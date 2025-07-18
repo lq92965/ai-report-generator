@@ -6,83 +6,126 @@
     <title>AI 周报/日报生成器</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* 自定义样式，如果 Tailwind CSS 不够用可以添加 */
+        /* 自定义 CSS，如果 Tailwind CSS 加载不全，至少保证基本布局 */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6; /* Tailwind gray-100 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
         }
         .container {
+            background-color: #ffffff; /* Tailwind white */
+            padding: 32px; /* Tailwind p-8 */
+            border-radius: 8px; /* Tailwind rounded-lg */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* 柔和阴影 */
+            width: 100%;
             max-width: 800px;
-            margin: 50px auto;
-            padding: 30px;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
-        textarea, select {
-            border-color: #d1d5db; /* Tailwind gray-300 */
+        h1 {
+            color: #1f2937; /* Tailwind gray-900 */
+            font-size: 30px; /* Tailwind text-3xl */
+            font-weight: bold; /* Tailwind font-bold */
+            margin-bottom: 24px; /* Tailwind mb-6 */
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px; /* Tailwind mb-2 */
+            color: #374151; /* Tailwind gray-700 */
+            font-weight: 600; /* Tailwind font-semibold */
+        }
+        textarea, select, input[type="text"] {
+            width: 100%;
+            padding: 12px; /* Tailwind p-3 */
+            border: 1px solid #d1d5db; /* Tailwind border-gray-300 */
+            border-radius: 6px; /* Tailwind rounded-md */
+            margin-bottom: 20px; /* Tailwind mb-5 */
+            font-size: 16px; /* Tailwind text-base */
+            box-sizing: border-box; /* 确保 padding 不会增加宽度 */
         }
         textarea:focus, select:focus {
-            border-color: #3b82f6; /* Tailwind blue-500 */
-            ring-color: #bfdbfe;   /* Tailwind blue-200 */
+            outline: none;
+            border-color: #2563eb; /* Tailwind border-blue-600 */
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2); /* Tailwind ring-blue-500/20 */
         }
         .btn-primary {
-            background-color: #3b82f6; /* Tailwind blue-500 */
+            background-color: #2563eb; /* Tailwind bg-blue-600 */
             color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: background-color 0.2s;
+            padding: 12px 24px; /* Tailwind px-6 py-3 */
+            border: none;
+            border-radius: 6px; /* Tailwind rounded-md */
+            cursor: pointer;
+            font-size: 18px; /* Tailwind text-lg */
+            font-weight: 600; /* Tailwind font-semibold */
+            transition: background-color 0.2s ease-in-out;
+            width: 100%; /* 确保按钮宽度是 100% */
         }
         .btn-primary:hover {
-            background-color: #2563eb; /* Tailwind blue-600 */
+            background-color: #1d4ed8; /* Tailwind bg-blue-700 */
         }
         .btn-secondary {
-            background-color: #6b7280; /* Tailwind gray-500 */
+            background-color: #6b7280; /* Tailwind bg-gray-500 */
             color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: background-color 0.2s;
+            padding: 10px 20px; /* Tailwind px-5 py-2.5 */
+            border: none;
+            border-radius: 6px; /* Tailwind rounded-md */
+            cursor: pointer;
+            font-size: 16px; /* Tailwind text-base */
+            font-weight: 600; /* Tailwind font-semibold */
+            transition: background-color 0.2s ease-in-out;
+            margin-top: 10px; /* 顶部间距 */
         }
         .btn-secondary:hover {
-            background-color: #4b5563; /* Tailwind gray-600 */
+            background-color: #4b5563; /* Tailwind bg-gray-600 */
+        }
+        .flex-container {
+            display: flex;
+            gap: 16px; /* Tailwind gap-4 */
+            margin-bottom: 20px;
+        }
+        .flex-item {
+            flex: 1; /* 每个项目占据相同宽度 */
         }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
-    <div class="container bg-white p-8 rounded-lg shadow-xl w-full max-w-2xl">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">AI 周报/日报生成器</h1>
+<body>
+    <div class="container">
+        <h1>AI 周报/日报生成器</h1>
 
         <div class="mb-5">
-            <label for="workInput" class="block text-gray-700 text-sm font-medium mb-2">请简要输入您的工作要点（例如：完成项目A需求分析；修复Bug列表中的3个问题；参与部门会议讨论新方案）：</label>
-            <textarea id="workInput" rows="8" class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-800"></textarea>
+            <label for="workInput">工作要点：</label>
+            <textarea id="workInput" rows="6" placeholder="例如：完成了项目A的需求分析，与团队成员讨论了技术方案，协助解决用户反馈问题等。"></textarea>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
-            <div>
-                <label for="styleSelect" class="block text-gray-700 text-sm font-medium mb-2">报告风格：</label>
-                <select id="styleSelect" class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-800">
+        <div class="flex-container">
+            <div class="flex-item">
+                <label for="styleSelect">风格：</label>
+                <select id="styleSelect">
                     <option value="formal">正式</option>
                     <option value="concise">口语化</option>
                 </select>
             </div>
-            <div>
-                <label for="lengthSelect" class="block text-gray-700 text-sm font-medium mb-2">报告篇幅：</label>
-                <select id="lengthSelect" class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-800">
-                    <option value="standard">标准</option>
-                    <option value="detailed">详细</option>
+            <div class="flex-item">
+                <label for="lengthSelect">篇幅：</label>
+                <select id="lengthSelect">
+                    <option value="standard">标准篇幅</option>
+                    <option value="detailed">详细篇幅</option>
                 </select>
             </div>
         </div>
 
-        <div class="flex justify-center space-x-4 mb-5">
-            <button id="generateBtn" class="btn-primary flex-grow">生成周报/日报</button>
+        <div class="mb-5">
+            <button id="generateBtn" class="btn-primary">生成周报/日报</button>
         </div>
 
         <div class="mb-5">
-            <label for="resultOutput" class="block text-gray-700 text-sm font-medium mb-2">生成结果：</label>
-            <textarea id="resultOutput" rows="12" readonly class="mt-1 block w-full p-3 border border-gray-300 rounded-md bg-gray-50 shadow-sm text-gray-800"></textarea>
+            <label for="resultOutput">生成结果：</label>
+            <textarea id="resultOutput" rows="12" readonly placeholder="AI 生成的周报/日报将显示在这里。"></textarea>
         </div>
 
         <div class="flex justify-center">
