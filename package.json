@@ -1,0 +1,24 @@
+{
+  "name": "myaiprojects",
+  "version": "1.0.0",
+  "type": "module", 
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lq92965/ai-report-generator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lq92965/ai-report-generator/issues"
+  },
+  "homepage": "https://github.com/lq92965/ai-report-generator#readme",
+  "description": "",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1"
+  }
+}
