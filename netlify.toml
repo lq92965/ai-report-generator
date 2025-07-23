@@ -1,0 +1,8 @@
+[build]
+  publish = "."  # 告诉 Netlify 你的静态文件在仓库根目录
+  functions = "api" # 告诉 Netlify 你的函数在 'api/' 目录中
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
