@@ -21,46 +21,34 @@ generateBtn.addEventListener('click', async () => {
     // 暂时显示一个占位符，模拟生成过程
     resultOutput.value = "正在智能分析并生成您的周报/日报，请稍候...";
 
-    // 构建发送给 Serverless Function 的实际 Prompt
-    // 这个 Prompt 是 AI 真正会“理解”的指令
-    let promptForAI = `你是一位专业的职场助理，请根据以下工作要点，生成一份`;
-    if (style === 'formal') {
-        promptForAI += `正式`;
-    } else if (style === 'concise') { // 确保与 HTML 的 option value 匹配
-        promptForAI += `口语化`;
-    }
-    promptForAI += `风格的`;
-    if (length === 'standard') { // 确保与 HTML 的 option value 匹配
-        promptForAI += `标准篇幅`;
-    } else if (length === 'detailed') { // 确保与 HTML 的 option value 匹配
-        promptForAI += `详细篇幅`;
-    }
-    promptForAI += `的周报或日报：\n\n${workContent}\n\n`;
-    promptForAI += `请确保内容条理清晰，表达专业，语气恰当。`; // 增加更多指令来引导AI生成更好的内容
-
     try {
         // 调用 Vercel 部署的 Serverless Function
         // 路径是 /api/文件名（不含.js），所以是 /api/generate-report
+        // 重要：确保这里发送的字段名 (workContent, style, length) 与后端 generate-report.js 期望接收的字段名完全一致
         const response = await fetch('/api/generate-report', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            // 将 promptForAI 作为 JSON 数据发送给后端
-            body: JSON.stringify({ prompt: promptForAI })
+            body: JSON.stringify({ 
+                workContent: workContent, // 发送工作内容
+                style: style,             // 发送风格
+                length: length            // 发送篇幅
+            })
         });
 
         // 检查响应状态码
         if (!response.ok) {
-            // 如果不是 2xx 状态码，抛出错误
-            const errorData = await response.json(); // 尝试解析错误信息
-            throw new Error(`API 请求失败: ${response.status} - ${errorData.message || '未知错误'}`);
+            // 如果不是 2xx 状态码，尝试解析错误信息并抛出
+            const errorData = await response.json(); 
+            // 确保这里从 errorData.error 获取错误信息，因为后端是 { error: ... }
+            throw new Error(`API 请求失败: ${response.status} - ${errorData.error || '未知错误'}`);
         }
 
         // 解析 JSON 响应
         const data = await response.json();
-        // 将 AI 生成的文本显示到结果区域
-        resultOutput.value = data.generatedText;
+        // 重要：确保这里接收的字段名 (data.report) 与后端 generate-report.js 返回的字段名完全一致
+        resultOutput.value = data.report; // 后端返回的是 { report: text }
 
     } catch (error) {
         console.error('生成失败:', error);
