@@ -1,29 +1,34 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-export default async function (req, res) {
-    // 只允许 POST 请求
-    if (req.method !== 'POST') {
-        return res.status(405).send('Method Not Allowed');
+export default async function handler(event, context) { // Netlify 函数的参数是 event 和 context
+    // Netlify 函数的请求方法通过 event.httpMethod 获取
+    if (event.httpMethod !== 'POST') {
+        return {
+            statusCode: 405,
+            body: JSON.stringify({ error: 'Method Not Allowed' }),
+            headers: { 'Content-Type': 'application/json' },
+        };
     }
 
     try {
-        // 从请求体中解构出 workContent, style, length
-        // 重要：确保这里接收的字段名与前端 script.js 发送的字段名完全一致
-        const { workContent, style, length } = req.body; 
+        // 从 event.body 中解析 JSON 数据
+        const { workContent, style, length } = JSON.parse(event.body); 
 
-        // 从 Vercel 环境变量中获取 Gemini API Key
+        // 从环境变量中获取 Gemini API Key
         const API_KEY = process.env.GEMINI_API_KEY; 
 
         // 检查 API Key 是否已设置
         if (!API_KEY) {
             console.error('GEMINI_API_KEY is not set in environment variables.');
-            // 返回一个包含 'error' 字段的 JSON 响应
-            return res.status(500).json({ error: 'API Key not configured on the server. Please check Vercel environment variables.' });
+            return {
+                statusCode: 500,
+                body: JSON.stringify({ error: 'API Key not configured on the server. Please check Netlify environment variables.' }),
+                headers: { 'Content-Type': 'application/json' },
+            };
         }
 
         // 初始化 Gemini AI 客户端
         const genAI = new GoogleGenerativeAI(API_KEY);
-        // 使用 gemini-1.5-flash 模型，因为它通常更快且成本效益更高
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); 
 
         // 根据前端传入的 style 和 length 构建 AI Prompt
@@ -48,12 +53,19 @@ export default async function (req, res) {
         const text = response.text();
 
         // 成功时返回 AI 生成的文本
-        // 重要：确保这里返回的字段名 (report) 与前端 script.js 期望接收的字段名完全一致
-        res.status(200).json({ report: text });
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ report: text }),
+            headers: { 'Content-Type': 'application/json' },
+        };
 
     } catch (error) {
         console.error('Error generating report in Serverless Function:', error);
         // 捕获并返回更详细的错误信息
-        res.status(500).json({ error: `Serverless Function Error: ${error.message || 'Unknown error'}. Please check Vercel logs.` });
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: `Serverless Function Error: ${error.message || 'Unknown error'}. Please check Netlify logs.` }),
+            headers: { 'Content-Type': 'application/json' },
+        };
     }
 }
