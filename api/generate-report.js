@@ -1,8 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 export default async function handler(event, context) {
-    // 确保所有执行路径都有明确的返回值
-
+    // 1. 检查请求方法
     if (event.httpMethod !== 'POST') {
         return {
             statusCode: 405,
@@ -12,39 +11,42 @@ export default async function handler(event, context) {
     }
 
     let parsedBody;
+    // 2. 安全解析请求体
     try {
-        // 尝试解析请求体。如果 event.body 为空或不是有效JSON，这里会抛出错误
-        // 确保 event.body 存在且不为空，否则 JSON.parse 会报错
-        parsedBody = JSON.parse(event.body || '{}'); 
+        if (!event.body) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ error: 'Request body is empty.' }),
+                headers: { 'Content-Type': 'application/json' },
+            };
+        }
+        parsedBody = JSON.parse(event.body); 
     } catch (parseError) {
-        console.error('Error parsing request body:', parseError);
         return {
-            statusCode: 400, // Bad Request，因为请求体格式不正确
-            body: JSON.stringify({ error: `Invalid request body format: ${parseError.message}` }),
+            statusCode: 400,
+            body: JSON.stringify({ error: `Invalid request body.` }), // 简化错误信息
             headers: { 'Content-Type': 'application/json' },
         };
     }
 
-    // 从解析后的请求体中解构出 workContent, style, length
+    // 3. 检查必要字段
     const { workContent, style, length } = parsedBody; 
-
-    // 检查必要的字段是否存在
     if (!workContent || !style || !length) {
         return {
-            statusCode: 400, // Bad Request，因为缺少必要字段
-            body: JSON.stringify({ error: 'Missing required fields: workContent, style, or length.' }),
+            statusCode: 400,
+            body: JSON.stringify({ error: 'Missing required fields.' }), // 简化错误信息
             headers: { 'Content-Type': 'application/json' },
         };
     }
 
+    // 4. 执行核心业务逻辑
     try {
         const API_KEY = process.env.GEMINI_API_KEY; 
 
         if (!API_KEY) {
-            console.error('GEMINI_API_KEY is not set in environment variables.');
             return {
                 statusCode: 500,
-                body: JSON.stringify({ error: 'API Key not configured on the server. Please check Netlify environment variables.' }),
+                body: JSON.stringify({ error: 'API Key not configured.' }), // 简化错误信息
                 headers: { 'Content-Type': 'application/json' },
             };
         }
@@ -71,6 +73,7 @@ export default async function handler(event, context) {
         const response = await result.response;
         const text = response.text();
 
+        // 成功时返回
         return {
             statusCode: 200,
             body: JSON.stringify({ report: text }),
@@ -78,11 +81,10 @@ export default async function handler(event, context) {
         };
 
     } catch (error) {
-        console.error('Error during Gemini API call or function execution:', error);
-        
-        let errorMessage = `Serverless Function Error: ${error.message || 'Unknown error'}. Please check Netlify logs.`;
+        // 5. 统一错误处理和返回
+        let errorMessage = `Serverless Function Error.`; // 极度简化错误信息
         if (error.message && error.message.includes('API key not valid')) {
-            errorMessage = 'API Key not valid. Please check your GEMINI_API_KEY in Netlify environment variables.';
+            errorMessage = 'API Key not valid.'; // 极度简化错误信息
         }
 
         return {
