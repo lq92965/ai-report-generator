@@ -1,6 +1,8 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 export default async function handler(event, context) {
+    // 确保所有执行路径都有明确的返回值
+
     if (event.httpMethod !== 'POST') {
         return {
             statusCode: 405,
@@ -12,7 +14,8 @@ export default async function handler(event, context) {
     let parsedBody;
     try {
         // 尝试解析请求体。如果 event.body 为空或不是有效JSON，这里会抛出错误
-        parsedBody = JSON.parse(event.body || '{}'); // 如果 event.body 为空，解析为空对象
+        // 确保 event.body 存在且不为空，否则 JSON.parse 会报错
+        parsedBody = JSON.parse(event.body || '{}'); 
     } catch (parseError) {
         console.error('Error parsing request body:', parseError);
         return {
@@ -76,8 +79,7 @@ export default async function handler(event, context) {
 
     } catch (error) {
         console.error('Error during Gemini API call or function execution:', error);
-        // 捕获并返回更详细的错误信息
-        // 检查是否是 API Key 无效的错误
+        
         let errorMessage = `Serverless Function Error: ${error.message || 'Unknown error'}. Please check Netlify logs.`;
         if (error.message && error.message.includes('API key not valid')) {
             errorMessage = 'API Key not valid. Please check your GEMINI_API_KEY in Netlify environment variables.';
