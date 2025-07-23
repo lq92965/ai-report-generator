@@ -61,7 +61,7 @@ export default async function handler(event, context) { // Netlify 函数的参�
 
     } catch (error) {
         console.error('Error generating report in Serverless Function:', error);
-        // 捕获并返回更详细的错误信息
+        // **** 关键修改：确保这里也返回 Netlify 期望的 Response 对象格式 ****
         return {
             statusCode: 500,
             body: JSON.stringify({ error: `Serverless Function Error: ${error.message || 'Unknown error'}. Please check Netlify logs.` }),
