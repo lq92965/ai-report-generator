@@ -28,12 +28,12 @@ generateBtn.addEventListener('click', async () => {
         const response = await fetch('/api/generate-report', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+             'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 
-                workContent: workContent, // 发送工作内容
-                style: style,             // 发送风格
-                length: length            // 发送篇幅
+                workContent: workContent, 
+                style: style,             
+                length: length            
             })
         });
 
