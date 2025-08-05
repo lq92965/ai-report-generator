@@ -1,15 +1,15 @@
 {
   "name": "ai-report-generator",
   "version": "1.0.0",
-  "description": "AI-powered report generator using Google Gemini API and Vercel",
-  "main": "api/generate-report.js",
+  "description": "AI-powered report generator using Google Gemini API and Render",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node api/generate-report.js",
-    "dev": "vercel dev"
+    "start": "node server.js"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.1.0"
+    "@google/generative-ai": "^0.1.0",
+    "express": "^4.19.2"
   },
   "author": "Your Name",
   "license": "ISC"
