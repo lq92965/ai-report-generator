@@ -7,7 +7,7 @@ const resultOutput = document.getElementById('resultOutput');
 const copyBtn = document.getElementById('copyBtn');
 
 // 你的 Render 后端服务的完整 URL，请将“xxxx”替换为你自己的。
-const API_URL = 'https://ai-report-generator-wlcr.onrender.com';
+const API_URL = 'https://ai-report-generator-wlcr.onrender.com/generate-report';
 
 // “生成”按钮点击事件监听
 generateBtn.addEventListener('click', async () => {
