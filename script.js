@@ -6,11 +6,14 @@ const generateBtn = document.getElementById('generateBtn');
 const resultOutput = document.getElementById('resultOutput');
 const copyBtn = document.getElementById('copyBtn');
 
+// 你的 Render 后端服务的完整 URL，请将“xxxx”替换为你自己的。
+const API_URL = 'https://ai-report-generator-wlcr.onrender.com';
+
 // “生成”按钮点击事件监听
 generateBtn.addEventListener('click', async () => {
     const workContent = workInput.value.trim(); // 获取输入框内容并去除首尾空格
-    const style = styleSelect.value;           // 获取风格选择
-    const length = lengthSelect.value;         // 获取篇幅选择
+    const style = styleSelect.value;              // 获取风格选择
+    const length = lengthSelect.value;            // 获取篇幅选择
 
     if (!workContent) {
         // 如果输入内容为空，给出提示
@@ -22,18 +25,16 @@ generateBtn.addEventListener('click', async () => {
     resultOutput.value = "正在智能分析并生成您的周报/日报，请稍候...";
 
     try {
-        // 调用 Vercel 部署的 Serverless Function
-        // 路径是 /api/文件名（不含.js），所以是 /api/generate-report
-        // 重要：确保这里发送的字段名 (workContent, style, length) 与后端 generate-report.js 期望接收的字段名完全一致
-        const response = await fetch('/api/generate-report', {
+        // 调用部署在 Render 上的后端服务
+        const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
-             'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 
                 workContent: workContent, 
-                style: style,             
-                length: length            
+                style: style, 
+                length: length 
             })
         });
 
@@ -41,13 +42,11 @@ generateBtn.addEventListener('click', async () => {
         if (!response.ok) {
             // 如果不是 2xx 状态码，尝试解析错误信息并抛出
             const errorData = await response.json(); 
-            // 确保这里从 errorData.error 获取错误信息，因为后端是 { error: ... }
             throw new Error(`API 请求失败: ${response.status} - ${errorData.error || '未知错误'}`);
         }
 
         // 解析 JSON 响应
         const data = await response.json();
-        // 重要：确保这里接收的字段名 (data.report) 与后端 generate-report.js 返回的字段名完全一致
         resultOutput.value = data.report; // 后端返回的是 { report: text }
 
     } catch (error) {
