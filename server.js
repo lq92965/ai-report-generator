@@ -27,7 +27,14 @@ async function generateReportLogic(workContent, style, length, language) {
     } else if (language === 'chinese') {
         prompt = `请严格使用中文。根据以下工作要点，生成一份${length}的${style}风格的周报或日报，要求结构清晰、条理分明，语言流畅。生成内容必须是中文。
         工作要点：${workContent}`;
-    } else {
+    } else if (language === 'espanol') {
+        prompt = `Utilice estrictamente el español. Basado en los siguientes detalles del trabajo, genere un informe de ${length} en un estilo ${style}. El informe debe ser claro, bien estructurado y fluido. La salida debe ser en español.
+        Detalles del trabajo: ${workContent}`;
+    } else if (language === 'francais') {
+        prompt = `Utilisez strictement le français. Basé sur les détails de travail suivants, générez un rapport de ${length} dans un style ${style}. Le rapport doit être clair, bien structuré et fluide. Le résultat doit être en français.
+        Détails du travail: ${workContent}`;
+    }
+    else {
         // 默认使用英文
         prompt = `Strictly use English. Based on the following work details, generate a ${length} report in a ${style} style. The report must be clear, well-structured, and fluent. The output must be in English.
         Work Details: ${workContent}`;
