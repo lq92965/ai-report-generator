@@ -1,138 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 周报/日报生成器</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* 自定义 CSS，如果 Tailwind CSS 加载不全，至少保证基本布局 */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f3f4f6; /* Tailwind gray-100 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .container {
-            background-color: #ffffff; /* Tailwind white */
-            padding: 32px; /* Tailwind p-8 */
-            border-radius: 8px; /* Tailwind rounded-lg */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* 柔和阴影 */
-            width: 100%;
-            max-width: 800px;
-        }
-        h1 {
-            color: #1f2937; /* Tailwind gray-900 */
-            font-size: 30px; /* Tailwind text-3xl */
-            font-weight: bold; /* Tailwind font-bold */
-            margin-bottom: 24px; /* Tailwind mb-6 */
-            text-align: center;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px; /* Tailwind mb-2 */
-            color: #374151; /* Tailwind gray-700 */
-            font-weight: 600; /* Tailwind font-semibold */
-        }
-        textarea, select, input[type="text"] {
-            width: 100%;
-            padding: 12px; /* Tailwind p-3 */
-            border: 1px solid #d1d5db; /* Tailwind border-gray-300 */
-            border-radius: 6px; /* Tailwind rounded-md */
-            margin-bottom: 20px; /* Tailwind mb-5 */
-            font-size: 16px; /* Tailwind text-base */
-            box-sizing: border-box; /* 确保 padding 不会增加宽度 */
-        }
-        textarea:focus, select:focus {
-            outline: none;
-            border-color: #2563eb; /* Tailwind border-blue-600 */
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2); /* Tailwind ring-blue-500/20 */
-        }
-        .btn-primary {
-            background-color: #2563eb; /* Tailwind bg-blue-600 */
-            color: white;
-            padding: 12px 24px; /* Tailwind px-6 py-3 */
-            border: none;
-            border-radius: 6px; /* Tailwind rounded-md */
-            cursor: pointer;
-            font-size: 18px; /* Tailwind text-lg */
-            font-weight: 600; /* Tailwind font-semibold */
-            transition: background-color 0.2s ease-in-out;
-            width: 100%; /* 确保按钮宽度是 100% */
-        }
-        .btn-primary:hover {
-            background-color: #1d4ed8; /* Tailwind bg-blue-700 */
-        }
-        .btn-secondary {
-            background-color: #6b7280; /* Tailwind bg-gray-500 */
-            color: white;
-            padding: 10px 20px; /* Tailwind px-5 py-2.5 */
-            border: none;
-            border-radius: 6px; /* Tailwind rounded-md */
-            cursor: pointer;
-            font-size: 16px; /* Tailwind text-base */
-            font-weight: 600; /* Tailwind font-semibold */
-            transition: background-color 0.2s ease-in-out;
-            margin-top: 10px; /* 顶部间距 */
-        }
-        .btn-secondary:hover {
-            background-color: #4b5563; /* Tailwind bg-gray-600 */
-        }
-        .flex-container {
-            display: flex;
-            gap: 16px; /* Tailwind gap-4 */
-            margin-bottom: 20px;
-        }
-        .flex-item {
-            flex: 1; /* 每个项目占据相同宽度 */
-        }
-    </style>
+    <title>AI Report Generator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>AI 周报/日报生成器</h1>
+    <header>
+        <h1>AI Report Generator</h1>
+    </header>
 
-        <div class="mb-5">
-            <label for="workInput">工作要点：</label>
-            <textarea id="workInput" rows="6" placeholder="例如：完成了项目A的需求分析，与团队成员讨论了技术方案，协助解决用户反馈问题等。"></textarea>
-        </div>
+    <main>
+        <section class="controls">
+            <div class="input-group">
+                <label for="workInput">Work Details:</label>
+                <textarea id="workInput" rows="8" placeholder="Enter your work details here..."></textarea>
+            </div>
 
-        <div class="flex-container">
-            <div class="flex-item">
-                <label for="styleSelect">风格：</label>
+            <div class="input-group">
+                <label for="languageSelect">Language:</label>
+                <select id="languageSelect">
+                    <option value="english" selected>English</option>
+                    <option value="chinese">中文</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="styleSelect">Style:</label>
                 <select id="styleSelect">
-                    <option value="formal">正式</option>
-                    <option value="concise">口语化</option>
+                    <option value="Formal" selected>Formal</option>
+                    <option value="Casual">Casual</option>
+                    <option value="Detailed">Detailed</option>
                 </select>
             </div>
-            <div class="flex-item">
-                <label for="lengthSelect">篇幅：</label>
+
+            <div class="input-group">
+                <label for="lengthSelect">Length:</label>
                 <select id="lengthSelect">
-                    <option value="standard">标准篇幅</option>
-                    <option value="detailed">详细篇幅</option>
+                    <option value="Standard">Standard</option>
+                    <option value="Detailed" selected>Detailed</option>
                 </select>
             </div>
-        </div>
 
-        <div class="mb-5">
-            <button id="generateBtn" class="btn-primary">生成周报/日报</button>
-        </div>
+            <button id="generateBtn">Generate Report</button>
+        </section>
 
-        <div class="mb-5">
-            <label for="resultOutput">生成结果：</label>
-            <textarea id="resultOutput" rows="12" readonly placeholder="AI 生成的周报/日报将显示在这里。"></textarea>
-        </div>
+        <section class="output">
+            <div class="output-header">
+                <label for="resultOutput">Generated Report:</label>
+                <button id="copyBtn">Copy Result</button>
+            </div>
+            <textarea id="resultOutput" rows="15" readonly placeholder="Your generated report will appear here..."></textarea>
+        </section>
+    </main>
 
-        <div class="flex justify-center">
-            <button id="copyBtn" class="btn-secondary">复制结果</button>
-        </div>
-    </div>
-
-    <script src="./script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
