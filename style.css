@@ -9,7 +9,7 @@
 }
 
 body {
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: var(--primary-color);
     color: var(--text-color);
     margin: 0;
@@ -82,7 +82,7 @@ textarea, select {
     border: 1px solid var(--accent-color);
     background-color: transparent;
     color: var(--text-color);
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Inter', sans-serif;
     border-radius: 6px;
     box-sizing: border-box;
     outline: none;
@@ -219,4 +219,31 @@ footer a:hover {
     text-shadow: none;
     padding: 12px 24px;
     font-size: 1rem;
+}
+
+/* New message box style */
+.message-box {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    padding: 15px 30px;
+    border-radius: 6px;
+    box-shadow: var(--subtle-shadow);
+    z-index: 1000;
+    font-weight: bold;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 20px; opacity: 1;}
+}
+
+@keyframes fadeout {
+    from {bottom: 20px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
 }

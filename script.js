@@ -1,5 +1,5 @@
 // Function to handle the click event on the "Generate Report" button
-const generateReport = () => {
+const generateReport = async () => {
     // Get the values from the input fields
     const workPoints = document.getElementById('workInput').value;
     const language = document.getElementById('languageSelect').value;
@@ -13,19 +13,69 @@ const generateReport = () => {
         return;
     }
 
-    // Placeholder text for the generated report
-    const placeholderReport = `
-    Generated Report
-    ---------------------
-    Work Points: ${workPoints}
-    Language: ${language}
-    Style: ${style}
-    Length: ${length}
+    // Set a loading message
+    resultOutput.value = "Generating report, please wait...";
 
-    This is a placeholder for the generated report. In a real application, a model would process the input to create a detailed report here.
-    `;
+    const prompt = `Generate a ${length} report in a ${style} tone based on the following work points. The report should be in ${language}. Work points: ${workPoints}`;
     
-    resultOutput.value = placeholderReport;
+    // API setup
+    let chatHistory = [];
+    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+    const payload = { contents: chatHistory };
+    const apiKey = "";
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+    let retryCount = 0;
+    const maxRetries = 5;
+
+    while (retryCount < maxRetries) {
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                if (response.status === 429) { // Too Many Requests
+                    const delay = Math.pow(2, retryCount) * 1000; // Exponential backoff
+                    retryCount++;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    continue; // Retry the request
+                } else {
+                    throw new Error(`API call failed with status: ${response.status}`);
+                }
+            }
+
+            const result = await response.json();
+            
+            if (result.candidates && result.candidates.length > 0 &&
+                result.candidates[0].content && result.candidates[0].content.parts &&
+                result.candidates[0].content.parts.length > 0) {
+                const text = result.candidates[0].content.parts[0].text;
+                resultOutput.value = text;
+            } else {
+                resultOutput.value = "Failed to generate report. Please try again.";
+            }
+            return; // Exit the function after a successful API call or a final error
+        } catch (error) {
+            console.error('Error generating report:', error);
+            resultOutput.value = `An error occurred: ${error.message}`;
+            return;
+        }
+    }
+
+    resultOutput.value = "API call failed after multiple retries. Please try again later.";
+};
+
+// Function to show a temporary message box
+const showMessage = (message) => {
+    const messageBox = document.getElementById('messageBox');
+    messageBox.textContent = message;
+    messageBox.style.display = 'block';
+    setTimeout(() => {
+        messageBox.style.display = 'none';
+    }, 3000); // Hide after 3 seconds
 };
 
 // Function to copy the generated report to the clipboard
@@ -35,9 +85,10 @@ const copyReport = () => {
     try {
         // Use the deprecated but widely supported execCommand for copying in iframes
         document.execCommand('copy');
-        alert("Report copied to clipboard!");
+        showMessage("Report copied to clipboard!");
     } catch (err) {
         console.error('Failed to copy text: ', err);
+        showMessage("Failed to copy text.");
     }
 };
 
