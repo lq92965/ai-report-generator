@@ -92,3 +92,16 @@ button {
 #copyBtn:hover {
     background-color: #218838;
 }
+
+footer {
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
+    font-size: 14px;
+    color: #666;
+}
+
+footer a {
+    color: #007BFF;
+    text-decoration: none;
+}
