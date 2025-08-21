@@ -3,7 +3,7 @@ import express from 'express';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.env || 3000;
 
 app.use(express.json());
 app.use((req, res, next) => {
@@ -63,6 +63,20 @@ app.post('/generate-report', async (req, res) => {
         console.error('API Error:', error);
         res.status(500).json({ error: 'API Error: ' + error.message });
     }
+});
+
+// 新增的反馈API路由
+app.post('/submit-feedback', (req, res) => {
+    const { name, email, message } = req.body;
+
+    // 这里我们将反馈内容打印到控制台日志中
+    console.log('--- New Feedback Received ---');
+    console.log('Name:', name || 'N/A');
+    console.log('Email:', email || 'N/A');
+    console.log('Message:', message);
+    console.log('-----------------------------');
+
+    res.status(200).json({ status: 'success', message: 'Feedback received.' });
 });
 
 app.listen(port, () => {
