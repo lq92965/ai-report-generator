@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Report Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,42 +13,47 @@
     </header>
 
     <main>
+        <!-- The main input area for work points. This section takes up the full width. -->
         <section class="controls">
             <div class="input-group">
-                <label for="workInput">Work Details:</label>
-                <textarea id="workInput" rows="8" placeholder="Enter your work details here..."></textarea>
+                <label for="workInput">Work Points:</label>
+                <textarea id="workInput" rows="8" placeholder="Enter your work points here..."></textarea>
             </div>
-
-            <div class="input-group">
-                <label for="languageSelect">Language:</label>
-                <select id="languageSelect">
-                    <option value="english" selected>English</option>
-                    <option value="chinese">中文</option>
-                    <option value="espanol">Español</option>
-                    <option value="francais">Français</option>
-                </select>
-            </div>
-
-            <div class="input-group">
-                <label for="styleSelect">Style:</label>
-                <select id="styleSelect">
-                    <option value="Formal" selected>Formal</option>
-                    <option value="Casual">Casual</option>
-                    <option value="Detailed">Detailed</option>
-                </select>
-            </div>
-
-            <div class="input-group">
-                <label for="lengthSelect">Length:</label>
-                <select id="lengthSelect">
-                    <option value="Standard">Standard</option>
-                    <option value="Detailed" selected>Detailed</option>
-                </select>
+            
+            <!-- Other options are grouped together below the main input. -->
+            <div class="options-group">
+                <div class="input-group">
+                    <label for="languageSelect">Language:</label>
+                    <select id="languageSelect">
+                        <option value="english" selected>English</option>
+                        <option value="chinese">Chinese</option>
+                        <option value="espanol">Spanish</option>
+                        <option value="francais">French</option>
+                    </select>
+                </div>
+    
+                <div class="input-group">
+                    <label for="styleSelect">Style:</label>
+                    <select id="styleSelect">
+                        <option value="Formal" selected>Formal</option>
+                        <option value="Casual">Casual</option>
+                        <option value="Detailed">Detailed</option>
+                    </select>
+                </div>
+    
+                <div class="input-group">
+                    <label for="lengthSelect">Length:</label>
+                    <select id="lengthSelect">
+                        <option value="Standard">Standard</option>
+                        <option value="Detailed" selected>Detailed</option>
+                    </select>
+                </div>
             </div>
 
             <button id="generateBtn">Generate Report</button>
         </section>
 
+        <!-- The report output area, also taking up the full width. -->
         <section class="output">
             <div class="output-header">
                 <label for="resultOutput">Generated Report:</label>
@@ -61,6 +67,7 @@
         <a href="#" id="feedbackLink">Provide Feedback</a>
     </footer>
 
+    <!-- Feedback Modal HTML -->
     <div id="feedbackModal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>

@@ -1,121 +1,78 @@
-// 获取 HTML 元素
-const workInput = document.getElementById('workInput');
-const styleSelect = document.getElementById('styleSelect');
-const lengthSelect = document.getElementById('lengthSelect');
-const languageSelect = document.getElementById('languageSelect');
-const generateBtn = document.getElementById('generateBtn');
-const resultOutput = document.getElementById('resultOutput');
-const copyBtn = document.getElementById('copyBtn');
+// Function to handle the click event on the "Generate Report" button
+const generateReport = () => {
+    // Get the values from the input fields
+    const workPoints = document.getElementById('workInput').value;
+    const language = document.getElementById('languageSelect').value;
+    const style = document.getElementById('styleSelect').value;
+    const length = document.getElementById('lengthSelect').value;
+    const resultOutput = document.getElementById('resultOutput');
 
-const feedbackLink = document.getElementById('feedbackLink');
-const feedbackModal = document.getElementById('feedbackModal');
-const closeBtn = document.querySelector('.close-btn');
-const feedbackForm = document.getElementById('feedbackForm');
-const submitFeedbackBtn = document.getElementById('submitFeedbackBtn');
-
-// 你的 Render 后端服务的完整 URL
-const API_URL = 'https://ai-report-generator-wlcr.onrender.com/generate-report';
-// 新增的反馈API路由
-const FEEDBACK_API_URL = 'https://ai-report-generator-wlcr.onrender.com/submit-feedback';
-
-
-// “生成”按钮点击事件监听
-generateBtn.addEventListener('click', async () => {
-    const workContent = workInput.value.trim();
-    const style = styleSelect.value;
-    const length = lengthSelect.value;
-    const language = languageSelect.value;
-
-    if (!workContent) {
-        alert('Please enter your work details!');
+    // Simple validation to ensure work points are entered
+    if (workPoints.trim() === '') {
+        resultOutput.value = "Please enter some work points to generate a report.";
         return;
     }
 
-    resultOutput.value = "Analyzing work details and generating your report, please wait...";
+    // Placeholder text for the generated report
+    const placeholderReport = `
+    Generated Report
+    ---------------------
+    Work Points: ${workPoints}
+    Language: ${language}
+    Style: ${style}
+    Length: ${length}
 
-    try {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ 
-                workContent: workContent, 
-                style: style, 
-                length: length,
-                language: language
-            })
-        });
+    This is a placeholder for the generated report. In a real application, a model would process the input to create a detailed report here.
+    `;
+    
+    resultOutput.value = placeholderReport;
+};
 
-        if (!response.ok) {
-            const errorData = await response.json(); 
-            throw new Error(`API request failed: ${response.status} - ${errorData.error || 'Unknown Error'}`);
-        }
-
-        const data = await response.json();
-        resultOutput.value = data.report;
-
-    } catch (error) {
-        console.error('Generation failed:', error);
-        resultOutput.value = `Generation failed, please try again later. Error: ${error.message}\nCheck your network connection or try again later.`;
-    }
-});
-
-// “复制”按钮点击事件监听
-copyBtn.addEventListener('click', () => {
+// Function to copy the generated report to the clipboard
+const copyReport = () => {
+    const resultOutput = document.getElementById('resultOutput');
     resultOutput.select();
     try {
+        // Use the deprecated but widely supported execCommand for copying in iframes
         document.execCommand('copy');
-        alert('Generated result has been copied to clipboard!');
+        alert("Report copied to clipboard!");
     } catch (err) {
-        console.error('Copy failed:', err);
-        alert('Copy failed, please copy manually.');
+        console.error('Failed to copy text: ', err);
     }
-});
+};
 
-// 显示反馈模态框
-feedbackLink.addEventListener('click', (event) => {
-    event.preventDefault();
-    feedbackModal.style.display = 'flex';
-});
+// Function to show the feedback modal
+const showModal = () => {
+    const modal = document.getElementById('feedbackModal');
+    modal.style.display = 'flex';
+};
 
-// 关闭反馈模态框
-closeBtn.addEventListener('click', () => {
-    feedbackModal.style.display = 'none';
-});
+// Function to hide the feedback modal
+const hideModal = () => {
+    const modal = document.getElementById('feedbackModal');
+    modal.style.display = 'none';
+};
 
-window.addEventListener('click', (event) => {
-    if (event.target === feedbackModal) {
-        feedbackModal.style.display = 'none';
-    }
-});
-
-// 提交反馈表单
-feedbackForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-
-    const name = document.getElementById('feedbackName').value;
-    const email = document.getElementById('feedbackEmail').value;
-    const message = document.getElementById('feedbackMessage').value;
-
-    try {
-        const response = await fetch(FEEDBACK_API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ name, email, message })
-        });
-
-        if (response.ok) {
-            alert('Feedback submitted successfully!');
-            feedbackForm.reset();
-            feedbackModal.style.display = 'none';
-        } else {
-            alert('Failed to submit feedback. Please try again.');
+// Attach event listeners to the buttons and links
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('generateBtn').addEventListener('click', generateReport);
+    document.getElementById('copyBtn').addEventListener('click', copyReport);
+    document.getElementById('feedbackLink').addEventListener('click', (e) => {
+        e.preventDefault();
+        showModal();
+    });
+    document.querySelector('.close-btn').addEventListener('click', hideModal);
+    document.getElementById('feedbackModal').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) {
+            hideModal();
         }
-    } catch (error) {
-        console.error('Feedback submission error:', error);
-        alert('An error occurred. Please try again later.');
-    }
+    });
+
+    // Handle form submission to prevent default behavior
+    document.getElementById('feedbackForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Here you would typically send the form data to a server
+        console.log('Feedback submitted!');
+        hideModal();
+    });
 });
