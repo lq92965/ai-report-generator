@@ -1,7 +1,7 @@
 {
-  "name": "ai-report-generator",
+  "name": "hummingbird-ai-editor",
   "version": "1.0.0",
-  "description": "AI-powered report generator using Google Gemini API and Render",
+  "description": "An AI-powered editor to generate daily and weekly reports.",
   "main": "server.js",
   "type": "module",
   "scripts": {
