@@ -2,10 +2,9 @@
   "name": "hummingbird-ai-editor",
   "version": "1.0.0",
   "description": "An AI-powered editor to generate daily and weekly reports.",
-  "main": "server.js",
-  "type": "module",
+  "main": "server.cjs",  // 更新为 server.cjs
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.cjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.1.0",
