@@ -1,84 +1,33 @@
-// server.js
-import express from 'express';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-
+const express = require('express');
+const fetch = require('node-fetch');
 const app = express();
-const port = process.env.env || 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-// 核心的周报生成逻辑，新增了 language 参数
-async function generateReportLogic(workContent, style, length, language) {
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-    let prompt;
-
-    // 根据语言动态构建提示词
-    if (language === 'english') {
-        prompt = `Strictly use English. Based on the following work details, generate a ${length} report in a ${style} style. The report must be clear, well-structured, and fluent. The output must be in English.
-        Work Details: ${workContent}`;
-    } else if (language === 'chinese') {
-        prompt = `请严格使用中文。根据以下工作要点，生成一份${length}的${style}风格的周报或日报，要求结构清晰、条理分明，语言流畅。生成内容必须是中文。
-        工作要点：${workContent}`;
-    } else if (language === 'espanol') {
-        prompt = `Utilice estrictamente el español. Basado en los siguientes detalles del trabajo, genere un informe de ${length} en un estilo ${style}. El informe debe ser claro, bien estructurado y fluido. La salida debe ser en español.
-        Detalles del trabajo: ${workContent}`;
-    } else if (language === 'francais') {
-        prompt = `Utilisez strictement le français. Basé sur les détails de travail suivants, générez un rapport de ${length} dans un style ${style}. Le rapport doit être clair, bien structuré et fluide. Le résultat doit être en français.
-        Détails du travail: ${workContent}`;
-    }
-    else {
-        // 默认使用英文
-        prompt = `Strictly use English. Based on the following work details, generate a ${length} report in a ${style} style. The report must be clear, well-structured, and fluent. The output must be in English.
-        Work Details: ${workContent}`;
-    }
-
-    try {
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        return response.text();
-    } catch (error) {
-        console.error('Error generating report:', error);
-        throw new Error('Error generating report from AI.');
-    }
-}
-
-// 设置 API 路由，新增了 language 参数的接收
+// 处理生成报告的 API 请求
 app.post('/generate-report', async (req, res) => {
-    try {
-        const { workContent, style, length, language } = req.body;
-        if (!workContent) {
-            return res.status(400).json({ error: 'Work content is required.' });
-        }
-        const report = await generateReportLogic(workContent, style, length, language);
-        res.status(200).json({ report });
-    } catch (error) {
-        console.error('API Error:', error);
-        res.status(500).json({ error: 'API Error: ' + error.message });
-    }
-});
+  const { prompt } = req.body;
+  const apiKey = process.env.OPENAI_API_KEY;
 
-// 新增的反馈API路由
-app.post('/submit-feedback', (req, res) => {
-    const { name, email, message } = req.body;
+  const response = await fetch('https://api.openai.com/v1/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      prompt,
+      max_tokens: 1000,
+      temperature: 0.7,
+      model: 'text-davinci-003',
+    }),
+  });
 
-    // 这里我们将反馈内容打印到控制台日志中
-    console.log('--- New Feedback Received ---');
-    console.log('Name:', name || 'N/A');
-    console.log('Email:', email || 'N/A');
-    console.log('Message:', message);
-    console.log('-----------------------------');
-
-    res.status(200).json({ status: 'success', message: 'Feedback received.' });
+  const data = await response.json();
+  res.json(data); // 返回生成的报告内容
 });
 
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running on port ${port}`);
 });

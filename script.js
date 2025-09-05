@@ -1,129 +1,31 @@
-// Function to handle the click event on the "Generate Report" button
-const generateReport = async () => {
-    // Get the values from the input fields
-    const workPoints = document.getElementById('workInput').value;
-    const language = document.getElementById('languageSelect').value;
-    const style = document.getElementById('styleSelect').value;
-    const length = document.getElementById('lengthSelect').value;
-    const resultOutput = document.getElementById('resultOutput');
+document.addEventListener("DOMContentLoaded", () => {
+  const generateButton = document.getElementById('generateButton');
+  const reportTextArea = document.getElementById('reportText');
+  const loadingSpinner = document.getElementById('loadingSpinner');
+  const copyButton = document.getElementById('copyButton');
+  const toast = document.getElementById('toast');
+  
+  let reportText = '';
 
-    // Simple validation to ensure work points are entered
-    if (workPoints.trim() === '') {
-        resultOutput.value = "Please enter some work points to generate a report.";
-        return;
-    }
+  // 生成报告
+  generateButton.addEventListener('click', async () => {
+    loadingSpinner.style.display = 'block'; // 显示加载动画
+    generateButton.disabled = true; // 禁用按钮
 
-    // Set a loading message
-    resultOutput.value = "Generating report, please wait...";
-
-    const prompt = `Generate a ${length} report in a ${style} tone based on the following work points. The report should be in ${language}. Work points: ${workPoints}`;
-    
-    // API setup
-    let chatHistory = [];
-    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-    const payload = { contents: chatHistory };
-    const apiKey = "AIzaSyB8OYrQcq9aOj-rf669J6uiKFMvLuB4yzY";
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-    let retryCount = 0;
-    const maxRetries = 5;
-
-    while (retryCount < maxRetries) {
-        try {
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            if (!response.ok) {
-                if (response.status === 429) { // Too Many Requests
-                    const delay = Math.pow(2, retryCount) * 1000; // Exponential backoff
-                    retryCount++;
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                    continue; // Retry the request
-                } else {
-                    throw new Error(`API call failed with status: ${response.status}`);
-                }
-            }
-
-            const result = await response.json();
-            
-            if (result.candidates && result.candidates.length > 0 &&
-                result.candidates[0].content && result.candidates[0].content.parts &&
-                result.candidates[0].content.parts.length > 0) {
-                const text = result.candidates[0].content.parts[0].text;
-                resultOutput.value = text;
-            } else {
-                resultOutput.value = "Failed to generate report. Please try again.";
-            }
-            return; // Exit the function after a successful API call or a final error
-        } catch (error) {
-            console.error('Error generating report:', error);
-            resultOutput.value = `An error occurred: ${error.message}`;
-            return;
-        }
-    }
-
-    resultOutput.value = "API call failed after multiple retries. Please try again later.";
-};
-
-// Function to show a temporary message box
-const showMessage = (message) => {
-    const messageBox = document.getElementById('messageBox');
-    messageBox.textContent = message;
-    messageBox.style.display = 'block';
+    // 模拟生成报告过程
     setTimeout(() => {
-        messageBox.style.display = 'none';
-    }, 3000); // Hide after 3 seconds
-};
+      reportText = '这是生成的日报内容...';
+      reportTextArea.value = reportText;
+      loadingSpinner.style.display = 'none'; // 隐藏加载动画
+      generateButton.disabled = false; // 启用按钮
+    }, 2000);
+  });
 
-// Function to copy the generated report to the clipboard
-const copyReport = () => {
-    const resultOutput = document.getElementById('resultOutput');
-    resultOutput.select();
-    try {
-        // Use the deprecated but widely supported execCommand for copying in iframes
-        document.execCommand('copy');
-        showMessage("Report copied to clipboard!");
-    } catch (err) {
-        console.error('Failed to copy text: ', err);
-        showMessage("Failed to copy text.");
-    }
-};
-
-// Function to show the feedback modal
-const showModal = () => {
-    const modal = document.getElementById('feedbackModal');
-    modal.style.display = 'flex';
-};
-
-// Function to hide the feedback modal
-const hideModal = () => {
-    const modal = document.getElementById('feedbackModal');
-    modal.style.display = 'none';
-};
-
-// Attach event listeners to the buttons and links
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('generateBtn').addEventListener('click', generateReport);
-    document.getElementById('copyBtn').addEventListener('click', copyReport);
-    document.getElementById('feedbackLink').addEventListener('click', (e) => {
-        e.preventDefault();
-        showModal();
+  // 复制结果
+  copyButton.addEventListener('click', () => {
+    navigator.clipboard.writeText(reportText).then(() => {
+      toast.style.display = 'block'; // 显示 Toast
+      setTimeout(() => toast.style.display = 'none', 2000); // 隐藏 Toast
     });
-    document.querySelector('.close-btn').addEventListener('click', hideModal);
-    document.getElementById('feedbackModal').addEventListener('click', (e) => {
-        if (e.target === e.currentTarget) {
-            hideModal();
-        }
-    });
-
-    // Handle form submission to prevent default behavior
-    document.getElementById('feedbackForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        // Here you would typically send the form data to a server
-        console.log('Feedback submitted!');
-        hideModal();
-    });
+  });
 });
