@@ -1,196 +1,75 @@
 // script.js
-import { callAIModel } from './services/aiModel.js';
+import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
-document.addEventListener('DOMContentLoaded', () => {
-  // DOM
-  const generateBtn = document.getElementById('generateBtn');
-  const loadingMsg = document.getElementById('loadingMsg');
-  const copyBtn = document.getElementById('copyBtn');
-  const copyMsg = document.getElementById('copyMsg');
-  const resultEl = document.getElementById('result');
-  const inputEl = document.getElementById('inputText');
-  const errorMsg = document.getElementById('errorMsg');
+// ✅ 从 Netlify 环境变量中读取 API Key
+const genAI = new GoogleGenerativeAI(window.GEMINI_API_KEY || "YOUR_API_KEY");
 
-  const feedbackForm = document.getElementById('feedbackForm');
-  const nameInput = document.getElementById('nameInput') || null;
-  const emailInput = document.getElementById('emailInput') || document.getElementById('email') || null;
-  const feedbackInput = document.getElementById('feedbackInput') || document.getElementById('feedback') || null;
-  const feedbackMsg = document.getElementById('feedbackMsg');
+// 选择模型
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-  const languageSelect = document.getElementById('languageSelect');
-  const toneSelect = document.getElementById('toneSelect');
-  const lengthSelect = document.getElementById('lengthSelect');
+// 获取页面元素
+const generateBtn = document.getElementById("generateBtn");
+const copyBtn = document.getElementById("copyBtn");
+const inputText = document.getElementById("inputText");
+const resultBox = document.getElementById("result");
+const loadingMsg = document.getElementById("loadingMsg");
+const copyMsg = document.getElementById("copyMsg");
+const errorMsg = document.getElementById("errorMsg");
 
-  // helpers
-  function setLoading(flag) {
-    if (generateBtn) generateBtn.disabled = !!flag;
-    if (loadingMsg) loadingMsg.style.display = flag ? 'inline' : 'none';
-  }
-  function showError(text) {
-    if (!errorMsg) return alert(text);
-    errorMsg.textContent = text;
-    errorMsg.style.display = 'block';
-  }
-  function clearError() {
-    if (!errorMsg) return;
-    errorMsg.textContent = '';
-    errorMsg.style.display = 'none';
+const languageSelect = document.getElementById("languageSelect");
+const toneSelect = document.getElementById("toneSelect");
+const lengthSelect = document.getElementById("lengthSelect");
+
+// 生成报告
+generateBtn.addEventListener("click", async () => {
+  const userInput = inputText.value.trim();
+  if (!userInput) {
+    errorMsg.style.display = "block";
+    errorMsg.textContent = "请输入内容再生成报告";
+    return;
   }
 
-  // 调用模型（兼容对象签名与字符串签名）
-  async function invokeModel(prompt) {
-    const payloadObj = {
-      inputText: prompt,
-      language: languageSelect?.value,
-      tone: toneSelect?.value,
-      length: lengthSelect?.value
-    };
+  errorMsg.style.display = "none";
+  loadingMsg.style.display = "inline";
 
-    try {
-      const r = await callAIModel(payloadObj);
-      return r;
-    } catch (errObj) {
-      console.warn('callAIModel with object failed:', errObj?.message || errObj);
-      try {
-        const r2 = await callAIModel(prompt);
-        return r2;
-      } catch (errStr) {
-        console.error('callAIModel with string also failed:', errStr?.message || errStr);
-        const message = errStr?.message || errObj?.message || 'AI call failed';
-        throw new Error(message);
-      }
-    }
+  const lang = languageSelect.value;
+  const tone = toneSelect.value;
+  const length = lengthSelect.value;
+
+  const prompt = `
+Generate a ${length} report in ${lang}.
+Tone/style: ${tone}.
+Content:
+${userInput}
+`;
+
+  try {
+    const result = await model.generateContent(prompt);
+    const text = result.response.text();
+    resultBox.value = text;
+  } catch (err) {
+    console.error(err);
+    errorMsg.style.display = "block";
+    errorMsg.textContent = "生成报告时出错，请稍后再试。";
+  } finally {
+    loadingMsg.style.display = "none";
   }
+});
 
-  // 生成按钮
-  generateBtn?.addEventListener('click', async () => {
-    clearError();
-    const prompt = inputEl?.value || '';
-    if (!prompt.trim()) {
-      showError('请输入用于生成报告的内容。');
-      inputEl?.focus();
-      return;
-    }
+// 复制报告
+copyBtn.addEventListener("click", async () => {
+  if (!resultBox.value) return;
+  await navigator.clipboard.writeText(resultBox.value);
+  copyMsg.style.display = "inline";
+  setTimeout(() => (copyMsg.style.display = "none"), 2000);
+});
 
-    setLoading(true);
-    resultEl.value = '';
-
-    try {
-      const report = await invokeModel(prompt);
-      let text = report;
-      if (report && typeof report === 'object' && ('result' in report)) {
-        text = report.result;
-      }
-      resultEl.value = String(text || '');
-      // 保存历史（最近 10 条）
-      try {
-        const key = 'hb_reports_v1';
-        const hist = JSON.parse(localStorage.getItem(key) || '[]');
-        hist.unshift({ time: Date.now(), input: prompt, result: text });
-        localStorage.setItem(key, JSON.stringify(hist.slice(0, 10)));
-      } catch (e) {
-        console.warn('save history failed', e);
-      }
-    } catch (err) {
-      console.error('Generate error:', err);
-      const msg = (err && err.message) || '';
-      if (msg.toLowerCase().includes('timeout')) {
-        showError('请求超时，请稍后再试。');
-      } else if (msg.toLowerCase().includes('empty')) {
-        showError('输入为空，请提供内容。');
-      } else {
-        showError('生成失败，请稍后重试。');
-      }
-    } finally {
-      setLoading(false);
-    }
-  });
-
-  // 复制按钮
-  copyBtn?.addEventListener('click', async () => {
-    const text = resultEl?.value || '';
-    if (!text.trim()) {
-      if (copyMsg) {
-        copyMsg.textContent = '没有可复制的内容';
-        copyMsg.style.display = 'inline';
-        setTimeout(() => (copyMsg.style.display = 'none'), 1500);
-      }
-      return;
-    }
-    try {
-      await navigator.clipboard.writeText(text);
-      copyMsg.textContent = '已复制!';
-      copyMsg.style.display = 'inline';
-      setTimeout(() => (copyMsg.style.display = 'none'), 2000);
-    } catch (e) {
-      console.error('copy failed', e);
-      copyMsg.textContent = '复制失败';
-      copyMsg.style.display = 'inline';
-      setTimeout(() => (copyMsg.style.display = 'none'), 2000);
-    }
-  });
-
-  // 反馈表单提交（修复：只要后端或本地保存成功就显示感谢）
-  if (feedbackForm) {
-    feedbackForm.addEventListener('submit', async (ev) => {
-      ev.preventDefault();
-      const name = nameInput?.value?.trim() || '';
-      const email = emailInput?.value?.trim() || '';
-      const feedback = feedbackInput?.value?.trim() || '';
-
-      if (!feedback) {
-        alert('反馈内容不能为空。');
-        feedbackInput?.focus();
-        return;
-      }
-      if (email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!re.test(email)) {
-          alert('请输入有效的邮箱地址，或留空。');
-          emailInput?.focus();
-          return;
-        }
-      }
-
-      let ok = false;
-
-      // 1) 优先尝试 POST 到后端 /api/feedback（若存在）
-      try {
-        const resp = await fetch('/api/feedback', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, feedback, time: Date.now() })
-        });
-        if (resp.ok) ok = true;
-      } catch (e) {
-        console.warn('posting feedback failed, fallback to localStorage', e);
-      }
-
-      // 2) fallback 保存到 localStorage
-      if (!ok) {
-        try {
-          const key = 'hb_feedbacks_v1';
-          const arr = JSON.parse(localStorage.getItem(key) || '[]');
-          arr.unshift({ name, email, feedback, time: Date.now() });
-          localStorage.setItem(key, JSON.stringify(arr.slice(0, 50)));
-          ok = true;
-        } catch (e) {
-          console.error('save feedback local failed', e);
-        }
-      }
-
-      // 3) 显示感谢提示
-      if (ok) {
-        if (feedbackMsg) {
-          feedbackMsg.textContent = 'Thanks for your feedback!';
-          feedbackMsg.style.display = 'inline';
-          setTimeout(() => (feedbackMsg.style.display = 'none'), 3000);
-        }
-        feedbackForm.reset();
-      } else {
-        alert('提交失败，请稍后重试。');
-      }
-    });
-  }
-
+// 反馈表单
+document.getElementById("feedbackForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  e.target.reset();
+  document.getElementById("feedbackMsg").style.display = "inline";
+  setTimeout(() => {
+    document.getElementById("feedbackMsg").style.display = "none";
+  }, 3000);
 });
