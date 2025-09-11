@@ -2,7 +2,7 @@
 import { callAIModel } from './services/aiModel.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // DOM
+  // DOM 元素映射
   const generateBtn = document.getElementById('generateBtn');
   const loadingMsg = document.getElementById('loadingMsg');
   const copyBtn = document.getElementById('copyBtn');
@@ -12,181 +12,162 @@ document.addEventListener('DOMContentLoaded', () => {
   const errorMsg = document.getElementById('errorMsg');
 
   const feedbackForm = document.getElementById('feedbackForm');
-  const nameInput = document.getElementById('nameInput') || null;
-  const emailInput = document.getElementById('emailInput') || document.getElementById('email') || null;
-  const feedbackInput = document.getElementById('feedbackInput') || document.getElementById('feedback') || null;
+  const nameInput = document.getElementById('nameInput');
+  const emailInput = document.getElementById('emailInput');
+  const feedbackInput = document.getElementById('feedbackInput');
   const feedbackMsg = document.getElementById('feedbackMsg');
 
   const languageSelect = document.getElementById('languageSelect');
   const toneSelect = document.getElementById('toneSelect');
   const lengthSelect = document.getElementById('lengthSelect');
 
-  // helpers
-  function setLoading(flag) {
-    generateBtn.disabled = !!flag;
-    loadingMsg.style.display = flag ? 'inline' : 'none';
+  // 公共 UI helper
+  function setLoading(isLoading) {
+    generateBtn.disabled = isLoading;
+    loadingMsg.style.display = isLoading ? 'inline' : 'none';
   }
+
   function showError(text) {
-    if (!errorMsg) return alert(text);
     errorMsg.textContent = text;
     errorMsg.style.display = 'block';
   }
   function clearError() {
-    if (!errorMsg) return;
     errorMsg.textContent = '';
     errorMsg.style.display = 'none';
   }
 
-  // 尝试调用 callAIModel：先用 object 签名，失败回退到 string 签名
-  async function invokeModel(prompt) {
-    const payloadObj = {
-      inputText: prompt,
-      language: languageSelect?.value,
-      tone: toneSelect?.value,
-      length: lengthSelect?.value
-    };
-
-    // 优先尝试对象签名（更现代、更灵活）
-    try {
-      const r = await callAIModel(payloadObj);
-      return r;
-    } catch (errObj) {
-      console.warn('callAIModel with object failed:', errObj?.message || errObj);
-      // 回退：尝试字符串签名（旧版）
-      try {
-        const r2 = await callAIModel(prompt);
-        return r2;
-      } catch (errStr) {
-        console.error('callAIModel with string also failed:', errStr?.message || errStr);
-        // 最终抛出字符串签名的错误信息（或对象签名的）
-        const message = errStr?.message || errObj?.message || 'AI call failed';
-        throw new Error(message);
-      }
-    }
-  }
-
-  // 生成按钮
-  generateBtn?.addEventListener('click', async () => {
+  // 生成报告（按钮事件）
+  generateBtn.addEventListener('click', async () => {
     clearError();
-    const prompt = inputEl?.value || '';
+    const prompt = inputEl.value || '';
     if (!prompt.trim()) {
-      showError('请输入用于生成报告的内容。');
-      inputEl?.focus();
+      showError('Please enter some input to generate the report.');
+      inputEl.focus();
       return;
     }
 
     setLoading(true);
-    resultEl.value = '';
-
+    resultEl.value = ''; // 清空旧结果
     try {
-      const report = await invokeModel(prompt);
-      // 若后端返回对象（{result: "..."}），尽量兼容
-      let text = report;
-      if (report && typeof report === 'object' && ('result' in report)) {
-        text = report.result;
-      }
-      resultEl.value = String(text || '');
-      // 保存历史（最近 10 条）
+      const payload = {
+        inputText: prompt,
+        language: languageSelect?.value,
+        tone: toneSelect?.value,
+        length: lengthSelect?.value
+      };
+
+      const report = await callAIModel(payload);
+      resultEl.value = report;
+      // 可选：将生成的结果存历史（localStorage）
       try {
-        const key = 'hb_reports_v1';
-        const hist = JSON.parse(localStorage.getItem(key) || '[]');
-        hist.unshift({ time: Date.now(), input: prompt, result: text });
-        localStorage.setItem(key, JSON.stringify(hist.slice(0, 10)));
+        const histKey = 'hb_reports_v1';
+        const existing = JSON.parse(localStorage.getItem(histKey) || '[]');
+        existing.unshift({
+          timestamp: Date.now(),
+          input: prompt,
+          result: report
+        });
+        // 仅保留最近 10 条
+        localStorage.setItem(histKey, JSON.stringify(existing.slice(0, 10)));
       } catch (e) {
+        // 无需中断主流程
         console.warn('save history failed', e);
       }
     } catch (err) {
-      console.error('Generate error:', err);
-      // 根据错误信息给用户更友好的提示
-      if (err.message && err.message.toLowerCase().includes('timeout')) {
-        showError('请求超时，请稍后再试。');
-      } else if (err.message && err.message.toLowerCase().includes('empty')) {
-        showError('输入为空，请提供内容。');
+      console.error(err);
+      if (err.message === 'timeout') {
+        showError('Request timed out. Please try again later.');
+      } else if (err.message === 'empty_input') {
+        showError('Input is empty.');
       } else {
-        showError('生成失败，请稍后重试。');
+        showError('Failed to generate report. Please try again later.');
       }
     } finally {
       setLoading(false);
     }
   });
 
-  // 复制按钮
-  copyBtn?.addEventListener('click', async () => {
-    const text = resultEl?.value || '';
+  // 复制结果
+  copyBtn.addEventListener('click', async () => {
+    const text = resultEl.value || '';
     if (!text.trim()) {
-      copyMsg.textContent = '没有可复制的内容';
+      // 没内容就不给复制
+      copyMsg.textContent = 'No content to copy';
       copyMsg.style.display = 'inline';
       setTimeout(() => (copyMsg.style.display = 'none'), 1500);
       return;
     }
     try {
       await navigator.clipboard.writeText(text);
-      copyMsg.textContent = '已复制!';
+      copyMsg.textContent = 'Copied!';
       copyMsg.style.display = 'inline';
       setTimeout(() => (copyMsg.style.display = 'none'), 2000);
     } catch (e) {
-      console.error('copy failed', e);
-      copyMsg.textContent = '复制失败';
+      console.error('clipboard error', e);
+      copyMsg.textContent = 'Copy failed';
       copyMsg.style.display = 'inline';
       setTimeout(() => (copyMsg.style.display = 'none'), 2000);
     }
   });
 
-  // 反馈表单提交
-  if (feedbackForm) {
-    feedbackForm.addEventListener('submit', async (ev) => {
-      ev.preventDefault();
-      const name = nameInput?.value?.trim() || '';
-      const email = emailInput?.value?.trim() || '';
-      const feedback = feedbackInput?.value?.trim() || '';
+  // 反馈表单提交（前端校验 + 本地保存回退）
+  feedbackForm.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const feedback = feedbackInput.value.trim();
 
-      if (!feedback) {
-        alert('反馈内容不能为空。');
-        feedbackInput?.focus();
+    if (!feedback) {
+      alert('Feedback cannot be empty.');
+      feedbackInput.focus();
+      return;
+    }
+
+    // 如果填写了邮箱，则校验格式；如果不填写则不强制
+    if (email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        emailInput.focus();
         return;
       }
-      if (email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!re.test(email)) {
-          alert('请输入有效的邮箱地址，或留空。');
-          emailInput?.focus();
-          return;
-        }
-      }
+    }
 
-      // 优先尝试 POST 到后端 /api/feedback（如果你有后端）；失败则保存 localStorage
-      let ok = false;
-      try {
-        const resp = await fetch('/api/feedback', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, feedback, time: Date.now() })
-        });
-        if (resp.ok) ok = true;
-      } catch (e) {
-        console.warn('posting feedback failed, will save locally', e);
-      }
-
-      if (!ok) {
-        try {
-          const key = 'hb_feedbacks_v1';
-          const arr = JSON.parse(localStorage.getItem(key) || '[]');
-          arr.unshift({ name, email, feedback, time: Date.now() });
-          localStorage.setItem(key, JSON.stringify(arr.slice(0, 50)));
-          ok = true;
-        } catch (e) {
-          console.error('save feedback local failed', e);
-        }
-      }
-
-      if (ok) {
-        feedbackMsg.style.display = 'inline';
-        setTimeout(() => (feedbackMsg.style.display = 'none'), 3000);
-        feedbackForm.reset();
+    // 优先尝试提交到后端 /api/feedback（如果你提供这个接口）
+    let submitted = false;
+    try {
+      const resp = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, feedback, time: Date.now() })
+      });
+      if (resp.ok) {
+        submitted = true;
       } else {
-        alert('提交失败，请稍后重试。');
+        console.warn('feedback endpoint returned', resp.status);
       }
-    });
-  }
+    } catch (e) {
+      console.warn('feedback post failed, saving locally', e);
+    }
 
+    if (!submitted) {
+      try {
+        const fbKey = 'hb_feedbacks_v1';
+        const existing = JSON.parse(localStorage.getItem(fbKey) || '[]');
+        existing.unshift({ name, email, feedback, time: Date.now() });
+        localStorage.setItem(fbKey, JSON.stringify(existing.slice(0, 50)));
+        submitted = true;
+      } catch (e) {
+        console.error('local save failed', e);
+      }
+    }
+
+    if (submitted) {
+      feedbackMsg.style.display = 'inline';
+      setTimeout(() => (feedbackMsg.style.display = 'none'), 3000);
+      feedbackForm.reset();
+    } else {
+      alert('Failed to submit feedback. Please try later.');
+    }
+  });
 });
