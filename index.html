@@ -1,95 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hummingbird AI Daily/Weekly Editor</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hummingbird AI - Report Editor</title>
+  <!-- 保留你原来的样式文件 -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <header>
-        <h1>Hummingbird AI Daily/Weekly Editor</h1>
-    </header>
+  <main id="app" class="container">
+    <h1 id="pageTitle">Hummingbird AI Daily/Weekly Editor</h1>
 
-    <main>
-        <!-- The main input area for work points. This section takes up the full width. -->
-        <section class="controls">
-            <div class="input-group">
-                <label for="workInput">Work Points:</label>
-                <textarea id="workInput" rows="8" placeholder="Enter your work points here..."></textarea>
-            </div>
-            
-            <!-- Other options are grouped together below the main input. -->
-            <div class="options-group">
-                <div class="input-group">
-                    <label for="languageSelect">Language:</label>
-                    <select id="languageSelect">
-                        <option value="english" selected>English</option>
-                        <option value="chinese">Chinese</option>
-                        <option value="espanol">Spanish</option>
-                        <option value="francais">French</option>
-                    </select>
-                </div>
-    
-                <div class="input-group">
-                    <label for="styleSelect">Style:</label>
-                    <select id="styleSelect">
-                        <option value="Formal" selected>Formal</option>
-                        <option value="Casual">Casual</option>
-                        <option value="Detailed">Detailed</option>
-                    </select>
-                </div>
-    
-                <div class="input-group">
-                    <label for="lengthSelect">Length:</label>
-                    <select id="lengthSelect">
-                        <option value="Standard">Standard</option>
-                        <option value="Detailed" selected>Detailed</option>
-                    </select>
-                </div>
-            </div>
+    <!-- 设置区：语言、风格、长度（使用 fieldset + label 提高可访问性） -->
+    <section aria-labelledby="settingsTitle">
+      <h2 id="settingsTitle" class="sr-only">Settings</h2>
+      <fieldset>
+        <legend>Language</legend>
+        <select id="languageSelect" aria-label="Select language">
+          <option value="English">English</option>
+          <option value="Chinese">Chinese</option>
+          <option value="Spanish">Spanish</option>
+          <option value="French">French</option>
+        </select>
+      </fieldset>
 
-            <button id="generateBtn">Generate Report</button>
-        </section>
+      <fieldset>
+        <legend>Tone / Style</legend>
+        <select id="toneSelect" aria-label="Select writing style">
+          <option value="Formal">Formal</option>
+          <option value="Casual">Casual</option>
+          <option value="Detailed">Detailed</option>
+        </select>
+      </fieldset>
 
-        <!-- The report output area, also taking up the full width. -->
-        <section class="output">
-            <div class="output-header">
-                <label for="resultOutput">Generated Report:</label>
-                <button id="copyBtn">Copy Result</button>
-            </div>
-            <textarea id="resultOutput" rows="15" readonly placeholder="Your generated report will appear here..."></textarea>
-        </section>
-    </main>
+      <fieldset>
+        <legend>Length</legend>
+        <select id="lengthSelect" aria-label="Select length">
+          <option value="Standard">Standard</option>
+          <option value="Detailed">Detailed</option>
+        </select>
+      </fieldset>
+    </section>
 
-    <footer>
-        <a href="#" id="feedbackLink">Provide Feedback</a>
-    </footer>
+    <!-- 输入区 -->
+    <section aria-labelledby="inputTitle">
+      <h2 id="inputTitle">Input</h2>
+      <label for="inputText" class="sr-only">Prompt or notes for the report</label>
+      <textarea id="inputText" rows="6" placeholder="Enter the notes, highlights or topic you want in the report"></textarea>
+    </section>
 
-    <!-- Feedback Modal HTML -->
-    <div id="feedbackModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>Provide Feedback</h2>
-            <form id="feedbackForm">
-                <label for="feedbackName">Name (Optional):</label>
-                <input type="text" id="feedbackName" name="name">
-                
-                <label for="feedbackEmail">Email (Optional):</label>
-                <input type="email" id="feedbackEmail" name="email">
+    <!-- 操作区 -->
+    <section aria-labelledby="actionsTitle">
+      <h2 id="actionsTitle" class="sr-only">Actions</h2>
+      <button id="generateBtn" type="button">Generate Report</button>
+      <span id="loadingMsg" role="status" aria-live="polite" style="display:none; margin-left:8px;">Generating...</span>
 
-                <label for="feedbackMessage">Your Feedback:</label>
-                <textarea id="feedbackMessage" name="message" required></textarea>
-                
-                <button type="submit" id="submitFeedbackBtn">Submit Feedback</button>
-            </form>
+      <button id="copyBtn" type="button" style="margin-left:12px;">Copy Result</button>
+      <span id="copyMsg" role="status" aria-live="polite" style="display:none; margin-left:8px;">Copied!</span>
+      <div id="errorMsg" role="alert" aria-live="assertive" style="display:none; color: #b00020; margin-top:8px;"></div>
+    </section>
+
+    <!-- 结果展示区 -->
+    <section aria-labelledby="resultTitle">
+      <h2 id="resultTitle">Generated Report</h2>
+      <textarea id="result" rows="12" readonly placeholder="Generated report will appear here..."></textarea>
+    </section>
+
+    <!-- 反馈表单 -->
+    <section aria-labelledby="feedbackTitle">
+      <h2 id="feedbackTitle">Provide Feedback</h2>
+      <form id="feedbackForm" novalidate>
+        <div>
+          <label for="nameInput">Name (optional)</label>
+          <input id="nameInput" name="name" type="text" placeholder="Your name (optional)" />
         </div>
-    </div>
+        <div>
+          <label for="emailInput">Email (optional)</label>
+          <input id="emailInput" name="email" type="email" placeholder="Your email (optional)" />
+        </div>
+        <div>
+          <label for="feedbackInput">Feedback</label>
+          <textarea id="feedbackInput" name="feedback" rows="4" placeholder="Your feedback" required></textarea>
+        </div>
+        <button type="submit">Submit Feedback</button>
+        <span id="feedbackMsg" role="status" aria-live="polite" style="display:none; margin-left:8px;">Thanks for your feedback!</span>
+      </form>
+    </section>
+  </main>
 
-    <!-- Message Box for copy notification -->
-    <div id="messageBox" class="message-box"></div>
-
-    <script src="script.js"></script>
+  <!-- 使用模块化脚本 -->
+  <script type="module" src="script.js"></script>
 </body>
 </html>
