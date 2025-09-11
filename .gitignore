@@ -12,3 +12,14 @@ jspm_packages/
 
 # Mac
 .DS_Store
+
+# Windows
+Thumbs.db
+
+# VSCode editor settings
+.vscode/
+*.code-workspace
+
+# Environment files (for API keys, secrets, etc.)
+.env
+.env.local
