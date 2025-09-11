@@ -1,129 +1,196 @@
-// Function to handle the click event on the "Generate Report" button
-const generateReport = async () => {
-    // Get the values from the input fields
-    const workPoints = document.getElementById('workInput').value;
-    const language = document.getElementById('languageSelect').value;
-    const style = document.getElementById('styleSelect').value;
-    const length = document.getElementById('lengthSelect').value;
-    const resultOutput = document.getElementById('resultOutput');
+// script.js
+import { callAIModel } from './services/aiModel.js';
 
-    // Simple validation to ensure work points are entered
-    if (workPoints.trim() === '') {
-        resultOutput.value = "Please enter some work points to generate a report.";
-        return;
-    }
-
-    // Set a loading message
-    resultOutput.value = "Generating report, please wait...";
-
-    const prompt = `Generate a ${length} report in a ${style} tone based on the following work points. The report should be in ${language}. Work points: ${workPoints}`;
-    
-    // API setup
-    let chatHistory = [];
-    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-    const payload = { contents: chatHistory };
-    const apiKey = "AIzaSyB8OYrQcq9aOj-rf669J6uiKFMvLuB4yzY";
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-    let retryCount = 0;
-    const maxRetries = 5;
-
-    while (retryCount < maxRetries) {
-        try {
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            if (!response.ok) {
-                if (response.status === 429) { // Too Many Requests
-                    const delay = Math.pow(2, retryCount) * 1000; // Exponential backoff
-                    retryCount++;
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                    continue; // Retry the request
-                } else {
-                    throw new Error(`API call failed with status: ${response.status}`);
-                }
-            }
-
-            const result = await response.json();
-            
-            if (result.candidates && result.candidates.length > 0 &&
-                result.candidates[0].content && result.candidates[0].content.parts &&
-                result.candidates[0].content.parts.length > 0) {
-                const text = result.candidates[0].content.parts[0].text;
-                resultOutput.value = text;
-            } else {
-                resultOutput.value = "Failed to generate report. Please try again.";
-            }
-            return; // Exit the function after a successful API call or a final error
-        } catch (error) {
-            console.error('Error generating report:', error);
-            resultOutput.value = `An error occurred: ${error.message}`;
-            return;
-        }
-    }
-
-    resultOutput.value = "API call failed after multiple retries. Please try again later.";
-};
-
-// Function to show a temporary message box
-const showMessage = (message) => {
-    const messageBox = document.getElementById('messageBox');
-    messageBox.textContent = message;
-    messageBox.style.display = 'block';
-    setTimeout(() => {
-        messageBox.style.display = 'none';
-    }, 3000); // Hide after 3 seconds
-};
-
-// Function to copy the generated report to the clipboard
-const copyReport = () => {
-    const resultOutput = document.getElementById('resultOutput');
-    resultOutput.select();
-    try {
-        // Use the deprecated but widely supported execCommand for copying in iframes
-        document.execCommand('copy');
-        showMessage("Report copied to clipboard!");
-    } catch (err) {
-        console.error('Failed to copy text: ', err);
-        showMessage("Failed to copy text.");
-    }
-};
-
-// Function to show the feedback modal
-const showModal = () => {
-    const modal = document.getElementById('feedbackModal');
-    modal.style.display = 'flex';
-};
-
-// Function to hide the feedback modal
-const hideModal = () => {
-    const modal = document.getElementById('feedbackModal');
-    modal.style.display = 'none';
-};
-
-// Attach event listeners to the buttons and links
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('generateBtn').addEventListener('click', generateReport);
-    document.getElementById('copyBtn').addEventListener('click', copyReport);
-    document.getElementById('feedbackLink').addEventListener('click', (e) => {
-        e.preventDefault();
-        showModal();
-    });
-    document.querySelector('.close-btn').addEventListener('click', hideModal);
-    document.getElementById('feedbackModal').addEventListener('click', (e) => {
-        if (e.target === e.currentTarget) {
-            hideModal();
-        }
-    });
+  // DOM
+  const generateBtn = document.getElementById('generateBtn');
+  const loadingMsg = document.getElementById('loadingMsg');
+  const copyBtn = document.getElementById('copyBtn');
+  const copyMsg = document.getElementById('copyMsg');
+  const resultEl = document.getElementById('result');
+  const inputEl = document.getElementById('inputText');
+  const errorMsg = document.getElementById('errorMsg');
 
-    // Handle form submission to prevent default behavior
-    document.getElementById('feedbackForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        // Here you would typically send the form data to a server
-        console.log('Feedback submitted!');
-        hideModal();
+  const feedbackForm = document.getElementById('feedbackForm');
+  const nameInput = document.getElementById('nameInput') || null;
+  const emailInput = document.getElementById('emailInput') || document.getElementById('email') || null;
+  const feedbackInput = document.getElementById('feedbackInput') || document.getElementById('feedback') || null;
+  const feedbackMsg = document.getElementById('feedbackMsg');
+
+  const languageSelect = document.getElementById('languageSelect');
+  const toneSelect = document.getElementById('toneSelect');
+  const lengthSelect = document.getElementById('lengthSelect');
+
+  // helpers
+  function setLoading(flag) {
+    if (generateBtn) generateBtn.disabled = !!flag;
+    if (loadingMsg) loadingMsg.style.display = flag ? 'inline' : 'none';
+  }
+  function showError(text) {
+    if (!errorMsg) return alert(text);
+    errorMsg.textContent = text;
+    errorMsg.style.display = 'block';
+  }
+  function clearError() {
+    if (!errorMsg) return;
+    errorMsg.textContent = '';
+    errorMsg.style.display = 'none';
+  }
+
+  // 调用模型（兼容对象签名与字符串签名）
+  async function invokeModel(prompt) {
+    const payloadObj = {
+      inputText: prompt,
+      language: languageSelect?.value,
+      tone: toneSelect?.value,
+      length: lengthSelect?.value
+    };
+
+    try {
+      const r = await callAIModel(payloadObj);
+      return r;
+    } catch (errObj) {
+      console.warn('callAIModel with object failed:', errObj?.message || errObj);
+      try {
+        const r2 = await callAIModel(prompt);
+        return r2;
+      } catch (errStr) {
+        console.error('callAIModel with string also failed:', errStr?.message || errStr);
+        const message = errStr?.message || errObj?.message || 'AI call failed';
+        throw new Error(message);
+      }
+    }
+  }
+
+  // 生成按钮
+  generateBtn?.addEventListener('click', async () => {
+    clearError();
+    const prompt = inputEl?.value || '';
+    if (!prompt.trim()) {
+      showError('请输入用于生成报告的内容。');
+      inputEl?.focus();
+      return;
+    }
+
+    setLoading(true);
+    resultEl.value = '';
+
+    try {
+      const report = await invokeModel(prompt);
+      let text = report;
+      if (report && typeof report === 'object' && ('result' in report)) {
+        text = report.result;
+      }
+      resultEl.value = String(text || '');
+      // 保存历史（最近 10 条）
+      try {
+        const key = 'hb_reports_v1';
+        const hist = JSON.parse(localStorage.getItem(key) || '[]');
+        hist.unshift({ time: Date.now(), input: prompt, result: text });
+        localStorage.setItem(key, JSON.stringify(hist.slice(0, 10)));
+      } catch (e) {
+        console.warn('save history failed', e);
+      }
+    } catch (err) {
+      console.error('Generate error:', err);
+      const msg = (err && err.message) || '';
+      if (msg.toLowerCase().includes('timeout')) {
+        showError('请求超时，请稍后再试。');
+      } else if (msg.toLowerCase().includes('empty')) {
+        showError('输入为空，请提供内容。');
+      } else {
+        showError('生成失败，请稍后重试。');
+      }
+    } finally {
+      setLoading(false);
+    }
+  });
+
+  // 复制按钮
+  copyBtn?.addEventListener('click', async () => {
+    const text = resultEl?.value || '';
+    if (!text.trim()) {
+      if (copyMsg) {
+        copyMsg.textContent = '没有可复制的内容';
+        copyMsg.style.display = 'inline';
+        setTimeout(() => (copyMsg.style.display = 'none'), 1500);
+      }
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+      copyMsg.textContent = '已复制!';
+      copyMsg.style.display = 'inline';
+      setTimeout(() => (copyMsg.style.display = 'none'), 2000);
+    } catch (e) {
+      console.error('copy failed', e);
+      copyMsg.textContent = '复制失败';
+      copyMsg.style.display = 'inline';
+      setTimeout(() => (copyMsg.style.display = 'none'), 2000);
+    }
+  });
+
+  // 反馈表单提交（修复：只要后端或本地保存成功就显示感谢）
+  if (feedbackForm) {
+    feedbackForm.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const name = nameInput?.value?.trim() || '';
+      const email = emailInput?.value?.trim() || '';
+      const feedback = feedbackInput?.value?.trim() || '';
+
+      if (!feedback) {
+        alert('反馈内容不能为空。');
+        feedbackInput?.focus();
+        return;
+      }
+      if (email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!re.test(email)) {
+          alert('请输入有效的邮箱地址，或留空。');
+          emailInput?.focus();
+          return;
+        }
+      }
+
+      let ok = false;
+
+      // 1) 优先尝试 POST 到后端 /api/feedback（若存在）
+      try {
+        const resp = await fetch('/api/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, feedback, time: Date.now() })
+        });
+        if (resp.ok) ok = true;
+      } catch (e) {
+        console.warn('posting feedback failed, fallback to localStorage', e);
+      }
+
+      // 2) fallback 保存到 localStorage
+      if (!ok) {
+        try {
+          const key = 'hb_feedbacks_v1';
+          const arr = JSON.parse(localStorage.getItem(key) || '[]');
+          arr.unshift({ name, email, feedback, time: Date.now() });
+          localStorage.setItem(key, JSON.stringify(arr.slice(0, 50)));
+          ok = true;
+        } catch (e) {
+          console.error('save feedback local failed', e);
+        }
+      }
+
+      // 3) 显示感谢提示
+      if (ok) {
+        if (feedbackMsg) {
+          feedbackMsg.textContent = 'Thanks for your feedback!';
+          feedbackMsg.style.display = 'inline';
+          setTimeout(() => (feedbackMsg.style.display = 'none'), 3000);
+        }
+        feedbackForm.reset();
+      } else {
+        alert('提交失败，请稍后重试。');
+      }
     });
+  }
+
 });
