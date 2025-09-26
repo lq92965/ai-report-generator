@@ -1,94 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Hummingbird AI - Report Editor</title>
-  <!-- 保留你原来的样式文件 -->
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportify AI - AI Report Generator</title>
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/docx@8.5.0/build/index.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <main id="app" class="container">
-    <h1 id="pageTitle">Hummingbird AI Daily/Weekly Editor</h1>
 
-    <!-- 设置区：语言、风格、长度（使用 fieldset + label 提高可访问性） -->
-    <section aria-labelledby="settingsTitle">
-      <h2 id="settingsTitle" class="sr-only">Settings</h2>
-      <fieldset>
-        <legend>Language</legend>
-        <select id="languageSelect" aria-label="Select language">
-          <option value="English">English</option>
-          <option value="Chinese">Chinese</option>
-          <option value="Spanish">Spanish</option>
-          <option value="French">French</option>
-        </select>
-      </fieldset>
-
-      <fieldset>
-        <legend>Tone / Style</legend>
-        <select id="toneSelect" aria-label="Select writing style">
-          <option value="Formal">Formal</option>
-          <option value="Casual">Casual</option>
-          <option value="Detailed">Detailed</option>
-        </select>
-      </fieldset>
-
-      <fieldset>
-        <legend>Length</legend>
-        <select id="lengthSelect" aria-label="Select length">
-          <option value="Standard">Standard</option>
-          <option value="Detailed">Detailed</option>
-        </select>
-      </fieldset>
-    </section>
-
-    <!-- 输入区 -->
-    <section aria-labelledby="inputTitle">
-      <h2 id="inputTitle">Input</h2>
-      <label for="inputText" class="sr-only">Prompt or notes for the report</label>
-      <textarea id="inputText" rows="6" placeholder="Enter the notes, highlights or topic you want in the report"></textarea>
-    </section>
-
-    <!-- 操作区 -->
-    <section aria-labelledby="actionsTitle">
-      <h2 id="actionsTitle" class="sr-only">Actions</h2>
-      <button id="generateBtn" type="button">Generate Report</button>
-      <span id="loadingMsg" role="status" aria-live="polite" style="display:none; margin-left:8px;">Generating...</span>
-
-      <button id="copyBtn" type="button" style="margin-left:12px;">Copy Result</button>
-      <span id="copyMsg" role="status" aria-live="polite" style="display:none; margin-left:8px;">Copied!</span>
-      <div id="errorMsg" role="alert" aria-live="assertive" style="display:none; color: #b00020; margin-top:8px;"></div>
-    </section>
-
-    <!-- 结果展示区 -->
-    <section aria-labelledby="resultTitle">
-      <h2 id="resultTitle">Generated Report</h2>
-      <textarea id="result" rows="12" readonly placeholder="Generated report will appear here..."></textarea>
-    </section>
-
-    <!-- 反馈表单 -->
-    <section aria-labelledby="feedbackTitle">
-      <h2 id="feedbackTitle">Provide Feedback</h2>
-      <form id="feedbackForm" novalidate>
-        <div>
-          <label for="nameInput">Name (optional)</label>
-          <input id="nameInput" name="name" type="text" placeholder="Your name (optional)" />
+    <header class="main-header">
+        <div class="container">
+            <a href="#" class="logo">
+                <span class="logo-icon">🐦</span>
+                <span>Reportify AI</span>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#generator">Generator</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="#" id="login-btn" class="btn btn-secondary">Login</a>
+                <a href="#" id="signup-btn" class="btn btn-primary">Sign Up</a>
+            </div>
         </div>
-        <div>
-          <label for="emailInput">Email (optional)</label>
-          <input id="emailInput" name="email" type="email" placeholder="Your email (optional)" />
-        </div>
-        <div>
-          <label for="feedbackInput">Feedback</label>
-          <textarea id="feedbackInput" name="feedback" rows="4" placeholder="Your feedback" required></textarea>
-        </div>
-        <button type="submit">Submit Feedback</button>
-        <span id="feedbackMsg" role="status" aria-live="polite" style="display:none; margin-left:8px;">Thanks for your feedback!</span>
-      </form>
-    </section>
-  </main>
+    </header>
 
-  <!-- 使用模块化脚本 -->
-  <script type="module" src="script.js"></script>
+    <main>
+        <section id="hero" class="hero-section">
+            <div class="container">
+                <h1>Generate in Seconds, Report with Confidence.</h1>
+                <p class="subtitle">Save time and boost your productivity. Let our AI handle the paperwork while you focus on what matters.</p>
+                <div class="cta-buttons">
+                    <a href="#generator" class="btn btn-primary btn-large">Get Started</a>
+                    <a href="#features" class="btn btn-secondary btn-large">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features-section">
+            <div class="container">
+                <h2 class="section-title">Everything You Need to Succeed</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>Rapid Generation</h3>
+                        <p>Turn your notes into a well-structured report in a single click. Our AI understands your context and delivers quality content instantly.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Multiple Export Formats</h3>
+                        <p>Download your reports in Word, PDF, or Markdown. Choose the format that best fits your workflow and sharing needs.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="badge feature-badge">Coming Soon</span>
+                        <h3>Custom Templates</h3>
+                        <p>Go beyond standard reports. Professional plans unlock industry-specific templates for IT, sales, marketing, and more.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="pricing-section">
+            <div class="container">
+                <h2 class="section-title">Choose Your Plan</h2>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h3>Free</h3>
+                        <p class="price"><span>$0</span>/month</p>
+                        <ul class="plan-features">
+                            <li>7-day trial</li>
+                            <li>Up to 3 reports per day</li>
+                            <li>Word & Markdown export</li>
+                            <li>Standard speed</li>
+                        </ul>
+                        <a href="#generator" class="btn btn-secondary">Start Trial</a>
+                    </div>
+                    <div class="pricing-card">
+                        <h3>Basic</h3>
+                        <p class="price"><span>$9.90</span>/month</p>
+                        <ul class="plan-features">
+                            <li>Unlimited report generation</li>
+                            <li>Word, PDF & Markdown export</li>
+                            <li>Standard generation speed</li>
+                            <li>Email support</li>
+                        </ul>
+                        <a href="#pricing" class="btn btn-secondary">Choose Basic</a>
+                    </div>
+                    <div class="pricing-card recommended selected-plan">
+                        <span class="badge">Recommended</span>
+                        <h3>Professional</h3>
+                        <p class="price"><span>$19.90</span>/month</p>
+                        <ul class="plan-features">
+                            <li>Priority generation speed</li>
+                            <li>Advanced industry templates</li>
+                            <li>Word, PDF & Markdown export</li>
+                            <li>Dedicated customer support</li>
+                        </ul>
+                        <a href="#pricing" class="btn btn-primary">Choose Pro</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="generator" class="generator-section">
+            <div class="container">
+                <h2 class="section-title">Create Your Report</h2>
+                <div class="generator-container">
+                    <div class="form-group settings-grid">
+                        <div class="input-wrapper">
+                            <label for="template">Report Type</label>
+                            <select id="template" name="template">
+                                <option value="日报 (Daily Report)">日报 (Daily Report)</option>
+                                <option value="周报 (Weekly Report)">周报 (Weekly Report)</option>
+                                <option value="月报 (Monthly Report)">月报 (Monthly Report)</option>
+                            </select>
+                        </div>
+                        <div class="input-wrapper">
+                            <label for="detail-level">Detail Level</label>
+                            <select id="detail-level" name="detail-level">
+                                <option value="简约 (Simple)">简约 (Simple)</option>
+                                <option value="标准 (Standard)">标准 (Standard)</option>
+                                <option value="详细 (Detailed)">详细 (Detailed)</option>
+                            </select>
+                        </div>
+                        <div class="input-wrapper">
+                             <label for="role">Your Role</label>
+                            <select id="role" name="role">
+                                <option value="通用角色 (General Role)">通用角色 (General Role)</option>
+                                <optgroup label="Management">
+                                    <option value="团队主管 (Team Lead)">团队主管 (Team Lead)</option>
+                                    <option value="项目经理 (Project Manager)">项目经理 (Project Manager)</option>
+                                    <option value="部门总监 (Department Director)">部门总监 (Department Director)</option>
+                                </optgroup>
+                                <optgroup label="Marketing & Sales">
+                                    <option value="市场专员 (Marketing Specialist)">市场专员 (Marketing Specialist)</option>
+                                    <option value="销售代表 (Sales Representative)">销售代表 (Sales Representative)</option>
+                                </optgroup>
+                                <optgroup label="Tech & Product">
+                                    <option value="软件工程师 (Software Engineer)">软件工程师 (Software Engineer)</option>
+                                    <option value="产品经理 (Product Manager)">产品经理 (Product Manager)</option>
+                                </optgroup>
+                                <optgroup label="Operations & Function">
+                                    <option value="运营专员 (Operations Specialist)">运营专员 (Operations Specialist)</option>
+                                    <option value="财务 (Finance)">财务 (Finance)</option>
+                                    <option value="人事 (HR)">人事 (HR)</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                         <div class="input-wrapper">
+                            <label for="tone">Tone / Style</label>
+                            <select id="tone" name="tone">
+                                <option value="专业汇报 (Professional)">专业汇报 (Professional)</option>
+                                <option value="口语化 (Conversational)">口语化 (Conversational)</option>
+                                <option value="正式书面 (Formal)">正式书面 (Formal)</option>
+                            </select>
+                        </div>
+                         <div class="input-wrapper">
+                            <label for="language">Language</label>
+                            <select id="language" name="language">
+                                <option value="English">English</option>
+                                <option value="中文">中文</option>
+                                <option value="日本語">日本語</option>
+                                <option value="한국어">한국어</option>
+                                <option value="Español">Español</option>
+                                <option value="Deutsch">Deutsch</option>
+                                <option value="Français">Français</option>
+                                <option value="Português">Português</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="prompt">Key points for the report</label>
+                        <textarea id="prompt" name="prompt" rows="8" placeholder="例如：&#10;- 上周总结：完成项目A的数据分析。&#10;- 本周计划：根据分析结果制定优化方案。&#10;- 需要的帮助：请市场部提供用户反馈数据。"></textarea>
+                    </div>
+                    <div class="form-group action-buttons">
+                        <button id="generate-btn" class="btn btn-primary">Generate Report</button>
+                        <button id="copy-btn" class="btn btn-secondary">Copy Result</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="result">Generated Report</label>
+                        <div id="result" class="result-box">The generated report will appear here...</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Export As</label>
+                        <div class="export-options">
+                            <button class="export-btn" data-format="Word">Word</button>
+                            <button class="export-btn" data-format="Markdown">Markdown</button>
+                            <button class="export-btn premium-feature" data-format="PDF">
+                                PDF
+                                <span>Pro</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2 class="section-title">Contact Us</h2>
+                <p class="subtitle">Dedicated support for Professional plan users.</p>
+                <form id="contact-form" class="contact-form">
+                    <div class="input-wrapper">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                        <p id="email-error" class="error-message"></p>
+                    </div>
+                    <div class="input-wrapper full-width">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="6" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                    <div id="form-status"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+       <div class="container">
+            <p>&copy; 2025 Reportify AI. All Rights Reserved.</p>
+       </div>
+    </footer>
+    
+    <div id="auth-modal-overlay" class="hidden">
+        <div id="auth-modal">
+            <button id="close-modal-btn">&times;</button>
+            <div class="auth-tabs">
+                <button class="tab-link active" data-tab="login">Login</button>
+                <button class="tab-link" data-tab="signup">Sign Up</button>
+            </div>
+
+            <div id="login" class="tab-content active">
+                <h2>Welcome Back!</h2>
+                <form>
+                    <div class="input-wrapper">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">Login</button>
+                </form>
+                <div class="social-login">
+                    <span>OR</span>
+                    <button class="btn-social-google">Continue with Google</button>
+                </div>
+            </div>
+
+            <div id="signup" class="tab-content">
+                <h2>Create Your Account</h2>
+                <form>
+                    <div class="input-wrapper">
+                        <label for="signup-name">Name</label>
+                        <input type="text" id="signup-name" required>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" required>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">Create Account</button>
+                </form>
+                <div class="social-login">
+                    <span>OR</span>
+                    <button class="btn-social-google">Sign Up with Google</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js" defer></script>
 </body>
 </html>

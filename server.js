@@ -1,84 +1,133 @@
-// server.js
 import express from 'express';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import cors from 'cors';
+import 'dotenv/config';
+import axios from 'axios';
+import { HttpsProxyAgent } from 'https-proxy-agent';
+import { MongoClient } from 'mongodb';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
+// --- 初始化应用和常量 ---
 const app = express();
-const port = process.env.env || 3000;
+const port = process.env.PORT || 3000;
+const API_KEY = process.env.GOOGLE_API_KEY;
+const MODEL_NAME = 'gemini-1.5-flash';
+const MONGO_URI = process.env.MONGO_URI;
+const JWT_SECRET = process.env.JWT_SECRET;
 
-app.use(express.json());
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-// 核心的周报生成逻辑，新增了 language 参数
-async function generateReportLogic(workContent, style, length, language) {
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-    let prompt;
-
-    // 根据语言动态构建提示词
-    if (language === 'english') {
-        prompt = `Strictly use English. Based on the following work details, generate a ${length} report in a ${style} style. The report must be clear, well-structured, and fluent. The output must be in English.
-        Work Details: ${workContent}`;
-    } else if (language === 'chinese') {
-        prompt = `请严格使用中文。根据以下工作要点，生成一份${length}的${style}风格的周报或日报，要求结构清晰、条理分明，语言流畅。生成内容必须是中文。
-        工作要点：${workContent}`;
-    } else if (language === 'espanol') {
-        prompt = `Utilice estrictamente el español. Basado en los siguientes detalles del trabajo, genere un informe de ${length} en un estilo ${style}. El informe debe ser claro, bien estructurado y fluido. La salida debe ser en español.
-        Detalles del trabajo: ${workContent}`;
-    } else if (language === 'francais') {
-        prompt = `Utilisez strictement le français. Basé sur les détails de travail suivants, générez un rapport de ${length} dans un style ${style}. Le rapport doit être clair, bien structuré et fluide. Le résultat doit être en français.
-        Détails du travail: ${workContent}`;
-    }
-    else {
-        // 默认使用英文
-        prompt = `Strictly use English. Based on the following work details, generate a ${length} report in a ${style} style. The report must be clear, well-structured, and fluent. The output must be in English.
-        Work Details: ${workContent}`;
-    }
-
-    try {
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        return response.text();
-    } catch (error) {
-        console.error('Error generating report:', error);
-        throw new Error('Error generating report from AI.');
-    }
+// --- 检查环境变量 ---
+if (!API_KEY || !MONGO_URI || !JWT_SECRET) {
+  console.error("错误：请确保 .env 文件中已设置 GOOGLE_API_KEY, MONGO_URI, 和 JWT_SECRET");
+  process.exit(1);
 }
 
-// 设置 API 路由，新增了 language 参数的接收
-app.post('/generate-report', async (req, res) => {
+// --- 数据库连接 ---
+const client = new MongoClient(MONGO_URI);
+let db;
+async function connectDB() {
+  try {
+    await client.connect();
+    db = client.db('ReportifyAI'); // 您可以给数据库起任何名字
+    console.log("成功连接到 MongoDB Atlas");
+  } catch (error) {
+    console.error("连接数据库失败", error);
+    process.exit(1);
+  }
+}
+connectDB();
+
+// --- 中间件设置 ---
+const proxyUrl = 'http://127.0.0.1:7890';
+const httpsAgent = new HttpsProxyAgent(proxyUrl);
+app.use(cors());
+app.use(express.json());
+
+// --- 用户认证 API ---
+
+// 注册接口
+app.post('/api/register', async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "所有字段都是必填的" });
+    }
+
+    const existingUser = await db.collection('users').findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "该邮箱已被注册" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await db.collection('users').insertOne({ name, email, password: hashedPassword });
+
+    res.status(201).json({ message: "用户注册成功" });
+  } catch (error) {
+    res.status(500).json({ message: "服务器内部错误" });
+  }
+});
+
+// 登录接口
+app.post('/api/login', async (req, res) => {
     try {
-        const { workContent, style, length, language } = req.body;
-        if (!workContent) {
-            return res.status(400).json({ error: 'Work content is required.' });
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ message: "邮箱和密码是必填的" });
         }
-        const report = await generateReportLogic(workContent, style, length, language);
-        res.status(200).json({ report });
+
+        const user = await db.collection('users').findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: "无效的邮箱或密码" });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: "无效的邮箱或密码" });
+        }
+
+        const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1d' });
+        res.json({ token, message: "登录成功" });
     } catch (error) {
-        console.error('API Error:', error);
-        res.status(500).json({ error: 'API Error: ' + error.message });
+        res.status(500).json({ message: "服务器内部错误" });
     }
 });
 
-// 新增的反馈API路由
-app.post('/submit-feedback', (req, res) => {
-    const { name, email, message } = req.body;
 
-    // 这里我们将反馈内容打印到控制台日志中
-    console.log('--- New Feedback Received ---');
-    console.log('Name:', name || 'N/A');
-    console.log('Email:', email || 'N/A');
-    console.log('Message:', message);
-    console.log('-----------------------------');
-
-    res.status(200).json({ status: 'success', message: 'Feedback received.' });
+// --- AI 生成接口 (保持不变) ---
+app.post('/api/generate', async (req, res) => {
+  // 注意：在真实产品中，您应该在这里加入一个中间件来验证用户的 JWT token
+  const { userPrompt, template, detailLevel, role, tone, language } = req.body;
+  if (!userPrompt) {
+    return res.status(400).json({ error: 'Prompt is required.' });
+  }
+  const finalPrompt = `
+    You are an expert in writing professional business reports. Your task is to act as a ${role} and create a complete, detailed, and ready-to-submit report.
+    **CRITICAL INSTRUCTION: You must not generate only a framework or an outline.** Your main goal is to expand the user's key points into fluent, detailed paragraphs. Based on your assigned role, you should add relevant details, analysis, or suggestions to make the report look highly professional and insightful. The final deliverable should be a complete document that the user can use after minor edits like changing the name and date.
+    Here are the report criteria:
+    - **Report Type**: ${template}
+    - **Detail Level**: ${detailLevel}. This means the content should be comprehensive and elaborate.
+    - **Tone and Style**: ${tone}
+    - **Output Language**: ${language}
+    Here are the user's key points that you must expand upon:
+    ---
+    ${userPrompt}
+    ---
+  `;
+  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
+  try {
+    const response = await axios.post(apiUrl, {
+      contents: [{ parts: [{ text: finalPrompt }] }]
+    }, {
+      httpsAgent: httpsAgent
+    });
+    const generatedText = response.data.candidates[0].content.parts[0].text;
+    res.json({ generatedText: generatedText });
+  } catch (error) {
+    console.error("详细错误信息:", error.response ? error.response.data : error.message);
+    res.status(500).json({ error: 'Failed to generate content.' });
+  }
 });
 
+// --- 启动服务器 ---
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server is running on port ${port}`);
 });

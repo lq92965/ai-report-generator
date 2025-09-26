@@ -1,173 +1,323 @@
-// script.js
-import { callAIModel } from './services/aiModel.js';
-
 document.addEventListener('DOMContentLoaded', () => {
-  // DOM 元素映射
-  const generateBtn = document.getElementById('generateBtn');
-  const loadingMsg = document.getElementById('loadingMsg');
-  const copyBtn = document.getElementById('copyBtn');
-  const copyMsg = document.getElementById('copyMsg');
-  const resultEl = document.getElementById('result');
-  const inputEl = document.getElementById('inputText');
-  const errorMsg = document.getElementById('errorMsg');
+    // --- 用户状态管理 ---
+    let token = localStorage.getItem('token');
+    // **重要**: 后端 API 地址已更新为您的 IP 地址
+    const API_BASE_URL = 'http://localhost:3000'; 
 
-  const feedbackForm = document.getElementById('feedbackForm');
-  const nameInput = document.getElementById('nameInput');
-  const emailInput = document.getElementById('emailInput');
-  const feedbackInput = document.getElementById('feedbackInput');
-  const feedbackMsg = document.getElementById('feedbackMsg');
+    // --- Element Selectors ---
+    const generateBtn = document.getElementById('generate-btn');
+    const copyBtn = document.getElementById('copy-btn');
+    const resultBox = document.getElementById('result');
+    const exportButtons = document.querySelectorAll('.export-btn');
+    const promptTextarea = document.getElementById('prompt');
+    const templateSelect = document.getElementById('template');
+    const detailLevelSelect = document.getElementById('detail-level');
+    const roleSelect = document.getElementById('role');
+    const toneSelect = document.getElementById('tone');
+    const languageSelect = document.getElementById('language');
+    const allLinks = document.querySelectorAll('a[href^="#"]');
+    const contactForm = document.getElementById('contact-form');
+    const pricingCards = document.querySelectorAll('.pricing-card');
+    const formStatus = document.getElementById('form-status');
+    const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('email-error');
+    const headerActions = document.querySelector('.header-actions');
+    const authModalOverlay = document.getElementById('auth-modal-overlay');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const authTabs = document.querySelectorAll('.tab-link');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const loginForm = document.getElementById('login').querySelector('form');
+    const signupForm = document.getElementById('signup').querySelector('form');
 
-  const languageSelect = document.getElementById('languageSelect');
-  const toneSelect = document.getElementById('toneSelect');
-  const lengthSelect = document.getElementById('lengthSelect');
-
-  // 公共 UI helper
-  function setLoading(isLoading) {
-    generateBtn.disabled = isLoading;
-    loadingMsg.style.display = isLoading ? 'inline' : 'none';
-  }
-
-  function showError(text) {
-    errorMsg.textContent = text;
-    errorMsg.style.display = 'block';
-  }
-  function clearError() {
-    errorMsg.textContent = '';
-    errorMsg.style.display = 'none';
-  }
-
-  // 生成报告（按钮事件）
-  generateBtn.addEventListener('click', async () => {
-    clearError();
-    const prompt = inputEl.value || '';
-    if (!prompt.trim()) {
-      showError('Please enter some input to generate the report.');
-      inputEl.focus();
-      return;
+    // --- Helper Functions ---
+    function downloadFile(blob, filename) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
     }
 
-    setLoading(true);
-    resultEl.value = ''; // 清空旧结果
-    try {
-      const payload = {
-        inputText: prompt,
-        language: languageSelect?.value,
-        tone: toneSelect?.value,
-        length: lengthSelect?.value
-      };
+    function updateUserNav() {
+        headerActions.innerHTML = '';
+        if (token) {
+            const myAccountBtn = document.createElement('a');
+            myAccountBtn.href = '#';
+            myAccountBtn.className = 'btn btn-secondary';
+            myAccountBtn.textContent = 'My Account';
+            
+            const logoutBtn = document.createElement('a');
+            logoutBtn.href = '#';
+            logoutBtn.className = 'btn btn-primary';
+            logoutBtn.textContent = 'Logout';
 
-      const report = await callAIModel(payload);
-      resultEl.value = report;
-      // 可选：将生成的结果存历史（localStorage）
-      try {
-        const histKey = 'hb_reports_v1';
-        const existing = JSON.parse(localStorage.getItem(histKey) || '[]');
-        existing.unshift({
-          timestamp: Date.now(),
-          input: prompt,
-          result: report
+            logoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                token = null;
+                localStorage.removeItem('token');
+                updateUserNav();
+            });
+
+            headerActions.appendChild(myAccountBtn);
+            headerActions.appendChild(logoutBtn);
+        } else {
+            const loginBtn = document.createElement('a');
+            loginBtn.href = '#';
+            loginBtn.className = 'btn btn-secondary';
+            loginBtn.textContent = 'Login';
+            
+            const signupBtn = document.createElement('a');
+            signupBtn.href = '#';
+            signupBtn.className = 'btn btn-primary';
+            signupBtn.textContent = 'Sign Up';
+
+            loginBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal('login');
+            });
+            signupBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal('signup');
+            });
+
+            headerActions.appendChild(loginBtn);
+            headerActions.appendChild(signupBtn);
+        }
+    }
+
+    // --- Main Generation Logic with Login Check ---
+    generateBtn.addEventListener('click', async () => {
+        if (!token) {
+            alert('Please log in or sign up to generate a report.');
+            openModal('login');
+            return;
+        }
+        const allOptions = {
+            userPrompt: promptTextarea.value,
+            template: templateSelect.value,
+            detailLevel: detailLevelSelect.value,
+            role: roleSelect.value,
+            tone: toneSelect.value,
+            language: languageSelect.value,
+        };
+        if (!allOptions.userPrompt.trim()) {
+            alert('Please enter your key points first.');
+            return;
+        }
+        generateBtn.disabled = true;
+        resultBox.innerHTML = '<div class="loader"></div>';
+        resultBox.style.color = 'var(--text-primary)';
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/generate`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(allOptions),
+            });
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const data = await response.json();
+            resultBox.innerText = data.generatedText;
+        } catch (error) {
+            console.error('Error calling generate API:', error);
+            resultBox.innerText = 'Failed to generate report. Please try again later.';
+            resultBox.style.color = 'red';
+        } finally {
+            generateBtn.disabled = false;
+        }
+    });
+
+    // --- Copy Button Logic ---
+    copyBtn.addEventListener('click', () => {
+        const textToCopy = resultBox.innerText;
+        if (textToCopy && textToCopy !== 'The generated report will appear here...') {
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalText = copyBtn.innerText;
+                copyBtn.innerText = 'Copied!';
+                setTimeout(() => { copyBtn.innerText = originalText; }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                alert('Failed to copy text.');
+            });
+        } else {
+            alert('Nothing to copy yet. Please generate a report first.');
+        }
+    });
+
+    // --- Export Buttons Logic ---
+    exportButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            if (!token) {
+                alert('Please log in or sign up to export a report.');
+                openModal('login');
+                return;
+            }
+
+            const format = button.dataset.format;
+            const text = resultBox.innerText;
+            const filename = `report-${new Date().toISOString().split('T')[0]}`;
+
+            if (!text || text === 'The generated report will appear here...') {
+                alert('Please generate a report first before exporting.');
+                return;
+            }
+
+            if (format === 'PDF') {
+                if (button.classList.contains('premium-feature')) {
+                    alert(`PDF export is a Pro feature. Please upgrade your plan.`);
+                    return;
+                }
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                const splitText = doc.splitTextToSize(text, 180);
+                doc.text(splitText, 10, 10);
+                doc.save(`${filename}.pdf`);
+            }
+
+            if (format === 'Markdown') {
+                const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+                downloadFile(blob, `${filename}.md`);
+            }
+
+            if (format === 'Word') {
+                const paragraphs = text.split('\n').map(p => new docx.Paragraph({ children: [new docx.TextRun(p)] }));
+                const doc = new docx.Document({
+                    sections: [{ children: paragraphs }],
+                });
+                docx.Packer.toBlob(doc).then(blob => {
+                    downloadFile(blob, `${filename}.docx`);
+                });
+            }
         });
-        // 仅保留最近 10 条
-        localStorage.setItem(histKey, JSON.stringify(existing.slice(0, 10)));
-      } catch (e) {
-        // 无需中断主流程
-        console.warn('save history failed', e);
-      }
-    } catch (err) {
-      console.error(err);
-      if (err.message === 'timeout') {
-        showError('Request timed out. Please try again later.');
-      } else if (err.message === 'empty_input') {
-        showError('Input is empty.');
-      } else {
-        showError('Failed to generate report. Please try again later.');
-      }
-    } finally {
-      setLoading(false);
-    }
-  });
+    });
 
-  // 复制结果
-  copyBtn.addEventListener('click', async () => {
-    const text = resultEl.value || '';
-    if (!text.trim()) {
-      // 没内容就不给复制
-      copyMsg.textContent = 'No content to copy';
-      copyMsg.style.display = 'inline';
-      setTimeout(() => (copyMsg.style.display = 'none'), 1500);
-      return;
-    }
-    try {
-      await navigator.clipboard.writeText(text);
-      copyMsg.textContent = 'Copied!';
-      copyMsg.style.display = 'inline';
-      setTimeout(() => (copyMsg.style.display = 'none'), 2000);
-    } catch (e) {
-      console.error('clipboard error', e);
-      copyMsg.textContent = 'Copy failed';
-      copyMsg.style.display = 'inline';
-      setTimeout(() => (copyMsg.style.display = 'none'), 2000);
-    }
-  });
+    // --- UI Interaction Logic (Smooth Scroll, Pricing Cards) ---
+    allLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+    pricingCards.forEach(card => {
+        card.addEventListener('click', () => {
+            pricingCards.forEach(c => c.classList.remove('selected-plan'));
+            card.classList.add('selected-plan');
+        });
+    });
 
-  // 反馈表单提交（前端校验 + 本地保存回退）
-  feedbackForm.addEventListener('submit', async (ev) => {
-    ev.preventDefault();
-    const name = nameInput.value.trim();
-    const email = emailInput.value.trim();
-    const feedback = feedbackInput.value.trim();
+    // --- Enhanced Contact Form Validation ---
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    emailInput.addEventListener('input', () => {
+        if (emailInput.value && !emailRegex.test(emailInput.value)) {
+            emailError.textContent = 'Please enter a valid email format.';
+        } else {
+            emailError.textContent = '';
+        }
+    });
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = emailInput.value;
+        const message = document.getElementById('message').value;
 
-    if (!feedback) {
-      alert('Feedback cannot be empty.');
-      feedbackInput.focus();
-      return;
-    }
+        formStatus.textContent = '';
+        formStatus.className = '';
+        emailError.textContent = '';
 
-    // 如果填写了邮箱，则校验格式；如果不填写则不强制
-    if (email) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        alert('Please enter a valid email address.');
-        emailInput.focus();
-        return;
-      }
-    }
+        if (!name.trim() || !email.trim() || !message.trim()) {
+            formStatus.textContent = 'Please fill in all required fields.';
+            formStatus.classList.add('error');
+            return;
+        }
 
-    // 优先尝试提交到后端 /api/feedback（如果你提供这个接口）
-    let submitted = false;
-    try {
-      const resp = await fetch('/api/feedback', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, feedback, time: Date.now() })
-      });
-      if (resp.ok) {
-        submitted = true;
-      } else {
-        console.warn('feedback endpoint returned', resp.status);
-      }
-    } catch (e) {
-      console.warn('feedback post failed, saving locally', e);
-    }
+        if (!emailRegex.test(email)) {
+            emailError.textContent = 'Please enter a valid email format.';
+            return;
+        }
 
-    if (!submitted) {
-      try {
-        const fbKey = 'hb_feedbacks_v1';
-        const existing = JSON.parse(localStorage.getItem(fbKey) || '[]');
-        existing.unshift({ name, email, feedback, time: Date.now() });
-        localStorage.setItem(fbKey, JSON.stringify(existing.slice(0, 50)));
-        submitted = true;
-      } catch (e) {
-        console.error('local save failed', e);
-      }
-    }
+        formStatus.textContent = 'Thank you for your feedback! Message sent successfully.';
+        formStatus.classList.add('success');
+        
+        contactForm.reset();
 
-    if (submitted) {
-      feedbackMsg.style.display = 'inline';
-      setTimeout(() => (feedbackMsg.style.display = 'none'), 3000);
-      feedbackForm.reset();
-    } else {
-      alert('Failed to submit feedback. Please try later.');
+        setTimeout(() => {
+            formStatus.textContent = '';
+            formStatus.className = '';
+        }, 4000);
+    });
+
+    // --- Login/Signup Modal Logic ---
+    function openModal(tabToShow = 'login') {
+        authModalOverlay.classList.remove('hidden');
+        authTabs.forEach(tab => tab.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+        document.querySelector(`.tab-link[data-tab="${tabToShow}"]`).classList.add('active');
+        document.getElementById(tabToShow).classList.add('active');
     }
-  });
+    function closeModal() {
+        authModalOverlay.classList.add('hidden');
+    }
+    closeModalBtn.addEventListener('click', closeModal);
+    authModalOverlay.addEventListener('click', (e) => {
+        if (e.target === authModalOverlay) closeModal();
+    });
+    authTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            openModal(tab.dataset.tab);
+        });
+    });
+    
+    // --- Frontend to Backend API Calls ---
+    signupForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('signup-name').value;
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, password }),
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message);
+            alert('Registration successful! Please log in.');
+            openModal('login');
+        } catch (err) {
+            alert(`Registration failed: ${err.message}`);
+        }
+    });
+
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message);
+            token = data.token;
+            localStorage.setItem('token', token);
+            alert(data.message);
+            closeModal();
+            updateUserNav();
+        } catch (err) {
+            alert(`Login failed: ${err.message}`);
+        }
+    });
+
+    // --- Initialization ---
+    updateUserNav();
 });
