@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 用户状态管理 ---
     let token = localStorage.getItem('token');
     // **重要**: 后端 API 地址已更新为您的 IP 地址
-    const API_BASE_URL = 'https://ai-report-generator-wlcr.onrender.com'; 
+    const API_BASE_URL = 'https://ai-report-generator-vp5v.vercel.app'; 
 
     // --- Element Selectors ---
     const generateBtn = document.getElementById('generate-btn');
