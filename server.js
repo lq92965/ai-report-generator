@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
 import axios from 'axios';
-import { HttpsProxyAgent } from 'https-proxy-agent';
 import { MongoClient } from 'mongodb';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -27,7 +26,7 @@ let db;
 async function connectDB() {
   try {
     await client.connect();
-    db = client.db('ReportifyAI'); // 您可以给数据库起任何名字
+    db = client.db('ReportifyAI');
     console.log("成功连接到 MongoDB Atlas");
   } catch (error) {
     console.error("连接数据库失败", error);
@@ -40,19 +39,7 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-// --- 智能代理配置 ---
-let httpsAgent;
-if (process.env.NODE_ENV !== 'production') {
-  console.log("本地开发模式，启用代理。");
-  const proxyUrl = 'http://127.0.0.1:7890';
-  httpsAgent = new HttpsProxyAgent(proxyUrl);
-} else {
-  console.log("生产模式，不使用代理。");
-}
-
 // --- 用户认证 API ---
-
-// 注册接口
 app.post('/api/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -71,7 +58,6 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-// 登录接口
 app.post('/api/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -115,15 +101,10 @@ app.post('/api/generate', async (req, res) => {
   `;
   const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
   
-  const axiosConfig = {};
-  if (httpsAgent) {
-    axiosConfig.httpsAgent = httpsAgent;
-  }
-
   try {
     const response = await axios.post(apiUrl, {
       contents: [{ parts: [{ text: finalPrompt }] }]
-    }, axiosConfig);
+    });
     const generatedText = response.data.candidates[0].content.parts[0].text;
     res.json({ generatedText: generatedText });
   } catch (error) {
@@ -133,6 +114,10 @@ app.post('/api/generate', async (req, res) => {
 });
 
 // --- 启动服务器 ---
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// Vercel 会自动处理监听，所以我们不再需要 app.listen()
+// app.listen(port, () => {
+//   console.log(`Server is running on port ${port}`);
+// });
+
+// 导出 app 供 Vercel 使用
+export default app;
