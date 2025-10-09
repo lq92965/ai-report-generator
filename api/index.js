@@ -8,7 +8,6 @@ import jwt from 'jsonwebtoken';
 
 // --- 初始化应用和常量 ---
 const app = express();
-const port = process.env.PORT || 3000;
 const API_KEY = process.env.GOOGLE_API_KEY;
 const MODEL_NAME = 'gemini-1.5-flash';
 const MONGO_URI = process.env.MONGO_URI;
@@ -16,7 +15,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 // --- 检查环境变量 ---
 if (!API_KEY || !MONGO_URI || !JWT_SECRET) {
-  console.error("错误：请确保 .env 文件中已设置 GOOGLE_API_KEY, MONGO_URI, 和 JWT_SECRET");
+  console.error("错误：环境变量未完全设置！");
   process.exit(1);
 }
 
@@ -39,8 +38,8 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-// --- 用户认证 API ---
-app.post('/api/register', async (req, res) => {
+// --- 用户认证 API (移除了 /api 前缀) ---
+app.post('/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
     if (!name || !email || !password) {
@@ -58,7 +57,7 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-app.post('/api/login', async (req, res) => {
+app.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
@@ -80,8 +79,8 @@ app.post('/api/login', async (req, res) => {
 });
 
 
-// --- AI 生成接口 ---
-app.post('/api/generate', async (req, res) => {
+// --- AI 生成接口 (移除了 /api 前缀) ---
+app.post('/generate', async (req, res) => {
   const { userPrompt, template, detailLevel, role, tone, language } = req.body;
   if (!userPrompt) {
     return res.status(400).json({ error: 'Prompt is required.' });
@@ -91,7 +90,7 @@ app.post('/api/generate', async (req, res) => {
     **CRITICAL INSTRUCTION: You must not generate only a framework or an outline.** Your main goal is to expand the user's key points into fluent, detailed paragraphs. Based on your assigned role, you should add relevant details, analysis, or suggestions to make the report look highly professional and insightful. The final deliverable should be a complete document that the user can use after minor edits like changing the name and date.
     Here are the report criteria:
     - **Report Type**: ${template}
-    - **Detail Level**: ${detailLevel}. This means the content should be comprehensive and elaborate.
+    - **Detail Level**: ${detailLevel}.
     - **Tone and Style**: ${tone}
     - **Output Language**: ${language}
     Here are the user's key points that you must expand upon:
@@ -112,12 +111,6 @@ app.post('/api/generate', async (req, res) => {
     res.status(500).json({ error: 'Failed to generate content.' });
   }
 });
-
-// --- 启动服务器 ---
-// Vercel 会自动处理监听，所以我们不再需要 app.listen()
-// app.listen(port, () => {
-//   console.log(`Server is running on port ${port}`);
-// });
 
 // 导出 app 供 Vercel 使用
 export default app;
