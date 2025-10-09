@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- 用户状态管理 ---
     let token = localStorage.getItem('token');
-    // **重要**: 后端 API 地址已更新为您的 IP 地址
-    const API_BASE_URL = '/api'; 
+    // **重要**: 修复 API 路径问题，使用相对路径
+    const API_BASE_URL = ''; 
 
     // --- Element Selectors ---
     const generateBtn = document.getElementById('generate-btn');
@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabContents = document.querySelectorAll('.tab-content');
     const loginForm = document.getElementById('login').querySelector('form');
     const signupForm = document.getElementById('signup').querySelector('form');
+    const socialLoginButtons = document.querySelectorAll('.btn-social-google');
 
     // --- Helper Functions ---
     function downloadFile(blob, filename) {
@@ -275,9 +276,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // --- Frontend to Backend API Calls ---
+    // --- Frontend to Backend API Calls with UI Feedback ---
     signupForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        const submitBtn = signupForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
+        
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Creating Account...';
+
         const name = document.getElementById('signup-name').value;
         const email = document.getElementById('signup-email').value;
         const password = document.getElementById('signup-password').value;
@@ -293,11 +300,20 @@ document.addEventListener('DOMContentLoaded', () => {
             openModal('login');
         } catch (err) {
             alert(`Registration failed: ${err.message}`);
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
         }
     });
 
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        const submitBtn = loginForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Logging In...';
+
         const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
         try {
@@ -315,7 +331,17 @@ document.addEventListener('DOMContentLoaded', () => {
             updateUserNav();
         } catch (err) {
             alert(`Login failed: ${err.message}`);
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
         }
+    });
+    
+    // Google Login placeholder
+    socialLoginButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            alert('Continue with Google feature is coming soon!');
+        });
     });
 
     // --- Initialization ---
