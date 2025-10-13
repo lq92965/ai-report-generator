@@ -123,4 +123,4 @@ app.post('/generate', async (req, res) => {
 });
 
 // 导出 app 供 Vercel/Fly.io 使用
-export default app;
+export default app; 

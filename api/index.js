@@ -8,6 +8,7 @@ import jwt from 'jsonwebtoken';
 
 // --- 初始化应用和常量 ---
 const app = express();
+const port = process.env.PORT || 3000; // Render 会自动注入 PORT 环境变量
 const API_KEY = process.env.GOOGLE_API_KEY;
 const MODEL_NAME = 'gemini-1.5-flash';
 const MONGO_URI = process.env.MONGO_URI;
@@ -38,8 +39,13 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-// --- 用户认证 API (移除了 /api 前缀) ---
-app.post('/register', async (req, res) => {
+// --- 健康检查路由 ---
+app.get('/', (req, res) => {
+  res.status(200).send('Backend is running healthy!');
+});
+
+// --- 用户认证 API ---
+app.post('/api/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
     if (!name || !email || !password) {
@@ -57,7 +63,7 @@ app.post('/register', async (req, res) => {
   }
 });
 
-app.post('/login', async (req, res) => {
+app.post('/api/login', async (req, res) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
@@ -79,8 +85,8 @@ app.post('/login', async (req, res) => {
 });
 
 
-// --- AI 生成接口 (移除了 /api 前缀) ---
-app.post('/generate', async (req, res) => {
+// --- AI 生成接口 ---
+app.post('/api/generate', async (req, res) => {
   const { userPrompt, template, detailLevel, role, tone, language } = req.body;
   if (!userPrompt) {
     return res.status(400).json({ error: 'Prompt is required.' });
@@ -112,5 +118,8 @@ app.post('/generate', async (req, res) => {
   }
 });
 
-// 导出 app 供 Vercel 使用
-export default app;
+// --- 启动服务器 ---
+// 这部分对于 Render 至关重要
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
