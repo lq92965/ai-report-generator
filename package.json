@@ -5,7 +5,8 @@
   "main": "api/index.js",
   "type": "module",
   "scripts": {
-    "start": "node api/index.js"
+    "start": "node api/index.js",
+    "build": "echo 'Build step not required, skipping...'"
   },
   "dependencies": {
     "@flydotio/dockerfile": "^0.5.8",
