@@ -2,10 +2,10 @@
   "name": "reportify-ai-backend",
   "version": "1.0.0",
   "description": "An AI-powered editor to generate daily and weekly reports.",
-  "main": "api/index.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node api/index.js",
+    "start": "node index.js",
     "build": "echo 'Build step not required, skipping...'"
   },
   "dependencies": {
