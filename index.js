@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
   res.status(200).send('Backend is running healthy!');
 });
 
-// --- 用户认证 API (重新加上 /api 前缀) ---
+// --- 用户认证 API ---
 app.post('/api/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -85,7 +85,7 @@ app.post('/api/login', async (req, res) => {
 });
 
 
-// --- AI 生成接口 (重新加上 /api 前缀) ---
+// --- AI 生成接口 ---
 app.post('/api/generate', async (req, res) => {
   const { userPrompt, template, detailLevel, role, tone, language } = req.body;
   if (!userPrompt) {
@@ -118,7 +118,8 @@ app.post('/api/generate', async (req, res) => {
   }
 });
 
-// --- 启动服务器 ---
-app.listen(port, () => {
+// --- 启动服务器 (最终修复) ---
+// 监听 0.0.0.0 地址以接受所有外部连接
+app.listen(port, '0.0.0.0', () => {
   console.log(`Server is running on port ${port}`);
 });
