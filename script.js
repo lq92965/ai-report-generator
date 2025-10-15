@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 用户状态管理 ---
     let token = localStorage.getItem('token');
     // **重要**: 修复 API 路径问题，使用相对路径
-    const API_BASE_URL = 'https://ai-report-generator-y7jz.onrender.com'; 
+    const API_BASE_URL = 'https://reportify-ai.netlify.app/'; 
 
     // --- Element Selectors ---
     const generateBtn = document.getElementById('generate-btn');
