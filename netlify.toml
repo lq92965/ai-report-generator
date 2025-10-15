@@ -1,6 +1,8 @@
 [build]
   publish = "."
-  functions = "api"
+  command = "npm run build"
 
-[build.environment]
-  NODE_VERSION = "20"
+[[redirects]]
+  from = "/api/*"
+  to = "https://你的-render-app.onrender.com/:splat"
+  status = 200

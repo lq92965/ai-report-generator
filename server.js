@@ -37,8 +37,10 @@ async function connectDB() {
 connectDB();
 
 // --- 中间件设置 ---
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+  origin: process.env.CLIENT_ORIGIN,
+  credentials: true,
+}));
 
 // --- 新增：健康检查路由 ---
 app.get('/', (req, res) => {

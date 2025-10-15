@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken';
 
 // --- 初始化应用和常量 ---
 const app = express();
-const port = process.env.PORT || 3000; // Render 会自动注入 PORT 环境变量
+const port = process.env.PORT || 3000;
 const API_KEY = process.env.GOOGLE_API_KEY;
 const MODEL_NAME = 'gemini-1.5-flash';
 const MONGO_URI = process.env.MONGO_URI;
@@ -16,7 +16,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 // --- 检查环境变量 ---
 if (!API_KEY || !MONGO_URI || !JWT_SECRET) {
-  console.error("错误：环境变量未完全设置！");
+  console.error("错误：请确保 .env 文件中已设置 GOOGLE_API_KEY, MONGO_URI, 和 JWT_SECRET");
   process.exit(1);
 }
 
@@ -39,9 +39,24 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-// --- 健康检查路由 ---
-app.get('/', (req, res) => {
-  res.status(200).send('Backend is running healthy!');
+// --- 新增：终极诊断接口 ---
+app.get('/api/test-google-connection', async (req, res) => {
+    console.log("收到 Google 连接测试请求...");
+    const testApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
+    try {
+        await axios.post(testApiUrl, {
+            contents: [{ parts: [{ text: "Hello" }] }]
+        });
+        console.log("Google 连接测试成功！");
+        res.status(200).send('Google Connection Test: SUCCESS');
+    } catch (error) {
+        // **打印最详细的错误对象**
+        console.error("Google 连接测试失败! 详细错误对象:", JSON.stringify(error, null, 2));
+        res.status(500).json({ 
+            message: 'Google Connection Test: FAILED',
+            error_details: error.response ? error.response.data : error.message
+        });
+    }
 });
 
 // --- 用户认证 API ---
@@ -84,7 +99,6 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-
 // --- AI 生成接口 ---
 app.post('/api/generate', async (req, res) => {
   const { userPrompt, template, detailLevel, role, tone, language } = req.body;
@@ -119,7 +133,6 @@ app.post('/api/generate', async (req, res) => {
 });
 
 // --- 启动服务器 ---
-// 这部分对于 Render 至关重要
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
