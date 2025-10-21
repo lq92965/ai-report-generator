@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 用户状态管理 ---
     let token = localStorage.getItem('token');
     // **重要**: 修复 API 路径问题，使用相对路径
-    const API_BASE_URL = 'http://68.183.162.193:3000'; 
+    const API_BASE_URL = 'https://goreportify.com'; 
 
     // --- Element Selectors ---
     const generateBtn = document.getElementById('generate-btn');
