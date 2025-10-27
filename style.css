@@ -83,16 +83,26 @@ main {
 .logo {
     display: flex;
     align-items: center;
-    font-size: clamp(1.1rem, 2vw + 0.5rem, 1.25rem); /* Responsive logo text */
+    font-size: clamp(1rem, 3vw, 1.25rem); /* Responsive logo text */
     font-weight: 700;
     text-decoration: none;
     color: var(--text-primary);
+    white-space: nowrap; /* Prevent wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0; /* Prevent logo from shrinking too much */
 }
 
 .logo-icon {
-    margin-right: var(--spacing-sm);
-    font-size: clamp(1.3rem, 2.5vw + 0.5rem, 1.5rem); /* Responsive icon */
+    margin-right: calc(var(--spacing-sm) / 2); /* Smaller gap */
+    font-size: clamp(1.2rem, 4vw, 1.5rem); /* Responsive icon */
+    flex-shrink: 0; /* Prevent icon from shrinking */
 }
+
+.logo span {
+    display: inline-block; /* Ensure span respects white-space */
+}
+
 
 .main-nav {
     display: none; /* Mobile first: hide nav */
@@ -102,6 +112,7 @@ main {
     list-style: none;
     display: flex;
     gap: var(--spacing-lg); /* Responsive gap */
+    padding: 0; /* Remove default padding */
 }
 
 .main-nav a {
@@ -109,6 +120,8 @@ main {
     color: var(--text-secondary);
     font-weight: 500;
     transition: color 0.2s ease;
+    white-space: nowrap; /* Prevent nav links wrapping */
+    font-size: clamp(0.9rem, 1.5vw, 1rem); /* Responsive nav links */
 }
 
 .main-nav a:hover {
@@ -119,6 +132,7 @@ main {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm); /* Responsive gap */
+    flex-shrink: 0; /* Prevent buttons from shrinking too much */
 }
 
 /* --- Button Styles --- */
@@ -229,6 +243,7 @@ main {
 .feature-card p {
     color: var(--text-secondary);
     flex-grow: 1;
+    font-size: clamp(0.9rem, 1.2vw + 0.5rem, 1rem); /* Responsive paragraph */
 }
 
 .badge { /* Style for Coming Soon etc. */
@@ -254,7 +269,7 @@ main {
     display: grid;
     grid-template-columns: 1fr; /* Mobile first: single column */
     gap: var(--spacing-lg); /* Responsive gap */
-    align-items: stretch;
+    align-items: stretch; /* Make cards same height */
 }
 
 .pricing-card {
@@ -318,6 +333,7 @@ main {
     margin-bottom: var(--spacing-sm); /* Responsive margin */
     padding-left: calc(var(--spacing-md) + 5px); /* Responsive padding */
     position: relative;
+    font-size: clamp(0.9rem, 1.2vw + 0.5rem, 1rem); /* Responsive list items */
 }
 
 .plan-features li::before {
@@ -352,6 +368,7 @@ main {
     display: block;
     font-weight: 500;
     margin-bottom: var(--spacing-sm);
+    font-size: clamp(0.9rem, 1.2vw + 0.5rem, 1rem); /* Responsive labels */
 }
 
 .settings-grid {
@@ -542,15 +559,16 @@ textarea {
 .btn-social-google { /* No major changes needed */ }
 .btn-social-google::before { /* No changes needed */ }
 
+
 /* === Responsive Breakpoints Start === */
 
-/* Tablet & Larger (Apply general multi-column layouts) */
+/* Tablet (Portrait) & Larger (Apply general multi-column layouts) */
 @media (min-width: 768px) {
     .main-nav { display: block; } /* Show nav */
     
-    .features-grid { grid-template-columns: repeat(3, 1fr); }
+    .features-grid { grid-template-columns: repeat(3, 1fr); } /* 3 columns for features */
     
-    .pricing-grid { grid-template-columns: repeat(3, 1fr); }
+    .pricing-grid { grid-template-columns: repeat(3, 1fr); } /* 3 columns for pricing */
     
     .settings-grid { grid-template-columns: repeat(2, 1fr); } /* Settings grid 2 columns */
     
@@ -572,24 +590,26 @@ textarea {
     .cta-buttons .btn { width: auto; }
 }
 
-/* Smaller Tablets (Refine 3-column grids if needed) */
-@media (min-width: 768px) and (max-width: 1024px) {
-    .container { max-width: 95%; }
-    
-    /* Optional: If 3 columns feel too tight on smaller tablets, switch to 2 */
-    /* .features-grid, .pricing-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+/* Tablet (Landscape) & Desktop Specific Adjustments (Refine 3-column grids if needed) */
+@media (min-width: 1024px) {
+    /* Ensure 3 columns are definitely used */
+    .features-grid { grid-template-columns: repeat(3, 1fr); }
+    .pricing-grid { grid-template-columns: repeat(3, 1fr); }
+
+    /* Reset tablet overrides for the last card */
     .features-grid > .feature-card:last-child:nth-child(odd),
     .pricing-grid > .pricing-card:last-child:nth-child(odd) {
-       grid-column: 1 / span 2;
-       justify-self: center;
-       max-width: 380px; 
-       width: 100%;
-    } */
+        grid-column: auto;
+        max-width: none;
+        justify-self: initial;
+    }
+     .settings-grid {
+         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Allow flexible columns on larger screens */
+    }
 }
 
-/* Mobile Landscape Specific Adjustments (Example) */
+
+/* Mobile Landscape Specific Adjustments (Optimize horizontal space) */
 @media (max-width: 767px) and (orientation: landscape) {
    .settings-grid {
         grid-template-columns: 1fr 1fr; /* Try 2 columns on mobile landscape */
@@ -613,7 +633,10 @@ textarea {
 /* Extra Small Screens (Further reduce sizes if needed) */
 @media (max-width: 480px) {
    .container { padding-left: 15px; padding-right: 15px; } /* Reduce container padding */
-   .btn { padding: 8px 16px; } /* Slightly smaller buttons */
-   .btn-large { padding: 12px 24px; }
+   .btn { padding: 8px 16px; font-size: 14px;} /* Smaller buttons and text */
+   .btn-large { padding: 12px 24px; font-size: 15px;}
    .feature-card, .pricing-card, .generator-container, #auth-modal { padding: var(--spacing-md); } /* Reduce card padding */
+    .pricing-card .price span {
+        font-size: clamp(1.8rem, 4vw + 0.8rem, 2.2rem); /* Slightly smaller price number */
+    }
 }
