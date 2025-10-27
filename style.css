@@ -54,6 +54,9 @@ main {
     padding: 15px 0; /* 稍微減小 padding */
     border-bottom: 1px solid #EAEAEA;
     background-color: var(--background-gradient-start);
+    position: sticky; /* Make header sticky */
+    top: 0;           /* Stick to the top */
+    z-index: 999;     /* Ensure it's above other content */
 }
 
 .main-header .container {
@@ -112,7 +115,6 @@ main {
     text-decoration: none;
     font-weight: 500;
     transition: all 0.2s ease;
-    /* width: 100%; */ /* 移除默認寬度，讓按鈕自適應 */
     text-align: center;
     border: 1px solid transparent;
     cursor: pointer;
@@ -207,6 +209,9 @@ main {
     box-shadow: var(--card-shadow);
     border: 1px solid #EAEAEA;
     position: relative;
+    display: flex; /* Use flexbox for alignment */
+    flex-direction: column; /* Stack content vertically */
+    height: 100%; /* Make cards fill grid cell height */
 }
 
 .feature-card h3 {
@@ -216,6 +221,7 @@ main {
 
 .feature-card p {
     color: var(--text-secondary);
+    flex-grow: 1; /* Allow description to take up space */
 }
 
 .badge {
@@ -244,7 +250,7 @@ main {
     display: grid;
     grid-template-columns: 1fr; /* 移動端默認單列 */
     gap: 20px; /* 減小間距 */
-    align-items: stretch; /* 讓卡片等高 */
+    align-items: stretch; /* Make cards same height */
 }
 
 .pricing-card {
@@ -265,6 +271,7 @@ main {
 
 .pricing-card .btn { /* 定價按鈕始終佔滿寬度 */
     width: 100%;
+    margin-top: auto; /* Push button to the bottom */
 }
 
 
@@ -299,6 +306,7 @@ main {
 
 .plan-features {
     list-style: none;
+    padding-left: 0; /* Remove default padding */
     margin-bottom: 30px; /* 減小 margin */
     flex-grow: 1;
 }
@@ -384,6 +392,7 @@ select:focus {
 
 textarea {
     resize: vertical;
+    min-height: 120px; /* Give textarea a minimum height */
 }
 
 .result-box {
@@ -454,7 +463,7 @@ textarea {
 .error-message {
     color: red;
     font-size: 14px;
-    height: 1em;
+    height: 1em; /* Ensure space is reserved */
     margin-top: 4px;
 }
 
@@ -466,8 +475,7 @@ textarea {
 }
 
 .export-btn {
-    flex-grow: 1; /* 在 grid 中可能不再需要 */
-    padding: 10px;
+    padding: 12px; /* Increase padding slightly */
     font-size: 16px;
     font-weight: 500;
     border: 1px solid var(--input-border-color);
@@ -667,71 +675,99 @@ textarea {
 }
 
 
-/* --- 新增：響應式設計媒體查詢 --- */
+/* --- 響應式設計媒體查詢 --- */
 
-/* 平板 (Tablet) - 寬度小於 1024px */
-@media (max-width: 1024px) {
-    .container {
-        max-width: 90%; /* 稍微增加內容寬度佔比 */
-    }
-    .hero-section h1 {
-        font-size: 48px; /* 平板上標題 */
-    }
-    .section-title {
-        font-size: 32px; /* 平板上段落標題 */
+/* 平板 (Tablet) - 寬度大於等於 768px */
+@media (min-width: 768px) {
+    .main-nav {
+        display: block; /* 在平板及以上顯示導航 */
     }
     .features-grid {
         grid-template-columns: repeat(2, 1fr); /* 平板上改為兩列 */
     }
-     /* 讓第三個卡片單獨佔一行 */
-    .features-grid .feature-card:last-child {
-        grid-column: 1 / span 2;
-    }
     .pricing-grid {
         grid-template-columns: repeat(2, 1fr); /* 平板上改為兩列 */
     }
-     /* 讓第三個卡片單獨佔一行 */
-    .pricing-grid .pricing-card:last-child {
-        grid-column: 1 / span 2;
-        justify-self: center; /* 居中顯示 */
-        max-width: 400px; /* 限制最大寬度避免過寬 */
+    .settings-grid {
+         grid-template-columns: repeat(2, 1fr); /* 平板上改為兩列 */
+    }
+    .action-buttons {
+         grid-template-columns: 1fr 1fr; /* 恢復兩列 */
+    }
+    .contact-form {
+         grid-template-columns: 1fr 1fr; /* 恢復兩列 */
+    }
+    .export-options {
+        display: flex; /* 恢復 flex 佈局 */
+        grid-template-columns: none; /* 清除 grid 設置 */
+    }
+    .hero-section h1 {
+        font-size: 48px; /* 平板上標題 */
+    }
+     .hero-section .subtitle {
+        font-size: 18px; /* 平板上副標題 */
+    }
+    .section-title {
+        font-size: 36px; /* 平板上段落標題 */
+    }
+    
+    /* 讓第三個 Pricing Card 居中 */
+    .pricing-grid > .pricing-card:last-child:nth-child(odd) {
+       grid-column: 1 / span 2;
+       justify-self: center;
+       max-width: 350px; /* Or adjust as needed */
+       width: 100%;
+    }
+    
+    /* 讓第三個 Feature Card 跨列 */
+     .features-grid > .feature-card:last-child:nth-child(odd) {
+       grid-column: 1 / span 2;
+        max-width: 730px; /* Example width */
+        justify-self: center;
+        width: 100%;
     }
 }
 
-/* 手機 (Mobile) - 寬度小於 768px */
-@media (max-width: 768px) {
-    .main-nav {
-        display: none; /* 手機上確認隱藏導航 (可考慮加入漢堡菜單) */
+/* 桌面 (Desktop) - 寬度大於等於 1024px */
+@media (min-width: 1024px) {
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr); /* 恢復三列 */
     }
-    .hero-section h1 {
-        font-size: 36px; /* 手機上標題 */
-    }
-     .hero-section .subtitle {
-        font-size: 16px; /* 手機上副標題 */
-    }
-     .section-title {
-        font-size: 28px; /* 手機上段落標題 */
-    }
-    .features-grid, .pricing-grid {
-        grid-template-columns: 1fr; /* 手機上確認單列 */
+    .pricing-grid {
+        grid-template-columns: repeat(3, 1fr); /* 恢復三列 */
     }
     /* 清除平板上為第三個卡片設定的跨列和寬度限制 */
-    .features-grid .feature-card:last-child,
-    .pricing-grid .pricing-card:last-child {
+    .features-grid > .feature-card:last-child:nth-child(odd),
+    .pricing-grid > .pricing-card:last-child:nth-child(odd) {
         grid-column: auto;
         max-width: none;
+        justify-self: initial;
     }
-    .settings-grid {
-        grid-template-columns: 1fr; /* 手機上確認單列 */
+     .settings-grid {
+         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 恢復桌面佈局 */
     }
-     .action-buttons {
-         grid-template-columns: 1fr; /* 手機上確認單列 */
+    .hero-section h1 {
+        font-size: 56px; /* 恢復大標題字體大小 */
     }
-    .contact-form {
-        grid-template-columns: 1fr; /* 手機上確認單列 */
+     .hero-section .subtitle {
+        font-size: 20px; /* 恢復副標題字體大小 */
     }
-    .export-options {
-        grid-template-columns: 1fr; /* 手機上確認單列 */
+    .section-title {
+        font-size: 42px; /* 恢復段落標題字體大小 */
+    }
+}
+
+
+/* 手機 (Mobile) - 寬度小於 480px 的進一步調整 */
+@media (max-width: 480px) {
+    .hero-section h1 {
+        font-size: 32px; /* 手機上進一步縮小 */
+    }
+    .hero-section .subtitle {
+        font-size: 16px; /* 手機上進一步縮小 */
+    }
+    .section-title {
+        font-size: 28px; /* 手機上進一步縮小 */
     }
     .cta-buttons {
         flex-direction: column; /* 手機上主要按鈕垂直堆疊 */
@@ -740,24 +776,44 @@ textarea {
      .cta-buttons .btn {
         width: 100%; /* 堆疊後佔滿寬度 */
     }
-     /* 手機上頭部按鈕 */
+    /* 手機上頭部按鈕 */
     .header-actions .btn {
-        padding: 8px 15px;
+        padding: 8px 12px; /* 再小一點 */
         font-size: 14px;
     }
-    .logo span { /* 手機上可能只顯示 Logo 圖標 */
-        /* display: none; */ /* 可選 */
+     .logo span { /* 在非常小的屏幕上隱藏文字 */
+        /* display: none; */
     }
+    .pricing-card {
+        padding: 25px 20px; /* 手機上內邊距再小點 */
+    }
+    .pricing-card .price span {
+        font-size: 36px; /* 手機上價格數字再小點 */
+    }
+    .generator-container, #auth-modal {
+        padding: 20px; /* 手機上容器內邊距再小點 */
+    }
+     #auth-modal {
+        max-width: 95%; /* 彈窗寬度佔滿 */
+     }
 }
 
 /* 考慮橫屏模式下的調整 (可選，根據需要細化) */
 @media (max-width: 768px) and (orientation: landscape) {
     .hero-section {
-        padding: 50px 0; /* 橫屏時減少垂直 padding */
+        padding: 40px 0; /* 橫屏時減少垂直 padding */
+    }
+    .settings-grid {
+        grid-template-columns: 1fr 1fr; /* 手機橫屏嘗試兩列 */
+    }
+    .action-buttons {
+        grid-template-columns: 1fr 1fr; /* 手機橫屏嘗試兩列 */
+    }
+    .export-options {
+        grid-template-columns: repeat(3, 1fr); /* 手機橫屏嘗試三列 */
     }
     #auth-modal {
-        /* 在橫屏時，彈窗可能會顯得過高，可以考慮減小內邊距或增加滾動 */
-        /* max-height: 80vh; */
-        /* overflow-y: auto; */
+        max-height: 90vh; /* 橫屏限制彈窗高度 */
+        overflow-y: auto; /* 超出則滾動 */
     }
 }
