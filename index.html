@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AVnSKKHaiFxJKn4HMqGyKeXBhxZ1W-Qs3w7PSP8maz3c2O8jGg_o_nLHt7IUJQjwKHQBZyIVKaJuUPBc=USD"></script> 
 </head>
 <body>
 
@@ -36,43 +38,11 @@
     </header>
 
     <main>
-        <section id="hero" class="hero-section">
-            <div class="container">
-                <h1>Generate in Seconds, Report with Confidence.</h1>
-                <p class="subtitle">Save time and boost your productivity. Let our AI handle the paperwork while you focus on what matters.</p>
-                <div class="cta-buttons">
-                    <a href="#generator" class="btn btn-primary btn-large">Get Started</a>
-                    <a href="#features" class="btn btn-secondary btn-large">Learn More</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="features" class="features-section">
-            <div class="container">
-                <h2 class="section-title">Everything You Need to Succeed</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <h3>Rapid Generation</h3>
-                        <p>Turn your notes into a well-structured report in a single click. Our AI understands your context and delivers quality content instantly.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Multiple Export Formats</h3>
-                        <p>Download your reports in Word, PDF, or Markdown. Choose the format that best fits your workflow and sharing needs.</p>
-                    </div>
-                    <div class="feature-card">
-                        <span class="badge feature-badge">Coming Soon</span>
-                        <h3>Custom Templates</h3>
-                        <p>Go beyond standard reports. Professional plans unlock industry-specific templates for IT, sales, marketing, and more.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section id="pricing" class="pricing-section">
             <div class="container">
                 <h2 class="section-title">Choose Your Plan</h2>
                 <div class="pricing-grid">
-                    <div class="pricing-card">
+                    <div class="pricing-card" data-plan="free">
                         <h3>Free</h3>
                         <p class="price"><span>$0</span>/month</p>
                         <ul class="plan-features">
@@ -82,8 +52,8 @@
                             <li>Standard speed</li>
                         </ul>
                         <a href="#generator" class="btn btn-secondary">Start Trial</a>
-                    </div>
-                    <div class="pricing-card">
+                        </div>
+                    <div class="pricing-card" data-plan="basic">
                         <h3>Basic</h3>
                         <p class="price"><span>$9.90</span>/month</p>
                         <ul class="plan-features">
@@ -92,9 +62,10 @@
                             <li>Standard generation speed</li>
                             <li>Email support</li>
                         </ul>
-                        <a href="#pricing" class="btn btn-secondary">Choose Basic</a>
+                        <button class="btn btn-secondary choose-plan-btn" data-plan-id="basic" data-amount="9.90">Choose Basic</button>
+                        <div id="paypal-button-container-basic" class="paypal-button-container"></div> 
                     </div>
-                    <div class="pricing-card recommended selected-plan">
+                    <div class="pricing-card recommended selected-plan" data-plan="pro"> 
                         <span class="badge">Recommended</span>
                         <h3>Professional</h3>
                         <p class="price"><span>$19.90</span>/month</p>
@@ -104,189 +75,18 @@
                             <li>Word, PDF & Markdown export</li>
                             <li>Dedicated customer support</li>
                         </ul>
-                        <a href="#pricing" class="btn btn-primary">Choose Pro</a>
+                        <button class="btn btn-primary choose-plan-btn" data-plan-id="pro" data-amount="19.90">Choose Pro</button>
+                        <div id="paypal-button-container-pro" class="paypal-button-container"></div> 
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="generator" class="generator-section">
-            <div class="container">
-                <h2 class="section-title">Create Your Report</h2>
-                <div class="generator-container">
-                    <div class="form-group settings-grid">
-                        <div class="input-wrapper">
-                            <label for="template">Report Type</label>
-                            <select id="template" name="template">
-                                <option value="日报 (Daily Report)">日报 (Daily Report)</option>
-                                <option value="周报 (Weekly Report)">周报 (Weekly Report)</option>
-                                <option value="月报 (Monthly Report)">月报 (Monthly Report)</option>
-                            </select>
-                        </div>
-                        <div class="input-wrapper">
-                            <label for="detail-level">Detail Level</label>
-                            <select id="detail-level" name="detail-level">
-                                <option value="简约 (Simple)">简约 (Simple)</option>
-                                <option value="标准 (Standard)">标准 (Standard)</option>
-                                <option value="详细 (Detailed)">详细 (Detailed)</option>
-                            </select>
-                        </div>
-                        <div class="input-wrapper">
-                             <label for="role">Your Role</label>
-                            <select id="role" name="role">
-                                <option value="通用角色 (General Role)">通用角色 (General Role)</option>
-                                <optgroup label="Management">
-                                    <option value="团队主管 (Team Lead)">团队主管 (Team Lead)</option>
-                                    <option value="项目经理 (Project Manager)">项目经理 (Project Manager)</option>
-                                    <option value="部门总监 (Department Director)">部门总监 (Department Director)</option>
-                                </optgroup>
-                                <optgroup label="Marketing & Sales">
-                                    <option value="市场专员 (Marketing Specialist)">市场专员 (Marketing Specialist)</option>
-                                    <option value="销售代表 (Sales Representative)">销售代表 (Sales Representative)</option>
-                                </optgroup>
-                                <optgroup label="Tech & Product">
-                                    <option value="软件工程师 (Software Engineer)">软件工程师 (Software Engineer)</option>
-                                    <option value="产品经理 (Product Manager)">产品经理 (Product Manager)</option>
-                                </optgroup>
-                                <optgroup label="Operations & Function">
-                                    <option value="运营专员 (Operations Specialist)">运营专员 (Operations Specialist)</option>
-                                    <option value="财务 (Finance)">财务 (Finance)</option>
-                                    <option value="人事 (HR)">人事 (HR)</option>
-                                </optgroup>
-                            </select>
-                        </div>
-                         <div class="input-wrapper">
-                            <label for="tone">Tone / Style</label>
-                            <select id="tone" name="tone">
-                                <option value="专业汇报 (Professional)">专业汇报 (Professional)</option>
-                                <option value="口语化 (Conversational)">口语化 (Conversational)</option>
-                                <option value="正式书面 (Formal)">正式书面 (Formal)</option>
-                            </select>
-                        </div>
-                         <div class="input-wrapper">
-                            <label for="language">Language</label>
-                            <select id="language" name="language">
-                                <option value="English">English</option>
-                                <option value="中文">中文</option>
-                                <option value="日本語">日本語</option>
-                                <option value="한국어">한국어</option>
-                                <option value="Español">Español</option>
-                                <option value="Deutsch">Deutsch</option>
-                                <option value="Français">Français</option>
-                                <option value="Português">Português</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="prompt">Key points for the report</label>
-                        <textarea id="prompt" name="prompt" rows="8" placeholder="例如：&#10;- 上周总结：完成项目A的数据分析。&#10;- 本周计划：根据分析结果制定优化方案。&#10;- 需要的帮助：请市场部提供用户反馈数据。"></textarea>
-                    </div>
-                    <div class="form-group action-buttons">
-                        <button id="generate-btn" class="btn btn-primary">Generate Report</button>
-                        <button id="copy-btn" class="btn btn-secondary">Copy Result</button>
-                    </div>
-                    <div class="form-group">
-                        <label for="result">Generated Report</label>
-                        <div id="result" class="result-box">The generated report will appear here...</div>
-                    </div>
-                    <div class="form-group">
-                        <label>Export As</label>
-                        <div class="export-options">
-                            <button class="export-btn" data-format="Word">Word</button>
-                            <button class="export-btn" data-format="Markdown">Markdown</button>
-                            <button class="export-btn premium-feature" data-format="PDF">
-                                PDF
-                                <span>Pro</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="contact-section">
-            <div class="container">
-                <h2 class="section-title">Contact Us</h2>
-                <p class="subtitle">Dedicated support for Professional plan users.</p>
-                <form id="contact-form" class="contact-form">
-                    <div class="input-wrapper">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="input-wrapper">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                        <p id="email-error" class="error-message"></p>
-                    </div>
-                    <div class="input-wrapper full-width">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="6" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit Feedback</button>
-                    <div id="form-status"></div>
-                </form>
-            </div>
-        </section>
-    </main>
+        </main>
 
     <footer class="main-footer">
-       <div class="container">
-            <p>&copy; 2025 Reportify AI. All Rights Reserved.</p>
-       </div>
-    </footer>
-    
-    <div id="auth-modal-overlay" class="hidden">
-        <div id="auth-modal">
-            <button id="close-modal-btn">&times;</button>
-            <div class="auth-tabs">
-                <button class="tab-link active" data-tab="login">Login</button>
-                <button class="tab-link" data-tab="signup">Sign Up</button>
-            </div>
+       </footer>
 
-            <div id="login" class="tab-content active">
-                <h2>Welcome Back!</h2>
-                <form>
-                    <div class="input-wrapper">
-                        <label for="login-email">Email</label>
-                        <input type="email" id="login-email" required>
-                    </div>
-                    <div class="input-wrapper">
-                        <label for="login-password">Password</label>
-                        <input type="password" id="login-password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary full-width">Login</button>
-                </form>
-                <div class="social-login">
-                    <span>OR</span>
-                    <button class="btn-social-google">Continue with Google</button>
-                </div>
-            </div>
-
-            <div id="signup" class="tab-content">
-                <h2>Create Your Account</h2>
-                <form>
-                    <div class="input-wrapper">
-                        <label for="signup-name">Name</label>
-                        <input type="text" id="signup-name" required>
-                    </div>
-                    <div class="input-wrapper">
-                        <label for="signup-email">Email</label>
-                        <input type="email" id="signup-email" required>
-                    </div>
-                    <div class="input-wrapper">
-                        <label for="signup-password">Password</label>
-                        <input type="password" id="signup-password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary full-width">Create Account</button>
-                </form>
-                <div class="social-login">
-                    <span>OR</span>
-                    <button class="btn-social-google">Sign Up with Google</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
     <script src="script.js" defer></script>
 </body>
 </html>
