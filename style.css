@@ -31,9 +31,15 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 100vh; /* 確保 body 至少和視窗一樣高 */
 }
 
-.main-header, main, .main-footer {
+main {
+    flex-grow: 1; /* 讓 main 區域填充剩餘空間 */
+    width: 100%;
+}
+
+.main-header, .main-footer {
     width: 100%;
 }
 
@@ -45,7 +51,7 @@ body {
 
 /* --- Header & Navigation Styles --- */
 .main-header {
-    padding: 20px 0;
+    padding: 15px 0; /* 稍微減小 padding */
     border-bottom: 1px solid #EAEAEA;
     background-color: var(--background-gradient-start);
 }
@@ -70,6 +76,11 @@ body {
     font-size: 24px;
 }
 
+/* --- 導航菜單在桌面端顯示 --- */
+.main-nav {
+    display: none; /* 移動端默認隱藏 */
+}
+
 .main-nav ul {
     list-style: none;
     display: flex;
@@ -90,7 +101,7 @@ body {
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 15px; /* 稍微減小間距 */
 }
 
 /* --- Button Styles --- */
@@ -101,12 +112,18 @@ body {
     text-decoration: none;
     font-weight: 500;
     transition: all 0.2s ease;
-    width: 100%;
+    /* width: 100%; */ /* 移除默認寬度，讓按鈕自適應 */
     text-align: center;
     border: 1px solid transparent;
     cursor: pointer;
     font-size: 16px;
+    white-space: nowrap; /* 防止按鈕文字換行 */
 }
+/* Header 中的按鈕寬度自適應 */
+.header-actions .btn {
+    width: auto;
+}
+
 
 .btn:disabled {
     opacity: 0.6;
@@ -141,11 +158,11 @@ body {
 /* --- Hero Section Styles --- */
 .hero-section {
     text-align: center;
-    padding: 100px 0;
+    padding: 80px 0; /* 減小 padding */
 }
 
 .hero-section h1 {
-    font-size: 56px;
+    font-size: 42px; /* 減小字體大小 */
     font-weight: 700;
     max-width: 800px;
     margin: 0 auto;
@@ -153,48 +170,48 @@ body {
 }
 
 .hero-section .subtitle {
-    font-size: 20px;
+    font-size: 18px; /* 減小字體大小 */
     color: var(--text-secondary);
     max-width: 650px;
-    margin: 20px auto 40px;
+    margin: 15px auto 30px; /* 調整 margin */
 }
 
 .cta-buttons {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 15px; /* 減小間距 */
 }
 
 /* --- Features Section Styles --- */
 .features-section {
-    padding: 80px 0;
+    padding: 60px 0; /* 減小 padding */
 }
 
 .section-title {
-    font-size: 42px;
+    font-size: 36px; /* 減小字體大小 */
     font-weight: 700;
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 40px; /* 減小 margin */
 }
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    grid-template-columns: 1fr; /* 移動端默認單列 */
+    gap: 20px; /* 減小間距 */
 }
 
 .feature-card {
     background-color: var(--card-background);
     border-radius: var(--card-border-radius);
-    padding: 30px;
+    padding: 25px; /* 減小 padding */
     box-shadow: var(--card-shadow);
     border: 1px solid #EAEAEA;
     position: relative;
 }
 
 .feature-card h3 {
-    font-size: 22px;
-    margin-bottom: 15px;
+    font-size: 20px; /* 減小字體大小 */
+    margin-bottom: 10px; /* 減小 margin */
 }
 
 .feature-card p {
@@ -216,23 +233,24 @@ body {
     right: 15px;
 }
 
+
 /* --- Pricing Section Styles --- */
 .pricing-section {
-    padding: 80px 0;
+    padding: 60px 0; /* 減小 padding */
     background-color: #FAFAFC;
 }
 
 .pricing-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    align-items: center;
+    grid-template-columns: 1fr; /* 移動端默認單列 */
+    gap: 20px; /* 減小間距 */
+    align-items: stretch; /* 讓卡片等高 */
 }
 
 .pricing-card {
     background-color: var(--card-background);
     border-radius: var(--card-border-radius);
-    padding: 40px 30px;
+    padding: 30px 25px; /* 調整 padding */
     box-shadow: var(--card-shadow);
     border: 2px solid #EAEAEA;
     text-align: left;
@@ -245,9 +263,14 @@ body {
     transition: all 0.2s ease;
 }
 
+.pricing-card .btn { /* 定價按鈕始終佔滿寬度 */
+    width: 100%;
+}
+
+
 .pricing-card.selected-plan {
     border-color: var(--primary-blue);
-    transform: scale(1.05);
+    transform: scale(1.02); /* 效果減弱 */
 }
 
 .pricing-card .badge {
@@ -258,30 +281,30 @@ body {
 }
 
 .pricing-card h3 {
-    font-size: 24px;
+    font-size: 22px; /* 減小字體大小 */
     margin-bottom: 10px;
 }
 
 .pricing-card .price {
-    font-size: 18px;
+    font-size: 16px; /* 減小字體大小 */
     color: var(--text-secondary);
-    margin-bottom: 30px;
+    margin-bottom: 20px; /* 減小 margin */
 }
 
 .pricing-card .price span {
-    font-size: 48px;
+    font-size: 42px; /* 減小字體大小 */
     font-weight: 700;
     color: var(--text-primary);
 }
 
 .plan-features {
     list-style: none;
-    margin-bottom: 40px;
+    margin-bottom: 30px; /* 減小 margin */
     flex-grow: 1;
 }
 
 .plan-features li {
-    margin-bottom: 15px;
+    margin-bottom: 12px; /* 減小 margin */
     padding-left: 25px;
     position: relative;
 }
@@ -296,21 +319,21 @@ body {
 
 /* --- Generator and Form Styles --- */
 .generator-section {
-    padding: 80px 0;
+    padding: 60px 0; /* 減小 padding */
 }
 
 .generator-container {
     max-width: 800px;
     margin: 0 auto;
     background: var(--card-background);
-    padding: 40px;
+    padding: 30px; /* 減小 padding */
     border-radius: var(--card-border-radius);
     box-shadow: var(--card-shadow);
     border: 1px solid #EAEAEA;
 }
 
 .form-group {
-    margin-bottom: 25px;
+    margin-bottom: 20px; /* 減小 margin */
 }
 
 .form-group:last-child {
@@ -325,14 +348,14 @@ body {
 
 .settings-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
+    grid-template-columns: 1fr; /* 移動端默認單列 */
+    gap: 15px; /* 減小間距 */
 }
 
 .action-buttons {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: 1fr; /* 移動端默認單列 */
+    gap: 15px; /* 減小間距 */
 }
 
 input[type="text"],
@@ -379,14 +402,14 @@ textarea {
 
 /* --- Contact Section Styles --- */
 .contact-section {
-    padding: 80px 0;
+    padding: 60px 0; /* 減小 padding */
     background-color: #FAFAFC;
 }
 
 .contact-section .subtitle {
     text-align: center;
-    margin-top: -40px;
-    margin-bottom: 40px;
+    margin-top: -30px; /* 調整 margin */
+    margin-bottom: 30px; /* 調整 margin */
     color: var(--text-secondary);
 }
 
@@ -394,8 +417,8 @@ textarea {
     max-width: 700px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: 1fr; /* 移動端默認單列 */
+    gap: 15px; /* 減小間距 */
     position: relative;
 }
 
@@ -404,7 +427,7 @@ textarea {
 }
 
 .contact-form .full-width {
-    grid-column: 1 / -1;
+    grid-column: 1 / -1; /* 保持跨列 */
 }
 
 .contact-form button {
@@ -412,11 +435,11 @@ textarea {
     padding-left: 40px;
     padding-right: 40px;
     justify-self: center;
-    grid-column: 1 / -1;
+    grid-column: 1 / -1; /* 保持跨列 */
 }
 
 #form-status {
-    grid-column: 1 / -1;
+    grid-column: 1 / -1; /* 保持跨列 */
     text-align: center;
     margin-top: 15px;
     font-weight: 500;
@@ -437,12 +460,13 @@ textarea {
 
 /* --- Export Options Styles --- */
 .export-options {
-    display: flex;
-    gap: 15px;
+    display: grid; /* 改為 grid 以便在移動端堆疊 */
+    grid-template-columns: 1fr;
+    gap: 10px; /* 減小間距 */
 }
 
 .export-btn {
-    flex-grow: 1;
+    flex-grow: 1; /* 在 grid 中可能不再需要 */
     padding: 10px;
     font-size: 16px;
     font-weight: 500;
@@ -452,6 +476,7 @@ textarea {
     cursor: pointer;
     transition: all 0.2s ease;
     position: relative;
+    width: 100%; /* 確保按鈕佔滿寬度 */
 }
 
 .export-btn:hover {
@@ -475,7 +500,7 @@ textarea {
 
 /* --- Footer Styles --- */
 .main-footer {
-    padding: 40px 0;
+    padding: 30px 0; /* 減小 padding */
     text-align: center;
     color: var(--text-secondary);
     font-size: 14px;
@@ -497,12 +522,8 @@ textarea {
     transform: translateZ(0);
 }
 @keyframes load {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* --- 登录/注册弹窗样式 --- */
@@ -519,6 +540,7 @@ textarea {
     z-index: 1000;
     opacity: 1;
     transition: opacity 0.3s ease;
+    padding: 15px; /* 添加 padding 防止小屏幕溢出 */
 }
 
 #auth-modal-overlay.hidden {
@@ -528,11 +550,11 @@ textarea {
 
 #auth-modal {
     background: var(--card-background);
-    padding: 40px;
+    padding: 30px; /* 減小 padding */
     border-radius: var(--card-border-radius);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 420px;
+    max-width: 400px; /* 稍微減小寬度 */
     position: relative;
     transform: scale(1);
     transition: transform 0.3s ease;
@@ -544,11 +566,11 @@ textarea {
 
 #close-modal-btn {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 10px; /* 調整位置 */
+    right: 10px; /* 調整位置 */
     background: none;
     border: none;
-    font-size: 28px;
+    font-size: 24px; /* 減小大小 */
     color: var(--text-secondary);
     cursor: pointer;
 }
@@ -556,16 +578,16 @@ textarea {
 .auth-tabs {
     display: flex;
     border-bottom: 1px solid var(--input-border-color);
-    margin-bottom: 30px;
+    margin-bottom: 25px; /* 減小 margin */
 }
 
 .auth-tabs .tab-link {
     flex: 1;
-    padding: 15px;
+    padding: 12px; /* 減小 padding */
     border: none;
     background: none;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px; /* 減小字體大小 */
     font-weight: 500;
     color: var(--text-secondary);
     border-bottom: 3px solid transparent;
@@ -585,13 +607,13 @@ textarea {
 }
 
 .tab-content h2 {
-    font-size: 24px;
+    font-size: 22px; /* 減小字體大小 */
     text-align: center;
     margin-bottom: 20px;
 }
 
 .tab-content .input-wrapper {
-    margin-bottom: 20px;
+    margin-bottom: 15px; /* 減小 margin */
 }
 
 .btn.full-width {
@@ -600,7 +622,7 @@ textarea {
 
 .social-login {
     text-align: center;
-    margin-top: 25px;
+    margin-top: 20px; /* 減小 margin */
 }
 
 .social-login span {
@@ -613,16 +635,12 @@ textarea {
     content: '';
     position: absolute;
     top: 50%;
-    width: 38%;
+    width: 38%; /* 調整寬度 */
     height: 1px;
     background: var(--input-border-color);
 }
-.social-login span::before {
-    left: 0;
-}
-.social-login span::after {
-    right: 0;
-}
+.social-login span::before { left: 0; }
+.social-login span::after { right: 0; }
 
 .btn-social-google {
     width: 100%;
@@ -646,4 +664,100 @@ textarea {
     background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg');
     background-size: contain;
     background-repeat: no-repeat;
+}
+
+
+/* --- 新增：響應式設計媒體查詢 --- */
+
+/* 平板 (Tablet) - 寬度小於 1024px */
+@media (max-width: 1024px) {
+    .container {
+        max-width: 90%; /* 稍微增加內容寬度佔比 */
+    }
+    .hero-section h1 {
+        font-size: 48px; /* 平板上標題 */
+    }
+    .section-title {
+        font-size: 32px; /* 平板上段落標題 */
+    }
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr); /* 平板上改為兩列 */
+    }
+     /* 讓第三個卡片單獨佔一行 */
+    .features-grid .feature-card:last-child {
+        grid-column: 1 / span 2;
+    }
+    .pricing-grid {
+        grid-template-columns: repeat(2, 1fr); /* 平板上改為兩列 */
+    }
+     /* 讓第三個卡片單獨佔一行 */
+    .pricing-grid .pricing-card:last-child {
+        grid-column: 1 / span 2;
+        justify-self: center; /* 居中顯示 */
+        max-width: 400px; /* 限制最大寬度避免過寬 */
+    }
+}
+
+/* 手機 (Mobile) - 寬度小於 768px */
+@media (max-width: 768px) {
+    .main-nav {
+        display: none; /* 手機上確認隱藏導航 (可考慮加入漢堡菜單) */
+    }
+    .hero-section h1 {
+        font-size: 36px; /* 手機上標題 */
+    }
+     .hero-section .subtitle {
+        font-size: 16px; /* 手機上副標題 */
+    }
+     .section-title {
+        font-size: 28px; /* 手機上段落標題 */
+    }
+    .features-grid, .pricing-grid {
+        grid-template-columns: 1fr; /* 手機上確認單列 */
+    }
+    /* 清除平板上為第三個卡片設定的跨列和寬度限制 */
+    .features-grid .feature-card:last-child,
+    .pricing-grid .pricing-card:last-child {
+        grid-column: auto;
+        max-width: none;
+    }
+    .settings-grid {
+        grid-template-columns: 1fr; /* 手機上確認單列 */
+    }
+     .action-buttons {
+         grid-template-columns: 1fr; /* 手機上確認單列 */
+    }
+    .contact-form {
+        grid-template-columns: 1fr; /* 手機上確認單列 */
+    }
+    .export-options {
+        grid-template-columns: 1fr; /* 手機上確認單列 */
+    }
+    .cta-buttons {
+        flex-direction: column; /* 手機上主要按鈕垂直堆疊 */
+        gap: 10px;
+    }
+     .cta-buttons .btn {
+        width: 100%; /* 堆疊後佔滿寬度 */
+    }
+     /* 手機上頭部按鈕 */
+    .header-actions .btn {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    .logo span { /* 手機上可能只顯示 Logo 圖標 */
+        /* display: none; */ /* 可選 */
+    }
+}
+
+/* 考慮橫屏模式下的調整 (可選，根據需要細化) */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero-section {
+        padding: 50px 0; /* 橫屏時減少垂直 padding */
+    }
+    #auth-modal {
+        /* 在橫屏時，彈窗可能會顯得過高，可以考慮減小內邊距或增加滾動 */
+        /* max-height: 80vh; */
+        /* overflow-y: auto; */
+    }
 }
