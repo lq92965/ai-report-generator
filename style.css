@@ -517,7 +517,7 @@ textarea {
 .loader { /* No changes needed */ }
 @keyframes load { /* No changes needed */ }
 
-/* --- Login/Signup Modal Styles --- */
+/* --- 登录/注册弹窗样式 --- */
 #auth-modal-overlay { /* No major changes needed */ }
 #auth-modal-overlay.hidden { /* No changes needed */ }
 #auth-modal {
@@ -539,8 +539,13 @@ textarea {
 }
 .auth-tabs .tab-link.active { /* No changes needed */ }
 
-.tab-content { /* No changes needed */ }
-.tab-content.active { /* No changes needed */ }
+/* --- **Fix for Tab Content Display** --- */
+.tab-content {
+    display: none; /* Hide all tab content by default */
+}
+.tab-content.active {
+    display: block; /* ONLY show the active tab content */
+}
 
 .tab-content h2 {
     font-size: var(--font-size-h3); /* Responsive modal title */
@@ -610,7 +615,7 @@ textarea {
 
 
 /* Mobile Landscape Specific Adjustments (Optimize horizontal space) */
-@media (max-width: 767px) and (orientation: landscape) {
+@media (max-width: 900px) and (orientation: landscape) { /* Adjusted max-width for landscape */
    .settings-grid {
         grid-template-columns: 1fr 1fr; /* Try 2 columns on mobile landscape */
     }
@@ -638,5 +643,15 @@ textarea {
    .feature-card, .pricing-card, .generator-container, #auth-modal { padding: var(--spacing-md); } /* Reduce card padding */
     .pricing-card .price span {
         font-size: clamp(1.8rem, 4vw + 0.8rem, 2.2rem); /* Slightly smaller price number */
+    }
+    .logo { 
+        font-size: clamp(0.9rem, 4vw, 1rem); /* Further reduce font on small screens */
+    }
+     .logo-icon {
+        font-size: clamp(1.1rem, 5vw, 1.3rem); /* Further reduce icon size */
+     }
+    .header-actions .btn {
+        padding: 6px 10px; /* Even smaller buttons */
+        font-size: 13px;
     }
 }
