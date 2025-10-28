@@ -10,7 +10,7 @@ import jwt from 'jsonwebtoken';
 const app = express();
 const port = process.env.PORT || 3000;
 const API_KEY = process.env.GOOGLE_API_KEY;
-const MODEL_NAME = 'gemini-1.0-pro'; // 使用我們確認可用的模型
+const MODEL_NAME = 'gemini-2.5-pro'; // 使用我們確認可用的模型
 const MONGO_URI = process.env.MONGO_URI;
 const JWT_SECRET = process.env.JWT_SECRET;
 
