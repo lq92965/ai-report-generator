@@ -25,11 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModalBtn = document.getElementById('close-modal-btn');
     const authTabs = document.querySelectorAll('.tab-link');
     const tabContents = document.querySelectorAll('.tab-content');
-    const loginForm = document.getElementById('login').querySelector('form');
-    const signupForm = document.getElementById('signup').querySelector('form');
+    const loginForm = document.getElementById('login')?.querySelector('form'); // Added safety check
+    const signupForm = document.getElementById('signup')?.querySelector('form'); // Added safety check
     const socialLoginButtons = document.querySelectorAll('.btn-social-google');
-    
-    // PayPal 相關按鈕
     const choosePlanButtons = document.querySelectorAll('.choose-plan-btn');
 
     // --- Helper Functions ---
@@ -45,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateUserNav() {
+        if (!headerActions) return; // Safety check
         headerActions.innerHTML = '';
         if (token) {
             const myAccountBtn = document.createElement('a');
@@ -70,14 +69,17 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             const loginBtn = document.createElement('a');
             loginBtn.href = '#';
+            loginBtn.id = 'login-btn'; // Re-add ID for listener below
             loginBtn.className = 'btn btn-secondary';
             loginBtn.textContent = 'Login';
             
             const signupBtn = document.createElement('a');
             signupBtn.href = '#';
+            signupBtn.id = 'signup-btn'; // Re-add ID for listener below
             signupBtn.className = 'btn btn-primary';
             signupBtn.textContent = 'Sign Up';
 
+            // Add listeners *after* creating the buttons
             loginBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 openModal('login');
@@ -93,157 +95,169 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Main Generation Logic with Login Check ---
-    generateBtn.addEventListener('click', async () => {
-        if (!token) {
-            alert('Please log in or sign up to generate a report.');
-            openModal('login');
-            return;
-        }
-        const allOptions = {
-            userPrompt: promptTextarea.value,
-            template: templateSelect.value,
-            detailLevel: detailLevelSelect.value,
-            role: roleSelect.value,
-            tone: toneSelect.value,
-            language: languageSelect.value,
-        };
-        if (!allOptions.userPrompt.trim()) {
-            alert('Please enter your key points first.');
-            return;
-        }
-        generateBtn.disabled = true;
-        resultBox.innerHTML = '<div class="loader"></div>';
-        resultBox.style.color = 'var(--text-primary)';
-        try {
-            const response = await fetch(`${API_BASE_URL}/api/generate`, {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(allOptions),
-            });
-            if (!response.ok) {
-                // Try to get error message from backend if available
-                let errorMsg = `HTTP error! status: ${response.status}`;
-                try {
-                    const errorData = await response.json();
-                    errorMsg = errorData.error || errorMsg;
-                } catch(e) { /* Ignore if response is not JSON */ }
-                throw new Error(errorMsg);
-            }
-            const data = await response.json();
-            resultBox.innerText = data.generatedText;
-        } catch (error) {
-            console.error('Error calling generate API:', error);
-            resultBox.innerText = `Failed to generate report. ${error.message}. Please try again later.`;
-            resultBox.style.color = 'red';
-        } finally {
-            generateBtn.disabled = false;
-        }
-    });
-
-    // --- Copy Button Logic ---
-    copyBtn.addEventListener('click', () => {
-        const textToCopy = resultBox.innerText;
-        if (textToCopy && textToCopy !== 'The generated report will appear here...' && !textToCopy.startsWith('Failed to generate report')) {
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                const originalText = copyBtn.innerText;
-                copyBtn.innerText = 'Copied!';
-                setTimeout(() => { copyBtn.innerText = originalText; }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-                alert('Failed to copy text.');
-            });
-        } else {
-            alert('Nothing to copy yet. Please generate a report first.');
-        }
-    });
-
-    // --- Export Buttons Logic ---
-    exportButtons.forEach(button => {
-        button.addEventListener('click', () => {
+    if (generateBtn) {
+        generateBtn.addEventListener('click', async () => {
             if (!token) {
-                alert('Please log in or sign up to export a report.');
+                alert('Please log in or sign up to generate a report.');
                 openModal('login');
                 return;
             }
-
-            const format = button.dataset.format;
-            const text = resultBox.innerText;
-            const filename = `report-${new Date().toISOString().split('T')[0]}`;
-
-            if (!text || text === 'The generated report will appear here...' || text.startsWith('Failed to generate report')) {
-                alert('Please generate a valid report first before exporting.');
+            const allOptions = {
+                userPrompt: promptTextarea?.value || '',
+                template: templateSelect?.value || '',
+                detailLevel: detailLevelSelect?.value || '',
+                role: roleSelect?.value || '',
+                tone: toneSelect?.value || '',
+                language: languageSelect?.value || '',
+            };
+            if (!allOptions.userPrompt.trim()) {
+                alert('Please enter your key points first.');
                 return;
             }
-
-            if (format === 'PDF') {
-                // **Important**: PDF export should ideally check user's plan status from backend
-                // For now, we rely on the button class for the "Pro" check
-                if (button.classList.contains('premium-feature')) { 
-                    // In a real app, check if user.plan === 'pro'
-                    // For demo, we just show the alert
-                     alert(`PDF export is a Pro feature. Please upgrade your plan.`);
-                     return; 
-                     // If user *was* Pro, the code below would run:
-                     // const { jsPDF } = window.jspdf;
-                     // const doc = new jsPDF();
-                     // const splitText = doc.splitTextToSize(text, 180);
-                     // doc.text(splitText, 10, 10);
-                     // doc.save(`${filename}.pdf`);
-                } else {
-                     // Non-pro users trying PDF (should ideally not happen if button disabled, but as fallback)
-                     alert(`PDF export is a Pro feature. Please upgrade your plan.`);
+            generateBtn.disabled = true;
+            if (resultBox) {
+                resultBox.innerHTML = '<div class="loader"></div>';
+                resultBox.style.color = 'var(--text-primary)';
+            }
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/generate`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(allOptions),
+                });
+                if (!response.ok) {
+                    let errorMsg = `HTTP error! status: ${response.status}`;
+                    try {
+                        const errorData = await response.json();
+                        errorMsg = errorData.error || errorData.message || errorMsg;
+                    } catch(e) { /* Ignore if response is not JSON */ }
+                    throw new Error(errorMsg);
                 }
-
-            } else if (format === 'Markdown') {
-                const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
-                downloadFile(blob, `${filename}.md`);
-            } else if (format === 'Word') {
-                try {
-                    const paragraphs = text.split('\n').map(p => new docx.Paragraph({ children: [new docx.TextRun(p)] }));
-                    const doc = new docx.Document({
-                        sections: [{ children: paragraphs }],
-                    });
-                    docx.Packer.toBlob(doc).then(blob => {
-                        downloadFile(blob, `${filename}.docx`);
-                    }).catch(err => {
-                         console.error("Error creating Word document:", err);
-                         alert("Failed to generate Word file.");
-                    });
-                } catch (err) {
-                    console.error("Error with docx library:", err);
-                    alert("Failed to generate Word file due to library error.");
+                const data = await response.json();
+                if(resultBox) resultBox.innerText = data.generatedText;
+            } catch (error) {
+                console.error('Error calling generate API:', error);
+                if (resultBox) {
+                    resultBox.innerText = `Failed to generate report. ${error.message}. Please try again later.`;
+                    resultBox.style.color = 'red';
                 }
+            } finally {
+                generateBtn.disabled = false;
             }
         });
-    });
+    }
+
+
+    // --- Copy Button Logic ---
+    if (copyBtn && resultBox) {
+        copyBtn.addEventListener('click', () => {
+            const textToCopy = resultBox.innerText;
+            if (textToCopy && textToCopy !== 'The generated report will appear here...' && !textToCopy.startsWith('Failed to generate report')) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const originalText = copyBtn.innerText;
+                    copyBtn.innerText = 'Copied!';
+                    setTimeout(() => { copyBtn.innerText = originalText; }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                    alert('Failed to copy text.');
+                });
+            } else {
+                alert('Nothing to copy yet. Please generate a report first.');
+            }
+        });
+    }
+
+    // --- Export Buttons Logic ---
+    if (exportButtons && resultBox) {
+        exportButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (!token) {
+                    alert('Please log in or sign up to export a report.');
+                    openModal('login');
+                    return;
+                }
+
+                const format = button.dataset.format;
+                const text = resultBox.innerText;
+                const filename = `report-${new Date().toISOString().split('T')[0]}`;
+
+                if (!text || text === 'The generated report will appear here...' || text.startsWith('Failed to generate report')) {
+                    alert('Please generate a valid report first before exporting.');
+                    return;
+                }
+
+                if (format === 'PDF') {
+                    if (button.classList.contains('premium-feature')) { 
+                         alert(`PDF export is a Pro feature. Please upgrade your plan.`);
+                         return; 
+                    } else {
+                         alert(`PDF export is a Pro feature. Please upgrade your plan.`);
+                    }
+                } else if (format === 'Markdown') {
+                    const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+                    downloadFile(blob, `${filename}.md`);
+                } else if (format === 'Word') {
+                    try {
+                        // Ensure docx is loaded
+                        if (typeof docx === 'undefined') {
+                            alert("Word export library not loaded. Please refresh.");
+                            console.error("docx library is not defined.");
+                            return;
+                        }
+                        const paragraphs = text.split('\n').map(p => new docx.Paragraph({ children: [new docx.TextRun(p)] }));
+                        const doc = new docx.Document({
+                            sections: [{ children: paragraphs }],
+                        });
+                        docx.Packer.toBlob(doc).then(blob => {
+                            downloadFile(blob, `${filename}.docx`);
+                        }).catch(err => {
+                             console.error("Error creating Word document:", err);
+                             alert("Failed to generate Word file.");
+                        });
+                    } catch (err) {
+                        console.error("Error with docx library:", err);
+                        alert("Failed to generate Word file due to library error.");
+                    }
+                }
+            });
+        });
+    }
 
     // --- UI Interaction Logic (Smooth Scroll, Pricing Cards) ---
-    allLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth' });
-            }
+    if (allLinks) {
+        allLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                // Only prevent default for internal links
+                if (targetId && targetId.startsWith('#')) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
         });
-    });
-    pricingCards.forEach(card => {
-        card.addEventListener('click', () => {
-            // Only add selection logic if it's not the free card's link being clicked
-            if (!card.querySelector('a[href="#generator"]')) {
+    }
+    if (pricingCards) {
+        pricingCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                // Prevent selection logic if clicking the button/link inside
+                if (e.target.closest('a') || e.target.closest('button') || e.target.closest('.paypal-button-container')) {
+                    return;
+                }
                 pricingCards.forEach(c => c.classList.remove('selected-plan'));
                 card.classList.add('selected-plan');
-            }
+            });
         });
-    });
+    }
 
     // --- Enhanced Contact Form Validation ---
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (emailInput) { // Check if element exists before adding listener
+    if (emailInput && emailError) { 
         emailInput.addEventListener('input', () => {
             if (emailInput.value && !emailRegex.test(emailInput.value)) {
                 emailError.textContent = 'Please enter a valid email format.';
@@ -253,31 +267,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (contactForm) { // Check if element exists
+    if (contactForm && formStatus) { 
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = emailInput.value;
-            const message = document.getElementById('message').value;
+            const nameInput = document.getElementById('name');
+            const messageInput = document.getElementById('message');
+            
+            const name = nameInput ? nameInput.value : '';
+            const email = emailInput ? emailInput.value : '';
+            const message = messageInput ? messageInput.value : '';
 
             formStatus.textContent = '';
             formStatus.className = '';
             if(emailError) emailError.textContent = '';
 
+            let hasError = false;
             if (!name.trim() || !email.trim() || !message.trim()) {
                 formStatus.textContent = 'Please fill in all required fields.';
                 formStatus.classList.add('error');
-                return;
+                hasError = true;
             }
 
-            if (!emailRegex.test(email)) {
+            if (email && !emailRegex.test(email)) {
                 if(emailError) emailError.textContent = 'Please enter a valid email format.';
-                // Also show general error
-                formStatus.textContent = 'Please correct the errors before submitting.';
-                formStatus.classList.add('error');
-                return;
+                if (!hasError) { // Don't overwrite the "fill all fields" message
+                    formStatus.textContent = 'Please correct the errors before submitting.';
+                    formStatus.classList.add('error');
+                }
+                hasError = true;
             }
+            
+            if (hasError) return;
 
+            // --- If validation passes ---
             formStatus.textContent = 'Thank you for your feedback! Message sent successfully.';
             formStatus.classList.add('success');
             
@@ -293,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Login/Signup Modal Logic ---
     function openModal(tabToShow = 'login') {
-        if (!authModalOverlay) return; // Exit if modal doesn't exist
+        if (!authModalOverlay || !authTabs || !tabContents) return; // Safety check
         authModalOverlay.classList.remove('hidden');
         
         authTabs.forEach(tab => tab.classList.remove('active'));
@@ -310,7 +332,6 @@ document.addEventListener('DOMContentLoaded', () => {
         authModalOverlay.classList.add('hidden');
     }
     
-    // Add listeners only if elements exist
     if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
     if (authModalOverlay) {
         authModalOverlay.addEventListener('click', (e) => {
@@ -331,14 +352,19 @@ document.addEventListener('DOMContentLoaded', () => {
         signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitBtn = signupForm.querySelector('button[type="submit"]');
+            if (!submitBtn) return; // Safety check
             const originalBtnText = submitBtn.textContent;
             
             submitBtn.disabled = true;
             submitBtn.textContent = 'Creating Account...';
 
-            const name = document.getElementById('signup-name').value;
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
+            const nameInput = document.getElementById('signup-name');
+            const emailInput = document.getElementById('signup-email');
+            const passwordInput = document.getElementById('signup-password');
+
+            const name = nameInput ? nameInput.value : '';
+            const email = emailInput ? emailInput.value : '';
+            const password = passwordInput ? passwordInput.value : '';
             try {
                 const res = await fetch(`${API_BASE_URL}/api/register`, {
                     method: 'POST',
@@ -346,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify({ name, email, password }),
                 });
                 const data = await res.json();
-                if (!res.ok) throw new Error(data.message || 'Unknown error');
+                if (!res.ok) throw new Error(data.message || 'Unknown error during registration');
                 alert('Registration successful! Please log in.');
                 openModal('login');
                 if(signupForm) signupForm.reset(); // Reset form on success
@@ -363,13 +389,17 @@ document.addEventListener('DOMContentLoaded', () => {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitBtn = loginForm.querySelector('button[type="submit"]');
+             if (!submitBtn) return; // Safety check
             const originalBtnText = submitBtn.textContent;
 
             submitBtn.disabled = true;
             submitBtn.textContent = 'Logging In...';
+            
+            const emailInput = document.getElementById('login-email');
+            const passwordInput = document.getElementById('login-password');
 
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
+            const email = emailInput ? emailInput.value : '';
+            const password = passwordInput ? passwordInput.value : '';
             try {
                 const res = await fetch(`${API_BASE_URL}/api/login`, {
                     method: 'POST',
@@ -377,7 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify({ email, password }),
                 });
                 const data = await res.json();
-                if (!res.ok) throw new Error(data.message || 'Unknown error');
+                if (!res.ok) throw new Error(data.message || 'Unknown error during login');
                 token = data.token;
                 localStorage.setItem('token', token);
                 alert(data.message);
@@ -403,7 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- PayPal Button Rendering Logic ---
-    if (choosePlanButtons) {
+    if (choosePlanButtons && typeof paypal !== 'undefined') { // Check if paypal exists
         choosePlanButtons.forEach(button => {
             const planId = button.dataset.planId;
             const amount = button.dataset.amount;
@@ -412,61 +442,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!containerElement) {
                 console.warn(`PayPal container ${containerId} not found.`);
-                return; // Skip if container doesn't exist
+                button.style.display = 'block'; // Show original button if container missing
+                return; 
             }
 
             // Hide original button, prepare for PayPal button
             button.style.display = 'none'; 
             
             try {
-                // Ensure paypal object is available
-                if (typeof paypal === 'undefined') {
-                    console.error('PayPal SDK not loaded.');
-                    containerElement.innerHTML = '<p style="color:red;">Error loading payment options.</p>';
-                    return;
-                }
-
                 paypal.Buttons({
                     createOrder: function(data, actions) {
-                        // Set up the transaction details
+                        // Check if logged in before creating order
+                        if (!token) {
+                            alert('Please log in or sign up before purchasing a plan.');
+                            openModal('login');
+                            return Promise.reject(new Error('User not logged in')); // Stop order creation
+                        }
                         return actions.order.create({
                             purchase_units: [{
+                                description: `Reportify AI - ${planId.charAt(0).toUpperCase() + planId.slice(1)} Plan`, // Add description
                                 amount: {
-                                    value: amount // Get amount from button data
+                                    value: amount 
                                 }
                             }]
                         });
                     },
                     onApprove: function(data, actions) {
-                        // Capture the funds from the transaction
                         return actions.order.capture().then(function(details) {
-                            // **IMPORTANT**: Actions after successful payment
-                            // Show success message, or ideally,
-                            // send confirmation to your backend to verify and update user status
-                            alert('Transaction completed by ' + details.payer.name.given_name + '! Payment successful.');
-                            
-                            // Example: Send confirmation to backend
-                            // fetch(`${API_BASE_URL}/api/payment/success`, {
+                            alert('Transaction completed by ' + details.payer.name.given_name + '! Payment successful. Your plan should be active shortly.');
+                            // **TODO**: Send details.id (PayPal Order ID) and planId to your backend
+                            // for verification and updating the user's subscription status.
+                            console.log('Capture result', details); 
+                            // Example backend call:
+                            // fetch(`${API_BASE_URL}/api/paypal/capture`, {
                             //     method: 'POST',
-                            //     headers: { 
-                            //        'Content-Type': 'application/json',
-                            //        'Authorization': `Bearer ${token}` 
-                            //     },
-                            //     body: JSON.stringify({ orderId: data.orderID, plan: planId })
+                            //     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                            //     body: JSON.stringify({ orderID: data.orderID, planId: planId })
                             // });
                         });
                     },
                     onError: function(err) {
-                        // Handle errors
                         console.error("PayPal button error:", err);
                         alert("An error occurred with the payment. Please try again or contact support.");
                     }
-                }).render(containerId); // Render the button into the container div
+                }).render(containerId); 
             } catch (error) {
                  console.error("Error rendering PayPal button:", error);
                  containerElement.innerHTML = '<p style="color:red;">Could not load payment options.</p>';
+                 button.style.display = 'block'; // Show original button if PayPal fails
             }
         });
+    } else if (typeof paypal === 'undefined') {
+        console.error('PayPal SDK script failed to load or is blocked.');
+        // Optionally show original buttons if PayPal SDK fails
+        choosePlanButtons.forEach(button => { button.style.display = 'block'; });
+        document.querySelectorAll('.paypal-button-container').forEach(el => el.innerHTML = '<p style="color:orange; font-size: small;">Payment gateway loading error.</p>');
     }
 
 
