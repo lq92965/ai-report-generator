@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
 import axios from 'axios';
-import { MongoClient, ObjectId } from 'mongodb'; // Import ObjectId
+import { MongoClient, ObjectId } from 'mongodb'; // 引入 ObjectId
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -34,8 +34,6 @@ async function connectDB() {
     templatesCollection = db.collection('templates'); // 初始化 templates 集合
     // 為 userId 創建索引以加速模板查找
     await templatesCollection.createIndex({ userId: 1 });
-    // 可選：為每個用戶的模板名稱創建唯一索引
-    // await templatesCollection.createIndex({ userId: 1, templateName: 1 }, { unique: true });
     console.log("成功連接到 MongoDB Atlas 並初始化 Collections");
   } catch (error) {
     console.error("連接數據庫或創建索引失敗", error);
@@ -45,9 +43,8 @@ async function connectDB() {
 connectDB();
 
 // --- 中間件設置 ---
-// 允許來自您的前端域名的請求
 app.use(cors({
-  origin: 'https://goreportify.com' 
+  origin: 'https://goreportify.com' // 只允許來自這個前端網域的請求
 }));
 app.use(express.json());
 
@@ -58,21 +55,19 @@ const authenticateToken = (req, res, next) => {
 
     if (token == null) {
         console.log('驗證失敗：缺少 Token');
-        return res.sendStatus(401); // 如果沒有 token
+        return res.sendStatus(401); 
     }
 
     jwt.verify(token, JWT_SECRET, (err, user) => {
         if (err) {
-            console.error("JWT 驗證錯誤:", err.message); // 記錄驗證錯誤
-            return res.sendStatus(403); // 如果 token 無效或密鑰錯誤
+            console.error("JWT 驗證錯誤:", err.message); 
+            return res.sendStatus(403); 
         }
-        // 將驗證後的 userId (應該是 JWT 創建時的字符串) 附加到請求對象上
         req.userId = user.userId; 
-        console.log(`Token 驗證成功，用戶 ID: ${req.userId}`); // 添加日誌
-        next(); // 將執行權交給下一個請求處理程序
+        console.log(`Token 驗證成功，用戶 ID: ${req.userId}`); 
+        next(); 
     });
 };
-
 
 // --- 健康檢查路由 ---
 app.get('/', (req, res) => {
@@ -110,7 +105,6 @@ app.post('/api/login', async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ message: "無效的郵箱或密碼" });
 
-        // 確保 user._id 在簽發 token 前轉換為字符串
         const token = jwt.sign({ userId: user._id.toString() }, JWT_SECRET, { expiresIn: '1d' }); 
         res.json({ token, message: "登錄成功" });
     } catch (error) {
@@ -126,12 +120,11 @@ app.post('/api/login', async (req, res) => {
 app.post('/api/templates', authenticateToken, async (req, res) => {
     try {
         const { templateName, templateContent } = req.body;
-        // userId 來自 authenticateToken 中間件
         if (!req.userId) return res.status(401).json({ message: "用戶未認證" }); 
-        
+
         let userIdObjectId;
         try {
-            userIdObjectId = new ObjectId(req.userId); // 將字符串 userId 轉回 ObjectId
+            userIdObjectId = new ObjectId(req.userId); 
         } catch (e) {
             console.error("創建模板時無效的 userId 格式:", req.userId);
             return res.status(400).json({ message: "無效的用戶ID格式" });
@@ -162,7 +155,7 @@ app.post('/api/templates', authenticateToken, async (req, res) => {
 app.get('/api/templates', authenticateToken, async (req, res) => {
     try {
         if (!req.userId) return res.status(401).json({ message: "用戶未認證" });
-        
+
         let userIdObjectId;
          try {
             userIdObjectId = new ObjectId(req.userId);
@@ -170,10 +163,9 @@ app.get('/api/templates', authenticateToken, async (req, res) => {
             console.error("獲取模板時無效的 userId 格式:", req.userId);
             return res.status(400).json({ message: "無效的用戶ID格式" });
         }
-        
+
         if (!templatesCollection) return res.status(500).json({ message: "數據庫連接未就緒" });
 
-        // 按創建時間降序排序
         const templates = await templatesCollection.find({ userId: userIdObjectId }).sort({ createdAt: -1 }).toArray(); 
         res.json(templates); // 返回模板數組
 
@@ -191,7 +183,7 @@ app.put('/api/templates/:id', authenticateToken, async (req, res) => {
         let templateIdObjectId;
         let userIdObjectId;
         try {
-             templateIdObjectId = new ObjectId(req.params.id); // 從 URL 獲取模板 ID
+             templateIdObjectId = new ObjectId(req.params.id); 
              userIdObjectId = new ObjectId(req.userId);
         } catch(e) {
              console.error("更新模板時無效的 ID 格式:", e);
@@ -206,7 +198,6 @@ app.put('/api/templates/:id', authenticateToken, async (req, res) => {
          if (!templatesCollection) return res.status(500).json({ message: "數據庫連接未就緒" });
 
         const result = await templatesCollection.updateOne(
-            // 確保用戶只能修改自己的模板
             { _id: templateIdObjectId, userId: userIdObjectId }, 
             { $set: { templateName, templateContent, updatedAt: new Date() } }
         );
@@ -226,7 +217,7 @@ app.put('/api/templates/:id', authenticateToken, async (req, res) => {
 app.delete('/api/templates/:id', authenticateToken, async (req, res) => {
     try {
         if (!req.userId) return res.status(401).json({ message: "用戶未認證" });
-        
+
         let templateIdObjectId;
         let userIdObjectId;
          try {
@@ -236,10 +227,9 @@ app.delete('/api/templates/:id', authenticateToken, async (req, res) => {
              console.error("刪除模板時無效的 ID 格式:", e);
              return res.status(400).json({ message: "無效的ID格式" });
         }
-        
+
          if (!templatesCollection) return res.status(500).json({ message: "數據庫連接未就緒" });
 
-        // 確保用戶只能刪除自己的模板
         const result = await templatesCollection.deleteOne({ _id: templateIdObjectId, userId: userIdObjectId }); 
 
         if (result.deletedCount === 0) {
@@ -258,7 +248,7 @@ app.delete('/api/templates/:id', authenticateToken, async (req, res) => {
 app.post('/api/generate', authenticateToken, async (req, res) => { 
   const { userPrompt, template, detailLevel, role, tone, language, selectedTemplateId } = req.body; 
   if (!req.userId) return res.status(401).json({ message: "用戶未認證" });
-  
+
   let userIdObjectId;
     try {
         userIdObjectId = new ObjectId(req.userId);
@@ -277,7 +267,7 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
       // 根據 selectedTemplateId 獲取模板或使用默認 Prompt
       if (selectedTemplateId && selectedTemplateId !== 'default') {
           if (!templatesCollection) throw new Error("數據庫連接未就緒");
-          
+
           let templateIdObjectId;
            try {
                templateIdObjectId = new ObjectId(selectedTemplateId);
@@ -285,14 +275,13 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
                 console.error("生成報告時無效的模板 ID 格式:", selectedTemplateId);
                 return res.status(400).json({ error: "無效的模板ID格式" });
            }
-           
+
           const userTemplate = await templatesCollection.findOne({ _id: templateIdObjectId, userId: userIdObjectId });
           if (!userTemplate) {
               console.warn(`模板 ${selectedTemplateId} 未找到或用戶 ${req.userId} 無權限訪問`);
               return res.status(404).json({ error: "選擇的模板未找到或無權限使用" });
           }
-          
-          // **更健壯的 Prompt 組合方式：結合模板內容和生成選項**
+
            finalPrompt = `
             Please use the following template structure to generate the report.
             Act as a ${role}, maintain a ${tone} tone, provide a ${detailLevel} level of detail, and write in ${language}.
@@ -328,22 +317,23 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
       }
 
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
-      
+
       const response = await axios.post(apiUrl, {
         contents: [{ parts: [{ text: finalPrompt }] }]
       });
 
-      // 安全地訪問生成的文本
       const generatedText = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || "AI response format error.";
       res.json({ generatedText: generatedText });
 
   } catch (error) {
     console.error("生成報告失敗:", error.response ? JSON.stringify(error.response.data, null, 2) : error.message);
-    // 向前端返回更友好的錯誤信息
     let userErrorMessage = 'Failed to generate content due to an internal server error.';
     if(error.response && error.response.data && error.response.data.error && error.response.data.error.message){
-        // 如果 Google AI 返回了具體錯誤，可以考慮是否要部分透露
-        // userErrorMessage = `AI generation failed: ${error.response.data.error.message}`; 
+         // 捕獲 Google AI 返回的錯誤
+         if (error.response.data.error.message.includes("is not found for API version")) {
+            userErrorMessage = "AI Model configuration error. Please contact support.";
+            console.error(`FATAL: Model name ${MODEL_NAME} is incorrect or unavailable in this project.`);
+         }
     } else if (error.message.includes("選擇的模板未找到")) {
          userErrorMessage = error.message;
     }
