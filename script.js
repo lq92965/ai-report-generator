@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         headerActions.innerHTML = '';
         if (token) {
             const myAccountBtn = document.createElement('a');
-            myAccountBtn.href = '#'; // Placeholder for account page
+            myAccountBtn.href = 'templates.html'; // Placeholder for account page
             myAccountBtn.className = 'btn btn-secondary';
             myAccountBtn.textContent = 'My Account';
             

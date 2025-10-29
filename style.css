@@ -612,6 +612,159 @@ textarea {
 .btn-social-google { /* No major changes needed */ }
 .btn-social-google::before { /* No changes needed */ }
 
+/* --- 新增：模板管理頁面 (templates.html) 樣式 --- */
+
+.template-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    flex-wrap: wrap; /* 在小屏幕上換行 */
+    gap: var(--spacing-md);
+}
+
+.template-header .section-title {
+    margin-bottom: 0; /* 移除標題的底部邊距 */
+}
+
+.template-list-container {
+    display: grid;
+    grid-template-columns: 1fr; /* 移動端默認單列 */
+    gap: var(--spacing-lg);
+}
+
+.template-card {
+    background-color: var(--card-background);
+    border-radius: var(--card-border-radius);
+    padding: var(--spacing-lg);
+    box-shadow: var(--card-shadow);
+    border: 1px solid #EAEAEA;
+    display: flex;
+    flex-direction: column;
+}
+
+.template-card h3 {
+    font-size: var(--font-size-h3);
+    margin-bottom: var(--spacing-sm);
+    word-break: break-word;
+}
+
+.template-card p {
+    color: var(--text-secondary);
+    flex-grow: 1;
+    margin-bottom: var(--spacing-md);
+    white-space: pre-wrap; /* 保持換行 */
+    word-break: break-word; /* 防止長單詞溢出 */
+}
+
+.template-card-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: auto; /* 將按鈕推到底部 */
+}
+
+.template-card-actions .btn-danger {
+    background-color: #FF3B30;
+    color: white;
+    border-color: #FF3B30;
+}
+ .template-card-actions .btn-danger:hover {
+    background-color: #c02d25;
+    border-color: #c02d25;
+}
+
+
+/* --- 模板編輯彈窗樣式 (類似登錄彈窗) --- */
+#template-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex; /* Use flex to control visibility */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0s linear 0s;
+    padding: 15px;
+}
+
+#template-modal-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+    pointer-events: none;
+}
+
+#template-modal {
+    background: var(--card-background);
+    padding: var(--spacing-lg);
+    border-radius: var(--card-border-radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px; /* 模板編輯器可以更寬 */
+    position: relative;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+    max-height: 90vh; /* 限制最大高度 */
+    display: flex; /* Use flex for internal scrolling */
+    flex-direction: column;
+}
+
+#template-modal-overlay.hidden #template-modal {
+    transform: scale(0.95);
+}
+
+#close-template-modal-btn {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    background: none;
+    border: none;
+    font-size: clamp(1.2rem, 2vw + 0.5rem, 1.5rem);
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 5px;
+    line-height: 1;
+}
+
+#template-modal h3 {
+    font-size: var(--font-size-h3);
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    flex-shrink: 0; /* Prevent title from shrinking */
+}
+
+#template-form {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Allow form content to scroll if modal is too short */
+}
+    
+#template-form small {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: calc(-1 * var(--spacing-sm) + 5px); /* Pull up slightly */
+    display: block;
+    margin-bottom: var(--spacing-md);
+}
+    
+#template-form-status {
+     text-align: center;
+     margin-bottom: var(--spacing-md);
+     font-weight: 500;
+     height: 1.2em; /* Reserve space */
+}
+
+/* --- 在媒體查詢中為模板列表添加列 --- */
+@media (min-width: 1024px) {
+    .template-list-container {
+         grid-template-columns: repeat(2, 1fr); /* 桌面改為兩列 */
+    }
+}
 
 /* === Responsive Breakpoints Start === */
 

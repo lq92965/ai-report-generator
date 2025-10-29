@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Templates - Reportify AI</title>
+    <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo"> <span class="logo-icon">🐦</span>
+                <span>Reportify AI</span>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="index.html#pricing">Pricing</a></li>
+                    <li><a href="index.html#generator">Generator</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="template-manager" class="generator-section">
+            <div class="container">
+                <div class="template-header">
+                    <h2 class="section-title">My Templates</h2>
+                    <button id="create-new-template-btn" class="btn btn-primary">Create New Template</button>
+                </div>
+
+                <div id="template-list" class="template-list-container">
+                    <p id="loading-templates">Loading your templates...</p>
+                </div>
+
+                <div id="template-modal-overlay" class="hidden">
+                    <div id="template-modal">
+                        <button id="close-template-modal-btn">&times;</button>
+                        <h3 id="template-modal-title">Create New Template</h3>
+                        <form id="template-form">
+                            <input type="hidden" id="template-id-input"> <div class="input-wrapper">
+                                <label for="template-name">Template Name</label>
+                                <input type="text" id="template-name" placeholder="e.g., My Weekly Sales Report" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="template-content">Template Content (Use [variable] for placeholders)</label>
+                                <textarea id="template-content" rows="10" placeholder="e.g., **Weekly Summary**:\n[Summary of the week]\n\n**Next Steps**:\n[Action items for next week]" required></textarea>
+                                <small>Use square brackets like [variable] to mark where your key points should go.</small>
+                            </div>
+                            <div id="template-form-status" class="error-message"></div>
+                            <button type="submit" id="save-template-btn" class="btn btn-primary full-width">Save Template</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+       <div class="container">
+            <p>&copy; 2025 Reportify AI. All Rights Reserved.</p>
+       </div>
+    </footer>
+
+    <script src="templates.js" defer></script>
+</body>
+</html>
