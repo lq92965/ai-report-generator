@@ -352,9 +352,6 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
 });
 
 // --- 啟動伺服器 ---
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Server is running on port ${port}, listening on all interfaces.`);
-});
 // --- 获取用户个人资料 ---
 app.get('/api/user/profile', authenticateToken, async (req, res) => {
   console.log('GET /api/user/profile route was hit!');
@@ -409,4 +406,7 @@ app.put('/api/user/profile', authenticateToken, async (req, res) => {
     console.error("更新个人资料失败:", error);
     res.status(500).json({ message: "服务器内部错误" }); // <--- 这是【已修复】的行
   }
+});
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server is running on port ${port}, listening on all interfaces.`);
 });
