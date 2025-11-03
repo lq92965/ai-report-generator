@@ -355,3 +355,58 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server is running on port ${port}, listening on all interfaces.`);
 });
+// --- 获取用户个人资料 ---
+app.get('/api/user/profile', authenticateToken, async (req, res) => {
+  console.log('GET /api/user/profile route was hit!');
+  try {
+    const userId = new ObjectId(req.userId); // 从 token 中获取 userId
+    const user = await db.collection('users').findOne({ _id: userId });
+
+    if (!user) {
+      return res.status(404).json({ message: "未找到用户" });
+    }
+
+    // 只返回安全的信息
+    res.json({
+      email: user.email,
+      name: user.name || '' // 如果 name 不存在，返回空字符串
+    });
+    
+  } catch (error) {
+    console.error("获取个人资料失败:", error);
+    res.status(500).json({ message: "服务器内部错误" });
+  }
+});
+
+// --- 更新用户个人资料 (例如，修改名称) ---
+app.put('/api/user/profile', authenticateToken, async (req, res) => {
+  console.log('PUT /api/user/profile route was hit!');
+  const { name } = req.body; // 从请求体中获取新名称
+
+  if (typeof name !== 'string' || name.trim() === '') {
+    return res.status(400).json({ message: "显示名称不能为空" });
+  }
+
+  try {
+    const userId = new ObjectId(req.userId); // 从 token 中获取 userId
+    
+    const updateResult = await db.collection('users').updateOne(
+      { _id: userId },
+      { $set: { name: name.trim() } }
+    );
+
+    if (updateResult.matchedCount === 0) {
+      return res.status(404).json({ message: "未找到用户" });
+    }
+
+    // 返回更新后的安全信息
+    res.json({
+      message: "个人资料已成功更新",
+      name: name.trim()
+    });
+
+  } catch (error) {
+    console.error("更新个人资料失败:", error);
+    res.status(500).json({ message: "服务器内部错误" }); // <--- 这是【已修复】的行
+  }
+});
