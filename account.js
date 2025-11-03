@@ -1,47 +1,30 @@
 // account.js
-
-// -----------------------------------------------------------------
-// 全局变量和 API 基本 URL
-// -----------------------------------------------------------------
-
-// 确保我们使用和 templates.js 相同的 API 基础
 const API_BASE_URL = 'https://api.goreportify.com'; 
 const token = localStorage.getItem('token');
 
-// -----------------------------------------------------------------
-// 页面加载时执行的主函数
-// -----------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-    // 检查用户是否登录
     if (!token) {
-        // 如果没有 token，立即重定向到主页（或登录页）
         window.location.href = 'index.html'; 
         return;
     }
 
     // 绑定 DOM 元素
-    const logoutBtn = document.getElementById('logout-btn');
     const profileForm = document.getElementById('profile-form');
     const profileEmailInput = document.getElementById('profile-email');
     const profileNameInput = document.getElementById('profile-name');
     const profileStatus = document.getElementById('profile-status');
+    const headerActions = document.querySelector('.header-actions'); // 获取导航栏容器
 
-    // 1. 绑定“退出登录”按钮
-    logoutBtn.addEventListener('click', () => {
-        localStorage.removeItem('token'); // 清除 token
-        window.location.href = 'index.html'; // 重定向到主页
-    });
-
-    // 2. 页面加载时，获取当前用户信息
+    // 1. 页面加载时，获取当前用户信息 (并更新导航栏)
     fetchUserProfile();
 
-    // 3. 绑定“保存修改”表单
+    // 2. 绑定“保存修改”表单
     profileForm.addEventListener('submit', async (e) => {
-        e.preventDefault(); // 阻止表单默认提交
+        e.preventDefault(); 
         const newName = profileNameInput.value.trim();
 
         if (!newName) {
-            showStatusMessage('显示名称不能为空', true);
+            showStatusMessage('Display Name cannot be empty', true);
             return;
         }
 
@@ -57,13 +40,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message || '更新失败');
+                throw new Error(errorData.message || 'Update failed');
             }
 
             const result = await response.json();
-            showStatusMessage('个人资料已成功更新！', false);
-            // 可选：更新输入框的值（虽然它已经是新值了）
+            showStatusMessage('Profile updated successfully!', false);
             profileNameInput.value = result.name; 
+            
+            // 【新功能】保存成功后，也立即更新右上角的名字
+            updateUserNav(result); 
 
         } catch (error) {
             console.error('Error updating profile:', error);
@@ -72,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /**
-     * (功能函数) 获取当前用户信息并填充表单
+     * (功能函数) 获取当前用户信息并填充表单和导航栏
      */
     async function fetchUserProfile() {
         try {
@@ -85,35 +70,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!response.ok) {
                 if (response.status === 401 || response.status === 403) {
-                    // Token 无效或过期
                     localStorage.removeItem('token');
                     window.location.href = 'index.html';
                 }
-                throw new Error('无法获取用户信息');
+                throw new Error('Could not fetch user profile');
             }
 
             const user = await response.json();
             
-            // 填充表单
+            // 1. 填充表单
             profileEmailInput.value = user.email;
             profileNameInput.value = user.name;
 
+            // 2. 【新功能】更新导航栏
+            updateUserNav(user);
+
         } catch (error) {
             console.error('Error fetching user profile:', error);
-            showStatusMessage('无法加载您的个人资料', true);
+            showStatusMessage('Could not load your profile', true);
         }
     }
 
     /**
+     * 【新功能】(辅助函数) 动态更新右上角的导航栏
+     * @param {object} user - 从 API 获取的用户对象 (包含 .name 和 .email)
+     */
+    function updateUserNav(user) {
+        if (!headerActions) return;
+        headerActions.innerHTML = ''; // 清空旧按钮
+
+        // 创建新的“用户名”链接 (链接到 account.html, 标记为 'active')
+        const userNameLink = document.createElement('a');
+        userNameLink.href = 'account.html';
+        userNameLink.className = 'btn btn-secondary active';
+        userNameLink.textContent = user.name || user.email.split('@')[0];
+        
+        // 创建新的“退出登录”按钮
+        const newLogoutBtn = document.createElement('button');
+        newLogoutBtn.className = 'btn';
+        newLogoutBtn.textContent = 'Logout';
+        newLogoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('token');
+            window.location.href = 'index.html';
+        });
+
+        // 将新按钮添加到导航栏
+        headerActions.appendChild(userNameLink);
+        headerActions.appendChild(newLogoutBtn);
+    }
+
+    /**
      * (辅助函数) 在表单下方显示状态消息
-     * @param {string} message - 要显示的消息
-     * @param {boolean} isError - 是不是一个错误消息 (红色)
      */
     function showStatusMessage(message, isError) {
         profileStatus.textContent = message;
         profileStatus.className = isError ? 'status-message error-message' : 'status-message success-message';
         
-        // 5秒后自动清除消息
         setTimeout(() => {
             profileStatus.textContent = '';
             profileStatus.className = 'status-message';
