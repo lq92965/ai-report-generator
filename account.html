@@ -17,42 +17,42 @@
                 <ul>
                     </ul>
             </nav>
-            <div class="header-actions">
-                <button id="logout-btn" class="btn btn-secondary">退出登录</button>
-            </div>
+            <div class="header-actions"></div>
         </div>
     </header>
 
     <section class="generator-section">
         <div class="container">
-            <h2 class="section-title">我的账户</h2>
+            <a href="templates.html" class="btn-back">&larr; Back to My Templates</a>
+
+            <h2 class="section-title">My Account</h2>
             
             <div class="account-container">
                 
                 <div class="account-profile-form">
-                    <h3>个人资料</h3>
+                    <h3>Profile</h3>
                     <form id="profile-form">
                         <div class="input-wrapper">
-                            <label for="profile-email">账户邮箱</label>
+                            <label for="profile-email">Account Email</label>
                             <input type="email" id="profile-email" disabled>
-                            <small>（账户邮箱不可修改）</small>
+                            <small>(Account email cannot be changed)</small>
                         </div>
                         <div class="input-wrapper">
-                            <label for="profile-name">显示名称</label>
+                            <label for="profile-name">Display Name</label>
                             <input type="text" id="profile-name" placeholder="e.g., John Doe">
                         </div>
-                        <button type="submit" class="btn btn-primary">保存修改</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
                         <p id="profile-status" class="status-message"></p>
                     </form>
                 </div>
 
-                </div>
+            </div>
         </div>
     </section>
 
     <footer class="main-footer">
         <div class="container">
-            <p>&copy; 2025 Reportify AI. 版权所有。</p>
+            <p>&copy; 2025 Reportify AI. All Rights Reserved.</p>
         </div>
     </footer>
 
