@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const logoutBtn = document.createElement('a');
             logoutBtn.href = '#'; // 登出按鈕
-            logoutBtn.className = 'btn btn-primary';account
+            logoutBtn.className = 'btn btn-primary';
             logoutBtn.textContent = 'Logout';
 
             logoutBtn.addEventListener('click', (e) => {
