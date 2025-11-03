@@ -18,34 +18,60 @@ document.addEventListener('DOMContentLoaded', () => {
     const formStatus = document.getElementById('template-form-status');
     const headerActions = document.querySelector('.header-actions');
 
-    // --- 導航欄更新 (此頁面專用) ---
-    function updateUserNav() {
-        if (!headerActions) return; 
-        headerActions.innerHTML = '';
-        if (token) {
-            const myAccountBtn = document.createElement('a');
-            myAccountBtn.href = 'account.html'; // 保持在當前頁面
-            myAccountBtn.className = 'btn btn-secondary active'; // 標記為當前頁
-            myAccountBtn.textContent = 'My Account';
-            
-            const logoutBtn = document.createElement('a');
-            logoutBtn.href = '#'; // 登出按鈕
-            logoutBtn.className = 'btn btn-primary';
-            logoutBtn.textContent = 'Logout';
+// --- 導航欄更新 (此頁面專用) ---
+// (這現在是一個異步函數，因為它需要 fetch 用戶名)
+async function updateUserNav() {
+  if (!headerActions) return;
+  headerActions.innerHTML = ''; // 清空舊按鈕
 
-            logoutBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                localStorage.removeItem('token');
-                window.location.href = 'index.html'; // 登出後返回主頁
-            });
-
-            headerActions.appendChild(myAccountBtn);
-            headerActions.appendChild(logoutBtn);
-        } else {
-            // 如果 token 無效或不存在，強制返回主頁
-            console.warn('No token found, redirecting to login.');
-            window.location.href = 'index.html';
+  if (token) {
+    try {
+      // --- 【新功能】：獲取用戶個人資料 ---
+      const response = await fetch(`${API_BASE_URL}/api/user/profile`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
         }
+      });
+
+      if (!response.ok) {
+        // Token 無效或過期
+        throw new Error('Failed to fetch user');
+      }
+
+      const user = await response.json();
+      
+      // --- 創建【新】的用戶名按鈕 ---
+      const userNameLink = document.createElement('a');
+      userNameLink.href = 'account.html';
+      userNameLink.className = 'btn btn-secondary active'; // 標記為當前頁面
+      // 使用 user.name，如果不存在，則使用 user.email
+      userNameLink.textContent = user.name || user.email.split('@')[0]; 
+      
+      // --- 創建【新】的退出登錄按鈕 ---
+      const logoutBtn = document.createElement('button'); // 改用 <button> 更安全
+      logoutBtn.className = 'btn btn-primary'; // 樣式改為 'btn'
+      logoutBtn.textContent = 'Logout';
+      logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('token');
+        window.location.href = 'index.html';
+      });
+
+      // --- 將新按鈕添加到導航欄 ---
+      headerActions.appendChild(userNameLink);
+      headerActions.appendChild(logoutBtn);
+
+    } catch (error) {
+      // 如果 fetch 用戶名失敗 (例如 token 過期)
+      console.error('Failed to update nav:', error);
+      localStorage.removeItem('token');
+      window.location.href = 'index.html'; // 強制跳轉回主頁
+    }
+  } else {
+    // 如果沒有 token，強制跳轉回主頁
+    console.warn('No token found, redirecting to login.');
+    window.location.href = 'index.html';
+  }
     }
 
     // --- 檢查登錄狀態 ---
