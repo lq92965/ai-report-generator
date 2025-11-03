@@ -42,58 +42,77 @@ document.addEventListener('DOMContentLoaded', () => {
         URL.revokeObjectURL(url);
     }
 
-    function updateUserNav() {
-        if (!headerActions) return; // Safety check
-        headerActions.innerHTML = '';
-        if (token) {
-            const myAccountBtn = document.createElement('a');
-            myAccountBtn.href = 'templates.html'; // Placeholder for account page
-            myAccountBtn.className = 'btn btn-secondary';
-            myAccountBtn.textContent = 'My Account';
-            
-            const logoutBtn = document.createElement('a');
-            logoutBtn.href = '#';
-            logoutBtn.className = 'btn btn-primary';
-            logoutBtn.textContent = 'Logout';
+  // --- (确保 API_BASE_URL 和 token 在这个函数外面或顶部已经定义了) ---
+// const API_BASE_URL = 'https://api.goreportify.com'; 
+// const token = localStorage.getItem('token');
+// -------------------------------------------------------------------
 
-            logoutBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                token = null;
-                localStorage.removeItem('token');
-                updateUserNav();
-                alert('You have been logged out.');
-            });
+/**
+ * 动态更新导航栏 (主页版本)
+ * - 如果登录了，显示用户名和 "Logout"
+ * - 如果没登录，显示 "Login" 和 "Get Started"
+ */
+async function updateUserNav() {
+  const headerActions = document.querySelector('.header-actions');
+  if (!headerActions) return;
+  headerActions.innerHTML = ''; // 清空所有旧按钮
 
-            headerActions.appendChild(myAccountBtn);
-            headerActions.appendChild(logoutBtn);
-        } else {
-            const loginBtn = document.createElement('a');
-            loginBtn.href = '#';
-            loginBtn.id = 'login-btn'; // Re-add ID for listener below
-            loginBtn.className = 'btn btn-secondary';
-            loginBtn.textContent = 'Login';
-            
-            const signupBtn = document.createElement('a');
-            signupBtn.href = '#';
-            signupBtn.id = 'signup-btn'; // Re-add ID for listener below
-            signupBtn.className = 'btn btn-primary';
-            signupBtn.textContent = 'Sign Up';
+  const token = localStorage.getItem('token'); // 再次获取 token 状态
 
-            // Add listeners *after* creating the buttons
-            loginBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                openModal('login');
-            });
-            signupBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                openModal('signup');
-            });
-
-            headerActions.appendChild(loginBtn);
-            headerActions.appendChild(signupBtn);
+  if (token) {
+    // --- 用户已登录 ---
+    try {
+      // (确保 API_BASE_URL 在这个文件的顶部已经定义了)
+      const response = await fetch(`${API_BASE_URL}/api/user/profile`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
         }
-    }
+      });
 
+      if (!response.ok) throw new Error('Failed to fetch user');
+      const user = await response.json();
+      
+      // 创建新的“用户名”链接
+      const userNameLink = document.createElement('a');
+      userNameLink.href = 'account.html';
+      userNameLink.className = 'btn btn-secondary';
+      userNameLink.textContent = user.name || user.email.split('@')[0];
+      
+      // 创建新的“退出登录”按钮
+      const logoutBtn = document.createElement('button');
+      logoutBtn.className = 'btn'; // (您的模板页用的是 .btn, 我们保持一致)
+      logoutBtn.textContent = 'Logout';
+      logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('token');
+        updateUserNav(); // 退出登录后，立即刷新导航栏
+      });
+
+      headerActions.appendChild(userNameLink);
+      headerActions.appendChild(logoutBtn);
+
+    } catch (error) {
+      // Token 无效或获取失败，当作“未登录”处理
+      localStorage.removeItem('token');
+      showLoggedOutNav(headerActions);
+    }
+  } else {
+    // --- 用户未登录 ---
+    showLoggedOutNav(headerActions);
+  }
+}
+
+/**
+ * (辅助函数) 显示“未登录”状态的按钮
+ * (我们现在使用从 index.html 里找到的【正确】链接)
+ */
+function showLoggedOutNav(headerActions) {
+  headerActions.innerHTML = `
+    <a href="account.html" class="btn btn-secondary">Login</a>
+    <a href="#generator" class="btn btn-primary">Get Started</a>
+  `;
+}
+    
     // --- Main Generation Logic with Login Check ---
     if (generateBtn) {
         generateBtn.addEventListener('click', async () => {
@@ -502,4 +521,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Initialization ---
     updateUserNav(); // Update nav based on initial login state
+
 });
