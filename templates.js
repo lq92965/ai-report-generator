@@ -24,13 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
         headerActions.innerHTML = '';
         if (token) {
             const myAccountBtn = document.createElement('a');
-            myAccountBtn.href = 'templates.html'; // 保持在當前頁面
+            myAccountBtn.href = 'account.html'; // 保持在當前頁面
             myAccountBtn.className = 'btn btn-secondary active'; // 標記為當前頁
             myAccountBtn.textContent = 'My Account';
             
             const logoutBtn = document.createElement('a');
             logoutBtn.href = '#'; // 登出按鈕
-            logoutBtn.className = 'btn btn-primary';
+            logoutBtn.className = 'btn btn-primary';account
             logoutBtn.textContent = 'Logout';
 
             logoutBtn.addEventListener('click', (e) => {
