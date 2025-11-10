@@ -105,19 +105,31 @@ async function updateUserNav() {
 
 /**
  * (辅助函数) 显示“未登录”状态的按钮
- * (我们现在使用从 index.html 里找到的【正确】链接)
+ * (我们现在恢复【正确】的“打开弹窗”逻辑)
  */
 function showLoggedOutNav(headerActions) {
-  // (我们假设 headerActions 是一个有效的 DOM 元素)
   if (!headerActions) return;
-  headerActions.innerHTML = `
-    <a href="account.html" class="btn btn-secondary">Login</a>
-    <a href="#generator" class="btn btn-primary">Get Started</a>
-  `;
-  // (我们根据您 index.html 的结构，确认了 'account.html' 是登录页，'#generator' 是 Get Started 锚点)
-}
+  headerActions.innerHTML = ''; // 清空
 
-// --- (您剩余的 400 多行代码，比如 'Main Generation Logic'，从这里开始) ---
+  // 1. 创建 Login 按钮 (它应该打开弹窗)
+  const loginBtn = document.createElement('a');
+  loginBtn.href = '#'; // 只是一个占位符
+  loginBtn.className = 'btn btn-secondary';
+  loginBtn.textContent = 'Login';
+  loginBtn.addEventListener('click', (e) => {
+    e.preventDefault(); // 阻止页面跳转
+    openModal('login'); // (调用您在 script.js 中已有的 openModal 函数)
+  });
+
+  // 2. 创建 Get Started 按钮 (它应该滚动到 #generator)
+  const getStartedBtn = document.createElement('a');
+  getStartedBtn.href = '#generator';
+  getStartedBtn.className = 'btn btn-primary';
+  getStartedBtn.textContent = 'Get Started';
+
+  headerActions.appendChild(loginBtn);
+  headerActions.appendChild(getStartedBtn);
+}
 
     if (generateBtn) {
         generateBtn.addEventListener('click', async () => {
