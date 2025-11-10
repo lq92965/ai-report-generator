@@ -42,10 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
         URL.revokeObjectURL(url);
     }
 
-  // --- (确保 API_BASE_URL 和 token 在这个函数外面或顶部已经定义了) ---
-// const API_BASE_URL = 'https://api.goreportify.com'; 
+// --- (确保 API_BASE_URL 和 token 在这个函数外面或顶部已经定义了) ---
 // const token = localStorage.getItem('token');
 // -------------------------------------------------------------------
+
+// --- 动态导航栏 (主页版本) ---
 
 /**
  * 动态更新导航栏 (主页版本)
@@ -62,7 +63,7 @@ async function updateUserNav() {
   if (token) {
     // --- 用户已登录 ---
     try {
-      // (确保 API_BASE_URL 在这个文件的顶部已经定义了)
+      // (我们假设 API_BASE_URL 在这个文件的顶部已经定义了)
       const response = await fetch(`${API_BASE_URL}/api/user/profile`, {
         method: 'GET',
         headers: {
@@ -75,13 +76,13 @@ async function updateUserNav() {
       
       // 创建新的“用户名”链接
       const userNameLink = document.createElement('a');
-      userNameLink.href = 'account.html';
+      userNameLink.href = 'account.html'; // 链接到 Account Hub
       userNameLink.className = 'btn btn-secondary';
       userNameLink.textContent = user.name || user.email.split('@')[0];
       
       // 创建新的“退出登录”按钮
       const logoutBtn = document.createElement('button');
-      logoutBtn.className = 'btn'; // (您的模板页用的是 .btn, 我们保持一致)
+      logoutBtn.className = 'btn';
       logoutBtn.textContent = 'Logout';
       logoutBtn.addEventListener('click', () => {
         localStorage.removeItem('token');
@@ -107,13 +108,17 @@ async function updateUserNav() {
  * (我们现在使用从 index.html 里找到的【正确】链接)
  */
 function showLoggedOutNav(headerActions) {
+  // (我们假设 headerActions 是一个有效的 DOM 元素)
+  if (!headerActions) return;
   headerActions.innerHTML = `
     <a href="account.html" class="btn btn-secondary">Login</a>
     <a href="#generator" class="btn btn-primary">Get Started</a>
   `;
+  // (我们根据您 index.html 的结构，确认了 'account.html' 是登录页，'#generator' 是 Get Started 锚点)
 }
-    
-    // --- Main Generation Logic with Login Check ---
+
+// --- (您剩余的 400 多行代码，比如 'Main Generation Logic'，从这里开始) ---
+
     if (generateBtn) {
         generateBtn.addEventListener('click', async () => {
             if (!token) {
@@ -521,5 +526,4 @@ function showLoggedOutNav(headerActions) {
 
     // --- Initialization ---
     updateUserNav(); // Update nav based on initial login state
-
 });
