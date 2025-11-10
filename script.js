@@ -50,50 +50,80 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /**
  * 动态更新导航栏 (主页版本)
- * - 如果登录了，显示用户名和 "Logout"
- * - 如果没登录，显示 "Login" 和 "Get Started"
+ * 【新逻辑】：Avatar + Dropdown Menu
  */
 async function updateUserNav() {
   const headerActions = document.querySelector('.header-actions');
   if (!headerActions) return;
   headerActions.innerHTML = ''; // 清空所有旧按钮
 
-  const token = localStorage.getItem('token'); // 再次获取 token 状态
+  const token = localStorage.getItem('token'); 
 
   if (token) {
     // --- 用户已登录 ---
     try {
-      // (我们假设 API_BASE_URL 在这个文件的顶部已经定义了)
       const response = await fetch(`${API_BASE_URL}/api/user/profile`, {
         method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+        headers: { 'Authorization': `Bearer ${token}` }
       });
 
       if (!response.ok) throw new Error('Failed to fetch user');
       const user = await response.json();
       
-      // 创建新的“用户名”链接
-      const userNameLink = document.createElement('a');
-      userNameLink.href = 'account.html'; // 链接到 Account Hub
-      userNameLink.className = 'btn btn-secondary';
-      userNameLink.textContent = user.name || user.email.split('@')[0];
+      const userName = user.name || user.email.split('@')[0];
+      const userInitial = (userName[0] || 'U').toUpperCase();
+
+      // 1. 创建头像
+      const avatar = document.createElement('div');
+      avatar.className = 'user-avatar';
+      avatar.textContent = userInitial; // (未来这里可以换成 <img>)
       
-      // 创建新的“退出登录”按钮
-      const logoutBtn = document.createElement('button');
-      logoutBtn.className = 'btn';
-      logoutBtn.textContent = 'Logout';
-      logoutBtn.addEventListener('click', () => {
+      // 2. 创建用户名 (作为触发器)
+      const userNameLink = document.createElement('a');
+      userNameLink.href = '#'; // 它只是一个触发器
+      userNameLink.className = 'nav-user-name';
+      userNameLink.textContent = userName;
+      
+      // 3. 创建下拉菜单 (默认隐藏)
+      const dropdown = document.createElement('div');
+      dropdown.className = 'nav-user-dropdown';
+      dropdown.innerHTML = `
+        <a href="account.html">My Account</a>
+        <a href="templates.html">My Templates</a>
+        <a href="profile.html">Settings</a>
+        <hr>
+        <button id="dynamic-logout-btn">Logout</button>
+      `;
+
+      // 4. 绑定下拉菜单的“退出”按钮
+      dropdown.querySelector('#dynamic-logout-btn').addEventListener('click', () => {
         localStorage.removeItem('token');
-        updateUserNav(); // 退出登录后，立即刷新导航栏
+        updateUserNav(); // 立即刷新导航栏
       });
 
+      // 5. 绑定触发器 (点击用户名或头像)
+      const toggleDropdown = (e) => {
+        e.preventDefault();
+        dropdown.classList.toggle('active');
+        userNameLink.classList.toggle('active');
+      };
+      userNameLink.addEventListener('click', toggleDropdown);
+      avatar.addEventListener('click', toggleDropdown);
+
+      // 6. 添加到 header
+      headerActions.appendChild(avatar);
       headerActions.appendChild(userNameLink);
-      headerActions.appendChild(logoutBtn);
+      headerActions.appendChild(dropdown);
+      
+      // 7. (新) 点击菜单外部时，关闭菜单
+      document.addEventListener('click', (e) => {
+        if (!headerActions.contains(e.target) && dropdown.classList.contains('active')) {
+          dropdown.classList.remove('active');
+          userNameLink.classList.remove('active');
+        }
+      });
 
     } catch (error) {
-      // Token 无效或获取失败，当作“未登录”处理
       localStorage.removeItem('token');
       showLoggedOutNav(headerActions);
     }
@@ -105,23 +135,21 @@ async function updateUserNav() {
 
 /**
  * (辅助函数) 显示“未登录”状态的按钮
- * (我们现在恢复【正确】的“打开弹窗”逻辑)
+ * (已修复，使用您正确的“打开弹窗”逻辑)
  */
 function showLoggedOutNav(headerActions) {
   if (!headerActions) return;
-  headerActions.innerHTML = ''; // 清空
+  headerActions.innerHTML = ''; 
 
-  // 1. 创建 Login 按钮 (它应该打开弹窗)
   const loginBtn = document.createElement('a');
-  loginBtn.href = '#'; // 只是一个占位符
+  loginBtn.href = '#'; 
   loginBtn.className = 'btn btn-secondary';
   loginBtn.textContent = 'Login';
   loginBtn.addEventListener('click', (e) => {
-    e.preventDefault(); // 阻止页面跳转
+    e.preventDefault(); 
     openModal('login'); // (调用您在 script.js 中已有的 openModal 函数)
   });
 
-  // 2. 创建 Get Started 按钮 (它应该滚动到 #generator)
   const getStartedBtn = document.createElement('a');
   getStartedBtn.href = '#generator';
   getStartedBtn.className = 'btn btn-primary';
@@ -130,6 +158,7 @@ function showLoggedOutNav(headerActions) {
   headerActions.appendChild(loginBtn);
   headerActions.appendChild(getStartedBtn);
 }
+
 
     if (generateBtn) {
         generateBtn.addEventListener('click', async () => {
@@ -437,20 +466,33 @@ function showLoggedOutNav(headerActions) {
             const email = emailInput ? emailInput.value : '';
             const password = passwordInput ? passwordInput.value : '';
             try {
-                const res = await fetch(`${API_BASE_URL}/api/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password }),
-                });
-                const data = await res.json();
-                if (!res.ok) throw new Error(data.message || 'Unknown error during login');
-                token = data.token;
-                localStorage.setItem('token', token);
-                alert(data.message);
-                closeModal();
-                updateUserNav();
-                if(loginForm) loginForm.reset(); // Reset form on success
-            } catch (err) {
+                 const res = await fetch(`${API_BASE_URL}/api/login`, {
+                     method: 'POST',
+                     headers: {
+                         'Content-Type': 'application/json',
+                     },
+                     body: JSON.stringify({ email, password }),
+            }); 
+
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message || 'Unknown error during login');
+
+            // --- 登录成功后的【正确】逻辑 ---
+
+            // 1. 保存 Token
+            localStorage.setItem('token', data.token);
+
+            // 2. 关闭弹窗 (不再 alert)
+            closeModal(); 
+
+            // 3. 立即刷新导航栏 (显示新头像)
+            updateUserNav(); 
+
+            // 4. 重置表单
+            if (loginForm) loginForm.reset(); 
+            // --- 结束 ---
+
+} catch (err) {
                 alert(`Login failed: ${err.message}`);
             } finally {
                 submitBtn.disabled = false;
