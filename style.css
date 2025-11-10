@@ -743,3 +743,171 @@ textarea {
     color: #333;
     cursor: default;
 }
+
+/* ---------------
+ * 账户中心 (Hub Page) 样式
+ * --------------- */
+.account-hub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.hub-card {
+    display: block;
+    padding: 25px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+}
+
+.hub-card:hover {
+    border-color: #007bff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transform: translateY(-2px);
+}
+
+.hub-card h3 {
+    margin-top: 0;
+    color: #007bff;
+}
+
+.hub-card p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.hub-card.disabled {
+    background: #f9f9f9;
+    color: #999;
+    cursor: not-allowed;
+}
+
+.hub-card.disabled:hover {
+    border-color: #ddd;
+    box-shadow: none;
+    transform: none;
+}
+
+.hub-card.disabled h3,
+.hub-card.disabled p {
+    color: #999;
+}
+
+.hub-card.disabled span {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #888;
+    background: #eee;
+    padding: 3px 8px;
+    border-radius: 12px;
+}
+
+/* ---------------
+ * 【新】导航栏 - 用户头像和下拉菜单
+ * --------------- */
+
+/* 1. 动态填充的 header-actions 容器 */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* 2. 用户头像 (CSS 模拟) */
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #007bff; /* 默认背景色 */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+/* 3. 用户名 (用作下拉菜单的触发器) */
+.nav-user-name {
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative; /* 为下拉箭头定位 */
+    padding-right: 15px; /* 为箭头留出空间 */
+}
+
+/* 4. 下拉箭头 */
+.nav-user-name::after {
+    content: '▼';
+    font-size: 10px;
+    color: #888;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.2s;
+}
+
+/* 5. 下拉菜单本身 (默认隐藏) */
+.nav-user-dropdown {
+    display: none; /* 默认隐藏 */
+    position: absolute;
+    top: 55px; /* 放在导航栏下方 */
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    width: 220px;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+/* 6. 当菜单激活时 (通过 JS 添加 'active') */
+.nav-user-dropdown.active {
+    display: block;
+}
+.nav-user-name.active::after {
+    transform: translateY(-50%) rotate(180deg); /* 箭头旋转 */
+}
+
+
+/* 7. 下拉菜单里的项目 */
+.nav-user-dropdown a,
+.nav-user-dropdown button {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    text-align: left;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.nav-user-dropdown a:hover,
+.nav-user-dropdown button:hover {
+    background-color: #f4f4f4;
+}
+
+/* 8. 菜单里的分割线 */
+.nav-user-dropdown hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 4px 0;
+}
