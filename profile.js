@@ -1,4 +1,4 @@
-// profile.js (最终版本，包含头像上传)
+// profile.js (【已修复】嵌套的 ` 错误)
 const API_BASE_URL = 'https://api.goreportify.com'; 
 const token = localStorage.getItem('token');
 
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileStatus = document.getElementById('profile-status');
     const headerActions = document.querySelector('.header-actions');
 
-    // --- 【新】头像 DOM 元素 ---
+    // --- 头像 DOM 元素 ---
     const avatarPreview = document.getElementById('avatar-preview');
     const avatarUploadInput = document.getElementById('avatar-upload-input');
     const avatarUploadBtn = document.getElementById('avatar-upload-btn');
@@ -26,12 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. 绑定“保存修改”表单
     profileForm.addEventListener('submit', handleProfileSubmit);
 
-    // 3. --- 【新】绑定头像上传按钮 ---
+    // 3. --- 绑定头像上传按钮 ---
     avatarUploadBtn.addEventListener('click', () => {
         avatarUploadInput.click(); // 触发隐藏的文件输入框
     });
 
-    // 4. --- 【新】绑定文件选择事件 ---
+    // 4. --- 绑定文件选择事件 ---
     avatarUploadInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (!file) return; // 用户取消了选择
@@ -70,15 +70,15 @@ async function fetchUserProfile() {
 
         // 1. 填充表单
         profileEmailInput.value = user.email;
-        profileNameInput.value = user.name || ''; // (确保是 '' 而不是 null)
+        profileNameInput.value = user.name || ''; 
 
-        // 2. 【新】填充头像
+        // 2. 填充头像
         if (user.avatarUrl) {
             avatarPreview.src = user.avatarUrl;
         } else {
-            // (如果用户没有头像, 我们可以在 JS 里创建一个默认首字母头像)
+            // 【已修复】(使用 ' 单引号, 而不是 ` 反引号)
             const userInitial = (user.name || user.email.split('@')[0])[0].toUpperCase();
-            avatarPreview.src = `data:image/svg+xml;base64,${btoa(`<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><rect width="100%" height="100%" fill="#f0f0f0"></rect><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="40" fill="#999">${userInitial}</text></svg>`)}`;
+            avatarPreview.src = `data:image/svg+xml;base64,${btoa('<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><rect width="100%" height="100%" fill="#f0f0f0"></rect><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="40" fill="#999">${userInitial}</text></svg>')}`;
         }
 
         // 3. 更新导航栏
@@ -122,7 +122,8 @@ async function handleProfileSubmit(e) {
         profileNameInput.value = result.name; 
 
         // 保存成功后，也立即更新右上角的名字
-        updateUserNav(result); // (result 此时只包含 { message, name })
+        // (我们必须重新 fetch 完整的 user 对象，因为它包含了 avatarUrl)
+        fetchUserProfile(); 
 
     } catch (error) {
         console.error('Error updating profile:', error);
@@ -131,22 +132,22 @@ async function handleProfileSubmit(e) {
 }
 
 /**
- * 【新功能】(功能函数) 上传头像文件
+ * (功能函数) 上传头像文件
  * @param {File} file - 用户选择的图片文件
  */
 async function uploadAvatar(file) {
     const formData = new FormData();
-    formData.append('avatar', file); // (这里的 'avatar' 必须和后端 multer 的 'upload.single('avatar')' 匹配)
+    formData.append('avatar', file); 
 
     showStatusMessage('Uploading new avatar...', false);
-    avatarUploadBtn.disabled = true;
+    const avatarUploadBtn = document.getElementById('avatar-upload-btn');
+    if(avatarUploadBtn) avatarUploadBtn.disabled = true;
 
     try {
         const response = await fetch(`${API_BASE_URL}/api/user/avatar`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`
-                // (注意: 发送 FormData 时【不要】设置 'Content-Type', 浏览器会自动处理)
             },
             body: formData
         });
@@ -158,14 +159,13 @@ async function uploadAvatar(file) {
         }
 
         showStatusMessage('Avatar updated successfully!', false);
-        avatarPreview.src = result.avatarUrl; // (使用 Cloudinary 返回的安全 URL)
+        avatarPreview.src = result.avatarUrl; 
 
         // 立即更新右上角的头像
         const headerAvatar = document.querySelector('.user-avatar');
         if (headerAvatar) {
-            // (我们将用背景图替换掉首字母)
             headerAvatar.textContent = '';
-            headerAvatar.style.backgroundImage = \`url(${result.avatarUrl})\`;
+            headerAvatar.style.backgroundImage = `url(${result.avatarUrl})`;
             headerAvatar.style.backgroundSize = 'cover';
         }
 
@@ -173,7 +173,7 @@ async function uploadAvatar(file) {
         console.error('Error uploading avatar:', error);
         showStatusMessage(error.message, true);
     } finally {
-        avatarUploadBtn.disabled = false;
+        if(avatarUploadBtn) avatarUploadBtn.disabled = false;
     }
 }
 
@@ -185,7 +185,6 @@ async function updateUserNav(user = null) {
   if (!headerActions) return;
   headerActions.innerHTML = ''; 
 
-  // (如果 user 对象没有被传入, 我们就去 fetch 一次)
   if (!user) {
       try {
           const res = await fetch(`${API_BASE_URL}/api/user/profile`, {
@@ -195,7 +194,6 @@ async function updateUserNav(user = null) {
           if (!res.ok) throw new Error('Not logged in');
           user = await res.json();
       } catch (e) {
-          // (获取失败，显示登录按钮)
           showLoggedOutNav(headerActions);
           return;
       }
@@ -209,9 +207,9 @@ async function updateUserNav(user = null) {
   const avatar = document.createElement('div');
   avatar.className = 'user-avatar';
 
-  // 【新】检查是否有 avatarUrl
+  // 检查是否有 avatarUrl
   if (user.avatarUrl) {
-      avatar.style.backgroundImage = \`url(${user.avatarUrl})\`;
+      avatar.style.backgroundImage = `url(${user.avatarUrl})`;
       avatar.style.backgroundSize = 'cover';
   } else {
       avatar.textContent = userInitial;
@@ -219,7 +217,7 @@ async function updateUserNav(user = null) {
 
   // 2. 创建用户名 (作为触发器)
   const userNameLink = document.createElement('a');
-  userNameLink.href = 'account.html'; // 链接回 Hub
+  userNameLink.href = 'account.html'; 
   userNameLink.className = 'nav-user-name';
   userNameLink.textContent = userName;
 
