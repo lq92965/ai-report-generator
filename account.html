@@ -9,13 +9,16 @@
 <body>
     <header class="main-header">
         <div class="container">
-            <a href="index.html" class="logo-link">
-                <span class="logo">Reportify AI</span>
+            <a href="index.html" class="logo-link"> <span class="logo">Reportify AI</span>
                 <span class="logo-icon">🚀</span>
             </a>
             <nav class="main-nav">
                 <ul>
-                    </ul>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="index.html#pricing">Pricing</a></li>
+                    <li><a href="index.html#generator">Generator</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
             </nav>
             <div class="header-actions"></div>
         </div>
@@ -23,29 +26,31 @@
 
     <section class="generator-section">
         <div class="container">
-            <a href="templates.html" class="btn-back">&larr; Back to My Templates</a>
-
             <h2 class="section-title">My Account</h2>
-            
-            <div class="account-container">
-                
-                <div class="account-profile-form">
-                    <h3>Profile</h3>
-                    <form id="profile-form">
-                        <div class="input-wrapper">
-                            <label for="profile-email">Account Email</label>
-                            <input type="email" id="profile-email" disabled>
-                            <small>(Account email cannot be changed)</small>
-                        </div>
-                        <div class="input-wrapper">
-                            <label for="profile-name">Display Name</label>
-                            <input type="text" id="profile-name" placeholder="e.g., John Doe">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                        <p id="profile-status" class="status-message"></p>
-                    </form>
-                </div>
+            <p class="section-subtitle">Manage your profile, security, and subscription settings.</p>
 
+            <div class="account-hub-grid">
+                <a href="profile.html" class="hub-card">
+                    <h3>Profile</h3>
+                    <p>Update your display name and avatar.</p>
+                </a>
+
+                <a href="security.html" class="hub-card">
+                     <h3>Security</h3>
+                     <p>Change your password and manage sessions.</p>
+                </a>
+
+                <a href="#" class="hub-card disabled">
+                    <h3>Subscription & Billing</h3>
+                    <p>Manage your $19.9 plan and view invoices.</p>
+                    <span>(Coming Soon)</span>
+                </a>
+
+                <a href="#" class="hub-card disabled">
+                    <h3>Usage & Limits</h3>
+                    <p>Check your AI generation and template quotas.</p>
+                    <span>(Coming Soon)</span>
+                </a>
             </div>
         </div>
     </section>
