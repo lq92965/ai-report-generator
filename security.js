@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const newPasswordInput = document.getElementById('new-password');
     const confirmPasswordInput = document.getElementById('confirm-password');
     const passwordStatus = document.getElementById('password-status');
+    const deleteAccountBtn = document.getElementById('delete-account-btn'); // (这就是您在 图 1 添加的按钮)
 
     // 1. 动态更新导航栏 (显示用户名)
     updateUserNav();
@@ -32,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showStatusMessage('New passwords do not match.', true);
             return;
         }
-        if (newPassword.length < 6) { // (假设我们后端要求最少6位)
+        if (newPassword.length < 6) { 
             showStatusMessage('New password must be at least 6 characters long.', true);
             return;
         }
@@ -62,6 +63,59 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Error updating password:', error);
             showStatusMessage(error.message, true);
+        }
+    });
+
+    // 3. --- 【新功能】绑定“删除账户”按钮 ---
+    deleteAccountBtn.addEventListener('click', async () => {
+
+        // 1. 第一次确认
+        if (!confirm('Are you absolutely sure you want to delete your account? This action cannot be undone.')) {
+            return;
+        }
+
+        // 2. 第二次确认 (输入密码)
+        const password = prompt('To confirm deletion, please enter your current password:');
+        if (password === null) { // (用户点击了“取消”)
+            return;
+        }
+        if (!password) {
+            alert('Password is required to delete your account.');
+            return;
+        }
+
+        // 3. (显示加载状态)
+        deleteAccountBtn.disabled = true;
+        deleteAccountBtn.textContent = 'Deleting...';
+        showStatusMessage('Deleting your account...', false);
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/user/account`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ password: password })
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                // (例如，密码错误)
+                throw new Error(result.message || 'Failed to delete account');
+            }
+
+            // 4. 成功！
+            alert('Your account has been successfully deleted.');
+            localStorage.removeItem('token'); // 退出登录
+            window.location.href = 'index.html'; // 返回主页
+
+        } catch (error) {
+            console.error('Error deleting account:', error);
+            showStatusMessage(error.message, true); // (在 security.html 页面上显示错误)
+            deleteAccountBtn.disabled = false;
+            deleteAccountBtn.textContent = 'Delete My Account';
         }
     });
 
