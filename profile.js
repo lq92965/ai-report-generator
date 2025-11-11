@@ -1,14 +1,4 @@
-// profile.js (【已修复】嵌套的 ` 错误)
-const API_BASE_URL = 'https://api.goreportify.com'; 
-const token = localStorage.getItem('token');
-
-document.addEventListener('DOMContentLoaded', () => {
-    if (!token) {
-        window.location.href = 'index.html'; 
-        return;
-    }
-
-    // 绑定 DOM 元素
+ // 绑定 DOM 元素
     const profileForm = document.getElementById('profile-form');
     const profileEmailInput = document.getElementById('profile-email');
     const profileNameInput = document.getElementById('profile-name');
@@ -19,6 +9,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const avatarPreview = document.getElementById('avatar-preview');
     const avatarUploadInput = document.getElementById('avatar-upload-input');
     const avatarUploadBtn = document.getElementById('avatar-upload-btn');
+
+// profile.js (【已修复】嵌套的 ` 错误)
+    const API_BASE_URL = 'https://api.goreportify.com'; 
+    const token = localStorage.getItem('token');
+
+    document.addEventListener('DOMContentLoaded', () => {
+    if (!token) {
+        window.location.href = 'index.html'; 
+        return;
+    }
 
     // 1. 页面加载时，获取当前用户信息 (并更新导航栏)
     fetchUserProfile();
