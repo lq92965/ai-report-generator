@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Reportify AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo-link"> 
+                <span class="logo">Reportify AI</span>
+                <span class="logo-icon">🚀</span>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="index.html#pricing">Pricing</a></li>
+                    <li><a href="index.html#generator">Generator</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions"></div>
+        </div>
+    </header>
+
+    <section class="generator-section">
+        <div class="container">
+            <a href="account.html" class="btn-back">&larr; Back to Account Hub</a>
+
+            <h2 class="section-title">My Profile</h2>
+
+            <div class="account-container">
+                <div class="account-profile-form">
+                    <h3>Profile</h3>
+
+                    <div class="avatar-upload-section">
+                        <img src="" alt="Avatar Preview" id="avatar-preview" class="avatar-preview">
+                        <input type="file" id="avatar-upload-input" accept="image/png, image/jpeg" style="display: none;">
+                        <button type="button" id="avatar-upload-btn" class="btn btn-secondary">Upload New Picture</button>
+                    </div>
+                    <form id="profile-form">
+                        <div class="input-wrapper">
+                            <label for="profile-email">Account Email</label>
+                            <input type="email" id="profile-email" disabled>
+                            <small>(Account email cannot be changed)</small>
+                        </div>
+                        <div class="input-wrapper">
+                            <label for="profile-name">Display Name</label>
+                            <input type="text" id="profile-name" placeholder="e.g., John Doe">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <p id="profile-status" class="status-message"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Reportify AI. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="profile.js" defer></script>
+</body>
+</html>
