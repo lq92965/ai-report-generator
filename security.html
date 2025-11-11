@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Settings - Reportify AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo-link">
+                <span class="logo">Reportify AI</span>
+                <span class="logo-icon">🚀</span>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="index.html#pricing">Pricing</a></li>
+                    <li><a href="index.html#generator">Generator</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions"></div>
+        </div>
+    </header>
+
+    <section class="generator-section">
+        <div class="container">
+            <a href="account.html" class="btn-back">&larr; Back to Account Hub</a>
+
+            <h2 class="section-title">Security</h2>
+
+            <div class="account-container">
+
+                <div class="account-profile-form">
+                    <h3>Change Password</h3>
+                    <form id="password-form">
+                        <div class="input-wrapper">
+                            <label for="current-password">Current Password</label>
+                            <input type="password" id="current-password" required>
+                        </div>
+                        <div class="input-wrapper">
+                            <label for="new-password">New Password</label>
+                            <input type="password" id="new-password" required>
+                        </div>
+                        <div class="input-wrapper">
+                            <label for="confirm-password">Confirm New Password</label>
+                            <input type="password" id="confirm-password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Password</button>
+                        <p id="password-status" class="status-message"></p>
+                    </form>
+                </div>
+
+                </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Reportify AI. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="security.js" defer></script>
+</body>
+</html>
