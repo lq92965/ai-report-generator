@@ -3,6 +3,9 @@ import cors from 'cors';
 import 'dotenv/config';
 import axios from 'axios';
 import { MongoClient, ObjectId } from 'mongodb'; // Import ObjectId
+import { v2 as cloudinary } from 'cloudinary';
+import multer from 'multer';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -19,6 +22,26 @@ if (!API_KEY || !MONGO_URI || !JWT_SECRET) {
   console.error("錯誤：請確保 .env 文件中已設置 GOOGLE_API_KEY, MONGO_URI, 和 JWT_SECRET");
   process.exit(1);
 }
+
+// --- 【新功能】Cloudinary 配置 ---
+// (它会自动从 .env 文件读取密钥)
+cloudinary.config({ 
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+    api_key: process.env.CLOUDINARY_API_KEY, 
+    api_secret: process.env.CLOUDINARY_API_SECRET 
+});
+
+// 配置 Multer 存储
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: 'reportify-avatars', // (在 Cloudinary 上的文件夹名)
+        allowed_formats: ['jpg', 'png', 'jpeg'],
+        public_id: (req, file) => `avatar-${req.userId}`, // (用 userId 命名)
+        transformation: [{ width: 200, height: 200, crop: 'fill' }] // (自动裁切成 200x200)
+    }
+});
+const upload = multer({ storage: storage });
 
 // --- 數據庫連接 ---
 const client = new MongoClient(MONGO_URI);
@@ -366,7 +389,8 @@ app.get('/api/user/profile', authenticateToken, async (req, res) => {
     // 只返回安全的信息
     res.json({
       email: user.email,
-      name: user.name || '' // 如果 name 不存在，返回空字符串
+      name: user.name || '' ,// 如果 name 不存在，返回空字符串
+      avatarUrl: user.avatarUrl || ''
     });
     
   } catch (error) {
@@ -407,6 +431,30 @@ app.put('/api/user/profile', authenticateToken, async (req, res) => {
     res.status(500).json({ message: "服务器内部错误" }); // <--- 这是【已修复】的行
   }
 });
+
+// --- 【新功能】上传用户头像 ---
+app.post('/api/user/avatar', authenticateToken, upload.single('avatar'), async (req, res) => {
+    console.log('POST /api/user/avatar route was hit!');
+    if (!req.file) {
+        return res.status(400).json({ message: 'No file uploaded.' });
+    }
+    try {
+        const userId = new ObjectId(req.userId);
+        const avatarUrl = req.file.path; 
+        await db.collection('users').updateOne(
+            { _id: userId },
+            { $set: { avatarUrl: avatarUrl } }
+        );
+        res.status(200).json({ 
+            message: 'Avatar updated successfully', 
+            avatarUrl: avatarUrl 
+        });
+    } catch (error) {
+        console.error("Error updating avatar:", error);
+        res.status(500).json({ message: "Server error while updating avatar." });
+    }
+});
+
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server is running on port ${port}, listening on all interfaces.`);
 });
