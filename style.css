@@ -947,3 +947,33 @@ hr.section-divider {
 .btn-danger:hover {
     background-color: #c82333;
 }
+
+/* ---------------
+ * 【新】个人资料 - 头像上传样式
+ * --------------- */
+.avatar-upload-section {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* 图像和按钮之间的间距 */
+    margin-bottom: 30px; /* 和下方的表单拉开距离 */
+    padding-bottom: 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.avatar-preview {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%; /* 圆形 */
+    background-color: #f0f0f0; /* 默认背景色 */
+    border: 2px solid #ddd;
+    object-fit: cover; /* 确保图片不变形 */
+    color: #bbb; /* (如果图片加载失败，显示 'alt' 文本) */
+    font-size: 12px;
+    text-align: center;
+}
+
+/* 确保上传按钮样式不会太大 */
+.avatar-upload-section .btn-secondary {
+    font-size: 14px;
+    padding: 8px 16px;
+}
