@@ -911,3 +911,39 @@ textarea {
     border-top: 1px solid #eee;
     margin: 4px 0;
 }
+
+/* ---------------
+ * 【新】账户安全 - 危险区
+ * --------------- */
+hr.section-divider {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 40px 0;
+}
+
+.danger-zone {
+    border: 1px solid #dc3545; /* 红色边框 */
+    border-radius: 8px;
+    padding: 20px;
+    background: #fff8f8;
+}
+
+.danger-zone h3 {
+    color: #dc3545;
+    margin-top: 0;
+}
+
+.danger-zone p {
+    font-size: 14px;
+    color: #555;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
