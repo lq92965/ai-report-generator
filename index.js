@@ -390,7 +390,9 @@ app.get('/api/user/profile', authenticateToken, async (req, res) => {
     res.json({
       email: user.email,
       name: user.name || '' ,// 如果 name 不存在，返回空字符串
-      avatarUrl: user.avatarUrl || ''
+      avatarUrl: user.avatarUrl || '',
+      bio: user.bio || '', // 【新】添加这一行
+      jobTitle: user.jobTitle || '' // 【新】添加这一行
     });
     
   } catch (error) {
@@ -402,7 +404,7 @@ app.get('/api/user/profile', authenticateToken, async (req, res) => {
 // --- 更新用户个人资料 (例如，修改名称) ---
 app.put('/api/user/profile', authenticateToken, async (req, res) => {
   console.log('PUT /api/user/profile route was hit!');
-  const { name } = req.body; // 从请求体中获取新名称
+  const { name, bio, jobTitle } = req.body; // 从请求体中获取新名称
 
   if (typeof name !== 'string' || name.trim() === '') {
     return res.status(400).json({ message: "显示名称不能为空" });
@@ -413,7 +415,11 @@ app.put('/api/user/profile', authenticateToken, async (req, res) => {
     
     const updateResult = await db.collection('users').updateOne(
       { _id: userId },
-      { $set: { name: name.trim() } }
+      { $set: { 
+          name: name.trim(),
+          bio: bio || '', // (如果 bio 是空的, 保存空字符串)
+          jobTitle: jobTitle || '' // (如果 jobTitle 是空的, 保存空字符串)
+    } }
     );
 
     if (updateResult.matchedCount === 0) {
@@ -423,7 +429,9 @@ app.put('/api/user/profile', authenticateToken, async (req, res) => {
     // 返回更新后的安全信息
     res.json({
       message: "个人资料已成功更新",
-      name: name.trim()
+      name: name.trim(),
+      bio: bio || '',
+      jobTitle: jobTitle || ''
     });
 
   } catch (error) {
