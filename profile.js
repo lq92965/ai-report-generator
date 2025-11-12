@@ -2,6 +2,8 @@
     const profileForm = document.getElementById('profile-form');
     const profileEmailInput = document.getElementById('profile-email');
     const profileNameInput = document.getElementById('profile-name');
+    const profileBioInput = document.getElementById('profile-bio');
+    const profileJobInput = document.getElementById('profile-job');
     const profileStatus = document.getElementById('profile-status');
     const headerActions = document.querySelector('.header-actions');
 
@@ -71,6 +73,8 @@ async function fetchUserProfile() {
         // 1. 填充表单
         profileEmailInput.value = user.email;
         profileNameInput.value = user.name || ''; 
+        profileBioInput.value = user.bio || '';
+        profileJobInput.value = user.jobTitle || '';
 
         // 2. 填充头像
         if (user.avatarUrl) {
@@ -96,6 +100,8 @@ async function fetchUserProfile() {
 async function handleProfileSubmit(e) {
     e.preventDefault(); 
     const newName = profileNameInput.value.trim();
+    const newBio = profileBioInput.value.trim();
+    const newJob = profileJobInput.value.trim();
 
     if (!newName) {
         showStatusMessage('Display Name cannot be empty', true);
@@ -109,7 +115,7 @@ async function handleProfileSubmit(e) {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ name: newName })
+            body: JSON.stringify({ name: newName, bio: newBio, jobTitle: newJob })
         });
 
         if (!response.ok) {
@@ -120,10 +126,12 @@ async function handleProfileSubmit(e) {
         const result = await response.json();
         showStatusMessage('Profile updated successfully!', false);
         profileNameInput.value = result.name; 
+        profileBioInput.value = result.bio;
+        profileJobInput.value = result.jobTitle;
 
         // 保存成功后，也立即更新右上角的名字
         // (我们必须重新 fetch 完整的 user 对象，因为它包含了 avatarUrl)
-        fetchUserProfile(); 
+        fetchUserProfile(); //
 
     } catch (error) {
         console.error('Error updating profile:', error);
