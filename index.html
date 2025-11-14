@@ -18,7 +18,7 @@
 
     <header class="main-header">
         <div class="container">
-            <a href="#" class="logo">
+            <a href="index.html" class="logo">
                 <span class="logo-icon">🐦</span>
                 <span>Reportify AI</span>
             </a>
@@ -120,17 +120,17 @@
                         <div class="input-wrapper">
                             <label for="template">Report Type</label>
                             <select id="template" name="template">
-                                <option value="日报 (Daily Report)">日报 (Daily Report)</option>
-                                <option value="周报 (Weekly Report)">周报 (Weekly Report)</option>
-                                <option value="月报 (Monthly Report)">月报 (Monthly Report)</option>
+                                <option value="Daily Report">Daily Report</option>
+                                <option value="Weekly Report">Weekly Report</option>
+                                <option value="Monthly Report">Monthly Report</option>
                             </select>
                         </div>
                         <div class="input-wrapper">
                             <label for="detail-level">Detail Level</label>
                             <select id="detail-level" name="detail-level">
-                                <option value="简约 (Simple)">简约 (Simple)</option>
-                                <option value="标准 (Standard)">标准 (Standard)</option>
-                                <option value="详细 (Detailed)">详细 (Detailed)</option>
+                                <option value="Simple">Simple</option>
+                                <option value="Standard">Standard</option>
+                                <option value="Detailed">Detailed</option>
                             </select>
                         </div>
                         <div class="input-wrapper">
@@ -160,22 +160,22 @@
                          <div class="input-wrapper">
                             <label for="tone">Tone / Style</label>
                             <select id="tone" name="tone">
-                                <option value="专业汇报 (Professional)">专业汇报 (Professional)</option>
-                                <option value="口语化 (Conversational)">口语化 (Conversational)</option>
-                                <option value="正式书面 (Formal)">正式书面 (Formal)</option>
+                                <option value="Professional">Professional</option>
+                                <option value="Conversational">Conversational</option>
+                                <option value="Formal">Formal</option>
                             </select>
                         </div>
                          <div class="input-wrapper">
                             <label for="language">Language</label>
                             <select id="language" name="language">
                                 <option value="English">English</option>
-                                <option value="中文">中文</option>
-                                <option value="日本語">日本語</option>
-                                <option value="한국어">한국어</option>
-                                <option value="Español">Español</option>
-                                <option value="Deutsch">Deutsch</option>
-                                <option value="Français">Français</option>
-                                <option value="Português">Português</option>
+                                <option value="Chinese">Chinese</option>
+                                <option value="Japanese">Japanese</option>
+                                <option value="Korean">Korean</option>
+                                <option value="Spanish">Spanish</option>
+                                <option value="German">German</option>
+                                <option value="French">French</option>
+                                <option value="Portuguese">Portuguese</option>
                             </select>
                         </div>
                     </div>
@@ -237,8 +237,8 @@
        </div>
     </footer>
     
-    <div id="auth-modal-overlay" class="hidden">
-        <div id="auth-modal">
+    <div id="auth-modal-overlay" class="modal-overlay hidden">
+        <div id="auth-modal" class="modal-content">
             <button id="close-modal-btn">&times;</button>
             <div class="auth-tabs">
                 <button class="tab-link active" data-tab="login">Login</button>
@@ -247,7 +247,7 @@
 
             <div id="login" class="tab-content active">
                 <h2>Welcome Back!</h2>
-                <form>
+                <form id="login-form">
                     <div class="input-wrapper">
                         <label for="login-email">Email</label>
                         <input type="email" id="login-email" required>
@@ -266,7 +266,7 @@
 
             <div id="signup" class="tab-content">
                 <h2>Create Your Account</h2>
-                <form>
+                <form id="signup-form">
                     <div class="input-wrapper">
                         <label for="signup-name">Name</label>
                         <input type="text" id="signup-name" required>
@@ -289,6 +289,7 @@
         </div>
     </div>
     
-    <script src="script.js" defer></script>
+    <script src="nav.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
