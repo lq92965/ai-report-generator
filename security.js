@@ -4,7 +4,8 @@ const token = localStorage.getItem('token');
 
 document.addEventListener('DOMContentLoaded', () => {
     if (!token) {
-        window.location.href = 'index.html'; 
+        alert('Please log in to access your security settings.');
+        window.location.href = 'index.html';
         return;
     }
 
@@ -17,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const deleteAccountBtn = document.getElementById('delete-account-btn'); // (这就是您在 图 1 添加的按钮)
 
     // 1. 动态更新导航栏 (显示用户名)
-    updateUserNav();
 
     // 2. 绑定“修改密码”表单
     passwordForm.addEventListener('submit', async (e) => {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch(`${API_BASE_URL}/api/user/password`, {
+            const response = await fetch(`${API_BASE_URL}/api/security/password`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showStatusMessage('Deleting your account...', false);
 
         try {
-            const response = await fetch(`${API_BASE_URL}/api/user/account`, {
+           const response = await fetch(`${API_BASE_URL}/api/account`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -122,110 +122,22 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * 动态更新导航栏 (和所有页面都一样)
- */
-async function updateUserNav() {
-  const headerActions = document.querySelector('.header-actions');
-  if (!headerActions) return;
-  headerActions.innerHTML = ''; 
+ * (辅助函数) 在*指定*元素中显示状态消息
+ * (!!!) 修复: 现在接受 'element' 作为参数
+ */
+function showStatusMessage(element, message, isError) {
+    if (!element) {
+        console.error('showStatusMessage: element not provided');
+        return;
+    }
 
-  const token = localStorage.getItem('token');
+    element.textContent = message;
+    element.className = isError ? 'status-message error-message' : 'status-message success-message';
+    element.style.display = 'block'; // 确保可见
 
-  if (token) {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/user/profile`, {
-        method: 'GET',
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-
-      if (!response.ok) throw new Error('Failed to fetch user');
-      const user = await response.json();
-
-      const userName = user.name || user.email.split('@')[0];
-      const userInitial = (userName[0] || 'U').toUpperCase();
-
-      // 1. 创建头像
-      const avatar = document.createElement('div');
-      avatar.className = 'user-avatar';
-      avatar.textContent = userInitial;
-
-      // 2. 创建用户名 (作为触发器)
-      const userNameLink = document.createElement('a');
-      userNameLink.href = '#'; 
-      userNameLink.className = 'nav-user-name';
-      userNameLink.textContent = userName;
-
-      // 3. 创建下拉菜单
-      const dropdown = document.createElement('div');
-      dropdown.className = 'nav-user-dropdown';
-      dropdown.innerHTML = `
-        <a href="account.html">My Account</a>
-        <a href="templates.html">My Templates</a>
-        <a href="profile.html">Settings</a>
-        <hr>
-        <button id="dynamic-logout-btn">Logout</button>
-      `;
-
-      // 4. 绑定下拉菜单的“退出”按钮
-      dropdown.querySelector('#dynamic-logout-btn').addEventListener('click', () => {
-        localStorage.removeItem('token');
-        window.location.href = 'index.html';
-      });
-
-      // 5. 绑定触发器
-      const toggleDropdown = (e) => {
-        e.preventDefault();
-        dropdown.classList.toggle('active');
-        userNameLink.classList.toggle('active');
-      };
-      userNameLink.addEventListener('click', toggleDropdown);
-      avatar.addEventListener('click', toggleDropdown);
-
-      // 6. 添加到 header
-      headerActions.appendChild(avatar);
-      headerActions.appendChild(userNameLink);
-      headerActions.appendChild(dropdown);
-
-      // 7. (新) 点击菜单外部时，关闭菜单
-      document.addEventListener('click', (e) => {
-        if (!headerActions.contains(e.target) && dropdown.classList.contains('active')) {
-          dropdown.classList.remove('active');
-          userNameLink.classList.remove('active');
-        }
-      });
-
-    } catch (error) {
-      localStorage.removeItem('token');
-      showLoggedOutNav(headerActions);
-    }
-  } else {
-    showLoggedOutNav(headerActions);
-  }
-}
-
-/**
- * 显示“未登录”状态的按钮
- */
-function showLoggedOutNav(headerActions) {
-  if (!headerActions) return;
-  headerActions.innerHTML = `
-    <a href="account.html" class="btn btn-secondary">Login</a>
-    <a href="#generator" class="btn btn-primary">Get Started</a>
-  `;
-}
-
-/**
- * (辅助函数) 在表单下方显示状态消息
- */
-function showStatusMessage(message, isError) {
-    const passwordStatus = document.getElementById('password-status');
-    if (!passwordStatus) return;
-
-    passwordStatus.textContent = message;
-    passwordStatus.className = isError ? 'status-message error-message' : 'status-message success-message';
-
-    setTimeout(() => {
-        passwordStatus.textContent = '';
-        passwordStatus.className = 'status-message';
-    }, 5000);
+    setTimeout(() => {
+        element.textContent = '';
+        element.className = 'status-message';
+        element.style.display = 'none'; // 隐藏
+    }, 5000);
 }
