@@ -9,27 +9,27 @@
 <body>
 
     <header class="main-header">
-        <div class="container">
-            <a href="index.html" class="logo"> <span class="logo-icon">🐦</span>
-                <span>Reportify AI</span>
-            </a>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html#features">Features</a></li>
-                    <li><a href="index.html#pricing">Pricing</a></li>
-                    <li><a href="index.html#generator">Generator</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
-                </ul>
-            </nav>
-            <div class="header-actions">
-                </div>
-        </div>
-    </header>
+        <div class="container">
+                        <a href="index.html" class="logo">
+                <span class="logo-icon">🐦</span>
+                <span>Reportify AI</span>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="index.html#pricing">Pricing</a></li>
+                    <li><a href="index.html#generator">Generator</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+                        <div class="header-actions"></div>
+        </div>
+    </header>
 
     <main>
         <section id="template-manager" class="generator-section">
             <div class="container">
-                                <a href="account.html" class="btn-back">&larr; Back to Account Hub</a>
+                <a href="account.html" class="btn-back">&larr; Back to Account Hub</a>
                 <div class="template-header">
                     <h2 class="section-title">My Templates</h2>
                     <button id="create-new-template-btn" class="btn btn-primary">Create New Template</button>
@@ -39,8 +39,8 @@
                     <p id="loading-templates">Loading your templates...</p>
                 </div>
 
-                <div id="template-modal-overlay" class="hidden">
-                    <div id="template-modal">
+                <div id="template-modal-overlay" class="modal-overlay hidden">
+                    <div id="template-modal" class="modal-content">
                         <button id="close-template-modal-btn">&times;</button>
                         <h3 id="template-modal-title">Create New Template</h3>
                         <form id="template-form">
@@ -69,6 +69,7 @@
        </div>
     </footer>
 
-    <script src="templates.js" defer></script>
+    <script src="nav.js"></script>
+    <script src="templates.js" defer></script>
 </body>
 </html>
