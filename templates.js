@@ -1,6 +1,23 @@
-// templates.js
+/*
+ * ===================================================================
+ * * Reportify AI - Template Management Script (Cleaned)
+ * * FILE: templates.js
+ * * PURPOSE: Handles template CRUD and is protected.
+ * * (All navigation is handled by nav.js)
+ * ===================================================================
+*/
 const API_BASE_URL = 'https://api.goreportify.com'; 
 const token = localStorage.getItem('token');
+
+// (!!!) 1. PAGE PROTECTION
+// This IIFE (Immediately Invoked Function Expression) runs instantly.
+(function() {
+    if (!token) {
+        // If no token, alert the user and redirect to index.html
+        alert('Please log in to access your templates.');
+        window.location.href = 'index.html'; 
+    }
+})();
 
 // --- DOM 元素 ---
 const headerActions = document.querySelector('.header-actions');
@@ -20,8 +37,7 @@ const closeModalBtn = document.getElementById('close-template-modal-btn');
 
 document.addEventListener('DOMContentLoaded', () => {
     // 动态更新导航栏 (显示用户名)
-    updateUserNav();
-    
+
     // 获取并显示模板
     fetchAndDisplayTemplates();
 
@@ -35,87 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 绑定表单提交
     templateForm.addEventListener('submit', handleFormSubmit);
 });
-
-/**
- * 动态更新导航栏 (模板页版本)
- */
-async function updateUserNav() {
-  if (!headerActions) return;
-  headerActions.innerHTML = ''; // 清空旧按鈕
-
-  if (token) {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/user/profile`, {
-        method: 'GET',
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-
-      if (!response.ok) throw new Error('Failed to fetch user');
-      const user = await response.json();
-      
-      const userName = user.name || user.email.split('@')[0];
-      const userInitial = (userName[0] || 'U').toUpperCase();
-
-      // 1. 创建头像
-      const avatar = document.createElement('div');
-      avatar.className = 'user-avatar';
-      avatar.textContent = userInitial;
-      
-      // 2. 创建用户名 (作为触发器)
-      const userNameLink = document.createElement('a');
-      userNameLink.href = '#'; 
-      userNameLink.className = 'nav-user-name';
-      userNameLink.textContent = userName;
-      
-      // 3. 创建下拉菜单 (默认隐藏)
-      const dropdown = document.createElement('div');
-      dropdown.className = 'nav-user-dropdown';
-      dropdown.innerHTML = `
-        <a href="account.html">My Account</a>
-        <a href="templates.html">My Templates</a>
-        <a href="profile.html">Settings</a>
-        <hr>
-        <button id="dynamic-logout-btn">Logout</button>
-      `;
-
-      // 4. 绑定下拉菜单的“退出”按钮
-      dropdown.querySelector('#dynamic-logout-btn').addEventListener('click', () => {
-        localStorage.removeItem('token');
-        window.location.href = 'index.html';
-      });
-
-      // 5. 绑定触发器 (点击用户名或头像)
-      const toggleDropdown = (e) => {
-        e.preventDefault();
-        dropdown.classList.toggle('active');
-        userNameLink.classList.toggle('active');
-      };
-      userNameLink.addEventListener('click', toggleDropdown);
-      avatar.addEventListener('click', toggleDropdown);
-
-      // 6. 添加到 header
-      headerActions.appendChild(avatar);
-      headerActions.appendChild(userNameLink);
-      headerActions.appendChild(dropdown);
-      
-      // 7. (新) 点击菜单外部时，关闭菜单
-      document.addEventListener('click', (e) => {
-        if (!headerActions.contains(e.target) && dropdown.classList.contains('active')) {
-          dropdown.classList.remove('active');
-          userNameLink.classList.remove('active');
-        }
-      });
-
-    } catch (error) {
-      localStorage.removeItem('token');
-      window.location.href = 'index.html'; 
-    }
-  } else {
-    // 如果沒有 token，強制跳轉回主頁
-    console.warn('No token found, redirecting to login.');
-    window.location.href = 'index.html';
-  }
-}
 
 /**
  * 【已恢复】获取并显示模板
@@ -153,10 +88,10 @@ async function fetchAndDisplayTemplates() {
                 const card = document.createElement('div');
                 card.className = 'template-card';
                 
-                const preview = template.templateContent ? template.templateContent.substring(0, 100) : 'No content preview';
-                
-                card.innerHTML = `
-                    <h3>${template.templateName}</h3>
+                const preview = template.content ? template.content.substring(0, 100) : 'No content preview';
+                
+                card.innerHTML = `
+                    <h3>${template.title}</h3>
                     <p>${preview}...</p>
                     <div class="template-card-actions">
                         <button class="btn-edit">Edit</button>
@@ -171,7 +106,7 @@ async function fetchAndDisplayTemplates() {
                 
                 // 绑定删除按钮
                 card.querySelector('.btn-delete').addEventListener('click', async () => {
-                    if (confirm(`Are you sure you want to delete "${template.templateName}"?`)) {
+                    if (confirm(`Are you sure you want to delete "${template.title}"?`)) {
                         await deleteTemplate(template._id);
                     }
                 });
@@ -197,8 +132,8 @@ function openModal(isEditing = false, template = null) {
         templateModalTitle.textContent = 'Edit Template';
         saveTemplateBtn.textContent = 'Update Template';
         templateIdInput.value = template._id;
-        templateNameInput.value = template.templateName;
-        templateContentInput.value = template.templateContent;
+        templateNameInput.value = template.title;
+        templateContentInput.value = template.content;
     } else {
         templateModalTitle.textContent = 'Create New Template';
         saveTemplateBtn.textContent = 'Save Template';
@@ -230,9 +165,9 @@ async function handleFormSubmit(e) {
     const isEditing = !!templateId;
     
     const templateData = {
-        templateName: templateNameInput.value,
-        templateContent: templateContentInput.value
-    };
+        title: templateNameInput.value,
+        content: templateContentInput.value
+    };
 
     const url = isEditing 
         ? `${API_BASE_URL}/api/templates/${templateId}` 
