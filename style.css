@@ -977,3 +977,45 @@ hr.section-divider {
     font-size: 14px;
     padding: 8px 16px;
 }
+
+/*
+ * ===================================================================
+ * * Reportify AI - 修复补丁 (2025-11-13)
+ * * 修复“方形头像” Bug
+ * ===================================================================
+*/
+
+/* (!!!) 修复点: 修复 profile.html 上的“大”头像 */
+#avatar-preview {
+    display: block;
+    width: 120px;       /* 确保尺寸统一 */
+    height: 120px;
+    border-radius: 50%; /* (!!!) 这是圆形修复 */
+    object-fit: cover;  /* (!!!) 防止图片拉伸变形 */
+    border: 3px solid #f0f0f0;
+    margin-bottom: 1rem;
+    background-color: #f9f9f9; /* 添加背景色以防图片加载失败 */
+}
+
+/* (!!!) 修复点: 修复右上角导航栏的“小”头像 */
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* (!!!) 这是圆形修复 */
+    background-color: #007bff; /* 默认背景色 (如果只有首字母) */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    overflow: hidden; /* (!!!) 确保 <img> 不会溢出 */
+}
+
+/* (!!!) 修复点: 确保头像内的 <img> 也是圆形的 */
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* (!!!) 防止图片拉伸变形 */
+}
