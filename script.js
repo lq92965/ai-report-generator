@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModalBtn = document.getElementById('close-modal-btn');
     const authTabs = document.querySelectorAll('.tab-link');
     const tabContents = document.querySelectorAll('.tab-content');
-    const loginForm = document.getElementById('login')?.querySelector('form');
-    const signupForm = document.getElementById('signup')?.querySelector('form');
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
     const socialLoginButtons = document.querySelectorAll('.btn-social-google');
     const choosePlanButtons = document.querySelectorAll('.choose-plan-btn');
 
@@ -57,137 +57,42 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     }
-
-    // --- 动态导航栏 (主页版本) ---
-
     /**
-     * 动态更新导航栏 (主页版本)
-     * 【新逻辑】：Avatar + Dropdown Menu
-     */
-    async function updateUserNav() {
-        const headerActions = document.querySelector('.header-actions');
-        if (!headerActions) return;
-        headerActions.innerHTML = ''; // 清空所有旧按钮
+     * (!!!) 关键修复点: “主页”的导航栏覆盖
+     * nav.js 已经运行了。现在我们 *覆盖* showLoggedOutNav
+     * 以便它打开弹窗，而不是链接到 index.html。
+     */
+    window.showLoggedOutNav = (headerActions) => {
+        if (!headerActions) return;
+        headerActions.innerHTML = ''; 
 
-        token = localStorage.getItem('token'); // (!!!) 修复点: 每次都重新获取最新的 token
+        const loginBtn = document.createElement('a');
+        loginBtn.href = '#'; 
+        loginBtn.className = 'btn btn-secondary';
+        loginBtn.textContent = 'Login';
+        loginBtn.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            openModal('login'); // (!!!) 这是此页面独有的功能
+        });
 
-        if (token) {
-            // --- 用户已登录 ---
-            try {
-                // (!!!) 修复点: 调用正确的 /api/me (匹配后端)
-                const response = await fetch(`${API_BASE_URL}/api/me`, {
-                    method: 'GET',
-                    // (!!!) 修复点: 使用 Bearer Token (匹配后端)
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
+        const getStartedBtn = document.createElement('a');
+        getStartedBtn.href = '#generator';
+        getStartedBtn.className = 'btn btn-primary';
+        getStartedBtn.textContent = 'Get Started';
 
-                if (!response.ok) {
-                    // 如果令牌无效或过期，清除它并显示“登出”状态
-                    localStorage.removeItem('token');
-                    throw new Error('Failed to fetch user');
-                }
-                const user = await response.json();
+        headerActions.appendChild(loginBtn);
+        headerActions.appendChild(getStartedBtn);
+    }
 
-                // (!!!) 修复点: 读取正确的 user.displayName (匹配后端)
-                const userName = user.displayName || user.email.split('@')[0];
-                const userInitial = (userName[0] || 'U').toUpperCase();
-
-                // 1. 创建头像 (使用 user.avatarUrl)
-                const avatar = document.createElement('div');
-                avatar.className = 'user-avatar';
-                if (user.avatarUrl && user.avatarUrl !== 'https://via.placeholder.com/150') {
-                    avatar.innerHTML = `<img src="${user.avatarUrl}" alt="${userName}">`;
-                } else {
-                    avatar.textContent = userInitial;
-                }
-
-                // 2. 创建用户名 (作为触发器)
-                const userNameLink = document.createElement('a');
-                userNameLink.href = '#'; // 它只是一个触发器
-                userNameLink.className = 'nav-user-name';
-                userNameLink.textContent = userName;
-
-                // 3. 创建下拉菜单 (默认隐藏)
-                const dropdown = document.createElement('div');
-                dropdown.className = 'nav-user-dropdown';
-                dropdown.innerHTML = `
-                    <a href="account.html">My Account</a>
-                    <a href="templates.html">My Templates</a>
-                    <a href="profile.html">Settings</a>
-                    <hr>
-                    <button id="dynamic-logout-btn">Logout</button>
-                `;
-
-                // 4. 绑定下拉菜单的“退出”按钮
-                dropdown.querySelector('#dynamic-logout-btn').addEventListener('click', async () => {
-                    // (!!!) 修复点: 调用后端的 /api/logout (虽然它现在什么也不做，但这是好习惯)
-                    await fetch(`${API_BASE_URL}/api/logout`, {
-                        method: 'POST',
-                        headers: { 'Authorization': `Bearer ${token}` }
-                    });
-                    localStorage.removeItem('token');
-                    updateUserNav(); // 立即刷新导航栏
-                });
-
-                // 5. 绑定触发器 (点击用户名或头像)
-                const toggleDropdown = (e) => {
-                    e.preventDefault();
-                    dropdown.classList.toggle('active');
-                    userNameLink.classList.toggle('active');
-                };
-                userNameLink.addEventListener('click', toggleDropdown);
-                avatar.addEventListener('click', toggleDropdown);
-
-                // 6. 添加到 header
-                headerActions.appendChild(avatar);
-                headerActions.appendChild(userNameLink);
-                headerActions.appendChild(dropdown);
-
-                // 7. (新) 点击菜单外部时，关闭菜单
-                document.addEventListener('click', (e) => {
-                    if (!headerActions.contains(e.target) && dropdown.classList.contains('active')) {
-                        dropdown.classList.remove('active');
-                        userNameLink.classList.remove('active');
-                    }
-                });
-
-            } catch (error) {
-                // (!!!) 修复点: 如果 fetch 失败 (例如令牌过期), 清理并显示登出按钮
-                console.error('Error fetching user profile:', error.message);
-                localStorage.removeItem('token');
-                showLoggedOutNav(headerActions);
-            }
-        } else {
-            // --- 用户未登录 ---
-            showLoggedOutNav(headerActions);
-        }
-    }
-
-    /**
-     * (辅助函数) 显示“未登录”状态的按钮
-     */
-    function showLoggedOutNav(headerActions) {
-        if (!headerActions) return;
-        headerActions.innerHTML = '';
-
-        const loginBtn = document.createElement('a');
-        loginBtn.href = '#';
-        loginBtn.className = 'btn btn-secondary';
-        loginBtn.textContent = 'Login';
-        loginBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            openModal('login');
-        });
-
-        const getStartedBtn = document.createElement('a');
-        getStartedBtn.href = '#generator';
-        getStartedBtn.className = 'btn btn-primary';
-        getStartedBtn.textContent = 'Get Started'; // (这是您原始截图中的 "开始使用")
-
-        headerActions.appendChild(loginBtn);
-        headerActions.appendChild(getStartedBtn);
-    }
-
+    /**
+     * (!!!) 关键修复点: 
+     * 我们必须 *再次* 调用 updateUserNav (它在 nav.js 中定义)
+     * 因为 showLoggedOutNav 可能在 nav.js 运行时被错误地调用了。
+     * 这确保了在 JS 完全加载后，导航栏状态是 100% 正确的。
+     */
+    if (window.updateUserNav) {
+        window.updateUserNav();
+    }
 
     if (generateBtn) {
         generateBtn.addEventListener('click', async () => {
@@ -523,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeModal();
 
                 // 3. 立即刷新导航栏 (显示新头像)
-                updateUserNav();
+                if (window.updateUserNav) window.updateUserNav(data.user);
 
                 // 4. 重置表单
                 if (loginForm) loginForm.reset();
@@ -618,5 +523,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- Initialization ---
-    updateUserNav(); // Update nav based on initial login state
 });
