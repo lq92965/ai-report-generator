@@ -1,13 +1,9 @@
 /*
  * ===================================================================
- * * Reportify AI (goreportify.com) - 个人资料页脚本
- * 文件: profile.js
- * 修复日期: 2025年11月13日
- * 修复内容: 
- * 1. (架构升级) 修复了所有 API 端点以匹配新的后端 index.js。
- * 2. (Bug 修复) 修复了所有 JSON 键 (使用 displayName 替换了 name)。
- * 3. (Bug 修复) 修复了响应处理 (期望 { user: ... } 结构)。
- *
+ * * Reportify AI (goreportify.com) - Profile Page Script
+ * * FILE: profile.js
+ * * PURPOSE: Handles profile updates, avatar uploads, and form logic.
+ * * (This file is now cleaned of all duplicate navigation code)
  * ===================================================================
 */
 
@@ -15,10 +11,11 @@
 const API_BASE_URL = 'https://api.goreportify.com';
 const token = localStorage.getItem('token');
 
-// --- 页面加载时的立即检查 ---
+// --- Page load immediate check (Protection) ---
 if (!token) {
-    // 如果没有令牌，立即重定向，不执行任何操作
-    window.location.href = 'index.html'; 
+    // (!!!) Fix: Add an alert for the user before redirecting
+    alert('Please log in to access your profile.');
+    window.location.href = 'index.html'; 
 }
 
 // --- DOMContentLoaded 监听器 ---
@@ -120,8 +117,12 @@ async function fetchUserProfile() {
             }
         }
 
-        // 3. 更新导航栏
-        updateUserNav(user);
+        // 3. (!!!) Fix: Call the *Global* nav function (from nav.js)
+        // We already have the 'user' object, so we pass it in 
+        // to prevent nav.js from fetching it again.
+        if (window.updateUserNav) {
+            window.updateUserNav(user);
+        }
 
     } catch (error) {
         console.error('Error fetching user profile:', error);
@@ -182,10 +183,12 @@ async function handleProfileSubmit(e) {
         profileBioInput.value = updatedUser.bio;
         profileJobInput.value = updatedUser.jobTitle;
 
-        // 保存成功后，也立即更新右上角的名字
-        // (!!!) 修复点: 
-        // 我们不需要重新 fetch，我们已经有了 updatedUser 对象
-        updateUserNav(updatedUser); 
+        // (!!!) Fix:
+        // On success, call the *Global* nav function (from nav.js)
+        // We pass the 'updatedUser' object to it.
+        if (window.updateUserNav) {
+            window.updateUserNav(updatedUser); 
+        }
 
     } catch (error) {
         console.error('Error updating profile:', error);
@@ -234,16 +237,15 @@ async function uploadAvatar(file) {
         const newAvatarUrl = result.avatarUrl;
         
         const avatarPreview = document.getElementById('avatar-preview');
-        if (avatarPreview) avatarPreview.src = newAvatarUrl; 
+        if (avatarPreview) avatarPreview.src = newAvatarUrl; 
 
-        // 立即更新右上角的头像
-        const headerAvatar = document.querySelector('.user-avatar');
-        if (headerAvatar) {
-            headerAvatar.innerHTML = `<img src="${newAvatarUrl}" alt="Avatar">`; // 使用 <img>
-            headerAvatar.style.backgroundImage = ''; // 清除旧样式
-            headerAvatar.style.backgroundSize = '';
-            headerAvatar.textContent = ''; // 清除首字母
-        }
+        // (!!!) Fix:
+        // Call the *Global* nav function (from nav.js)
+        // We don't pass an object, so nav.js will auto-refetch 
+        // to get the latest user data (which is correct).
+        if (window.updateUserNav) {
+            window.updateUserNav();
+        }
 
     } catch (error) {
         console.error('Error uploading avatar:', error);
@@ -251,131 +253,6 @@ async function uploadAvatar(file) {
     } finally {
         if(avatarUploadBtn) avatarUploadBtn.disabled = false;
     }
-}
-
-/**
- * (!!!) 
- * (!!!) 导航栏 Bug (类别 A)
- * (!!!) 
- * 这是一个重复的函数。它与 script.js 中的 updateUserNav 完全相同。
- * 这是导致您的 Bug (3, 4, 6) 的根源。
- * * 我们现在修复它，使其在此页面上 (profile.html) 能够正确工作。
- * 我们的下一个任务将是创建一个“共享”的 nav.js 来一劳永逸地解决这个问题。
- * (!!!) 
- */
-async function updateUserNav(user = null) {
-    const headerActions = document.querySelector('.header-actions');
-    if (!headerActions) return;
-    headerActions.innerHTML = ''; 
-
-    // (!!!) 修复点: 确保 token 真的存在
-    const currentToken = localStorage.getItem('token');
-    if (!currentToken) {
-        showLoggedOutNav(headerActions);
-        return;
-    }
-
-    try {
-        if (!user) {
-            // (!!!) 修复点: API 路径
-            const res = await fetch(`${API_BASE_URL}/api/me`, { 
-                method: 'GET',
-                headers: { 'Authorization': `Bearer ${currentToken}` }
-            });
-            if (!res.ok) throw new Error('Not logged in');
-            user = await res.json();
-        }
-
-        // --- 用户已登录 ---
-        // (!!!) 修复点: JSON 键
-        const userName = user.displayName || user.email.split('@')[0];
-        const userInitial = (userName[0] || 'U').toUpperCase();
-
-        // 1. 创建头像
-        const avatar = document.createElement('div');
-        avatar.className = 'user-avatar';
-
-        // 检查是否有 avatarUrl
-        if (user.avatarUrl && user.avatarUrl !== 'https://via.placeholder.com/150') {
-            avatar.innerHTML = `<img src="${user.avatarUrl}" alt="${userName}">`;
-        } else {
-            avatar.textContent = userInitial;
-        }
-
-        // 2. 创建用户名 (作为触发器)
-        const userNameLink = document.createElement('a');
-        userNameLink.href = 'account.html'; 
-        userNameLink.className = 'nav-user-name';
-        userNameLink.textContent = userName;
-
-        // 3. 创建下拉菜单
-        const dropdown = document.createElement('div');
-        dropdown.className = 'nav-user-dropdown';
-        dropdown.innerHTML = `
-            <a href="account.html">My Account</a>
-            <a href="templates.html">My Templates</a>
-            <a href="profile.html">Settings</a>
-            <hr>
-            <button id="dynamic-logout-btn">Logout</button>
-        `;
-
-        // 4. 绑定下拉菜单的“退出”按钮
-        dropdown.querySelector('#dynamic-logout-btn').addEventListener('click', () => {
-            localStorage.removeItem('token');
-            window.location.href = 'index.html';
-        });
-
-        // 5. 绑定触发器
-        const toggleDropdown = (e) => {
-            e.preventDefault();
-            // (!!!) 修复点: 我们不应该跳转, 所以阻止默认行为
-            // (但您的 userNameLink.href 是 'account.html', 这很好)
-            // 让我们为头像点击也添加 e.preventDefault()
-            dropdown.classList.toggle('active');
-            userNameLink.classList.toggle('active');
-        };
-        userNameLink.addEventListener('click', toggleDropdown);
-        avatar.addEventListener('click', (e) => {
-             e.preventDefault(); // (!!!) 修复点: 头像点击也应阻止默认
-             toggleDropdown(e);
-        });
-
-
-        // 6. 添加到 header
-        headerActions.appendChild(avatar);
-        headerActions.appendChild(userNameLink);
-        headerActions.appendChild(dropdown);
-
-        // 7. (新) 点击菜单外部时，关闭菜单
-        document.addEventListener('click', (e) => {
-            if (!headerActions.contains(e.target) && dropdown.classList.contains('active')) {
-                dropdown.classList.remove('active');
-                userNameLink.classList.remove('active');
-            }
-        });
-    
-    } catch (e) {
-        // 如果获取用户失败 (例如令牌过期)
-        console.error("updateUserNav failed:", e.message);
-        localStorage.removeItem('token');
-        showLoggedOutNav(headerActions);
-        return;
-    }
-}
-
-/**
- * 显示“未登录”状态的按钮
- */
-function showLoggedOutNav(headerActions) {
-    if (!headerActions) return;
-    // (!!!) 修复点: 
-    // “Login” 按钮应该打开弹窗，而不是跳转到 account.html
-    // 但在 profile.html 上没有弹窗。
-    // 我们暂时将其指向 index.html 的登录
-    headerActions.innerHTML = `
-        <a href="index.html#login" class="btn btn-secondary">Login</a>
-        <a href="index.html#generator" class="btn btn-primary">Get Started</a>
-    `;
 }
 
 /**
