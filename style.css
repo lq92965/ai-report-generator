@@ -1037,3 +1037,123 @@ hr.section-divider {
     position: relative !important; /* 强制相对定位 */
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
+
+/* =========================================
+   2025-11-13 紧急修复补丁
+   ========================================= */
+
+/* 1. 修复：隐藏工具类 (解决模板弹窗、登录弹窗直接显示的问题) */
+.hidden {
+    display: none !important;
+}
+
+/* 2. 修复：右上角导航容器 (解决下拉菜单乱跑的问题) */
+.header-actions {
+    position: relative; /* 让下拉菜单相对于这个容器定位 */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 3. 修复：下拉菜单位置 */
+.nav-user-dropdown {
+    /* 确保它在头像正下方，而不是屏幕最右边 */
+    right: 0; 
+    top: 100%; 
+    margin-top: 10px;
+    width: 200px; /* 固定宽度，防止太窄 */
+}
+
+/* 4. 修复：账户页页眉高度 (解决页眉太宽的问题) */
+.account-header {
+    background-color: #fff;
+    position: relative !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 15px 0; /* 减小上下间距 */
+}
+
+.account-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 5. 修复：头像样式 (确保是圆的，且不重复显示) */
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #eee;
+    flex-shrink: 0; /* 防止被压缩 */
+}
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* =========================================
+   2025-11-13 紧急修复补丁 (Visual Fixes)
+   ========================================= */
+
+/* 1. 关键：隐藏工具类 (必须有 !important) */
+/* 这解决了模板弹窗和登录弹窗无法隐藏的问题 */
+.hidden {
+    display: none !important;
+}
+
+/* 2. 修复：右上角导航容器定位 */
+/* 这解决了下拉菜单跑到屏幕最右边的问题 */
+.header-actions {
+    position: relative; 
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 3. 修复：下拉菜单具体位置 */
+.nav-user-dropdown {
+    right: 0; 
+    top: 100%; 
+    margin-top: 10px;
+    width: 200px; 
+    /* 确保菜单在最上层 */
+    z-index: 1000; 
+}
+
+/* 4. 修复：账户页页眉高度 */
+/* 这解决了账户页面页眉太宽的问题 */
+.account-header {
+    background-color: #fff;
+    position: relative !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 15px 0; 
+}
+
+.account-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 5. 修复：头像样式 (确保是圆的) */
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #eee;
+    flex-shrink: 0; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
