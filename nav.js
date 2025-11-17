@@ -1,71 +1,64 @@
 /*
  * ===================================================================
- * * Reportify AI (goreportify.com) - 共享导航脚本 (新文件)
+ * * Reportify AI (goreportify.com) - 共享导航脚本 (修复版)
  * 文件: nav.js
- * 职责: 
- * 1. 为网站的 *每一个* 页面提供统一的“登录/登出”状态导航栏。
- * 2. 暴露 window.updateUserNav() 函数，以便其他脚本(如 profile.js) 
- * 在更新用户信息后可以调用它来刷新导航栏。
+ * 修复: 解决了“双头像”的竞态条件问题 (Race Condition)。
  * ===================================================================
 */
-
-// (!!!) 注意: 此脚本不使用 'DOMContentLoaded'
-// 它会立即运行，以尽快构建导航栏
 
 const API_BASE_URL_NAV = 'https://api.goreportify.com';
 
 /**
  * (全局函数) 动态更新右上角的导航栏
- * @param {object | null} user - (可选) 如果已获取用户对象，直接传入
  */
 window.updateUserNav = async (user = null) => {
     const headerActions = document.querySelector('.header-actions');
-    if (!headerActions) {
-        console.error('Navigation Error: ".header-actions" element not found.');
-        return;
-    }
-    headerActions.innerHTML = ''; // 清空所有旧按钮
+    if (!headerActions) return;
+    
+    // (!!!) 移除: 不要在这里清空，否则会导致并发时的双重渲染
+    // headerActions.innerHTML = ''; 
 
     const token = localStorage.getItem('token');
 
     if (token && !user) {
-        // 如果有 token 但没有传入 user 对象，我们自己去获取
         try {
             const response = await fetch(`${API_BASE_URL_NAV}/api/me`, {
                 method: 'GET',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (!response.ok) {
-                // 令牌无效
                 localStorage.removeItem('token');
                 throw new Error('Invalid token');
             }
             user = await response.json();
         } catch (error) {
-            console.warn('Session expired or invalid:', error.message);
+            console.warn('Session expired:', error.message);
             localStorage.removeItem('token');
-            window.showLoggedOutNav(headerActions); // (!!!) 调用下面的“登出”函数
+            window.showLoggedOutNav(headerActions);
             return;
         }
     }
 
+    // (!!!) 修复点: 只有在数据准备好，准备渲染前一刻，才清空容器
+    headerActions.innerHTML = ''; 
+
     if (user) {
         // --- 1. 用户已登录 ---
         const userName = user.displayName || user.email.split('@')[0];
+        const userInitial = (userName[0] || 'U').toUpperCase();
 
-        // 1. 创建头像 (已修复圆形 CSS)
+        // 1. 创建头像
         const avatar = document.createElement('div');
-        avatar.className = 'user-avatar'; // (!!!) CSS 将通过这个 class 修复样式
+        avatar.className = 'user-avatar'; 
         if (user.avatarUrl && user.avatarUrl !== 'https://via.placeholder.com/150') {
             avatar.innerHTML = `<img src="${user.avatarUrl}" alt="${userName}">`;
         } else {
-            const userInitial = (userName[0] || 'U').toUpperCase();
             avatar.textContent = userInitial;
         }
 
-        // 2. 创建用户名 (作为触发器)
+        // 2. 创建用户名
         const userNameLink = document.createElement('a');
-        userNameLink.href = 'account.html'; // 始终指向“我的账户”
+        userNameLink.href = 'account.html';
         userNameLink.className = 'nav-user-name';
         userNameLink.textContent = userName;
 
@@ -80,28 +73,27 @@ window.updateUserNav = async (user = null) => {
             <button id="dynamic-logout-btn">Logout</button>
         `;
 
-        // 4. 绑定下拉菜单的“退出”按钮
+        // 4. 绑定退出
         dropdown.querySelector('#dynamic-logout-btn').addEventListener('click', () => {
             localStorage.removeItem('token');
-            // (!!!) 修复 Bug #3 和 #4: 登出后，*必须*跳转到主页
             window.location.href = 'index.html'; 
         });
 
         // 5. 绑定触发器
         const toggleDropdown = (e) => {
-            e.preventDefault(); // (!!!) 强制阻止跳转，无论是点击头像还是名字
+            e.preventDefault(); // 阻止跳转
             dropdown.classList.toggle('active');
             userNameLink.classList.toggle('active');
         };
         userNameLink.addEventListener('click', toggleDropdown);
         avatar.addEventListener('click', toggleDropdown);
 
-        // 6. 添加到 header
+        // 6. 添加到 DOM
         headerActions.appendChild(avatar);
         headerActions.appendChild(userNameLink);
         headerActions.appendChild(dropdown);
 
-        // 7. (新) 点击菜单外部时，关闭菜单
+        // 7. 点击外部关闭
         document.addEventListener('click', (e) => {
             if (!headerActions.contains(e.target) && dropdown.classList.contains('active')) {
                 dropdown.classList.remove('active');
@@ -116,20 +108,16 @@ window.updateUserNav = async (user = null) => {
 };
 
 /**
- * (全局函数) 显示“未登录”状态的按钮
- * (!!!) 这是在 *非主页* 上的版本
+ * (全局函数) 显示“未登录”状态
  */
 window.showLoggedOutNav = (headerActions) => {
     if (!headerActions) return;
-
-    // 修复 Bug #3: 在 *任何* 页面上点击“登录”或“开始”，都应返回主页
+    // 这里第一件事就是 innerHTML = ''，所以是安全的
     headerActions.innerHTML = `
         <a href="index.html" class="btn btn-secondary">Login</a>
         <a href="index.html#generator" class="btn btn-primary">Get Started</a>
     `;
 };
 
-
-// --- (!!!) 脚本加载时立即执行 ---
-// 这将确保 *每个* 加载了此脚本的页面都会立即尝试更新导航栏
+// --- 脚本加载时立即执行 ---
 window.updateUserNav();
