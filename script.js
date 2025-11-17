@@ -1,13 +1,11 @@
 /*
- * ===================================================================
- * * Reportify AI - script.js (主页完整版)
- * * 修复内容: 删除了所有重复的 updateUserNav 函数，解决双头像问题。
- * ===================================================================
-*/
+ * Reportify AI - script.js (纯净版)
+ * 修复: 移除了所有重复的导航代码，解决“双头像”问题。
+ */
 document.addEventListener('DOMContentLoaded', () => {
     const API_BASE_URL = 'https://api.goreportify.com'; 
 
-    // --- 1. DOM 元素选择器 (已修复 ID) ---
+    // --- 1. DOM 元素选择器 ---
     const generateBtn = document.getElementById('generate-btn');
     const copyBtn = document.getElementById('copy-btn');
     const resultBox = document.getElementById('result');
@@ -22,13 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contact-form');
     const pricingCards = document.querySelectorAll('.pricing-card');
     const formStatus = document.getElementById('form-status');
-    const emailInput = document.getElementById('email');
-    const emailError = document.getElementById('email-error');
+    
+    // 弹窗相关
     const authModalOverlay = document.getElementById('auth-modal-overlay');
     const closeModalBtn = document.getElementById('close-modal-btn');
     const authTabs = document.querySelectorAll('.tab-link');
     const tabContents = document.querySelectorAll('.tab-content');
-    // (!!!) 确保这里使用的是 index.html 中修正后的 ID
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
     const socialLoginButtons = document.querySelectorAll('.btn-social-google');
@@ -71,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         headerActions.appendChild(getStartedBtn);
     }
 
-    // (!!!) 关键: 再次调用全局导航，以应用上面的覆盖
+    // (!!!) 关键: 再次调用全局导航，以确保上面的覆盖生效
     if (window.updateUserNav) window.updateUserNav();
 
     // --- 4. AI 生成器逻辑 ---
@@ -240,7 +237,6 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.disabled = true;
             submitBtn.textContent = 'Creating Account...';
             
-            // 这里的 ID 必须与 index.html 中的 input id 匹配
             const nameInput = document.getElementById('signup-name');
             const emailInput = document.getElementById('signup-email');
             const passwordInput = document.getElementById('signup-password');
@@ -302,10 +298,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.textContent = originalBtnText;
             }
         });
-    }
-
-    // PayPal 错误处理占位
-    if (typeof window.paypal === 'undefined') {
-        document.querySelectorAll('.paypal-button-container').forEach(el => el.innerHTML = '<p style="color:orange; font-size: small;">Payment gateway loading error.</p>');
     }
 });
