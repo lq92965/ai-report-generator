@@ -89,13 +89,7 @@ window.updateUserNav = async (user = null) => {
 
         // 5. 绑定触发器
         const toggleDropdown = (e) => {
-            // (!!!) 修复 Bug #3: 阻止 Logo 链接的默认跳转行为
-            if (e.currentTarget.href && e.currentTarget.href.includes('account.html')) {
-                // 如果是点击用户名，正常跳转
-            } else {
-                // 如果是点击头像，阻止跳转
-                e.preventDefault();
-            }
+            e.preventDefault(); // (!!!) 强制阻止跳转，无论是点击头像还是名字
             dropdown.classList.toggle('active');
             userNameLink.classList.toggle('active');
         };
