@@ -3,83 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subscription & Billing - Reportify AI</title>
+    <title>Subscription - Reportify AI</title>
     <link rel="stylesheet" href="style.css?v=3.0">
-    <script src="https://www.paypal.com/sdk/js?client-id=AVnSKKHaiFxJKn4HMqGyKeXBhxZ1W-Qs3w7PSP8maz3c2O8jGg_o_nLHt7IUJQjwKHQBZyIVKaJuUPBc&currency=USD"></script> 
+    <script src="https://www.paypal.com/sdk/js?client-id=AVnSKKHaiFxJKn4HMqGyKeXBhxZ1W-Qs3w7PSP8maz3c2O8jGg_o_nLHt7IUJQjwKHQBZyIVKaJuUPBc&currency=USD"></script>
 </head>
-<body style="align-items: stretch !important; display: block !important;">
-
+<body>
     <header class="main-header account-header">
         <div class="container">
             <a href="index.html" class="logo">
-                <span class="logo-icon">🐦</span>
-                <span>Reportify AI</span>
+                <span class="logo-icon">🐦</span><span>Reportify AI</span>
             </a>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html#features">Features</a></li>
-                    <li><a href="index.html#pricing">Pricing</a></li>
-                </ul>
-            </nav>
             <div class="header-actions"></div>
         </div>
     </header>
 
     <section class="generator-section account-hub">
         <div class="container">
-            <a href="account.html" class="btn-back" style="margin-bottom: 20px; display: inline-block; text-decoration: none; color: #333;">&larr; Back to Account Hub</a>
-
-            <h2 class="section-title">Subscription & Billing</h2>
-            <p class="section-subtitle">Upgrade to Professional to unlock unlimited templates and priority support.</p>
-
-            <div class="current-plan-box" style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 40px; text-align: center; border: 1px solid #e9ecef;">
-                <h3>Current Plan: <span id="user-plan-badge" style="color: #007bff; font-weight: bold;">Loading...</span></h3>
-                <p id="plan-expiry-date" style="display:none; color: #666; font-size: 0.9em;">Expires on: -</p>
+            <a href="account.html" class="btn-back">&larr; Back to Account</a>
+            
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h2 class="section-title">Upgrade Your Plan</h2>
+                <p class="section-subtitle">Unlock unlimited potential with our Professional plan.</p>
+                
+                <div style="display: inline-block; background: #f0f9ff; padding: 15px 30px; border-radius: 50px; border: 1px solid #b9e6fe; color: #006699; font-weight: 500; margin-top: 20px;">
+                    Current Plan: <span id="user-plan-badge" style="font-weight: bold; text-transform: uppercase;">Loading...</span>
+                </div>
             </div>
 
             <div class="pricing-grid">
                 <div class="pricing-card" id="plan-card-basic">
                     <h3>Basic</h3>
-                    <p class="price"><span>$9.90</span>/month</p>
+                    <p class="price"><span>$9.90</span>/mo</p>
                     <ul class="plan-features">
-                        <li>Unlimited report generation</li>
-                        <li>Word, PDF & Markdown export</li>
-                        <li>Standard generation speed</li>
-                        <li>Email support</li>
+                        <li>✅ Unlimited reports</li>
+                        <li>✅ Standard speed</li>
+                        <li>✅ Email support</li>
                     </ul>
-                    <div id="btn-container-basic" class="plan-action-area">
-                        <button class="btn btn-secondary choose-plan-btn" data-plan="basic" data-amount="9.90">Choose Basic</button>
-                        <div id="paypal-basic"></div>
+                    <div class="plan-action-area" id="btn-container-basic">
+                        <button class="btn btn-secondary choose-plan-btn" data-plan="basic" data-amount="9.90" style="width:100%">Select Basic</button>
+                        <div id="paypal-basic" style="margin-top: 15px;"></div>
                     </div>
                 </div>
 
-                <div class="pricing-card recommended" id="plan-card-pro">
-                    <span class="badge">Recommended</span>
+                <div class="pricing-card recommended selected-plan" id="plan-card-pro">
+                    <span class="badge">Best Value</span>
                     <h3>Professional</h3>
-                    <p class="price"><span>$19.90</span>/month</p>
+                    <p class="price"><span>$19.90</span>/mo</p>
                     <ul class="plan-features">
-                        <li>Priority generation speed</li>
-                        <li>Advanced industry templates</li>
-                        <li>Word, PDF & Markdown export</li>
-                        <li>Dedicated customer support</li>
+                        <li>✅ <strong>Priority</strong> speed</li>
+                        <li>✅ <strong>Advanced</strong> templates</li>
+                        <li>✅ PDF & Word export</li>
+                        <li>✅ 24/7 Support</li>
                     </ul>
-                    <div id="btn-container-pro" class="plan-action-area">
-                        <button class="btn btn-primary choose-plan-btn" data-plan="pro" data-amount="19.90">Choose Pro</button>
-                        <div id="paypal-pro"></div>
+                    <div class="plan-action-area" id="btn-container-pro">
+                        <button class="btn btn-primary choose-plan-btn" data-plan="pro" data-amount="19.90" style="width:100%">Select Professional</button>
+                        <div id="paypal-pro" style="margin-top: 15px;"></div>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <footer class="main-footer">
-        <div class="container">
-            <p>&copy; 2025 Reportify AI. All Rights Reserved.</p>
-        </div>
-    </footer>
-
     <script src="nav.js?v=3.0"></script>
-    <script src="subscription.js?v=3.0" defer></script> 
+    <script src="subscription.js?v=3.0" defer></script>
 </body>
 </html>
