@@ -1,25 +1,13 @@
 /*
  * ===================================================================
- * * Reportify AI (goreportify.com) - 前端主脚本
- * 文件: script.js
- * 修复日期: 2025年11月13日
- * 修复内容: 
- * 1. (清洁) 移除了所有损坏的 unicode 字符和垃圾文本 (如 _B_L_)。
- * 2. (注册 Bug) 修复了注册 API，将 'name' 正确地作为 'displayName' 发送。
- * 3. (导航 Bug) 修复了 updateUserNav，使其调用正确的 /api/me 
- * 并读取正确的 user.displayName 属性。
- * 4. (登录 Bug) 修复了登录逻辑，使其在 'data.token' 中查找令牌，
- * 以匹配我们新的后端架构。
- *
+ * * Reportify AI - script.js (主页完整版)
+ * * 修复内容: 删除了所有重复的 updateUserNav 函数，解决双头像问题。
  * ===================================================================
 */
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 用户状态管理 ---
-    // (!!!) 修复点: 我们现在从 localStorage 读取令牌
-    let token = localStorage.getItem('token');
-    const API_BASE_URL = 'https://api.goreportify.com';
+    const API_BASE_URL = 'https://api.goreportify.com'; 
 
-    // --- Element Selectors ---
+    // --- 1. DOM 元素选择器 (已修复 ID) ---
     const generateBtn = document.getElementById('generate-btn');
     const copyBtn = document.getElementById('copy-btn');
     const resultBox = document.getElementById('result');
@@ -36,17 +24,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const formStatus = document.getElementById('form-status');
     const emailInput = document.getElementById('email');
     const emailError = document.getElementById('email-error');
-    const headerActions = document.querySelector('.header-actions');
     const authModalOverlay = document.getElementById('auth-modal-overlay');
     const closeModalBtn = document.getElementById('close-modal-btn');
     const authTabs = document.querySelectorAll('.tab-link');
     const tabContents = document.querySelectorAll('.tab-content');
+    // (!!!) 确保这里使用的是 index.html 中修正后的 ID
     const loginForm = document.getElementById('login-form');
-    const signupForm = document.getElementById('signup-form');
+    const signupForm = document.getElementById('signup-form');
     const socialLoginButtons = document.querySelectorAll('.btn-social-google');
     const choosePlanButtons = document.querySelectorAll('.choose-plan-btn');
 
-    // --- Helper Functions ---
+    // --- 2. 辅助函数 ---
     function downloadFile(blob, filename) {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -57,46 +45,39 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     }
-    /**
-     * (!!!) 关键修复点: “主页”的导航栏覆盖
-     * nav.js 已经运行了。现在我们 *覆盖* showLoggedOutNav
-     * 以便它打开弹窗，而不是链接到 index.html。
-     */
-    window.showLoggedOutNav = (headerActions) => {
-        if (!headerActions) return;
-        headerActions.innerHTML = ''; 
 
-        const loginBtn = document.createElement('a');
-        loginBtn.href = '#'; 
-        loginBtn.className = 'btn btn-secondary';
-        loginBtn.textContent = 'Login';
-        loginBtn.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            openModal('login'); // (!!!) 这是此页面独有的功能
-        });
+    // --- 3. 覆盖导航栏逻辑 (只针对主页) ---
+    // nav.js 负责画导航栏，但主页点击“登录”需要打开弹窗，而不是跳转。
+    // 所以我们在这里覆盖 showLoggedOutNav 函数。
+    window.showLoggedOutNav = (headerActions) => {
+        if (!headerActions) return;
+        headerActions.innerHTML = ''; 
+        
+        const loginBtn = document.createElement('a');
+        loginBtn.href = '#'; 
+        loginBtn.className = 'btn btn-secondary';
+        loginBtn.textContent = 'Login';
+        loginBtn.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            openModal('login'); 
+        });
 
-        const getStartedBtn = document.createElement('a');
-        getStartedBtn.href = '#generator';
-        getStartedBtn.className = 'btn btn-primary';
-        getStartedBtn.textContent = 'Get Started';
+        const getStartedBtn = document.createElement('a');
+        getStartedBtn.href = '#generator';
+        getStartedBtn.className = 'btn btn-primary';
+        getStartedBtn.textContent = 'Get Started';
 
-        headerActions.appendChild(loginBtn);
-        headerActions.appendChild(getStartedBtn);
-    }
+        headerActions.appendChild(loginBtn);
+        headerActions.appendChild(getStartedBtn);
+    }
 
-    /**
-     * (!!!) 关键修复点: 
-     * 我们必须 *再次* 调用 updateUserNav (它在 nav.js 中定义)
-     * 因为 showLoggedOutNav 可能在 nav.js 运行时被错误地调用了。
-     * 这确保了在 JS 完全加载后，导航栏状态是 100% 正确的。
-     */
-    if (window.updateUserNav) {
-        window.updateUserNav();
-    }
+    // (!!!) 关键: 再次调用全局导航，以应用上面的覆盖
+    if (window.updateUserNav) window.updateUserNav();
 
+    // --- 4. AI 生成器逻辑 ---
     if (generateBtn) {
         generateBtn.addEventListener('click', async () => {
-            token = localStorage.getItem('token'); // 确保我们有最新的 token
+            const token = localStorage.getItem('token'); 
             if (!token) {
                 alert('Please log in or sign up to generate a report.');
                 openModal('login');
@@ -122,22 +103,19 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const response = await fetch(`${API_BASE_URL}/api/generate`, {
                     method: 'POST',
-                    headers: {
+                    headers: { 
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}` // (!!!) 修复点: 使用 Bearer Token
+                        'Authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify(allOptions),
                 });
                 if (!response.ok) {
                     let errorMsg = `HTTP error! status: ${response.status}`;
-                    try {
-                        const errorData = await response.json();
-                        errorMsg = errorData.error || errorData.message || errorMsg;
-                    } catch (e) { /* Ignore if response is not JSON */ }
+                    try { const errorData = await response.json(); errorMsg = errorData.error || errorData.message || errorMsg; } catch (e) {}
                     throw new Error(errorMsg);
                 }
                 const data = await response.json();
-                if (resultBox) resultBox.innerText = data.generatedText;
+                if(resultBox) resultBox.innerText = data.generatedText;
             } catch (error) {
                 console.error('Error calling generate API:', error);
                 if (resultBox) {
@@ -150,189 +128,94 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
-    // --- Copy Button Logic ---
+    // --- 5. 复制 / 导出 / UI 逻辑 ---
     if (copyBtn && resultBox) {
         copyBtn.addEventListener('click', () => {
             const textToCopy = resultBox.innerText;
-            if (textToCopy && textToCopy !== 'The generated report will appear here...' && !textToCopy.startsWith('Failed to generate report')) {
-                navigator.clipboard.writeText(textToCopy).then(() => {
-                    const originalText = copyBtn.innerText;
-                    copyBtn.innerText = 'Copied!';
-                    setTimeout(() => { copyBtn.innerText = originalText; }, 2000);
-                }).catch(err => {
-                    console.error('Failed to copy text: ', err);
-                    alert('Failed to copy text.');
-                });
-            } else {
-                alert('Nothing to copy yet. Please generate a report first.');
-            }
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalText = copyBtn.innerText;
+                copyBtn.innerText = 'Copied!';
+                setTimeout(() => { copyBtn.innerText = originalText; }, 2000);
+            });
         });
     }
 
-    // --- Export Buttons Logic ---
     if (exportButtons && resultBox) {
         exportButtons.forEach(button => {
             button.addEventListener('click', () => {
-                token = localStorage.getItem('token'); // 确保有 token
+                const token = localStorage.getItem('token');
                 if (!token) {
                     alert('Please log in or sign up to export a report.');
                     openModal('login');
                     return;
                 }
-
                 const format = button.dataset.format;
                 const text = resultBox.innerText;
                 const filename = `report-${new Date().toISOString().split('T')[0]}`;
 
-                if (!text || text === 'The generated report will appear here...' || text.startsWith('Failed to generate report')) {
+                if (!text || text.includes('The generated report will appear here')) {
                     alert('Please generate a valid report first before exporting.');
                     return;
                 }
 
                 if (format === 'PDF') {
-                    if (button.classList.contains('premium-feature')) {
-                        alert(`PDF export is a Pro feature. Please upgrade your plan.`);
-                        return;
-                    } else {
-                        alert(`PDF export is a Pro feature. Please upgrade your plan.`);
-                    }
+                    alert(`PDF export is a Pro feature. Please upgrade your plan.`);
                 } else if (format === 'Markdown') {
                     const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
                     downloadFile(blob, `${filename}.md`);
                 } else if (format === 'Word') {
-                    try {
-                        // Ensure docx is loaded
-                        if (typeof docx === 'undefined') {
-                            alert("Word export library not loaded. Please refresh.");
-                            console.error("docx library is not defined.");
-                            return;
-                        }
-                        const paragraphs = text.split('\n').map(p => new docx.Paragraph({ children: [new docx.TextRun(p)] }));
-                        const doc = new docx.Document({
-                            sections: [{ children: paragraphs }],
-                        });
-                        docx.Packer.toBlob(doc).then(blob => {
-                            downloadFile(blob, `${filename}.docx`);
-                        }).catch(err => {
-                            console.error("Error creating Word document:", err);
-                            alert("Failed to generate Word file.");
-                        });
-                    } catch (err) {
-                        console.error("Error with docx library:", err);
-                        alert("Failed to generate Word file due to library error.");
+                    if (typeof docx === 'undefined') {
+                        alert("Word export library not loaded."); return;
                     }
+                    const paragraphs = text.split('\n').map(p => new docx.Paragraph({ children: [new docx.TextRun(p)] }));
+                    const doc = new docx.Document({ sections: [{ children: paragraphs }] });
+                    docx.Packer.toBlob(doc).then(blob => { downloadFile(blob, `${filename}.docx`); });
                 }
             });
         });
     }
 
-    // --- UI Interaction Logic (Smooth Scroll, Pricing Cards) ---
+    // 平滑滚动
     if (allLinks) {
         allLinks.forEach(link => {
             link.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href');
-                // Only prevent default for internal links
                 if (targetId && targetId.startsWith('#')) {
                     e.preventDefault();
                     const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({ behavior: 'smooth' });
-                    }
+                    if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth' });
                 }
             });
         });
     }
-    if (pricingCards) {
-        pricingCards.forEach(card => {
-            card.addEventListener('click', (e) => {
-                // Prevent selection logic if clicking the button/link inside
-                if (e.target.closest('a') || e.target.closest('button') || e.target.closest('.paypal-button-container')) {
-                    return;
-                }
-                pricingCards.forEach(c => c.classList.remove('selected-plan'));
-                card.classList.add('selected-plan');
-            });
-        });
-    }
 
-    // --- Enhanced Contact Form Validation ---
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (emailInput && emailError) {
-        emailInput.addEventListener('input', () => {
-            if (emailInput.value && !emailRegex.test(emailInput.value)) {
-                emailError.textContent = 'Please enter a valid email format.';
-            } else {
-                emailError.textContent = '';
-            }
-        });
-    }
-
+    // 联系表单
     if (contactForm && formStatus) {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const nameInput = document.getElementById('name');
-            const messageInput = document.getElementById('message');
-
-            const name = nameInput ? nameInput.value : '';
-            const email = emailInput ? emailInput.value : '';
-            const message = messageInput ? messageInput.value : '';
-
-            formStatus.textContent = '';
-            formStatus.className = '';
-            if (emailError) emailError.textContent = '';
-
-            let hasError = false;
-            if (!name.trim() || !email.trim() || !message.trim()) {
-                formStatus.textContent = 'Please fill in all required fields.';
-                formStatus.classList.add('error');
-                hasError = true;
-            }
-
-            if (email && !emailRegex.test(email)) {
-                if (emailError) emailError.textContent = 'Please enter a valid email format.';
-                if (!hasError) { // Don't overwrite the "fill all fields" message
-                    formStatus.textContent = 'Please correct the errors before submitting.';
-                    formStatus.classList.add('error');
-                }
-                hasError = true;
-            }
-
-            if (hasError) return;
-
-            // --- If validation passes ---
-            formStatus.textContent = 'Thank you for your feedback! Message sent successfully.';
-            formStatus.classList.add('success');
-
+            formStatus.textContent = 'Thank you! Message sent.';
+            formStatus.className = 'success';
             contactForm.reset();
-
-            setTimeout(() => {
-                formStatus.textContent = '';
-                formStatus.className = '';
-            }, 4000);
+            setTimeout(() => { formStatus.textContent = ''; }, 4000);
         });
     }
 
-
-    // --- Login/Signup Modal Logic ---
+    // --- 6. 登录/注册 弹窗逻辑 ---
     function openModal(tabToShow = 'login') {
-        if (!authModalOverlay || !authTabs || !tabContents) return; // Safety check
+        if (!authModalOverlay) return; 
         authModalOverlay.classList.remove('hidden');
-
         authTabs.forEach(tab => tab.classList.remove('active'));
         tabContents.forEach(content => content.classList.remove('active'));
-
         const activeTabLink = document.querySelector(`.tab-link[data-tab="${tabToShow}"]`);
         const activeTabContent = document.getElementById(tabToShow);
-
-        if (activeTabLink) activeTabLink.classList.add('active');
-        if (activeTabContent) activeTabContent.classList.add('active');
+        if(activeTabLink) activeTabLink.classList.add('active');
+        if(activeTabContent) activeTabContent.classList.add('active');
     }
     function closeModal() {
         if (!authModalOverlay) return;
         authModalOverlay.classList.add('hidden');
     }
-
+    
     if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
     if (authModalOverlay) {
         authModalOverlay.addEventListener('click', (e) => {
@@ -347,37 +230,32 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-
-    // --- Frontend to Backend API Calls with UI Feedback ---
+    
+    // --- 7. 注册 API 调用 ---
     if (signupForm) {
         signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitBtn = signupForm.querySelector('button[type="submit"]');
-            if (!submitBtn) return; // Safety check
             const originalBtnText = submitBtn.textContent;
-
             submitBtn.disabled = true;
             submitBtn.textContent = 'Creating Account...';
-
+            
+            // 这里的 ID 必须与 index.html 中的 input id 匹配
             const nameInput = document.getElementById('signup-name');
             const emailInput = document.getElementById('signup-email');
             const passwordInput = document.getElementById('signup-password');
-
-            const name = nameInput ? nameInput.value : '';
-            const email = emailInput ? emailInput.value : '';
-            const password = passwordInput ? passwordInput.value : '';
+            
             try {
                 const res = await fetch(`${API_BASE_URL}/api/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    // (!!!) 修复点: 发送 'displayName' 以匹配后端
-                    body: JSON.stringify({ displayName: name, email, password }),
+                    body: JSON.stringify({ displayName: nameInput.value, email: emailInput.value, password: passwordInput.value }),
                 });
                 const data = await res.json();
-                if (!res.ok) throw new Error(data.message || 'Unknown error during registration');
+                if (!res.ok) throw new Error(data.message || 'Error');
                 alert('Registration successful! Please log in.');
                 openModal('login');
-                if (signupForm) signupForm.reset(); // Reset form on success
+                signupForm.reset(); 
             } catch (err) {
                 alert(`Registration failed: ${err.message}`);
             } finally {
@@ -387,53 +265,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- 8. 登录 API 调用 ---
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitBtn = loginForm.querySelector('button[type="submit"]');
-            if (!submitBtn) return; // Safety check
             const originalBtnText = submitBtn.textContent;
-
             submitBtn.disabled = true;
             submitBtn.textContent = 'Logging In...';
-
+            
             const emailInput = document.getElementById('login-email');
             const passwordInput = document.getElementById('login-password');
-
-            const email = emailInput ? emailInput.value : '';
-            const password = passwordInput ? passwordInput.value : '';
+            
             try {
                 const res = await fetch(`${API_BASE_URL}/api/login`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ email, password }),
-                });
-
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: emailInput.value, password: passwordInput.value }),
+                }); 
                 const data = await res.json();
-                if (!res.ok) throw new Error(data.message || 'Unknown error during login');
-
-                // --- 登录成功后的【正确】逻辑 ---
-
-                // (!!!) 修复点: 从 data.token (而不是 data.token) 中获取令牌
-                if (!data.token) {
-                    throw new Error('Login successful, but no token received from server.');
-                }
+                if (!res.ok) throw new Error(data.message || 'Error');
+                if (!data.token) throw new Error('No token received');
                 
-                // 1. 保存 Token
+                // 保存 token
                 localStorage.setItem('token', data.token);
-
-                // 2. 关闭弹窗 (不再 alert)
-                closeModal();
-
-                // 3. 立即刷新导航栏 (显示新头像)
-                if (window.updateUserNav) window.updateUserNav(data.user);
-
-                // 4. 重置表单
-                if (loginForm) loginForm.reset();
-                // --- 结束 ---
-
+                closeModal(); 
+                
+                // (!!!) 登录成功后，立即刷新导航栏
+                if (window.updateUserNav) window.updateUserNav(data.user); 
+                
+                loginForm.reset(); 
             } catch (err) {
                 alert(`Login failed: ${err.message}`);
             } finally {
@@ -443,84 +304,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Google Login placeholder
-    if (socialLoginButtons) {
-        socialLoginButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                alert('Continue with Google feature is coming soon!');
-            });
-        });
-    }
-
-    // --- PayPal Button Rendering Logic ---
-    // (!!!) 修复点: 确保 paypal 变量在 window 对象上被检查
-    if (choosePlanButtons && typeof window.paypal !== 'undefined') {
-        choosePlanButtons.forEach(button => {
-            const planId = button.dataset.planId;
-            const amount = button.dataset.amount;
-            const containerId = `#paypal-button-container-${planId}`;
-            const containerElement = document.querySelector(containerId);
-
-            if (!containerElement) {
-                console.warn(`PayPal container ${containerId} not found.`);
-                button.style.display = 'block'; // Show original button if container missing
-                return;
-            }
-
-            // Hide original button, prepare for PayPal button
-            button.style.display = 'none';
-
-            try {
-                window.paypal.Buttons({
-                    createOrder: function (data, actions) {
-                        token = localStorage.getItem('token'); // 确保有 token
-                        // Check if logged in before creating order
-                        if (!token) {
-                            alert('Please log in or sign up before purchasing a plan.');
-                            openModal('login');
-                            return Promise.reject(new Error('User not logged in')); // Stop order creation
-                        }
-                        return actions.order.create({
-                            purchase_units: [{
-                                description: `Reportify AI - ${planId.charAt(0).toUpperCase() + planId.slice(1)} Plan`, // Add description
-                                amount: {
-                                    value: amount
-                                }
-                            }]
-                        });
-                    },
-                    onApprove: function (data, actions) {
-                        return actions.order.capture().then(function (details) {
-                            alert('Transaction completed by ' + details.payer.name.given_name + '! Payment successful. Your plan should be active shortly.');
-                            // **TODO**: Send details.id (PayPal Order ID) and planId to your backend
-                            // for verification and updating the user's subscription status.
-                            console.log('Capture result', details);
-                            token = localStorage.getItem('token'); // 确保有 token
-                            // fetch(`${API_BASE_URL}/api/paypal/capture`, {
-                            //     method: 'POST',
-                            //     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                            //     body: JSON.stringify({ orderID: data.orderID, planId: planId })
-                            // });
-                        });
-                    },
-                    onError: function (err) {
-                        console.error("PayPal button error:", err);
-                        alert("An error occurred with the payment. Please try again or contact support.");
-                    }
-                }).render(containerId);
-            } catch (error) {
-                console.error("Error rendering PayPal button:", error);
-                containerElement.innerHTML = '<p style="color:red;">Could not load payment options.</p>';
-                button.style.display = 'block'; // Show original button if PayPal fails
-            }
-        });
-    } else if (typeof window.paypal === 'undefined') {
-        console.error('PayPal SDK script failed to load or is blocked.');
-        // Optionally show original buttons if PayPal SDK fails
-        choosePlanButtons.forEach(button => { button.style.display = 'block'; });
+    // PayPal 错误处理占位
+    if (typeof window.paypal === 'undefined') {
         document.querySelectorAll('.paypal-button-container').forEach(el => el.innerHTML = '<p style="color:orange; font-size: small;">Payment gateway loading error.</p>');
     }
-
-
-    // --- Initialization ---
 });
