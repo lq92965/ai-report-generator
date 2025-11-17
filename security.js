@@ -5,7 +5,7 @@ const token = localStorage.getItem('token');
 document.addEventListener('DOMContentLoaded', () => {
     if (!token) {
         alert('Please log in to access your security settings.');
-        window.location.href = 'index.html';
+        window.location.href = 'index.html';
         return;
     }
 
@@ -126,18 +126,17 @@ document.addEventListener('DOMContentLoaded', () => {
  * (!!!) 修复: 现在接受 'element' 作为参数
  */
 function showStatusMessage(element, message, isError) {
-    if (!element) {
-        console.error('showStatusMessage: element not provided');
-        return;
-    }
-
-    element.textContent = message;
-    element.className = isError ? 'status-message error-message' : 'status-message success-message';
-    element.style.display = 'block'; // 确保可见
-
-    setTimeout(() => {
-        element.textContent = '';
-        element.className = 'status-message';
-        element.style.display = 'none'; // 隐藏
-    }, 5000);
+    if (!element) {
+    console.error('showStatusMessage: element not provided');
+    return;
+}
+    element.textContent = message;
+    element.className = isError ? 'status-message error-message' : 'status-message success-message';
+    element.style.display = 'block'; // 确保可见
+    
+    setTimeout(() => {
+        element.textContent = '';
+        element.className = 'status-message';
+        element.style.display = 'none'; // 隐藏
+        // }, 5000);
 }
