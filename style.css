@@ -1253,3 +1253,16 @@ hr.section-divider {
     align-items: center !important;
     margin-right: auto !important; /* 确保它用力往左挤 */
 }
+
+/* 修复主页定价卡片高度不一致 */
+.pricing-grid {
+    align-items: stretch; /* 强制所有卡片等高 */
+}
+.pricing-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.pricing-card .plan-features {
+    flex-grow: 1; /* 让列表撑满剩余空间，把按钮顶到底部 */
+}
