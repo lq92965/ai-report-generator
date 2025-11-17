@@ -68,6 +68,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // (!!!) 再次调用全局导航，确保上面的覆盖生效
     if (window.updateUserNav) window.updateUserNav();
 
+    // --- 2.5 定价卡片交互逻辑 (修复蓝框卡死问题) ---
+    if (pricingCards) {
+        pricingCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                // 如果点击的是按钮本身，不要触发卡片选中（防止冲突）
+                if (e.target.closest('button') || e.target.closest('a')) return;
+
+                // 移除其他卡片的选中状态
+                pricingCards.forEach(c => c.classList.remove('selected-plan'));
+                // 给当前卡片添加选中状态
+                card.classList.add('selected-plan');
+            });
+        });
+    }
+
     // --- 3. AI 生成器逻辑 ---
     if (generateBtn) {
         generateBtn.addEventListener('click', async () => {
