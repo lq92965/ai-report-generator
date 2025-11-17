@@ -1184,3 +1184,21 @@ hr.section-divider {
 .hidden {
     display: none !important;
 }
+
+/* =========================================
+   2025-11-17 最终布局修正
+   ========================================= */
+
+/* 1. 在账户、模板、安全页面，隐藏中间的 "Features/Pricing" 菜单 */
+/* 这将直接解决页眉过宽/过高的问题，尤其是在手机上 */
+.account-header .main-nav {
+    display: none !important;
+}
+
+/* 2. 确保 Logo 和 头像 分布在两端 */
+.account-header .container {
+    display: flex !important;
+    justify-content: space-between !important; /* Logo在左，头像在右 */
+    align-items: center !important;
+    height: 60px !important; /* 强制锁定高度 */
+}
