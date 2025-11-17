@@ -13,9 +13,9 @@ const token = localStorage.getItem('token');
 
 // --- Page load immediate check (Protection) ---
 if (!token) {
-    // (!!!) Fix: Add an alert for the user before redirecting
-    alert('Please log in to access your profile.');
-    window.location.href = 'index.html'; 
+    // (!!!) Fix: Add an alert for the user before redirecting
+    // alert('Please log in to access your profile.');
+    // window.location.href = 'index.html'; 
 }
 
 // --- DOMContentLoaded 监听器 ---
@@ -118,11 +118,11 @@ async function fetchUserProfile() {
         }
 
         // 3. (!!!) Fix: Call the *Global* nav function (from nav.js)
-        // We already have the 'user' object, so we pass it in 
-        // to prevent nav.js from fetching it again.
-        if (window.updateUserNav) {
-            window.updateUserNav(user);
-        }
+        // We already have the 'user' object, so we pass it in 
+        // to prevent nav.js from fetching it again.
+        if (window.updateUserNav) {
+            window.updateUserNav(user);
+        }
 
     } catch (error) {
         console.error('Error fetching user profile:', error);
@@ -184,11 +184,11 @@ async function handleProfileSubmit(e) {
         profileJobInput.value = updatedUser.jobTitle;
 
         // (!!!) Fix:
-        // On success, call the *Global* nav function (from nav.js)
-        // We pass the 'updatedUser' object to it.
-        if (window.updateUserNav) {
-            window.updateUserNav(updatedUser); 
-        }
+        // On success, call the *Global* nav function (from nav.js)
+        // We pass the 'updatedUser' object to it.
+        if (window.updateUserNav) {
+            window.updateUserNav(updatedUser); 
+        }
 
     } catch (error) {
         console.error('Error updating profile:', error);
@@ -237,15 +237,15 @@ async function uploadAvatar(file) {
         const newAvatarUrl = result.avatarUrl;
         
         const avatarPreview = document.getElementById('avatar-preview');
-        if (avatarPreview) avatarPreview.src = newAvatarUrl; 
-
-        // (!!!) Fix:
-        // Call the *Global* nav function (from nav.js)
-        // We don't pass an object, so nav.js will auto-refetch 
-        // to get the latest user data (which is correct).
-        if (window.updateUserNav) {
-            window.updateUserNav();
-        }
+        if (avatarPreview) avatarPreview.src = newAvatarUrl; 
+        
+        // (!!!) Fix:
+        // Call the *Global* nav function (from nav.js)
+        // We don't pass an object, so nav.js will auto-refetch 
+        // to get the latest user data (which is correct)
+        /if (window.updateUserNav) {
+            window.updateUserNav();
+        }
 
     } catch (error) {
         console.error('Error uploading avatar:', error);
