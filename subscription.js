@@ -174,13 +174,34 @@ function initPayPalButtons() {
 }
 
 /**
- * 4. 模拟后端升级 (稍后我们会写真的后端)
+ * 4. 调用后端 API 升级用户 (真逻辑)
  */
 async function upgradeUserPlan(planId, orderId) {
-    console.log(`Upgrading to ${planId} with order ${orderId}`);
-    // 暂时模拟成功，两秒后刷新
-    setTimeout(() => {
-        alert('Upgrade successful! Refreshing page...');
+    try {
+        console.log(`Processing upgrade to ${planId}...`);
+        
+        const response = await fetch(`${API_BASE_URL}/api/user/upgrade`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ plan: planId, orderId: orderId })
+        });
+
+        if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.message || 'Upgrade failed on server');
+        }
+
+        // 升级成功！
+        alert(`Success! You are now on the ${planId.toUpperCase()} plan.`);
+        
+        // 刷新页面，"Current Plan" 现在会变成 PRO
         window.location.reload();
-    }, 1000);
+
+    } catch (error) {
+        console.error('Upgrade API Error:', error);
+        alert('Payment verification failed: ' + error.message);
+    }
 }
