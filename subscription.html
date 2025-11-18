@@ -19,19 +19,19 @@
 
     <section class="generator-section account-hub">
         <div class="container">
-            <a href="account.html" class="btn-back">&larr; Back to Account</a>
+            <a href="account.html" class="btn-back" style="margin-bottom: 20px; display: inline-block; text-decoration: none; color: #333;">&larr; Back to Account</a>
             
             <div style="text-align: center; margin-bottom: 40px;">
-                <h2 class="section-title">Upgrade Your Plan</h2>
-                <p class="section-subtitle">Unlock unlimited potential with our Professional plan.</p>
+                <h2 class="section-title">订阅与计费 (Subscription)</h2>
+                <p class="section-subtitle">Upgrade to unlock unlimited power.</p>
                 
-                <div style="display: inline-block; background: #f0f9ff; padding: 15px 30px; border-radius: 50px; border: 1px solid #b9e6fe; color: #006699; font-weight: 500; margin-top: 20px;">
-                    Current Plan: <span id="user-plan-badge" style="font-weight: bold; text-transform: uppercase;">Loading...</span>
+                <div style="display: inline-block; background: #f0f9ff; padding: 15px 30px; border-radius: 50px; border: 1px solid #b9e6fe; color: #006699; margin-top: 20px;">
+                    您当前的计划 (Current Plan): <span id="user-plan-badge" style="font-weight: bold;">LOADING...</span>
                 </div>
             </div>
 
             <div class="pricing-grid">
-                <div class="pricing-card" id="plan-card-basic">
+                <div class="pricing-card" id="card-basic">
                     <h3>Basic</h3>
                     <p class="price"><span>$9.90</span>/mo</p>
                     <ul class="plan-features">
@@ -39,14 +39,14 @@
                         <li>✅ Standard speed</li>
                         <li>✅ Email support</li>
                     </ul>
-                    <div class="plan-action-area" id="btn-container-basic">
+                    <div class="plan-action-area">
                         <button class="btn btn-secondary choose-plan-btn" data-plan="basic" data-amount="9.90" style="width:100%">Select Basic</button>
                         <div id="paypal-basic" style="margin-top: 15px;"></div>
                     </div>
                 </div>
 
-                <div class="pricing-card recommended selected-plan" id="plan-card-pro">
-                    <span class="badge">Best Value</span>
+                <div class="pricing-card recommended selected-plan" id="card-pro">
+                    <span class="badge">Recommended</span>
                     <h3>Professional</h3>
                     <p class="price"><span>$19.90</span>/mo</p>
                     <ul class="plan-features">
@@ -55,7 +55,7 @@
                         <li>✅ PDF & Word export</li>
                         <li>✅ 24/7 Support</li>
                     </ul>
-                    <div class="plan-action-area" id="btn-container-pro">
+                    <div class="plan-action-area">
                         <button class="btn btn-primary choose-plan-btn" data-plan="pro" data-amount="19.90" style="width:100%">Select Professional</button>
                         <div id="paypal-pro" style="margin-top: 15px;"></div>
                     </div>
