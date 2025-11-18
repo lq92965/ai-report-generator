@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             const allOptions = {
-                userPrompt: promptTextarea?.value || '',
+                prompt: promptTextarea?.value || '', // (!!!) 修复：改成 'prompt'
                 template: templateSelect?.value || '',
                 detailLevel: detailLevelSelect?.value || '',
                 role: roleSelect?.value || '',
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 language: languageSelect?.value || '',
             };
             
-            if (!allOptions.userPrompt.trim()) { 
+            if (!allOptions.prompt.trim()) { // (!!!) 修复：检查 'prompt'
                 alert('Please enter your key points first.');
                 return;
             }
