@@ -125,7 +125,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     throw new Error(errorMsg);
                 }
                 const data = await response.json();
-                if(resultBox) resultBox.innerText = data.generatedText;
+                // (!!!) 修复: 使用 marked.parse 将 AI 的 Markdown 转换为 HTML
+                if(resultBox) {
+                    // 检查 marked 库是否加载
+                    if (typeof marked !== 'undefined') {
+                        resultBox.innerHTML = marked.parse(data.generatedText);
+                    } else {
+                        // 如果库没加载，回退到纯文本
+                        resultBox.innerText = data.generatedText; 
+                    }
+                }
             } catch (error) {
                 console.error('Error calling generate API:', error);
                 if (resultBox) {
