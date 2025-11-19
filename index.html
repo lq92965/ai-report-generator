@@ -6,7 +6,8 @@
     <title>Reportify AI - AI Report Generator</title>
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
     <script src="https://unpkg.com/docx@8.5.0/build/index.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
     <link rel="stylesheet" href="style.css?v=3.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -235,7 +236,7 @@
     </footer>
     
     <div id="auth-modal-overlay" class="modal-overlay hidden">
-        <div id="auth-modal" class="modal-content">
+        <div id="auth-modal" class="modal-content">
             <button id="close-modal-btn">&times;</button>
             <div class="auth-tabs">
                 <button class="tab-link active" data-tab="login">Login</button>
