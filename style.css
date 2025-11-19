@@ -1266,3 +1266,63 @@ hr.section-divider {
 .pricing-card .plan-features {
     flex-grow: 1; /* 让列表撑满剩余空间，把按钮顶到底部 */
 }
+
+/* =========================================
+   2025-11-19 报告结果样式修复 (Markdown)
+   ========================================= */
+
+/* 修复结果容器 */
+.result-box {
+    width: 100% !important;
+    min-height: 200px;
+    padding: 25px !important; /* 增加阅读空间 */
+    
+    /* 核心修复：强制左对齐，覆盖 body 的居中 */
+    text-align: left !important; 
+    align-items: flex-start !important;
+    
+    /* 字体与排版 */
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.8; /* 增加行高，更易阅读 */
+    color: #333;
+    background: #fdfdfd; /* 轻微的纸张白 */
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    
+    /* 确保长文本自动换行 */
+    white-space: normal !important; 
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+/* 修复生成的标题样式 (H1, H2, H3) */
+.result-box h1, 
+.result-box h2, 
+.result-box h3 {
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+    color: #1a1a1a;
+    font-weight: 700;
+}
+
+/* 修复列表样式 */
+.result-box ul, 
+.result-box ol {
+    padding-left: 25px !important;
+    margin-bottom: 1em;
+}
+
+.result-box li {
+    margin-bottom: 0.5em;
+}
+
+/* 修复段落间距 */
+.result-box p {
+    margin-bottom: 1em;
+}
+
+/* 修复强调文字 */
+.result-box strong {
+    color: #000;
+    font-weight: 700;
+}
