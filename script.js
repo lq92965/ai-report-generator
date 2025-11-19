@@ -101,7 +101,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             
-            generateBtn.disabled = true;
+            const originalBtnText = generateBtn.textContent; // 保存原始文本
+                generateBtn.disabled = true;
+                generateBtn.textContent = 'Generating...'; // (!!!) 关键: 更改按钮文本
             if (resultBox) {
                 resultBox.innerHTML = '<div class="loader"></div>';
                 resultBox.style.color = 'var(--text-primary)';
@@ -131,7 +133,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     resultBox.style.color = 'red';
                 }
             } finally {
-                generateBtn.disabled = false;
+                    generateBtn.textContent = originalBtnText; // 恢复原始文本
+                    generateBtn.disabled = false;
             }
         });
     }
