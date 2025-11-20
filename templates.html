@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Template Library - Reportify AI</title>
-    <link rel="stylesheet" href="style.css?v=5.0">
+    <link rel="stylesheet" href="style.css?v=6.0">
 </head>
-<body class="bg-light"> <header class="main-header account-header">
+<body>
+    <header class="main-header account-header">
         <div class="container">
             <a href="index.html" class="logo">
                 <span class="logo-icon">🐦</span><span>Reportify AI</span>
@@ -15,21 +16,20 @@
         </div>
     </header>
 
-    <div class="template-wrapper">
-        
-        <div class="template-hero">
-            <h1>Template Matrix</h1>
-            <p>Select a professionally engineered template to jumpstart your report. <br>Or create your own dynamic workflow.</p>
-        </div>
+    <div class="template-hero-section">
+        <h1>Template Matrix</h1>
+        <p>Unlock productivity with 50+ professionally engineered workflows.<br>Filter by role, scenario, or business stage.</p>
+    </div>
 
-        <div class="template-layout">
-            <aside class="template-sidebar">
-            <a href="account.html" class="btn-back-small" style="color:#666; text-decoration:none;">&larr; Back to Hub</a>
+    <div class="container" style="display: flex; gap: 50px; padding-bottom: 60px;">
+        
+        <aside class="template-sidebar">
+            <a href="account.html" class="btn-back" style="display:block; margin-bottom:20px;">&larr; Back to Account</a>
             
             <div class="filter-group">
                 <h3>1. Domain / Role</h3>
                 <ul class="filter-list" id="role-filter">
-                    <li class="active" data-filter="all">Show All</li>
+                    <li class="active" data-filter="all">All Templates</li>
                     <li data-filter="Sales">Sales & Growth</li>
                     <li data-filter="Product">Product & Tech</li>
                     <li data-filter="General">General & Admin</li>
@@ -41,84 +41,77 @@
                 <ul class="filter-list">
                     <li data-filter="Daily">Daily Updates</li>
                     <li data-filter="Weekly">Weekly / Monthly</li>
-                    <li data-filter="Ad-hoc">Ad-hoc (按需)</li>
+                    <li data-filter="Quarterly">Quarterly / Annual</li>
                 </ul>
             </div>
             
             <div class="filter-group">
                 <h3>3. Business Stage</h3>
                 <ul class="filter-list">
-                    <li data-filter="Opening">Opening / Pitch</li>
-                    <li data-filter="Progress">In Progress</li>
-                    <li data-filter="Closing">Closing / Result</li>
+                    <li data-filter="Opening">Opening / Outreach</li>
+                    <li data-filter="Progression">In Progress / Follow-up</li>
+                    <li data-filter="Closing">Closing / Deal</li>
                 </ul>
             </div>
 
             <div class="filter-group">
-                <h3>4. Scenario</h3>
+                <h3>4. Audience</h3>
+                <ul class="filter-list">
+                    <li data-filter="Internal">Internal Team</li>
+                    <li data-filter="Client">Client / External</li>
+                    <li data-filter="Executive">Executive / C-Level</li>
+                </ul>
+            </div>
+
+            <div class="filter-group">
+                <h3>5. Scenario</h3>
                 <ul class="filter-list">
                     <li data-filter="Crisis">Crisis / Risk</li>
-                    <li data-filter="Promotion">Promotion / Wins</li>
+                    <li data-filter="Promotion">Wins / Promotion</li>
                     <li data-filter="Translation">Translation / Polish</li>
                 </ul>
             </div>
 
             <div class="filter-group" style="margin-top:30px; padding-top:20px; border-top:1px solid #eee;">
                 <ul class="filter-list">
-                     <li data-filter="Custom" style="color:#007bff; font-weight:700;">My Workspace</li>
+                     <li data-filter="Custom" style="color:#007bff; font-weight:700;">My Custom Templates</li>
                 </ul>
             </div>
         </aside>
 
-            <main class="template-content">
-                <div class="content-header">
-                    <h2 id="current-view-title">All Templates</h2>
-                    <button id="create-new-template-btn" class="btn btn-primary">+ Create Custom Template</button>
-                </div>
-                
-                <div id="template-grid" class="template-grid">
-                    <div class="loader"></div>
-                </div>
-            </main>
-        </div>
+        <main class="template-content" style="flex-grow:1;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+                <h2 id="current-category-title">All Templates</h2>
+                <button id="create-new-template-btn" class="btn btn-primary">+ Create Custom</button>
+            </div>
+            
+            <div id="template-grid" class="template-grid">
+                <p style="color:#888;">Loading matrix...</p>
+            </div>
+        </main>
     </div>
 
     <div id="template-modal-overlay" class="modal-overlay hidden">
-        <div id="template-modal" class="modal-content large-modal">
-            <div class="modal-header">
-                <h3>Design Your Template</h3>
-                <button id="close-template-modal-btn" class="close-btn">&times;</button>
-            </div>
-            
+        <div id="template-modal" class="modal-content">
+            <button id="close-template-modal-btn" class="modal-close-btn" style="position:absolute; top:20px; right:20px; background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+            <h3 style="margin-bottom:20px;">Create Custom Template</h3>
             <form id="template-form">
                 <input type="hidden" id="template-id-input">
-                
-                <div class="form-row">
-                    <div class="input-wrapper">
-                        <label>Template Name</label>
-                        <input type="text" id="template-name" placeholder="e.g. Monthly Client Review" required>
-                    </div>
-                </div>
-
                 <div class="input-wrapper">
-                    <label>Template Structure (Prompt)</label>
-                    <div class="tip-box">
-                        <strong>💡 How to make it dynamic:</strong><br>
-                        Wrap words in square brackets to create input fields.<br>
-                        Example: <code>"Write a report for [Client Name] regarding [Topic]."</code>
-                    </div>
-                    <textarea id="template-content" rows="8" required></textarea>
+                    <label>Template Name</label>
+                    <input type="text" id="template-name" required>
                 </div>
-                
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-text" onclick="document.getElementById('template-modal-overlay').classList.add('hidden')">Cancel</button>
-                    <button type="submit" id="save-template-btn" class="btn btn-primary">Save Template</button>
+                <div class="input-wrapper">
+                    <label>Prompt Structure</label>
+                    <p style="font-size:12px; color:#666; margin-bottom:5px;">Use <b>[brackets]</b> to create variables. e.g. <code>Hello [Name]</code></p>
+                    <textarea id="template-content" rows="6" required style="font-family:monospace;"></textarea>
                 </div>
+                <button type="submit" id="save-template-btn" class="btn btn-primary" style="width:100%;">Save Template</button>
             </form>
         </div>
     </div>
 
-    <script src="nav.js?v=5.0"></script>
-    <script src="templates.js?v=5.0" defer></script>
+    <script src="nav.js?v=6.0"></script>
+    <script src="templates.js?v=6.0" defer></script>
 </body>
 </html>
