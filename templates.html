@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Template Library - Reportify AI</title>
-    <link rel="stylesheet" href="style.css?v=4.0">
+    <link rel="stylesheet" href="style.css?v=5.0">
 </head>
-<body>
-    <header class="main-header account-header">
+<body class="bg-light"> <header class="main-header account-header">
         <div class="container">
             <a href="index.html" class="logo">
                 <span class="logo-icon">🐦</span><span>Reportify AI</span>
@@ -16,62 +15,78 @@
         </div>
     </header>
 
-    <div class="template-layout">
-        <aside class="template-sidebar">
-            <a href="account.html" class="btn-back" style="font-size:0.9rem; margin-bottom:20px; display:block;">&larr; Back to Account</a>
-            
-            <h3>Categories</h3>
-            <ul id="category-filter" style="list-style:none; padding:0;">
-                <li class="active" data-filter="all">All Templates</li>
-                <li data-filter="Sales">Sales & Marketing</li>
-                <li data-filter="Product">Product & IT</li>
-                <li data-filter="General">General & HR</li>
-                <li data-filter="Custom" style="font-weight:bold; color:#007bff;">My Custom Templates</li>
-            </ul>
-        </aside>
+    <div class="template-wrapper">
+        
+        <div class="template-hero">
+            <h1>Template Matrix</h1>
+            <p>Select a professionally engineered template to jumpstart your report. <br>Or create your own dynamic workflow.</p>
+        </div>
 
-        <main class="template-content">
-            <div class="template-header-row" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                <h2 style="margin:0;">Template Library</h2>
-                <button id="create-new-template-btn" class="btn btn-primary">+ Create New</button>
-            </div>
-            
-            <div id="template-grid" class="template-grid">
-                <p>Loading templates...</p>
-            </div>
-        </main>
+        <div class="template-layout">
+            <aside class="template-sidebar">
+                <a href="account.html" class="btn-back-small">&larr; Back to Hub</a>
+                
+                <div class="sidebar-group">
+                    <h3>By Role</h3>
+                    <ul id="category-filter">
+                        <li class="active" data-filter="all">Show All</li>
+                        <li data-filter="Sales">Sales & Growth</li>
+                        <li data-filter="PM">Product & Agile</li>
+                        <li data-filter="General">General Workplace</li>
+                        <li data-filter="Custom" class="custom-filter">My Custom Templates</li>
+                    </ul>
+                </div>
+            </aside>
+
+            <main class="template-content">
+                <div class="content-header">
+                    <h2 id="current-view-title">All Templates</h2>
+                    <button id="create-new-template-btn" class="btn btn-primary">+ Create Custom Template</button>
+                </div>
+                
+                <div id="template-grid" class="template-grid">
+                    <div class="loader"></div>
+                </div>
+            </main>
+        </div>
     </div>
 
     <div id="template-modal-overlay" class="modal-overlay hidden">
-        <div id="template-modal" class="modal-content">
-            <button id="close-template-modal-btn" class="modal-close-btn" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
-            <h3 id="template-modal-title" style="margin-top:0;">Create Custom Template</h3>
+        <div id="template-modal" class="modal-content large-modal">
+            <div class="modal-header">
+                <h3>Design Your Template</h3>
+                <button id="close-template-modal-btn" class="close-btn">&times;</button>
+            </div>
             
             <form id="template-form">
                 <input type="hidden" id="template-id-input">
                 
+                <div class="form-row">
+                    <div class="input-wrapper">
+                        <label>Template Name</label>
+                        <input type="text" id="template-name" placeholder="e.g. Monthly Client Review" required>
+                    </div>
+                </div>
+
                 <div class="input-wrapper">
-                    <label>Template Name</label>
-                    <input type="text" id="template-name" placeholder="e.g. Client Meeting Summary" required style="width:100%; padding:10px; margin-bottom:15px;">
+                    <label>Template Structure (Prompt)</label>
+                    <div class="tip-box">
+                        <strong>💡 How to make it dynamic:</strong><br>
+                        Wrap words in square brackets to create input fields.<br>
+                        Example: <code>"Write a report for [Client Name] regarding [Topic]."</code>
+                    </div>
+                    <textarea id="template-content" rows="8" required></textarea>
                 </div>
                 
-                <div class="input-wrapper">
-                    <label>Template Structure (The Magic Part ✨)</label>
-                    <p style="font-size:12px; color:#666; margin-bottom:5px;">
-                        Use <b>[brackets]</b> to create dynamic fields that you can fill in later.
-                    </p>
-                    <textarea id="template-content" rows="6" required style="width:100%; padding:10px; font-family:monospace;" 
-                        placeholder="Example:&#10;Meeting with: [Client Name]&#10;Date: [Date]&#10;Key Discussion: [Topic]&#10;Next Steps: [Action Items]"></textarea>
-                </div>
-                
-                <div class="form-actions" style="text-align:right; margin-top:20px;">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-text" onclick="document.getElementById('template-modal-overlay').classList.add('hidden')">Cancel</button>
                     <button type="submit" id="save-template-btn" class="btn btn-primary">Save Template</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <script src="nav.js?v=4.0"></script>
-    <script src="templates.js?v=4.0" defer></script>
+    <script src="nav.js?v=5.0"></script>
+    <script src="templates.js?v=5.0" defer></script>
 </body>
 </html>
