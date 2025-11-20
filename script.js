@@ -1,26 +1,28 @@
 /*
  * ===================================================================
- * * Reportify AI - script.js (最终完整修复版)
- * * 包含功能: 登录/注册弹窗, AI生成, 定价卡片交互, 导航栏覆盖
+ * * Reportify AI - script.js (v5.0 完整旗舰版)
+ * * 包含: 
+ * * 1. 动态模板加载与分类 (Sales, PM, etc.)
+ * * 2. 智能表单构建器 (根据变量生成输入框)
+ * * 3. 完整的登录/注册/导出/UI交互逻辑
  * ===================================================================
 */
 document.addEventListener('DOMContentLoaded', () => {
     const API_BASE_URL = 'https://api.goreportify.com'; 
 
-    // --- 1. DOM 元素选择器 ---
+    // --- DOM 元素选择器 ---
     const generateBtn = document.getElementById('generate-btn');
     const copyBtn = document.getElementById('copy-btn');
     const resultBox = document.getElementById('result');
     const exportButtons = document.querySelectorAll('.export-btn');
-    const promptTextarea = document.getElementById('prompt');
-    const templateSelect = document.getElementById('template');
+    const promptTextarea = document.getElementById('prompt'); // 大文本框
+    const templateSelect = document.getElementById('template'); // 下拉菜单
+    
+    // 筛选器
     const detailLevelSelect = document.getElementById('detail-level');
     const roleSelect = document.getElementById('role');
     const toneSelect = document.getElementById('tone');
     const languageSelect = document.getElementById('language');
-    
-    // 定价卡片
-    const pricingCards = document.querySelectorAll('.pricing-card');
     
     // 弹窗与表单
     const loginForm = document.getElementById('login-form');
@@ -29,13 +31,43 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModalBtn = document.getElementById('close-modal-btn');
     const authTabs = document.querySelectorAll('.tab-link');
     const tabContents = document.querySelectorAll('.tab-content');
-    
-    // 链接与其他
-    const allLinks = document.querySelectorAll('a[href^="#"]');
-    const contactForm = document.getElementById('contact-form');
+    const pricingCards = document.querySelectorAll('.pricing-card');
     const formStatus = document.getElementById('form-status');
+    const contactForm = document.getElementById('contact-form');
+    const allLinks = document.querySelectorAll('a[href^="#"]');
+    const socialLoginButtons = document.querySelectorAll('.btn-social-google');
+    const choosePlanButtons = document.querySelectorAll('.choose-plan-btn');
 
-    // --- 2. 覆盖导航栏逻辑 (让主页按钮打开弹窗) ---
+    // (!!!) 动态输入框的容器
+    // 尝试获取，如果没有则动态创建插入
+    let dynamicInputsContainer = document.getElementById('dynamic-inputs-container');
+    if (!dynamicInputsContainer && templateSelect) {
+        dynamicInputsContainer = document.createElement('div');
+        dynamicInputsContainer.id = 'dynamic-inputs-container';
+        dynamicInputsContainer.className = 'settings-grid'; 
+        dynamicInputsContainer.style.marginBottom = '20px';
+        // 插入到 templateSelect 所在的 form-group 后面
+        templateSelect.closest('.form-group').after(dynamicInputsContainer);
+    }
+    
+    // 全局状态
+    let allTemplates = []; 
+    let currentUserPlan = 'basic'; 
+
+    // --- 1. 辅助函数 ---
+    function downloadFile(blob, filename) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    // --- 2. 导航栏逻辑覆盖 ---
+    // 覆盖 nav.js 的默认行为，让主页的“登录”按钮打开弹窗
     window.showLoggedOutNav = (headerActions) => {
         if (!headerActions) return;
         headerActions.innerHTML = ''; 
@@ -57,56 +89,206 @@ document.addEventListener('DOMContentLoaded', () => {
         headerActions.appendChild(loginBtn);
         headerActions.appendChild(getStartedBtn);
     }
-
-    // (!!!) 再次调用全局导航，确保上面的覆盖生效
+    // 重新触发导航更新
     if (window.updateUserNav) window.updateUserNav();
 
 
-    // --- 3. 定价卡片交互逻辑 (修复蓝框问题) ---
-    if (pricingCards) {
-        pricingCards.forEach(card => {
-            card.addEventListener('click', (e) => {
-                // 如果点击的是按钮本身，不要触发卡片选中
-                if (e.target.closest('button') || e.target.closest('a')) return;
-
-                // 移除其他卡片的选中状态
-                pricingCards.forEach(c => c.classList.remove('selected-plan'));
-                // 给当前卡片添加选中状态
-                card.classList.add('selected-plan');
+    // --- 3. 模板系统初始化 ---
+    
+    // 获取用户 Plan (用于判断 Pro 锁)
+    async function fetchUserPlan() {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/me`, {
+                headers: { 'Authorization': `Bearer ${token}` }
             });
+            if (res.ok) {
+                const user = await res.json();
+                currentUserPlan = user.plan || 'basic';
+            }
+        } catch (e) { console.error(e); }
+    }
+
+    // 从后台加载所有模板
+    async function loadTemplates() {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/templates`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (response.ok) {
+                allTemplates = await response.json();
+                renderTemplateDropdown(allTemplates);
+            }
+        } catch (error) {
+            console.error('Failed to load templates:', error);
+        }
+    }
+
+    // 渲染下拉菜单 (支持分组)
+    function renderTemplateDropdown(templates) {
+        if (!templateSelect) return;
+        templateSelect.innerHTML = '<option value="" disabled selected>Select a Report Type...</option>';
+        
+        // 分组逻辑
+        const groups = {};
+        templates.forEach(t => {
+            const cat = t.category || 'Custom'; // 默认 Custom
+            if (!groups[cat]) groups[cat] = [];
+            groups[cat].push(t);
+        });
+
+        // 渲染分组
+        for (const [category, items] of Object.entries(groups)) {
+            const optgroup = document.createElement('optgroup');
+            optgroup.label = category; 
+            
+            items.forEach(t => {
+                const option = document.createElement('option');
+                option.value = t._id;
+                // Pro 锁图标
+                const lock = (t.isPro && currentUserPlan !== 'pro') ? '🔒 ' : '';
+                option.textContent = `${lock}${t.title}`;
+                optgroup.appendChild(option);
+            });
+            templateSelect.appendChild(optgroup);
+        }
+    }
+
+    // 页面加载时执行初始化
+    (async () => {
+        await fetchUserPlan();
+        await loadTemplates();
+    })();
+
+
+    // --- 4. 动态表单构建器 (核心) ---
+    if (templateSelect) {
+        templateSelect.addEventListener('change', () => {
+            if (!dynamicInputsContainer) return;
+            
+            const selectedId = templateSelect.value;
+            const template = allTemplates.find(t => t._id === selectedId);
+            
+            // 清空
+            dynamicInputsContainer.innerHTML = '';
+            if(promptTextarea) promptTextarea.value = '';
+            
+            if (!template) return;
+
+            // 权限提示
+            if (template.isPro && currentUserPlan !== 'pro') {
+                alert(`This is a PRO template. Please upgrade to use it.`);
+            }
+
+            // 生成输入框
+            if (template.variables && template.variables.length > 0) {
+                // 修改大文本框提示
+                const mainLabel = document.querySelector('label[for="prompt"]');
+                if(mainLabel) mainLabel.textContent = "Additional Notes (Optional)";
+                if(promptTextarea) promptTextarea.placeholder = "Any extra details...";
+
+                template.variables.forEach(variable => {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'input-wrapper';
+                    wrapper.style.marginBottom = '15px';
+                    
+                    const label = document.createElement('label');
+                    label.textContent = variable.label || variable.id;
+                    label.style.display = 'block';
+                    label.style.fontWeight = '500';
+                    label.style.marginBottom = '5px';
+
+                    let input;
+                    if (variable.type === 'textarea') {
+                        input = document.createElement('textarea');
+                        input.rows = 3;
+                    } else {
+                        input = document.createElement('input');
+                        input.type = 'text';
+                    }
+                    input.className = 'dynamic-input'; // 用于收集数据
+                    input.dataset.key = variable.id;
+                    input.placeholder = variable.placeholder || '';
+                    input.style.width = '100%';
+                    input.style.padding = '10px';
+                    input.style.border = '1px solid #ddd';
+                    input.style.borderRadius = '6px';
+
+                    wrapper.appendChild(label);
+                    wrapper.appendChild(input);
+                    dynamicInputsContainer.appendChild(wrapper);
+                });
+            } else {
+                // 普通模板恢复
+                const mainLabel = document.querySelector('label[for="prompt"]');
+                if(mainLabel) mainLabel.textContent = "Key points for the report";
+                if(promptTextarea) promptTextarea.placeholder = "Enter your details here...";
+            }
         });
     }
 
-    // --- 4. AI 生成器逻辑 ---
+
+    // --- 5. AI 生成逻辑 ---
     if (generateBtn) {
         generateBtn.addEventListener('click', async () => {
             const token = localStorage.getItem('token'); 
             if (!token) {
-                alert('Please log in or sign up to generate a report.');
-                openModal('login');
+                alert('Please log in.'); openModal('login'); return;
+            }
+
+            const selectedId = templateSelect ? templateSelect.value : null;
+            const template = allTemplates.find(t => t._id === selectedId);
+            
+            // Pro 拦截
+            if (template && template.isPro && currentUserPlan !== 'pro') {
+                alert('This template requires a PRO plan. Please upgrade.');
+                window.location.href = 'subscription.html';
                 return;
             }
-            
-            const allOptions = {
-                prompt: promptTextarea?.value || '', // (!!!) 修复：改成 'prompt'
-                template: templateSelect?.value || '',
-                detailLevel: detailLevelSelect?.value || '',
-                role: roleSelect?.value || '',
-                tone: toneSelect?.value || '',
-                language: languageSelect?.value || '',
+
+            // 收集动态输入
+            const inputs = {};
+            const dynamicEls = document.querySelectorAll('.dynamic-input');
+            let hasDynamicData = false;
+
+            dynamicEls.forEach(el => {
+                inputs[el.dataset.key] = el.value;
+                if (el.value.trim()) hasDynamicData = true;
+            });
+
+            // 准备 Payload
+            const payload = {
+                detailLevel: detailLevelSelect ? detailLevelSelect.value : 'Standard',
+                role: roleSelect ? roleSelect.value : 'General',
+                tone: toneSelect ? toneSelect.value : 'Professional',
+                language: languageSelect ? languageSelect.value : 'English',
             };
-            
-            if (!allOptions.prompt.trim()) { // (!!!) 修复：检查 'prompt'
-                alert('Please enter your key points first.');
-                return;
+
+            if (template) {
+                payload.templateId = template._id;
+                payload.inputs = inputs;
+                payload.prompt = promptTextarea ? promptTextarea.value : ''; 
+                
+                if (!hasDynamicData && (!promptTextarea || !promptTextarea.value)) {
+                    alert('Please fill in the fields.'); return;
+                }
+            } else {
+                payload.prompt = promptTextarea ? promptTextarea.value : '';
+                if (!payload.prompt) { alert('Please enter key points.'); return; }
             }
+
+            // UI Loading
+            generateBtn.disabled = true;
+            const originalText = generateBtn.textContent;
+            generateBtn.textContent = 'Generating...';
             
-            const originalBtnText = generateBtn.textContent; // 保存原始文本
-                generateBtn.disabled = true;
-                generateBtn.textContent = 'Generating...'; // (!!!) 关键: 更改按钮文本
             if (resultBox) {
                 resultBox.innerHTML = '<div class="loader"></div>';
-                resultBox.style.color = 'var(--text-primary)';
+                resultBox.style.color = '#333';
             }
             
             try {
@@ -116,39 +298,38 @@ document.addEventListener('DOMContentLoaded', () => {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
-                    body: JSON.stringify(allOptions),
+                    body: JSON.stringify(payload),
                 });
                 
                 if (!response.ok) {
-                    let errorMsg = `HTTP error! status: ${response.status}`;
-                    try { const errorData = await response.json(); errorMsg = errorData.error || errorData.message || errorMsg; } catch (e) {}
-                    throw new Error(errorMsg);
+                    const err = await response.json();
+                    throw new Error(err.message || 'Generation failed');
                 }
                 const data = await response.json();
-                // (!!!) 修复: 使用 marked.parse 将 AI 的 Markdown 转换为 HTML
+                
+                // Markdown 解析
                 if(resultBox) {
-                    // 检查 marked 库是否加载
                     if (typeof marked !== 'undefined') {
                         resultBox.innerHTML = marked.parse(data.generatedText);
                     } else {
-                        // 如果库没加载，回退到纯文本
                         resultBox.innerText = data.generatedText; 
                     }
                 }
             } catch (error) {
-                console.error('Error calling generate API:', error);
+                console.error('Generate API Error:', error);
                 if (resultBox) {
-                    resultBox.innerText = `Failed to generate report. ${error.message}. Please try again later.`;
+                    resultBox.innerText = `Error: ${error.message}`;
                     resultBox.style.color = 'red';
                 }
             } finally {
-                    generateBtn.textContent = originalBtnText; // 恢复原始文本
-                    generateBtn.disabled = false;
+                generateBtn.textContent = originalText;
+                generateBtn.disabled = false;
             }
         });
     }
 
-    // --- 5. 辅助逻辑 (复制, 导出, 滚动) ---
+
+    // --- 6. 复制 / 导出 / UI 交互 (原样保留) ---
     if (copyBtn && resultBox) {
         copyBtn.addEventListener('click', () => {
             const textToCopy = resultBox.innerText;
@@ -176,7 +357,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 if (format === 'PDF') {
-                    alert('PDF export is a Pro feature.');
+                    // 简单模拟 PDF 导出，实际需 jsPDF 库
+                    alert('PDF export starting...');
+                     if (typeof window.jspdf !== 'undefined') {
+                        const doc = new window.jspdf.jsPDF();
+                        const splitText = doc.splitTextToSize(text, 180);
+                        doc.text(splitText, 10, 10);
+                        doc.save(`${filename}.pdf`);
+                    } else {
+                        alert('PDF library not loaded.');
+                    }
                 } else if (format === 'Markdown') {
                     const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
                     downloadFile(blob, `${filename}.md`);
@@ -190,7 +380,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 平滑滚动
     if (allLinks) {
         allLinks.forEach(link => {
             link.addEventListener('click', function (e) {
@@ -204,7 +393,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 联系表单
+    if (pricingCards) {
+        pricingCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.closest('button') || e.target.closest('a')) return;
+                pricingCards.forEach(c => c.classList.remove('selected-plan'));
+                card.classList.add('selected-plan');
+            });
+        });
+    }
+
     if (contactForm && formStatus) {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -216,17 +414,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- 6. 弹窗管理 (Login/Signup) ---
+    // --- 7. 弹窗与登录注册逻辑 ---
     function openModal(tabToShow = 'login') {
         if (!authModalOverlay) return; 
         authModalOverlay.classList.remove('hidden');
-        
         authTabs.forEach(tab => tab.classList.remove('active'));
         tabContents.forEach(content => content.classList.remove('active'));
-
         const activeTabLink = document.querySelector(`.tab-link[data-tab="${tabToShow}"]`);
         const activeTabContent = document.getElementById(tabToShow);
-
         if(activeTabLink) activeTabLink.classList.add('active');
         if(activeTabContent) activeTabContent.classList.add('active');
     }
@@ -243,14 +438,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (authTabs) {
         authTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const tabToShow = tab.dataset.tab;
-                openModal(tabToShow);
-            });
+            tab.addEventListener('click', () => openModal(tab.dataset.tab));
         });
     }
 
-    // --- 7. API 调用 (登录/注册) ---
+    // 注册
     if (signupForm) {
         signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -271,7 +463,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.message || 'Error');
-                
                 alert('Registration successful! Please log in.');
                 openModal('login');
                 signupForm.reset(); 
@@ -284,6 +475,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // 登录
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -308,8 +500,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('token', data.token);
                 closeModal(); 
                 
-                // 登录成功，刷新导航
+                // 登录成功后，刷新导航并加载模板
                 if (window.updateUserNav) window.updateUserNav(data.user); 
+                loadTemplates(); 
+                fetchUserPlan(); // 刷新 Plan 状态
                 
                 loginForm.reset(); 
             } catch (err) {
@@ -319,5 +513,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.textContent = originalBtnText;
             }
         });
+    }
+
+    // Google 登录占位
+    if (socialLoginButtons) {
+        socialLoginButtons.forEach(btn => {
+            btn.addEventListener('click', () => alert('Google login coming soon!'));
+        });
+    }
+
+    // PayPal 错误占位
+    if (typeof window.paypal === 'undefined') {
+        document.querySelectorAll('.paypal-button-container').forEach(el => el.innerHTML = '<p style="color:orange; font-size: small;">Payment gateway loading error.</p>');
     }
 });
