@@ -122,6 +122,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) {
                 allTemplates = await response.json();
                 renderTemplateDropdown(allTemplates);
+            // (!!!) 新增：检查是否有自动选中的模板
+                const autoSelectId = localStorage.getItem('autoSelectTemplate');
+                if (autoSelectId) {
+                    templateSelect.value = autoSelectId;
+                    // 触发 change 事件以生成输入框
+                    templateSelect.dispatchEvent(new Event('change'));
+                    // 清除标记
+                    localStorage.removeItem('autoSelectTemplate');
+                }
             }
         } catch (error) {
             console.error('Failed to load templates:', error);
