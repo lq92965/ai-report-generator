@@ -1325,227 +1325,154 @@ hr.section-divider {
 }
 
 /* =========================================
-   2025-11-20 模板中心 (Template Library) 样式
+   2025-11-20 模板库 Pro 级设计 (UI Overhaul)
    ========================================= */
 
-.template-layout {
-    display: flex;
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
-    gap: 40px;
+/* 1. 顶部 Hero 区域 (全宽背景) */
+.template-hero-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 60px 0;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 40px;
+}
+.template-hero-section h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-weight: 800;
+}
+.template-hero-section p {
+    font-size: 1.1rem;
+    color: #6c757d;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
 }
 
-/* 侧边栏 */
+/* 2. 布局容器 (侧边栏 + 网格) */
+.template-layout-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 80px; /* 底部留白 */
+    display: flex;
+    gap: 40px;
+    align-items: flex-start; /* 顶部对齐 */
+}
+
+/* 3. 左侧过滤器 (侧边栏) */
 .template-sidebar {
-    width: 250px;
+    width: 260px;
     flex-shrink: 0;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 25px;
+    position: sticky; /* 关键：滚动时吸顶 */
+    top: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
 }
-.template-sidebar h3 {
-    font-size: 0.9rem;
+
+.filter-group { margin-bottom: 30px; }
+.filter-group h3 {
+    font-size: 0.85rem;
     text-transform: uppercase;
-    color: #888;
-    margin-bottom: 10px;
     letter-spacing: 1px;
+    color: #adb5bd;
+    margin-bottom: 15px;
+    font-weight: 700;
 }
-.template-sidebar ul {
-    list-style: none;
-    padding: 0;
-}
-.template-sidebar li {
+.filter-list { list-style: none; padding: 0; margin: 0; }
+.filter-list li {
     padding: 10px 15px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    color: #495057;
     cursor: pointer;
-    border-radius: 6px;
-    color: #333;
-    transition: background 0.2s;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.template-sidebar li:hover {
-    background: #f0f0f0;
-}
-.template-sidebar li.active {
-    background: #e6f0ff;
+.filter-list li:hover { background-color: #f1f3f5; color: #212529; }
+.filter-list li.active {
+    background-color: #e7f5ff;
     color: #007bff;
     font-weight: 600;
 }
 
-/* 网格区域 */
-.template-content {
-    flex-grow: 1;
-}
+/* 4. 右侧内容区 */
+.template-main { flex-grow: 1; }
+
 .template-header-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
+.template-header-row h2 { font-size: 1.5rem; color: #343a40; margin: 0; }
+
+/* 5. 卡片网格 (Grid) */
 .template-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* 自适应宽度 */
+    gap: 25px;
 }
 
-/* 模板卡片 */
+/* 6. 模板卡片 (Card) */
 .template-card {
     background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 20px;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 25px;
     transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     flex-direction: column;
-}
-.template-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-}
-.template-card h3 {
-    margin: 0 0 10px 0;
-    font-size: 1.1rem;
-    color: #333;
-}
-.template-card p {
-    color: #666;
-    font-size: 0.9rem;
-    flex-grow: 1;
-    margin-bottom: 15px;
-}
-.template-tag {
-    display: inline-block;
-    padding: 4px 8px;
-    background: #f0f0f0;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    color: #555;
-    margin-right: 5px;
-}
-.tag-pro {
-    background: #fff8e1;
-    color: #b7791f;
-    border: 1px solid #f6e05e;
-}
-
-/* =========================================
-   2025-11-20 模板库 & 弹窗 终极修复
-   ========================================= */
-
-/* 1. 修复：模板库的双栏布局 (左侧边栏，右内容) */
-.template-layout {
-    display: flex !important;
-    flex-direction: row !important; /* 强制横向排列 */
-    align-items: flex-start !important;
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
-    gap: 40px;
-    min-height: 80vh; /* 撑开高度 */
-}
-
-/* 2. 修复：侧边栏样式 */
-.template-sidebar {
-    width: 260px !important;
-    flex-shrink: 0 !important;
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    border: 1px solid #eee;
-}
-
-/* 3. 修复：内容区域 */
-.template-content {
-    flex-grow: 1;
-    width: 100%;
-}
-
-/* 4. 修复：弹窗 (Modal) - 必须居中悬浮 */
-.modal-overlay {
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 9999 !important; /* 确保在最上层 */
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(5px); /* 背景模糊，更高级 */
-}
-
-/* 弹窗隐藏状态 */
-.modal-overlay.hidden {
-    display: none !important;
-}
-
-/* 弹窗本体 */
-.modal-content {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 500px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    height: 100%; /* 等高 */
     position: relative;
-    animation: slideDown 0.3s ease;
-}
-
-@keyframes slideDown {
-    from { transform: translateY(-20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-/* 模板库美化 */
-.bg-light { background-color: #f8f9fa; }
-
-.template-hero {
-    text-align: center;
-    margin-bottom: 40px;
-    padding: 40px 0;
-    background: #fff;
-    border-bottom: 1px solid #eee;
-}
-.template-hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
-.template-hero p { color: #666; font-size: 1.1rem; }
-
-.template-wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    gap: 40px;
-    padding: 0 20px 60px;
-}
-
-/* 卡片样式 */
-.template-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-}
-.template-card {
-    background: #fff;
-    border: 1px solid #eaeaea;
-    border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    transition: all 0.3s ease;
-    position: relative;
+    overflow: hidden;
 }
 .template-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-    border-color: #007bff;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+    border-color: #cce5ff;
 }
-.card-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
-.badge { font-size: 10px; padding: 3px 8px; border-radius: 20px; background: #eee; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; }
-.badge.pro { background: linear-gradient(45deg, #FFD700, #FFA500); color: #fff; }
-.card-footer { margin-top: auto; display: flex; justify-content: space-between; align-items: center; padding-top: 15px; }
+/* 顶部彩条 (装饰) */
+.card-top-accent {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #007bff, #00c6ff);
+}
 
-/* 提示框 */
-.tip-box {
-    background: #e3f2fd;
-    padding: 10px;
-    border-radius: 6px;
-    font-size: 13px;
-    color: #0d47a1;
-    margin-bottom: 10px;
+/* 标签区 */
+.card-badges { margin-bottom: 15px; display: flex; gap: 8px; flex-wrap: wrap; }
+.t-badge {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
 }
+.t-badge.role { background: #e3f2fd; color: #0d47a1; }
+.t-badge.freq { background: #f3f0ff; color: #5f3dc4; }
+.t-badge.pro { background: #fff9db; color: #f08c00; border: 1px solid #fcc419; }
+
+/* 内容 */
+.template-card h3 {
+    font-size: 1.2rem;
+    margin: 0 0 10px 0;
+    color: #212529;
+    font-weight: 700;
+}
+.template-card p {
+    font-size: 0.9rem;
+    color: #868e96;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    flex-grow: 1; /* 撑开空间 */
+}
+
+/* 按钮 */
+.card-actions button { width: 100%; }
