@@ -65,21 +65,33 @@ async function checkCurrentPlan() {
 }
 
 /**
- * 2. 初始化卡片选择交互 (点击变蓝)
+ * 2. 初始化卡片选择交互 (修复版)
  */
 function initCardSelection() {
+    // 使用委托或者重新获取，确保拿到所有卡片
     const cards = document.querySelectorAll('.pricing-card');
     
     cards.forEach(card => {
         card.addEventListener('click', (e) => {
-            // 如果点击的是里面的按钮，不要触发卡片样式切换（防止冲突）
-            if (e.target.closest('button') || e.target.closest('.paypal-button-container')) return;
+            // 防止点击按钮时触发
+            if (e.target.tagName === 'BUTTON' || e.target.closest('button') || e.target.closest('.paypal-button-container')) {
+                return;
+            }
 
-            // 移除所有卡片的选中状态
-            cards.forEach(c => c.classList.remove('selected-plan'));
+            // (!!!) 强制移除所有卡片的选中状态
+            document.querySelectorAll('.pricing-card').forEach(c => {
+                c.classList.remove('selected-plan');
+                c.style.border = '1px solid #dee2e6'; // 强制复位边框
+                c.style.backgroundColor = '#fff'; // 强制复位背景
+                c.style.transform = 'none';
+            });
             
-            // 给当前点击的卡片添加选中状态
+            // 给当前卡片添加状态
             card.classList.add('selected-plan');
+            // (!!!) JS 强制添加样式，防止 CSS 权重不够
+            card.style.border = '2px solid #007bff';
+            card.style.backgroundColor = '#f0f9ff';
+            card.style.transform = 'scale(1.02)';
         });
     });
 }
