@@ -3,72 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Templates - Reportify AI</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Template Library - Reportify AI</title>
+    <link rel="stylesheet" href="style.css?v=3.0">
 </head>
-<body style="align-items: stretch !important; display: block !important;">
+<body>
     <header class="main-header account-header">
         <div class="container">
             <a href="index.html" class="logo">
-                <span class="logo-icon">🐦</span>
-                <span>Reportify AI</span>
+                <span class="logo-icon">🐦</span><span>Reportify AI</span>
             </a>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html#features">Features</a></li>
-                    <li><a href="index.html#pricing">Pricing</a></li>
-                    <li><a href="index.html#generator">Generator</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
-                </ul>
-            </nav>
-                        <div class="header-actions"></div>
-                    </div>
-                </header>
+            <div class="header-actions"></div>
+        </div>
+    </header>
 
-    <main>
-        <section id="template-manager" class="generator-section">
-            <div class="container">
-                <a href="account.html" class="btn-back">&larr; Back to Account Hub</a>
-                <div class="template-header">
-                    <h2 class="section-title">My Templates</h2>
-                    <button id="create-new-template-btn" class="btn btn-primary">Create New Template</button>
-                </div>
+    <div class="template-layout">
+        <aside class="template-sidebar">
+            <h3>Categories</h3>
+            <ul id="category-filter">
+                <li class="active" data-filter="all">All Templates</li>
+                <li data-filter="Sales">Sales & Marketing</li>
+                <li data-filter="Product">Product & IT</li>
+                <li data-filter="General">General & HR</li>
+            </ul>
+            
+            <h3 style="margin-top: 20px;">Frequency</h3>
+            <ul id="frequency-filter">
+                <li data-filter="Daily">Daily</li>
+                <li data-filter="Weekly">Weekly</li>
+            </ul>
+        </aside>
 
-                <div id="template-list" class="template-list-container">
-                    <p id="loading-templates">Loading your templates...</p>
-                </div>
-
-                <div id="template-modal-overlay" class="modal-overlay hidden">
-                    <div id="template-modal" class="modal-content">
-                        <button id="close-template-modal-btn">&times;</button>
-                        <h3 id="template-modal-title">Create New Template</h3>
-                        <form id="template-form">
-                            <input type="hidden" id="template-id-input"> <div class="input-wrapper">
-                                <label for="template-name">Template Name</label>
-                                <input type="text" id="template-name" placeholder="e.g., My Weekly Sales Report" required>
-                            </div>
-                            <div class="input-wrapper">
-                                <label for="template-content">Template Content (Use [variable] for placeholders)</label>
-                                <textarea id="template-content" rows="10" placeholder="e.g., **Weekly Summary**:\n[Summary of the week]\n\n**Next Steps**:\n[Action items for next week]" required></textarea>
-                                <small>Use square brackets like [variable] to mark where your key points should go.</small>
-                            </div>
-                            <div id="template-form-status" class="error-message"></div>
-                            <button type="submit" id="save-template-btn" class="btn btn-primary full-width">Save Template</button>
-                        </form>
-                    </div>
-                </div>
-
+        <main class="template-content">
+            <div class="template-header-row">
+                <h2>Template Library</h2>
+                <button id="create-new-template-btn" class="btn btn-primary">+ Create Custom</button>
             </div>
-        </section>
-    </main>
+            
+            <div id="template-grid" class="template-grid">
+                <p>Loading...</p>
+            </div>
+        </main>
+    </div>
 
-    <footer class="main-footer">
-       <div class="container">
-            <p>&copy; 2025 Reportify AI. All Rights Reserved.</p>
-       </div>
-    </footer>
+    <div id="template-modal-overlay" class="modal-overlay hidden">
+        <div id="template-modal" class="modal-content">
+            <button id="close-template-modal-btn">&times;</button>
+            <h3 id="template-modal-title">Create New Template</h3>
+            <form id="template-form">
+                <input type="hidden" id="template-id-input">
+                <div class="input-wrapper">
+                    <label>Template Name</label>
+                    <input type="text" id="template-name" required>
+                </div>
+                <div class="input-wrapper">
+                    <label>Content</label>
+                    <textarea id="template-content" rows="5" required></textarea>
+                </div>
+                <button type="submit" id="save-template-btn" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
 
-    <script src="nav.js"></script>
-    <script src="templates.js" defer></script>
+    <script src="nav.js?v=3.0"></script>
+    <script src="templates.js?v=3.0" defer></script>
 </body>
 </html>
