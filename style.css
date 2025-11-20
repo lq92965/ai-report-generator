@@ -1325,154 +1325,72 @@ hr.section-divider {
 }
 
 /* =========================================
-   2025-11-20 模板库 Pro 级设计 (UI Overhaul)
+   2025-11-20 模板库 UI 终极美化 (Visual Polish)
    ========================================= */
 
-/* 1. 顶部 Hero 区域 (全宽背景) */
+/* 1. 顶部 Hero 区域：改为纯净大气风格 */
 .template-hero-section {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    padding: 60px 0;
+    background: #ffffff !important; /* 纯白背景 */
+    padding: 60px 20px 40px !important;
     text-align: center;
-    border-bottom: 1px solid #dee2e6;
-    margin-bottom: 40px;
+    border-bottom: none !important; /* 去掉边框，更通透 */
+    margin-bottom: 20px;
 }
 .template-hero-section h1 {
-    font-size: 2.5rem;
-    color: #2c3e50;
-    margin-bottom: 15px;
-    font-weight: 800;
+    font-size: 3rem !important; /* 更大的标题 */
+    color: #111 !important;
+    margin-bottom: 15px !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.5px;
 }
 .template-hero-section p {
-    font-size: 1.1rem;
-    color: #6c757d;
-    max-width: 600px;
-    margin: 0 auto;
+    font-size: 1.2rem !important;
+    color: #666 !important;
+    max-width: 700px;
+    margin: 0 auto !important;
     line-height: 1.6;
 }
 
-/* 2. 布局容器 (侧边栏 + 网格) */
-.template-layout-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px 80px; /* 底部留白 */
-    display: flex;
-    gap: 40px;
-    align-items: flex-start; /* 顶部对齐 */
+/* 2. 修复：卡片标签重叠问题 (关键修复) */
+.template-card .card-header {
+    display: flex !important;
+    flex-wrap: wrap !important; /* 允许换行，防止挤压 */
+    gap: 8px !important; /* 标签之间的间距 */
+    margin-bottom: 15px !important;
+    align-items: flex-start !important;
 }
 
-/* 3. 左侧过滤器 (侧边栏) */
+.badge {
+    font-size: 11px !important;
+    padding: 5px 10px !important;
+    border-radius: 4px !important; /* 稍微方一点，更现代 */
+    font-weight: 600 !important;
+    letter-spacing: 0.5px;
+    line-height: 1 !important;
+    white-space: nowrap !important; /* 防止文字换行 */
+}
+
+/* 不同类型的标签颜色优化 */
+.badge.Sales { background: #e3f2fd; color: #1976d2; }
+.badge.Product { background: #e8f5e9; color: #2e7d32; }
+.badge.General { background: #f3e5f5; color: #7b1fa2; }
+.badge.pro { 
+    background: #fff3cd !important; 
+    color: #856404 !important; 
+    border: 1px solid #ffeeba !important;
+}
+
+/* 3. 侧边栏美化 */
 .template-sidebar {
-    width: 260px;
-    flex-shrink: 0;
-    background: #fff;
-    border: 1px solid #eee;
-    border-radius: 12px;
-    padding: 25px;
-    position: sticky; /* 关键：滚动时吸顶 */
-    top: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    background: #fff !important;
+    border: none !important; /* 去掉边框 */
+    padding-right: 20px !important; /* 只留右边距 */
+    border-right: 1px solid #eee !important; /* 加一条细竖线 */
+    box-shadow: none !important; /* 去掉阴影，更扁平 */
 }
-
-.filter-group { margin-bottom: 30px; }
 .filter-group h3 {
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #adb5bd;
-    margin-bottom: 15px;
-    font-weight: 700;
+    font-size: 0.75rem !important;
+    color: #999 !important;
+    margin-top: 25px !important;
+    margin-bottom: 10px !important;
 }
-.filter-list { list-style: none; padding: 0; margin: 0; }
-.filter-list li {
-    padding: 10px 15px;
-    margin-bottom: 5px;
-    border-radius: 8px;
-    color: #495057;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-size: 0.95rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.filter-list li:hover { background-color: #f1f3f5; color: #212529; }
-.filter-list li.active {
-    background-color: #e7f5ff;
-    color: #007bff;
-    font-weight: 600;
-}
-
-/* 4. 右侧内容区 */
-.template-main { flex-grow: 1; }
-
-.template-header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-}
-.template-header-row h2 { font-size: 1.5rem; color: #343a40; margin: 0; }
-
-/* 5. 卡片网格 (Grid) */
-.template-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* 自适应宽度 */
-    gap: 25px;
-}
-
-/* 6. 模板卡片 (Card) */
-.template-card {
-    background: #fff;
-    border: 1px solid #e9ecef;
-    border-radius: 12px;
-    padding: 25px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    display: flex;
-    flex-direction: column;
-    height: 100%; /* 等高 */
-    position: relative;
-    overflow: hidden;
-}
-.template-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
-    border-color: #cce5ff;
-}
-/* 顶部彩条 (装饰) */
-.card-top-accent {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #007bff, #00c6ff);
-}
-
-/* 标签区 */
-.card-badges { margin-bottom: 15px; display: flex; gap: 8px; flex-wrap: wrap; }
-.t-badge {
-    font-size: 0.75rem;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-.t-badge.role { background: #e3f2fd; color: #0d47a1; }
-.t-badge.freq { background: #f3f0ff; color: #5f3dc4; }
-.t-badge.pro { background: #fff9db; color: #f08c00; border: 1px solid #fcc419; }
-
-/* 内容 */
-.template-card h3 {
-    font-size: 1.2rem;
-    margin: 0 0 10px 0;
-    color: #212529;
-    font-weight: 700;
-}
-.template-card p {
-    font-size: 0.9rem;
-    color: #868e96;
-    line-height: 1.5;
-    margin-bottom: 20px;
-    flex-grow: 1; /* 撑开空间 */
-}
-
-/* 按钮 */
-.card-actions button { width: 100%; }
