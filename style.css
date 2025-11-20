@@ -1492,3 +1492,60 @@ hr.section-divider {
     from { transform: translateY(-20px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
+
+/* 模板库美化 */
+.bg-light { background-color: #f8f9fa; }
+
+.template-hero {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 40px 0;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+}
+.template-hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
+.template-hero p { color: #666; font-size: 1.1rem; }
+
+.template-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 40px;
+    padding: 0 20px 60px;
+}
+
+/* 卡片样式 */
+.template-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+.template-card {
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    position: relative;
+}
+.template-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    border-color: #007bff;
+}
+.card-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+.badge { font-size: 10px; padding: 3px 8px; border-radius: 20px; background: #eee; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; }
+.badge.pro { background: linear-gradient(45deg, #FFD700, #FFA500); color: #fff; }
+.card-footer { margin-top: auto; display: flex; justify-content: space-between; align-items: center; padding-top: 15px; }
+
+/* 提示框 */
+.tip-box {
+    background: #e3f2fd;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #0d47a1;
+    margin-bottom: 10px;
+}
