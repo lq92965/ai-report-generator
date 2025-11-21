@@ -1476,17 +1476,3 @@ hr.section-divider {
 
 /* 按钮 */
 .card-actions button { width: 100%; }
-
-/* 热门推荐区域 */
-.section-label {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    color: #333;
-    border-left: 4px solid #007bff;
-    padding-left: 15px;
-}
-
-/* 调整侧边栏按钮 */
-.template-sidebar .btn-primary {
-    box-shadow: 0 4px 10px rgba(0,123,255,0.2);
-}
