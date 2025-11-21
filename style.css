@@ -1476,3 +1476,32 @@ hr.section-divider {
 
 /* 按钮 */
 .card-actions button { width: 100%; }
+
+/* --- 模板库新布局 (追加) --- */
+.template-hero-section {
+    background: #fff; padding: 40px 20px; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 30px;
+}
+.template-hero-section h1 { margin-bottom: 10px; }
+
+.template-layout-container {
+    display: flex; max-width: 1200px; margin: 0 auto; padding: 0 20px 60px; gap: 30px; align-items: flex-start;
+}
+
+.template-sidebar {
+    width: 240px; flex-shrink: 0; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #eee;
+}
+.filter-list li { padding: 8px 12px; cursor: pointer; border-radius: 6px; font-size: 0.95rem; margin-bottom: 2px; }
+.filter-list li:hover { background: #f8f9fa; }
+.filter-list li.active { background: #e7f5ff; color: #007bff; font-weight: 600; }
+
+.template-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;
+}
+.template-card {
+    background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 20px;
+    transition: transform 0.2s; display: flex; flex-direction: column;
+}
+.template-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+.template-card h3 { font-size: 1.1rem; margin: 10px 0; }
+.badge { display: inline-block; font-size: 10px; padding: 3px 6px; background: #eee; border-radius: 4px; }
+.badge.pro { background: #fff3cd; color: #856404; }
