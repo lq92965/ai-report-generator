@@ -1,168 +1,191 @@
+/*
+ * ===================================================================
+ * * Reportify AI - templates.js (修复版)
+ * * 功能: 
+ * * 1. 检查登录状态 (修复“自动退出”问题)
+ * * 2. 更新导航栏头像
+ * * 3. 加载和管理模板
+ * ===================================================================
+*/
+
 const API_BASE_URL = 'https://api.goreportify.com'; 
 const token = localStorage.getItem('token');
 
-(function() {
-    if (!token) { window.location.href = 'index.html'; }
-})();
+// --- 1. 页面保护与导航栏初始化 ---
+document.addEventListener('DOMContentLoaded', async () => {
+    // 检查是否登录
+    if (!token) {
+        alert('Please log in to view your templates.');
+        window.location.href = 'index.html'; 
+        return;
+    }
 
-// DOM
-const templateGrid = document.getElementById('template-grid');
-const sidebarLinks = document.querySelectorAll('#category-filter li');
-const createBtn = document.getElementById('create-new-template-btn');
-const modalOverlay = document.getElementById('template-modal-overlay');
-const modalTitle = document.querySelector('#template-modal h3'); // 修正选择器
-const templateForm = document.getElementById('template-form');
-const nameInput = document.getElementById('template-name');
-const contentInput = document.getElementById('template-content');
-const idInput = document.getElementById('template-id-input');
-const closeBtn = document.getElementById('close-template-modal-btn');
-const viewTitle = document.getElementById('current-view-title');
+    // (!!!) 关键修复: 立即更新右上角导航栏
+    await updateUserNav();
 
-let allTemplates = [];
-let userPlan = 'basic';
-
-document.addEventListener('DOMContentLoaded', () => {
-    fetchUserPlan();
-    fetchTemplates();
-
-    // 筛选逻辑
-    sidebarLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            sidebarLinks.forEach(l => l.classList.remove('active'));
-            e.currentTarget.classList.add('active');
-            const filter = e.currentTarget.dataset.filter;
-            viewTitle.textContent = e.currentTarget.textContent;
-            renderTemplates(filter);
-        });
-    });
-
-    // 弹窗逻辑
-    createBtn.addEventListener('click', () => openModal());
-    closeBtn.addEventListener('click', closeModal);
-    templateForm.addEventListener('submit', handleSave);
+    // 加载模板数据
+    fetchAndDisplayTemplates();
+    
+    // 绑定按钮事件
+    setupEventListeners();
 });
 
-async function fetchUserPlan() {
+// --- 2. 导航栏更新逻辑 (修复“退出”假象) ---
+async function updateUserNav() {
+    const headerActions = document.querySelector('.header-actions');
+    if (!headerActions) return;
+
     try {
-        const res = await fetch(`${API_BASE_URL}/api/me`, { headers: { 'Authorization': `Bearer ${token}` } });
-        const data = await res.json();
-        userPlan = data.plan || 'basic';
-    } catch(e) {}
-}
-
-async function fetchTemplates() {
-    try {
-        const res = await fetch(`${API_BASE_URL}/api/templates`, { headers: { 'Authorization': `Bearer ${token}` } });
-        allTemplates = await res.json();
-        renderTemplates('all');
-    } catch(e) {
-        templateGrid.innerHTML = '<p class="error">Failed to load templates.</p>';
-    }
-}
-
-function renderTemplates(filter) {
-    templateGrid.innerHTML = '';
-    
-    const filtered = allTemplates.filter(t => {
-        if (filter === 'all') return true;
-        if (filter === 'Custom') return !t.isSystem; // Custom = 非系统模板
-        return t.category === filter;
-    });
-
-    if (filtered.length === 0) {
-        templateGrid.innerHTML = '<div class="empty-state">No templates found. Create one!</div>';
-        return;
-    }
-
-    filtered.forEach(t => {
-        const card = document.createElement('div');
-        card.className = 'template-card';
+        // 获取用户信息
+        const response = await fetch(`${API_BASE_URL}/api/me`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
         
-        let badges = `<span class="badge ${t.category}">${t.category || 'Custom'}</span>`;
-        if (t.isPro) badges += `<span class="badge pro">PRO</span>`;
+        if (response.ok) {
+            const user = await response.json();
+            const userName = user.displayName || user.email.split('@')[0];
+            const userInitial = (userName[0] || 'U').toUpperCase();
 
-        card.innerHTML = `
-            <div class="card-header">
-                ${badges}
-                ${!t.isSystem ? '<button class="btn-icon delete-btn" title="Delete">&times;</button>' : ''}
-            </div>
-            <h3>${t.title}</h3>
-            <p>${t.description || 'Custom template'}</p>
-            <div class="card-footer">
-                ${!t.isSystem ? '<button class="btn-text edit-btn">Edit</button>' : ''}
-                <button class="btn btn-primary use-btn">Use Template</button>
-            </div>
-        `;
+            // 渲染头像和下拉菜单
+            headerActions.innerHTML = `
+                <div class="user-profile-menu" style="position: relative; display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <div class="user-avatar" style="width: 35px; height: 35px; border-radius: 50%; background: #007bff; color: white; display: flex; justify-content: center; align-items: center; font-weight: bold;">
+                        ${user.avatarUrl ? `<img src="${user.avatarUrl}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">` : userInitial}
+                    </div>
+                    <span style="font-weight: 500;">${userName}</span>
+                    
+                    <div class="dropdown-content" style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); min-width: 150px; z-index: 1000; margin-top: 10px;">
+                        <a href="account.html" style="display: block; padding: 10px 15px; text-decoration: none; color: #333; border-bottom: 1px solid #eee;">My Account</a>
+                        <a href="templates.html" style="display: block; padding: 10px 15px; text-decoration: none; color: #333; border-bottom: 1px solid #eee;">My Templates</a>
+                        <a href="#" id="logout-btn" style="display: block; padding: 10px 15px; text-decoration: none; color: #d9534f;">Logout</a>
+                    </div>
+                </div>
+            `;
 
-        // 绑定事件
-        card.querySelector('.use-btn').addEventListener('click', () => useTemplate(t));
-        if (!t.isSystem) {
-            card.querySelector('.edit-btn').addEventListener('click', () => openModal(t));
-            card.querySelector('.delete-btn').addEventListener('click', () => deleteTemplate(t._id));
+            // 绑定菜单点击事件
+            const menu = headerActions.querySelector('.user-profile-menu');
+            const dropdown = headerActions.querySelector('.dropdown-content');
+            
+            menu.addEventListener('click', () => {
+                dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            });
+
+            // 绑定登出事件
+            document.getElementById('logout-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                localStorage.removeItem('token');
+                window.location.href = 'index.html';
+            });
+        }
+    } catch (error) {
+        console.error('Nav update failed:', error);
+    }
+}
+
+// --- 3. 模板管理逻辑 ---
+
+// DOM 元素
+const loadingMessage = document.getElementById('loading-templates');
+const templateListContainer = document.getElementById('template-list');
+const createBtn = document.getElementById('create-new-template-btn');
+const templateModal = document.getElementById('template-modal-overlay');
+const templateForm = document.getElementById('template-form');
+const closeModalBtn = document.getElementById('close-template-modal-btn');
+
+// 获取并显示模板
+async function fetchAndDisplayTemplates() {
+    if(!templateListContainer) return;
+    templateListContainer.innerHTML = '<p>Loading...</p>';
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/templates`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const templates = await response.json();
+
+        templateListContainer.innerHTML = ''; // 清空 Loading
+
+        if (templates.length === 0) {
+            templateListContainer.innerHTML = '<p>You have no templates yet. Create one!</p>';
+            return;
         }
 
-        templateGrid.appendChild(card);
-    });
-}
+        templates.forEach(template => {
+            const card = document.createElement('div');
+            card.className = 'template-card'; // 确保 style.css 有这个类
+            // 简单的卡片样式内联 (防止样式未加载)
+            card.style.cssText = 'background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-bottom: 20px;';
+            
+            card.innerHTML = `
+                <h3 style="margin-top:0;">${template.title}</h3>
+                <p style="color:#666; font-size:0.9em;">${template.content ? template.content.substring(0, 100) + '...' : 'No content'}</p>
+                <div style="margin-top: 15px;">
+                    <button class="btn-delete" style="background: #ff4d4f; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Delete</button>
+                </div>
+            `;
 
-// (!!!) 核心逻辑：跳转并激活
-function useTemplate(t) {
-    if (t.isPro && userPlan !== 'pro') {
-        alert('Upgrade to PRO to use this template.');
-        return;
-    }
-    // 存入 ID
-    localStorage.setItem('autoSelectTemplate', t._id);
-    // 跳转到主页的生成器部分
-    window.location.href = 'index.html#generator';
-}
+            // 绑定删除
+            card.querySelector('.btn-delete').addEventListener('click', async () => {
+                if(confirm('Delete this template?')) {
+                    await fetch(`${API_BASE_URL}/api/templates/${template._id}`, {
+                        method: 'DELETE',
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    fetchAndDisplayTemplates(); // 刷新
+                }
+            });
 
-function openModal(template = null) {
-    modalOverlay.classList.remove('hidden');
-    if (template) {
-        modalTitle.textContent = 'Edit Template';
-        idInput.value = template._id;
-        nameInput.value = template.title;
-        contentInput.value = template.content || template.structure || ''; // 兼容字段
-    } else {
-        modalTitle.textContent = 'Create New Template';
-        templateForm.reset();
-        idInput.value = '';
-    }
-}
-
-function closeModal() {
-    modalOverlay.classList.add('hidden');
-}
-
-async function handleSave(e) {
-    e.preventDefault();
-    const id = idInput.value;
-    const payload = {
-        title: nameInput.value,
-        content: contentInput.value,
-        category: 'General', // 默认为 General，避免后端校验失败
-        isSystem: false
-    };
-    
-    const url = id ? `${API_BASE_URL}/api/templates/${id}` : `${API_BASE_URL}/api/templates`;
-    const method = id ? 'PUT' : 'POST';
-
-    try {
-        const res = await fetch(url, {
-            method: method,
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-            body: JSON.stringify(payload)
+            templateListContainer.appendChild(card);
         });
-        if (!res.ok) throw new Error('Failed');
-        
-        closeModal();
-        fetchTemplates(); // 刷新
-    } catch(e) { alert(e.message); }
+
+    } catch (error) {
+        templateListContainer.innerHTML = `<p style="color:red">Error: ${error.message}</p>`;
+    }
 }
 
-async function deleteTemplate(id) {
-    if(!confirm('Delete this template?')) return;
-    await fetch(`${API_BASE_URL}/api/templates/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
-    fetchTemplates();
+// 绑定基础事件
+function setupEventListeners() {
+    if(createBtn) {
+        createBtn.addEventListener('click', () => {
+            if(templateModal) templateModal.classList.remove('hidden');
+        });
+    }
+    
+    if(closeModalBtn) {
+        closeModalBtn.addEventListener('click', () => {
+            if(templateModal) templateModal.classList.add('hidden');
+        });
+    }
+
+    if(templateForm) {
+        templateForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nameInput = document.getElementById('template-name');
+            const contentInput = document.getElementById('template-content');
+            
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/templates`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` 
+                    },
+                    body: JSON.stringify({
+                        title: nameInput.value,
+                        content: contentInput.value
+                    })
+                });
+                
+                if(res.ok) {
+                    templateModal.classList.add('hidden');
+                    templateForm.reset();
+                    fetchAndDisplayTemplates(); // 刷新列表
+                } else {
+                    alert('Failed to create template');
+                }
+            } catch(err) {
+                alert(err.message);
+            }
+        });
+    }
 }
