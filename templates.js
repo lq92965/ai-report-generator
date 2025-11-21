@@ -1,23 +1,22 @@
-/* templates.js v6.0 - 支持热门推荐与分类 */
 const API_BASE_URL = 'https://api.goreportify.com'; 
 const token = localStorage.getItem('token');
 
-(function() { if (!token) window.location.href = 'index.html'; })();
+(function() {
+    if (!token) { window.location.href = 'index.html'; }
+})();
 
 // DOM
-const popularGrid = document.getElementById('popular-grid');
-const mainGrid = document.getElementById('template-grid');
-const sidebarLinks = document.querySelectorAll('#category-filter li, [data-filter="Custom"]');
-const listTitle = document.getElementById('list-title');
-// 弹窗 DOM
+const templateGrid = document.getElementById('template-grid');
+const sidebarLinks = document.querySelectorAll('#category-filter li');
 const createBtn = document.getElementById('create-new-template-btn');
 const modalOverlay = document.getElementById('template-modal-overlay');
+const modalTitle = document.querySelector('#template-modal h3'); // 修正选择器
 const templateForm = document.getElementById('template-form');
-const closeModalBtn = document.getElementById('close-template-modal-btn');
-// 表单输入
 const nameInput = document.getElementById('template-name');
 const contentInput = document.getElementById('template-content');
 const idInput = document.getElementById('template-id-input');
+const closeBtn = document.getElementById('close-template-modal-btn');
+const viewTitle = document.getElementById('current-view-title');
 
 let allTemplates = [];
 let userPlan = 'basic';
@@ -26,21 +25,20 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchUserPlan();
     fetchTemplates();
 
-    // 筛选点击
+    // 筛选逻辑
     sidebarLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-            // 样式切换
-            document.querySelectorAll('.template-sidebar li').forEach(l => l.classList.remove('active'));
+            sidebarLinks.forEach(l => l.classList.remove('active'));
             e.currentTarget.classList.add('active');
-            
             const filter = e.currentTarget.dataset.filter;
-            renderView(filter);
+            viewTitle.textContent = e.currentTarget.textContent;
+            renderTemplates(filter);
         });
     });
 
-    // 弹窗事件
+    // 弹窗逻辑
     createBtn.addEventListener('click', () => openModal());
-    closeModalBtn.addEventListener('click', closeModal);
+    closeBtn.addEventListener('click', closeModal);
     templateForm.addEventListener('submit', handleSave);
 });
 
@@ -56,107 +54,115 @@ async function fetchTemplates() {
     try {
         const res = await fetch(`${API_BASE_URL}/api/templates`, { headers: { 'Authorization': `Bearer ${token}` } });
         allTemplates = await res.json();
-        renderView('all');
+        renderTemplates('all');
     } catch(e) {
-        mainGrid.innerHTML = '<p>Error loading templates.</p>';
+        templateGrid.innerHTML = '<p class="error">Failed to load templates.</p>';
     }
 }
 
-// 核心渲染视图
-function renderView(filter) {
-    mainGrid.innerHTML = '';
-    popularGrid.innerHTML = '';
+function renderTemplates(filter) {
+    templateGrid.innerHTML = '';
     
-    // 1. 如果是 "All"，则显示热门板块
-    const popularSection = document.getElementById('popular-section');
-    if (filter === 'all') {
-        popularSection.style.display = 'block';
-        const populars = allTemplates.filter(t => t.isPopular);
-        populars.forEach(t => popularGrid.appendChild(createCard(t)));
-        listTitle.textContent = 'All Categories';
-    } else {
-        popularSection.style.display = 'none'; // 筛选时隐藏热门
-        listTitle.textContent = filter === 'Custom' ? 'My Custom Templates' : `${filter} Templates`;
-    }
-
-    // 2. 渲染主列表
     const filtered = allTemplates.filter(t => {
-        if (filter === 'all') return true; // 显示所有（不包括热门？通常这里重复显示也无所谓）
-        if (filter === 'Custom') return !t.isSystem;
+        if (filter === 'all') return true;
+        if (filter === 'Custom') return !t.isSystem; // Custom = 非系统模板
         return t.category === filter;
     });
 
     if (filtered.length === 0) {
-        mainGrid.innerHTML = '<p>No templates found.</p>';
+        templateGrid.innerHTML = '<div class="empty-state">No templates found. Create one!</div>';
         return;
     }
 
     filtered.forEach(t => {
-        mainGrid.appendChild(createCard(t));
+        const card = document.createElement('div');
+        card.className = 'template-card';
+        
+        let badges = `<span class="badge ${t.category}">${t.category || 'Custom'}</span>`;
+        if (t.isPro) badges += `<span class="badge pro">PRO</span>`;
+
+        card.innerHTML = `
+            <div class="card-header">
+                ${badges}
+                ${!t.isSystem ? '<button class="btn-icon delete-btn" title="Delete">&times;</button>' : ''}
+            </div>
+            <h3>${t.title}</h3>
+            <p>${t.description || 'Custom template'}</p>
+            <div class="card-footer">
+                ${!t.isSystem ? '<button class="btn-text edit-btn">Edit</button>' : ''}
+                <button class="btn btn-primary use-btn">Use Template</button>
+            </div>
+        `;
+
+        // 绑定事件
+        card.querySelector('.use-btn').addEventListener('click', () => useTemplate(t));
+        if (!t.isSystem) {
+            card.querySelector('.edit-btn').addEventListener('click', () => openModal(t));
+            card.querySelector('.delete-btn').addEventListener('click', () => deleteTemplate(t._id));
+        }
+
+        templateGrid.appendChild(card);
     });
 }
 
-function createCard(t) {
-    const card = document.createElement('div');
-    card.className = 'template-card';
-    
-    let badgeHtml = `<span class="badge ${t.category}">${t.category || 'Custom'}</span>`;
-    if (t.isPro) badgeHtml += `<span class="badge pro">PRO</span>`;
-
-    card.innerHTML = `
-        <div class="card-header">${badgeHtml}</div>
-        <h3>${t.title}</h3>
-        <p>${t.description || 'Custom template'}</p>
-        <div class="card-footer">
-             ${!t.isSystem ? `<button class="btn-text edit-btn">Edit</button>` : ''}
-            <button class="btn btn-primary use-btn" style="${t.isSystem ? 'width:100%' : ''}">Use Template</button>
-             ${!t.isSystem ? `<button class="btn-icon delete-btn">&times;</button>` : ''}
-        </div>
-    `;
-
-    // 绑定事件
-    card.querySelector('.use-btn').addEventListener('click', () => {
-        if (t.isPro && userPlan !== 'pro') return alert('Please upgrade to Pro.');
-        localStorage.setItem('autoSelectTemplate', t._id);
-        window.location.href = 'index.html#generator';
-    });
-    
-    if (!t.isSystem) {
-        card.querySelector('.edit-btn').addEventListener('click', () => openModal(t));
-        card.querySelector('.delete-btn').addEventListener('click', () => deleteTemplate(t._id));
+// (!!!) 核心逻辑：跳转并激活
+function useTemplate(t) {
+    if (t.isPro && userPlan !== 'pro') {
+        alert('Upgrade to PRO to use this template.');
+        return;
     }
-
-    return card;
+    // 存入 ID
+    localStorage.setItem('autoSelectTemplate', t._id);
+    // 跳转到主页的生成器部分
+    window.location.href = 'index.html#generator';
 }
 
-// --- CRUD 逻辑 (简写) ---
-function openModal(t=null) {
+function openModal(template = null) {
     modalOverlay.classList.remove('hidden');
-    if(t) {
-        idInput.value = t._id; nameInput.value = t.title; contentInput.value = t.content || t.structure;
+    if (template) {
+        modalTitle.textContent = 'Edit Template';
+        idInput.value = template._id;
+        nameInput.value = template.title;
+        contentInput.value = template.content || template.structure || ''; // 兼容字段
     } else {
-        templateForm.reset(); idInput.value = '';
+        modalTitle.textContent = 'Create New Template';
+        templateForm.reset();
+        idInput.value = '';
     }
 }
-function closeModal() { modalOverlay.classList.add('hidden'); }
+
+function closeModal() {
+    modalOverlay.classList.add('hidden');
+}
 
 async function handleSave(e) {
     e.preventDefault();
     const id = idInput.value;
+    const payload = {
+        title: nameInput.value,
+        content: contentInput.value,
+        category: 'General', // 默认为 General，避免后端校验失败
+        isSystem: false
+    };
+    
     const url = id ? `${API_BASE_URL}/api/templates/${id}` : `${API_BASE_URL}/api/templates`;
     const method = id ? 'PUT' : 'POST';
-    // 简单保存逻辑，稍后会升级为"向导式"
-    await fetch(url, {
-        method, 
-        headers: {'Content-Type':'application/json', 'Authorization':`Bearer ${token}`},
-        body: JSON.stringify({ title: nameInput.value, content: contentInput.value, category: 'Custom' })
-    });
-    closeModal();
-    fetchTemplates();
+
+    try {
+        const res = await fetch(url, {
+            method: method,
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('Failed');
+        
+        closeModal();
+        fetchTemplates(); // 刷新
+    } catch(e) { alert(e.message); }
 }
 
 async function deleteTemplate(id) {
-    if(!confirm('Delete?')) return;
-    await fetch(`${API_BASE_URL}/api/templates/${id}`, { method: 'DELETE', headers: {'Authorization':`Bearer ${token}`} });
+    if(!confirm('Delete this template?')) return;
+    await fetch(`${API_BASE_URL}/api/templates/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
     fetchTemplates();
 }
