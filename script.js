@@ -468,7 +468,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const res = await fetch(`${API_BASE_URL}/api/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ displayName: nameInput.value, email: emailInput.value, password: passwordInput.value }),
+                    body: JSON.stringify({ 
+                        displayName: nameInput.value, // (!!!) 修复: 改为 displayName
+                        email: emailInput.value, 
+                        password: passwordInput.value 
+                    }),
                 });
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.message || 'Error');
