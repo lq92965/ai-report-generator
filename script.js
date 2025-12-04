@@ -140,32 +140,58 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) { console.error(e); }
     }
 
-    // 从后台加载所有模板
-    async function loadTemplates() {
-        const token = localStorage.getItem('token');
-        if (!token) return;
+    // --- 强力模板加载函数 (修复下拉菜单空白) ---
+async function loadTemplates() {
+    const templateSelect = document.getElementById('template'); // 确保 HTML 里这个 ID 对
+    if (!templateSelect) return;
 
-        try {
-            const response = await fetch(`${API_BASE_URL}/api/templates`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            if (response.ok) {
-                allTemplates = await response.json();
-                renderTemplateDropdown(allTemplates);
-            // (!!!) 新增：检查是否有自动选中的模板
-                const autoSelectId = localStorage.getItem('autoSelectTemplate');
-                if (autoSelectId) {
-                    templateSelect.value = autoSelectId;
-                    // 触发 change 事件以生成输入框
-                    templateSelect.dispatchEvent(new Event('change'));
-                    // 清除标记
-                    localStorage.removeItem('autoSelectTemplate');
-                }
-            }
-        } catch (error) {
-            console.error('Failed to load templates:', error);
+    // 先清空，给一个“加载中”的状态
+    templateSelect.innerHTML = '<option value="" disabled selected>Loading templates...</option>';
+
+    try {
+        const token = localStorage.getItem('token');
+        // 注意：如果您的模板是公开的，后端应该允许不带 Token 访问，或者这里必须确保已登录
+        // 这里假设获取所有模板（包含系统默认）
+        const API_URL = 'https://api.goreportify.com';
+        
+        const response = await fetch(`${API_URL}/api/templates`, {
+            headers: token ? { 'Authorization': `Bearer ${token}` } : {} 
+        });
+
+        if (!response.ok) throw new Error('Failed to fetch templates');
+
+        const templates = await response.json();
+        
+        // 调试：在浏览器控制台打印出来，看看有没有数据
+        console.log("从后台获取到的模板:", templates);
+
+        // 如果数组为空，手动加几个备用选项（防止空白）
+        if (templates.length === 0) {
+             templateSelect.innerHTML = `
+                <option value="" disabled selected>No templates in DB</option>
+                <option value="daily">Daily Report (Backup)</option>
+                <option value="weekly">Weekly Report (Backup)</option>
+             `;
+             return;
         }
+
+        // 正常渲染
+        templateSelect.innerHTML = '<option value="" disabled selected>Select a Report Type...</option>';
+        
+        // 简单的按 title 排序
+        templates.forEach(t => {
+            const option = document.createElement('option');
+            option.value = t._id; // 这里的 ID 传给后端
+            option.textContent = t.title; // 显示给用户看
+            if (t.isPro) option.textContent += " (Pro)";
+            templateSelect.appendChild(option);
+        });
+
+    } catch (error) {
+        console.error('Template Load Error:', error);
+        templateSelect.innerHTML = '<option value="" disabled selected>Error loading templates</option>';
     }
+}
 
     // 渲染下拉菜单 (支持分组)
     function renderTemplateDropdown(templates) {
