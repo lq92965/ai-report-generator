@@ -6,40 +6,13 @@
     <title>My Profile - Reportify AI</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* 强制导航栏全宽布局 */
-        body { margin: 0; padding: 0; background-color: #f4f6f8; font-family: 'Inter', sans-serif; }
-        
-        .navbar-full {
-            width: 100%;
-            background: #fff;
-            border-bottom: 1px solid #e1e4e8;
-            padding: 15px 40px;
-            box-sizing: border-box; /* 关键：防止padding撑破宽度 */
-            display: flex;
-            justify-content: space-between; /* 关键：一左一右 */
-            align-items: center;
-            position: fixed; /* 固定在顶部 */
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
-
-        .main-content {
-            margin-top: 100px; /* 给固定导航栏留位置 */
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 0 20px;
-        }
-    </style>
 </head>
-<body>
+<body style="background-color: #f4f6f8; font-family: 'Inter', sans-serif;">
 
-    <nav class="navbar-full">
+    <nav class="navbar" style="background: #fff; border-bottom: 1px solid #e1e4e8; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center;">
         <div class="logo">
             <a href="index.html" style="text-decoration: none; color: #333; font-weight: 700; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
-                <img src="https://img.icons8.com/color/96/hummingbird.png" alt="Logo" style="height: 38px;">
+                <img src="https://img.icons8.com/fluency/48/hummingbird.png" alt="Logo" style="height: 36px;">
                 Reportify AI
             </a>
         </div>
@@ -47,18 +20,18 @@
         <div class="header-actions"></div>
     </nav>
 
-    <div class="main-content">
+    <div class="container" style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
         
         <div style="margin-bottom: 25px;">
-            <a href="index.html" style="text-decoration: none; color: #555; display: inline-flex; align-items: center; gap: 8px; font-weight: 500;">
-                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            <a href="account.html" style="text-decoration: none; color: #555; display: inline-flex; align-items: center; gap: 8px; font-weight: 500;">
+                <i class="fas fa-arrow-left"></i> 返回我的账户 (Back to Account)
             </a>
         </div>
 
-        <div style="display: flex; gap: 40px; align-items: flex-start;">
+        <div style="display: flex; align-items: flex-start;">
             <div style="flex: 1;">
                 <h1 style="font-size: 2.5rem; color: #1a1a1a; margin-bottom: 10px;">My Profile</h1>
-                <p style="color: #666; font-size: 1.1rem;">Manage your personal information and account settings.</p>
+                <p style="color: #666; font-size: 1.1rem;">Manage your personal settings.</p>
             </div>
         </div>
 
@@ -68,7 +41,7 @@
                 <div class="profile-avatar" style="margin-bottom: 20px;">
                     <img src="https://via.placeholder.com/150" alt="Avatar" style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
                 </div>
-                <button class="btn btn-outline upload-btn" style="width: 100%; border: 1px solid #ddd; background: white; padding: 8px; border-radius: 6px; cursor: pointer;">Change Photo</button>
+                <button class="btn btn-outline upload-btn" style="width: 100%; padding: 8px; border: 1px solid #ddd; background: white; border-radius: 6px; cursor: pointer;">Change Photo</button>
                 <input type="file" id="hidden-avatar-input" accept="image/*" style="display: none;">
             </div>
 
@@ -84,17 +57,14 @@
                             <input type="text" id="profile-job" class="form-control" style="width: 100%; padding: 12px; border: 1px solid #dfe1e5; border-radius: 8px;">
                         </div>
                     </div>
-
                     <div class="form-group" style="margin-bottom: 20px;">
                         <label style="font-weight: 600; display: block; margin-bottom: 8px;">Bio</label>
                         <textarea id="profile-bio" rows="4" class="form-control" style="width: 100%; padding: 12px; border: 1px solid #dfe1e5; border-radius: 8px;"></textarea>
                     </div>
-
                     <div class="form-group" style="margin-bottom: 30px;">
                         <label style="font-weight: 600; display: block; margin-bottom: 8px;">Account Email</label>
                         <input type="email" id="profile-email" readonly style="width: 100%; padding: 12px; border: 1px solid #dfe1e5; border-radius: 8px; background: #f4f6f8; color: #666;">
                     </div>
-
                     <div style="text-align: right;">
                         <button class="btn btn-primary save-btn" style="padding: 12px 40px; font-weight: 600; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer;">Save Changes</button>
                     </div>
@@ -102,7 +72,6 @@
             </div>
         </div>
     </div>
-
     <script src="nav.js"></script>
     <script src="profile.js"></script>
 </body>
