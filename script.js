@@ -8,6 +8,36 @@
  * ===================================================================
 */
 document.addEventListener('DOMContentLoaded', () => {
+    // --- 密码强度实时校验 ---
+    const passInput = document.getElementById('signup-password');
+    if (passInput) {
+        passInput.addEventListener('input', function() {
+            const val = this.value;
+            const reqLen = document.getElementById('req-length');
+            const reqNum = document.getElementById('req-number');
+            const reqUp = document.getElementById('req-upper');
+
+            if (val.length >= 8) reqLen.className = 'valid'; else reqLen.className = 'invalid';
+            if (/[0-9]/.test(val)) reqNum.className = 'valid'; else reqNum.className = 'invalid';
+            if (/[A-Z]/.test(val)) reqUp.className = 'valid'; else reqUp.className = 'invalid';
+        });
+    }
+
+    // --- 注册提交拦截校验 ---
+    const signupFormEl = document.getElementById('signup-form');
+    if (signupFormEl) {
+        // 移除旧的监听器不容易，我们直接用 onsubmit 覆盖
+        signupFormEl.onsubmit = function(e) {
+            const pw = document.getElementById('signup-password').value;
+            // 简单校验
+            if (pw.length < 8 || !/[0-9]/.test(pw) || !/[A-Z]/.test(pw)) {
+                e.preventDefault(); // 阻止提交
+                alert("Password implies safety rules: 8+ chars, 1 number, 1 uppercase.");
+                return false;
+            }
+            // 如果通过，让它继续执行原本的 addEventListener 逻辑，或者您可以在这里直接调用 fetch 注册
+        };
+    }
     const API_BASE_URL = 'https://api.goreportify.com'; 
 
     // --- DOM 元素选择器 ---
