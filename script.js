@@ -481,36 +481,85 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 注册
-    if (signupForm) {
-        signupForm.addEventListener('submit', async (e) => {
+   // --- 新版注册逻辑 (包含强力校验) ---
+    // 重新获取元素，确保 ID 对应正确
+    const signupFormNew = document.getElementById('signup-form');
+
+    if (signupFormNew) {
+        // 使用 cloneNode 移除所有旧的监听器，防止冲突
+        const newForm = signupFormNew.cloneNode(true);
+        signupFormNew.parentNode.replaceChild(newForm, signupFormNew);
+
+        newForm.addEventListener('submit', async (e) => {
+            // 1. 阻止默认提交 (最关键的一步)
             e.preventDefault();
-            const submitBtn = signupForm.querySelector('button[type="submit"]');
+            
+            const submitBtn = newForm.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.textContent;
+
+            // 获取输入值
+            const nameVal = document.getElementById('signup-name').value;
+            const emailVal = document.getElementById('signup-email').value;
+            const passVal = document.getElementById('signup-password').value;
+
+            // --- 校验 A: 姓名 (2-50位，允许空格) ---
+            if (nameVal.length < 2 || nameVal.length > 50) {
+                alert("Name Format Error: Name must be between 2 and 50 characters.");
+                return; // ⛔ 停止运行
+            }
+
+            // --- 校验 B: 邮箱 (必须包含 @ 和 .) ---
+            // 比如 '2222@sadsa. d' 会因为有空格或者格式不对被拦截
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailVal)) {
+                alert("Invalid Email Format:\nPlease check for spaces and ensure it looks like 'user@domain.com'.");
+                return; // ⛔ 停止运行
+            }
+
+            // --- 校验 C: 密码 (8位以上，含数字和大写) ---
+            const isStrong = /[A-Z]/.test(passVal) && /[0-9]/.test(passVal) && passVal.length >= 8;
+            if (!isStrong) {
+                alert("Weak Password:\n- At least 8 characters\n- One Uppercase letter (A-Z)\n- One Number (0-9)");
+                return; // ⛔ 停止运行
+            }
+
+            // --- 校验通过，发送请求 ---
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Creating...';
-            
-            const nameInput = document.getElementById('signup-name');
-            const emailInput = document.getElementById('signup-email');
-            const passwordInput = document.getElementById('signup-password');
-            
+            submitBtn.textContent = 'Creating Account...';
+
             try {
-                const res = await fetch(`${API_BASE_URL}/api/register`, {
+                // 确保 API 地址正确
+                const API_URL = 'https://api.goreportify.com'; 
+
+                const res = await fetch(`${API_URL}/api/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        displayName: nameInput.value, // (!!!) 修复: 改为 displayName
-                        email: emailInput.value, 
-                        password: passwordInput.value 
+                    body: JSON.stringify({
+                        displayName: nameVal,
+                        email: emailVal,
+                        password: passVal
                     }),
                 });
+
                 const data = await res.json();
-                if (!res.ok) throw new Error(data.message || 'Error');
-                alert('Registration successful! Please log in.');
-                openModal('login');
-                signupForm.reset(); 
+                
+                if (!res.ok) {
+                    throw new Error(data.message || 'Registration failed');
+                }
+
+                alert('✅ Account Created Successfully! Please Login.');
+                
+                // 自动切换到登录页面
+                const authModal = document.getElementById('auth-modal-overlay');
+                if(authModal && !authModal.classList.contains('hidden')) {
+                    // 如果在弹窗里，切换 Tab
+                    const loginTab = document.querySelector('.tab-link[data-tab="login"]');
+                    if(loginTab) loginTab.click();
+                }
+                newForm.reset();
+
             } catch (err) {
-                alert(`Registration failed: ${err.message}`);
+                alert(`Registration Error: ${err.message}`);
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalBtnText;
