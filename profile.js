@@ -1,226 +1,143 @@
-/*
- * ===================================================================
- * * Reportify AI - Profile Page Script (v5.0 Clean)
- * * PURPOSE: Handles profile updates, avatar uploads, and form logic.
- * * (Cleaned of duplicate navigation code & syntax errors)
- * ===================================================================
-*/
-
-const API_BASE_URL = 'https://api.goreportify.com';
-const token = localStorage.getItem('token');
-
-// --- Page Protection ---
-if (!token) {
-    // alert('Please log in to access your profile.');
-    // window.location.href = 'index.html'; 
-}
-
+/* * Reportify AI - profile.js 
+ * 修复：头像上传与显示
+ */
 document.addEventListener('DOMContentLoaded', () => {
-    // DOM Elements
-    const profileForm = document.getElementById('profile-form');
-    const avatarUploadInput = document.getElementById('avatar-upload-input');
-    const avatarUploadBtn = document.getElementById('avatar-upload-btn');
-    const avatarPreview = document.getElementById('avatar-preview');
+    // 务必确保这个地址是您服务器的地址
+    const API_BASE_URL = 'https://api.goreportify.com'; 
+    const token = localStorage.getItem('token');
 
-    if (!profileForm || !avatarUploadBtn) {
-        console.warn('Profile form elements not found.');
-        return;
+    // DOM 元素
+    const avatarImg = document.querySelector('.profile-avatar img'); 
+    const uploadBtn = document.querySelector('.upload-btn'); // 对应 "Upload New Picture" 按钮
+    const nameInput = document.getElementById('profile-name'); // 对应 Display Name 输入框
+    const bioInput = document.getElementById('profile-bio');   // 对应 Bio 输入框
+    const jobInput = document.getElementById('profile-job');   // 对应 Job Title 输入框
+    const saveBtn = document.querySelector('.save-btn');       // 对应 Save Changes 按钮
+    const emailInput = document.getElementById('profile-email'); // 对应 Email (只读)
+
+    // 创建一个隐藏的文件输入框用于上传
+    let fileInput = document.getElementById('hidden-avatar-input');
+    if (!fileInput) {
+        fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.id = 'hidden-avatar-input';
+        fileInput.accept = 'image/*';
+        fileInput.style.display = 'none';
+        document.body.appendChild(fileInput);
     }
 
-    // 1. Load Profile Data
-    fetchUserProfile();
+    // 1. 加载用户资料
+    async function loadProfile() {
+        if (!token) {
+            window.location.href = 'index.html'; // 没登录踢回首页
+            return;
+        }
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/me`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!res.ok) throw new Error('Failed to load profile');
+            
+            const user = await res.json();
+            
+            // 填充表单
+            if (nameInput) nameInput.value = user.displayName || '';
+            if (emailInput) emailInput.value = user.email || '';
+            if (bioInput) bioInput.value = user.bio || ''; // 需要后端支持 bio
+            if (jobInput) jobInput.value = user.jobTitle || ''; // 需要后端支持 jobTitle
+            
+            // 显示头像
+            if (avatarImg) {
+                // 如果 user.avatarUrl 有值就用，没有就用默认图
+                avatarImg.src = user.avatarUrl || 'https://via.placeholder.com/150';
+            }
+        } catch (e) {
+            console.error("加载资料错误:", e);
+        }
+    }
 
-    // 2. Bind Form Submit
-    profileForm.addEventListener('submit', handleProfileSubmit);
+    // 2. 绑定上传按钮点击事件
+    if (uploadBtn) {
+        uploadBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            fileInput.click(); // 触发文件选择
+        });
+    }
 
-    // 3. Bind Avatar Upload
-    avatarUploadBtn.addEventListener('click', () => avatarUploadInput.click());
-
-    avatarUploadInput.addEventListener('change', (e) => {
-        const file = e.target.files[0];
+    // 3. 监听文件选择变化，立即上传
+    fileInput.addEventListener('change', async () => {
+        const file = fileInput.files[0];
         if (!file) return;
 
-        // Local Preview
-        const reader = new FileReader();
-        reader.onload = (ev) => { 
-            if(avatarPreview) avatarPreview.src = ev.target.result; 
-        };
-        reader.readAsDataURL(file);
+        const formData = new FormData();
+        formData.append('avatar', file);
 
-        // Upload to Server
-        uploadAvatar(file);
-    });
-});
+        // 更改按钮状态
+        const originalText = uploadBtn.textContent;
+        uploadBtn.textContent = 'Uploading...';
+        uploadBtn.disabled = true;
 
-/**
- * Fetch and display user profile
- */
-async function fetchUserProfile() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/me`, { 
-            method: 'GET',
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-
-        if (!response.ok) {
-            if (response.status === 401 || response.status === 403) {
-                localStorage.removeItem('token');
-                window.location.href = 'index.html';
-            }
-            throw new Error('Could not fetch user profile');
-        }
-
-        const user = await response.json();
-
-        // Fill Form
-        const profileEmailInput = document.getElementById('profile-email');
-        const profileNameInput = document.getElementById('profile-name');
-        const profileBioInput = document.getElementById('profile-bio');
-        const profileJobInput = document.getElementById('profile-job');
-        const avatarPreview = document.getElementById('avatar-preview');
-
-        if (profileEmailInput) profileEmailInput.value = user.email;
-        if (profileNameInput) profileNameInput.value = user.displayName || ''; 
-        if (profileBioInput) profileBioInput.value = user.bio || '';
-        if (profileJobInput) profileJobInput.value = user.jobTitle || '';
-
-        // Show Avatar
-        if (avatarPreview) {
-            if (user.avatarUrl && user.avatarUrl !== 'https://via.placeholder.com/150') {
-                avatarPreview.src = user.avatarUrl;
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/user/avatar`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` }, 
+                // 注意：Fetch 会自动设置 Content-Type 为 multipart/form-data
+                body: formData
+            });
+            
+            const data = await res.json();
+            if (res.ok) {
+                // 立即更新页面头像
+                if (avatarImg) avatarImg.src = data.avatarUrl;
+                alert('Avatar updated successfully!');
             } else {
-                const userInitial = (user.displayName || user.email.split('@')[0])[0].toUpperCase();
-                // Create SVG Placeholder
-                avatarPreview.src = `data:image/svg+xml;base64,${btoa('<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><rect width="100%" height="100%" fill="#f0f0f0"></rect><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="40" fill="#999">${userInitial}</text></svg>')}`;
+                alert('Upload failed: ' + (data.message || 'Unknown error'));
             }
+        } catch (err) {
+            console.error(err);
+            alert('Network error while uploading.');
+        } finally {
+            uploadBtn.textContent = originalText;
+            uploadBtn.disabled = false;
+            fileInput.value = ''; // 清空选择
         }
+    });
 
-        // Update Global Nav
-        if (window.updateUserNav) {
-            window.updateUserNav(user);
-        }
+    // 4. 保存文字资料
+    if (saveBtn) {
+        saveBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            saveBtn.textContent = 'Saving...';
+            saveBtn.disabled = true;
 
-    } catch (error) {
-        console.error('Error fetching user profile:', error);
-        showStatusMessage('Could not load your profile', true);
-    }
-}
-
-/**
- * Handle Profile Update
- */
-async function handleProfileSubmit(e) {
-    e.preventDefault(); 
-    
-    const profileNameInput = document.getElementById('profile-name');
-    const profileBioInput = document.getElementById('profile-bio');
-    const profileJobInput = document.getElementById('profile-job');
-
-    const newName = profileNameInput.value.trim();
-    const newBio = profileBioInput.value.trim();
-    const newJob = profileJobInput.value.trim();
-
-    if (!newName) {
-        showStatusMessage('Display Name cannot be empty', true);
-        return;
-    }
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/profile`, { 
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ displayName: newName, bio: newBio, jobTitle: newJob })
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/user/profile`, {
+                    method: 'PUT',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        name: nameInput.value,
+                        bio: bioInput ? bioInput.value : '',
+                        jobTitle: jobInput ? jobInput.value : ''
+                    })
+                });
+                
+                if (res.ok) {
+                    alert('Profile saved successfully!');
+                } else {
+                    alert('Failed to save profile.');
+                }
+            } catch (err) {
+                alert('Error saving profile.');
+            } finally {
+                saveBtn.textContent = 'Save Changes';
+                saveBtn.disabled = false;
+            }
         });
-        
-        if (!response.headers.get("content-type")?.includes("application/json")) {
-           const text = await response.text();
-           throw new Error(`Server Error: ${text.substring(0, 50)}...`);
-        }
-
-        const result = await response.json();
-        if (!response.ok) throw new Error(result.message || 'Update failed');
-
-        const updatedUser = result.user;
-
-        showStatusMessage('Profile updated successfully!', false);
-        profileNameInput.value = updatedUser.displayName; 
-        profileBioInput.value = updatedUser.bio;
-        profileJobInput.value = updatedUser.jobTitle;
-
-        // Refresh Global Nav with new data
-        if (window.updateUserNav) {
-            window.updateUserNav(updatedUser); 
-        }
-
-    } catch (error) {
-        console.error('Error updating profile:', error);
-        showStatusMessage(error.message, true);
-    }
-}
-
-/**
- * Upload Avatar
- */
-async function uploadAvatar(file) {
-    const formData = new FormData();
-    formData.append('avatar', file); 
-
-    showStatusMessage('Uploading new avatar...', false);
-    const avatarUploadBtn = document.getElementById('avatar-upload-btn');
-    if(avatarUploadBtn) {
-        avatarUploadBtn.disabled = true;
-        avatarUploadBtn.textContent = 'Uploading...';
     }
 
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/upload-avatar`, {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${token}` },
-            body: formData
-        });
-
-        const result = await response.json();
-        if (!response.ok) throw new Error(result.message || 'Upload failed');
-
-        showStatusMessage('Avatar updated successfully!', false);
-        
-        const newAvatarUrl = result.avatarUrl;
-        const avatarPreview = document.getElementById('avatar-preview');
-        if (avatarPreview) avatarPreview.src = newAvatarUrl; 
-
-        // (!!!) Fixed: Correct syntax for if statement
-        if (window.updateUserNav) {
-            window.updateUserNav(); // Refresh Nav
-        }
-
-    } catch (error) {
-        console.error('Error uploading avatar:', error);
-        showStatusMessage(error.message, true);
-    } finally {
-        if(avatarUploadBtn) {
-            avatarUploadBtn.disabled = false;
-            avatarUploadBtn.textContent = 'Upload New Picture';
-        }
-    }
-}
-
-/**
- * Show status message
- */
-function showStatusMessage(message, isError) {
-    const profileStatus = document.getElementById('profile-status');
-    if (!profileStatus) return;
-
-    profileStatus.textContent = message;
-    profileStatus.className = isError ? 'status-message error-message' : 'status-message success-message';
-    profileStatus.style.display = 'block';
-
-    setTimeout(() => {
-        profileStatus.textContent = '';
-        profileStatus.className = 'status-message';
-        profileStatus.style.display = 'none';
-    }, 5000);
-}
+    // 初始化
+    loadProfile();
+});
