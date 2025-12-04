@@ -1505,3 +1505,31 @@ hr.section-divider {
 .template-card h3 { font-size: 1.1rem; margin: 10px 0; }
 .badge { display: inline-block; font-size: 10px; padding: 3px 6px; background: #eee; border-radius: 4px; }
 .badge.pro { background: #fff3cd; color: #856404; }
+
+/* --- New Auth Modal Styles --- */
+.auth-modal {
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 420px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    font-family: sans-serif;
+}
+.auth-subtitle { color: #666; margin-bottom: 20px; font-size: 0.9em; }
+.form-group { margin-bottom: 15px; text-align: left; }
+.form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9em; }
+.form-group input { 
+    width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1em; 
+}
+.full-width { width: 100%; margin-top: 10px; padding: 12px; }
+.forgot-links { margin-top: 5px; font-size: 0.8em; text-align: right; }
+.password-requirements { list-style: none; padding: 0; margin-top: 5px; font-size: 0.8em; color: #888; }
+.password-requirements li::before { content: "• "; }
+.password-requirements li.valid { color: green; }
+.password-requirements li.invalid { color: red; }
+.divider { text-align: center; margin: 20px 0; color: #ccc; font-size: 0.8em; }
+.btn-social { 
+    width: 100%; padding: 10px; background: #fff; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; 
+}
+.btn-social:hover { background: #f5f5f5; }
