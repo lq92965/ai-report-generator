@@ -233,32 +233,72 @@
        </div>
     </footer>
     
-    <div id="auth-modal-overlay" class="modal-overlay hidden">
-        <div id="auth-modal" class="modal-content">
-            <button id="close-modal-btn">&times;</button>
-            <div class="auth-tabs">
-                <button class="tab-link active" data-tab="login">Login</button>
-                <button class="tab-link" data-tab="signup">Sign Up</button>
-            </div>
+    <div id="auth-modal-overlay" class="hidden">
+    <div class="auth-modal">
+        <span id="close-modal-btn">&times;</span>
+        
+        <div class="auth-tabs">
+            <button class="tab-link active" data-tab="login">Login</button>
+            <button class="tab-link" data-tab="signup">Sign Up</button>
+        </div>
 
-            <div id="login" class="tab-content active">
-                <h2>Welcome Back!</h2>
-                <form id="login-form">
-                    <div class="input-wrapper">
-                        <label for="login-email">Email</label>
-                        <input type="email" id="login-email" required>
-                    </div>
-                    <div class="input-wrapper">
-                        <label for="login-password">Password</label>
-                        <input type="password" id="login-password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary full-width">Login</button>
-                </form>
-                <div class="social-login">
-                    <span>OR</span>
-                    <button class="btn-social-google">Continue with Google</button>
+        <div id="login" class="tab-content active">
+            <h2>Welcome Back</h2>
+            <p class="auth-subtitle">Enter your credentials to access your account.</p>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" placeholder="name@example.com" required>
                 </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                    <div class="forgot-links">
+                        <a href="#" onclick="alert('Please contact admin to reset password.'); return false;">Forgot Password?</a>
+                        <a href="#" onclick="alert('Please check your email inbox.'); return false;" style="margin-left:10px; color:#666;">Forgot Email?</a>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary full-width">Login</button>
+            </form>
+
+            <div class="divider"><span>OR</span></div>
+            
+            <div class="social-login">
+                <button class="btn-social" onclick="alert('Google Login coming soon!')">
+                    <span>G</span> Continue with Google
+                </button>
             </div>
+        </div>
+
+        <div id="signup" class="tab-content">
+            <h2>Create Account</h2>
+            <p class="auth-subtitle">Get started with your free account today.</p>
+
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" placeholder="John Doe" required>
+                    <small class="hint">Use your real name for reports.</small>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email Address</label>
+                    <input type="email" id="signup-email" placeholder="name@company.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" placeholder="Min 8 chars, 1 Number, 1 Upper" required>
+                    <ul class="password-requirements">
+                        <li id="req-length" class="invalid">At least 8 characters</li>
+                        <li id="req-number" class="invalid">Contains a number</li>
+                        <li id="req-upper" class="invalid">Contains uppercase letter</li>
+                    </ul>
+                </div>
+                <button type="submit" class="btn btn-primary full-width">Create Account</button>
+            </form>
+        </div>
+    </div>
+</div>
 
             <div id="signup" class="tab-content">
                 <h2>Create Your Account</h2>
