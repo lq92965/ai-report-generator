@@ -6,13 +6,27 @@
     <title>My Profile - Reportify AI</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 强制覆盖：让导航栏变宽，不再居中 */
+        .navbar-full-width {
+            width: 100%;
+            background: #fff;
+            border-bottom: 1px solid #e1e4e8;
+            padding: 15px 40px;
+            box-sizing: border-box; 
+            display: flex;
+            justify-content: space-between; /* 关键：左Logo，右头像 */
+            align-items: center;
+        }
+    </style>
 </head>
-<body style="background-color: #f4f6f8; font-family: 'Inter', sans-serif;">
+<body style="background-color: #f4f6f8; font-family: 'Inter', sans-serif; margin: 0;">
 
-    <nav class="navbar" style="background: #fff; border-bottom: 1px solid #e1e4e8; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center;">
+    <nav class="navbar-full-width">
         <div class="logo">
             <a href="index.html" style="text-decoration: none; color: #333; font-weight: 700; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
-                <img src="https://img.icons8.com/fluency/48/hummingbird.png" alt="Logo" style="height: 36px;">
+                
+                <img src="https://img.icons8.com/color/48/hummingbird.png" alt="Logo" style="height: 36px;">
                 Reportify AI
             </a>
         </div>
@@ -24,7 +38,7 @@
         
         <div style="margin-bottom: 25px;">
             <a href="account.html" style="text-decoration: none; color: #555; display: inline-flex; align-items: center; gap: 8px; font-weight: 500;">
-                <i class="fas fa-arrow-left"></i> 返回我的账户 (Back to Account)
+                <i class="fas fa-arrow-left"></i> Back to Account
             </a>
         </div>
 
@@ -41,7 +55,7 @@
                 <div class="profile-avatar" style="margin-bottom: 20px;">
                     <img src="https://via.placeholder.com/150" alt="Avatar" style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
                 </div>
-                <button class="btn btn-outline upload-btn" style="width: 100%; padding: 8px; border: 1px solid #ddd; background: white; border-radius: 6px; cursor: pointer;">Change Photo</button>
+                <button class="btn btn-outline upload-btn" style="width: 100%; padding: 8px; background: white; border: 1px solid #ddd; border-radius: 6px; cursor: pointer;">Change Photo</button>
                 <input type="file" id="hidden-avatar-input" accept="image/*" style="display: none;">
             </div>
 
