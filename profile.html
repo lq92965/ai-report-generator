@@ -4,87 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile - Reportify AI</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=3.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* 强制覆盖：让导航栏变宽，不再居中 */
-        .navbar-full-width {
-            width: 100%;
-            background: #fff;
-            border-bottom: 1px solid #e1e4e8;
-            padding: 15px 40px;
-            box-sizing: border-box; 
-            display: flex;
-            justify-content: space-between; /* 关键：左Logo，右头像 */
-            align-items: center;
-        }
-    </style>
 </head>
-<body style="background-color: #f4f6f8; font-family: 'Inter', sans-serif; margin: 0;">
+<body style="align-items: stretch !important; display: block !important;">
 
-    <nav class="navbar-full-width">
-        <div class="logo">
-               <a href="index.html" class="logo">
+    <header class="main-header account-header">
+        <div class="container">
+            <a href="index.html" class="logo">
                 <span class="logo-icon">🐦</span>
                 <span>Reportify AI</span>
             </a>
-        
-        <div class="header-actions"></div>
-    </nav>
-
-    <div class="container" style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
-        
-        <div style="margin-bottom: 25px;">
-            <a href="account.html" style="text-decoration: none; color: #555; display: inline-flex; align-items: center; gap: 8px; font-weight: 500;">
-                <i class="fas fa-arrow-left"></i> Back to Account
-            </a>
-        </div>
-
-        <div style="display: flex; align-items: flex-start;">
-            <div style="flex: 1;">
-                <h1 style="font-size: 2.5rem; color: #1a1a1a; margin-bottom: 10px;">My Profile</h1>
-                <p style="color: #666; font-size: 1.1rem;">Manage your personal settings.</p>
-            </div>
-        </div>
-
-        <div class="profile-card" style="background: #fff; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-top: 30px; overflow: hidden; display: flex;">
-            
-            <div style="width: 280px; background: #fafbfc; border-right: 1px solid #eee; padding: 40px 30px; text-align: center;">
-                <div class="profile-avatar" style="margin-bottom: 20px;">
-                    <img src="https://via.placeholder.com/150" alt="Avatar" style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="index.html#pricing">Pricing</a></li>
+                    <li><a href="index.html#generator">Generator</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
                 </div>
-                <button class="btn btn-outline upload-btn" style="width: 100%; padding: 8px; background: white; border: 1px solid #ddd; border-radius: 6px; cursor: pointer;">Change Photo</button>
-                <input type="file" id="hidden-avatar-input" accept="image/*" style="display: none;">
+        </div>
+    </header>
+
+    <section class="generator-section account-hub">
+        <div class="container">
+            
+            <div style="margin-bottom: 20px;">
+                <a href="account.html" style="text-decoration: none; color: #333; display: inline-flex; align-items: center; gap: 8px; font-weight: 500;">
+                    <i class="fas fa-arrow-left"></i> Back to Account Hub
+                </a>
             </div>
 
-            <div style="flex: 1; padding: 40px;">
-                <form id="profile-form" onsubmit="return false;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
-                        <div class="form-group">
-                            <label style="font-weight: 600; display: block; margin-bottom: 8px;">Display Name</label>
-                            <input type="text" id="profile-name" class="form-control" style="width: 100%; padding: 12px; border: 1px solid #dfe1e5; border-radius: 8px;">
+            <h2 class="section-title" style="text-align: left; margin-bottom: 10px;">My Profile</h2>
+            <p class="section-subtitle" style="text-align: left; margin-bottom: 40px;">Manage your personal information and account settings.</p>
+
+            <div class="profile-card" style="background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); padding: 40px; border: 1px solid #eee;">
+                
+                <div style="display: flex; gap: 40px; align-items: flex-start;">
+                    
+                    <div style="width: 200px; text-align: center; flex-shrink: 0;">
+                        <div class="profile-avatar" style="margin-bottom: 15px;">
+                            <img src="https://via.placeholder.com/150" alt="Avatar" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #f8f9fa;">
                         </div>
-                        <div class="form-group">
-                            <label style="font-weight: 600; display: block; margin-bottom: 8px;">Job Title</label>
-                            <input type="text" id="profile-job" class="form-control" style="width: 100%; padding: 12px; border: 1px solid #dfe1e5; border-radius: 8px;">
-                        </div>
+                        <button class="btn btn-secondary upload-btn" style="width: 100%; font-size: 0.9rem; padding: 8px;">Change Photo</button>
+                        <input type="file" id="hidden-avatar-input" accept="image/*" style="display: none;">
                     </div>
-                    <div class="form-group" style="margin-bottom: 20px;">
-                        <label style="font-weight: 600; display: block; margin-bottom: 8px;">Bio</label>
-                        <textarea id="profile-bio" rows="4" class="form-control" style="width: 100%; padding: 12px; border: 1px solid #dfe1e5; border-radius: 8px;"></textarea>
+
+                    <div style="flex: 1;">
+                        <form id="profile-form" onsubmit="return false;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                                <div class="form-group" style="text-align: left;">
+                                    <label style="font-weight: 600; display: block; margin-bottom: 8px; color: #333;">Display Name</label>
+                                    <input type="text" id="profile-name" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem;">
+                                </div>
+                                <div class="form-group" style="text-align: left;">
+                                    <label style="font-weight: 600; display: block; margin-bottom: 8px; color: #333;">Job Title</label>
+                                    <input type="text" id="profile-job" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem;">
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 20px; text-align: left;">
+                                <label style="font-weight: 600; display: block; margin-bottom: 8px; color: #333;">Bio</label>
+                                <textarea id="profile-bio" rows="4" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; font-family: inherit;"></textarea>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 30px; text-align: left;">
+                                <label style="font-weight: 600; display: block; margin-bottom: 8px; color: #333;">Account Email</label>
+                                <input type="email" id="profile-email" readonly style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; background: #f9f9f9; color: #666; cursor: not-allowed;">
+                            </div>
+
+                            <div style="text-align: right;">
+                                <button class="btn btn-primary save-btn" style="padding: 12px 30px; font-size: 1rem;">Save Changes</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-group" style="margin-bottom: 30px;">
-                        <label style="font-weight: 600; display: block; margin-bottom: 8px;">Account Email</label>
-                        <input type="email" id="profile-email" readonly style="width: 100%; padding: 12px; border: 1px solid #dfe1e5; border-radius: 8px; background: #f4f6f8; color: #666;">
-                    </div>
-                    <div style="text-align: right;">
-                        <button class="btn btn-primary save-btn" style="padding: 12px 40px; font-weight: 600; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer;">Save Changes</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-    <script src="nav.js"></script>
-    <script src="profile.js"></script>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Reportify AI. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="nav.js?v=3.0"></script>
+    <script src="profile.js?v=3.0"></script>
 </body>
 </html>
