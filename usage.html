@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usage & Limits - Reportify AI</title>
+    <link rel="stylesheet" href="style.css?v=3.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 进度条样式 */
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 20px;
+            margin: 20px 0;
+            height: 25px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #007bff, #00c6ff);
+            width: 0%; /* JS 会动态改变这个宽度 */
+            transition: width 0.5s ease;
+            text-align: center;
+            line-height: 25px;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        .usage-card-inner {
+            background: #f8f9fa;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+        }
+        .big-number { font-size: 3rem; font-weight: 800; color: #333; }
+        .limit-text { color: #666; font-size: 1.2rem; }
+    </style>
+</head>
+<body style="align-items: stretch !important; display: block !important;">
+
+    <header class="main-header account-header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🐦</span>
+                <span>Reportify AI</span>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="index.html#pricing">Pricing</a></li>
+                    <li><a href="index.html#generator">Generator</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions"></div>
+        </div>
+    </header>
+
+    <section class="generator-section account-hub">
+        <div class="container">
+            
+            <div style="margin-bottom: 20px;">
+                <a href="account.html" style="text-decoration: none; color: #333; display: inline-flex; align-items: center; gap: 8px; font-weight: 500;">
+                    <i class="fas fa-arrow-left"></i> Back to Account Hub
+                </a>
+            </div>
+
+            <h2 class="section-title" style="text-align: left;">Usage & Limits</h2>
+            <p class="section-subtitle" style="text-align: left; margin-bottom: 40px;">Track your monthly report generation quota.</p>
+
+            <div class="profile-card" style="background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); padding: 40px; border: 1px solid #eee;">
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                    
+                    <div>
+                        <h3 style="margin-bottom: 20px;">Current Plan</h3>
+                        <div class="usage-card-inner">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #007bff; margin-bottom: 10px;" id="plan-name">Loading...</div>
+                            <p style="color: #666; font-size: 0.9rem;">
+                                Your quota resets on: <strong id="reset-date">...</strong>
+                            </p>
+                            <a href="subscription.html" class="btn btn-outline" style="margin-top: 20px; display: inline-block; font-size: 0.9rem;">Upgrade Plan</a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="margin-bottom: 20px;">Reports Generated</h3>
+                        
+                        <div id="usage-text-container">
+                            <span class="big-number" id="used-count">0</span>
+                            <span class="limit-text" id="limit-display"> / 0</span>
+                        </div>
+
+                        <div class="progress-container">
+                            <div class="progress-bar" id="usage-progress">0%</div>
+                        </div>
+
+                        <p style="color: #888; font-size: 0.85rem; margin-top: 10px;">
+                            * Includes all drafted and finalized reports.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container"><p>&copy; 2025 Reportify AI. All Rights Reserved.</p></div>
+    </footer>
+
+    <script src="nav.js?v=3.0"></script>
+    <script>
+        // 简单的脚本：加载用量数据
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('token');
+            if(!token) return;
+
+            try {
+                // 调用后端新写的 /api/usage 接口
+                const res = await fetch('https://api.goreportify.com/api/usage', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+
+                // 1. 填充计划信息
+                document.getElementById('plan-name').textContent = data.planName;
+                document.getElementById('reset-date').textContent = data.resetDate;
+
+                // 2. 填充数字
+                document.getElementById('used-count').textContent = data.used;
+
+                // 3. 处理无限量 (Pro) vs 有限量
+                const limitDisplay = document.getElementById('limit-display');
+                const progressBar = document.getElementById('usage-progress');
+
+                if (data.limit === -1) {
+                    // 无限模式
+                    limitDisplay.textContent = " / Unlimited";
+                    progressBar.style.width = "100%";
+                    progressBar.style.background = "linear-gradient(90deg, #28a745, #85e085)"; // 绿色代表无限
+                    progressBar.textContent = "∞ Unlimited Power";
+                } else {
+                    // 有限模式 (Basic/Free)
+                    limitDisplay.textContent = ` / ${data.limit}`;
+                    
+                    // 计算百分比
+                    let percentage = (data.used / data.limit) * 100;
+                    if (percentage > 100) percentage = 100; // 防止溢出
+
+                    progressBar.style.width = `${percentage}%`;
+                    progressBar.textContent = `${Math.round(percentage)}%`;
+
+                    // 颜色警告：如果用了超过 80%，变红
+                    if (percentage > 80) {
+                        progressBar.style.background = "linear-gradient(90deg, #ff9966, #ff5e62)";
+                    }
+                }
+
+            } catch(e) {
+                console.error(e);
+                document.getElementById('plan-name').textContent = "Error loading data";
+            }
+        });
+    </script>
+</body>
+</html>
