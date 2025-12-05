@@ -67,7 +67,6 @@ window.updateUserNav = async (user = null) => {
         dropdown.className = 'nav-user-dropdown';
         dropdown.innerHTML = `
             <a href="account.html">My Account</a>
-            <a href="templates.html">My Templates</a>
             <a href="profile.html">Settings</a>
             <hr>
             <button id="dynamic-logout-btn">Logout</button>
