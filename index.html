@@ -131,27 +131,33 @@
                         </div>
                         <div class="input-wrapper">
                              <label for="role">Your Role</label>
-                            <select id="role" name="role">
-                                <option value="通用角色 (General Role)">通用角色 (General Role)</option>
-                                <optgroup label="Management">
-                                    <option value="团队主管 (Team Lead)">团队主管 (Team Lead)</option>
-                                    <option value="项目经理 (Project Manager)">项目经理 (Project Manager)</option>
-                                    <option value="部门总监 (Department Director)">部门总监 (Department Director)</option>
-                                </optgroup>
-                                <optgroup label="Marketing & Sales">
-                                    <option value="市场专员 (Marketing Specialist)">市场专员 (Marketing Specialist)</option>
-                                    <option value="销售代表 (Sales Representative)">销售代表 (Sales Representative)</option>
-                                </optgroup>
-                                <optgroup label="Tech & Product">
-                                    <option value="软件工程师 (Software Engineer)">软件工程师 (Software Engineer)</option>
-                                    <option value="产品经理 (Product Manager)">产品经理 (Product Manager)</option>
-                                </optgroup>
-                                <optgroup label="Operations & Function">
-                                    <option value="运营专员 (Operations Specialist)">运营专员 (Operations Specialist)</option>
-                                    <option value="财务 (Finance)">财务 (Finance)</option>
-                                    <option value="人事 (HR)">人事 (HR)</option>
-                                </optgroup>
-                            </select>
+                            <select id="role" name="role" required>
+                              <option value="" disabled selected>Select your Role...</option>
+                        
+                              <option value="General Role">General Role (Business Consultant)</option>
+                        
+                              <optgroup label="Management">
+                                  <option value="Team Lead">Team Lead</option>
+                                  <option value="Project Manager">Project Manager</option>
+                                  <option value="Department Director">Department Director</option>
+                              </optgroup>
+                        
+                              <optgroup label="Marketing & Sales">
+                                  <option value="Marketing Specialist">Marketing Specialist</option>
+                                  <option value="Sales Representative">Sales Representative</option>
+                              </optgroup>
+                        
+                              <optgroup label="Tech & Product">
+                                  <option value="Software Engineer">Software Engineer</option>
+                                  <option value="Product Manager">Product Manager</option>
+                              </optgroup>
+                        
+                              <optgroup label="Operations & Function">
+                                  <option value="Operations Specialist">Operations Specialist</option>
+                                  <option value="Finance">Finance</option>
+                                  <option value="HR">HR</option>
+                              </optgroup>
+                        </select>
                         </div>
                          <div class="input-wrapper">
                             <label for="tone">Tone / Style</label>
