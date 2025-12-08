@@ -356,32 +356,65 @@ async function loadTemplates() {
                 resultBox.style.color = '#333';
             }
             
+            // --- 🟢 新的生成逻辑 (开始) ---
             try {
-                const response = await fetch(`${API_BASE_URL}/api/generate`, {
+                // 确保 API 地址正确 (根据您之前的代码，这里用变量或者直接写死)
+                const API_URL = 'https://api.goreportify.com'; 
+
+                // 获取 DOM 元素 (防错检查)
+                const promptEl = document.getElementById('key-points') || document.querySelector('textarea');
+                const roleEl = document.getElementById('role');
+                const toneEl = document.getElementById('tone');
+                const langEl = document.getElementById('language');
+                const typeEl = document.getElementById('report-type') || document.getElementById('template');
+
+                const res = await fetch(`${API_URL}/api/generate`, {
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
+                        'Authorization': `Bearer ${localStorage.getItem('token')}` 
                     },
-                    body: JSON.stringify(payload),
+                    body: JSON.stringify({
+                        userPrompt: promptEl ? promptEl.value : "No input",
+                        role: roleEl ? roleEl.value : "General",
+                        tone: toneEl ? toneEl.value : "Professional",
+                        language: langEl ? langEl.value : "English",
+                        templateId: typeEl ? typeEl.value : ""
+                    }),
                 });
+
+                const data = await res.json();
                 
-                if (!response.ok) {
-                    const err = await response.json();
-                    throw new Error(err.message || 'Generation failed');
+                // 🛑 拦截 403 (额度用完)
+                if (res.status === 403) {
+                    alert(`🚫 额度已用完 (Limit Reached):\n\n${data.error}\n\n请前往 "My Account" 升级您的计划。`);
+                    return;
                 }
-                const data = await response.json();
                 
-                // Markdown 解析
-                if(resultBox) {
-                    if (typeof marked !== 'undefined') {
-                        resultBox.innerHTML = marked.parse(data.generatedText);
-                    } else {
-                        resultBox.innerText = data.generatedText; 
-                    }
+                // 🛑 拦截 400 (字数超限)
+                if (res.status === 400) {
+                    alert(`⚠️ 输入内容过长 (Input Error):\n\n${data.error}`);
+                    return;
                 }
-            } catch (error) {
-                console.error('Generate API Error:', error);
+                
+                // 🛑 拦截 500 (服务器错误)
+                if (!res.ok) {
+                    throw new Error(data.error || 'Server Internal Error');
+                }
+
+                // ✅ 成功！显示结果
+                const resultBox = document.getElementById('generated-report') || document.getElementById('result');
+                if (resultBox) {
+                    // 如果是 textarea 用 value，如果是 div 用 innerText
+                    if (resultBox.tagName === 'TEXTAREA') resultBox.value = data.generatedText;
+                    else resultBox.innerText = data.generatedText;
+                }
+
+            } catch (err) {
+                console.error(err);
+                alert(`❌ 生成失败: ${err.message}`);
+            } 
+            // --- 🟢 新的生成逻辑 (结束) ---
                 if (resultBox) {
                     resultBox.innerText = `Error: ${error.message}`;
                     resultBox.style.color = 'red';
