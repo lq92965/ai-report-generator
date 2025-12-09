@@ -3,69 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subscription - Reportify AI</title>
-    <link rel="stylesheet" href="style.css?v=3.0">
-    <script src="https://www.paypal.com/sdk/js?client-id=AeJjXRJe0H2XbqAwcw8zNA3-3ms0im4_QhK8E9p9FwzivH6yjFqjs-yus4oyZUTnG8Rx8udHY_DXl2Rc"></script>
+    <title>Upgrade Plan - Reportify AI</title>
+    <link rel="stylesheet" href="style.css?v=4.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body style="background-color: #f8f9fa;">
+
     <header class="main-header account-header">
         <div class="container">
             <a href="index.html" class="logo">
-                <span class="logo-icon">🐦</span><span>Reportify AI</span>
+                <span class="logo-icon">🐦</span> <span>Reportify AI</span>
             </a>
-            <div class="header-actions"></div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html#generator">Generator</a></li>
+                    <li><a href="account.html">My Account</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
-    <section class="generator-section account-hub">
-        <div class="container">
-            <a href="account.html" class="btn-back" style="margin-bottom: 20px; display: inline-block; text-decoration: none; color: #333;">&larr; Back to Account</a>
+    <div class="container" style="max-width: 1200px; margin: 40px auto; text-align: center;">
+        
+        <h1 style="font-size: 2.5rem; color: #333; margin-bottom: 10px;">Choose Your Power</h1>
+        <p style="color: #666; font-size: 1.1rem; margin-bottom: 50px;">
+            Current Plan: <span id="current-plan-badge" style="font-weight:bold; color:#007bff">LOADING...</span>
+        </p>
+
+        <div class="pricing-grid">
             
-            <div style="text-align: center; margin-bottom: 40px;">
-                <h2 class="section-title">订阅与计费 (Subscription)</h2>
-                <p class="section-subtitle">Upgrade to unlock unlimited power.</p>
+            <div class="pricing-card">
+                <h3>Basic</h3>
+                <p style="color:#888; font-size:0.9rem;">For daily reporting tasks</p>
+                <div class="price">$9.90<span>/mo</span></div>
                 
-                <div style="display: inline-block; background: #f0f9ff; padding: 15px 30px; border-radius: 50px; border: 1px solid #b9e6fe; color: #006699; margin-top: 20px;">
-                    您当前的计划 (Current Plan): <span id="user-plan-badge" style="font-weight: bold;">LOADING...</span>
-                </div>
+                <ul class="features-list">
+                    <li><i class="fas fa-check-circle" style="color:#007bff"></i> <strong>45 Reports</strong> per month</li>
+                    <li><i class="fas fa-check-circle" style="color:#007bff"></i> <strong>Gemini 2.5 Pro</strong> Model</li>
+                    <li><i class="fas fa-check-circle" style="color:#007bff"></i> <strong>5,000 Characters</strong> Input</li>
+                    <li><i class="fas fa-check-circle" style="color:#007bff"></i> Word & PDF Export</li>
+                    <li><i class="fas fa-info-circle" style="color:#ccc"></i> Professional Tone Only</li>
+                </ul>
+                <button class="btn btn-secondary full-width choose-plan-btn" data-plan="basic" style="width:100%">Select Basic</button>
             </div>
 
-            <div class="pricing-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto;">
+            <div class="pricing-card featured">
+                <div class="recommended-badge">Most Popular</div>
+                <h3>Professional</h3>
+                <p style="color:#888; font-size:0.9rem;">For power users & deep analysis</p>
+                <div class="price">$19.90<span>/mo</span></div>
                 
-                <div class="pricing-card" style="border: 2px solid #e0e0e0; border-radius: 16px; padding: 40px; background: #fff;">
-                    <h3 style="font-size: 1.5rem; margin-bottom: 10px;">Basic</h3>
-                    <div class="price" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 20px; color: #333;">$9.90 <span style="font-size: 1rem; font-weight: 400; color: #666;">/ mo</span></div>
-                    
-                    <ul class="features-list" style="list-style: none; padding: 0; margin-bottom: 30px; text-align: left; line-height: 2;">
-                        <li><i class="fas fa-check" style="color: #28a745;"></i> <strong>45 Reports</strong> / month</li>
-                        <li><i class="fas fa-check" style="color: #28a745;"></i> <strong>Smart AI</strong> (Gemini 2.5 Pro)</li>
-                        <li><i class="fas fa-check" style="color: #28a745;"></i> Input limit: <strong>5,000 chars</strong></li>
-                        <li><i class="fas fa-check" style="color: #28a745;"></i> Professional Tone only</li>
-                        <li><i class="fas fa-check" style="color: #28a745;"></i> PDF & Word Export</li>
-                    </ul>
-                    <button class="btn btn-secondary full-width choose-plan-btn" data-plan="basic" style="width: 100%; padding: 12px; border-radius: 8px;">Select Basic</button>
-                </div>
-
-                <div class="pricing-card featured" style="border: 2px solid #007bff; border-radius: 16px; padding: 40px; background: #fff; position: relative; box-shadow: 0 10px 30px rgba(0,123,255,0.15);">
-                    <div style="position: absolute; top: 0; right: 0; background: #007bff; color: white; padding: 5px 15px; border-radius: 0 14px 0 14px; font-size: 0.8rem; font-weight: 600;">BEST VALUE</div>
-                    
-                    <h3 style="font-size: 1.5rem; margin-bottom: 10px; color: #007bff;">Professional</h3>
-                    <div class="price" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 20px; color: #333;">$19.90 <span style="font-size: 1rem; font-weight: 400; color: #666;">/ mo</span></div>
-                    
-                    <ul class="features-list" style="list-style: none; padding: 0; margin-bottom: 30px; text-align: left; line-height: 2;">
-                        <li><i class="fas fa-bolt" style="color: #007bff;"></i> <strong>Unlimited</strong> Generation</li>
-                        <li><i class="fas fa-brain" style="color: #007bff;"></i> <strong>Smart AI</strong> (Gemini 2.5 Pro)</li>
-                        <li><i class="fas fa-file-alt" style="color: #007bff;"></i> Long Input: <strong>100,000 chars</strong></li>
-                        <li><i class="fas fa-star" style="color: #007bff;"></i> <strong>All Tones</strong> (Humorous, etc.)</li>
-                        <li><i class="fas fa-crown" style="color: #007bff;"></i> Priority Support</li>
-                    </ul>
-                    <button class="btn btn-primary full-width choose-plan-btn" data-plan="pro" style="width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 8px;">Select Professional</button>
-                </div>
+                <ul class="features-list">
+                    <li><i class="fas fa-check-circle" style="color:#28a745"></i> <strong>Unlimited</strong> Generation</li>
+                    <li><i class="fas fa-check-circle" style="color:#28a745"></i> <strong>Gemini 2.5 Pro</strong> Model</li>
+                    <li><i class="fas fa-check-circle" style="color:#28a745"></i> <strong>100,000 Characters</strong> Input</li>
+                    <li><i class="fas fa-check-circle" style="color:#28a745"></i> <strong>All Tones</strong> Unlocked</li>
+                    <li><i class="fas fa-check-circle" style="color:#28a745"></i> Priority Support</li>
+                </ul>
+                <button class="btn btn-primary full-width choose-plan-btn" data-plan="pro" style="width:100%">Upgrade to Pro</button>
             </div>
+
         </div>
-    </section>
+        
+        <div style="margin-top: 40px; color: #999; font-size: 0.9rem;">
+            <p>Secure payment via PayPal. Cancel anytime.</p>
+        </div>
+    </div>
 
-    <script src="nav.js?v=3.0"></script>
-    <script src="subscription.js?v=3.0" defer></script>
+    <script src="nav.js"></script>
+    <script>
+        // 简单的 Plan 检查
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('token');
+            if(!token) return;
+            try {
+                const res = await fetch('https://api.goreportify.com/api/me', { headers: { 'Authorization': `Bearer ${token}` }});
+                const user = await res.json();
+                const plan = user.plan || 'free';
+                document.getElementById('current-plan-badge').textContent = plan.toUpperCase();
+                
+                document.querySelectorAll('.choose-plan-btn').forEach(btn => {
+                    if (btn.dataset.plan === plan) {
+                        btn.textContent = 'Current Plan';
+                        btn.disabled = true;
+                        btn.style.opacity = '0.5';
+                    } else {
+                        btn.onclick = () => alert('Redirecting to PayPal...'); // 暂时占位
+                    }
+                });
+            } catch(e) {}
+        });
+    </script>
 </body>
 </html>
