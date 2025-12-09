@@ -7,6 +7,31 @@
  * * 3. 完整的登录/注册/导出/UI交互逻辑
  * ===================================================================
 */
+// --- 全局消息提示工具 (替代 alert) ---
+window.showToast = function(message, type = 'info') {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    let icon = 'fa-info-circle';
+    if (type === 'success') icon = 'fa-check-circle';
+    if (type === 'error') icon = 'fa-exclamation-circle';
+
+    toast.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
+    container.appendChild(toast);
+
+    // 3秒后自动消失
+    setTimeout(() => {
+        toast.style.animation = 'fadeOut 0.5s ease forwards';
+        setTimeout(() => toast.remove(), 500);
+    }, 3000);
+};
 document.addEventListener('DOMContentLoaded', () => {
     // --- 密码强度实时校验 ---
     const passInput = document.getElementById('signup-password');
@@ -297,65 +322,50 @@ async function loadTemplates() {
     }
 
 
-   // --- 🟢 修复后的生成报告逻辑 (v6.1 微创版) ---
+  // --- 🟢 [修改] 生成报告核心逻辑 (修复版 + Toast) ---
     if (generateBtn) {
-        generateBtn.addEventListener('click', async () => {
+        // 使用 cloneNode 移除旧监听器，防止冲突
+        const newGenerateBtn = generateBtn.cloneNode(true);
+        generateBtn.parentNode.replaceChild(newGenerateBtn, generateBtn);
+
+        newGenerateBtn.addEventListener('click', async () => {
             const token = localStorage.getItem('token'); 
             if (!token) {
-                alert('Please log in first.'); 
-                openModal('login'); 
+                showToast('Please log in first.', 'error'); 
+                if (typeof openModal === 'function') openModal('login'); 
                 return;
             }
 
-            // 1. 准备基础数据
-            const promptEl = document.getElementById('key-points') || document.getElementById('prompt');
-            const roleEl = document.getElementById('role');
-            const toneEl = document.getElementById('tone');
-            const langEl = document.getElementById('language');
-            const detailEl = document.getElementById('detail-level');
-            const typeEl = document.getElementById('report-type') || document.getElementById('template');
-            
-            // 2. 收集动态输入框的数据 (Dynamic Inputs)
-            // (这是您原版代码里很重要的功能，必须保留)
+            // 收集数据
             const inputs = {};
             const dynamicEls = document.querySelectorAll('.dynamic-input');
-            let hasDynamicData = false;
-            dynamicEls.forEach(el => {
-                if (el.dataset.key) {
-                    inputs[el.dataset.key] = el.value;
-                    if (el.value.trim()) hasDynamicData = true;
-                }
-            });
+            dynamicEls.forEach(el => { if(el.dataset.key) inputs[el.dataset.key] = el.value; });
 
-            // 3. 简单校验
-            const mainPrompt = promptEl ? promptEl.value.trim() : "";
-            // 如果既没有动态数据，也没有主输入框数据，才报错
-            if (!hasDynamicData && !mainPrompt) {
-                alert('Please enter some content for the report.');
+            const mainPrompt = promptTextarea ? promptTextarea.value.trim() : "";
+            if (dynamicEls.length === 0 && !mainPrompt) {
+                showToast('Please enter some content.', 'error');
                 return;
             }
 
-            // 4. UI 进入加载状态
-            const originalText = generateBtn.textContent;
-            generateBtn.disabled = true;
-            generateBtn.textContent = 'Generating...';
-            
+            // UI 加载状态
+            const originalText = newGenerateBtn.textContent;
+            newGenerateBtn.disabled = true;
+            newGenerateBtn.textContent = 'Generating...';
             if (resultBox) {
                 if (resultBox.tagName === 'TEXTAREA') resultBox.value = "AI is thinking... (This may take a few seconds)";
                 else resultBox.innerText = "AI is thinking... (This may take a few seconds)";
             }
 
             try {
-                // 5. 构建发送给后端的数据 (Payload)
-                // 注意：这里使用了 userPrompt 来匹配后端的 v16 版本
+                // 构建 Payload (注意: userPrompt 对应后端 v16)
                 const payload = {
                     userPrompt: mainPrompt, 
-                    role: roleEl ? roleEl.value : "General",
-                    tone: toneEl ? toneEl.value : "Professional",
-                    language: langEl ? langEl.value : "English",
-                    detailLevel: detailEl ? detailEl.value : "Standard",
-                    templateId: typeEl ? typeEl.value : "",
-                    inputs: inputs // 把动态收集的字段也发过去
+                    role: roleSelect ? roleSelect.value : "General",
+                    tone: toneSelect ? toneSelect.value : "Professional",
+                    language: languageSelect ? languageSelect.value : "English",
+                    detailLevel: detailLevelSelect ? detailLevelSelect.value : "Standard",
+                    templateId: templateSelect ? templateSelect.value : "",
+                    inputs: inputs
                 };
 
                 const API_URL = 'https://api.goreportify.com'; 
@@ -370,42 +380,38 @@ async function loadTemplates() {
 
                 const data = await res.json();
 
-                // 6. 错误拦截 (商业逻辑)
+                // 错误拦截 (使用 Toast 替代 alert)
                 if (res.status === 403) {
-                    alert(`🚫 额度已用完 (Limit Reached):\n\n${data.error}\n\n请前往 "My Account" 升级您的计划。`);
+                    showToast(`🚫 Limit Reached: ${data.error}`, 'error');
                     if(resultBox) resultBox.value = "Generation failed: Quota exceeded.";
                     return;
                 }
                 if (res.status === 400) {
-                    alert(`⚠️ 输入错误 (Input Error):\n\n${data.error}`);
+                    showToast(`⚠️ Input Error: ${data.error}`, 'error');
                     if(resultBox) resultBox.value = "Generation failed: Input error.";
                     return;
                 }
-                if (!res.ok) {
-                    throw new Error(data.error || 'Server Internal Error');
-                }
+                if (!res.ok) throw new Error(data.error || 'Server Internal Error');
 
-                // 7. 成功！显示结果
+                // 成功
                 if (resultBox) {
-                    // 兼容 textarea 和 div
                     if (resultBox.tagName === 'TEXTAREA') {
                         resultBox.value = data.generatedText;
-                        // 自动调整高度
                         resultBox.style.height = 'auto'; 
                         resultBox.style.height = resultBox.scrollHeight + 'px';
                     } else {
                         resultBox.innerText = data.generatedText;
                     }
                 }
+                showToast("Report Generated Successfully!", "success");
 
             } catch (err) {
                 console.error("Generate Error:", err);
-                alert(`❌ 生成失败: ${err.message}`);
-                if (resultBox) resultBox.value = "Error occurred. Please check console.";
+                showToast(`Generation Failed: ${err.message}`, 'error');
+                if(resultBox) resultBox.value = "Error occurred.";
             } finally {
-                // 8. 恢复按钮状态
-                generateBtn.disabled = false;
-                generateBtn.textContent = originalText;
+                newGenerateBtn.disabled = false;
+                newGenerateBtn.textContent = originalText;
             }
         });
     }
@@ -424,39 +430,59 @@ async function loadTemplates() {
         });
     }
 
+    // --- 🟢 [修改] 导出功能 (Word/PDF 增强版 + Toast) ---
     if (exportButtons && resultBox) {
         exportButtons.forEach(button => {
             button.addEventListener('click', () => {
-                const token = localStorage.getItem('token');
-                if (!token) { alert('Please log in first.'); openModal('login'); return; }
-                
-                const format = button.dataset.format;
-                const text = resultBox.innerText;
-                const filename = `report-${new Date().toISOString().split('T')[0]}`;
-                
-                if (!text || text.includes('The generated report will appear')) {
-                    alert('Please generate a report first.'); return;
+                const format = button.dataset.format || button.textContent.trim();
+                let text = resultBox.tagName === 'TEXTAREA' ? resultBox.value : resultBox.innerText;
+
+                if (!text || text.includes('AI is thinking') || text.length < 5) {
+                    showToast('Please generate a report first.', 'error');
+                    return;
                 }
 
-                if (format === 'PDF') {
-                    // 简单模拟 PDF 导出，实际需 jsPDF 库
-                    alert('PDF export starting...');
-                     if (typeof window.jspdf !== 'undefined') {
-                        const doc = new window.jspdf.jsPDF();
-                        const splitText = doc.splitTextToSize(text, 180);
-                        doc.text(splitText, 10, 10);
-                        doc.save(`${filename}.pdf`);
-                    } else {
-                        alert('PDF library not loaded.');
-                    }
-                } else if (format === 'Markdown') {
+                const filename = `Reportify_${new Date().toISOString().slice(0,10)}`;
+
+                // 1. Word 导出
+                if (format.includes('Word')) {
+                    if (typeof docx === 'undefined') { showToast("Word library loading...", "error"); return; }
+                    const lines = text.split('\n');
+                    const docChildren = [
+                        new docx.Paragraph({ 
+                            children: [new docx.TextRun({ text: "Generated Report", bold: true, size: 32 })],
+                            spacing: { after: 400 }
+                        })
+                    ];
+                    lines.forEach(line => {
+                        if(line.trim()) {
+                            docChildren.push(new docx.Paragraph({
+                                children: [new docx.TextRun({ text: line, size: 24 })],
+                                spacing: { after: 200 }
+                            }));
+                        }
+                    });
+                    const doc = new docx.Document({ sections: [{ children: docChildren }] });
+                    docx.Packer.toBlob(doc).then(blob => {
+                        downloadFile(blob, `${filename}.docx`);
+                        showToast("Word document downloaded!", "success");
+                    });
+                }
+                // 2. PDF 导出
+                else if (format.includes('PDF')) {
+                    if (typeof html2pdf === 'undefined') { showToast("PDF library loading...", "error"); return; }
+                    const element = document.createElement('div');
+                    element.style.padding = '20px';
+                    element.style.fontFamily = 'Arial';
+                    element.innerHTML = `<h2>Reportify AI Report</h2><hr><div style="white-space: pre-wrap;">${text}</div>`;
+                    html2pdf().from(element).save(`${filename}.pdf`);
+                    showToast("PDF downloaded!", "success");
+                } 
+                // 3. Markdown 导出
+                else {
                     const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
                     downloadFile(blob, `${filename}.md`);
-                } else if (format === 'Word') {
-                     if (typeof docx === 'undefined') { alert("Word library missing."); return; }
-                     const paragraphs = text.split('\n').map(p => new docx.Paragraph({ children: [new docx.TextRun(p)] }));
-                     const doc = new docx.Document({ sections: [{ children: paragraphs }] });
-                     docx.Packer.toBlob(doc).then(blob => { downloadFile(blob, `${filename}.docx`); });
+                    showToast("Markdown downloaded!", "success");
                 }
             });
         });
