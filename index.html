@@ -73,39 +73,41 @@
             <div class="container">
                 <h2 class="section-title">Choose Your Plan</h2>
                 <div class="pricing-grid">
-                    <div class="pricing-card" data-plan="free">
-                        <h3>Free</h3>
-                        <p class="price"><span>$0</span>/month</p>
-                        <ul class="plan-features">
-                            <li>7-day trial</li>
-                            <li>Up to 3 reports per day</li>
-                            <li>Word & Markdown export</li>
-                            <li>Standard speed</li>
-                        </ul>
-                        <a href="#generator" class="btn btn-secondary">Start Trial</a>
-                        </div>
-                    <div class="pricing-card" data-plan="basic">
-                        <h3>Basic</h3>
-                        <p class="price"><span>$9.90</span>/month</p>
-                        <ul class="plan-features">
-                            <li>Unlimited report generation</li>
-                            <li>Word, PDF & Markdown export</li>
-                            <li>Standard generation speed</li>
-                            <li>Email support</li>
-                        </ul>
-                        <a href="subscription.html" class="btn btn-secondary">Choose Basic</a>
-                    </div>
-                    <div class="pricing-card recommended selected-plan" data-plan="pro"> 
-                        <span class="badge">Recommended</span>
-                        <h3>Professional</h3>
-                        <p class="price"><span>$19.90</span>/month</p>
-                        <ul class="plan-features">
-                            <li>Priority generation speed</li>
-                            <li>Advanced industry templates</li>
-                            <li>Word, PDF & Markdown export</li>
-                            <li>Dedicated customer support</li>
-                        </ul>
-                        <a href="subscription.html" class="btn btn-primary">Choose Pro</a>
+                <div class="pricing-card">
+                    <h3>Free</h3>
+                    <div class="price">$0<span>/month</span></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> 7-day trial</li>
+                        <li><i class="fas fa-check"></i> <strong>3 reports</strong> per day</li>
+                        <li><i class="fas fa-check"></i> Word & Markdown export</li>
+                        <li><i class="fas fa-clock"></i> Limited Input (1k chars)</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline" onclick="openModal('signup')">Start Trial</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>Basic</h3>
+                    <div class="price">$9.90<span>/month</span></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> <strong>45 reports</strong> / month</li>
+                        <li><i class="fas fa-check"></i> Word, PDF & Markdown</li>
+                        <li><i class="fas fa-check"></i> Input limit: 5,000 chars</li>
+                        <li><i class="fas fa-check"></i> Smart AI (Gemini 2.5 Pro)</li>
+                    </ul>
+                    <a href="subscription.html" class="btn btn-secondary">Choose Basic</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="recommended-badge">Recommended</div>
+                    <h3>Professional</h3>
+                    <div class="price">$19.90<span>/month</span></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> <strong>Unlimited</strong> generation</li>
+                        <li><i class="fas fa-check"></i> <strong>Long Input</strong> (100k chars)</li>
+                        <li><i class="fas fa-check"></i> <strong>All Tones</strong> Unlocked</li>
+                        <li><i class="fas fa-check"></i> Priority Support</li>
+                    </ul>
+                    <a href="subscription.html" class="btn btn-primary">Choose Pro</a>
                 </div>
             </div>
         </section>
