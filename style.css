@@ -1566,3 +1566,155 @@ hr.section-divider {
 @keyframes fadeOut {
     to { transform: translateX(100%); opacity: 0; }
 }
+
+/* =========================================
+   UI 2.0 升级包 (粘贴到 style.css 最底部)
+   ========================================= */
+
+/* 1. 更加现代的价格卡片 */
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.pricing-card {
+    background: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 20px; /* 更圆润 */
+    padding: 40px 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02); /* 极其轻微的阴影 */
+}
+
+.pricing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08); /* 悬停时浮起 */
+    border-color: #007bff;
+}
+
+.pricing-card.featured {
+    border: 2px solid #007bff;
+    background: #fdfdfd;
+    box-shadow: 0 10px 30px rgba(0,123,255,0.1);
+}
+
+.pricing-card h3 {
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.pricing-card .price {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #111;
+    margin: 20px 0;
+    letter-spacing: -1px;
+}
+
+.pricing-card .price span {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin: 30px 0;
+    text-align: left;
+}
+
+.features-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #f5f5f5;
+    color: #555;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.features-list li:last-child {
+    border-bottom: none;
+}
+
+/* 2. 按钮美化 */
+.btn {
+    border-radius: 10px; /* 圆角按钮 */
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    padding: 14px 20px;
+    transition: all 0.2s;
+}
+.btn-primary {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    box-shadow: 0 4px 15px rgba(0,123,255,0.3);
+    border: none;
+}
+.btn-primary:hover {
+    box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+    transform: translateY(-1px);
+}
+
+/* 3. 推荐标签 (Best Value) */
+.recommended-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #007bff;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(0,123,255,0.2);
+    text-transform: uppercase;
+}
+
+/* 4. Toast 消息提示条 (像微信那样) */
+#toast-container {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    min-width: 300px;
+    background: white;
+    padding: 16px 24px;
+    border-radius: 50px; /* 胶囊形状 */
+    box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.95rem;
+    color: #333;
+    animation: slideDown 0.3s ease-out;
+}
+
+.toast.success { border-left: none; }
+.toast.success i { color: #28a745; font-size: 1.2rem; }
+
+.toast.error { border-left: none; }
+.toast.error i { color: #dc3545; font-size: 1.2rem; }
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
