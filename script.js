@@ -297,131 +297,115 @@ async function loadTemplates() {
     }
 
 
-    // --- 5. AI 生成逻辑 ---
+   // --- 🟢 修复后的生成报告逻辑 (v6.1 微创版) ---
     if (generateBtn) {
         generateBtn.addEventListener('click', async () => {
             const token = localStorage.getItem('token'); 
             if (!token) {
-                alert('Please log in.'); openModal('login'); return;
-            }
-
-            const selectedId = templateSelect ? templateSelect.value : null;
-            const template = allTemplates.find(t => t._id === selectedId);
-            
-            // Pro 拦截
-            if (template && template.isPro && currentUserPlan !== 'pro') {
-                alert('This template requires a PRO plan. Please upgrade.');
-                window.location.href = 'subscription.html';
+                alert('Please log in first.'); 
+                openModal('login'); 
                 return;
             }
 
-            // 收集动态输入
+            // 1. 准备基础数据
+            const promptEl = document.getElementById('key-points') || document.getElementById('prompt');
+            const roleEl = document.getElementById('role');
+            const toneEl = document.getElementById('tone');
+            const langEl = document.getElementById('language');
+            const detailEl = document.getElementById('detail-level');
+            const typeEl = document.getElementById('report-type') || document.getElementById('template');
+            
+            // 2. 收集动态输入框的数据 (Dynamic Inputs)
+            // (这是您原版代码里很重要的功能，必须保留)
             const inputs = {};
             const dynamicEls = document.querySelectorAll('.dynamic-input');
             let hasDynamicData = false;
-
             dynamicEls.forEach(el => {
-                inputs[el.dataset.key] = el.value;
-                if (el.value.trim()) hasDynamicData = true;
+                if (el.dataset.key) {
+                    inputs[el.dataset.key] = el.value;
+                    if (el.value.trim()) hasDynamicData = true;
+                }
             });
 
-            // 准备 Payload
-            const payload = {
-                detailLevel: detailLevelSelect ? detailLevelSelect.value : 'Standard',
-                role: roleSelect ? roleSelect.value : 'General',
-                tone: toneSelect ? toneSelect.value : 'Professional',
-                language: languageSelect ? languageSelect.value : 'English',
-            };
-
-            if (template) {
-                payload.templateId = template._id;
-                payload.inputs = inputs;
-                payload.prompt = promptTextarea ? promptTextarea.value : ''; 
-                
-                if (!hasDynamicData && (!promptTextarea || !promptTextarea.value)) {
-                    alert('Please fill in the fields.'); return;
-                }
-            } else {
-                payload.prompt = promptTextarea ? promptTextarea.value : '';
-                if (!payload.prompt) { alert('Please enter key points.'); return; }
+            // 3. 简单校验
+            const mainPrompt = promptEl ? promptEl.value.trim() : "";
+            // 如果既没有动态数据，也没有主输入框数据，才报错
+            if (!hasDynamicData && !mainPrompt) {
+                alert('Please enter some content for the report.');
+                return;
             }
 
-            // UI Loading
-            generateBtn.disabled = true;
+            // 4. UI 进入加载状态
             const originalText = generateBtn.textContent;
+            generateBtn.disabled = true;
             generateBtn.textContent = 'Generating...';
             
             if (resultBox) {
-                resultBox.innerHTML = '<div class="loader"></div>';
-                resultBox.style.color = '#333';
+                if (resultBox.tagName === 'TEXTAREA') resultBox.value = "AI is thinking... (This may take a few seconds)";
+                else resultBox.innerText = "AI is thinking... (This may take a few seconds)";
             }
-            
-            // --- 🟢 新的生成逻辑 (开始) ---
+
             try {
-                // 确保 API 地址正确 (根据您之前的代码，这里用变量或者直接写死)
+                // 5. 构建发送给后端的数据 (Payload)
+                // 注意：这里使用了 userPrompt 来匹配后端的 v16 版本
+                const payload = {
+                    userPrompt: mainPrompt, 
+                    role: roleEl ? roleEl.value : "General",
+                    tone: toneEl ? toneEl.value : "Professional",
+                    language: langEl ? langEl.value : "English",
+                    detailLevel: detailEl ? detailEl.value : "Standard",
+                    templateId: typeEl ? typeEl.value : "",
+                    inputs: inputs // 把动态收集的字段也发过去
+                };
+
                 const API_URL = 'https://api.goreportify.com'; 
-
-                // 获取 DOM 元素 (防错检查)
-                const promptEl = document.getElementById('key-points') || document.querySelector('textarea');
-                const roleEl = document.getElementById('role');
-                const toneEl = document.getElementById('tone');
-                const langEl = document.getElementById('language');
-                const typeEl = document.getElementById('report-type') || document.getElementById('template');
-
                 const res = await fetch(`${API_URL}/api/generate`, {
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('token')}` 
+                        'Authorization': `Bearer ${token}` 
                     },
-                    body: JSON.stringify({
-                        userPrompt: promptEl ? promptEl.value : "No input",
-                        role: roleEl ? roleEl.value : "General",
-                        tone: toneEl ? toneEl.value : "Professional",
-                        language: langEl ? langEl.value : "English",
-                        templateId: typeEl ? typeEl.value : ""
-                    }),
+                    body: JSON.stringify(payload),
                 });
 
                 const data = await res.json();
-                
-                // 🛑 拦截 403 (额度用完)
+
+                // 6. 错误拦截 (商业逻辑)
                 if (res.status === 403) {
                     alert(`🚫 额度已用完 (Limit Reached):\n\n${data.error}\n\n请前往 "My Account" 升级您的计划。`);
+                    if(resultBox) resultBox.value = "Generation failed: Quota exceeded.";
                     return;
                 }
-                
-                // 🛑 拦截 400 (字数超限)
                 if (res.status === 400) {
-                    alert(`⚠️ 输入内容过长 (Input Error):\n\n${data.error}`);
+                    alert(`⚠️ 输入错误 (Input Error):\n\n${data.error}`);
+                    if(resultBox) resultBox.value = "Generation failed: Input error.";
                     return;
                 }
-                
-                // 🛑 拦截 500 (服务器错误)
                 if (!res.ok) {
                     throw new Error(data.error || 'Server Internal Error');
                 }
 
-                // ✅ 成功！显示结果
-                const resultBox = document.getElementById('generated-report') || document.getElementById('result');
+                // 7. 成功！显示结果
                 if (resultBox) {
-                    // 如果是 textarea 用 value，如果是 div 用 innerText
-                    if (resultBox.tagName === 'TEXTAREA') resultBox.value = data.generatedText;
-                    else resultBox.innerText = data.generatedText;
+                    // 兼容 textarea 和 div
+                    if (resultBox.tagName === 'TEXTAREA') {
+                        resultBox.value = data.generatedText;
+                        // 自动调整高度
+                        resultBox.style.height = 'auto'; 
+                        resultBox.style.height = resultBox.scrollHeight + 'px';
+                    } else {
+                        resultBox.innerText = data.generatedText;
+                    }
                 }
 
             } catch (err) {
-                console.error(err);
+                console.error("Generate Error:", err);
                 alert(`❌ 生成失败: ${err.message}`);
-            } 
-            // --- 🟢 新的生成逻辑 (结束) ---
-                if (resultBox) {
-                    resultBox.innerText = `Error: ${error.message}`;
-                    resultBox.style.color = 'red';
-                }
+                if (resultBox) resultBox.value = "Error occurred. Please check console.";
             } finally {
-                generateBtn.textContent = originalText;
+                // 8. 恢复按钮状态
                 generateBtn.disabled = false;
+                generateBtn.textContent = originalText;
             }
         });
     }
