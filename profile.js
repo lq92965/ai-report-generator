@@ -89,7 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (res.ok) {
                 // 立即更新页面头像
                 if (avatarImg) avatarImg.src = data.avatarUrl;
-                alert('Avatar updated successfully!');
+                if(window.showToast) window.showToast('Avatar updated successfully!', 'success');
+                else alert('Avatar updated successfully!');
             } else {
                 alert('Upload failed: ' + (data.message || 'Unknown error'));
             }
@@ -125,7 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 
                 if (res.ok) {
-                    alert('Profile saved successfully!');
+                    if(window.showToast) window.showToast('Profile saved!', 'success');
+                    else alert('Profile saved successfully!');
                 } else {
                     alert('Failed to save profile.');
                 }
