@@ -1533,3 +1533,36 @@ hr.section-divider {
     width: 100%; padding: 10px; background: #fff; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; 
 }
 .btn-social:hover { background: #f5f5f5; }
+
+/* --- Toast Notification (高端消息提示) --- */
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+}
+.toast {
+    background: #fff;
+    color: #333;
+    padding: 15px 25px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: slideIn 0.3s ease forwards;
+    min-width: 250px;
+    border-left: 5px solid #007bff; /* 默认蓝色 */
+}
+.toast.success { border-left-color: #28a745; } /* 成功绿 */
+.toast.error { border-left-color: #dc3545; }   /* 失败红 */
+.toast i { font-size: 1.2rem; }
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeOut {
+    to { transform: translateX(100%); opacity: 0; }
+}
