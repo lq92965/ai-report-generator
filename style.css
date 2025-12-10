@@ -1568,55 +1568,46 @@ hr.section-divider {
 }
 
 /* =========================================
-   UI 2.0 升级包 (粘贴到 style.css 最底部)
+   UI 2.0 终极修复版 (v6.0 - 粘贴到 style.css 最底部)
+   包含：Flex对齐修复、蓝框修复、遮挡修复、Toast样式
    ========================================= */
 
-/* 1. 更加现代的价格卡片 */
+/* 1. 价格网格 (一行三列，宽度优化) */
 .pricing-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    /* 300px 宽度让卡片更宽敞，一行三列 */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    align-items: stretch; /* 强制所有卡片高度一致 */
 }
 
+/* 2. 价格卡片 (核心样式) */
 .pricing-card {
     background: #ffffff;
-    border: 1px solid #eaeaea;
+    border: 2px solid #eaeaea; /* 默认浅灰边框 */
     border-radius: 20px;
     padding: 40px 30px;
     text-align: center;
     transition: all 0.3s ease;
     position: relative;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
     
-    /* 🔴 核心修复：Flex 布局 */
+    /* 🔴 核心修复 A：Flex 布局实现按钮底部对齐 */
     display: flex;
     flex-direction: column; 
-    height: 100%; /* 占满单元格高度 */
+    height: 100%; 
+    
+    /* 🔴 核心修复 B：防止 Pro 标签被遮挡 */
+    overflow: visible !important; 
+    z-index: 1;
 }
 
-/* 🔴 核心修复：把按钮强制推到底部 */
-.pricing-card button, 
-.pricing-card a.btn {
-    margin-top: auto; 
-}
-
-.pricing-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08); /* 悬停时浮起 */
-    border-color: #007bff;
-}
-
-.pricing-card.featured {
-    /* border: 2px solid #007bff;  <-- 删除这行，不要写死边框 */
-    background: #fdfdfd;
-    /* box-shadow: ... <-- 删除这行，由激活状态控制 */
-}
-
+/* 卡片内部元素 */
 .pricing-card h3 {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     color: #333;
     margin-bottom: 10px;
     font-weight: 700;
@@ -1636,64 +1627,77 @@ hr.section-divider {
     font-weight: 500;
 }
 
+/* 功能列表 */
 .features-list {
     list-style: none;
     padding: 0;
     margin: 30px 0;
     text-align: left;
+    /* 让列表占据剩余空间，把按钮推到底部 */
+    flex-grow: 1; 
 }
 
 .features-list li {
-    padding: 10px 0;
+    padding: 12px 0;
     border-bottom: 1px solid #f5f5f5;
     color: #555;
     font-size: 0.95rem;
     display: flex;
     align-items: center;
     gap: 10px;
+    line-height: 1.4;
 }
 
 .features-list li:last-child {
     border-bottom: none;
 }
 
-/* 2. 按钮美化 */
-.btn {
-    border-radius: 10px; /* 圆角按钮 */
+/* 🔴 核心修复 C：按钮强制底部对齐 */
+.pricing-card button, 
+.pricing-card a.btn {
+    margin-top: auto; 
+    width: 100%;
+    display: block;
+    border-radius: 10px;
+    padding: 14px 0;
     font-weight: 600;
-    letter-spacing: 0.5px;
     text-transform: uppercase;
     font-size: 0.9rem;
-    padding: 14px 20px;
-    transition: all 0.2s;
-}
-.btn-primary {
-    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-    box-shadow: 0 4px 15px rgba(0,123,255,0.3);
-    border: none;
-}
-.btn-primary:hover {
-    box-shadow: 0 6px 20px rgba(0,123,255,0.4);
-    transform: translateY(-1px);
+    letter-spacing: 0.5px;
 }
 
-/* 3. 推荐标签 (Best Value) */
+/* 3. 交互状态 (蓝框逻辑) */
+.pricing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+}
+
+/* 激活状态：唯一的蓝框真理 */
+.pricing-card.plan-active {
+    border: 2px solid #007bff !important;
+    background-color: #fff;
+    box-shadow: 0 10px 40px rgba(0,123,255,0.15) !important;
+    transform: translateY(-5px);
+    z-index: 2; /* 保证浮在最上面，不被遮挡 */
+}
+
+/* 4. 推荐标签 (Best Value) - 位置优化 */
 .recommended-badge {
     position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: -15px;   /* 向上提，骑在边框上 */
+    right: 20px;  /* 放在右上角 */
     background: #007bff;
     color: white;
-    padding: 5px 15px;
+    padding: 6px 16px;
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: 700;
-    box-shadow: 0 4px 10px rgba(0,123,255,0.2);
+    box-shadow: 0 4px 10px rgba(0,123,255,0.3);
     text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* 4. Toast 消息提示条 (像微信那样) */
+/* 5. Toast 消息提示条样式 */
 #toast-container {
     position: fixed;
     top: 30px;
@@ -1709,7 +1713,7 @@ hr.section-divider {
     min-width: 300px;
     background: white;
     padding: 16px 24px;
-    border-radius: 50px; /* 胶囊形状 */
+    border-radius: 50px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.12);
     display: flex;
     align-items: center;
@@ -1719,20 +1723,10 @@ hr.section-divider {
     animation: slideDown 0.3s ease-out;
 }
 
-.toast.success { border-left: none; }
 .toast.success i { color: #28a745; font-size: 1.2rem; }
-
-.toast.error { border-left: none; }
 .toast.error i { color: #dc3545; font-size: 1.2rem; }
 
 @keyframes slideDown {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
-}
-
-/* 🔴 新增：选中状态 (唯一的蓝框真理) */
-.pricing-card.plan-active {
-    border: 2px solid #007bff !important;
-    box-shadow: 0 10px 30px rgba(0,123,255,0.15) !important;
-    transform: translateY(-5px);
 }
