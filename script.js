@@ -501,12 +501,20 @@ async function loadTemplates() {
         });
     }
 
+    // --- [修改] 交互：价格卡片点击选中效果 ---
+    // 目的：实现点击任意卡片变蓝框，且互斥（点A，B就不蓝了）
+    const pricingCards = document.querySelectorAll('.pricing-card'); // 重新获取，防止变量名冲突
     if (pricingCards) {
         pricingCards.forEach(card => {
             card.addEventListener('click', (e) => {
+                // 如果点的是按钮，不触发卡片选中（避免冲突）
                 if (e.target.closest('button') || e.target.closest('a')) return;
-                pricingCards.forEach(c => c.classList.remove('selected-plan'));
-                card.classList.add('selected-plan');
+                
+                // 1. 移除所有卡片的激活状态 (plan-active)
+                pricingCards.forEach(c => c.classList.remove('plan-active'));
+                
+                // 2. 给当前点击的卡片加上激活状态
+                card.classList.add('plan-active');
             });
         });
     }
