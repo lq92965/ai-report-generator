@@ -1584,12 +1584,23 @@ hr.section-divider {
 .pricing-card {
     background: #ffffff;
     border: 1px solid #eaeaea;
-    border-radius: 20px; /* 更圆润 */
+    border-radius: 20px;
     padding: 40px 30px;
     text-align: center;
     transition: all 0.3s ease;
     position: relative;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02); /* 极其轻微的阴影 */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    
+    /* 🔴 核心修复：Flex 布局 */
+    display: flex;
+    flex-direction: column; 
+    height: 100%; /* 占满单元格高度 */
+}
+
+/* 🔴 核心修复：把按钮强制推到底部 */
+.pricing-card button, 
+.pricing-card a.btn {
+    margin-top: auto; 
 }
 
 .pricing-card:hover {
@@ -1599,9 +1610,9 @@ hr.section-divider {
 }
 
 .pricing-card.featured {
-    border: 2px solid #007bff;
+    /* border: 2px solid #007bff;  <-- 删除这行，不要写死边框 */
     background: #fdfdfd;
-    box-shadow: 0 10px 30px rgba(0,123,255,0.1);
+    /* box-shadow: ... <-- 删除这行，由激活状态控制 */
 }
 
 .pricing-card h3 {
@@ -1717,4 +1728,11 @@ hr.section-divider {
 @keyframes slideDown {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* 🔴 新增：选中状态 (唯一的蓝框真理) */
+.pricing-card.plan-active {
+    border: 2px solid #007bff !important;
+    box-shadow: 0 10px 30px rgba(0,123,255,0.15) !important;
+    transform: translateY(-5px);
 }
