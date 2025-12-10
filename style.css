@@ -1931,3 +1931,52 @@ hr.section-divider {
     width: 100% !important;
     display: block !important;
 }
+
+/* =============================================
+   🔴 按钮位置与蓝框终极修复补丁 (style.css 底部)
+   ============================================= */
+
+/* 1. 强制网格拉伸：让 Free 和 Pro 一样高 */
+.pricing-grid {
+    display: flex !important; /* 改用 Flex 强制一行 */
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: stretch !important; /* 关键：拉伸高度 */
+    gap: 30px !important;
+}
+
+/* 2. 强制卡片占满高度 */
+.pricing-card {
+    flex: 1 !important; /* 三个卡片平分宽度 */
+    min-width: 300px !important;
+    max-width: 380px !important;
+    
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    height: auto !important; /* 让它随父容器拉伸 */
+    min-height: 100% !important; /* 双重保险 */
+}
+
+/* 3. 强制功能列表占位：把按钮挤到底部 */
+.features-list {
+    flex-grow: 1 !important;
+    margin-bottom: 30px !important;
+}
+
+/* 4. 强制按钮沉底 */
+.pricing-card button, 
+.pricing-card a.btn {
+    margin-top: auto !important;
+    width: 100% !important;
+}
+
+/* 5. 修复蓝框选中样式 */
+/* 当 JS 添加 plan-active 时，强制显示蓝框 */
+.pricing-card.plan-active {
+    border: 3px solid #007bff !important; /* 加粗边框 */
+    transform: translateY(-10px) !important;
+    box-shadow: 0 15px 40px rgba(0,123,255,0.2) !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
