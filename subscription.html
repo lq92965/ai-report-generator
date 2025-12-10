@@ -4,8 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upgrade Plan - Reportify AI</title>
-    <link rel="stylesheet" href="style.css?v=4.0">
+    <link rel="stylesheet" href="style.css?v=5.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 针对此页面的微调，确保一行三列 */
+        .pricing-grid {
+            display: grid;
+            /* 强制在宽屏下显示3列，每列最小280px */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body style="background-color: #f8f9fa;">
 
@@ -25,54 +37,65 @@
 
     <div class="container" style="max-width: 1200px; margin: 40px auto; text-align: center;">
         
-        <h1 style="font-size: 2.5rem; color: #333; margin-bottom: 10px;">Choose Your Power</h1>
-        <p style="color: #666; font-size: 1.1rem; margin-bottom: 50px;">
-            Current Plan: <span id="current-plan-badge" style="font-weight:bold; color:#007bff">LOADING...</span>
+        <h1 style="font-size: 2.2rem; color: #333; margin-bottom: 10px;">Choose Your Plan</h1>
+        <p style="color: #666; font-size: 1rem; margin-bottom: 40px;">
+            Unlock the full potential of AI reporting.
+            <br>
+            <span style="font-size: 0.9rem; background: #eef; padding: 5px 10px; border-radius: 10px; color: #555;">
+                Current Plan: <span id="current-plan-badge" style="font-weight:bold; color:#007bff">LOADING...</span>
+            </span>
         </p>
 
         <div class="pricing-grid">
             
             <div class="pricing-card">
-                <h3>Basic</h3>
-                <p style="color:#888; font-size:0.9rem;">For daily reporting tasks</p>
-                <div class="price">$9.90<span>/mo</span></div>
-                
+                <h3>Free Trial</h3>
+                <div class="price">$0<span>/ 7 days</span></div>
                 <ul class="features-list">
-                    <li><i class="fas fa-check-circle" style="color:#007bff"></i> <strong>45 Reports</strong> per month</li>
-                    <li><i class="fas fa-check-circle" style="color:#007bff"></i> <strong>Gemini 2.5 Pro</strong> Model</li>
-                    <li><i class="fas fa-check-circle" style="color:#007bff"></i> <strong>5,000 Characters</strong> Input</li>
-                    <li><i class="fas fa-check-circle" style="color:#007bff"></i> Word & PDF Export</li>
+                    <li><i class="fas fa-check" style="color:#28a745"></i> <strong>3 Reports</strong> per day</li>
+                    <li><i class="fas fa-check" style="color:#28a745"></i> <strong>Standard AI</strong> Model</li>
+                    <li><i class="fas fa-check" style="color:#28a745"></i> Word & Markdown Export</li>
+                    <li><i class="fas fa-clock" style="color:#999"></i> Limited Input (1k chars)</li>
+                </ul>
+                <button class="btn btn-outline full-width" onclick="window.location.href='index.html'" style="width:100%; cursor:pointer;">Start Free</button>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Basic</h3>
+                <div class="price">$9.90<span>/ mo</span></div>
+                <ul class="features-list">
+                    <li><i class="fas fa-check" style="color:#007bff"></i> <strong>45 Reports</strong> / month</li>
+                    <li><i class="fas fa-check" style="color:#007bff"></i> <strong>Smart AI</strong> Engine</li>
+                    <li><i class="fas fa-check" style="color:#007bff"></i> Input Limit: <strong>5,000 chars</strong></li>
+                    <li><i class="fas fa-check" style="color:#007bff"></i> PDF & Word Export</li>
                     <li><i class="fas fa-info-circle" style="color:#ccc"></i> Professional Tone Only</li>
                 </ul>
-                <button class="btn btn-secondary full-width choose-plan-btn" data-plan="basic" style="width:100%">Select Basic</button>
+                <button class="btn btn-secondary full-width choose-plan-btn" data-plan="basic" style="width:100%; cursor:pointer;">Select Basic</button>
             </div>
 
             <div class="pricing-card featured">
-                <div class="recommended-badge">Most Popular</div>
+                <div class="recommended-badge">Best Value</div>
                 <h3>Professional</h3>
-                <p style="color:#888; font-size:0.9rem;">For power users & deep analysis</p>
-                <div class="price">$19.90<span>/mo</span></div>
-                
+                <div class="price">$19.90<span>/ mo</span></div>
                 <ul class="features-list">
-                    <li><i class="fas fa-check-circle" style="color:#28a745"></i> <strong>Unlimited</strong> Generation</li>
-                    <li><i class="fas fa-check-circle" style="color:#28a745"></i> <strong>Gemini 2.5 Pro</strong> Model</li>
-                    <li><i class="fas fa-check-circle" style="color:#28a745"></i> <strong>100,000 Characters</strong> Input</li>
-                    <li><i class="fas fa-check-circle" style="color:#28a745"></i> <strong>All Tones</strong> Unlocked</li>
-                    <li><i class="fas fa-check-circle" style="color:#28a745"></i> Priority Support</li>
+                    <li><i class="fas fa-bolt" style="color:#28a745"></i> <strong>Unlimited</strong> Generation</li>
+                    <li><i class="fas fa-brain" style="color:#28a745"></i> <strong>Advanced AI</strong> Engine</li>
+                    <li><i class="fas fa-file-alt" style="color:#28a745"></i> Long Input: <strong>100k chars</strong></li>
+                    <li><i class="fas fa-star" style="color:#28a745"></i> <strong>All Tones</strong> Unlocked</li>
+                    <li><i class="fas fa-crown" style="color:#28a745"></i> Priority Support</li>
                 </ul>
-                <button class="btn btn-primary full-width choose-plan-btn" data-plan="pro" style="width:100%">Upgrade to Pro</button>
+                <button class="btn btn-primary full-width choose-plan-btn" data-plan="pro" style="width:100%; cursor:pointer;">Upgrade to Pro</button>
             </div>
 
         </div>
         
-        <div style="margin-top: 40px; color: #999; font-size: 0.9rem;">
-            <p>Secure payment via PayPal. Cancel anytime.</p>
+        <div style="margin-top: 40px; color: #999; font-size: 0.8rem;">
+            <p><i class="fab fa-paypal"></i> Secure payment via PayPal. Cancel anytime.</p>
         </div>
     </div>
 
     <script src="nav.js"></script>
     <script>
-        // 简单的 Plan 检查
         document.addEventListener('DOMContentLoaded', async () => {
             const token = localStorage.getItem('token');
             if(!token) return;
@@ -88,7 +111,7 @@
                         btn.disabled = true;
                         btn.style.opacity = '0.5';
                     } else {
-                        btn.onclick = () => alert('Redirecting to PayPal...'); // 暂时占位
+                        btn.onclick = () => alert('Redirecting to PayPal payment...'); // 占位，下一步做支付
                     }
                 });
             } catch(e) {}
