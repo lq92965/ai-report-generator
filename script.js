@@ -501,24 +501,6 @@ async function loadTemplates() {
         });
     }
 
-    // --- [修改] 交互：价格卡片点击选中效果 ---
-    // 目的：实现点击任意卡片变蓝框，且互斥（点A，B就不蓝了）
-    const pricingCards = document.querySelectorAll('.pricing-card'); // 重新获取，防止变量名冲突
-    if (pricingCards) {
-        pricingCards.forEach(card => {
-            card.addEventListener('click', (e) => {
-                // 如果点的是按钮，不触发卡片选中（避免冲突）
-                if (e.target.closest('button') || e.target.closest('a')) return;
-                
-                // 1. 移除所有卡片的激活状态 (plan-active)
-                pricingCards.forEach(c => c.classList.remove('plan-active'));
-                
-                // 2. 给当前点击的卡片加上激活状态
-                card.classList.add('plan-active');
-            });
-        });
-    }
-
     if (contactForm && formStatus) {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -694,5 +676,24 @@ async function loadTemplates() {
     // PayPal 错误占位
     if (typeof window.paypal === 'undefined') {
         document.querySelectorAll('.paypal-button-container').forEach(el => el.innerHTML = '<p style="color:orange; font-size: small;">Payment gateway loading error.</p>');
+    }
+});
+
+// --- [修复版] 交互：点击切换蓝色边框 (放在 script.js 最底部) ---
+document.addEventListener('DOMContentLoaded', () => {
+    const pricingCards = document.querySelectorAll('.pricing-card');
+    if (pricingCards.length > 0) {
+        pricingCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                // 如果点的是按钮或链接，不触发卡片选中效果
+                if (e.target.closest('button') || e.target.closest('a')) return;
+                
+                // 1. 移除所有卡片的激活状态
+                pricingCards.forEach(c => c.classList.remove('plan-active'));
+                
+                // 2. 给当前点击的卡片加上激活状态
+                card.classList.add('plan-active');
+            });
+        });
     }
 });
