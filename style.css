@@ -1824,3 +1824,54 @@ hr.section-divider {
 .pricing-card .btn-primary:hover {
     background: #0056b3 !important;
 }
+
+/* =============================================
+   🔴 布局崩溃紧急修复补丁 (粘贴到 style.css 最底部)
+   ============================================= */
+
+/* 1. 修复大容器：强制恢复为网格布局，一行多列 */
+.pricing-grid {
+    display: grid !important;
+    /* 最小宽度设为 280px，确保能排下一行3个 */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+    gap: 30px !important;
+    align-items: stretch !important; /* 让所有卡片等高 */
+    
+    /* 关键：确保大容器本身没有边框和阴影 */
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    transform: none !important;
+}
+
+/* 2. 修复小卡片：内部使用 Flex 布局上下撑开 */
+.pricing-card {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    height: 100% !important;
+    /* 确保卡片有自己的背景和圆角 */
+    background: #ffffff !important;
+    border-radius: 20px !important;
+    /* 默认灰色边框 */
+    border: 2px solid #eaeaea !important;
+}
+
+/* 3. 确保激活状态只针对小卡片生效 */
+.pricing-card.plan-active {
+    border: 2px solid #007bff !important;
+    box-shadow: 0 10px 40px rgba(0,123,255,0.15) !important;
+    z-index: 2 !important;
+}
+
+/* 4. 强制功能列表撑开空间 */
+.features-list {
+    flex-grow: 1 !important;
+    margin-bottom: 20px !important;
+}
+/* 5. 强制按钮沉底 */
+.pricing-card button, 
+.pricing-card a.btn {
+    margin-top: auto !important;
+    width: 100% !important;
+}
