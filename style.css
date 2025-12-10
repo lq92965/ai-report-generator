@@ -1875,3 +1875,59 @@ hr.section-divider {
     margin-top: auto !important;
     width: 100% !important;
 }
+
+/* =================================================================
+   ☢️ NUCLEAR LAYOUT FIX (Paste at the VERY bottom of style.css)
+   ================================================================= */
+
+/* 1. Force the container to be a wide grid */
+.pricing-grid {
+    display: grid !important;
+    /* This forces 3 columns on desktop. 'minmax(300px, 1fr)' ensures they don't get too skinny */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+    gap: 30px !important;
+    width: 100% !important;
+    max-width: 1200px !important;
+    margin: 40px auto !important;
+    
+    /* Reset any weird borders or shadows on the container itself */
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 20px !important;
+}
+
+/* 2. Force the cards to look like cards */
+.pricing-card {
+    display: flex !important;
+    flex-direction: column !important;
+    background: #ffffff !important;
+    border: 1px solid #eaeaea !important;
+    border-radius: 20px !important;
+    padding: 40px 30px !important;
+    text-align: center !important;
+    height: auto !important; /* Let content dictate height, but flex stretches them */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
+}
+
+/* 3. The Blue Box Logic (Only for the active card) */
+.pricing-card.plan-active {
+    border: 2px solid #007bff !important;
+    box-shadow: 0 10px 40px rgba(0,123,255,0.15) !important;
+    transform: translateY(-5px) !important;
+    z-index: 10 !important;
+}
+
+/* 4. Fix button alignment */
+.features-list {
+    flex-grow: 1 !important; /* Pushes button to bottom */
+    margin-bottom: 20px !important;
+    text-align: left !important;
+}
+
+.pricing-card button, 
+.pricing-card a.btn {
+    margin-top: auto !important;
+    width: 100% !important;
+    display: block !important;
+}
