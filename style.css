@@ -1730,3 +1730,41 @@ hr.section-divider {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+
+/* =============================================
+   🔴 强制修复补丁 (粘贴到 style.css 最底部)
+   ============================================= */
+
+/* 1. 强制卡片等高排列 */
+.pricing-grid {
+    align-items: stretch !important; /* 让三个卡片拉伸到相同高度 */
+}
+
+/* 2. 强制卡片内部布局 */
+.pricing-card {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important; /* 占满高度 */
+    justify-content: space-between !important; /* 内容上下撑开 */
+}
+
+/* 3. 强制功能列表占据剩余空间 (这是把按钮挤下去的关键) */
+.features-list {
+    flex-grow: 1 !important;
+    margin-bottom: 20px !important;
+}
+
+/* 4. 强制按钮样式和位置 */
+.pricing-card button, 
+.pricing-card a.btn {
+    margin-top: auto !important; /* 沉底 */
+    width: 100% !important;
+    display: block !important;
+}
+
+/* 5. 修复 Free 按钮位置偏低/偏高的问题 */
+/* 确保所有卡片的内边距一致 */
+.pricing-card {
+    padding: 40px 30px !important;
+}
