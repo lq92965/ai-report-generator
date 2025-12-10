@@ -22,18 +22,19 @@
 <body style="background-color: #f8f9fa;">
 
     <header class="main-header account-header">
-        <div class="container">
-            <a href="index.html" class="logo">
-                <span class="logo-icon">🐦</span> <span>Reportify AI</span>
-            </a>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html#generator">Generator</a></li>
-                    <li><a href="account.html">My Account</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <div class="container">
+        <a href="index.html" class="logo">
+            <span class="logo-icon">🐦</span> <span>Reportify AI</span>
+        </a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html#generator">Generator</a></li>
+                <li><a href="account.html">My Account</a></li>
+            </ul>
+        </nav>
+        <div class="header-actions"></div>
+    </div>
+</header>
     
     <div style="width: 100%; max-width: 1200px; margin: 20px auto; padding: 0 20px; text-align: left;">
         <a href="account.html" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #666; font-size: 0.9rem; font-weight: 600;">
@@ -63,8 +64,7 @@
                     <li><i class="fas fa-check" style="color:#28a745"></i> Word & Markdown Export</li>
                     <li><i class="fas fa-clock" style="color:#999"></i> Limited Input (1k chars)</li>
                 </ul>
-                <button class="btn btn-outline full-width" onclick="window.location.href='index.html'" style="width:100%; cursor:pointer;">Start Free</button>
-            </div>
+                html <button class="btn btn-secondary full-width" onclick="window.location.href='index.html'" style="width:100%; cursor:pointer;">Start Free</button>
 
             <div class="pricing-card">
                 <h3>Basic</h3>
@@ -100,28 +100,26 @@
         </div>
     </div>
 
-    <script src="nav.js"></script>
-    <script src="script.js?v=6.0"></script> 
-    <script>
-        document.addEventListener('DOMContentLoaded', async () => {
+   <script src="nav.js"></script>
+    <script src="script.js?v=7.0"></script> <script>
+        // 这一段是为了页面加载时自动触发导航栏更新
+        document.addEventListener('DOMContentLoaded', () => {
             const token = localStorage.getItem('token');
-            if(!token) return;
-            try {
-                const res = await fetch('https://api.goreportify.com/api/me', { headers: { 'Authorization': `Bearer ${token}` }});
-                const user = await res.json();
-                const plan = user.plan || 'free';
-                document.getElementById('current-plan-badge').textContent = plan.toUpperCase();
-                
-                document.querySelectorAll('.choose-plan-btn').forEach(btn => {
-                    if (btn.dataset.plan === plan) {
-                        btn.textContent = 'Current Plan';
-                        btn.disabled = true;
-                        btn.style.opacity = '0.5';
-                    } else {
-                        btn.onclick = () => alert('Redirecting to PayPal payment...'); // 占位，下一步做支付
-                    }
-                });
-            } catch(e) {}
+            if (token) {
+                // 尝试获取用户信息并更新头像
+                fetch('https://api.goreportify.com/api/me', { headers: { 'Authorization': `Bearer ${token}` }})
+                    .then(res => res.json())
+                    .then(user => {
+                        // 调用 nav.js 里的更新函数 (如果 nav.js 定义了 window.updateUserNav)
+                        if (window.updateUserNav) window.updateUserNav(user);
+                        
+                        // 更新当前计划显示
+                        const plan = user.plan || 'free';
+                        const badge = document.getElementById('current-plan-badge');
+                        if(badge) badge.textContent = plan.toUpperCase();
+                    })
+                    .catch(console.error);
+            }
         });
     </script>
 </body>
