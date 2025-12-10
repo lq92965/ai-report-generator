@@ -36,10 +36,12 @@
     </div>
 </header>
     
-    <div style="width: 100%; max-width: 1200px; margin: 20px auto; padding: 0 20px; text-align: left;">
-        <a href="account.html" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #666; font-size: 0.9rem; font-weight: 600;">
-            <i class="fas fa-arrow-left"></i> Back to Account Hub
-        </a>
+    <div style="width: 100%; background: #f8f9fa; padding: 20px 0;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; text-align: left;">
+            <a href="account.html" style="display: inline-block; text-decoration: none; color: #666; font-size: 0.9rem; font-weight: 600;">
+                <i class="fas fa-arrow-left"></i> Back to Account Hub
+            </a>
+        </div>
     </div>
 
     <div class="container" style="max-width: 1200px; margin: 40px auto; text-align: center;">
@@ -101,24 +103,31 @@
     </div>
 
    <script src="nav.js"></script>
-    <script src="script.js?v=7.0"></script> <script>
+    <script src="script.js?v=8.0"></script> 
+
+    <script>
         // 这一段是为了页面加载时自动触发导航栏更新
         document.addEventListener('DOMContentLoaded', () => {
             const token = localStorage.getItem('token');
             if (token) {
-                // 尝试获取用户信息并更新头像
                 fetch('https://api.goreportify.com/api/me', { headers: { 'Authorization': `Bearer ${token}` }})
                     .then(res => res.json())
                     .then(user => {
-                        // 调用 nav.js 里的更新函数 (如果 nav.js 定义了 window.updateUserNav)
                         if (window.updateUserNav) window.updateUserNav(user);
-                        
-                        // 更新当前计划显示
                         const plan = user.plan || 'free';
                         const badge = document.getElementById('current-plan-badge');
                         if(badge) badge.textContent = plan.toUpperCase();
+                        
+                        // 初始化：根据当前 Plan 自动点亮对应的蓝框
+                        const activeCard = document.querySelector(`.choose-plan-btn[data-plan="${plan}"]`)?.closest('.pricing-card');
+                        if(activeCard) {
+                            // 移除默认的 active
+                            document.querySelectorAll('.pricing-card').forEach(c => c.classList.remove('plan-active'));
+                            // 点亮当前的
+                            activeCard.classList.add('plan-active');
+                        }
                     })
-                    .catch(console.error);
+                    .catch(() => {});
             }
         });
     </script>
