@@ -1674,3 +1674,48 @@ hr.section-divider {
     box-shadow: 0 15px 30px rgba(0,123,255,0.15) !important;
     z-index: 10 !important;
 }
+
+/* =============================================
+   🔴 价格与标识微调补丁 (粘贴到 style.css 底部)
+   ============================================= */
+
+/* 1. 价格区域：强制同一行对齐 */
+.pricing-card .price {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: baseline !important; /* 基线对齐 */
+    gap: 5px !important;
+    margin: 15px 0 !important;
+}
+
+/* 2. 统一字体大小：金额和月份一样大 */
+/* 您觉得之前的金额太小？或者不协调？这里统一设为 1.8rem (约28px) */
+.pricing-card .price {
+    font-size: 1.8rem !important; 
+    font-weight: 700 !important;
+    color: #333 !important;
+    letter-spacing: 0 !important;
+}
+
+/* 强制 span (月份) 继承父元素的大小 */
+.pricing-card .price span {
+    font-size: 1.8rem !important; /* 和金额一样大 */
+    font-weight: 700 !important;   /* 和金额一样粗 */
+    color: #333 !important;        /* 和金额一样黑 */
+}
+
+/* 3. Pro 版本上方的“最佳推荐”蓝色文字 */
+.best-value-text {
+    color: #007bff !important;
+    font-size: 0.85rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 5px !important;
+    display: block !important;
+}
+
+/* 4. 隐藏旧的悬浮徽章 (如果有的话) */
+.recommended-badge {
+    display: none !important;
+}
