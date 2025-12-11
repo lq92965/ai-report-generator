@@ -1,12 +1,12 @@
 /*
  * ===================================================================
- * * Reportify AI - script.js (v17.0 终极全功能版)
- * * 包含: 动态模板, 智能表单, 登录注册, 支付跳转, 蓝框交互, 导出功能
- * * 修复: 解决了重复粘贴导致的语法错误 (Unexpected end of input)
+ * * Reportify AI - script.js (v18.0 最终修正版)
+ * * 修复核心问题: 补回了被误删的导航栏(Login按钮)控制逻辑
+ * * 包含: 导航栏覆盖, 弹窗控制, 登录注册, 支付, 报告生成
  * ===================================================================
 */
 
-// --- 1. 全局消息提示工具 (Toast) ---
+// --- 1. 全局工具: Toast 提示 ---
 window.showToast = function(message, type = 'info') {
     let container = document.getElementById('toast-container');
     if (!container) {
@@ -32,7 +32,48 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentUserPlan = 'basic'; 
 
     // =============================================
-    // 模块 A: 弹窗与导航
+    // 🔴 模块 A: 导航栏逻辑 (之前漏掉的部分!)
+    // =============================================
+    // 这个函数会被 nav.js 调用，用来渲染“未登录”状态下的按钮
+    window.showLoggedOutNav = (headerActions) => {
+        if (!headerActions) return;
+        headerActions.innerHTML = ''; 
+        
+        // 1. 创建登录按钮
+        const loginBtn = document.createElement('a');
+        loginBtn.href = '#'; 
+        loginBtn.className = 'btn btn-secondary';
+        loginBtn.textContent = 'Login';
+        loginBtn.style.marginRight = '10px';
+        loginBtn.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            window.openModal('login'); // 点击触发弹窗
+        });
+
+        // 2. 创建注册/开始按钮
+        const getStartedBtn = document.createElement('a');
+        getStartedBtn.href = '#';
+        getStartedBtn.className = 'btn btn-primary';
+        getStartedBtn.textContent = 'Get Started';
+        getStartedBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.openModal('signup'); // 点击触发注册
+        });
+
+        headerActions.appendChild(loginBtn);
+        headerActions.appendChild(getStartedBtn);
+    };
+
+    // 如果 nav.js 已经运行过了，我们需要手动触发一次更新
+    if (window.updateUserNav) {
+        const token = localStorage.getItem('token');
+        // 如果没有token，强制显示未登录状态
+        if (!token) window.showLoggedOutNav(document.querySelector('.header-actions'));
+        else window.updateUserNav(); // 有token则正常更新
+    }
+
+    // =============================================
+    // 模块 B: 弹窗控制 (Open/Close)
     // =============================================
     const authModalOverlay = document.getElementById('auth-modal-overlay');
     const closeModalBtn = document.getElementById('close-modal-btn');
@@ -42,8 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.openModal = function(tabToShow = 'login') {
         if (!authModalOverlay) return;
         authModalOverlay.classList.remove('hidden');
+        // 切换 Tab
         authTabs.forEach(t => t.classList.remove('active'));
         tabContents.forEach(c => c.classList.remove('active'));
+        
         const link = document.querySelector(`.tab-link[data-tab="${tabToShow}"]`);
         const content = document.getElementById(tabToShow);
         if(link) link.classList.add('active');
@@ -58,28 +101,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (authModalOverlay) authModalOverlay.addEventListener('click', (e) => { 
         if(e.target === authModalOverlay) window.closeModal(); 
     });
-    if (authTabs) {
-        authTabs.forEach(t => t.addEventListener('click', () => window.openModal(t.dataset.tab)));
-    }
+    // Tab 切换点击事件
+    authTabs.forEach(t => t.addEventListener('click', () => window.openModal(t.dataset.tab)));
+
 
     // =============================================
-    // 模块 B: 登录注册与密码强度
+    // 模块 C: 登录与注册表单提交
     // =============================================
     
-    // 密码强度
-    const passInput = document.getElementById('signup-password');
-    if (passInput) {
-        passInput.addEventListener('input', function() {
-            const val = this.value;
-            const reqLen = document.getElementById('req-length');
-            const reqNum = document.getElementById('req-number');
-            const reqUp = document.getElementById('req-upper');
-            if(reqLen) reqLen.className = val.length >= 8 ? 'valid' : 'invalid';
-            if(reqNum) reqNum.className = /[0-9]/.test(val) ? 'valid' : 'invalid';
-            if(reqUp) reqUp.className = /[A-Z]/.test(val) ? 'valid' : 'invalid';
-        });
-    }
-
     // 登录
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
@@ -106,14 +135,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 localStorage.setItem('token', data.token);
                 window.closeModal(); 
-                if (window.updateUserNav) window.updateUserNav(data.user); 
                 
-                // 登录成功后重新加载模板和计划
-                fetchUserPlan();
-                loadTemplates();
+                if (window.updateUserNav) window.updateUserNav(data.user); 
                 showToast("Login Successful!", "success");
                 newLoginForm.reset(); 
                 
+                // 刷新页面状态
+                fetchUserPlan();
+                loadTemplates();
+                if(window.location.href.includes('subscription')) location.reload();
+
             } catch (err) {
                 showToast(err.message, "error");
             } finally {
@@ -166,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================
-    // 模块 C: 模板加载与动态表单 (恢复的功能!)
+    // 模块 D: 模板加载与动态表单
     // =============================================
     async function fetchUserPlan() {
         const token = localStorage.getItem('token');
@@ -222,7 +253,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let dynamicInputsContainer = document.getElementById('dynamic-inputs-container');
     
     if (templateSelect) {
-        // 如果没有容器，创建一个
         if (!dynamicInputsContainer) {
             dynamicInputsContainer = document.createElement('div');
             dynamicInputsContainer.id = 'dynamic-inputs-container';
@@ -288,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTemplates();
 
     // =============================================
-    // 模块 D: 报告生成器
+    // 模块 E: 报告生成器
     // =============================================
     const generateBtn = document.getElementById('generate-btn');
     if (generateBtn) {
@@ -306,7 +336,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const promptEl = document.getElementById('key-points');
             const resultBox = document.getElementById('generated-report');
             
-            // 收集动态输入
             const inputs = {};
             document.querySelectorAll('.dynamic-input').forEach(el => { 
                 if(el.dataset.key) inputs[el.dataset.key] = el.value; 
@@ -365,7 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================
-    // 模块 E: 导出 & 支付 & 交互
+    // 模块 F: 导出 & 支付 & 交互
     // =============================================
     
     // 导出
