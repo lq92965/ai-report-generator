@@ -1568,127 +1568,115 @@ hr.section-divider {
 }
 
 /* =================================================================
-   ✅ FINAL CONSOLIDATED STYLES (v9.0)
-   Replaces all previous patches for layout, buttons, and interaction.
+   ✅ UI v10.0 - 精致版 (粘贴到 style.css 最底部)
+   修复：卡片变窄、字体变小、布局居中、按钮对齐
    ================================================================= */
 
-/* 1. Grid Layout: Forces 3 columns in one row */
+/* 1. 全局字体优化 (防止字体丑陋) */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 2. 价格网格 (居中，卡片紧凑) */
 .pricing-grid {
-    display: flex !important;       /* Use Flexbox for better row control */
-    flex-direction: row !important; /* Force row direction */
-    flex-wrap: nowrap !important;   /* Prevent wrapping to next line */
-    justify-content: center !important;
-    align-items: stretch !important; /* Make all cards same height */
-    gap: 30px !important;
-    width: 100% !important;
-    max-width: 1200px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important; /* 居中对齐 */
+    align-items: stretch !important;    /* 等高 */
+    gap: 25px !important;
+    max-width: 1100px !important;       /* 容器稍微收窄 */
     margin: 40px auto !important;
     padding: 0 20px !important;
-    
-    /* Reset container styles */
-    border: none !important;
-    box-shadow: none !important;
-    background: transparent !important;
 }
 
-/* 2. Card Styling & Layout */
+/* 3. 价格卡片 (变窄，更精致) */
 .pricing-card {
-    flex: 1 !important;             /* Each card takes equal width */
-    min-width: 280px !important;    /* Minimum width to prevent squishing */
-    max-width: 380px !important;    /* Maximum width */
+    flex: 1 !important;
+    min-width: 260px !important; /* 最小宽度减小 */
+    max-width: 320px !important; /* 🔴 关键：最大宽度限制在 320px，防止太宽 */
     
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between !important; /* Push content apart */
+    justify-content: space-between !important;
     
     background: #ffffff !important;
-    border: 2px solid #eaeaea !important;
-    border-radius: 20px !important;
-    padding: 40px 30px !important;
+    border: 1px solid #e1e4e8 !important; /* 边框颜色变淡 */
+    border-radius: 16px !important;       /* 圆角稍微变小 */
+    padding: 30px 25px !important;        /* 内边距减小 */
     text-align: center !important;
     position: relative !important;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
-    transform: none !important;     /* Reset transform */
-    z-index: 1 !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03) !important;
+    transition: transform 0.2s ease !important;
 }
 
-/* 3. Button Alignment */
+/* 4. 字体美化 (变小，变精致) */
+.pricing-card h3 {
+    font-size: 1.25rem !important; /* 标题变小 */
+    font-weight: 700 !important;
+    color: #24292e !important;
+    margin-bottom: 10px !important;
+}
+
+.pricing-card .price {
+    font-size: 2.2rem !important; /* 价格数字变小 */
+    font-weight: 800 !important;
+    color: #111 !important;
+    margin: 15px 0 !important;
+    letter-spacing: -0.5px !important;
+}
+
+.pricing-card .price span {
+    font-size: 0.9rem !important;
+    color: #666 !important;
+    font-weight: 500 !important;
+}
+
+/* 5. 功能列表 (紧凑) */
 .features-list {
-    flex-grow: 1 !important;        /* Takes up all available space */
-    margin-bottom: 30px !important; /* Spacing before button */
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
+    flex-grow: 1 !important;
+    margin-bottom: 25px !important;
+    padding: 0 !important;
+    text-align: left !important;
 }
 
+.features-list li {
+    padding: 8px 0 !important; /* 行间距减小 */
+    font-size: 0.9rem !important; /* 字体变小 */
+    color: #555 !important;
+    border-bottom: 1px dashed #eee !important; /* 分隔线变虚线 */
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+.features-list li:last-child { border-bottom: none !important; }
+
+/* 6. 按钮样式 (底部沉底) */
 .pricing-card button, 
 .pricing-card a.btn {
-    margin-top: auto !important;    /* Forces button to bottom */
+    margin-top: auto !important;
     width: 100% !important;
     display: block !important;
-    padding: 12px 0 !important;
-    border-radius: 8px !important;
-    font-weight: 600 !important;
-    text-transform: uppercase !important;
+    padding: 10px 0 !important; /* 按钮变薄一点 */
     font-size: 0.9rem !important;
-    cursor: pointer !important;
+    border-radius: 8px !important;
+    text-decoration: none !important;
 }
 
-/* 4. Button Colors */
-/* Free & Basic (White/Gray) */
-.pricing-card .btn-secondary,
-.pricing-card .btn-outline {
-    background: #fff !important;
-    border: 1px solid #ddd !important;
-    color: #333 !important;
-}
-.pricing-card .btn-secondary:hover,
-.pricing-card .btn-outline:hover {
-    background: #f8f9fa !important;
-}
-
-/* Pro (Blue) */
-.pricing-card .btn-primary {
-    background: #007bff !important;
-    color: white !important;
-    border: none !important;
-}
-.pricing-card .btn-primary:hover {
-    background: #0056b3 !important;
-}
-
-/* 5. Active State (Blue Border) - Controlled by JS */
+/* 7. 选中状态 (蓝框) */
 .pricing-card.plan-active {
-    border: 3px solid #007bff !important;
-    box-shadow: 0 15px 40px rgba(0,123,255,0.2) !important;
-    transform: translateY(-10px) !important;
+    border: 2px solid #007bff !important;
+    transform: translateY(-8px) !important;
+    box-shadow: 0 12px 30px rgba(0,123,255,0.12) !important;
     z-index: 10 !important;
 }
 
-/* 6. Recommended Badge */
+/* 8. 推荐标签 */
 .recommended-badge {
-    position: absolute !important;
-    top: -15px !important;
-    right: 20px !important;
-    background: #007bff !important;
-    color: white !important;
-    padding: 5px 15px !important;
-    border-radius: 20px !important;
-    font-size: 0.8rem !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    box-shadow: 0 4px 10px rgba(0,123,255,0.3) !important;
-    z-index: 11 !important;
-}
-
-/* Responsive: Stack on mobile */
-@media (max-width: 900px) {
-    .pricing-grid {
-        flex-direction: column !important;
-        align-items: center !important;
-    }
-    .pricing-card {
-        width: 100% !important;
-        max-width: 400px !important;
-    }
+    top: -12px !important;
+    right: 15px !important;
+    font-size: 0.75rem !important;
+    padding: 4px 12px !important;
+    letter-spacing: 0.5px !important;
 }
