@@ -697,3 +697,63 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+/* =============================================
+   💳 支付与订阅逻辑 (v10.0)
+   ============================================= */
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. 处理 Basic 和 Pro 按钮点击 (触发支付)
+    const payButtons = document.querySelectorAll('.choose-plan-btn');
+    
+    if (payButtons.length > 0) {
+        payButtons.forEach(btn => {
+            // 先移除旧事件，防止重复
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+
+            newBtn.addEventListener('click', async (e) => {
+                e.preventDefault(); // 阻止任何默认跳转
+                
+                const planType = newBtn.dataset.plan; // 'basic' or 'pro'
+                const token = localStorage.getItem('token');
+
+                if (!token) {
+                    showToast('Please log in to upgrade.', 'error');
+                    // 如果有登录弹窗逻辑，可以在这里调用 openModal('login')
+                    setTimeout(() => window.location.href = 'index.html', 1500);
+                    return;
+                }
+
+                // ⬇️ 这里是对接 PayPal/Stripe 的地方 ⬇️
+                // 目前模拟支付流程
+                newBtn.textContent = 'Connecting to PayPal...';
+                newBtn.disabled = true;
+
+                try {
+                    // 模拟网络请求延迟
+                    await new Promise(r => setTimeout(r, 1000));
+                    
+                    // 🔴 如果您已经有 PayPal 链接，请在这里替换 alert
+                    // window.location.href = "YOUR_PAYPAL_LINK_HERE";
+                    
+                    alert(`🚀 Redirecting to PayPal for ${planType.toUpperCase()} Plan...\n\n(Payment gateway integration point)`);
+                    
+                } catch (err) {
+                    showToast('Payment initialization failed.', 'error');
+                } finally {
+                    newBtn.textContent = planType === 'basic' ? 'Select Basic' : 'Upgrade to Pro';
+                    newBtn.disabled = false;
+                }
+            });
+        });
+    }
+
+    // 2. 处理 Free 按钮 (直接回首页或开始使用)
+    const freeBtn = document.getElementById('btn-select-free');
+    if (freeBtn) {
+        freeBtn.addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+    }
+});
