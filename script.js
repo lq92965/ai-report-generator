@@ -725,6 +725,33 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
+            /* =============================================
+   💳 支付与订阅逻辑 (v10.0)
+   ============================================= */
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. 处理 Basic 和 Pro 按钮点击 (触发支付)
+    const payButtons = document.querySelectorAll('.choose-plan-btn');
+    
+    if (payButtons.length > 0) {
+        payButtons.forEach(btn => {
+            // 先移除旧事件，防止重复
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+
+            newBtn.addEventListener('click', async (e) => {
+                e.preventDefault(); // 阻止任何默认跳转
+                
+                const planType = newBtn.dataset.plan; // 'basic' or 'pro'
+                const token = localStorage.getItem('token');
+
+                if (!token) {
+                    showToast('Please log in to upgrade.', 'error');
+                    // 如果有登录弹窗逻辑，可以在这里调用 openModal('login')
+                    setTimeout(() => window.location.href = 'index.html', 1500);
+                    return;
+                }
+
                 // ⬇️ 这里是对接 PayPal/Stripe 的地方 ⬇️
                 // 目前模拟支付流程
                 newBtn.textContent = 'Connecting to PayPal...';
@@ -745,35 +772,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     newBtn.textContent = planType === 'basic' ? 'Select Basic' : 'Upgrade to Pro';
                     newBtn.disabled = false;
                 }
-            });// ⬇️ 真实支付逻辑 (V11.0) ⬇️
-                
-                // 1. 定义您的收款账号 (🔴 请修改这里!)
-                const myPaypalEmail = "liqing92965@gmail.com"; // 您的 PayPal 邮箱
-                
-                // 2. 生成支付链接
-                let paymentUrl = "";
-                if (planType === 'basic') {
-                    // Basic 版: $9.90
-                    paymentUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${myPaypalEmail}&currency_code=USD&amount=9.90&item_name=Reportify%20Basic%20Plan&return=https://goreportify.com/success&cancel_return=https://goreportify.com/subscription`;
-                } else if (planType === 'pro') {
-                    // Pro 版: $19.90
-                    paymentUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${myPaypalEmail}&currency_code=USD&amount=19.90&item_name=Reportify%20Professional%20Plan&return=https://goreportify.com/success&cancel_return=https://goreportify.com/subscription`;
-                }
-
-                // 3. 执行跳转 (弹出新窗口)
-                if (paymentUrl) {
-                    // 使用 window.open 弹出新窗口进行支付，这是最稳妥的方式
-                    window.open(paymentUrl, '_blank'); 
-                    showToast(`🚀 Opening PayPal for ${planType.toUpperCase()}...`, 'success');
-                } else {
-                    showToast('Payment link error.', 'error');
-                }
-
-                // 恢复按钮状态
-                setTimeout(() => {
-                    newBtn.textContent = planType === 'basic' ? 'Select Basic' : 'Upgrade to Pro';
-                    newBtn.disabled = false;
-                }, 2000);
+            });
+        });
     }
 
     // 2. 处理 Free 按钮 (直接回首页或开始使用)
