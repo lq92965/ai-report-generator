@@ -1,8 +1,7 @@
 /*
  * ===================================================================
- * * Reportify AI - script.js (v18.0 最终修正版)
- * * 修复核心问题: 补回了被误删的导航栏(Login按钮)控制逻辑
- * * 包含: 导航栏覆盖, 弹窗控制, 登录注册, 支付, 报告生成
+ * * Reportify AI - script.js (v19.0 强制刷新版)
+ * * 核心修复: 登录成功后自动刷新页面，强制UI更新为“已登录”状态
  * ===================================================================
 */
 
@@ -32,14 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentUserPlan = 'basic'; 
 
     // =============================================
-    // 🔴 模块 A: 导航栏逻辑 (之前漏掉的部分!)
+    // 模块 A: 导航栏逻辑
     // =============================================
-    // 这个函数会被 nav.js 调用，用来渲染“未登录”状态下的按钮
     window.showLoggedOutNav = (headerActions) => {
         if (!headerActions) return;
         headerActions.innerHTML = ''; 
         
-        // 1. 创建登录按钮
         const loginBtn = document.createElement('a');
         loginBtn.href = '#'; 
         loginBtn.className = 'btn btn-secondary';
@@ -47,33 +44,31 @@ document.addEventListener('DOMContentLoaded', () => {
         loginBtn.style.marginRight = '10px';
         loginBtn.addEventListener('click', (e) => {
             e.preventDefault(); 
-            window.openModal('login'); // 点击触发弹窗
+            window.openModal('login');
         });
 
-        // 2. 创建注册/开始按钮
         const getStartedBtn = document.createElement('a');
         getStartedBtn.href = '#';
         getStartedBtn.className = 'btn btn-primary';
         getStartedBtn.textContent = 'Get Started';
         getStartedBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            window.openModal('signup'); // 点击触发注册
+            window.openModal('signup');
         });
 
         headerActions.appendChild(loginBtn);
         headerActions.appendChild(getStartedBtn);
     };
 
-    // 如果 nav.js 已经运行过了，我们需要手动触发一次更新
+    // 尝试更新导航
     if (window.updateUserNav) {
         const token = localStorage.getItem('token');
-        // 如果没有token，强制显示未登录状态
         if (!token) window.showLoggedOutNav(document.querySelector('.header-actions'));
-        else window.updateUserNav(); // 有token则正常更新
+        else window.updateUserNav(); 
     }
 
     // =============================================
-    // 模块 B: 弹窗控制 (Open/Close)
+    // 模块 B: 弹窗控制
     // =============================================
     const authModalOverlay = document.getElementById('auth-modal-overlay');
     const closeModalBtn = document.getElementById('close-modal-btn');
@@ -83,10 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.openModal = function(tabToShow = 'login') {
         if (!authModalOverlay) return;
         authModalOverlay.classList.remove('hidden');
-        // 切换 Tab
         authTabs.forEach(t => t.classList.remove('active'));
         tabContents.forEach(c => c.classList.remove('active'));
-        
         const link = document.querySelector(`.tab-link[data-tab="${tabToShow}"]`);
         const content = document.getElementById(tabToShow);
         if(link) link.classList.add('active');
@@ -101,12 +94,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (authModalOverlay) authModalOverlay.addEventListener('click', (e) => { 
         if(e.target === authModalOverlay) window.closeModal(); 
     });
-    // Tab 切换点击事件
     authTabs.forEach(t => t.addEventListener('click', () => window.openModal(t.dataset.tab)));
 
 
     // =============================================
-    // 模块 C: 登录与注册表单提交
+    // 模块 C: 登录与注册 (核心修复点)
     // =============================================
     
     // 登录
@@ -133,21 +125,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.message || 'Login failed');
                 
+                // 1. 保存 Token
                 localStorage.setItem('token', data.token);
+                
+                // 2. 提示成功
+                showToast("Login Successful! Reloading...", "success");
+                
+                // 3. 关闭弹窗
                 window.closeModal(); 
                 
-                if (window.updateUserNav) window.updateUserNav(data.user); 
-                showToast("Login Successful!", "success");
-                newLoginForm.reset(); 
-                
-                // 刷新页面状态
-                fetchUserPlan();
-                loadTemplates();
-                if(window.location.href.includes('subscription')) location.reload();
+                // 4. 🔴 关键修复：延迟1秒后强制刷新页面，确保 UI 变成已登录状态
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
 
             } catch (err) {
                 showToast(err.message, "error");
-            } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalText;
             }
