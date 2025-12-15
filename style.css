@@ -1721,21 +1721,27 @@ hr.section-divider {
 }
 
 /* ====================================================================
-   🔥 Reportify AI - 响应式 v7.0 (回退优化版 + iPad Air 专属补丁)
+   🔥 Reportify AI - 响应式适配补丁 v5.0 (追加到 style.css 最底部)
    ==================================================================== */
 
-/* --- 1. 强制修复 Logo 颜色 (保留这个，解决小鸟变蓝) --- */
-a.logo, a.logo:visited, .main-header a {
+/* --- 1. 全局修正 (强制修复 Logo 颜色和容器) --- */
+/* 解决 Vivo/安卓手机 Logo 变蓝的问题 */
+a.logo, 
+a.logo:visited,
+.main-header a {
     color: #333 !important; 
     text-decoration: none !important;
-    -webkit-tap-highlight-color: transparent;
 }
 .logo-icon {
     color: #e63946 !important; 
-    fill: #e63946 !important; 
 }
 
-/* --- 2. 导航栏锁定 --- */
+/* 确保所有容器内边距计算正确 */
+* { box-sizing: border-box; }
+body { overflow-x: hidden; }
+
+/* --- 2. 导航栏锁定 (所有设备通用) --- */
+/* 强制 Logo 和 头像 永远在同一行，绝不换行 */
 .main-header .container {
     display: flex !important;
     flex-direction: row !important; 
@@ -1744,36 +1750,35 @@ a.logo, a.logo:visited, .main-header a {
     flex-wrap: nowrap !important;
 }
 
-/* =================================================================
-   核心分层适配
-   ================================================================= */
+/* --- 3. 屏幕分级适配 --- */
 
-/* [层级 A] 笔记本 & 横屏 iPad Pro (1025px - 1400px) */
-@media screen and (max-width: 1400px) {
+/* [层级 A] 笔记本 & 横屏 iPad Pro (1025px - 1366px) */
+@media screen and (max-width: 1366px) {
     .container { padding: 0 40px; }
+    /* 保持 3 列，但缩小间距 */
+    .features-grid, .pricing-grid, .stats-grid { gap: 20px; }
 }
 
-/* [层级 B: 针对 iPad Air 竖屏 / iPad Pro 竖屏] (769px - 1024px) */
-/* 🔴 核心修复：这个区间强制使用【双列布局】，解决 iPad Air 两边被切掉的问题 */
-@media screen and (min-width: 769px) and (max-width: 1024px) {
+/* [层级 B] 竖屏 iPad & 折叠屏展开态 (769px - 1024px) */
+@media screen and (max-width: 1024px) {
     .container { padding: 0 30px; }
     
-    /* 改为 2 列，刚好填满 iPad Air */
+    /* 强制改为 2 列布局，防止 3 列太挤 */
     .features-grid, .pricing-grid, .stats-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 20px;
     }
     
+    /* 标题字号微调 */
     .hero-section h1 { font-size: 3rem; }
 }
 
-/* [层级 C: 手机、折叠屏、iPad Mini] (768px 以下) */
-/* 🔴 回退到你满意的旧版逻辑：全宽单列，解决“偏左”问题 */
+/* [层级 C] 手机 & 折叠屏外屏 (768px 以下) */
 @media screen and (max-width: 768px) {
     .container { padding: 0 20px !important; }
 
-    /* 单列布局 */
+    /* 强制改为单列 (1列) 布局 */
     .features-grid, 
     .pricing-grid, 
     .stats-grid, 
@@ -1783,33 +1788,41 @@ a.logo, a.logo:visited, .main-header a {
         gap: 25px;
     }
 
-    /* 恢复全宽，取消 max-width 限制 (解决折叠屏偏左问题) */
+    /* 卡片宽度修正：填满屏幕 */
     .feature-card, .pricing-card, .stat-box {
         width: 100% !important;
         margin: 0 !important;
+        max-width: none !important;
     }
 
     /* 导航栏微调 */
-    .header-actions { margin-top: 0 !important; width: auto !important; }
+    .header-actions {
+        margin-top: 0 !important;
+        width: auto !important;
+    }
     
-    /* Hero */
+    /* Hero 区域 */
     .hero-section { padding: 40px 0; }
     .hero-section h1 { font-size: 2.2rem !important; }
 
-    /* 按钮 */
+    /* 按钮全宽 */
     .cta-buttons { flex-direction: column; width: 100%; }
     .btn { width: 100%; text-align: center; }
 
-    /* Profile */
+    /* Profile 页面垂直排列 */
     .profile-card { flex-direction: column; }
     .profile-sidebar { 
-        border-right: none; border-bottom: 1px solid #eee; margin-bottom: 20px; 
+        border-right: none; 
+        border-bottom: 1px solid #eee; 
+        margin-bottom: 20px; 
     }
 }
 
-/* [层级 D: 小屏手机] (480px 以下) */
+/* [层级 D] 小屏手机 (480px 以下) */
 @media screen and (max-width: 480px) {
     .logo { font-size: 1.1rem; }
-    .user-nav-wrapper { gap: 8px !important; }
-    .user-name { display: none !important; } /* 空间不够时隐藏名字 */
+    .user-nav-wrapper { gap: 5px !important; }
+    
+    /* 空间不足时隐藏用户名，只留头像 */
+    .user-name { display: none !important; }
 }
