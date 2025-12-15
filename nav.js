@@ -71,79 +71,97 @@ function showLoggedOut(container) {
     container.appendChild(startBtn);
 }
 
-// --- 渲染：已登录状态 (带头像和下拉菜单) ---
+// --- 替换开始 ---
 function showLoggedIn(container, user) {
-    container.innerHTML = ''; // 清空
+    container.innerHTML = ''; 
 
-    // 获取显示名称和首字母
+    // 获取显示名称和头像
     const displayName = user.name || user.email.split('@')[0];
     const initial = displayName.charAt(0).toUpperCase();
+    const avatarSrc = user.avatarUrl ? `${API_BASE_URL_NAV}${user.avatarUrl}` : null;
+    
+    // 生成头像 HTML
+    const avatarContent = avatarSrc 
+        ? `<img src="${avatarSrc}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">`
+        : initial;
 
-    // 创建头像容器
+    // 创建容器
     const navWrapper = document.createElement('div');
     navWrapper.className = 'user-nav-wrapper';
-    navWrapper.style.cssText = 'position: relative; display: flex; align-items: center; cursor: pointer; gap: 8px;';
+    
+    // 🟢 关键修改：在这里添加了 font-family (解决字体难看) 和 font-size (解决字体太大)
+    navWrapper.style.cssText = `
+        position: relative; 
+        display: flex; 
+        align-items: center; 
+        cursor: pointer; 
+        gap: 8px; 
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+        font-size: 14px;
+    `;
 
-    // 生成 HTML 结构
+    // 🟢 关键修改：优化了下拉菜单的样式 (width: 200px, box-shadow 等)
     navWrapper.innerHTML = `
-        <div style="width: 36px; height: 36px; background-color: #007bff; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px;">
-            ${initial}
+        <div style="width: 32px; height: 32px; background-color: #007bff; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden;">
+            ${avatarContent}
         </div>
         
-        <span class="user-name" style="font-weight: 500; color: #333; font-size: 14px;">
+        <span class="user-name" style="font-weight: 500; color: #333;">
             ${displayName}
         </span>
         
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2">
             <path d="M6 9l6 6 6-6"/>
         </svg>
 
-        <div class="nav-dropdown" style="display: none; position: absolute; top: 120%; right: 0; background: white; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 180px; z-index: 1000; overflow: hidden;">
-            <div style="padding: 12px 15px; border-bottom: 1px solid #f0f0f0; background: #fafafa;">
-                <div style="font-size: 12px; color: #888;">Signed in as</div>
-                <div style="font-weight: 600; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${user.email}</div>
+        <div class="nav-dropdown" style="display: none; position: absolute; top: 150%; right: 0; background: white; border: 1px solid #e1e4e8; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); width: 220px; z-index: 1000; text-align: left;">
+            <div style="padding: 12px 16px; border-bottom: 1px solid #f0f0f0; background: #fafafa;">
+                <div style="font-size: 11px; color: #888; text-transform: uppercase; margin-bottom: 2px;">Signed in as</div>
+                <div style="font-weight: 600; font-size: 13px; color: #333; overflow: hidden; text-overflow: ellipsis;">${user.email}</div>
             </div>
             
-            <a href="account.html" class="nav-item" style="display: block; padding: 10px 15px; color: #333; text-decoration: none; transition: background 0.2s;">
-                My Reports
-            </a>
+            <div style="padding: 6px;">
+                <a href="account.html" class="nav-item" style="display: block; padding: 8px 10px; color: #444; text-decoration: none; border-radius: 6px; font-size: 13px; transition: background 0.2s;">
+                    📊 My Reports
+                </a>
+                <a href="profile.html" class="nav-item" style="display: block; padding: 8px 10px; color: #444; text-decoration: none; border-radius: 6px; font-size: 13px; transition: background 0.2s;">
+                    ⚙️ Settings
+                </a>
+            </div>
             
-            <a href="profile.html" class="nav-item" style="display: block; padding: 10px 15px; color: #333; text-decoration: none; transition: background 0.2s;">
-                Settings
-            </a>
-            
-            <div style="border-top: 1px solid #f0f0f0;"></div>
-            <a href="#" id="logout-btn" style="display: block; padding: 10px 15px; color: #dc3545; text-decoration: none; transition: background 0.2s;">Logout</a>
+            <div style="border-top: 1px solid #f0f0f0; padding: 6px;">
+                <a href="#" id="logout-btn" style="display: block; padding: 8px 10px; color: #d73a49; text-decoration: none; border-radius: 6px; font-size: 13px; transition: background 0.2s;">
+                    🚪 Logout
+                </a>
+            </div>
         </div>
     `;
 
-    // --- 交互逻辑 ---
-    
-    // 1. 点击头像切换下拉菜单
+    // --- 交互逻辑 (保持不变) ---
     navWrapper.addEventListener('click', (e) => {
-        e.stopPropagation(); 
+        e.stopPropagation();
         const dropdown = navWrapper.querySelector('.nav-dropdown');
         const isHidden = dropdown.style.display === 'none';
         document.querySelectorAll('.nav-dropdown').forEach(el => el.style.display = 'none');
         dropdown.style.display = isHidden ? 'block' : 'none';
     });
 
-    // 2. 鼠标悬停高亮
-    navWrapper.querySelectorAll('.nav-item').forEach(item => {
-        item.addEventListener('mouseenter', () => item.style.background = '#f8f9fa');
-        item.addEventListener('mouseleave', () => item.style.background = 'white');
+    // 鼠标悬停效果
+    navWrapper.querySelectorAll('.nav-item, #logout-btn').forEach(item => {
+        item.addEventListener('mouseenter', () => item.style.backgroundColor = '#f6f8fa');
+        item.addEventListener('mouseleave', () => item.style.backgroundColor = 'transparent');
     });
 
-    // 3. 点击 Logout
+    // 登出逻辑
     const logoutBtn = navWrapper.querySelector('#logout-btn');
     logoutBtn.addEventListener('click', (e) => {
         e.preventDefault();
         localStorage.removeItem('token');
-        if(window.showToast) window.showToast('Logged out successfully');
+        if(window.showToast) window.showToast('Logged out');
         setTimeout(() => window.location.reload(), 500);
     });
 
-    // 4. 点击空白关闭
+    // 点击外部关闭
     document.addEventListener('click', () => {
         const dropdown = navWrapper.querySelector('.nav-dropdown');
         if (dropdown) dropdown.style.display = 'none';
@@ -151,3 +169,4 @@ function showLoggedIn(container, user) {
 
     container.appendChild(navWrapper);
 }
+// --- 替换结束 ---
