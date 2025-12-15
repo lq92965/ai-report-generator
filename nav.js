@@ -105,11 +105,11 @@ function showLoggedIn(container, user) {
             </div>
             
             <a href="account.html" class="nav-item" style="display: block; padding: 10px 15px; color: #333; text-decoration: none; transition: background 0.2s;">
-                My Reports (我的报告)
+                My Reports
             </a>
             
             <a href="profile.html" class="nav-item" style="display: block; padding: 10px 15px; color: #333; text-decoration: none; transition: background 0.2s;">
-                Settings (设置)
+                Settings
             </a>
             
             <div style="border-top: 1px solid #f0f0f0;"></div>
