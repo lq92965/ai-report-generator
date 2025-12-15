@@ -1,65 +1,150 @@
-// nav.js - 极简修复版 (只负责显示 My Account / Logout)
+/* * Reportify AI - nav.js (完整功能版)
+ * 包含：用户头像、下拉菜单、移动端适配
+ */
+
+const API_BASE_URL_NAV = 'https://api.goreportify.com';
+
 document.addEventListener('DOMContentLoaded', () => {
-    // 暴露全局函数，给 script.js 用
-    window.updateUserNav = checkLoginState;
-    // 自动运行一次
-    checkLoginState();
+    // 暴露全局函数，确保 script.js 可以调用
+    window.updateUserNav = loadUserNav;
+    // 页面加载完毕自动执行一次
+    loadUserNav();
 });
 
-function checkLoginState() {
+async function loadUserNav() {
     const token = localStorage.getItem('token');
     const headerActions = document.querySelector('.header-actions');
     
-    // 防御性编程：如果没有这个元素，直接跳过
+    // 如果找不到导航栏容器，直接停止
     if (!headerActions) return;
 
-    // 清空，防止重复显示
-    headerActions.innerHTML = ''; 
-
-    if (token) {
-        // === 已登录 ===
-        // 1. 显示 My Account
-        const label = document.createElement('span');
-        label.textContent = 'My Account';
-        label.style.fontWeight = 'bold';
-        label.style.marginRight = '15px';
-        label.style.color = '#333';
-
-        // 2. 显示 Logout 按钮
-        const logoutBtn = document.createElement('button');
-        logoutBtn.textContent = 'Logout';
-        logoutBtn.style.padding = '5px 15px';
-        logoutBtn.style.cursor = 'pointer';
-        logoutBtn.style.backgroundColor = '#fff';
-        logoutBtn.style.border = '1px solid #ccc';
-        logoutBtn.style.borderRadius = '4px';
-        
-        logoutBtn.onclick = () => {
-            localStorage.removeItem('token');
-            window.location.reload();
-        };
-
-        headerActions.appendChild(label);
-        headerActions.appendChild(logoutBtn);
-
-    } else {
-        // === 未登录 ===
-        // 1. 显示 Login
-        const loginBtn = document.createElement('a');
-        loginBtn.className = 'btn btn-secondary';
-        loginBtn.textContent = 'Login';
-        loginBtn.href = '#';
-        loginBtn.style.marginRight = '10px';
-        loginBtn.onclick = (e) => { e.preventDefault(); window.openModal('login'); };
-
-        // 2. 显示 Get Started
-        const startBtn = document.createElement('a');
-        startBtn.className = 'btn btn-primary';
-        startBtn.textContent = 'Get Started';
-        startBtn.href = '#';
-        startBtn.onclick = (e) => { e.preventDefault(); window.openModal('signup'); };
-
-        headerActions.appendChild(loginBtn);
-        headerActions.appendChild(startBtn);
+    // 1. 如果没有 Token，显示登录/注册按钮
+    if (!token) {
+        showLoggedOut(headerActions);
+        return;
     }
+
+    // 2. 如果有 Token，尝试从后端获取用户详情
+    try {
+        const res = await fetch(`${API_BASE_URL_NAV}/api/me`, {
+            method: 'GET',
+            headers: { 
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (res.ok) {
+            const user = await res.json();
+            showLoggedIn(headerActions, user);
+        } else {
+            // Token 可能过期了，强制登出
+            console.warn('Session expired or invalid.');
+            localStorage.removeItem('token');
+            showLoggedOut(headerActions);
+        }
+    } catch (err) {
+        console.error('Nav Error:', err);
+        // 网络错误时，为了安全起见，显示登出状态
+        showLoggedOut(headerActions);
+    }
+}
+
+// --- 渲染：未登录状态 ---
+function showLoggedOut(container) {
+    container.innerHTML = ''; // 清空
+    
+    const loginBtn = document.createElement('a');
+    loginBtn.href = '#';
+    loginBtn.className = 'btn btn-secondary';
+    loginBtn.textContent = 'Login';
+    loginBtn.style.marginRight = '10px';
+    loginBtn.onclick = (e) => { e.preventDefault(); window.openModal('login'); };
+
+    const startBtn = document.createElement('a');
+    startBtn.href = '#';
+    startBtn.className = 'btn btn-primary';
+    startBtn.textContent = 'Get Started';
+    startBtn.onclick = (e) => { e.preventDefault(); window.openModal('signup'); };
+
+    container.appendChild(loginBtn);
+    container.appendChild(startBtn);
+}
+
+// --- 渲染：已登录状态 (带头像和下拉菜单) ---
+function showLoggedIn(container, user) {
+    container.innerHTML = ''; // 清空
+
+    // 获取显示名称和首字母
+    const displayName = user.name || user.email.split('@')[0];
+    const initial = displayName.charAt(0).toUpperCase();
+
+    // 创建头像容器
+    const navWrapper = document.createElement('div');
+    navWrapper.className = 'user-nav-wrapper';
+    // 核心样式：相对定位，为了让下拉菜单能对齐
+    navWrapper.style.cssText = 'position: relative; display: flex; align-items: center; cursor: pointer; gap: 8px;';
+
+    // 生成 HTML 结构
+    navWrapper.innerHTML = `
+        <div style="width: 36px; height: 36px; background-color: #007bff; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px;">
+            ${initial}
+        </div>
+        
+        <span class="user-name" style="font-weight: 500; color: #333; font-size: 14px;">
+            ${displayName}
+        </span>
+        
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 9l6 6 6-6"/>
+        </svg>
+
+        <div class="nav-dropdown" style="display: none; position: absolute; top: 120%; right: 0; background: white; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 180px; z-index: 1000; overflow: hidden;">
+            <div style="padding: 12px 15px; border-bottom: 1px solid #f0f0f0; background: #fafafa;">
+                <div style="font-size: 12px; color: #888;">Signed in as</div>
+                <div style="font-weight: 600; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${user.email}</div>
+            </div>
+            <a href="#" class="nav-item" style="display: block; padding: 10px 15px; color: #333; text-decoration: none; transition: background 0.2s;">My Reports</a>
+            <a href="#" class="nav-item" style="display: block; padding: 10px 15px; color: #333; text-decoration: none; transition: background 0.2s;">Settings</a>
+            <div style="border-top: 1px solid #f0f0f0;"></div>
+            <a href="#" id="logout-btn" style="display: block; padding: 10px 15px; color: #dc3545; text-decoration: none; transition: background 0.2s;">Logout</a>
+        </div>
+    `;
+
+    // --- 交互逻辑 ---
+    
+    // 1. 点击头像切换下拉菜单
+    navWrapper.addEventListener('click', (e) => {
+        e.stopPropagation(); // 阻止事件冒泡
+        const dropdown = navWrapper.querySelector('.nav-dropdown');
+        const isHidden = dropdown.style.display === 'none';
+        
+        // 先关闭页面上其他可能的菜单
+        document.querySelectorAll('.nav-dropdown').forEach(el => el.style.display = 'none');
+        
+        dropdown.style.display = isHidden ? 'block' : 'none';
+    });
+
+    // 2. 鼠标悬停高亮 (模拟 CSS hover)
+    navWrapper.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('mouseenter', () => item.style.background = '#f8f9fa');
+        item.addEventListener('mouseleave', () => item.style.background = 'white');
+    });
+
+    // 3. 点击 Logout
+    const logoutBtn = navWrapper.querySelector('#logout-btn');
+    logoutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.removeItem('token');
+        if(window.showToast) window.showToast('Logged out successfully');
+        setTimeout(() => window.location.reload(), 500);
+    });
+
+    // 4. 点击页面空白处关闭菜单
+    document.addEventListener('click', () => {
+        const dropdown = navWrapper.querySelector('.nav-dropdown');
+        if (dropdown) dropdown.style.display = 'none';
+    });
+
+    container.appendChild(navWrapper);
 }
