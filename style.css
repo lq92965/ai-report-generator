@@ -1720,82 +1720,146 @@ hr.section-divider {
     display: none !important;
 }
 
-/* =========================================
-   Mobile Responsive Fixes (自适应补丁)
-   ========================================= */
-@media (max-width: 768px) {
-    /* 1. 调整容器内边距，防止贴边 */
+/* =================================================================
+   🔥 Reportify AI - Ultimate Responsive Fix (终极自适应补丁 v2.0)
+   ================================================================= */
+
+/* --- 1. 全局容器修正 (防止内容溢出) --- */
+.container {
+    max-width: 100%;
+    box-sizing: border-box; /* 核心：让padding包含在宽度内 */
+}
+
+/* --- 2. 平板端适配 (Pad / 折叠屏展开态: 768px ~ 1024px) --- */
+@media screen and (max-width: 1024px) {
+    /* 稍微缩小容器内边距 */
     .container {
-        width: 100%;
-        padding: 0 20px;
-        box-sizing: border-box;
+        padding: 0 30px; 
     }
 
-    /* 2. 导航栏：Logo和菜单分行，或者缩小间距 */
+    /* 顶部导航：保持左右结构，但缩小间距 */
     .main-header .container {
-        flex-direction: column;
-        gap: 15px;
-    }
-    
-    .header-actions {
-        width: 100%;
-        justify-content: center;
-        margin-top: 10px;
+        display: flex !important;
+        flex-direction: row !important; /* 强制横向 */
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 0 !important; /* 去掉多余间隙，靠两端对齐 */
     }
 
-    /* 3. Hero 区域：文字和按钮居中 */
-    .hero-section {
-        text-align: center;
-        padding: 60px 0;
-    }
-    
-    .hero-section h1 {
-        font-size: 2.5rem; /* 手机上字号改小 */
-        line-height: 1.2;
-    }
-    
-    .cta-buttons {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .btn-large {
-        width: 100%; /* 按钮占满全宽 */
-    }
-
-    /* 4. 功能网格和价格卡片：改为单列 */
+    /* 功能网格/价格卡片：平板上改为 2 列 (原来可能是3列) */
     .features-grid, 
     .pricing-grid,
-    .generator-container {
-        grid-template-columns: 1fr !important; /* 强制一列显示 */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px;
     }
+}
+
+/* --- 3. 手机端适配 (Mobile: 768px 以下) --- */
+@media screen and (max-width: 767px) {
     
-    /* 5. 表单输入框在手机上更易点击 */
-    input, select, textarea {
-        font-size: 16px; /* 防止 iOS 自动缩放 */
+    /* === 核心布局 === */
+    .container {
+        padding: 0 20px !important; /* 手机两边留白 */
     }
 
-    /* 6. 弹窗适配 */
-    .auth-modal {
-        width: 90%;
-        padding: 20px;
+    /* === 顶部导航栏 (你最关心的部分) === */
+    .main-header {
+        padding: 15px 0; /* 减小高度 */
+    }
+
+    .main-header .container {
+        display: flex !important;
+        flex-direction: row !important; /* 坚决保持一行！ */
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important; /* 禁止换行 */
+    }
+
+    /* Logo 缩小，防止挤压 */
+    .logo {
+        font-size: 1.2rem; 
+        flex-shrink: 0; /* 防止 Logo 被压缩 */
     }
     
-    /* 7. Profile 页面适配 */
+    .logo span:last-child {
+        display: inline-block; /* 保持文字显示 */
+    }
+
+    /* 右侧菜单区域 */
+    .header-actions {
+        margin-top: 0 !important; /* 去掉上次的 margin */
+        width: auto !important;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    /* 那个圆圆的头像框缩小一点 */
+    .user-nav-wrapper {
+        transform: scale(0.9); /* 整体轻微缩小 */
+        transform-origin: right center;
+    }
+
+    /* === Hero 区域 === */
+    .hero-section {
+        padding: 40px 0;
+        text-align: center;
+    }
+    .hero-section h1 {
+        font-size: 2rem !important; /* 标题字号缩小 */
+    }
+
+    /* === 卡片修正 (解决"比其他地方宽"的问题) === */
+    .features-grid, 
+    .pricing-grid,
+    .stats-grid {
+        display: flex !important; /* 改用 Flex 布局更容易控制单列 */
+        flex-direction: column !important;
+        gap: 20px;
+    }
+
+    .pricing-card, 
+    .feature-card, 
+    .stat-box,
+    .usage-card {
+        width: 100% !important; /* 强制 100% 宽 */
+        margin: 0 !important;   /* 去掉多余边距 */
+        box-sizing: border-box !important; /* 包含边框和内边距 */
+        max-width: none !important; /* 解除最大宽度限制 */
+    }
+
+    /* === 弹窗适配 === */
+    .auth-modal {
+        width: 90% !important;
+        max-width: 90% !important;
+        padding: 20px !important;
+        margin: 0 auto;
+    }
+    
+    .social-login-grid {
+        grid-template-columns: 1fr !important; /* 社交登录按钮变成竖排，防止挤压 */
+    }
+
+    /* === Profile 页面适配 === */
     .profile-card {
         flex-direction: column;
-        align-items: center;
     }
-    
     .profile-sidebar {
         width: 100%;
         border-right: none;
         border-bottom: 1px solid #eee;
         padding-bottom: 20px;
         margin-bottom: 20px;
+        text-align: center; /* 头像居中 */
     }
-    
-    .profile-content {
-        width: 100%;
+}
+
+/* --- 4. 超小屏幕适配 (iPhone SE, 折叠屏外屏: 375px 以下) --- */
+@media screen and (max-width: 375px) {
+    .logo span:last-child {
+        display: none; /* 屏幕太小时，只显示 Logo 图标，隐藏文字 Reportify AI */
+    }
+    .logo-icon {
+        font-size: 1.5rem;
     }
 }
