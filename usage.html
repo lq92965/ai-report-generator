@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +7,17 @@
     <link rel="stylesheet" href="style.css?v=13.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* 🔴 修复 1：强制横向排列 (Flex Row) */
+        /* 强制横向排列，手机端自动垂直 */
         .stats-grid {
-            display: flex; /* 改用 Flex */
-            flex-direction: row; /* 强制横向 */
-            justify-content: space-between; /* 两端对齐 */
-            gap: 20px; /* 间距 */
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 20px;
             margin-top: 40px;
         }
         
         .stat-box {
-            flex: 1; /* 三个盒子等宽 */
+            flex: 1;
             background: #f8f9fa;
             border-radius: 16px;
             padding: 25px 20px;
@@ -33,7 +33,7 @@
         }
 
         .stat-number {
-            font-size: 2.5rem; /* 数字加大 */
+            font-size: 2.5rem;
             font-weight: 800;
             color: #333;
             margin: 15px 0 5px;
@@ -43,6 +43,7 @@
             font-size: 0.95rem;
             color: #666;
             font-weight: 600;
+            text-transform: uppercase; /* 英文习惯 */
         }
         
         .stat-desc {
@@ -51,7 +52,7 @@
             margin-top: 5px;
         }
 
-        /* 进度条样式 */
+        /* 进度条 */
         .progress-container {
             background: #e9ecef;
             border-radius: 20px;
@@ -67,17 +68,13 @@
             border-radius: 20px;
             width: 0%;
             transition: width 0.8s ease-in-out;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.8rem;
-            font-weight: bold;
         }
         
-        /* 手机端适配：自动变成竖排 */
+        /* 手机端适配 */
         @media (max-width: 768px) {
             .stats-grid { flex-direction: column; }
+            .container { padding: 0 15px; }
+            h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
@@ -92,26 +89,25 @@
 
     <div style="width: 100%; max-width: 1000px; margin: 30px auto 0; padding: 0 20px; text-align: left;">
         <a href="account.html" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #666; font-size: 0.9rem; font-weight: 600;">
-            <i class="fas fa-arrow-left"></i> 返回账户中心
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
         </a>
     </div>
 
     <div class="container" style="max-width: 900px; margin: 20px auto 60px; padding: 0 20px;">
-        
         <div style="background: white; border-radius: 24px; padding: 50px; box-shadow: 0 10px 40px rgba(0,0,0,0.06);">
             
             <div style="text-align: center; margin-bottom: 40px;">
-                <h1 style="margin: 0 0 10px; color: #333; font-size: 2rem;">使用量统计</h1>
-                <p style="color: #666;">当前计划：<span id="plan-name" style="color: #007bff; font-weight: 800; font-size: 1.1rem;">LOADING...</span></p>
+                <h1 style="margin: 0 0 10px; color: #333; font-size: 2rem;">Usage Statistics</h1>
+                <p style="color: #666;">Current Plan: <span id="plan-name" style="color: #007bff; font-weight: 800; font-size: 1.1rem; text-transform: uppercase;">LOADING...</span></p>
                 <div id="upgrade-hint" style="display:none; margin-top:10px;">
-                    <a href="subscription.html" class="btn btn-sm btn-outline" style="border-radius:20px; padding:5px 15px; font-size:0.8rem;">升级计划 &rarr;</a>
+                    <a href="subscription.html" class="btn btn-sm btn-outline" style="border-radius:20px; padding:5px 15px; font-size:0.8rem;">Upgrade Plan &rarr;</a>
                 </div>
             </div>
 
             <div style="max-width: 600px; margin: 0 auto 50px; text-align: center;">
                 <div style="display:flex; justify-content:space-between; margin-bottom:5px; font-weight:600; color:#555;">
-                    <span>已用额度</span>
-                    <span>总额度</span>
+                    <span>Used</span>
+                    <span>Total Limit</span>
                 </div>
                 <div style="font-size: 3.5rem; font-weight: 900; color: #333; line-height: 1;">
                     <span id="usage-used">0</span> <span style="font-size: 1.5rem; color: #ccc; vertical-align: middle;">/</span> <span id="usage-limit" style="font-size: 1.5rem; color: #999; vertical-align: middle;">0</span>
@@ -120,86 +116,84 @@
                 <div class="progress-container">
                     <div id="usage-progress" class="progress-bar"></div>
                 </div>
-                <p id="reset-info" style="font-size: 0.85rem; color: #888;">配额将在每天/每月初重置</p>
+                <p id="reset-info" style="font-size: 0.85rem; color: #888;">Quotas reset daily/monthly.</p>
             </div>
 
             <hr style="border: 0; border-top: 1px solid #eee; margin: 0 20px;">
 
             <div class="stats-grid">
-                
                 <div class="stat-box">
                     <i class="fas fa-bolt" style="color: #ffc107; font-size: 1.8rem;"></i>
                     <div class="stat-number" id="quota-left">0</div>
-                    <div class="stat-label">剩余次数</div>
-                    <div class="stat-desc">本周期可用</div>
+                    <div class="stat-label">Remaining</div>
+                    <div class="stat-desc">Available this cycle</div>
                 </div>
 
                 <div class="stat-box">
                     <i class="fas fa-hourglass-half" style="color: #28a745; font-size: 1.8rem;"></i>
                     <div class="stat-number" id="days-remaining">0</div>
-                    <div class="stat-label">剩余天数</div>
-                    <div class="stat-desc">距离重置/过期</div>
+                    <div class="stat-label">Days Left</div>
+                    <div class="stat-desc">Until reset</div>
                 </div>
 
                 <div class="stat-box">
                     <i class="fas fa-calendar-check" style="color: #17a2b8; font-size: 1.8rem;"></i>
                     <div class="stat-number" id="days-used">0</div>
-                    <div class="stat-label">活跃天数</div>
-                    <div class="stat-desc">自注册以来</div>
+                    <div class="stat-label">Active Days</div>
+                    <div class="stat-desc">Since joined</div>
                 </div>
-
             </div>
 
         </div>
     </div>
 
     <script src="nav.js"></script>
-    <script src="script.js?v=13.0"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const token = localStorage.getItem('token');
             if (!token) { window.location.href = 'index.html'; return; }
 
             try {
+                // 请求后端接口
                 const res = await fetch('https://api.goreportify.com/api/usage', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
+                
+                if (!res.ok) throw new Error("Failed to load usage data");
                 const data = await res.json();
 
-                // 1. 顶部基础信息
-                document.getElementById('plan-name').textContent = data.planName;
+                // 填充数据 (英文版)
+                document.getElementById('plan-name').textContent = data.planName || 'Basic';
                 if(data.plan === 'free') document.getElementById('upgrade-hint').style.display = 'block';
 
                 document.getElementById('usage-used').textContent = data.used;
                 
-                // 2. 进度条逻辑
                 if (data.limit === -1) {
                     document.getElementById('usage-limit').textContent = "∞";
                     document.getElementById('usage-progress').style.width = '100%';
-                    document.getElementById('quota-left').textContent = "无限";
+                    document.getElementById('quota-left').textContent = "Unlimited";
                 } else {
                     document.getElementById('usage-limit').textContent = data.limit;
-                    // 🔴 逻辑闭环：这里显示剩余次数
-                    document.getElementById('quota-left').textContent = data.quotaLeft;
+                    document.getElementById('quota-left').textContent = data.limit - data.used;
                     
                     const percent = Math.min(100, (data.used / data.limit) * 100);
                     const progressBar = document.getElementById('usage-progress');
                     progressBar.style.width = percent + '%';
                     
-                    // 变色逻辑：用得多了变橙色/红色
-                    if(percent > 80) progressBar.style.background = '#dc3545'; // 红
-                    else if(percent > 50) progressBar.style.background = '#ffc107'; // 橙
+                    if(percent > 80) progressBar.style.background = '#dc3545';
+                    else if(percent > 50) progressBar.style.background = '#ffc107';
                 }
 
-                // 3. 时间数据
-                document.getElementById('days-remaining').textContent = data.daysRemaining;
-                document.getElementById('days-used').textContent = data.daysUsed;
+                document.getElementById('days-remaining').textContent = data.daysRemaining || 30;
+                document.getElementById('days-used').textContent = data.daysUsed || 1;
                 
-                // 4. 底部导航栏同步
-                if (window.updateUserNav) window.updateUserNav({ plan: data.plan });
+                if (window.updateUserNav) window.updateUserNav();
 
             } catch (err) {
                 console.error(err);
+                // 失败时显示默认值
+                document.getElementById('plan-name').textContent = "BASIC";
+                document.getElementById('usage-limit').textContent = "10";
             }
         });
     </script>
