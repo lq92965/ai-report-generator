@@ -2,26 +2,23 @@ import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
 import axios from 'axios';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { HttpsProxyAgent } from 'https-proxy-agent';
 
-
-// --- 初始化应用和常量 ---
 const app = express();
 const API_KEY = process.env.GOOGLE_API_KEY;
 const MODEL_NAME = 'gemini-1.5-flash';
 const MONGO_URI = process.env.MONGO_URI;
 const JWT_SECRET = process.env.JWT_SECRET;
 
-// --- 检查环境变量 ---
+// 1. 检查环境变量
 if (!API_KEY || !MONGO_URI || !JWT_SECRET) {
   console.error("错误：环境变量未完全设置！");
   process.exit(1);
 }
 
-// --- 数据库连接 ---
+// 2. 数据库连接
 const client = new MongoClient(MONGO_URI);
 let db;
 async function connectDB() {
@@ -36,93 +33,118 @@ async function connectDB() {
 }
 connectDB();
 
-// --- 中间件设置 ---
+// 3. 中间件配置
 app.use(cors({
-  origin: process.env.CLIENT_ORIGIN,
+  origin: process.env.CLIENT_ORIGIN || '*', 
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
+app.use(express.json());
 
-// --- 新增：健康检查路由 ---
-app.get('/', (req, res) => {
-  res.status(200).send('Backend is running healthy!');
-});
+// 4. 鉴权中间件 (验证 Token)
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (!token) return res.status(401).json({ message: '未授权：请先登录' });
 
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ message: 'Token 无效或已过期' });
+    req.user = user;
+    next();
+  });
+};
 
-// --- 用户认证 API ---
-app.post('/register', async (req, res) => {
+// --- 5. 路由定义 (全部加上 /api 前缀) ---
+
+// 健康检查
+app.get('/', (req, res) => res.status(200).send('Backend is running healthy!'));
+
+// 注册接口
+app.post('/api/register', async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: "所有字段都是必填的" });
-    }
+    const { displayName, email, password } = req.body;
+    if (!email || !password) return res.status(400).json({ message: "缺少必要字段" });
+    
     const existingUser = await db.collection('users').findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: "该邮箱已被注册" });
-    }
+    if (existingUser) return res.status(400).json({ message: "邮箱已存在" });
+
     const hashedPassword = await bcrypt.hash(password, 10);
-    await db.collection('users').insertOne({ name, email, password: hashedPassword });
-    res.status(201).json({ message: "用户注册成功" });
+    await db.collection('users').insertOne({ 
+        name: displayName || 'User', 
+        email, 
+        password: hashedPassword,
+        plan: 'basic',
+        createdAt: new Date()
+    });
+    res.status(201).json({ message: "注册成功" });
   } catch (error) {
-    console.error("注册失败:", error);
-    res.status(500).json({ message: "服务器内部错误" });
+    console.error(error);
+    res.status(500).json({ message: "服务器错误" });
   }
 });
 
-app.post('/login', async (req, res) => {
+// 登录接口
+app.post('/api/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-        if (!email || !password) {
-            return res.status(400).json({ message: "邮箱和密码是必填的" });
-        }
         const user = await db.collection('users').findOne({ email });
-        if (!user) {
-            return res.status(400).json({ message: "无效的邮箱或密码" });
+        if (!user || !(await bcrypt.compare(password, user.password))) {
+            return res.status(400).json({ message: "账号或密码错误" });
         }
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ message: "无效的邮箱或密码" });
-        }
-        const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1d' });
+        // 生成 Token
+        const token = jwt.sign({ userId: user._id, plan: user.plan || 'basic' }, JWT_SECRET, { expiresIn: '7d' });
         res.json({ token, message: "登录成功" });
     } catch (error) {
-        console.error("登录失败:", error);
-        res.status(500).json({ message: "服务器内部错误" });
+        console.error(error);
+        res.status(500).json({ message: "服务器错误" });
     }
 });
 
+// 获取用户信息接口 (前端 nav.js 需要这个)
+app.get('/api/me', authenticateToken, async (req, res) => {
+    try {
+        const user = await db.collection('users').findOne(
+            { _id: new ObjectId(req.user.userId) },
+            { projection: { password: 0 } }
+        );
+        if (!user) return res.status(404).json({ message: "用户不存在" });
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ message: "服务器错误" });
+    }
+});
 
-// --- AI 生成接口 ---
-app.post('/generate', async (req, res) => {
-  const { userPrompt, template, detailLevel, role, tone, language } = req.body;
-  if (!userPrompt) {
-    return res.status(400).json({ error: 'Prompt is required.' });
-  }
+// 获取模板接口
+app.get('/api/templates', async (req, res) => {
+    const templates = [
+        { _id: 'daily_summary', title: 'Daily Work Summary', category: 'General', isPro: false },
+        { _id: 'project_proposal', title: 'Project Proposal', category: 'Management', isPro: true },
+        { _id: 'marketing_copy', title: 'Marketing Copy', category: 'Marketing', isPro: true },
+    ];
+    res.json(templates);
+});
+
+// AI 生成接口
+app.post('/api/generate', authenticateToken, async (req, res) => {
+  const { userPrompt, role, templateId, inputs } = req.body;
+  
   const finalPrompt = `
-    You are an expert in writing professional business reports. Your task is to act as a ${role} and create a complete, detailed, and ready-to-submit report.
-    **CRITICAL INSTRUCTION: You must not generate only a framework or an outline.** Your main goal is to expand the user's key points into fluent, detailed paragraphs. Based on your assigned role, you should add relevant details, analysis, or suggestions to make the report look highly professional and insightful. The final deliverable should be a complete document that the user can use after minor edits like changing the name and date.
-    Here are the report criteria:
-    - **Report Type**: ${template}
-    - **Detail Level**: ${detailLevel}.
-    - **Tone and Style**: ${tone}
-    - **Output Language**: ${language}
-    Here are the user's key points that you must expand upon:
-    ---
-    ${userPrompt}
-    ---
+    Role: ${role || 'Consultant'}. 
+    Task: Write a report for ${templateId}. 
+    Context: ${userPrompt} 
+    Inputs: ${JSON.stringify(inputs || {})}
   `;
+  
   const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
   
   try {
-    const response = await axios.post(apiUrl, {
-      contents: [{ parts: [{ text: finalPrompt }] }]
-    });
+    const response = await axios.post(apiUrl, { contents: [{ parts: [{ text: finalPrompt }] }] });
     const generatedText = response.data.candidates[0].content.parts[0].text;
-    res.json({ generatedText: generatedText });
+    res.json({ generatedText });
   } catch (error) {
-    console.error("详细错误信息:", error.response ? error.response.data : error.message);
-    res.status(500).json({ error: 'Failed to generate content.' });
+    console.error("AI Error:", error.response?.data || error.message);
+    res.status(500).json({ error: 'AI 生成服务暂时不可用' });
   }
 });
 
-// 导出 app 供 Vercel/Fly.io 使用
-export default app; 
+export default app;
