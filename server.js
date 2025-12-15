@@ -7,6 +7,8 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 const app = express();
+const PORT = process.env.PORT || 3000;
+
 const API_KEY = process.env.GOOGLE_API_KEY;
 const MODEL_NAME = 'gemini-1.5-flash';
 const MONGO_URI = process.env.MONGO_URI;
@@ -33,15 +35,26 @@ async function connectDB() {
 }
 connectDB();
 
-// 3. 中间件配置
+// 3. 中间件配置 (包含 CORS 白名单)
 app.use(cors({
-  origin: process.env.CLIENT_ORIGIN || '*', 
+  origin: [
+      'https://goreportify.com', 
+      'https://www.goreportify.com', 
+      'http://localhost:3000',
+      'http://127.0.0.1:5500' 
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
 app.use(express.json());
 
-// 4. 鉴权中间件 (验证 Token)
+// --- 调试日志 ---
+app.use((req, res, next) => {
+    console.log(`[Request] ${req.method} ${req.path}`);
+    next();
+});
+
+// 4. 鉴权中间件
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
@@ -54,68 +67,43 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-// --- 5. 路由定义 (全部加上 /api 前缀) ---
+// --- 5. 路由定义 (兼容 /api 前缀和无前缀) ---
 
-// 健康检查
 app.get('/', (req, res) => res.status(200).send('Backend is running healthy!'));
 
-// 注册接口
-app.post('/api/register', async (req, res) => {
+app.post(['/api/register', '/register'], async (req, res) => {
   try {
     const { displayName, email, password } = req.body;
     if (!email || !password) return res.status(400).json({ message: "缺少必要字段" });
-    
     const existingUser = await db.collection('users').findOne({ email });
     if (existingUser) return res.status(400).json({ message: "邮箱已存在" });
-
     const hashedPassword = await bcrypt.hash(password, 10);
-    await db.collection('users').insertOne({ 
-        name: displayName || 'User', 
-        email, 
-        password: hashedPassword,
-        plan: 'basic',
-        createdAt: new Date()
-    });
+    await db.collection('users').insertOne({ name: displayName || 'User', email, password: hashedPassword, plan: 'basic', createdAt: new Date() });
     res.status(201).json({ message: "注册成功" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "服务器错误" });
-  }
+  } catch (error) { console.error(error); res.status(500).json({ message: "服务器错误" }); }
 });
 
-// 登录接口
-app.post('/api/login', async (req, res) => {
+app.post(['/api/login', '/login'], async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await db.collection('users').findOne({ email });
         if (!user || !(await bcrypt.compare(password, user.password))) {
             return res.status(400).json({ message: "账号或密码错误" });
         }
-        // 生成 Token
         const token = jwt.sign({ userId: user._id, plan: user.plan || 'basic' }, JWT_SECRET, { expiresIn: '7d' });
         res.json({ token, message: "登录成功" });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "服务器错误" });
-    }
+    } catch (error) { console.error(error); res.status(500).json({ message: "服务器错误" }); }
 });
 
-// 获取用户信息接口 (前端 nav.js 需要这个)
-app.get('/api/me', authenticateToken, async (req, res) => {
+app.get(['/api/me', '/me'], authenticateToken, async (req, res) => {
     try {
-        const user = await db.collection('users').findOne(
-            { _id: new ObjectId(req.user.userId) },
-            { projection: { password: 0 } }
-        );
+        const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) }, { projection: { password: 0 } });
         if (!user) return res.status(404).json({ message: "用户不存在" });
         res.json(user);
-    } catch (error) {
-        res.status(500).json({ message: "服务器错误" });
-    }
+    } catch (error) { res.status(500).json({ message: "服务器错误" }); }
 });
 
-// 获取模板接口
-app.get('/api/templates', async (req, res) => {
+app.get(['/api/templates', '/templates'], async (req, res) => {
     const templates = [
         { _id: 'daily_summary', title: 'Daily Work Summary', category: 'General', isPro: false },
         { _id: 'project_proposal', title: 'Project Proposal', category: 'Management', isPro: true },
@@ -124,27 +112,16 @@ app.get('/api/templates', async (req, res) => {
     res.json(templates);
 });
 
-// AI 生成接口
-app.post('/api/generate', authenticateToken, async (req, res) => {
+app.post(['/api/generate', '/generate'], authenticateToken, async (req, res) => {
   const { userPrompt, role, templateId, inputs } = req.body;
-  
-  const finalPrompt = `
-    Role: ${role || 'Consultant'}. 
-    Task: Write a report for ${templateId}. 
-    Context: ${userPrompt} 
-    Inputs: ${JSON.stringify(inputs || {})}
-  `;
-  
+  const finalPrompt = `Role: ${role}. Task: Report for ${templateId}. Context: ${userPrompt}. Inputs: ${JSON.stringify(inputs)}`;
   const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
-  
   try {
     const response = await axios.post(apiUrl, { contents: [{ parts: [{ text: finalPrompt }] }] });
-    const generatedText = response.data.candidates[0].content.parts[0].text;
-    res.json({ generatedText });
-  } catch (error) {
-    console.error("AI Error:", error.response?.data || error.message);
-    res.status(500).json({ error: 'AI 生成服务暂时不可用' });
-  }
+    res.json({ generatedText: response.data.candidates[0].content.parts[0].text });
+  } catch (error) { res.status(500).json({ error: 'AI Error' }); }
 });
 
-export default app;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
