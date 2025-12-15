@@ -85,23 +85,21 @@ function showLoggedIn(container, user) {
     const navWrapper = document.createElement('div');
     navWrapper.className = 'user-nav-wrapper';
     
-    // 🟢 修改点 1：字号从 14px 加大到 15px
+    // 🔴 移除 font-family，让 style.css 全局控制
     navWrapper.style.cssText = `
         position: relative; 
         display: flex; 
         align-items: center; 
         cursor: pointer; 
-        gap: 10px; /* 间距稍微拉大 */
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-        font-size: 15px; 
+        gap: 10px;
     `;
 
     navWrapper.innerHTML = `
-        <div style="width: 42px; height: 42px; background-color: #007bff; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 18px; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); overflow: hidden; flex-shrink: 0;">
+        <div style="width: 40px; height: 40px; background-color: #007bff; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 18px; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); overflow: hidden; flex-shrink: 0;">
             ${avatarContent}
         </div>
         
-        <span class="user-name" style="font-weight: 500; color: #333;">
+        <span class="user-name" style="font-weight: 500; color: #333; font-size: 14px;">
             ${displayName}
         </span>
         
@@ -132,7 +130,7 @@ function showLoggedIn(container, user) {
         </div>
     `;
 
-    // --- 交互逻辑 (保持不变) ---
+    // 交互逻辑
     navWrapper.addEventListener('click', (e) => {
         e.stopPropagation();
         const dropdown = navWrapper.querySelector('.nav-dropdown');
