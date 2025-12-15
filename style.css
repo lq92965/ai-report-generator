@@ -1719,3 +1719,83 @@ hr.section-divider {
 .recommended-badge {
     display: none !important;
 }
+
+/* =========================================
+   Mobile Responsive Fixes (自适应补丁)
+   ========================================= */
+@media (max-width: 768px) {
+    /* 1. 调整容器内边距，防止贴边 */
+    .container {
+        width: 100%;
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+
+    /* 2. 导航栏：Logo和菜单分行，或者缩小间距 */
+    .main-header .container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .header-actions {
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    /* 3. Hero 区域：文字和按钮居中 */
+    .hero-section {
+        text-align: center;
+        padding: 60px 0;
+    }
+    
+    .hero-section h1 {
+        font-size: 2.5rem; /* 手机上字号改小 */
+        line-height: 1.2;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .btn-large {
+        width: 100%; /* 按钮占满全宽 */
+    }
+
+    /* 4. 功能网格和价格卡片：改为单列 */
+    .features-grid, 
+    .pricing-grid,
+    .generator-container {
+        grid-template-columns: 1fr !important; /* 强制一列显示 */
+    }
+    
+    /* 5. 表单输入框在手机上更易点击 */
+    input, select, textarea {
+        font-size: 16px; /* 防止 iOS 自动缩放 */
+    }
+
+    /* 6. 弹窗适配 */
+    .auth-modal {
+        width: 90%;
+        padding: 20px;
+    }
+    
+    /* 7. Profile 页面适配 */
+    .profile-card {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .profile-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .profile-content {
+        width: 100%;
+    }
+}
