@@ -1720,82 +1720,109 @@ hr.section-divider {
     display: none !important;
 }
 
-/* =================================================================
-   🔥 Reportify AI - Responsive Fix v3.0 (针对 iPad/折叠屏/安卓优化)
-   ================================================================= */
+/* ====================================================================
+   🔥 Reportify AI - 响应式适配补丁 v5.0 (追加到 style.css 最底部)
+   ==================================================================== */
 
-/* --- 0. 全局 Logo 颜色强制修正 (解决 Vivo 变蓝问题) --- */
-a.logo {
-    color: #333 !important; /* 强制文字黑色，覆盖浏览器默认蓝 */
+/* --- 1. 全局修正 (强制修复 Logo 颜色和容器) --- */
+/* 解决 Vivo/安卓手机 Logo 变蓝的问题 */
+a.logo, 
+a.logo:visited,
+.main-header a {
+    color: #333 !important; 
     text-decoration: none !important;
 }
 .logo-icon {
-    color: #e63946 !important; /* 强制图标红色/品牌色 */
+    color: #e63946 !important; 
 }
 
-/* --- 1. 平板/桌面过渡区 (901px - 1200px) --- */
-/* 针对 iPad Pro 竖屏、iPad Air 横屏 */
-@media screen and (max-width: 1200px) {
+/* 确保所有容器内边距计算正确 */
+* { box-sizing: border-box; }
+body { overflow-x: hidden; }
+
+/* --- 2. 导航栏锁定 (所有设备通用) --- */
+/* 强制 Logo 和 头像 永远在同一行，绝不换行 */
+.main-header .container {
+    display: flex !important;
+    flex-direction: row !important; 
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+}
+
+/* --- 3. 屏幕分级适配 --- */
+
+/* [层级 A] 笔记本 & 横屏 iPad Pro (1025px - 1366px) */
+@media screen and (max-width: 1366px) {
+    .container { padding: 0 40px; }
+    /* 保持 3 列，但缩小间距 */
+    .features-grid, .pricing-grid, .stats-grid { gap: 20px; }
+}
+
+/* [层级 B] 竖屏 iPad & 折叠屏展开态 (769px - 1024px) */
+@media screen and (max-width: 1024px) {
     .container { padding: 0 30px; }
     
-    /* 确保 Logo 文字不消失 */
-    .logo span { display: inline-block !important; }
-}
-
-/* --- 2. 竖屏平板 & 大手机 (900px 以下) --- */
-/* 🔴 核心改动：iPad Mini/Air 竖屏现在会走这里，强制单列，不再挤压 */
-@media screen and (max-width: 900px) {
+    /* 强制改为 2 列布局，防止 3 列太挤 */
+    .features-grid, .pricing-grid, .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px;
+    }
     
-    /* 布局改为单列，内容居中，更美观 */
-    .features-grid, 
-    .pricing-grid,
-    .stats-grid {
-        grid-template-columns: 1fr !important; /* 强制单列 */
-        gap: 25px;
-        max-width: 600px; /* 限制最大宽度，防止在 iPad 上拉得太长 */
-        margin: 0 auto;   /* 居中显示 */
-    }
-
-    /* 顶部导航：保持左右结构，防止换行 */
-    .main-header .container {
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-    }
-
-    /* 修复 Usage 页面卡片 */
-    .usage-card {
-        padding: 30px 20px !important;
-    }
+    /* 标题字号微调 */
+    .hero-section h1 { font-size: 3rem; }
 }
 
-/* --- 3. 手机端 (600px 以下) --- */
-@media screen and (max-width: 600px) {
+/* [层级 C] 手机 & 折叠屏外屏 (768px 以下) */
+@media screen and (max-width: 768px) {
     .container { padding: 0 20px !important; }
 
-    /* Hero 文字进一步缩小 */
-    .hero-section h1 { font-size: 2rem !important; }
-    
+    /* 强制改为单列 (1列) 布局 */
+    .features-grid, 
+    .pricing-grid, 
+    .stats-grid, 
+    .generator-container {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 25px;
+    }
+
+    /* 卡片宽度修正：填满屏幕 */
+    .feature-card, .pricing-card, .stat-box {
+        width: 100% !important;
+        margin: 0 !important;
+        max-width: none !important;
+    }
+
     /* 导航栏微调 */
-    .logo { font-size: 1.2rem; }
-    .header-actions { margin-top: 0 !important; }
+    .header-actions {
+        margin-top: 0 !important;
+        width: auto !important;
+    }
     
-    /* 弹窗全宽 */
-    .auth-modal { width: 95% !important; margin: 10px auto; }
-    
-    /* Profile 页面变单列 */
+    /* Hero 区域 */
+    .hero-section { padding: 40px 0; }
+    .hero-section h1 { font-size: 2.2rem !important; }
+
+    /* 按钮全宽 */
+    .cta-buttons { flex-direction: column; width: 100%; }
+    .btn { width: 100%; text-align: center; }
+
+    /* Profile 页面垂直排列 */
     .profile-card { flex-direction: column; }
     .profile-sidebar { 
         border-right: none; 
         border-bottom: 1px solid #eee; 
-        margin-bottom: 20px;
+        margin-bottom: 20px; 
     }
 }
 
-/* --- 4. 超小屏幕 (360px 以下, 如折叠屏外屏) --- */
-@media screen and (max-width: 360px) {
-    .logo span:last-child {
-        display: none; /* 空间实在不够时，才隐藏文字 */
-    }
+/* [层级 D] 小屏手机 (480px 以下) */
+@media screen and (max-width: 480px) {
+    .logo { font-size: 1.1rem; }
+    .user-nav-wrapper { gap: 5px !important; }
+    
+    /* 空间不足时隐藏用户名，只留头像 */
+    .user-name { display: none !important; }
 }
