@@ -1721,57 +1721,44 @@ hr.section-divider {
 }
 
 /* ====================================================================
-   🔥 Reportify AI - 响应式 & iPad Air 修复补丁 (v6.0 Final)
+   🔥 Reportify AI - 响应式 v7.0 (回退优化版 + iPad Air 专属补丁)
    ==================================================================== */
 
-/* --- 1. 强制修复 Logo 颜色 (解决 Vivo/安卓小鸟变蓝) --- */
-a.logo, 
-a.logo:visited,
-a.logo:hover,
-a.logo:active,
-.main-header a {
+/* --- 1. 强制修复 Logo 颜色 (保留这个，解决小鸟变蓝) --- */
+a.logo, a.logo:visited, .main-header a {
     color: #333 !important; 
-    text-decoration: none !important; /* 去掉下划线 */
-    -webkit-tap-highlight-color: transparent; /* 去掉点击高亮 */
+    text-decoration: none !important;
+    -webkit-tap-highlight-color: transparent;
 }
-
 .logo-icon {
-    /* 强制红色，并防止被浏览器篡改 */
     color: #e63946 !important; 
     fill: #e63946 !important; 
-    -webkit-text-fill-color: #e63946 !important; 
 }
 
-/* --- 2. 导航栏锁定 (所有设备通用) --- */
-/* 强制 Logo 和 头像 永远在同一行，绝不换行 */
+/* --- 2. 导航栏锁定 --- */
 .main-header .container {
     display: flex !important;
     flex-direction: row !important; 
     justify-content: space-between !important;
     align-items: center !important;
     flex-wrap: nowrap !important;
-    height: 60px;
 }
 
-.logo { flex-shrink: 0; }
-.header-actions { flex-shrink: 0; }
-
 /* =================================================================
-   核心分层适配 (Media Queries)
+   核心分层适配
    ================================================================= */
 
 /* [层级 A] 笔记本 & 横屏 iPad Pro (1025px - 1400px) */
 @media screen and (max-width: 1400px) {
     .container { padding: 0 40px; }
-    /* 卡片间距缩小 */
-    .features-grid, .pricing-grid, .stats-grid { gap: 20px; }
 }
 
-/* [层级 B] 竖屏 iPad Pro (901px - 1024px) */
-@media screen and (max-width: 1024px) {
+/* [层级 B: 针对 iPad Air 竖屏 / iPad Pro 竖屏] (769px - 1024px) */
+/* 🔴 核心修复：这个区间强制使用【双列布局】，解决 iPad Air 两边被切掉的问题 */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
     .container { padding: 0 30px; }
     
-    /* 强制改为 2 列布局 (3列放不下) */
+    /* 改为 2 列，刚好填满 iPad Air */
     .features-grid, .pricing-grid, .stats-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr) !important;
@@ -1781,53 +1768,48 @@ a.logo:active,
     .hero-section h1 { font-size: 3rem; }
 }
 
-/* [层级 C] iPad Air, iPad Mini, 手机 (900px 以下) */
-/* 🔴 核心修复：把界限提高到 900px，让 iPad Air 也进入单列模式 */
-@media screen and (max-width: 900px) {
-    .container { padding: 0 25px !important; }
+/* [层级 C: 手机、折叠屏、iPad Mini] (768px 以下) */
+/* 🔴 回退到你满意的旧版逻辑：全宽单列，解决“偏左”问题 */
+@media screen and (max-width: 768px) {
+    .container { padding: 0 20px !important; }
 
-    /* 强制改为单列 (1列) 垂直布局，完美解决遮挡问题 */
+    /* 单列布局 */
     .features-grid, 
     .pricing-grid, 
     .stats-grid, 
     .generator-container {
         display: flex !important;
         flex-direction: column !important;
-        gap: 30px;
-        max-width: 600px; /* 限制最大宽度，防止卡片在 iPad 上太宽 */
-        margin: 0 auto;   /* 居中 */
+        gap: 25px;
     }
 
-    /* 卡片宽度修正 */
+    /* 恢复全宽，取消 max-width 限制 (解决折叠屏偏左问题) */
     .feature-card, .pricing-card, .stat-box {
         width: 100% !important;
         margin: 0 !important;
     }
 
-    /* Hero 区域 */
+    /* 导航栏微调 */
+    .header-actions { margin-top: 0 !important; width: auto !important; }
+    
+    /* Hero */
     .hero-section { padding: 40px 0; }
     .hero-section h1 { font-size: 2.2rem !important; }
 
-    /* 按钮全宽 */
+    /* 按钮 */
     .cta-buttons { flex-direction: column; width: 100%; }
     .btn { width: 100%; text-align: center; }
 
-    /* Profile 页面垂直排列 */
+    /* Profile */
     .profile-card { flex-direction: column; }
     .profile-sidebar { 
-        width: 100%;
-        border-right: none; 
-        border-bottom: 1px solid #eee; 
-        margin-bottom: 20px; 
+        border-right: none; border-bottom: 1px solid #eee; margin-bottom: 20px; 
     }
-    .profile-content { width: 100%; }
 }
 
-/* [层级 D] 小屏手机 (480px 以下) */
+/* [层级 D: 小屏手机] (480px 以下) */
 @media screen and (max-width: 480px) {
     .logo { font-size: 1.1rem; }
     .user-nav-wrapper { gap: 8px !important; }
-    
-    /* 空间极度不足时隐藏用户名，只留头像 */
-    .user-name { display: none !important; }
+    .user-name { display: none !important; } /* 空间不够时隐藏名字 */
 }
