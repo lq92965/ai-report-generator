@@ -1,21 +1,18 @@
-/* * Reportify AI - profile.js 
- * 修复：头像上传与显示
- */
+/* * Reportify AI - profile.js (已根据您的代码调整修复) */
 document.addEventListener('DOMContentLoaded', () => {
-    // 务必确保这个地址是您服务器的地址
     const API_BASE_URL = 'https://api.goreportify.com'; 
     const token = localStorage.getItem('token');
 
-    // DOM 元素
-    const avatarImg = document.querySelector('.profile-avatar img'); 
-    const uploadBtn = document.querySelector('.upload-btn'); // 对应 "Upload New Picture" 按钮
-    const nameInput = document.getElementById('profile-name'); // 对应 Display Name 输入框
-    const bioInput = document.getElementById('profile-bio');   // 对应 Bio 输入框
-    const jobInput = document.getElementById('profile-job');   // 对应 Job Title 输入框
-    const saveBtn = document.querySelector('.save-btn');       // 对应 Save Changes 按钮
-    const emailInput = document.getElementById('profile-email'); // 对应 Email (只读)
+    // DOM 元素 (保持您的选择器不变)
+    const avatarImg = document.querySelector('.profile-avatar img') || document.querySelector('.profile-avatar'); 
+    const uploadBtn = document.querySelector('.upload-btn'); 
+    const nameInput = document.getElementById('profile-name') || document.getElementById('display-name'); 
+    const bioInput = document.getElementById('profile-bio'); 
+    const jobInput = document.getElementById('profile-job'); 
+    const saveBtn = document.querySelector('.save-btn'); 
+    const emailInput = document.getElementById('profile-email') || document.getElementById('account-email');
 
-    // 创建一个隐藏的文件输入框用于上传
+    // 创建隐藏的文件输入框
     let fileInput = document.getElementById('hidden-avatar-input');
     if (!fileInput) {
         fileInput = document.createElement('input');
@@ -29,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. 加载用户资料
     async function loadProfile() {
         if (!token) {
-            window.location.href = 'index.html'; // 没登录踢回首页
+            window.location.href = 'index.html'; 
             return;
         }
         try {
@@ -41,58 +38,68 @@ document.addEventListener('DOMContentLoaded', () => {
             const user = await res.json();
             
             // 填充表单
-            if (nameInput) nameInput.value = user.displayName || '';
+            // 数据库里通常存的是 name，这里做个兼容
+            if (nameInput) nameInput.value = user.name || user.displayName || ''; 
             if (emailInput) emailInput.value = user.email || '';
-            if (bioInput) bioInput.value = user.bio || ''; // 需要后端支持 bio
-            if (jobInput) jobInput.value = user.jobTitle || ''; // 需要后端支持 jobTitle
+            if (bioInput) bioInput.value = user.bio || ''; 
+            if (jobInput) jobInput.value = user.jobTitle || ''; 
             
-            // 显示头像
-            if (avatarImg) {
-                // 如果 user.avatarUrl 有值就用，没有就用默认图
-                avatarImg.src = user.avatarUrl || 'https://via.placeholder.com/150';
+            // 显示头像 (关键修复：加上域名)
+            if (avatarImg && user.avatarUrl) {
+                // 如果已经是完整链接(如谷歌头像)就不加，否则加上后端域名
+                const fullUrl = user.avatarUrl.startsWith('http') ? user.avatarUrl : `${API_BASE_URL}${user.avatarUrl}`;
+                avatarImg.src = fullUrl;
             }
         } catch (e) {
             console.error("加载资料错误:", e);
         }
     }
 
-    // 2. 绑定上传按钮点击事件
+    // 2. 绑定上传按钮
     if (uploadBtn) {
         uploadBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            fileInput.click(); // 触发文件选择
+            fileInput.click(); 
         });
     }
 
-    // 3. 监听文件选择变化，立即上传
+    // 3. 监听文件选择变化 (上传逻辑)
     fileInput.addEventListener('change', async () => {
         const file = fileInput.files[0];
         if (!file) return;
 
+        if (file.size > 2 * 1024 * 1024) {
+             alert("File is too large (Max 2MB).");
+             return;
+        }
+
         const formData = new FormData();
         formData.append('avatar', file);
 
-        // 更改按钮状态
         const originalText = uploadBtn.textContent;
         uploadBtn.textContent = 'Uploading...';
         uploadBtn.disabled = true;
 
         try {
-            const res = await fetch(`${API_BASE_URL}/api/user/avatar`, {
+            // 🔴 修正点：使用服务器已有的接口 /api/upload-avatar
+            const res = await fetch(`${API_BASE_URL}/api/upload-avatar`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` }, 
-                // 注意：Fetch 会自动设置 Content-Type 为 multipart/form-data
                 body: formData
             });
             
             const data = await res.json();
             if (res.ok) {
-                // 立即更新页面头像
-                if (avatarImg) avatarImg.src = data.avatarUrl;
-                if(window.showToast) window.showToast('Avatar updated successfully!', 'success');
-                else alert('Avatar updated successfully!');
+                // 🔴 修正点：显示新头像时加上域名
+                const newAvatarUrl = `${API_BASE_URL}${data.avatarUrl}`;
+                if (avatarImg) avatarImg.src = newAvatarUrl;
+                
+                // 顺便刷新导航栏头像
+                if(window.updateUserNav) window.updateUserNav();
+                
+                alert('Avatar updated successfully!');
             } else {
-                alert('Upload failed: ' + (data.message || 'Unknown error'));
+                alert('Upload failed: ' + (data.message || 'Error'));
             }
         } catch (err) {
             console.error(err);
@@ -100,11 +107,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } finally {
             uploadBtn.textContent = originalText;
             uploadBtn.disabled = false;
-            fileInput.value = ''; // 清空选择
+            fileInput.value = ''; 
         }
     });
 
-    // 4. 保存文字资料
+    // 4. 保存文字资料 (Bio/Job)
     if (saveBtn) {
         saveBtn.addEventListener('click', async (e) => {
             e.preventDefault();
@@ -112,8 +119,10 @@ document.addEventListener('DOMContentLoaded', () => {
             saveBtn.disabled = true;
 
             try {
-                const res = await fetch(`${API_BASE_URL}/api/user/profile`, {
-                    method: 'PUT',
+                // 🔴 注意：为了让这个保存功能生效，你需要在 server.js 添加 /api/update-profile 接口
+                // (见下文的操作步骤)
+                const res = await fetch(`${API_BASE_URL}/api/update-profile`, {
+                    method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
@@ -126,8 +135,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 
                 if (res.ok) {
-                    if(window.showToast) window.showToast('Profile saved!', 'success');
-                    else alert('Profile saved successfully!');
+                    alert('Profile saved!');
+                    if(window.updateUserNav) window.updateUserNav(); // 刷新导航栏名字
                 } else {
                     alert('Failed to save profile.');
                 }
@@ -140,6 +149,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 初始化
     loadProfile();
 });
