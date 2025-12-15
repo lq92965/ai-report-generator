@@ -82,7 +82,6 @@ function showLoggedIn(container, user) {
     // 创建头像容器
     const navWrapper = document.createElement('div');
     navWrapper.className = 'user-nav-wrapper';
-    // 核心样式：相对定位，为了让下拉菜单能对齐
     navWrapper.style.cssText = 'position: relative; display: flex; align-items: center; cursor: pointer; gap: 8px;';
 
     // 生成 HTML 结构
@@ -104,8 +103,15 @@ function showLoggedIn(container, user) {
                 <div style="font-size: 12px; color: #888;">Signed in as</div>
                 <div style="font-weight: 600; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${user.email}</div>
             </div>
-            <a href="#" class="nav-item" style="display: block; padding: 10px 15px; color: #333; text-decoration: none; transition: background 0.2s;">My Reports</a>
-            <a href="#" class="nav-item" style="display: block; padding: 10px 15px; color: #333; text-decoration: none; transition: background 0.2s;">Settings</a>
+            
+            <a href="account.html" class="nav-item" style="display: block; padding: 10px 15px; color: #333; text-decoration: none; transition: background 0.2s;">
+                My Reports (我的报告)
+            </a>
+            
+            <a href="profile.html" class="nav-item" style="display: block; padding: 10px 15px; color: #333; text-decoration: none; transition: background 0.2s;">
+                Settings (设置)
+            </a>
+            
             <div style="border-top: 1px solid #f0f0f0;"></div>
             <a href="#" id="logout-btn" style="display: block; padding: 10px 15px; color: #dc3545; text-decoration: none; transition: background 0.2s;">Logout</a>
         </div>
@@ -115,17 +121,14 @@ function showLoggedIn(container, user) {
     
     // 1. 点击头像切换下拉菜单
     navWrapper.addEventListener('click', (e) => {
-        e.stopPropagation(); // 阻止事件冒泡
+        e.stopPropagation(); 
         const dropdown = navWrapper.querySelector('.nav-dropdown');
         const isHidden = dropdown.style.display === 'none';
-        
-        // 先关闭页面上其他可能的菜单
         document.querySelectorAll('.nav-dropdown').forEach(el => el.style.display = 'none');
-        
         dropdown.style.display = isHidden ? 'block' : 'none';
     });
 
-    // 2. 鼠标悬停高亮 (模拟 CSS hover)
+    // 2. 鼠标悬停高亮
     navWrapper.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('mouseenter', () => item.style.background = '#f8f9fa');
         item.addEventListener('mouseleave', () => item.style.background = 'white');
@@ -140,7 +143,7 @@ function showLoggedIn(container, user) {
         setTimeout(() => window.location.reload(), 500);
     });
 
-    // 4. 点击页面空白处关闭菜单
+    // 4. 点击空白关闭
     document.addEventListener('click', () => {
         const dropdown = navWrapper.querySelector('.nav-dropdown');
         if (dropdown) dropdown.style.display = 'none';
