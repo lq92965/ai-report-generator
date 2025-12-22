@@ -461,40 +461,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================
-    // 模块 F: 支付集成 (升级为 PayPal SDK Smart Buttons)
+    // 模块 F: 支付集成 (PayPal SDK 弹窗版)
     // =============================================
+    
     const payButtons = document.querySelectorAll('.choose-plan-btn');
     const paymentModal = document.getElementById('payment-modal-overlay');
     const closePaymentBtn = document.getElementById('close-payment-btn');
     const paymentPlanLabel = document.getElementById('payment-plan-name');
     const paypalContainer = document.getElementById('paypal-button-container');
 
-    // 关闭支付弹窗
+    // 1. 关闭弹窗逻辑
     if (closePaymentBtn && paymentModal) {
-        closePaymentBtn.addEventListener('click', () => {
+        const closeModal = () => {
             paymentModal.style.display = 'none';
-            paypalContainer.innerHTML = ''; // 清空按钮，防止重复渲染
-        });
-        
-        // 点击遮罩层关闭
+            if (paypalContainer) paypalContainer.innerHTML = ''; // 清空按钮，防止重复
+        };
+        closePaymentBtn.addEventListener('click', closeModal);
         paymentModal.addEventListener('click', (e) => {
-            if (e.target === paymentModal) {
-                paymentModal.style.display = 'none';
-                paypalContainer.innerHTML = '';
-            }
+            if (e.target === paymentModal) closeModal();
         });
     }
 
+    // 2. 绑定点击事件
     if (payButtons.length > 0) {
         payButtons.forEach(btn => {
-            // 克隆以移除旧事件
+            // 克隆节点以移除旧的事件监听器 (防止多次绑定)
             const newBtn = btn.cloneNode(true);
             btn.parentNode.replaceChild(newBtn, btn);
 
             newBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 
-                // 1. 检查登录
+                // 检查登录
                 const token = localStorage.getItem('token');
                 if (!token) { 
                     showToast('Please log in first.', 'error'); 
@@ -502,8 +500,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     return; 
                 }
 
-                // 2. 获取方案信息
-                const planType = newBtn.dataset.plan; // 'basic' or 'pro'
+                // 检查弹窗元素是否存在
+                if (!paymentModal || !paypalContainer) {
+                    console.error("缺少支付弹窗 HTML，请检查 subscription.html");
+                    alert("支付组件加载失败，请刷新页面");
+                    return;
+                }
+
+                // 获取方案信息
+                const planType = newBtn.dataset.plan; // 确保 HTML 里有 data-plan="basic"
                 let amount = '0.00';
                 let planName = '';
 
@@ -513,53 +518,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else if (planType === 'pro') {
                     amount = '19.90';
                     planName = 'Professional Plan ($19.90/mo)';
+                } else {
+                    return; // 未知方案
                 }
 
-                // 3. 打开弹窗
-                if (paymentModal && paymentPlanLabel) {
-                    paymentPlanLabel.textContent = planName;
-                    paymentModal.style.display = 'flex'; // 显示弹窗
+                // 显示弹窗
+                if (paymentPlanLabel) paymentPlanLabel.textContent = planName;
+                paymentModal.style.display = 'flex';
+                
+                // 渲染 PayPal 按钮
+                if (window.paypal) {
+                    paypalContainer.innerHTML = ''; // 清空旧按钮
                     
-                    // 4. 渲染 PayPal 按钮
-                    if (window.paypal) {
-                        paypalContainer.innerHTML = ''; // 清空旧按钮
-                        
-                        window.paypal.Buttons({
-                            style: {
-                                shape: 'rect',
-                                color: 'blue',
-                                layout: 'vertical',
-                                label: 'pay',
-                            },
-                            createOrder: function(data, actions) {
-                                return actions.order.create({
-                                    purchase_units: [{
-                                        description: planName,
-                                        amount: {
-                                            value: amount
-                                        }
-                                    }]
-                                });
-                            },
-                            onApprove: function(data, actions) {
-                                return actions.order.capture().then(function(details) {
-                                    // 支付成功！
-                                    console.log(details);
-                                    paymentModal.style.display = 'none';
-                                    showToast('Payment Successful! Thank you.', 'success');
-                                    
-                                    // 这里可以发送请求给后端，更新用户 Plan
-                                    // fetch('/api/upgrade-plan', ...)
-                                });
-                            },
-                            onError: function (err) {
-                                console.error(err);
-                                showToast('Payment Error. Please try again.', 'error');
-                            }
-                        }).render('#paypal-button-container');
-                    } else {
-                        showToast('PayPal SDK not loaded.', 'error');
-                    }
+                    window.paypal.Buttons({
+                        style: {
+                            shape: 'rect',
+                            color: 'blue',
+                            layout: 'vertical',
+                            label: 'pay',
+                        },
+                        createOrder: function(data, actions) {
+                            return actions.order.create({
+                                purchase_units: [{
+                                    description: planName,
+                                    amount: { value: amount }
+                                }]
+                            });
+                        },
+                        onApprove: function(data, actions) {
+                            return actions.order.capture().then(function(details) {
+                                console.log(details);
+                                paymentModal.style.display = 'none';
+                                showToast(`Payment Successful! Welcome ${details.payer.name.given_name}`, 'success');
+                                // TODO: 这里可以 fetch 后端更新用户等级
+                            });
+                        },
+                        onError: function (err) {
+                            console.error(err);
+                            showToast('Payment Error. Try again.', 'error');
+                        }
+                    }).render('#paypal-button-container');
+                } else {
+                    showToast('PayPal SDK not loaded.', 'error');
                 }
             });
         });
