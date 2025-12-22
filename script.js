@@ -311,10 +311,11 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTemplates();
 
     // =============================================
-    // 模块 E: 报告生成器
+    // 模块 E: 报告生成器 (增强修复版)
     // =============================================
     const generateBtn = document.getElementById('generate-btn');
     if (generateBtn) {
+        // 防止重复绑定：克隆节点
         const newGenerateBtn = generateBtn.cloneNode(true);
         generateBtn.parentNode.replaceChild(newGenerateBtn, generateBtn);
 
@@ -326,22 +327,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const promptEl = document.getElementById('key-points');
-            const resultBox = document.getElementById('generated-report');
+            // 🔴 核心修复：双重查找，确保一定能找到输入框
+            const promptEl = document.getElementById('key-points') || document.getElementById('prompt');
+            const resultBox = document.getElementById('generated-report') || document.getElementById('result');
             
+            // 获取下拉菜单
+            const templateSelect = document.getElementById('template');
+            const roleSelect = document.getElementById('role');
+            const toneSelect = document.getElementById('tone');
+            const langSelect = document.getElementById('language');
+
+            // 收集动态输入框 (如果有)
             const inputs = {};
             document.querySelectorAll('.dynamic-input').forEach(el => { 
                 if(el.dataset.key) inputs[el.dataset.key] = el.value; 
             });
 
-            if ((!promptEl || !promptEl.value.trim()) && Object.keys(inputs).length === 0) {
-                showToast('Please enter content.', 'error');
+            // 验证输入：必须有文本 或者 有动态输入
+            const userPromptText = promptEl ? promptEl.value.trim() : "";
+            
+            if (!userPromptText && Object.keys(inputs).length === 0) {
+                alert('请输入内容 (Please enter content in the box)'); // 弹窗提示更直接
+                if(promptEl) promptEl.focus();
                 return;
             }
 
+            // 更改按钮状态
             const originalText = newGenerateBtn.textContent;
             newGenerateBtn.disabled = true;
             newGenerateBtn.textContent = 'Generating...';
+            
             if (resultBox) {
                 if(resultBox.tagName === 'TEXTAREA') resultBox.value = "AI is thinking...";
                 else resultBox.innerText = "AI is thinking...";
@@ -352,11 +367,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                     body: JSON.stringify({
-                        userPrompt: promptEl ? promptEl.value : "",
-                        role: document.getElementById('role') ? document.getElementById('role').value : "General",
-                        tone: document.getElementById('tone') ? document.getElementById('tone').value : "Professional",
-                        language: document.getElementById('language') ? document.getElementById('language').value : "English",
-                        templateId: templateSelect ? templateSelect.value : "",
+                        userPrompt: userPromptText,
+                        role: roleSelect ? roleSelect.value : "General",
+                        tone: toneSelect ? toneSelect.value : "Professional",
+                        language: langSelect ? langSelect.value : "English",
+                        templateId: templateSelect ? templateSelect.value : "daily_summary", // 给个默认值防止为空
                         inputs: inputs
                     }),
                 });
@@ -365,20 +380,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (res.status === 403) {
                     showToast(`Limit Reached: ${data.error}`, 'error');
-                    if(resultBox) resultBox.value = "Quota exceeded.";
+                    if(resultBox) resultBox.innerText = "Quota exceeded (配额已用完).";
                 } else if (!res.ok) {
                     throw new Error(data.error || 'Server Error');
                 } else {
+                    // 成功显示
                     if (resultBox) {
                         if(resultBox.tagName === 'TEXTAREA') resultBox.value = data.generatedText;
                         else resultBox.innerText = data.generatedText;
+                        // 自动调整高度
                         resultBox.style.height = 'auto';
                         resultBox.style.height = resultBox.scrollHeight + 'px';
                     }
                     showToast("Report Generated!", "success");
+                    
+                    // 如果有 nav.js 的更新功能，刷新一下配额显示
+                    if(window.updateUserNav) window.updateUserNav();
                 }
             } catch (err) {
+                console.error(err);
                 showToast(`Failed: ${err.message}`, 'error');
+                if (resultBox) resultBox.innerText = "生成失败，请重试 (Network Error)";
             } finally {
                 newGenerateBtn.disabled = false;
                 newGenerateBtn.textContent = originalText;
