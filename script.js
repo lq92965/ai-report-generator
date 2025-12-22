@@ -460,29 +460,107 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 支付按钮 (PayPal)
+    // =============================================
+    // 模块 F: 支付集成 (升级为 PayPal SDK Smart Buttons)
+    // =============================================
     const payButtons = document.querySelectorAll('.choose-plan-btn');
+    const paymentModal = document.getElementById('payment-modal-overlay');
+    const closePaymentBtn = document.getElementById('close-payment-btn');
+    const paymentPlanLabel = document.getElementById('payment-plan-name');
+    const paypalContainer = document.getElementById('paypal-button-container');
+
+    // 关闭支付弹窗
+    if (closePaymentBtn && paymentModal) {
+        closePaymentBtn.addEventListener('click', () => {
+            paymentModal.style.display = 'none';
+            paypalContainer.innerHTML = ''; // 清空按钮，防止重复渲染
+        });
+        
+        // 点击遮罩层关闭
+        paymentModal.addEventListener('click', (e) => {
+            if (e.target === paymentModal) {
+                paymentModal.style.display = 'none';
+                paypalContainer.innerHTML = '';
+            }
+        });
+    }
+
     if (payButtons.length > 0) {
         payButtons.forEach(btn => {
+            // 克隆以移除旧事件
             const newBtn = btn.cloneNode(true);
             btn.parentNode.replaceChild(newBtn, btn);
+
             newBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                const planType = newBtn.dataset.plan; 
+                
+                // 1. 检查登录
                 const token = localStorage.getItem('token');
-                if (!token) { showToast('Please log in first.', 'error'); window.openModal('login'); return; }
+                if (!token) { 
+                    showToast('Please log in first.', 'error'); 
+                    window.openModal('login'); 
+                    return; 
+                }
 
-                newBtn.textContent = 'Processing...';
-                newBtn.disabled = true;
-                const myPaypalEmail = "liqing92965@gmail.com"; 
-                let paymentUrl = "";
-                
-                if (planType === 'basic') paymentUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${myPaypalEmail}&currency_code=USD&amount=9.90&item_name=Reportify%20Basic`;
-                else if (planType === 'pro') paymentUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${myPaypalEmail}&currency_code=USD&amount=19.90&item_name=Reportify%20Pro`;
+                // 2. 获取方案信息
+                const planType = newBtn.dataset.plan; // 'basic' or 'pro'
+                let amount = '0.00';
+                let planName = '';
 
-                if (paymentUrl) { window.open(paymentUrl, '_blank'); showToast('Opening PayPal...', 'success'); }
-                
-                setTimeout(() => { newBtn.textContent = planType === 'basic' ? 'Select Basic' : 'Upgrade to Pro'; newBtn.disabled = false; }, 2000);
+                if (planType === 'basic') {
+                    amount = '9.90';
+                    planName = 'Basic Plan ($9.90/mo)';
+                } else if (planType === 'pro') {
+                    amount = '19.90';
+                    planName = 'Professional Plan ($19.90/mo)';
+                }
+
+                // 3. 打开弹窗
+                if (paymentModal && paymentPlanLabel) {
+                    paymentPlanLabel.textContent = planName;
+                    paymentModal.style.display = 'flex'; // 显示弹窗
+                    
+                    // 4. 渲染 PayPal 按钮
+                    if (window.paypal) {
+                        paypalContainer.innerHTML = ''; // 清空旧按钮
+                        
+                        window.paypal.Buttons({
+                            style: {
+                                shape: 'rect',
+                                color: 'blue',
+                                layout: 'vertical',
+                                label: 'pay',
+                            },
+                            createOrder: function(data, actions) {
+                                return actions.order.create({
+                                    purchase_units: [{
+                                        description: planName,
+                                        amount: {
+                                            value: amount
+                                        }
+                                    }]
+                                });
+                            },
+                            onApprove: function(data, actions) {
+                                return actions.order.capture().then(function(details) {
+                                    // 支付成功！
+                                    console.log(details);
+                                    paymentModal.style.display = 'none';
+                                    showToast('Payment Successful! Thank you.', 'success');
+                                    
+                                    // 这里可以发送请求给后端，更新用户 Plan
+                                    // fetch('/api/upgrade-plan', ...)
+                                });
+                            },
+                            onError: function (err) {
+                                console.error(err);
+                                showToast('Payment Error. Please try again.', 'error');
+                            }
+                        }).render('#paypal-button-container');
+                    } else {
+                        showToast('PayPal SDK not loaded.', 'error');
+                    }
+                }
             });
         });
     }
