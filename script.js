@@ -530,45 +530,58 @@ if (payButtons.length > 0) {
             if (window.paypal) {
                 paypalContainer.innerHTML = ''; 
 
-                window.paypal.Buttons({
-                    style: { shape: 'rect', color: 'blue', layout: 'vertical', label: 'pay' },
-                    createOrder: function(data, actions) {
-                        return actions.order.create({
-                            purchase_units: [{ description: planName, amount: { value: amount } }]
-                        });
-                    },
-                    onApprove: function(data, actions) {
-                        return actions.order.capture().then(async function(details) {
-                            console.log(details);
-                            paymentModal.style.display = 'none';
+                // --- 替换开始 ---
+                    window.paypal.Buttons({
+                        // 🔴 核心修改：只允许显示 PayPal 按钮，隐藏黑色的信用卡按钮
+                        fundingSource: window.paypal.FUNDING.PAYPAL,
 
-                            try {
-                                const res = await fetch(`${API_BASE_URL}/api/upgrade-plan`, {
-                                    method: 'POST',
-                                    headers: { 
-                                        'Content-Type': 'application/json',
-                                        'Authorization': `Bearer ${token}` 
-                                    },
-                                    body: JSON.stringify({ plan: planType })
-                                });
-
-                                if (res.ok) {
-                                    showToast(`Upgrade Successful!`, 'success');
-                                    setTimeout(() => window.location.href = 'usage.html', 1500);
-                                } else {
-                                    showToast('Update failed. Contact support.', 'warning');
+                        style: {
+                            shape: 'rect',
+                            color: 'blue',      // 按钮颜色
+                            layout: 'vertical',
+                            label: 'pay',
+                        },
+                        createOrder: function(data, actions) {
+                            return actions.order.create({
+                                purchase_units: [{
+                                    description: planName,
+                                    amount: { value: amount }
+                                }]
+                            });
+                        },
+                        onApprove: function(data, actions) {
+                            return actions.order.capture().then(async function(details) {
+                                console.log(details);
+                                paymentModal.style.display = 'none';
+                                
+                                try {
+                                    const res = await fetch(`${API_BASE_URL}/api/upgrade-plan`, {
+                                        method: 'POST',
+                                        headers: { 
+                                            'Content-Type': 'application/json',
+                                            'Authorization': `Bearer ${token}` 
+                                        },
+                                        body: JSON.stringify({ plan: planType })
+                                    });
+                                    
+                                    if (res.ok) {
+                                        showToast(`Upgrade Successful!`, 'success');
+                                        setTimeout(() => window.location.href = 'usage.html', 1500);
+                                    } else {
+                                        showToast('Update failed. Contact support.', 'warning');
+                                    }
+                                } catch (err) {
+                                    console.error(err);
+                                    showToast('Network error updating plan.', 'error');
                                 }
-                            } catch (err) {
-                                console.error(err);
-                                showToast('Network error updating plan.', 'error');
-                            }
-                        });
-                    },
-                    onError: function (err) {
-                        console.error(err);
-                        showToast('Payment Error. Try again.', 'error');
-                    }
-                }).render('#paypal-button-container');
+                            });
+                        },
+                        onError: function (err) {
+                            console.error(err);
+                            showToast('Payment Error. Try again.', 'error');
+                        }
+                    }).render('#paypal-button-container');
+                    // --- 替换结束 ---
             } else {
                 showToast('PayPal SDK not loaded.', 'error');
             }
