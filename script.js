@@ -546,22 +546,36 @@ document.addEventListener('DOMContentLoaded', () => {
                             });
                         },
                         onApprove: function(data, actions) {
-                            return actions.order.capture().then(function(details) {
+                            return actions.order.capture().then(async function(details) {
                                 console.log(details);
                                 paymentModal.style.display = 'none';
-                                showToast(`Payment Successful! Welcome ${details.payer.name.given_name}`, 'success');
-                                // TODO: 这里可以 fetch 后端更新用户等级
+                                
+                                // 🔴 核心修复：支付成功后，告诉后端更新数据库
+                                try {
+                                    const res = await fetch(`${API_BASE_URL}/api/upgrade-plan`, {
+                                        method: 'POST',
+                                        headers: { 
+                                            'Content-Type': 'application/json',
+                                            'Authorization': `Bearer ${token}` 
+                                        },
+                                        body: JSON.stringify({ plan: planType }) // planType 来自外层变量
+                                    });
+                                    
+                                    if (res.ok) {
+                                        showToast(`Upgrade Successful! You are now on ${planType.toUpperCase()} plan.`, 'success');
+                                        // 延迟 1 秒后跳转到使用统计页，查看新额度
+                                        setTimeout(() => {
+                                            window.location.href = 'usage.html';
+                                        }, 1500);
+                                    } else {
+                                        showToast('Payment received but update failed. Contact support.', 'warning');
+                                    }
+                                } catch (err) {
+                                    console.error(err);
+                                    showToast('Network error updating plan.', 'error');
+                                }
                             });
                         },
-                        onError: function (err) {
-                            console.error(err);
-                            showToast('Payment Error. Try again.', 'error');
-                        }
-                    }).render('#paypal-button-container');
-                } else {
-                    showToast('PayPal SDK not loaded.', 'error');
-                }
-            });
         });
     }
 
