@@ -184,7 +184,10 @@
                     else if(percent > 50) progressBar.style.background = '#ffc107';
                 }
 
-                document.getElementById('days-remaining').textContent = data.daysRemaining || 30;
+                // 🔴 修复：允许显示 0，只有当数据真的不存在时才显示 30
+                // 🔴 修复：允许显示 0，只有当数据真的不存在时才显示 30
+                // 🔴 修复：允许显示 0，只有当数据真的不存在时才显示 30
+                document.getElementById('days-remaining').textContent = (data.daysRemaining !== undefined) ? data.daysRemaining : 30;
                 document.getElementById('days-used').textContent = data.daysUsed || 1;
                 
                 if (window.updateUserNav) window.updateUserNav();
