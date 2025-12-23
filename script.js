@@ -461,123 +461,120 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================
-    // 模块 F: 支付集成 (PayPal SDK 弹窗版)
-    // =============================================
-    
-    const payButtons = document.querySelectorAll('.choose-plan-btn');
-    const paymentModal = document.getElementById('payment-modal-overlay');
-    const closePaymentBtn = document.getElementById('close-payment-btn');
-    const paymentPlanLabel = document.getElementById('payment-plan-name');
-    const paypalContainer = document.getElementById('paypal-button-container');
+// 模块 F: 支付集成 (修复版 - 粘贴到这里)
+// =============================================
+const payButtons = document.querySelectorAll('.choose-plan-btn');
+const paymentModal = document.getElementById('payment-modal-overlay');
+const closePaymentBtn = document.getElementById('close-payment-btn');
+const paymentPlanLabel = document.getElementById('payment-plan-name');
+const paypalContainer = document.getElementById('paypal-button-container');
 
-    // 1. 关闭弹窗逻辑
-    if (closePaymentBtn && paymentModal) {
-        const closeModal = () => {
-            paymentModal.style.display = 'none';
-            if (paypalContainer) paypalContainer.innerHTML = ''; // 清空按钮，防止重复
-        };
-        closePaymentBtn.addEventListener('click', closeModal);
-        paymentModal.addEventListener('click', (e) => {
-            if (e.target === paymentModal) closeModal();
-        });
-    }
+// 1. 关闭弹窗逻辑
+if (closePaymentBtn && paymentModal) {
+    const closeModal = () => {
+        paymentModal.style.display = 'none';
+        if (paypalContainer) paypalContainer.innerHTML = ''; 
+    };
+    closePaymentBtn.addEventListener('click', closeModal);
+    paymentModal.addEventListener('click', (e) => {
+        if (e.target === paymentModal) closeModal();
+    });
+}
 
-    // 2. 绑定点击事件
-    if (payButtons.length > 0) {
-        payButtons.forEach(btn => {
-            // 克隆节点以移除旧的事件监听器 (防止多次绑定)
-            const newBtn = btn.cloneNode(true);
-            btn.parentNode.replaceChild(newBtn, btn);
+// 2. 绑定支付按钮
+if (payButtons.length > 0) {
+    payButtons.forEach(btn => {
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
 
-            newBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                // 检查登录
-                const token = localStorage.getItem('token');
-                if (!token) { 
-                    showToast('Please log in first.', 'error'); 
-                    window.openModal('login'); 
-                    return; 
-                }
+        newBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation(); // 防止冒泡影响蓝框
 
-                // 检查弹窗元素是否存在
-                if (!paymentModal || !paypalContainer) {
-                    console.error("缺少支付弹窗 HTML，请检查 subscription.html");
-                    alert("支付组件加载失败，请刷新页面");
-                    return;
-                }
+            // 蓝框跟随逻辑
+            const parentCard = newBtn.closest('.pricing-card');
+            if (parentCard) {
+                document.querySelectorAll('.pricing-card').forEach(c => c.classList.remove('plan-active'));
+                parentCard.classList.add('plan-active');
+            }
 
-                // 获取方案信息
-                const planType = newBtn.dataset.plan; // 确保 HTML 里有 data-plan="basic"
-                let amount = '0.00';
-                let planName = '';
+            const token = localStorage.getItem('token');
+            if (!token) { 
+                showToast('Please log in first.', 'error'); 
+                window.openModal('login'); 
+                return; 
+            }
 
-                if (planType === 'basic') {
-                    amount = '9.90';
-                    planName = 'Basic Plan ($9.90/mo)';
-                } else if (planType === 'pro') {
-                    amount = '19.90';
-                    planName = 'Professional Plan ($19.90/mo)';
-                } else {
-                    return; // 未知方案
-                }
+            if (!paymentModal || !paypalContainer) {
+                console.error("Missing payment modal HTML");
+                return;
+            }
 
-                // 显示弹窗
-                if (paymentPlanLabel) paymentPlanLabel.textContent = planName;
-                paymentModal.style.display = 'flex';
-                
-                // 渲染 PayPal 按钮
-                if (window.paypal) {
-                    paypalContainer.innerHTML = ''; // 清空旧按钮
-                    
-                    window.paypal.Buttons({
-                        style: {
-                            shape: 'rect',
-                            color: 'blue',
-                            layout: 'vertical',
-                            label: 'pay',
-                        },
-                        createOrder: function(data, actions) {
-                            return actions.order.create({
-                                purchase_units: [{
-                                    description: planName,
-                                    amount: { value: amount }
-                                }]
-                            });
-                        },
-                        onApprove: function(data, actions) {
-                            return actions.order.capture().then(async function(details) {
-                                console.log(details);
-                                paymentModal.style.display = 'none';
-                                
-                                // 🔴 核心修复：支付成功后，告诉后端更新数据库
-                                try {
-                                    const res = await fetch(`${API_BASE_URL}/api/upgrade-plan`, {
-                                        method: 'POST',
-                                        headers: { 
-                                            'Content-Type': 'application/json',
-                                            'Authorization': `Bearer ${token}` 
-                                        },
-                                        body: JSON.stringify({ plan: planType }) // planType 来自外层变量
-                                    });
-                                    
-                                    if (res.ok) {
-                                        showToast(`Upgrade Successful! You are now on ${planType.toUpperCase()} plan.`, 'success');
-                                        // 延迟 1 秒后跳转到使用统计页，查看新额度
-                                        setTimeout(() => {
-                                            window.location.href = 'usage.html';
-                                        }, 1500);
-                                    } else {
-                                        showToast('Payment received but update failed. Contact support.', 'warning');
-                                    }
-                                } catch (err) {
-                                    console.error(err);
-                                    showToast('Network error updating plan.', 'error');
+            const planType = newBtn.dataset.plan; 
+            let amount = '0.00';
+            let planName = '';
+
+            if (planType === 'basic') {
+                amount = '9.90';
+                planName = 'Basic Plan ($9.90/mo)';
+            } else if (planType === 'pro') {
+                amount = '19.90';
+                planName = 'Professional Plan ($19.90/mo)';
+            } else {
+                return;
+            }
+
+            if (paymentPlanLabel) paymentPlanLabel.textContent = planName;
+            paymentModal.style.display = 'flex';
+
+            if (window.paypal) {
+                paypalContainer.innerHTML = ''; 
+
+                window.paypal.Buttons({
+                    style: { shape: 'rect', color: 'blue', layout: 'vertical', label: 'pay' },
+                    createOrder: function(data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{ description: planName, amount: { value: amount } }]
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(async function(details) {
+                            console.log(details);
+                            paymentModal.style.display = 'none';
+
+                            try {
+                                const res = await fetch(`${API_BASE_URL}/api/upgrade-plan`, {
+                                    method: 'POST',
+                                    headers: { 
+                                        'Content-Type': 'application/json',
+                                        'Authorization': `Bearer ${token}` 
+                                    },
+                                    body: JSON.stringify({ plan: planType })
+                                });
+
+                                if (res.ok) {
+                                    showToast(`Upgrade Successful!`, 'success');
+                                    setTimeout(() => window.location.href = 'usage.html', 1500);
+                                } else {
+                                    showToast('Update failed. Contact support.', 'warning');
                                 }
-                            });
-                        },
+                            } catch (err) {
+                                console.error(err);
+                                showToast('Network error updating plan.', 'error');
+                            }
+                        });
+                    },
+                    onError: function (err) {
+                        console.error(err);
+                        showToast('Payment Error. Try again.', 'error');
+                    }
+                }).render('#paypal-button-container');
+            } else {
+                showToast('PayPal SDK not loaded.', 'error');
+            }
         });
-    }
+    });
+}
 
     // Free 按钮
     document.querySelectorAll('button').forEach(btn => {
