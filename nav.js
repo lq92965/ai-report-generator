@@ -1,5 +1,5 @@
-/* * Reportify AI - nav.js (完整功能版)
- * 包含：用户头像、下拉菜单、移动端适配
+/* * Reportify AI - nav.js (最终完整版)
+ * 包含：用户头像、下拉菜单、会员等级徽章、移动端适配
  */
 
 const API_BASE_URL_NAV = 'https://api.goreportify.com';
@@ -71,6 +71,7 @@ function showLoggedOut(container) {
     container.appendChild(startBtn);
 }
 
+// --- 渲染：已登录状态 (核心修改部分) ---
 function showLoggedIn(container, user) {
     container.innerHTML = ''; 
 
@@ -78,14 +79,27 @@ function showLoggedIn(container, user) {
     const initial = displayName.charAt(0).toUpperCase();
     const avatarSrc = user.avatarUrl ? `${API_BASE_URL_NAV}${user.avatarUrl}` : null;
     
+    // 1. 头像处理
     const avatarContent = avatarSrc 
         ? `<img src="${avatarSrc}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">`
         : initial;
 
+    // 2. 会员徽章逻辑 (新增)
+    let planBadge = 'FREE USER';
+    let badgeColor = '#888';
+    
+    if (user.plan === 'basic') {
+        planBadge = 'BASIC MEMBER';
+        badgeColor = '#007bff'; // 蓝色
+    } else if (user.plan === 'pro') {
+        planBadge = 'PRO MEMBER';
+        badgeColor = '#e63946'; // 红色
+    }
+
     const navWrapper = document.createElement('div');
     navWrapper.className = 'user-nav-wrapper';
     
-    // 🔴 移除 font-family，让 style.css 全局控制
+    // 容器样式
     navWrapper.style.cssText = `
         position: relative; 
         display: flex; 
@@ -95,15 +109,20 @@ function showLoggedIn(container, user) {
     `;
 
     navWrapper.innerHTML = `
-        <div style="width: 40px; height: 40px; background-color: #007bff; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 18px; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); overflow: hidden; flex-shrink: 0;">
+        <div style="width: 42px; height: 42px; background-color: #007bff; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 18px; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); overflow: hidden; flex-shrink: 0;">
             ${avatarContent}
         </div>
         
-        <span class="user-name" style="font-weight: 500; color: #333; font-size: 14px;">
-            ${displayName}
-        </span>
+        <div style="display:flex; flex-direction:column; line-height:1.2;">
+            <span class="user-name" style="font-weight: 600; color: #333; font-size: 14px;">
+                ${displayName}
+            </span>
+            <span class="user-name" style="font-size: 10px; color: ${badgeColor}; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">
+                ${planBadge}
+            </span>
+        </div>
         
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" style="margin-left: 5px;">
             <path d="M6 9l6 6 6-6"/>
         </svg>
 
