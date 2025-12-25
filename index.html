@@ -53,16 +53,16 @@
                 <h2 class="section-title">Everything You Need to Succeed</h2>
                 <div class="features-grid">
                     <div class="feature-card">
-                        <h3>Rapid Generation</h3>
-                        <p>Turn your notes into a well-structured report in a single click. Our AI understands your context and delivers quality content instantly.</p>
+                        <h3>Chaos to Clarity</h3>
+                        <p>Stop struggling with formatting. Just drop in your messy bullet points or rough notes. Our engine instantly structures them into a coherent, logic-first narrative.</p>
                     </div>
                     <div class="feature-card">
-                        <h3>Multiple Export Formats</h3>
-                        <p>Download your reports in Word, PDF, or Markdown. Choose the format that best fits your workflow and sharing needs.</p>
+                        <h3>Business-Ready Formats</h3>
+                        <p>Don't just get text; get a document. Export directly to professionally styled <strong>Word</strong> or <strong>PDF</strong>. Ready to be presented immediately.</p>
                     </div>
                     <div class="feature-card">
-                        <h3>Intelligent Logic</h3>
-                        <p>Our AI doesn't just write; it understands. It analyzes your fragmented notes to build a report with strong logical flow and professional coherence.</p>
+                        <h3>Role-Adaptive Engine</h3>
+                        <p>Reportify adapts to your specific role—whether you are a <strong>Manager</strong> needing brevity or a <strong>Marketer</strong> needing persuasion. It speaks your industry's language.</p>
                     </div>
                 </div>
             </div>
@@ -126,60 +126,52 @@
                         <div class="input-wrapper">
                             <label for="template">Report Type</label>
                             <select id="template" name="template">
-                                <option value="" disabled selected>Select a Report Type...</option>
-                                </select>
+                                <option value="general" selected>General Summary</option>
+                                <option value="daily_standup">Daily Standup (Daily Progress)</option>
+                                <option value="weekly_pulse">Weekly Pulse (Weekly Report)</option>
+                                <option value="project_update">Project Status Update</option>
+                                <option value="monthly_review">Monthly Review (Pro)</option>
+                                <option value="quarterly_report">Quarterly Report (Pro)</option>
+                            </select>
                         </div>
+
                         <div class="input-wrapper">
                             <label for="detail-level">Detail Level</label>
                             <select id="detail-level" name="detail-level">
-                                <option value="Simple">Simple</option>
-                                <option value="Standard">Standard</option>
-                                <option value="Detailed">Detailed</option>
+                                <option value="Brief">Brief (Bullet points)</option>
+                                <option value="Standard" selected>Standard (Balanced)</option>
+                                <option value="Detailed">Detailed (Comprehensive)</option>
                             </select>
                         </div>
+
                         <div class="input-wrapper">
-                             <label for="role">Your Role</label>
-                            <select id="role" name="role" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; background: #fff;">
-                               <option value="" disabled selected>Select your Role...</option>
-    
-                             <option value="General Role">General Role (Business Consultant)</option>
-    
-                          <optgroup label="Management">
-                              <option value="Team Lead">Team Lead</option>
-                              <option value="Project Manager">Project Manager</option>
-                              <option value="Department Director">Department Director</option>
-                          </optgroup>
-    
-                          <optgroup label="Marketing & Sales">
-                              <option value="Marketing Specialist">Marketing Specialist</option>
-                              <option value="Sales Representative">Sales Representative</option>
-                          </optgroup>
-    
-                          <optgroup label="Tech & Product">
-                              <option value="Software Engineer">Software Engineer</option>
-                              <option value="Product Manager">Product Manager</option>
-                          </optgroup>
-    
-                          <optgroup label="Operations & Function">
-                              <option value="Operations Specialist">Operations Specialist</option>
-                              <option value="Finance">Finance</option>
-                              <option value="HR">Human Resources</option>
-                          </optgroup>
-                        </select>
+                            <label for="role">Your Role</label>
+                            <select id="role" name="role" required>
+                                <option value="General" selected>General Consultant</option>
+                                <option value="Management">Senior Executive / Manager</option>
+                                <option value="Marketing">Marketing Director</option>
+                                <option value="Sales">Sales Executive</option>
+                                <option value="Tech">Lead Engineer / CTO</option>
+                                <option value="Operations">Operations Manager</option>
+                                <option value="HR">HR Director</option>
+                            </select>
                         </div>
-                         <div class="input-wrapper">
+
+                        <div class="input-wrapper">
                             <label for="tone">Tone / Style</label>
                             <select id="tone" name="tone">
-                                <option value="Professional">Professional</option>
+                                <option value="Professional" selected>Professional</option>
                                 <option value="Conversational">Conversational</option>
-                                <option value="Formal">Formal</option>
+                                <option value="Direct">Direct / Blunt</option>
+                                <option value="Persuasive">Persuasive</option>
                             </select>
                         </div>
-                         <div class="input-wrapper">
+
+                        <div class="input-wrapper">
                             <label for="language">Language</label>
                             <select id="language" name="language">
                                 <option value="English">English</option>
-                                <option value="Chinese">Chinese</option>
+                                <option value="Chinese">Chinese (简体中文)</option>
                                 <option value="Japanese">Japanese</option>
                                 <option value="Korean">Korean</option>
                                 <option value="Spanish">Spanish</option>
