@@ -409,43 +409,144 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================
-    // 模块 F: 导出 & 支付 & 交互
+    // 模块 F (部分): 专业导出功能 (修复排版问题)
     // =============================================
     
     // 导出
     const exportButtons = document.querySelectorAll('.export-btn');
-    const resultBox = document.getElementById('generated-report');
-    if (exportButtons && resultBox) {
-        exportButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const format = button.dataset.format || button.textContent.trim();
-                let text = resultBox.tagName === 'TEXTAREA' ? resultBox.value : resultBox.innerText;
-                if (!text || text.includes('AI is thinking') || text.length < 5) return showToast('No report to export.', 'error');
-                
-                const filename = `Report_${new Date().toISOString().slice(0,10)}`;
-                const downloadFile = (blob, name) => {
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a'); a.href = url; a.download = name;
-                    document.body.appendChild(a); a.click(); document.body.removeChild(a);
-                };
+    // 兼容 Textarea 和 Div (防止改了 HTML 后找不到)
+    const exportResultBox = document.getElementById('generated-report') || document.getElementById('result');
 
-                if (format.includes('Word')) {
-                    if (typeof docx !== 'undefined') {
-                        const doc = new docx.Document({ sections: [{ children: [new docx.Paragraph({ children: [new docx.TextRun(text)] })] }] });
-                        docx.Packer.toBlob(doc).then(blob => downloadFile(blob, `${filename}.docx`));
+    if (exportButtons.length > 0 && exportResultBox) {
+        exportButtons.forEach(button => {
+            // 克隆节点防止重复绑定
+            const newBtn = button.cloneNode(true);
+            button.parentNode.replaceChild(newBtn, button);
+
+            newBtn.addEventListener('click', () => {
+                const format = newBtn.dataset.format || newBtn.textContent.trim(); // "Word", "Markdown", "PDF"
+                
+                // 1. 获取原始内容
+                let rawText = exportResultBox.tagName === 'TEXTAREA' ? exportResultBox.value : exportResultBox.innerText;
+
+                // 2. 验证内容
+                if (!rawText || rawText.includes('AI is thinking') || rawText.trim().length < 5) {
+                    showToast('Please generate a report first.', 'warning');
+                    return;
+                }
+
+                const dateStr = new Date().toISOString().slice(0,10);
+                const filename = `Reportify_${dateStr}`;
+
+                // --- A. 导出为 Markdown (原样下载) ---
+                if (format === 'Markdown') {
+                    const blob = new Blob([rawText], {type: 'text/markdown;charset=utf-8'});
+                    saveAs(blob, `${filename}.md`);
+                    showToast("Markdown downloaded.", "success");
+                } 
+                
+                // --- B. 导出为 Word (智能分段优化) ---
+                else if (format.includes('Word')) {
+                    if (typeof docx === 'undefined') { showToast('Word library missing.', 'error'); return; }
+                    showToast('Preparing Word doc...', 'info');
+
+                    // 按行分割，创建段落，解决"挤成一坨"的问题
+                    const lines = rawText.split('\n');
+                    const docChildren = lines.map(line => {
+                        // 如果是空行，就加一个空段落
+                        if (!line.trim()) return new docx.Paragraph({ text: "" });
+                        
+                        // 简单的 Markdown 标题处理 (把 ## 去掉，变成大字号)
+                        let size = 24; // 默认 12pt
+                        let cleanText = line;
+                        let bold = false;
+
+                        if (line.startsWith('## ')) {
+                            size = 32; // 16pt 标题
+                            cleanText = line.replace('## ', '');
+                            bold = true;
+                        } else if (line.startsWith('- ')) {
+                            cleanText = '• ' + line.replace('- ', ''); // 列表符
+                        }
+
+                        return new docx.Paragraph({
+                            children: [ new docx.TextRun({ text: cleanText, size: size, bold: bold }) ],
+                            spacing: { after: 120 } // 段后间距，防止太挤
+                        });
+                    });
+
+                    const doc = new docx.Document({
+                        sections: [{ properties: {}, children: docChildren }]
+                    });
+                    
+                    docx.Packer.toBlob(doc).then(blob => {
+                        saveAs(blob, `${filename}.docx`);
                         showToast("Word downloaded.", "success");
+                    });
+                } 
+                
+                // --- C. 导出为 PDF (核心：Markdown -> HTML -> PDF) ---
+                else if (format.includes('PDF')) {
+                    if (typeof html2pdf === 'undefined' || typeof marked === 'undefined') { 
+                        showToast('PDF libraries missing. Check index.html', 'error'); 
+                        return; 
                     }
-                } else if (format.includes('PDF')) {
-                    if (typeof html2pdf !== 'undefined') {
-                        const el = document.createElement('div'); el.innerHTML = text.replace(/\n/g, '<br>');
-                        html2pdf().from(el).save(`${filename}.pdf`);
-                        showToast("PDF downloaded.", "success");
-                    }
-                } else {
-                    downloadFile(new Blob([text], {type: 'text/markdown'}), `${filename}.md`);
+                    showToast('Rendering PDF...', 'info');
+
+                    // 1. 把 Markdown 符号转换成漂亮的 HTML (加粗、标题、列表)
+                    // marked.parse 会把 ## 变成 <h2>, ** 变成 <strong>
+                    const renderedHTML = marked.parse(rawText);
+
+                    // 2. 创建一个临时的、看不见的容器来排版
+                    const element = document.createElement('div');
+                    element.innerHTML = `
+                        <div style="font-family: Helvetica, Arial, sans-serif; padding: 40px; line-height: 1.6; color: #333;">
+                            <div style="text-align:center; margin-bottom:30px;">
+                                <h1 style="color:#007bff; margin:0;">Professional Report</h1>
+                                <p style="color:#888; font-size:12px;">Generated by Reportify AI on ${dateStr}</p>
+                            </div>
+                            <hr style="border:0; border-top:1px solid #eee; margin-bottom:30px;">
+                            
+                            <div class="report-content">
+                                ${renderedHTML}
+                            </div>
+                        </div>
+                    `;
+
+                    // 3. 配置 PDF 参数 (A4纸, 高清)
+                    const opt = {
+                        margin:       0.5,
+                        filename:     `${filename}.pdf`,
+                        image:        { type: 'jpeg', quality: 0.98 },
+                        html2canvas:  { scale: 2, useCORS: true }, 
+                        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+                    };
+
+                    // 4. 生成并保存
+                    html2pdf().set(opt).from(element).save().then(() => {
+                         showToast("PDF downloaded successfully.", "success");
+                    }).catch(err => {
+                        console.error(err);
+                        showToast("PDF generation failed.", "error");
+                    });
                 }
             });
         });
+    }
+
+    // 下载辅助函数
+    function saveAs(blob, filename) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }, 100);
     }
 
     // 价格卡片交互 (蓝框)
