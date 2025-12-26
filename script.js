@@ -409,55 +409,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================
-    // 模块 F: 终极导出修复 (Word下载 + PDF可见性修复)
+    // 模块 F (修复版): 导出功能 (PDF/Word/Markdown)
     // =============================================
     
     const exportButtons = document.querySelectorAll('.export-btn');
-    const copyResultBtn = document.getElementById('copy-btn');
+    // 兼容 Textarea 和 Div
     const getResultContent = () => {
         const box = document.getElementById('generated-report') || document.getElementById('result');
         return box ? (box.tagName === 'TEXTAREA' ? box.value : box.innerText) : "";
     };
 
-    // --- 1. 复制功能 (Copy) ---
-    if (copyResultBtn) {
-        const newCopyBtn = copyResultBtn.cloneNode(true);
-        copyResultBtn.parentNode.replaceChild(newCopyBtn, copyResultBtn);
-
-        newCopyBtn.addEventListener('click', () => {
-            const text = getResultContent();
-            if (!text || text.length < 2) { showToast('Nothing to copy.', 'warning'); return; }
-
-            // 优先尝试标准 API
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(text)
-                    .then(() => showToast('Copied to clipboard!', 'success'))
-                    .catch(() => fallbackCopy(text));
-            } else {
-                fallbackCopy(text);
-            }
-        });
-    }
-
-    function fallbackCopy(text) {
-        const textArea = document.createElement("textarea");
-        textArea.value = text;
-        textArea.style.position = "fixed"; 
-        textArea.style.left = "-9999px";
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        try {
-            document.execCommand('copy');
-            showToast('Copied successfully!', 'success');
-        } catch (err) {
-            console.error('Copy failed', err);
-            showToast('Manual copy required.', 'error');
-        }
-        document.body.removeChild(textArea);
-    }
-
-    // --- 2. 导出下载功能 (PDF / Word / Markdown) ---
     if (exportButtons.length > 0) {
         exportButtons.forEach(button => {
             const newBtn = button.cloneNode(true);
@@ -475,35 +436,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 const dateStr = new Date().toISOString().slice(0,10);
                 const filename = `Report_${dateStr}`;
 
-                // >>> A. Markdown 下载 <<<
+                // >>> A. Markdown 导出 <<<
                 if (format === 'Markdown') {
                     const blob = new Blob([text], {type: 'text/markdown;charset=utf-8'});
                     saveAs(blob, `${filename}.md`);
                     showToast("Markdown downloaded.", "success");
                 } 
                 
-                // >>> B. Word 下载 (修复 Loading 问题) <<<
+                // >>> B. Word 导出 (带排版) <<<
                 else if (format.includes('Word')) {
-                    // 检查 docx 是否加载成功
-                    if (typeof docx === 'undefined') { 
-                        showToast('Word engine not loaded. Check network.', 'error'); 
-                        console.error('docx library missing. Please check script tags in index.html');
-                        return; 
-                    }
-                    
-                    showToast('Generating Word doc...', 'info');
+                    if (typeof docx === 'undefined') { showToast('Word engine loading...', 'info'); return; }
                     
                     const doc = new docx.Document({
                         sections: [{
                             properties: {},
                             children: text.split('\n').map(line => {
                                 let cleanLine = line.trim();
-                                if(!cleanLine) return new docx.Paragraph({text:""}); // 空行
+                                if(!cleanLine) return new docx.Paragraph({text:""}); 
 
                                 let isBold = false;
                                 let size = 24; // 12pt
 
-                                // 简单的 Markdown 样式转换
+                                // 简单的 Markdown 格式转换
                                 if (cleanLine.startsWith('## ')) {
                                     cleanLine = cleanLine.replace('## ', '');
                                     size = 32; // 16pt 标题
@@ -526,38 +480,37 @@ document.addEventListener('DOMContentLoaded', () => {
                     docx.Packer.toBlob(doc).then(blob => {
                         saveAs(blob, `${filename}.docx`);
                         showToast("Word downloaded.", "success");
-                    }).catch(e => console.error(e));
+                    });
                 } 
                 
-                // >>> C. PDF 下载 (修复版：隐形渲染，不干扰用户) <<<
+                // >>> C. PDF 导出 (隐形渲染修复版) <<<
                 else if (format.includes('PDF')) {
                     if (typeof html2pdf === 'undefined' || typeof marked === 'undefined') { 
-                        showToast('PDF engine missing.', 'error'); return; 
+                        showToast('PDF engine missing. Check index.html', 'error'); return; 
                     }
                     
-                    showToast('Preparing PDF...', 'info');
+                    showToast('Generating PDF...', 'info');
 
                     // 1. 转换 Markdown 为 HTML
                     const htmlContent = marked.parse(text);
 
                     // 2. 创建一个“隐形”容器
-                    // 关键点：在屏幕内，但是透明、置底。浏览器会渲染它，但用户看不见。
+                    // 关键点：位置在屏幕内 (top:0, left:0)，但是透明 (opacity:0) 且置底 (z-index:-9999)
+                    // 这样浏览器会渲染它，html2pdf 能截取到，但用户看不见，体验完美。
                     const container = document.createElement('div');
-                    container.style.position = 'fixed';  // 固定在窗口，不随页面滚动
+                    container.style.position = 'fixed';
                     container.style.top = '0';
                     container.style.left = '0';
-                    container.style.width = '210mm';     // 强制 A4 宽度
-                    container.style.minHeight = '297mm'; // 最小 A4 高度
-                    container.style.zIndex = '-9999';    // 藏在所有内容下面
-                    container.style.opacity = '0';       // 完全透明
-                    container.style.background = '#fff'; 
-                    container.style.padding = '20mm';    // 页边距
+                    container.style.width = '210mm';     // A4 宽度
+                    container.style.minHeight = '297mm'; // A4 高度
+                    container.style.zIndex = '-9999';    // 藏到底下
+                    container.style.opacity = '0';       // 透明不可见
+                    container.style.background = '#fff';
+                    container.style.padding = '20mm';
                     container.style.boxSizing = 'border-box';
-                    container.style.pointerEvents = 'none'; // 鼠标穿透，不影响用户点击
                     
-                    // 排版样式
                     container.innerHTML = `
-                        <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; line-height: 1.6;">
+                        <div style="font-family: Helvetica, Arial, sans-serif; color: #333; line-height: 1.6;">
                             <div style="text-align: center; border-bottom: 2px solid #007bff; padding-bottom: 15px; margin-bottom: 30px;">
                                 <h1 style="color: #007bff; margin: 0; font-size: 24px;">Professional Report</h1>
                                 <p style="color: #666; font-size: 12px; margin-top: 5px;">Generated by Reportify AI • ${dateStr}</p>
@@ -570,51 +523,32 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     document.body.appendChild(container);
 
-                    // 3. 配置 PDF 参数
+                    // 3. 生成 PDF
                     const opt = {
-                        margin:       0, // 容器本身已有 padding，这里设为 0
+                        margin:       0,
                         filename:     `${filename}.pdf`,
                         image:        { type: 'jpeg', quality: 0.98 },
-                        html2canvas:  { 
-                            scale: 2,       // 高清
-                            useCORS: true, 
-                            logging: false
-                        },
+                        html2canvas:  { scale: 2, useCORS: true, logging: false },
                         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
                     };
 
-                    // 4. 生成 -> 保存 -> 移除
-                    // 稍微给一点渲染时间 (200ms)
+                    // 4. 保存并清理
                     setTimeout(() => {
                         html2pdf().set(opt).from(container).save().then(() => {
                             document.body.removeChild(container);
                             showToast("PDF downloaded.", "success");
                         }).catch(err => {
-                            console.error("PDF Error:", err);
+                            console.error(err);
                             if(document.body.contains(container)) document.body.removeChild(container);
-                            showToast("PDF generation failed.", "error");
+                            showToast("PDF failed.", "error");
                         });
-                    }, 200);
+                    }, 500); // 给浏览器 0.5秒 渲染时间
                 }
             });
         });
     }
 
-    function saveAs(blob, filename) {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        a.style.display = 'none';
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => {
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }, 100);
-    }
-
-    // 通用下载函数
+    // 辅助函数: saveAs
     function saveAs(blob, filename) {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
