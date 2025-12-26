@@ -574,7 +574,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             if(document.body.contains(loadingTip)) document.body.removeChild(loadingTip);
                             showToast("PDF generation failed.", "error");
                         });
-                    }, 500); 
+                    }, 100); 
                 }
             });
         });
@@ -749,3 +749,4 @@ if (payButtons.length > 0) {
 
 }); 
 // End of Script
+
