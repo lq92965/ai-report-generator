@@ -409,37 +409,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================
-    // 模块 F: 增强版导出与复制 (修复 PDF 空白/复制失效问题)
+    // 模块 F: 终极导出修复 (Word下载 + PDF可见性修复)
     // =============================================
     
     const exportButtons = document.querySelectorAll('.export-btn');
     const copyResultBtn = document.getElementById('copy-btn');
-    // 再次获取结果框，确保兼容
     const getResultContent = () => {
         const box = document.getElementById('generated-report') || document.getElementById('result');
-        if (!box) return "";
-        return box.tagName === 'TEXTAREA' ? box.value : box.innerText;
+        return box ? (box.tagName === 'TEXTAREA' ? box.value : box.innerText) : "";
     };
 
-    // --- 1. 强力复制功能 (包含降级兼容) ---
+    // --- 1. 复制功能 (Copy) ---
     if (copyResultBtn) {
         const newCopyBtn = copyResultBtn.cloneNode(true);
         copyResultBtn.parentNode.replaceChild(newCopyBtn, copyResultBtn);
 
         newCopyBtn.addEventListener('click', () => {
             const text = getResultContent();
-            if (!text || text.includes('AI is thinking') || text.length < 2) {
-                showToast('Nothing to copy yet.', 'warning');
-                return;
-            }
+            if (!text || text.length < 2) { showToast('Nothing to copy.', 'warning'); return; }
 
-            // 尝试方案 A: 现代 API
+            // 优先尝试标准 API
             if (navigator.clipboard && window.isSecureContext) {
                 navigator.clipboard.writeText(text)
                     .then(() => showToast('Copied to clipboard!', 'success'))
-                    .catch(() => fallbackCopy(text)); // 失败则用方案 B
+                    .catch(() => fallbackCopy(text));
             } else {
-                // 方案 B: 传统方法 (兼容 http 和旧浏览器)
                 fallbackCopy(text);
             }
         });
@@ -448,7 +442,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function fallbackCopy(text) {
         const textArea = document.createElement("textarea");
         textArea.value = text;
-        textArea.style.position = "fixed"; // 避免页面滚动
+        textArea.style.position = "fixed"; 
         textArea.style.left = "-9999px";
         document.body.appendChild(textArea);
         textArea.focus();
@@ -458,12 +452,12 @@ document.addEventListener('DOMContentLoaded', () => {
             showToast('Copied successfully!', 'success');
         } catch (err) {
             console.error('Copy failed', err);
-            showToast('Copy failed. Please select and copy manually.', 'error');
+            showToast('Manual copy required.', 'error');
         }
         document.body.removeChild(textArea);
     }
 
-    // --- 2. 导出功能 (PDF/Word/Markdown) ---
+    // --- 2. 导出下载功能 (PDF / Word / Markdown) ---
     if (exportButtons.length > 0) {
         exportButtons.forEach(button => {
             const newBtn = button.cloneNode(true);
@@ -481,33 +475,44 @@ document.addEventListener('DOMContentLoaded', () => {
                 const dateStr = new Date().toISOString().slice(0,10);
                 const filename = `Report_${dateStr}`;
 
-                // >>> Markdown 导出 <<<
+                // >>> A. Markdown 下载 <<<
                 if (format === 'Markdown') {
                     const blob = new Blob([text], {type: 'text/markdown;charset=utf-8'});
                     saveAs(blob, `${filename}.md`);
                     showToast("Markdown downloaded.", "success");
                 } 
                 
-                // >>> Word 导出 (修复版) <<<
+                // >>> B. Word 下载 (修复 Loading 问题) <<<
                 else if (format.includes('Word')) {
-                    if (typeof docx === 'undefined') { showToast('Word library loading...', 'info'); return; }
+                    // 检查 docx 是否加载成功
+                    if (typeof docx === 'undefined') { 
+                        showToast('Word engine not loaded. Check network.', 'error'); 
+                        console.error('docx library missing. Please check script tags in index.html');
+                        return; 
+                    }
+                    
+                    showToast('Generating Word doc...', 'info');
                     
                     const doc = new docx.Document({
                         sections: [{
                             properties: {},
                             children: text.split('\n').map(line => {
-                                // 简单的格式处理
                                 let cleanLine = line.trim();
+                                if(!cleanLine) return new docx.Paragraph({text:""}); // 空行
+
                                 let isBold = false;
                                 let size = 24; // 12pt
 
+                                // 简单的 Markdown 样式转换
                                 if (cleanLine.startsWith('## ')) {
                                     cleanLine = cleanLine.replace('## ', '');
-                                    size = 32; // 16pt
+                                    size = 32; // 16pt 标题
                                     isBold = true;
                                 } else if (cleanLine.startsWith('**') && cleanLine.endsWith('**')) {
                                     cleanLine = cleanLine.replace(/\*\*/g, '');
                                     isBold = true;
+                                } else if (cleanLine.startsWith('- ')) {
+                                    cleanLine = '• ' + cleanLine.replace('- ', '');
                                 }
 
                                 return new docx.Paragraph({
@@ -521,60 +526,78 @@ document.addEventListener('DOMContentLoaded', () => {
                     docx.Packer.toBlob(doc).then(blob => {
                         saveAs(blob, `${filename}.docx`);
                         showToast("Word downloaded.", "success");
-                    });
+                    }).catch(e => console.error(e));
                 } 
                 
-                // >>> PDF 导出 (修复空白问题) <<<
+                // >>> C. PDF 下载 (修复空白问题) <<<
                 else if (format.includes('PDF')) {
                     if (typeof html2pdf === 'undefined' || typeof marked === 'undefined') { 
-                        showToast('PDF library missing.', 'error'); return; 
+                        showToast('PDF engine missing.', 'error'); return; 
                     }
-                    
                     showToast('Generating PDF...', 'info');
 
-                    // 1. 将 Markdown 转换为 HTML
+                    // 1. 转换 Markdown 为 HTML
                     const htmlContent = marked.parse(text);
 
-                    // 2. 创建一个可见的临时容器 (解决空白问题的关键)
-                    // html2pdf 有时抓取不到隐藏元素，所以我们把它放在屏幕外面
+                    // 2. 创建一个“隐形但存在”的容器
+                    // 关键修复：z-index:-9999 让它在底层，但 opacity:1 保证它能被渲染引擎看见
                     const container = document.createElement('div');
-                    container.style.position = 'absolute';
-                    container.style.left = '-9999px';
+                    container.style.position = 'fixed'; // 固定定位
                     container.style.top = '0';
-                    container.style.width = '800px'; // 固定宽度，模拟 A4
+                    container.style.left = '0';
+                    container.style.width = '800px'; // 模拟 A4 宽度
+                    container.style.zIndex = '-9999'; // 藏在网页最下面
                     container.style.background = 'white';
                     container.style.padding = '40px';
+                    container.style.color = '#000'; // 强制黑色字体
+                    
                     container.innerHTML = `
-                        <h2 style="color:#333; border-bottom:2px solid #007bff; padding-bottom:10px;">Professional Report</h2>
-                        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #444; margin-top: 20px;">
-                            ${htmlContent}
-                        </div>
-                        <div style="margin-top: 50px; color: #999; font-size: 12px; text-align: center;">
-                            Generated by Reportify AI
+                        <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+                            <h2 style="color:#007bff; border-bottom:2px solid #ddd; padding-bottom:10px;">Professional Report</h2>
+                            <div style="margin-top:20px;">
+                                ${htmlContent}
+                            </div>
+                            <div style="margin-top:50px; color:#999; font-size:12px; text-align:center; border-top:1px solid #eee; padding-top:10px;">
+                                Generated by Reportify AI
+                            </div>
                         </div>
                     `;
-                    document.body.appendChild(container);
+                    document.body.appendChild(container); // 必须插入到 body 才能被截屏
 
                     // 3. 生成 PDF
                     const opt = {
                         margin: 0.5,
                         filename: `${filename}.pdf`,
                         image: { type: 'jpeg', quality: 0.98 },
-                        html2canvas: { scale: 2, logging: false },
+                        html2canvas: { scale: 2, useCORS: true, logging: false },
                         jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
                     };
 
                     html2pdf().set(opt).from(container).save().then(() => {
-                        document.body.removeChild(container); // 下载后移除
+                        document.body.removeChild(container); // 下载完再删掉
                         showToast("PDF downloaded.", "success");
                     }).catch(err => {
                         console.error(err);
-                        document.body.removeChild(container);
+                        if(document.body.contains(container)) document.body.removeChild(container);
                         showToast("PDF failed.", "error");
                     });
                 }
             });
         });
+    }
+
+    function saveAs(blob, filename) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }, 100);
     }
 
     // 通用下载函数
