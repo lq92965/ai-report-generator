@@ -409,132 +409,175 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================
-    // 模块 F (部分): 专业导出功能 (修复排版问题)
+    // 模块 F: 增强版导出与复制 (修复 PDF 空白/复制失效问题)
     // =============================================
     
-    // 导出
     const exportButtons = document.querySelectorAll('.export-btn');
-    // 兼容 Textarea 和 Div (防止改了 HTML 后找不到)
-    const exportResultBox = document.getElementById('generated-report') || document.getElementById('result');
+    const copyResultBtn = document.getElementById('copy-btn');
+    // 再次获取结果框，确保兼容
+    const getResultContent = () => {
+        const box = document.getElementById('generated-report') || document.getElementById('result');
+        if (!box) return "";
+        return box.tagName === 'TEXTAREA' ? box.value : box.innerText;
+    };
 
-    if (exportButtons.length > 0 && exportResultBox) {
+    // --- 1. 强力复制功能 (包含降级兼容) ---
+    if (copyResultBtn) {
+        const newCopyBtn = copyResultBtn.cloneNode(true);
+        copyResultBtn.parentNode.replaceChild(newCopyBtn, copyResultBtn);
+
+        newCopyBtn.addEventListener('click', () => {
+            const text = getResultContent();
+            if (!text || text.includes('AI is thinking') || text.length < 2) {
+                showToast('Nothing to copy yet.', 'warning');
+                return;
+            }
+
+            // 尝试方案 A: 现代 API
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text)
+                    .then(() => showToast('Copied to clipboard!', 'success'))
+                    .catch(() => fallbackCopy(text)); // 失败则用方案 B
+            } else {
+                // 方案 B: 传统方法 (兼容 http 和旧浏览器)
+                fallbackCopy(text);
+            }
+        });
+    }
+
+    function fallbackCopy(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed"; // 避免页面滚动
+        textArea.style.left = "-9999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            showToast('Copied successfully!', 'success');
+        } catch (err) {
+            console.error('Copy failed', err);
+            showToast('Copy failed. Please select and copy manually.', 'error');
+        }
+        document.body.removeChild(textArea);
+    }
+
+    // --- 2. 导出功能 (PDF/Word/Markdown) ---
+    if (exportButtons.length > 0) {
         exportButtons.forEach(button => {
-            // 克隆节点防止重复绑定
             const newBtn = button.cloneNode(true);
             button.parentNode.replaceChild(newBtn, button);
 
             newBtn.addEventListener('click', () => {
-                const format = newBtn.dataset.format || newBtn.textContent.trim(); // "Word", "Markdown", "PDF"
-                
-                // 1. 获取原始内容
-                let rawText = exportResultBox.tagName === 'TEXTAREA' ? exportResultBox.value : exportResultBox.innerText;
+                const format = newBtn.dataset.format || newBtn.textContent.trim();
+                const text = getResultContent();
 
-                // 2. 验证内容
-                if (!rawText || rawText.includes('AI is thinking') || rawText.trim().length < 5) {
+                if (!text || text.length < 5 || text.includes('AI is thinking')) {
                     showToast('Please generate a report first.', 'warning');
                     return;
                 }
 
                 const dateStr = new Date().toISOString().slice(0,10);
-                const filename = `Reportify_${dateStr}`;
+                const filename = `Report_${dateStr}`;
 
-                // --- A. 导出为 Markdown (原样下载) ---
+                // >>> Markdown 导出 <<<
                 if (format === 'Markdown') {
-                    const blob = new Blob([rawText], {type: 'text/markdown;charset=utf-8'});
+                    const blob = new Blob([text], {type: 'text/markdown;charset=utf-8'});
                     saveAs(blob, `${filename}.md`);
                     showToast("Markdown downloaded.", "success");
                 } 
                 
-                // --- B. 导出为 Word (智能分段优化) ---
+                // >>> Word 导出 (修复版) <<<
                 else if (format.includes('Word')) {
-                    if (typeof docx === 'undefined') { showToast('Word library missing.', 'error'); return; }
-                    showToast('Preparing Word doc...', 'info');
-
-                    // 按行分割，创建段落，解决"挤成一坨"的问题
-                    const lines = rawText.split('\n');
-                    const docChildren = lines.map(line => {
-                        // 如果是空行，就加一个空段落
-                        if (!line.trim()) return new docx.Paragraph({ text: "" });
-                        
-                        // 简单的 Markdown 标题处理 (把 ## 去掉，变成大字号)
-                        let size = 24; // 默认 12pt
-                        let cleanText = line;
-                        let bold = false;
-
-                        if (line.startsWith('## ')) {
-                            size = 32; // 16pt 标题
-                            cleanText = line.replace('## ', '');
-                            bold = true;
-                        } else if (line.startsWith('- ')) {
-                            cleanText = '• ' + line.replace('- ', ''); // 列表符
-                        }
-
-                        return new docx.Paragraph({
-                            children: [ new docx.TextRun({ text: cleanText, size: size, bold: bold }) ],
-                            spacing: { after: 120 } // 段后间距，防止太挤
-                        });
-                    });
-
-                    const doc = new docx.Document({
-                        sections: [{ properties: {}, children: docChildren }]
-                    });
+                    if (typeof docx === 'undefined') { showToast('Word library loading...', 'info'); return; }
                     
+                    const doc = new docx.Document({
+                        sections: [{
+                            properties: {},
+                            children: text.split('\n').map(line => {
+                                // 简单的格式处理
+                                let cleanLine = line.trim();
+                                let isBold = false;
+                                let size = 24; // 12pt
+
+                                if (cleanLine.startsWith('## ')) {
+                                    cleanLine = cleanLine.replace('## ', '');
+                                    size = 32; // 16pt
+                                    isBold = true;
+                                } else if (cleanLine.startsWith('**') && cleanLine.endsWith('**')) {
+                                    cleanLine = cleanLine.replace(/\*\*/g, '');
+                                    isBold = true;
+                                }
+
+                                return new docx.Paragraph({
+                                    children: [new docx.TextRun({ text: cleanLine, bold: isBold, size: size })],
+                                    spacing: { after: 120 }
+                                });
+                            })
+                        }]
+                    });
+
                     docx.Packer.toBlob(doc).then(blob => {
                         saveAs(blob, `${filename}.docx`);
                         showToast("Word downloaded.", "success");
                     });
                 } 
                 
-                // --- C. 导出为 PDF (核心：Markdown -> HTML -> PDF) ---
+                // >>> PDF 导出 (修复空白问题) <<<
                 else if (format.includes('PDF')) {
                     if (typeof html2pdf === 'undefined' || typeof marked === 'undefined') { 
-                        showToast('PDF libraries missing. Check index.html', 'error'); 
-                        return; 
+                        showToast('PDF library missing.', 'error'); return; 
                     }
-                    showToast('Rendering PDF...', 'info');
+                    
+                    showToast('Generating PDF...', 'info');
 
-                    // 1. 把 Markdown 符号转换成漂亮的 HTML (加粗、标题、列表)
-                    // marked.parse 会把 ## 变成 <h2>, ** 变成 <strong>
-                    const renderedHTML = marked.parse(rawText);
+                    // 1. 将 Markdown 转换为 HTML
+                    const htmlContent = marked.parse(text);
 
-                    // 2. 创建一个临时的、看不见的容器来排版
-                    const element = document.createElement('div');
-                    element.innerHTML = `
-                        <div style="font-family: Helvetica, Arial, sans-serif; padding: 40px; line-height: 1.6; color: #333;">
-                            <div style="text-align:center; margin-bottom:30px;">
-                                <h1 style="color:#007bff; margin:0;">Professional Report</h1>
-                                <p style="color:#888; font-size:12px;">Generated by Reportify AI on ${dateStr}</p>
-                            </div>
-                            <hr style="border:0; border-top:1px solid #eee; margin-bottom:30px;">
-                            
-                            <div class="report-content">
-                                ${renderedHTML}
-                            </div>
+                    // 2. 创建一个可见的临时容器 (解决空白问题的关键)
+                    // html2pdf 有时抓取不到隐藏元素，所以我们把它放在屏幕外面
+                    const container = document.createElement('div');
+                    container.style.position = 'absolute';
+                    container.style.left = '-9999px';
+                    container.style.top = '0';
+                    container.style.width = '800px'; // 固定宽度，模拟 A4
+                    container.style.background = 'white';
+                    container.style.padding = '40px';
+                    container.innerHTML = `
+                        <h2 style="color:#333; border-bottom:2px solid #007bff; padding-bottom:10px;">Professional Report</h2>
+                        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #444; margin-top: 20px;">
+                            ${htmlContent}
+                        </div>
+                        <div style="margin-top: 50px; color: #999; font-size: 12px; text-align: center;">
+                            Generated by Reportify AI
                         </div>
                     `;
+                    document.body.appendChild(container);
 
-                    // 3. 配置 PDF 参数 (A4纸, 高清)
+                    // 3. 生成 PDF
                     const opt = {
-                        margin:       0.5,
-                        filename:     `${filename}.pdf`,
-                        image:        { type: 'jpeg', quality: 0.98 },
-                        html2canvas:  { scale: 2, useCORS: true }, 
-                        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+                        margin: 0.5,
+                        filename: `${filename}.pdf`,
+                        image: { type: 'jpeg', quality: 0.98 },
+                        html2canvas: { scale: 2, logging: false },
+                        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
                     };
 
-                    // 4. 生成并保存
-                    html2pdf().set(opt).from(element).save().then(() => {
-                         showToast("PDF downloaded successfully.", "success");
+                    html2pdf().set(opt).from(container).save().then(() => {
+                        document.body.removeChild(container); // 下载后移除
+                        showToast("PDF downloaded.", "success");
                     }).catch(err => {
                         console.error(err);
-                        showToast("PDF generation failed.", "error");
+                        document.body.removeChild(container);
+                        showToast("PDF failed.", "error");
                     });
                 }
             });
         });
     }
 
-    // 下载辅助函数
+    // 通用下载函数
     function saveAs(blob, filename) {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
