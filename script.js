@@ -483,7 +483,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 } 
                 
-                // >>> C. PDF 下载 (终极稳妥版：全屏覆盖渲染) <<<
+                // >>> C. PDF 下载 (修复版：智能分页，防止文字被切断) <<<
                 else if (format.includes('PDF')) {
                     if (typeof html2pdf === 'undefined' || typeof marked === 'undefined') { 
                         showToast('PDF engine missing.', 'error'); return; 
@@ -495,20 +495,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     const htmlContent = marked.parse(text);
 
                     // 2. 创建一个“全屏覆盖”的容器
-                    // 必须让它完全可见 (z-index 高, 背景白, 位置正)，浏览器才会老实渲染它
                     const container = document.createElement('div');
                     container.style.position = 'fixed';
                     container.style.top = '0';
                     container.style.left = '0';
                     container.style.width = '100%';
                     container.style.height = '100%';
-                    container.style.zIndex = '999999'; // 最高层级
+                    container.style.zIndex = '999999'; 
                     container.style.background = '#ffffff';
-                    container.style.overflowY = 'auto'; // 允许内部滚动，防止内容截断
+                    container.style.overflowY = 'auto'; 
                     container.style.padding = '20px';
                     container.style.boxSizing = 'border-box';
                     
-                    // 增加一个“正在生成”的提示，提升体验
+                    // 增加“生成中”提示
                     const loadingTip = document.createElement('div');
                     loadingTip.innerHTML = "⏳ Generating PDF... Please wait...";
                     loadingTip.style.position = "fixed";
@@ -519,8 +518,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     loadingTip.style.zIndex = "1000000";
                     document.body.appendChild(loadingTip);
 
-                    // 排版内容 (模拟 A4 纸宽度)
+                    // 3. 排版内容 (加入智能分页 CSS)
                     container.innerHTML = `
+                        <style>
+                            /* 🔴 核心修复：防止元素内部断页 */
+                            p, h1, h2, h3, h4, h5, li, div {
+                                page-break-inside: avoid; 
+                                break-inside: avoid;
+                            }
+                            /* 增加段落间距，让切分更容易 */
+                            p { margin-bottom: 15px; }
+                        </style>
                         <div id="pdf-content-source" style="max-width: 800px; margin: 0 auto; background: white; padding: 20px; font-family: Helvetica, Arial, sans-serif; color: #333; line-height: 1.6;">
                             <div style="text-align: center; border-bottom: 2px solid #007bff; padding-bottom: 15px; margin-bottom: 30px;">
                                 <h1 style="color: #007bff; margin: 0; font-size: 24px;">Professional Report</h1>
@@ -537,7 +545,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     document.body.appendChild(container);
 
-                    // 3. 配置 PDF 参数
+                    // 4. 配置 PDF 参数 (开启智能分页)
                     const opt = {
                         margin:       10, // mm
                         filename:     `${filename}.pdf`,
@@ -545,30 +553,28 @@ document.addEventListener('DOMContentLoaded', () => {
                         html2canvas:  { 
                             scale: 2, 
                             useCORS: true, 
-                            scrollY: 0, // 强制从头截取
-                            windowWidth: document.body.scrollWidth // 确保宽度正确
+                            scrollY: 0, 
+                            windowWidth: document.body.scrollWidth 
                         },
-                        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                        // 🔴 核心修复：开启智能分页模式
+                        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] } 
                     };
 
-                    // 4. 针对特定元素生成 -> 保存 -> 恢复界面
-                    // 这里我们只截取 container 里面的 #pdf-content-source，避免截取到滚动条
                     const elementToPrint = container.querySelector('#pdf-content-source');
 
                     setTimeout(() => {
                         html2pdf().set(opt).from(elementToPrint).save().then(() => {
-                            // 成功后清理
                             document.body.removeChild(container);
                             document.body.removeChild(loadingTip);
                             showToast("PDF downloaded.", "success");
                         }).catch(err => {
                             console.error("PDF Error:", err);
-                            // 失败也要清理，防止死锁
                             if(document.body.contains(container)) document.body.removeChild(container);
                             if(document.body.contains(loadingTip)) document.body.removeChild(loadingTip);
                             showToast("PDF generation failed.", "error");
                         });
-                    }, 500); // 留 500ms 给浏览器渲染图片和字体
+                    }, 500); 
                 }
             });
         });
