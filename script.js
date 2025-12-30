@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    const API_BASE_URL = 'http://68.183.162.193:3000'; 
+    const API_BASE_URL = 'https://api.goreportify.com'; 
     let allTemplates = []; 
     let currentUserPlan = 'basic'; 
 
@@ -791,6 +791,3 @@ if (payButtons.length > 0) {
 
 }); 
 // End of Script
-
-
-
