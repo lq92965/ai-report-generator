@@ -2,7 +2,7 @@
  * 包含：用户头像、下拉菜单、会员等级徽章、移动端适配
  */
 
-const API_BASE_URL_NAV = 'https://api.goreportify.com';
+const API_BASE_URL_NAV = 'https://goreportify.com';
 
 document.addEventListener('DOMContentLoaded', () => {
     // 暴露全局函数，确保 script.js 可以调用
