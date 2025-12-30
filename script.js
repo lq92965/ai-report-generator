@@ -24,6 +24,48 @@ window.showToast = function(message, type = 'info') {
     }, 3000);
 };
 
+// =================================================
+// 🚀 极速版导航栏逻辑 (修复 10秒 延迟)
+// =================================================
+document.addEventListener('DOMContentLoaded', () => {
+    const headerActions = document.querySelector('.header-actions');
+    
+    // 1. 默认：立刻显示“登录/注册”按钮 (不用等服务器)
+    if (headerActions) {
+        headerActions.innerHTML = `
+            <a href="#" class="btn btn-secondary" onclick="window.openModal('login')">Login</a>
+            <a href="#" class="btn btn-primary" onclick="window.openModal('signup')">Get Started</a>
+        `;
+    }
+
+    // 2. 后台静默检查：如果已登录，再把按钮换成头像
+    const token = localStorage.getItem('token');
+    if (token) {
+        fetch('https://api.goreportify.com/api/me', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        })
+        .then(res => {
+            if (res.ok) return res.json();
+            throw new Error('Not logged in');
+        })
+        .then(user => {
+            // 登录成功，切换为用户信息
+            if (headerActions) {
+                headerActions.innerHTML = `
+                    <div class="user-profile">
+                        <span>Welcome, ${user.name || 'User'}</span>
+                        </div>
+                `;
+            }
+        })
+        .catch(err => {
+            // 登录失败或网络不通，保持默认按钮，不做任何事
+            console.log("保持未登录状态:", err.message); 
+            // 关键：这里不再弹红色的报错，避免吓到用户
+        });
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     
     const API_BASE_URL = 'https://api.goreportify.com'; 
@@ -749,4 +791,3 @@ if (payButtons.length > 0) {
 
 }); 
 // End of Script
-
