@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    const API_BASE_URL = 'https://api.goreportify.com'; 
+    const API_BASE_URL = 'https://goreportify.com'; 
     let allTemplates = []; 
     let currentUserPlan = 'basic'; 
 
