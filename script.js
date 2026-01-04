@@ -49,12 +49,14 @@ document.addEventListener('DOMContentLoaded', () => {
             throw new Error('Not logged in');
         })
         .then(user => {
-            // 登录成功，切换为 "头像 + 下拉菜单" 模式
+            // -----------------------------------------------------
+            // 🟢 开始替换：登录成功，切换为 "头像 + 下拉菜单" 模式
+            // -----------------------------------------------------
             if (headerActions) {
-                // 1. 定义默认头像 (如果用户没有头像，就用这个默认的灰底人像)
+                // 1. 自动生成头像 (如果用户没有头像，就用名字首字母生成)
                 const avatarUrl = user.avatarUrl || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name || 'User') + '&background=random';
 
-                // 2. 注入带下拉菜单的 HTML
+                // 2. 写入带下拉菜单的 HTML
                 headerActions.innerHTML = `
                     <div class="user-menu-container" style="position: relative; display: inline-block;">
                         <div id="user-menu-trigger" style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: background 0.2s;">
@@ -68,45 +70,55 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <div style="font-size: 12px; color: #888;">Signed in as</div>
                                 <div style="font-weight: bold; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${user.email}</div>
                             </div>
-                            <a href="profile.html" style="display: block; padding: 12px 15px; color: #333; text-decoration: none; transition: background 0.1s;" onmouseover="this.style.background='#f9f9f9'" onmouseout="this.style.background='transparent'">
-                                <i class="fas fa-user-circle" style="margin-right: 8px; color: #555;"></i> Profile
+                            
+                            <a href="profile.html" style="display: block; padding: 12px 15px; color: #333; text-decoration: none;">
+                                <i class="fas fa-user-circle" style="margin-right: 8px;"></i> Profile
                             </a>
-                            <a href="usage.html" style="display: block; padding: 12px 15px; color: #333; text-decoration: none; transition: background 0.1s;" onmouseover="this.style.background='#f9f9f9'" onmouseout="this.style.background='transparent'">
-                                <i class="fas fa-chart-line" style="margin-right: 8px; color: #555;"></i> My Plan
+                            <a href="usage.html" style="display: block; padding: 12px 15px; color: #333; text-decoration: none;">
+                                <i class="fas fa-chart-line" style="margin-right: 8px;"></i> My Plan
                             </a>
+                            
                             <div style="border-top: 1px solid #f0f0f0;"></div>
-                            <a href="#" id="logout-btn" style="display: block; padding: 12px 15px; color: #dc3545; text-decoration: none; transition: background 0.1s;" onmouseover="this.style.background='#fff0f0'" onmouseout="this.style.background='transparent'">
+                            
+                            <a href="#" id="logout-btn" style="display: block; padding: 12px 15px; color: #dc3545; text-decoration: none;">
                                 <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i> Log Out
                             </a>
                         </div>
                     </div>
                 `;
 
-                // 3. 绑定交互事件
+                // 3. 绑定点击事件 (让菜单能点开)
                 const trigger = document.getElementById('user-menu-trigger');
                 const dropdown = document.getElementById('user-dropdown');
                 const logoutBtn = document.getElementById('logout-btn');
 
-                // 点击头像显示/隐藏菜单
-                trigger.addEventListener('click', (e) => {
-                    e.stopPropagation(); // 防止冒泡
-                    const isHidden = dropdown.style.display === 'none';
-                    dropdown.style.display = isHidden ? 'block' : 'none';
-                });
+                if (trigger && dropdown) {
+                    // 点击头像 -> 切换菜单显示/隐藏
+                    trigger.addEventListener('click', (e) => {
+                        e.stopPropagation(); // 阻止事件冒泡
+                        const isHidden = dropdown.style.display === 'none' || dropdown.style.display === '';
+                        dropdown.style.display = isHidden ? 'block' : 'none';
+                    });
 
-                // 点击页面其他地方关闭菜单
-                document.addEventListener('click', () => {
-                    dropdown.style.display = 'none';
-                });
+                    // 点击页面空白处 -> 关闭菜单
+                    document.addEventListener('click', () => {
+                        dropdown.style.display = 'none';
+                    });
+                }
 
-                // 点击退出登录
-                logoutBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    localStorage.removeItem('token'); // 清除 Token
-                    showToast('Logged out successfully', 'success');
-                    setTimeout(() => window.location.reload(), 1000); // 刷新页面
-                });
+                if (logoutBtn) {
+                    // 点击登出 -> 清除 Token 并刷新
+                    logoutBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        localStorage.removeItem('token');
+                        alert('Logged out successfully'); // 简单提示
+                        window.location.reload();
+                    });
+                }
             }
+            // -----------------------------------------------------
+            // 🟢 替换结束
+            // -----------------------------------------------------
         })
 
 document.addEventListener('DOMContentLoaded', () => {
