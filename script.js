@@ -7,27 +7,28 @@
 
 // --- 1. 全局工具: Toast 提示 ---
 window.showToast = function(message, type = 'info') {
-    let container = document.getElementById('toast-container');
-    if (!container) {
-        container = document.createElement('div');
-        container.id = 'toast-container';
-        document.body.appendChild(container);
-    }
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    let icon = type === 'success' ? 'fa-check-circle' : (type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle');
-    toast.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
-    container.appendChild(toast);
-    setTimeout(() => {
-        toast.style.animation = 'fadeOut 0.5s ease forwards';
-        setTimeout(() => toast.remove(), 500);
-    }, 3000);
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        document.body.appendChild(container);
+    }
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    let icon = type === 'success' ? 'fa-check-circle' : (type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle');
+    toast.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
+    container.appendChild(toast);
+    setTimeout(() => {
+        toast.style.animation = 'fadeOut 0.5s ease forwards';
+        setTimeout(() => toast.remove(), 500);
+    }, 3000);
 };
 
 // =================================================
 // 🚀 极速版导航栏逻辑 (修复 10秒 延迟)
 // =================================================
-docum// =============================================
+document.addEventListener('DOMContentLoaded', () => {
+    // =============================================
     // 🟢 新增功能: 接收 Google 登录回来的 Token
     // =============================================
     const urlParams = new URLSearchParams(window.location.search);
@@ -48,24 +49,23 @@ docum// =============================================
     if (errorFromUrl) {
         showToast('Google Login Failed. Please try again.', 'error');
         window.history.replaceState({}, document.title, window.location.pathname);
-    }ent.addEventListener('DOMContentLoaded', () => {
-
-    const headerActions = document.querySelector('.header-actions');
-    
-    // 1. 默认：立刻显示“登录/注册”按钮 (不用等服务器)
-    if (headerActions) {
-        headerActions.innerHTML = `
-            <a href="#" class="btn btn-secondary" onclick="window.openModal('login')">Login</a>
-            <a href="#" class="btn btn-primary" onclick="window.openModal('signup')">Get Started</a>
-        `;
     }
+    const headerActions = document.querySelector('.header-actions');
+    
+    // 1. 默认：立刻显示“登录/注册”按钮 (不用等服务器)
+    if (headerActions) {
+        headerActions.innerHTML = `
+            <a href="#" class="btn btn-secondary" onclick="window.openModal('login')">Login</a>
+            <a href="#" class="btn btn-primary" onclick="window.openModal('signup')">Get Started</a>
+        `;
+    }
 
-    // 2. 后台静默检查：如果已登录，再把按钮换成头像
-    const token = localStorage.getItem('token');
-    if (token) {
-        fetch('https://api.goreportify.com/api/me', {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
+    // 2. 后台静默检查：如果已登录，再把按钮换成头像
+    const token = localStorage.getItem('token');
+    if (token) {
+        fetch('https://api.goreportify.com/api/me', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        })
         .then(res => {
             if (res.ok) return res.json();
             throw new Error('Not logged in');
@@ -141,9 +141,9 @@ docum// =============================================
             // -----------------------------------------------------
             // 🟢 替换结束
             // -----------------------------------------------------
-        });
-    }
-});
+        })
+    }
+}）；
 
 document.addEventListener('DOMContentLoaded', () => {
     
