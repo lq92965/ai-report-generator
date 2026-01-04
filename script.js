@@ -49,22 +49,65 @@ document.addEventListener('DOMContentLoaded', () => {
             throw new Error('Not logged in');
         })
         .then(user => {
-            // 登录成功，切换为用户信息
+            // 登录成功，切换为 "头像 + 下拉菜单" 模式
             if (headerActions) {
+                // 1. 定义默认头像 (如果用户没有头像，就用这个默认的灰底人像)
+                const avatarUrl = user.avatarUrl || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name || 'User') + '&background=random';
+
+                // 2. 注入带下拉菜单的 HTML
                 headerActions.innerHTML = `
-                    <div class="user-profile">
-                        <span>Welcome, ${user.name || 'User'}</span>
+                    <div class="user-menu-container" style="position: relative; display: inline-block;">
+                        <div id="user-menu-trigger" style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: background 0.2s;">
+                            <img src="${avatarUrl}" alt="Avatar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <span style="font-weight: 600; color: #333;">${user.name || 'User'}</span>
+                            <i class="fas fa-chevron-down" style="font-size: 12px; color: #666;"></i>
                         </div>
+
+                        <div id="user-dropdown" class="hidden" style="position: absolute; right: 0; top: 50px; background: white; min-width: 180px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #eee; overflow: hidden; z-index: 1000; display: none;">
+                            <div style="padding: 15px; border-bottom: 1px solid #f0f0f0;">
+                                <div style="font-size: 12px; color: #888;">Signed in as</div>
+                                <div style="font-weight: bold; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${user.email}</div>
+                            </div>
+                            <a href="profile.html" style="display: block; padding: 12px 15px; color: #333; text-decoration: none; transition: background 0.1s;" onmouseover="this.style.background='#f9f9f9'" onmouseout="this.style.background='transparent'">
+                                <i class="fas fa-user-circle" style="margin-right: 8px; color: #555;"></i> Profile
+                            </a>
+                            <a href="usage.html" style="display: block; padding: 12px 15px; color: #333; text-decoration: none; transition: background 0.1s;" onmouseover="this.style.background='#f9f9f9'" onmouseout="this.style.background='transparent'">
+                                <i class="fas fa-chart-line" style="margin-right: 8px; color: #555;"></i> My Plan
+                            </a>
+                            <div style="border-top: 1px solid #f0f0f0;"></div>
+                            <a href="#" id="logout-btn" style="display: block; padding: 12px 15px; color: #dc3545; text-decoration: none; transition: background 0.1s;" onmouseover="this.style.background='#fff0f0'" onmouseout="this.style.background='transparent'">
+                                <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i> Log Out
+                            </a>
+                        </div>
+                    </div>
                 `;
+
+                // 3. 绑定交互事件
+                const trigger = document.getElementById('user-menu-trigger');
+                const dropdown = document.getElementById('user-dropdown');
+                const logoutBtn = document.getElementById('logout-btn');
+
+                // 点击头像显示/隐藏菜单
+                trigger.addEventListener('click', (e) => {
+                    e.stopPropagation(); // 防止冒泡
+                    const isHidden = dropdown.style.display === 'none';
+                    dropdown.style.display = isHidden ? 'block' : 'none';
+                });
+
+                // 点击页面其他地方关闭菜单
+                document.addEventListener('click', () => {
+                    dropdown.style.display = 'none';
+                });
+
+                // 点击退出登录
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.removeItem('token'); // 清除 Token
+                    showToast('Logged out successfully', 'success');
+                    setTimeout(() => window.location.reload(), 1000); // 刷新页面
+                });
             }
         })
-        .catch(err => {
-            // 登录失败或网络不通，保持默认按钮，不做任何事
-            console.log("保持未登录状态:", err.message); 
-            // 关键：这里不再弹红色的报错，避免吓到用户
-        });
-    }
-});
 
 document.addEventListener('DOMContentLoaded', () => {
     
