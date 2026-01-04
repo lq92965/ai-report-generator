@@ -27,23 +27,45 @@ window.showToast = function(message, type = 'info') {
 // =================================================
 // 🚀 极速版导航栏逻辑 (修复 10秒 延迟)
 // =================================================
-document.addEventListener('DOMContentLoaded', () => {
-    const headerActions = document.querySelector('.header-actions');
-    
-    // 1. 默认：立刻显示“登录/注册”按钮 (不用等服务器)
-    if (headerActions) {
-        headerActions.innerHTML = `
-            <a href="#" class="btn btn-secondary" onclick="window.openModal('login')">Login</a>
-            <a href="#" class="btn btn-primary" onclick="window.openModal('signup')">Get Started</a>
-        `;
-    }
+docum// =============================================
+    // 🟢 新增功能: 接收 Google 登录回来的 Token
+    // =============================================
+    const urlParams = new URLSearchParams(window.location.search);
+    const tokenFromUrl = urlParams.get('token');
+    const errorFromUrl = urlParams.get('error');
 
-    // 2. 后台静默检查：如果已登录，再把按钮换成头像
-    const token = localStorage.getItem('token');
-    if (token) {
-        fetch('https://api.goreportify.com/api/me', {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
+    if (tokenFromUrl) {
+        // 1. 保存 Token
+        localStorage.setItem('token', tokenFromUrl);
+        // 2. 清理地址栏 (把 ?token=... 去掉，好看点)
+        window.history.replaceState({}, document.title, window.location.pathname);
+        // 3. 提示并刷新
+        showToast('Google Login Successful!', 'success');
+        setTimeout(() => window.location.reload(), 500);
+        return; // 停止执行后面的代码
+    }
+
+    if (errorFromUrl) {
+        showToast('Google Login Failed. Please try again.', 'error');
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }ent.addEventListener('DOMContentLoaded', () => {
+
+    const headerActions = document.querySelector('.header-actions');
+    
+    // 1. 默认：立刻显示“登录/注册”按钮 (不用等服务器)
+    if (headerActions) {
+        headerActions.innerHTML = `
+            <a href="#" class="btn btn-secondary" onclick="window.openModal('login')">Login</a>
+            <a href="#" class="btn btn-primary" onclick="window.openModal('signup')">Get Started</a>
+        `;
+    }
+
+    // 2. 后台静默检查：如果已登录，再把按钮换成头像
+    const token = localStorage.getItem('token');
+    if (token) {
+        fetch('https://api.goreportify.com/api/me', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        })
         .then(res => {
             if (res.ok) return res.json();
             throw new Error('Not logged in');
@@ -847,4 +869,40 @@ if (payButtons.length > 0) {
     });
 
 }); 
+
+// =============================================
+    // 🟢 新增功能: Google 登录按钮点击事件
+    // =============================================
+    const googleBtns = document.querySelectorAll('button');
+    googleBtns.forEach(btn => {
+        // 找到写着 "Google" 的按钮
+        if (btn.textContent && btn.textContent.includes('Google')) {
+            // 克隆按钮以清除可能存在的旧事件
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            
+            newBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                const originalText = newBtn.textContent;
+                newBtn.textContent = 'Wait...'; // 给点点击反馈
+                
+                try {
+                    // 1. 找后端要 Google 的跳转链接
+                    const res = await fetch('https://api.goreportify.com/api/auth/google');
+                    const data = await res.json();
+                    
+                    // 2. 拿到链接，跳过去
+                    if (data.url) {
+                        window.location.href = data.url; 
+                    } else {
+                        showToast('Login server not ready', 'error');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    showToast('Network error connecting to Google', 'error');
+                    newBtn.textContent = originalText;
+                }
+            });
+        }
+    });
 // End of Script
