@@ -1,7 +1,11 @@
 /*
  * ===================================================================
- * * Reportify AI - script.js (v19.0 强制刷新版)
- * * 核心修复: 登录成功后自动刷新页面，强制UI更新为“已登录”状态
+ * * Reportify AI - script.js (v21.0 完美合并修复版)
+ * * 修复内容: 
+ * * 1. 修复了 "Unexpected end of input" 括号丢失错误
+ * * 2. 整合了头像下拉菜单 (带登出功能)
+ * * 3. 完整保留了 PayPal 支付逻辑
+ * * 4. 统一使用 HTTPS API 地址
  * ===================================================================
 */
 
@@ -25,12 +29,23 @@ window.showToast = function(message, type = 'info') {
 };
 
 // =================================================
-// 🚀 极速版导航栏逻辑 (修复 10秒 延迟)
+// 🚀 主程序开始
 // =================================================
 document.addEventListener('DOMContentLoaded', () => {
+
+    // 🟢 全局配置: 你的后端地址 (必须是 HTTPS)
+    const API_BASE_URL = 'https://api.goreportify.com';
+
+    // 变量初始化
+    let allTemplates = [];
+    let currentUserPlan = 'basic';
     const headerActions = document.querySelector('.header-actions');
+
+    // =================================================
+    // 模块 A: 导航栏与用户状态 (头像 + 下拉菜单)
+    // =================================================
     
-    // 1. 默认：立刻显示“登录/注册”按钮 (不用等服务器)
+    // 1. 默认状态：立刻显示“登录/注册”按钮
     if (headerActions) {
         headerActions.innerHTML = `
             <a href="#" class="btn btn-secondary" onclick="window.openModal('login')">Login</a>
@@ -38,10 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-    // 2. 后台静默检查：如果已登录，再把按钮换成头像
+    // 2. 检查登录状态并更新 UI
     const token = localStorage.getItem('token');
     if (token) {
-        fetch('https://api.goreportify.com/api/me', {
+        fetch(`${API_BASE_URL}/api/me`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
         .then(res => {
@@ -49,14 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
             throw new Error('Not logged in');
         })
         .then(user => {
-            // -----------------------------------------------------
-            // 🟢 开始替换：登录成功，切换为 "头像 + 下拉菜单" 模式
-            // -----------------------------------------------------
+            // 🟢 登录成功：显示头像和下拉菜单
             if (headerActions) {
-                // 1. 自动生成头像 (如果用户没有头像，就用名字首字母生成)
+                // 自动生成头像 (UI Avatars)
                 const avatarUrl = user.avatarUrl || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name || 'User') + '&background=random';
 
-                // 2. 写入带下拉菜单的 HTML
+                // 写入 HTML
                 headerActions.innerHTML = `
                     <div class="user-menu-container" style="position: relative; display: inline-block;">
                         <div id="user-menu-trigger" style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: background 0.2s;">
@@ -87,85 +100,40 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
 
-                // 3. 绑定点击事件 (让菜单能点开)
+                // 绑定交互事件
                 const trigger = document.getElementById('user-menu-trigger');
                 const dropdown = document.getElementById('user-dropdown');
                 const logoutBtn = document.getElementById('logout-btn');
 
                 if (trigger && dropdown) {
-                    // 点击头像 -> 切换菜单显示/隐藏
                     trigger.addEventListener('click', (e) => {
-                        e.stopPropagation(); // 阻止事件冒泡
+                        e.stopPropagation();
                         const isHidden = dropdown.style.display === 'none' || dropdown.style.display === '';
                         dropdown.style.display = isHidden ? 'block' : 'none';
                     });
-
-                    // 点击页面空白处 -> 关闭菜单
                     document.addEventListener('click', () => {
                         dropdown.style.display = 'none';
                     });
                 }
 
                 if (logoutBtn) {
-                    // 点击登出 -> 清除 Token 并刷新
                     logoutBtn.addEventListener('click', (e) => {
                         e.preventDefault();
                         localStorage.removeItem('token');
-                        alert('Logged out successfully'); // 简单提示
-                        window.location.reload();
+                        showToast('Logged out successfully', 'success');
+                        setTimeout(() => window.location.reload(), 1000);
                     });
                 }
             }
-            // -----------------------------------------------------
-            // 🟢 替换结束
-            // -----------------------------------------------------
         })
-
-document.addEventListener('DOMContentLoaded', () => {
-    
-    const API_BASE_URL = 'https://api.goreportify.com'; 
-    let allTemplates = []; 
-    let currentUserPlan = 'basic'; 
-
-    // =============================================
-    // 模块 A: 导航栏逻辑
-    // =============================================
-    window.showLoggedOutNav = (headerActions) => {
-        if (!headerActions) return;
-        headerActions.innerHTML = ''; 
-        
-        const loginBtn = document.createElement('a');
-        loginBtn.href = '#'; 
-        loginBtn.className = 'btn btn-secondary';
-        loginBtn.textContent = 'Login';
-        loginBtn.style.marginRight = '10px';
-        loginBtn.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            window.openModal('login');
+        .catch(err => {
+            console.log("Token invalid or expired:", err.message);
+            // 保持未登录状态，不做额外操作
         });
-
-        const getStartedBtn = document.createElement('a');
-        getStartedBtn.href = '#';
-        getStartedBtn.className = 'btn btn-primary';
-        getStartedBtn.textContent = 'Get Started';
-        getStartedBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.openModal('signup');
-        });
-
-        headerActions.appendChild(loginBtn);
-        headerActions.appendChild(getStartedBtn);
-    };
-
-    // 尝试更新导航
-    if (window.updateUserNav) {
-        const token = localStorage.getItem('token');
-        if (!token) window.showLoggedOutNav(document.querySelector('.header-actions'));
-        else window.updateUserNav(); 
     }
 
     // =============================================
-    // 模块 B: 弹窗控制
+    // 模块 B: 弹窗控制 (Modal)
     // =============================================
     const authModalOverlay = document.getElementById('auth-modal-overlay');
     const closeModalBtn = document.getElementById('close-modal-btn');
@@ -195,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // =============================================
-    // 模块 C: 登录与注册 (核心修复点)
+    // 模块 C: 登录与注册
     // =============================================
     
     // 登录
@@ -222,16 +190,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.message || 'Login failed');
                 
-                // 1. 保存 Token
                 localStorage.setItem('token', data.token);
-                
-                // 2. 提示成功
                 showToast("Login Successful! Reloading...", "success");
-                
-                // 3. 关闭弹窗
                 window.closeModal(); 
                 
-                // 4. 🔴 关键修复：延迟1秒后强制刷新页面，确保 UI 变成已登录状态
                 setTimeout(() => {
                     window.location.reload();
                 }, 1000);
@@ -285,6 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
 
     // =============================================
     // 模块 D: 模板加载与动态表单
@@ -374,8 +337,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const label = document.createElement('label');
                     label.textContent = variable.label || variable.id;
                     label.style.fontWeight = '600';
-                    label.style.display = 'block';
-                    label.style.marginBottom = '5px';
                     
                     let input;
                     if (variable.type === 'textarea') {
@@ -403,16 +364,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 初始化加载
+    // 初始化调用
     fetchUserPlan();
     loadTemplates();
 
     // =============================================
-    // 模块 E: 报告生成器 (增强修复版)
+    // 模块 E: 报告生成器
     // =============================================
     const generateBtn = document.getElementById('generate-btn');
     if (generateBtn) {
-        // 防止重复绑定：克隆节点
         const newGenerateBtn = generateBtn.cloneNode(true);
         generateBtn.parentNode.replaceChild(newGenerateBtn, generateBtn);
 
@@ -424,32 +384,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // 🔴 核心修复：双重查找，确保一定能找到输入框
             const promptEl = document.getElementById('key-points') || document.getElementById('prompt');
             const resultBox = document.getElementById('generated-report') || document.getElementById('result');
             
-            // 获取下拉菜单
             const templateSelect = document.getElementById('template');
             const roleSelect = document.getElementById('role');
             const toneSelect = document.getElementById('tone');
             const langSelect = document.getElementById('language');
 
-            // 收集动态输入框 (如果有)
             const inputs = {};
             document.querySelectorAll('.dynamic-input').forEach(el => { 
                 if(el.dataset.key) inputs[el.dataset.key] = el.value; 
             });
 
-            // 验证输入：必须有文本 或者 有动态输入
             const userPromptText = promptEl ? promptEl.value.trim() : "";
             
             if (!userPromptText && Object.keys(inputs).length === 0) {
-                alert('请输入内容 (Please enter content in the box)'); // 弹窗提示更直接
+                alert('Please enter content or fill in the form.');
                 if(promptEl) promptEl.focus();
                 return;
             }
 
-            // 更改按钮状态
             const originalText = newGenerateBtn.textContent;
             newGenerateBtn.disabled = true;
             newGenerateBtn.textContent = 'Generating...';
@@ -468,7 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         role: roleSelect ? roleSelect.value : "General",
                         tone: toneSelect ? toneSelect.value : "Professional",
                         language: langSelect ? langSelect.value : "English",
-                        templateId: templateSelect ? templateSelect.value : "daily_summary", // 给个默认值防止为空
+                        templateId: templateSelect ? templateSelect.value : "daily_summary",
                         inputs: inputs
                     }),
                 });
@@ -477,27 +432,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (res.status === 403) {
                     showToast(`Limit Reached: ${data.error}`, 'error');
-                    if(resultBox) resultBox.innerText = "Quota exceeded (配额已用完).";
+                    if(resultBox) resultBox.innerText = "Quota exceeded.";
                 } else if (!res.ok) {
                     throw new Error(data.error || 'Server Error');
                 } else {
-                    // 成功显示
                     if (resultBox) {
                         if(resultBox.tagName === 'TEXTAREA') resultBox.value = data.generatedText;
                         else resultBox.innerText = data.generatedText;
-                        // 自动调整高度
                         resultBox.style.height = 'auto';
                         resultBox.style.height = resultBox.scrollHeight + 'px';
                     }
                     showToast("Report Generated!", "success");
-                    
-                    // 如果有 nav.js 的更新功能，刷新一下配额显示
-                    if(window.updateUserNav) window.updateUserNav();
                 }
             } catch (err) {
                 console.error(err);
                 showToast(`Failed: ${err.message}`, 'error');
-                if (resultBox) resultBox.innerText = "生成失败，请重试 (Network Error)";
+                if (resultBox) resultBox.innerText = "Generation failed. Please try again.";
             } finally {
                 newGenerateBtn.disabled = false;
                 newGenerateBtn.textContent = originalText;
@@ -506,11 +456,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================
-    // 模块 F (修复版): 导出功能 (PDF/Word/Markdown)
+    // 模块 F: 导出功能 (PDF/Word/Markdown)
     // =============================================
-    
     const exportButtons = document.querySelectorAll('.export-btn');
-    // 兼容 Textarea 和 Div
     const getResultContent = () => {
         const box = document.getElementById('generated-report') || document.getElementById('result');
         return box ? (box.tagName === 'TEXTAREA' ? box.value : box.innerText) : "";
@@ -533,14 +481,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const dateStr = new Date().toISOString().slice(0,10);
                 const filename = `Report_${dateStr}`;
 
-                // >>> A. Markdown 导出 <<<
                 if (format === 'Markdown') {
                     const blob = new Blob([text], {type: 'text/markdown;charset=utf-8'});
                     saveAs(blob, `${filename}.md`);
                     showToast("Markdown downloaded.", "success");
                 } 
-                
-                // >>> B. Word 导出 (带排版) <<<
                 else if (format.includes('Word')) {
                     if (typeof docx === 'undefined') { showToast('Word engine loading...', 'info'); return; }
                     
@@ -552,12 +497,11 @@ document.addEventListener('DOMContentLoaded', () => {
                                 if(!cleanLine) return new docx.Paragraph({text:""}); 
 
                                 let isBold = false;
-                                let size = 24; // 12pt
+                                let size = 24; 
 
-                                // 简单的 Markdown 格式转换
                                 if (cleanLine.startsWith('## ')) {
                                     cleanLine = cleanLine.replace('## ', '');
-                                    size = 32; // 16pt 标题
+                                    size = 32; 
                                     isBold = true;
                                 } else if (cleanLine.startsWith('**') && cleanLine.endsWith('**')) {
                                     cleanLine = cleanLine.replace(/\*\*/g, '');
@@ -579,51 +523,33 @@ document.addEventListener('DOMContentLoaded', () => {
                         showToast("Word downloaded.", "success");
                     });
                 } 
-                
-                // >>> C. PDF 下载 (修复版：智能分页，防止文字被切断) <<<
                 else if (format.includes('PDF')) {
                     if (typeof html2pdf === 'undefined' || typeof marked === 'undefined') { 
                         showToast('PDF engine missing.', 'error'); return; 
                     }
                     
                     showToast('Generating PDF...', 'info');
-
-                    // 1. 转换 Markdown 为 HTML
                     const htmlContent = marked.parse(text);
-
-                    // 2. 创建一个“全屏覆盖”的容器
                     const container = document.createElement('div');
                     container.style.position = 'fixed';
                     container.style.top = '0';
                     container.style.left = '0';
                     container.style.width = '100%';
-                    container.style.height = '100%';
                     container.style.zIndex = '999999'; 
                     container.style.background = '#ffffff';
-                    container.style.overflowY = 'auto'; 
                     container.style.padding = '20px';
-                    container.style.boxSizing = 'border-box';
                     
-                    // 增加“生成中”提示
                     const loadingTip = document.createElement('div');
                     loadingTip.innerHTML = "⏳ Generating PDF... Please wait...";
                     loadingTip.style.position = "fixed";
                     loadingTip.style.top = "10px";
                     loadingTip.style.right = "20px";
-                    loadingTip.style.color = "#007bff";
-                    loadingTip.style.fontWeight = "bold";
                     loadingTip.style.zIndex = "1000000";
                     document.body.appendChild(loadingTip);
 
-                    // 3. 排版内容 (加入智能分页 CSS)
                     container.innerHTML = `
                         <style>
-                            /* 🔴 核心修复：防止元素内部断页 */
-                            p, h1, h2, h3, h4, h5, li, div {
-                                page-break-inside: avoid; 
-                                break-inside: avoid;
-                            }
-                            /* 增加段落间距，让切分更容易 */
+                            p, h1, h2, h3, h4, h5, li, div { page-break-inside: avoid; break-inside: avoid; }
                             p { margin-bottom: 15px; }
                         </style>
                         <div id="pdf-content-source" style="max-width: 800px; margin: 0 auto; background: white; padding: 20px; font-family: Helvetica, Arial, sans-serif; color: #333; line-height: 1.6;">
@@ -631,37 +557,23 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <h1 style="color: #007bff; margin: 0; font-size: 24px;">Professional Report</h1>
                                 <p style="color: #666; font-size: 12px; margin-top: 5px;">Generated by Reportify AI • ${dateStr}</p>
                             </div>
-                            <div style="font-size: 14px; text-align: left;">
-                                ${htmlContent}
-                            </div>
-                            <div style="margin-top: 50px; text-align: center; font-size: 10px; color: #aaa; border-top: 1px solid #eee; padding-top: 10px;">
-                                - End of Document -
-                            </div>
+                            <div style="font-size: 14px; text-align: left;">${htmlContent}</div>
+                            <div style="margin-top: 50px; text-align: center; font-size: 10px; color: #aaa; border-top: 1px solid #eee; padding-top: 10px;">- End of Document -</div>
                         </div>
                     `;
-                    
                     document.body.appendChild(container);
 
-                    // 4. 配置 PDF 参数 (开启智能分页)
                     const opt = {
-                        margin:       10, // mm
-                        filename:     `${filename}.pdf`,
-                        image:        { type: 'jpeg', quality: 0.98 },
-                        html2canvas:  { 
-                            scale: 2, 
-                            useCORS: true, 
-                            scrollY: 0, 
-                            windowWidth: document.body.scrollWidth 
-                        },
-                        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                        // 🔴 核心修复：开启智能分页模式
-                        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] } 
+                        margin: 10,
+                        filename: `${filename}.pdf`,
+                        image: { type: 'jpeg', quality: 0.98 },
+                        html2canvas: { scale: 2, useCORS: true },
+                        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] } 
                     };
 
-                    const elementToPrint = container.querySelector('#pdf-content-source');
-
                     setTimeout(() => {
-                        html2pdf().set(opt).from(elementToPrint).save().then(() => {
+                        html2pdf().set(opt).from(container.querySelector('#pdf-content-source')).save().then(() => {
                             document.body.removeChild(container);
                             document.body.removeChild(loadingTip);
                             showToast("PDF downloaded.", "success");
@@ -677,7 +589,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 辅助函数: saveAs
     function saveAs(blob, filename) {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -691,8 +602,8 @@ document.addEventListener('DOMContentLoaded', () => {
             URL.revokeObjectURL(url);
         }, 100);
     }
-
-    // 价格卡片交互 (蓝框)
+    
+    // 价格卡片交互
     const pricingCards = document.querySelectorAll('.pricing-card');
     if (pricingCards.length > 0) {
         pricingCards.forEach(card => {
@@ -705,83 +616,79 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================
-// 模块 F: 支付集成 (修复版 - 粘贴到这里)
-// =============================================
-const payButtons = document.querySelectorAll('.choose-plan-btn');
-const paymentModal = document.getElementById('payment-modal-overlay');
-const closePaymentBtn = document.getElementById('close-payment-btn');
-const paymentPlanLabel = document.getElementById('payment-plan-name');
-const paypalContainer = document.getElementById('paypal-button-container');
+    // 模块 G: PayPal 支付集成 (完整保留)
+    // =============================================
+    const payButtons = document.querySelectorAll('.choose-plan-btn');
+    const paymentModal = document.getElementById('payment-modal-overlay');
+    const closePaymentBtn = document.getElementById('close-payment-btn');
+    const paymentPlanLabel = document.getElementById('payment-plan-name');
+    const paypalContainer = document.getElementById('paypal-button-container');
 
-// 1. 关闭弹窗逻辑
-if (closePaymentBtn && paymentModal) {
-    const closeModal = () => {
-        paymentModal.style.display = 'none';
-        if (paypalContainer) paypalContainer.innerHTML = ''; 
-    };
-    closePaymentBtn.addEventListener('click', closeModal);
-    paymentModal.addEventListener('click', (e) => {
-        if (e.target === paymentModal) closeModal();
-    });
-}
+    // 1. 关闭弹窗逻辑
+    if (closePaymentBtn && paymentModal) {
+        const closeModal = () => {
+            paymentModal.style.display = 'none';
+            if (paypalContainer) paypalContainer.innerHTML = ''; 
+        };
+        closePaymentBtn.addEventListener('click', closeModal);
+        paymentModal.addEventListener('click', (e) => {
+            if (e.target === paymentModal) closeModal();
+        });
+    }
 
-// 2. 绑定支付按钮
-if (payButtons.length > 0) {
-    payButtons.forEach(btn => {
-        const newBtn = btn.cloneNode(true);
-        btn.parentNode.replaceChild(newBtn, btn);
+    // 2. 绑定支付按钮
+    if (payButtons.length > 0) {
+        payButtons.forEach(btn => {
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
 
-        newBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation(); // 防止冒泡影响蓝框
+            newBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation(); 
 
-            // 蓝框跟随逻辑
-            const parentCard = newBtn.closest('.pricing-card');
-            if (parentCard) {
-                document.querySelectorAll('.pricing-card').forEach(c => c.classList.remove('plan-active'));
-                parentCard.classList.add('plan-active');
-            }
+                const parentCard = newBtn.closest('.pricing-card');
+                if (parentCard) {
+                    document.querySelectorAll('.pricing-card').forEach(c => c.classList.remove('plan-active'));
+                    parentCard.classList.add('plan-active');
+                }
 
-            const token = localStorage.getItem('token');
-            if (!token) { 
-                showToast('Please log in first.', 'error'); 
-                window.openModal('login'); 
-                return; 
-            }
+                const token = localStorage.getItem('token');
+                if (!token) { 
+                    showToast('Please log in first.', 'error'); 
+                    window.openModal('login'); 
+                    return; 
+                }
 
-            if (!paymentModal || !paypalContainer) {
-                console.error("Missing payment modal HTML");
-                return;
-            }
+                if (!paymentModal || !paypalContainer) {
+                    console.error("Missing payment modal HTML");
+                    return;
+                }
 
-            const planType = newBtn.dataset.plan; 
-            let amount = '0.00';
-            let planName = '';
+                const planType = newBtn.dataset.plan; 
+                let amount = '0.00';
+                let planName = '';
 
-            if (planType === 'basic') {
-                amount = '9.90';
-                planName = 'Basic Plan ($9.90/mo)';
-            } else if (planType === 'pro') {
-                amount = '19.90';
-                planName = 'Professional Plan ($19.90/mo)';
-            } else {
-                return;
-            }
+                if (planType === 'basic') {
+                    amount = '9.90';
+                    planName = 'Basic Plan ($9.90/mo)';
+                } else if (planType === 'pro') {
+                    amount = '19.90';
+                    planName = 'Professional Plan ($19.90/mo)';
+                } else {
+                    return;
+                }
 
-            if (paymentPlanLabel) paymentPlanLabel.textContent = planName;
-            paymentModal.style.display = 'flex';
+                if (paymentPlanLabel) paymentPlanLabel.textContent = planName;
+                paymentModal.style.display = 'flex';
 
-            if (window.paypal) {
-                paypalContainer.innerHTML = ''; 
+                if (window.paypal) {
+                    paypalContainer.innerHTML = ''; 
 
-                // --- 替换开始 ---
                     window.paypal.Buttons({
-                        // 🔴 核心修改：只允许显示 PayPal 按钮，隐藏黑色的信用卡按钮
                         fundingSource: window.paypal.FUNDING.PAYPAL,
-
                         style: {
                             shape: 'rect',
-                            color: 'blue',      // 按钮颜色
+                            color: 'blue',
                             layout: 'vertical',
                             label: 'pay',
                         },
@@ -825,13 +732,12 @@ if (payButtons.length > 0) {
                             showToast('Payment Error. Try again.', 'error');
                         }
                     }).render('#paypal-button-container');
-                    // --- 替换结束 ---
-            } else {
-                showToast('PayPal SDK not loaded.', 'error');
-            }
+                } else {
+                    showToast('PayPal SDK not loaded.', 'error');
+                }
+            });
         });
-    });
-}
+    }
 
     // Free 按钮
     document.querySelectorAll('button').forEach(btn => {
