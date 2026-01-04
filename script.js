@@ -7,21 +7,21 @@
 
 // --- 1. 全局工具: Toast 提示 ---
 window.showToast = function(message, type = 'info') {
-    let container = document.getElementById('toast-container');
-    if (!container) {
-        container = document.createElement('div');
-        container.id = 'toast-container';
-        document.body.appendChild(container);
-    }
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    let icon = type === 'success' ? 'fa-check-circle' : (type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle');
-    toast.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
-    container.appendChild(toast);
-    setTimeout(() => {
-        toast.style.animation = 'fadeOut 0.5s ease forwards';
-        setTimeout(() => toast.remove(), 500);
-    }, 3000);
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        document.body.appendChild(container);
+    }
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    let icon = type === 'success' ? 'fa-check-circle' : (type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle');
+    toast.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
+    container.appendChild(toast);
+    setTimeout(() => {
+        toast.style.animation = 'fadeOut 0.5s ease forwards';
+        setTimeout(() => toast.remove(), 500);
+    }, 3000);
 };
 
 // =================================================
@@ -119,10 +119,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // -----------------------------------------------------
             // 🟢 替换结束
             // -----------------------------------------------------
-        })
-     }
-}）；
-
+        });
+    }
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     
