@@ -1,13 +1,9 @@
-/* * Reportify AI - nav.js (最终完整版)
- * 包含：用户头像、下拉菜单、会员等级徽章、移动端适配
- */
+/* * Reportify AI - nav.js (HTTPS 修正版) */
 
 const API_BASE_URL_NAV = 'https://api.goreportify.com';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 暴露全局函数，确保 script.js 可以调用
     window.updateUserNav = loadUserNav;
-    // 页面加载完毕自动执行一次
     loadUserNav();
 });
 
@@ -15,18 +11,17 @@ async function loadUserNav() {
     const token = localStorage.getItem('token');
     const headerActions = document.querySelector('.header-actions');
     
-    // 如果找不到导航栏容器，直接停止
     if (!headerActions) return;
 
-    // 1. 如果没有 Token，显示登录/注册按钮
     if (!token) {
         showLoggedOut(headerActions);
         return;
     }
 
-    // 2. 如果有 Token，尝试从后端获取用户详情
     try {
-        const res = await fetch(`${API_BASE_URL_NAV}/api/me`, {
+        // ⚠️ 注意：请确认你的后端路由是 /api/me 还是 /auth/me
+        // 之前你的截图暗示可能是 /auth/me，如果下面的报错，请尝试改为 /auth/me
+        const res = await fetch(`${API_BASE_URL_NAV}/auth/me`, { 
             method: 'GET',
             headers: { 
                 'Authorization': `Bearer ${token}`,
@@ -38,21 +33,19 @@ async function loadUserNav() {
             const user = await res.json();
             showLoggedIn(headerActions, user);
         } else {
-            // Token 可能过期了，强制登出
-            console.warn('Session expired or invalid.');
-            localStorage.removeItem('token');
+            console.warn('Token 失效，执行自动登出');
+            localStorage.removeItem('token'); // 这就是Token消失的原因（这是正确的安全逻辑）
             showLoggedOut(headerActions);
         }
     } catch (err) {
         console.error('Nav Error:', err);
-        // 网络错误时，为了安全起见，显示登出状态
+        // 网络错误不应该删除 Token，只显示未登录状态即可，防止误删
         showLoggedOut(headerActions);
     }
 }
 
-// --- 渲染：未登录状态 ---
 function showLoggedOut(container) {
-    container.innerHTML = ''; // 清空
+    container.innerHTML = ''; 
     
     const loginBtn = document.createElement('a');
     loginBtn.href = '#';
@@ -71,35 +64,41 @@ function showLoggedOut(container) {
     container.appendChild(startBtn);
 }
 
-// --- 渲染：已登录状态 (核心修改部分) ---
 function showLoggedIn(container, user) {
     container.innerHTML = ''; 
 
     const displayName = user.name || user.email.split('@')[0];
     const initial = displayName.charAt(0).toUpperCase();
-    const avatarSrc = user.avatarUrl ? `${API_BASE_URL_NAV}${user.avatarUrl}` : null;
     
-    // 1. 头像处理
+    // 🔥【关键修复】头像路径处理逻辑
+    let avatarSrc = null;
+    if (user.avatarUrl) {
+        if (user.avatarUrl.startsWith('http')) {
+            // 如果数据库里已经是完整链接，强制替换 http 为 https，且不再拼接前缀
+            avatarSrc = user.avatarUrl.replace('http:', 'https:');
+        } else {
+            // 如果是相对路径 (如 /uploads/xxx.png)，才拼接前缀
+            avatarSrc = `${API_BASE_URL_NAV}${user.avatarUrl}`;
+        }
+    }
+    
     const avatarContent = avatarSrc 
         ? `<img src="${avatarSrc}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">`
         : initial;
 
-    // 2. 会员徽章逻辑 (新增)
+    // 会员徽章
     let planBadge = 'FREE USER';
     let badgeColor = '#888';
-    
     if (user.plan === 'basic') {
         planBadge = 'BASIC MEMBER';
-        badgeColor = '#007bff'; // 蓝色
+        badgeColor = '#007bff';
     } else if (user.plan === 'pro') {
         planBadge = 'PRO MEMBER';
-        badgeColor = '#e63946'; // 红色
+        badgeColor = '#e63946';
     }
 
     const navWrapper = document.createElement('div');
     navWrapper.className = 'user-nav-wrapper';
-    
-    // 容器样式
     navWrapper.style.cssText = `
         position: relative; 
         display: flex; 
@@ -149,7 +148,6 @@ function showLoggedIn(container, user) {
         </div>
     `;
 
-    // 交互逻辑
     navWrapper.addEventListener('click', (e) => {
         e.stopPropagation();
         const dropdown = navWrapper.querySelector('.nav-dropdown');
