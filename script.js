@@ -30,34 +30,38 @@ window.showToast = function(message, type = 'info') {
 document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------
     // 1. Handle Google Login Token (Pure Version)
-    // -------------------------------------------------
+    // --- 🟢 (清洗版) 处理 Google 登录 Token ---
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = urlParams.get('token');
     const errorFromUrl = urlParams.get('error');
 
-    // Check if token exists
+    // 1. 如果发现 URL 里有 Token
     if (tokenFromUrl) {
-        console.log("Saving Token:", tokenFromUrl);
-        
-        // A. Save to LocalStorage
-        localStorage.setItem('token', tokenFromUrl);
-        
-        // B. Clean URL
+        // 打印日志，证明代码运行到了这里
+        console.log("正在保存 Token:", tokenFromUrl);
+
+        // A. 核心：存入浏览器 (使用双引号防止格式问题)
+        localStorage.setItem("token", tokenFromUrl);
+
+        // B. 清理地址栏 (把乱七八糟的参数去掉)
         window.history.replaceState({}, document.title, window.location.pathname);
-        
-        // C. Show success and reload
-        showToast('Login Successful!', 'success');
+
+        // C. 提示用户
+        showToast("Login Successful!", "success");
+
+        // D. 延迟刷新页面 (确保数据存完再刷新)
         setTimeout(() => {
-            window.location.href = 'index.html';
+            window.location.href = "index.html";
         }, 500);
-        return; 
+        
+        return; // 阻止后续代码执行
     }
 
+    // 2. 如果发现报错信息
     if (errorFromUrl) {
-        showToast('Google Login Failed', 'error');
+        showToast("Google Login Failed", "error");
         window.history.replaceState({}, document.title, window.location.pathname);
     }
-
     const headerActions = document.querySelector('.header-actions');
     
     // 1. 默认：立刻显示“登录/注册”按钮 (不用等服务器)
