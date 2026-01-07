@@ -28,40 +28,38 @@ window.showToast = function(message, type = 'info') {
 // 🚀 极速版导航栏逻辑 (修复 10秒 延迟)
 // =================================================
 document.addEventListener('DOMContentLoaded', () => {
-    // -------------------------------------------------
-    // 1. Handle Google Login Token (Pure Version)
-    // --- 🟢 (清洗版) 处理 Google 登录 Token ---
+    // ----------------------------------------------------
+    // 🟢 1. (清洗版) 优先处理 Google 登录 Token
+    // ----------------------------------------------------
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = urlParams.get('token');
     const errorFromUrl = urlParams.get('error');
 
-    // 1. 如果发现 URL 里有 Token
     if (tokenFromUrl) {
-        // 打印日志，证明代码运行到了这里
-        console.log("正在保存 Token:", tokenFromUrl);
-
-        // A. 核心：存入浏览器 (使用双引号防止格式问题)
-        localStorage.setItem("token", tokenFromUrl);
-
-        // B. 清理地址栏 (把乱七八糟的参数去掉)
-        window.history.replaceState({}, document.title, window.location.pathname);
-
-        // C. 提示用户
-        showToast("Login Successful!", "success");
-
-        // D. 延迟刷新页面 (确保数据存完再刷新)
-        setTimeout(() => {
-            window.location.href = "index.html";
-        }, 500);
+        // 打印日志，方便调试
+        console.log("Saving Token:", tokenFromUrl);
         
-        return; // 阻止后续代码执行
+        // 核心：存入浏览器
+        localStorage.setItem('token', tokenFromUrl);
+        
+        // 清理地址栏
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // 成功提示
+        showToast('Login Successful!', 'success');
+        
+        // 延迟刷新 (给浏览器一点时间存数据)
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 500);
+        return; 
     }
 
-    // 2. 如果发现报错信息
     if (errorFromUrl) {
-        showToast("Google Login Failed", "error");
+        showToast('Google Login Failed', 'error');
         window.history.replaceState({}, document.title, window.location.pathname);
     }
+    
     const headerActions = document.querySelector('.header-actions');
     
     // 1. 默认：立刻显示“登录/注册”按钮 (不用等服务器)
