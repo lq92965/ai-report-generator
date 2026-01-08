@@ -765,7 +765,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 try {
                     // 1. 找后端要 Google 的跳转链接
-                    const res = await fetch('https://api.goreportify.com/api/auth/google');
+                    const res = await fetch('https://api.goreportify.com/auth/google');
                     const data = await res.json();
                     
                     // 2. 拿到链接，跳过去
@@ -785,3 +785,4 @@ document.addEventListener('DOMContentLoaded', () => {
 }); 
 
 // End of Script
+
