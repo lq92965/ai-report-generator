@@ -133,7 +133,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // 4. 强制刷新页面，确保 nav.js 读取到最新状态
                 setTimeout(() => {
-                    window.location.reload();
+                    // window.location.reload();
+                    console.log("登录成功，暂停刷新以进行调试");
                 }, 1000);
 
             } catch (err) {
