@@ -34,7 +34,10 @@ async function loadUserNav() {
             showLoggedIn(headerActions, user);
         } else {
             console.warn('Token 失效，执行自动登出');
-            localStorage.removeItem('token'); // 这就是Token消失的原因（这是正确的安全逻辑）
+            
+            // 🔴 暂时注释掉下面这一行，不要让它删除 Token！
+            // localStorage.removeItem('token'); 
+            
             showLoggedOut(headerActions);
         }
     } catch (err) {
