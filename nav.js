@@ -21,7 +21,7 @@ async function loadUserNav() {
     try {
         // ⚠️ 注意：请确认你的后端路由是 /api/me 还是 /auth/me
         // 之前你的截图暗示可能是 /auth/me，如果下面的报错，请尝试改为 /auth/me
-        const res = await fetch(`${API_BASE_URL_NAV}/auth/me`, { 
+        const res = await fetch(`${API_BASE_URL_NAV}/api/me`, { 
             method: 'GET',
             headers: { 
                 'Authorization': `Bearer ${token}`,
