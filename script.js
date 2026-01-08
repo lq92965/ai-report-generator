@@ -1,9 +1,11 @@
 /*
  * ===================================================================
- * * Reportify AI - script.js (v19.0 强制刷新版)
- * * 核心修复: 登录成功后自动刷新页面，强制UI更新为“已登录”状态
+ * * Reportify AI - script.js (v20.0 最终完整版)
+ * * 状态: 已修复 Token 误删问题，已移除 Nav 冲突代码，保留所有功能
  * ===================================================================
 */
+
+const API_BASE_URL = 'https://api.goreportify.com'; 
 
 // --- 1. 全局工具: Toast 提示 ---
 window.showToast = function(message, type = 'info') {
@@ -25,30 +27,23 @@ window.showToast = function(message, type = 'info') {
 };
 
 // =================================================
-// 🚀 极速版导航栏逻辑 (修复 10秒 延迟)
+// 🟢 Google 登录回调处理 (仅保留 Token 保存逻辑，UI 交给 nav.js)
 // =================================================
 document.addEventListener('DOMContentLoaded', () => {
-    // ----------------------------------------------------
-    // 🟢 1. (清洗版) 优先处理 Google 登录 Token
-    // ----------------------------------------------------
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = urlParams.get('token');
     const errorFromUrl = urlParams.get('error');
 
     if (tokenFromUrl) {
-        // 打印日志，方便调试
         console.log("Saving Token:", tokenFromUrl);
-        
-        // 核心：存入浏览器
         localStorage.setItem('token', tokenFromUrl);
         
         // 清理地址栏
         window.history.replaceState({}, document.title, window.location.pathname);
         
-        // 成功提示
         showToast('Login Successful!', 'success');
         
-        // 延迟刷新 (给浏览器一点时间存数据)
+        // 延迟刷新，让 nav.js 重新加载用户状态
         setTimeout(() => {
             window.location.href = 'index.html';
         }, 500);
@@ -59,147 +54,18 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast('Google Login Failed', 'error');
         window.history.replaceState({}, document.title, window.location.pathname);
     }
-    
-    const headerActions = document.querySelector('.header-actions');
-    
-    // 1. 默认：立刻显示“登录/注册”按钮 (不用等服务器)
-    if (headerActions) {
-        headerActions.innerHTML = `
-            <a href="#" class="btn btn-secondary" onclick="window.openModal('login')">Login</a>
-            <a href="#" class="btn btn-primary" onclick="window.openModal('signup')">Get Started</a>
-        `;
-    }
-
-    // 2. 后台静默检查：如果已登录，再把按钮换成头像
-    const token = localStorage.getItem('token');
-    if (token) {
-        fetch('https://api.goreportify.com/api/me', {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
-        .then(res => {
-            if (res.ok) return res.json();
-            throw new Error('Not logged in');
-        })
-        .then(user => {
-            // -----------------------------------------------------
-            // 🟢 开始替换：登录成功，切换为 "头像 + 下拉菜单" 模式
-            // -----------------------------------------------------
-            if (headerActions) {
-                // 1. 自动生成头像 (如果用户没有头像，就用名字首字母生成)
-                const avatarUrl = user.avatarUrl || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name || 'User') + '&background=random';
-
-                // 2. 写入带下拉菜单的 HTML
-                headerActions.innerHTML = `
-                    <div class="user-menu-container" style="position: relative; display: inline-block;">
-                        <div id="user-menu-trigger" style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: background 0.2s;">
-                            <img src="${avatarUrl}" alt="Avatar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                            <span style="font-weight: 600; color: #333;">${user.name || 'User'}</span>
-                            <i class="fas fa-chevron-down" style="font-size: 12px; color: #666;"></i>
-                        </div>
-
-                        <div id="user-dropdown" class="hidden" style="position: absolute; right: 0; top: 50px; background: white; min-width: 180px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #eee; overflow: hidden; z-index: 1000; display: none;">
-                            <div style="padding: 15px; border-bottom: 1px solid #f0f0f0;">
-                                <div style="font-size: 12px; color: #888;">Signed in as</div>
-                                <div style="font-weight: bold; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${user.email}</div>
-                            </div>
-                            
-                            <a href="profile.html" style="display: block; padding: 12px 15px; color: #333; text-decoration: none;">
-                                <i class="fas fa-user-circle" style="margin-right: 8px;"></i> Profile
-                            </a>
-                            <a href="usage.html" style="display: block; padding: 12px 15px; color: #333; text-decoration: none;">
-                                <i class="fas fa-chart-line" style="margin-right: 8px;"></i> My Plan
-                            </a>
-                            
-                            <div style="border-top: 1px solid #f0f0f0;"></div>
-                            
-                            <a href="#" id="logout-btn" style="display: block; padding: 12px 15px; color: #dc3545; text-decoration: none;">
-                                <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i> Log Out
-                            </a>
-                        </div>
-                    </div>
-                `;
-
-                // 3. 绑定点击事件 (让菜单能点开)
-                const trigger = document.getElementById('user-menu-trigger');
-                const dropdown = document.getElementById('user-dropdown');
-                const logoutBtn = document.getElementById('logout-btn');
-
-                if (trigger && dropdown) {
-                    // 点击头像 -> 切换菜单显示/隐藏
-                    trigger.addEventListener('click', (e) => {
-                        e.stopPropagation(); // 阻止事件冒泡
-                        const isHidden = dropdown.style.display === 'none' || dropdown.style.display === '';
-                        dropdown.style.display = isHidden ? 'block' : 'none';
-                    });
-
-                    // 点击页面空白处 -> 关闭菜单
-                    document.addEventListener('click', () => {
-                        dropdown.style.display = 'none';
-                    });
-                }
-
-                if (logoutBtn) {
-                    // 点击登出 -> 清除 Token 并刷新
-                    logoutBtn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        localStorage.removeItem('token');
-                        alert('Logged out successfully'); // 简单提示
-                        window.location.reload();
-                    });
-                }
-            }
-            // -----------------------------------------------------
-            // 🟢 替换结束
-            // -----------------------------------------------------
-        })
-    }
 });
 
+// =================================================
+// 🟢 核心业务逻辑 (模板、生成、支付、导出)
+// =================================================
 document.addEventListener('DOMContentLoaded', () => {
     
-    const API_BASE_URL = 'https://api.goreportify.com'; 
     let allTemplates = []; 
     let currentUserPlan = 'basic'; 
 
     // =============================================
-    // 模块 A: 导航栏逻辑
-    // =============================================
-    window.showLoggedOutNav = (headerActions) => {
-        if (!headerActions) return;
-        headerActions.innerHTML = ''; 
-        
-        const loginBtn = document.createElement('a');
-        loginBtn.href = '#'; 
-        loginBtn.className = 'btn btn-secondary';
-        loginBtn.textContent = 'Login';
-        loginBtn.style.marginRight = '10px';
-        loginBtn.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            window.openModal('login');
-        });
-
-        const getStartedBtn = document.createElement('a');
-        getStartedBtn.href = '#';
-        getStartedBtn.className = 'btn btn-primary';
-        getStartedBtn.textContent = 'Get Started';
-        getStartedBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.openModal('signup');
-        });
-
-        headerActions.appendChild(loginBtn);
-        headerActions.appendChild(getStartedBtn);
-    };
-
-    // 尝试更新导航
-    if (window.updateUserNav) {
-        const token = localStorage.getItem('token');
-        if (!token) window.showLoggedOutNav(document.querySelector('.header-actions'));
-        else window.updateUserNav(); 
-    }
-
-    // =============================================
-    // 模块 B: 弹窗控制
+    // 模块 B: 弹窗控制 (Login/Signup Modal)
     // =============================================
     const authModalOverlay = document.getElementById('auth-modal-overlay');
     const closeModalBtn = document.getElementById('close-modal-btn');
@@ -229,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // =============================================
-    // 模块 C: 登录与注册 (核心修复点)
+    // 模块 C: 登录与注册表单处理
     // =============================================
     
     // 登录
@@ -265,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // 3. 关闭弹窗
                 window.closeModal(); 
                 
-                // 4. 🔴 关键修复：延迟1秒后强制刷新页面，确保 UI 变成已登录状态
+                // 4. 强制刷新页面，确保 nav.js 读取到最新状态
                 setTimeout(() => {
                     window.location.reload();
                 }, 1000);
@@ -321,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================
-    // 模块 D: 模板加载与动态表单
+    // 模块 D: 模板加载 (修复 Token 逻辑)
     // =============================================
     async function fetchUserPlan() {
         const token = localStorage.getItem('token');
@@ -344,9 +210,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(`${API_BASE_URL}/api/templates`, {
                 headers: token ? { 'Authorization': `Bearer ${token}` } : {} 
             });
-            if (!response.ok) return;
-            allTemplates = await response.json();
             
+            // ⚠️ 修复点: 如果获取模板失败（比如401），直接返回，不要删Token，也不要报错
+            if (!response.ok) return; 
+
+            allTemplates = await response.json();
             if(allTemplates.length === 0) return;
 
             templateSelect.innerHTML = '<option value="" disabled selected>Select a Report Type...</option>';
@@ -478,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const userPromptText = promptEl ? promptEl.value.trim() : "";
             
             if (!userPromptText && Object.keys(inputs).length === 0) {
-                alert('请输入内容 (Please enter content in the box)'); // 弹窗提示更直接
+                alert('请输入内容 (Please enter content in the box)'); 
                 if(promptEl) promptEl.focus();
                 return;
             }
@@ -512,6 +380,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (res.status === 403) {
                     showToast(`Limit Reached: ${data.error}`, 'error');
                     if(resultBox) resultBox.innerText = "Quota exceeded (配额已用完).";
+                } else if (res.status === 401) {
+                    // ⚠️ 修复: 如果401，提示用户重新登录，但不要自动删Token
+                    showToast('Session expired. Please re-login.', 'warning');
                 } else if (!res.ok) {
                     throw new Error(data.error || 'Server Error');
                 } else {
@@ -540,11 +411,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================
-    // 模块 F (修复版): 导出功能 (PDF/Word/Markdown)
+    // 模块 F: 导出功能 (PDF/Word/Markdown)
     // =============================================
-    
     const exportButtons = document.querySelectorAll('.export-btn');
-    // 兼容 Textarea 和 Div
     const getResultContent = () => {
         const box = document.getElementById('generated-report') || document.getElementById('result');
         return box ? (box.tagName === 'TEXTAREA' ? box.value : box.innerText) : "";
@@ -739,133 +608,132 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================
-// 模块 F: 支付集成 (修复版 - 粘贴到这里)
-// =============================================
-const payButtons = document.querySelectorAll('.choose-plan-btn');
-const paymentModal = document.getElementById('payment-modal-overlay');
-const closePaymentBtn = document.getElementById('close-payment-btn');
-const paymentPlanLabel = document.getElementById('payment-plan-name');
-const paypalContainer = document.getElementById('paypal-button-container');
+    // 模块 G: 支付集成 (保留 PayPal 逻辑)
+    // =============================================
+    const payButtons = document.querySelectorAll('.choose-plan-btn');
+    const paymentModal = document.getElementById('payment-modal-overlay');
+    const closePaymentBtn = document.getElementById('close-payment-btn');
+    const paymentPlanLabel = document.getElementById('payment-plan-name');
+    const paypalContainer = document.getElementById('paypal-button-container');
 
-// 1. 关闭弹窗逻辑
-if (closePaymentBtn && paymentModal) {
-    const closeModal = () => {
-        paymentModal.style.display = 'none';
-        if (paypalContainer) paypalContainer.innerHTML = ''; 
-    };
-    closePaymentBtn.addEventListener('click', closeModal);
-    paymentModal.addEventListener('click', (e) => {
-        if (e.target === paymentModal) closeModal();
-    });
-}
-
-// 2. 绑定支付按钮
-if (payButtons.length > 0) {
-    payButtons.forEach(btn => {
-        const newBtn = btn.cloneNode(true);
-        btn.parentNode.replaceChild(newBtn, btn);
-
-        newBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation(); // 防止冒泡影响蓝框
-
-            // 蓝框跟随逻辑
-            const parentCard = newBtn.closest('.pricing-card');
-            if (parentCard) {
-                document.querySelectorAll('.pricing-card').forEach(c => c.classList.remove('plan-active'));
-                parentCard.classList.add('plan-active');
-            }
-
-            const token = localStorage.getItem('token');
-            if (!token) { 
-                showToast('Please log in first.', 'error'); 
-                window.openModal('login'); 
-                return; 
-            }
-
-            if (!paymentModal || !paypalContainer) {
-                console.error("Missing payment modal HTML");
-                return;
-            }
-
-            const planType = newBtn.dataset.plan; 
-            let amount = '0.00';
-            let planName = '';
-
-            if (planType === 'basic') {
-                amount = '9.90';
-                planName = 'Basic Plan ($9.90/mo)';
-            } else if (planType === 'pro') {
-                amount = '19.90';
-                planName = 'Professional Plan ($19.90/mo)';
-            } else {
-                return;
-            }
-
-            if (paymentPlanLabel) paymentPlanLabel.textContent = planName;
-            paymentModal.style.display = 'flex';
-
-            if (window.paypal) {
-                paypalContainer.innerHTML = ''; 
-
-                // --- 替换开始 ---
-                    window.paypal.Buttons({
-                        // 🔴 核心修改：只允许显示 PayPal 按钮，隐藏黑色的信用卡按钮
-                        fundingSource: window.paypal.FUNDING.PAYPAL,
-
-                        style: {
-                            shape: 'rect',
-                            color: 'blue',      // 按钮颜色
-                            layout: 'vertical',
-                            label: 'pay',
-                        },
-                        createOrder: function(data, actions) {
-                            return actions.order.create({
-                                purchase_units: [{
-                                    description: planName,
-                                    amount: { value: amount }
-                                }]
-                            });
-                        },
-                        onApprove: function(data, actions) {
-                            return actions.order.capture().then(async function(details) {
-                                console.log(details);
-                                paymentModal.style.display = 'none';
-                                
-                                try {
-                                    const res = await fetch(`${API_BASE_URL}/api/upgrade-plan`, {
-                                        method: 'POST',
-                                        headers: { 
-                                            'Content-Type': 'application/json',
-                                            'Authorization': `Bearer ${token}` 
-                                        },
-                                        body: JSON.stringify({ plan: planType })
-                                    });
-                                    
-                                    if (res.ok) {
-                                        showToast(`Upgrade Successful!`, 'success');
-                                        setTimeout(() => window.location.href = 'usage.html', 1500);
-                                    } else {
-                                        showToast('Update failed. Contact support.', 'warning');
-                                    }
-                                } catch (err) {
-                                    console.error(err);
-                                    showToast('Network error updating plan.', 'error');
-                                }
-                            });
-                        },
-                        onError: function (err) {
-                            console.error(err);
-                            showToast('Payment Error. Try again.', 'error');
-                        }
-                    }).render('#paypal-button-container');
-                    // --- 替换结束 ---
-            } else {
-                showToast('PayPal SDK not loaded.', 'error');
-            }
+    // 1. 关闭弹窗逻辑
+    if (closePaymentBtn && paymentModal) {
+        const closeModal = () => {
+            paymentModal.style.display = 'none';
+            if (paypalContainer) paypalContainer.innerHTML = ''; 
+        };
+        closePaymentBtn.addEventListener('click', closeModal);
+        paymentModal.addEventListener('click', (e) => {
+            if (e.target === paymentModal) closeModal();
         });
-    });
-}
+    }
+
+    // 2. 绑定支付按钮
+    if (payButtons.length > 0) {
+        payButtons.forEach(btn => {
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+
+            newBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation(); // 防止冒泡影响蓝框
+
+                // 蓝框跟随逻辑
+                const parentCard = newBtn.closest('.pricing-card');
+                if (parentCard) {
+                    document.querySelectorAll('.pricing-card').forEach(c => c.classList.remove('plan-active'));
+                    parentCard.classList.add('plan-active');
+                }
+
+                const token = localStorage.getItem('token');
+                if (!token) { 
+                    showToast('Please log in first.', 'error'); 
+                    window.openModal('login'); 
+                    return; 
+                }
+
+                if (!paymentModal || !paypalContainer) {
+                    console.error("Missing payment modal HTML");
+                    return;
+                }
+
+                const planType = newBtn.dataset.plan; 
+                let amount = '0.00';
+                let planName = '';
+
+                if (planType === 'basic') {
+                    amount = '9.90';
+                    planName = 'Basic Plan ($9.90/mo)';
+                } else if (planType === 'pro') {
+                    amount = '19.90';
+                    planName = 'Professional Plan ($19.90/mo)';
+                } else {
+                    return;
+                }
+
+                if (paymentPlanLabel) paymentPlanLabel.textContent = planName;
+                paymentModal.style.display = 'flex';
+
+                if (window.paypal) {
+                    paypalContainer.innerHTML = ''; 
+
+                    // --- PayPal 渲染 ---
+                        window.paypal.Buttons({
+                            fundingSource: window.paypal.FUNDING.PAYPAL,
+
+                            style: {
+                                shape: 'rect',
+                                color: 'blue',      // 按钮颜色
+                                layout: 'vertical',
+                                label: 'pay',
+                            },
+                            createOrder: function(data, actions) {
+                                return actions.order.create({
+                                    purchase_units: [{
+                                        description: planName,
+                                        amount: { value: amount }
+                                    }]
+                                });
+                            },
+                            onApprove: function(data, actions) {
+                                return actions.order.capture().then(async function(details) {
+                                    console.log(details);
+                                    paymentModal.style.display = 'none';
+                                    
+                                    try {
+                                        const res = await fetch(`${API_BASE_URL}/api/upgrade-plan`, {
+                                            method: 'POST',
+                                            headers: { 
+                                                'Content-Type': 'application/json',
+                                                'Authorization': `Bearer ${token}` 
+                                            },
+                                            body: JSON.stringify({ plan: planType })
+                                        });
+                                        
+                                        if (res.ok) {
+                                            showToast(`Upgrade Successful!`, 'success');
+                                            setTimeout(() => window.location.href = 'usage.html', 1500);
+                                        } else {
+                                            showToast('Update failed. Contact support.', 'warning');
+                                        }
+                                    } catch (err) {
+                                        console.error(err);
+                                        showToast('Network error updating plan.', 'error');
+                                    }
+                                });
+                            },
+                            onError: function (err) {
+                                console.error(err);
+                                showToast('Payment Error. Try again.', 'error');
+                            }
+                        }).render('#paypal-button-container');
+                        // --- 结束 ---
+                } else {
+                    showToast('PayPal SDK not loaded.', 'error');
+                }
+            });
+        });
+    }
 
     // Free 按钮
     document.querySelectorAll('button').forEach(btn => {
@@ -878,8 +746,8 @@ if (payButtons.length > 0) {
         }
     });
 
-// =============================================
-    // 🟢 新增功能: Google 登录按钮点击事件
+    // =============================================
+    // 模块 H: Google 登录按钮点击事件
     // =============================================
     const googleBtns = document.querySelectorAll('button');
     googleBtns.forEach(btn => {
