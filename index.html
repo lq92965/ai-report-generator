@@ -351,8 +351,18 @@
         </div>
     </div>
     
-        <script src="nav.js?v=999.0"></script>
-        <script src="script.js?v=999.0"></script>
+        <script>
+            var version = new Date().getTime(); // 获取当前时间的毫秒数 (例如: 1736405000123)
+    
+            // 动态加载 js 文件，并带上时间戳
+            var scriptNav = document.createElement('script');
+            scriptNav.src = "nav.js?v=" + version;
+            document.body.appendChild(scriptNav);
+
+            var scriptMain = document.createElement('script');
+            scriptMain.src = "script.js?v=" + version;
+            document.body.appendChild(scriptMain);
+        </script>
 
 <div id="payment-modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
         <div style="background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 450px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
