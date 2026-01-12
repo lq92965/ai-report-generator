@@ -136,7 +136,7 @@ function showLoggedIn(container, user) {
             
             <div style="padding: 6px;">
                 <a href="account.html" class="nav-item" style="display: block; padding: 10px 10px; color: #444; text-decoration: none; border-radius: 6px; font-size: 14px; transition: background 0.2s;">
-                    📊 My Reports
+                    📊 My Account
                 </a>
                 <a href="profile.html" class="nav-item" style="display: block; padding: 10px 10px; color: #444; text-decoration: none; border-radius: 6px; font-size: 14px; transition: background 0.2s;">
                     ⚙️ Settings
