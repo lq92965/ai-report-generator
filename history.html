@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Reports History - Reportify AI</title>
+    <link rel="stylesheet" href="style.css?v=1002">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo-icon"><i class="fas fa-file-alt"></i></div>
+            <a href="index.html" class="logo-text">Reportify AI</a>
+        </div>
+        <div class="header-actions">
+            </div>
+    </header>
+
+    <div class="container" style="margin-top: 40px; max-width: 1000px;">
+        <div class="section-header" style="margin-bottom: 30px;">
+            <h2>📂 My Report History</h2>
+            <p>Access and re-download your past generated reports.</p>
+        </div>
+
+        <div id="history-list" class="settings-grid" style="grid-template-columns: 1fr;">
+            <div style="text-align: center; padding: 40px; color: #666;">
+                <i class="fas fa-spinner fa-spin"></i> Loading history...
+            </div>
+        </div>
+    </div>
+
+    <div id="report-modal" class="modal hidden">
+        <div class="modal-content" style="max-width: 800px; width: 90%;">
+            <div class="modal-header">
+                <h3 id="modal-title">Report Details</h3>
+                <button class="close-btn" onclick="closeReportModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="preview-box" id="modal-content" style="max-height: 500px; overflow-y: auto; background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                    </div>
+                
+                <div class="button-group" style="justify-content: flex-end; gap: 10px; display: flex;">
+                    <button class="btn btn-secondary" onclick="downloadReport('md')">Download Markdown</button>
+                    <button class="btn btn-primary" onclick="downloadReport('pdf')">Download PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/nav.js?v=1002"></script>
+    <script src="js/history.js?v=1002"></script> </body>
+</html>
