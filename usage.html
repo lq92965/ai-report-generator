@@ -162,21 +162,37 @@
                 if (!res.ok) throw new Error("Failed to load usage data");
                 const data = await res.json();
 
-                // 填充数据 (英文版)
-                document.getElementById('plan-name').textContent = data.planName || 'Basic';
-                if(data.plan === 'free') document.getElementById('upgrade-hint').style.display = 'block';
-
-                document.getElementById('usage-used').textContent = data.used;
+                // 🟢 修复1：手动映射 Plan 名字，确保显示 "Professional" 而不是 Basic
+                let displayPlan = 'Basic';
+                const planNameEl = document.getElementById('plan-name');
                 
-                if (data.limit === -1) {
-                    document.getElementById('usage-limit').textContent = "∞";
+                if (data.plan === 'pro') {
+                    displayPlan = 'Professional';
+                    planNameEl.style.color = '#e63946'; // Pro 变红色
+                } else if (data.plan === 'free') {
+                    displayPlan = 'Free Trial';
+                    document.getElementById('upgrade-hint').style.display = 'block';
+                }
+                planNameEl.textContent = displayPlan;
+
+                // 填充已用次数 (优先用 usageCount, 兼容 used)
+                const usedCount = data.usageCount !== undefined ? data.usageCount : (data.used || 0);
+                document.getElementById('usage-used').textContent = usedCount;
+                
+                // 🟢 修复2：只要限额大于 10000 (代表999999)，就显示不限次数
+                if (data.limit > 10000 || data.limit === -1) {
+                    // 无限模式
+                    document.getElementById('usage-limit').textContent = "∞"; // 显示无穷符号
                     document.getElementById('usage-progress').style.width = '100%';
                     document.getElementById('quota-left').textContent = "Unlimited";
+                    // 进度条变绿，表示无需担心
+                    document.getElementById('usage-progress').style.background = '#28a745'; 
                 } else {
+                    // 普通模式 (Basic/Free)
                     document.getElementById('usage-limit').textContent = data.limit;
-                    document.getElementById('quota-left').textContent = data.limit - data.used;
+                    document.getElementById('quota-left').textContent = data.limit - usedCount;
                     
-                    const percent = Math.min(100, (data.used / data.limit) * 100);
+                    const percent = Math.min(100, (usedCount / data.limit) * 100);
                     const progressBar = document.getElementById('usage-progress');
                     progressBar.style.width = percent + '%';
                     
@@ -184,9 +200,7 @@
                     else if(percent > 50) progressBar.style.background = '#ffc107';
                 }
 
-                // 🔴 修复：允许显示 0，只有当数据真的不存在时才显示 30
-                // 🔴 修复：允许显示 0，只有当数据真的不存在时才显示 30
-                // 🔴 修复：允许显示 0，只有当数据真的不存在时才显示 30
+                // 日期逻辑
                 document.getElementById('days-remaining').textContent = (data.daysRemaining !== undefined) ? data.daysRemaining : 30;
                 document.getElementById('days-used').textContent = data.daysUsed || 1;
                 
@@ -195,8 +209,8 @@
             } catch (err) {
                 console.error(err);
                 // 失败时显示默认值
-                document.getElementById('plan-name').textContent = "BASIC";
-                document.getElementById('usage-limit').textContent = "10";
+                document.getElementById('plan-name').textContent = "Basic";
+                document.getElementById('usage-limit').textContent = "0";
             }
         });
     </script>
