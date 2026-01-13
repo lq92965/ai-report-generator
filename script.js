@@ -786,3 +786,214 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // End of Script
 
+// =================================================
+// 🟢 模块 I: 历史报告与详情弹窗 (新增功能)
+// =================================================
+
+// --- 1. 通用导出工具函数 (修复 PDF 空白和 Word 缺失) ---
+
+// 导出 Word (支持中文和排版)
+function exportHistoryToWord(content, filename) {
+    const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' " +
+        "xmlns:w='urn:schemas-microsoft-com:office:word' " +
+        "xmlns='http://www.w3.org/TR/REC-html40'>" +
+        "<head><meta charset='utf-8'><title>Export HTML to Word Document with JavaScript</title></head><body>";
+    const footer = "</body></html>";
+    
+    // 简单的 Markdown 转 HTML 适配 Word
+    // 如果你已经引入了 marked.js，可以直接用 marked.parse(content)
+    // 这里做个简单的容错
+    let htmlBody = content;
+    if (typeof marked !== 'undefined') {
+        htmlBody = marked.parse(content);
+    } else {
+        htmlBody = content.replace(/\n/g, "<br>");
+    }
+
+    const sourceHTML = header + htmlBody + footer;
+    const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+    
+    const fileDownload = document.createElement("a");
+    document.body.appendChild(fileDownload);
+    fileDownload.href = source;
+    fileDownload.download = filename + '.doc';
+    fileDownload.click();
+    document.body.removeChild(fileDownload);
+    window.showToast("Word document downloaded", "success");
+}
+
+// 导出 PDF (截图法 - 解决弹窗内容空白问题)
+function exportHistoryToPDF(elementId, filename) {
+    const element = document.getElementById(elementId);
+    if (!element) {
+        window.showToast("Error: Content not found", "error");
+        return;
+    }
+    
+    window.showToast("Generating PDF...", "info");
+
+    // 配置 html2pdf 参数
+    // 注意：这里需要依赖 html2pdf.js 库 (你的主页代码里似乎已经有了)
+    const opt = {
+        margin:       10,
+        filename:     filename + '.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, logging: false },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+    };
+
+    // 如果 html2pdf 存在
+    if (typeof html2pdf !== 'undefined') {
+        html2pdf().set(opt).from(element).save().then(() => {
+            window.showToast("PDF downloaded", "success");
+        }).catch(err => {
+            console.error(err);
+            window.showToast("PDF generation failed", "error");
+        });
+    } else {
+        alert("PDF engine (html2pdf) is missing. Please check your index.html.");
+    }
+}
+
+// --- 2. 显示报告详情弹窗 (包含 Word/PDF 按钮) ---
+function showReportDetail(report) {
+    // 创建遮罩层
+    const modalOverlay = document.createElement('div');
+    modalOverlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+    modalOverlay.id = 'report-detail-modal';
+    
+    // 解析 Markdown 内容
+    const htmlContent = (typeof marked !== 'undefined') ? marked.parse(report.content) : report.content;
+
+    // 渲染弹窗 HTML
+    modalOverlay.innerHTML = `
+        <div class="bg-white rounded-lg w-11/12 max-w-4xl h-5/6 flex flex-col shadow-2xl animate__animated animate__fadeIn">
+            <div class="flex justify-between items-center p-6 border-b">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800">${report.title || 'Report Details'}</h3>
+                    <p class="text-sm text-gray-500">${new Date(report.createdAt).toLocaleString()}</p>
+                </div>
+                <button id="close-detail-btn" class="text-gray-500 hover:text-red-500 text-3xl">&times;</button>
+            </div>
+
+            <div class="flex-1 p-8 overflow-y-auto bg-gray-50">
+                <div id="history-content-preview" class="markdown-body bg-white p-8 shadow-sm rounded-md text-gray-800 leading-relaxed border border-gray-100">
+                    ${htmlContent}
+                </div>
+            </div>
+
+            <div class="p-6 border-t bg-gray-100 flex justify-end gap-3">
+                <button id="btn-history-word" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 shadow flex items-center gap-2">
+                    📄 Download Word
+                </button>
+                <button id="btn-history-pdf" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 shadow flex items-center gap-2">
+                    📕 Download PDF
+                </button>
+                <button id="btn-close-bottom" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">
+                    Close
+                </button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modalOverlay);
+
+    // --- 绑定事件 ---
+    
+    // 关闭功能
+    const closeModal = () => modalOverlay.remove();
+    document.getElementById('close-detail-btn').onclick = closeModal;
+    document.getElementById('btn-close-bottom').onclick = closeModal;
+    
+    // 点击背景关闭
+    modalOverlay.onclick = (e) => {
+        if (e.target === modalOverlay) closeModal();
+    };
+
+    // 导出 Word
+    document.getElementById('btn-history-word').onclick = () => {
+        exportHistoryToWord(report.content, report.title || 'Report');
+    };
+
+    // 导出 PDF (关键：传入 ID 'history-content-preview')
+    document.getElementById('btn-history-pdf').onclick = () => {
+        exportHistoryToPDF('history-content-preview', report.title || 'Report');
+    };
+}
+
+// --- 3. 加载报告列表 (Load Reports) ---
+async function loadReports() {
+    const reportListContainer = document.getElementById('report-list');
+    // 如果页面上没有 report-list 这个容器，说明不在历史页，直接退出
+    if (!reportListContainer) return;
+
+    reportListContainer.innerHTML = '<div class="text-center py-10">Loading reports...</div>';
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+        reportListContainer.innerHTML = '<div class="text-center py-10 text-red-500">Please log in to view history.</div>';
+        return;
+    }
+
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/reports`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (!res.ok) throw new Error("Failed to fetch reports");
+
+        const reports = await res.json();
+
+        if (reports.length === 0) {
+            reportListContainer.innerHTML = '<div class="text-center py-10 text-gray-500">No reports found. Generate one first!</div>';
+            return;
+        }
+
+        reportListContainer.innerHTML = ''; // 清空加载提示
+
+        // 渲染列表卡片
+        reports.forEach(report => {
+            const card = document.createElement('div');
+            card.className = "bg-white p-6 rounded-lg shadow hover:shadow-md transition border border-gray-100 mb-4";
+            
+            // 简单的预览文字 (截取前100字)
+            const preview = report.content.replace(/[#*`]/g, '').slice(0, 120) + '...';
+            const dateStr = new Date(report.createdAt).toLocaleString();
+
+            card.innerHTML = `
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h4 class="text-lg font-bold text-gray-800 mb-1">${report.title || 'Untitled Report'}</h4>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full">${report.type || 'General'}</span>
+                            <span class="text-xs text-gray-400">🕒 ${dateStr}</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4 leading-relaxed">${preview}</p>
+                    </div>
+                    <button class="view-detail-btn px-4 py-2 border border-gray-300 rounded hover:bg-gray-50 text-sm font-medium transition">
+                        查看和下载
+                    </button>
+                </div>
+            `;
+
+            // 绑定点击事件，打开弹窗
+            card.querySelector('.view-detail-btn').addEventListener('click', () => {
+                showReportDetail(report);
+            });
+
+            reportListContainer.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error(error);
+        reportListContainer.innerHTML = '<div class="text-center py-10 text-red-500">Error loading reports.</div>';
+    }
+}
+
+// --- 4. 自动初始化 ---
+// 当 DOM 加载完成后，检查是否需要加载历史记录
+document.addEventListener('DOMContentLoaded', () => {
+    loadReports();
+});
+
