@@ -1,135 +1,171 @@
-/* history.js - 管理历史记录 */
+// history.js - Fixed Version
 
-const API_URL = 'https://api.goreportify.com';
-let currentReportText = "";
-let currentReportDate = "";
+const API_BASE_URL = 'https://api.goreportify.com'; // 确保这个地址是你的后端地址
 
+// 页面加载时获取历史记录
 document.addEventListener('DOMContentLoaded', () => {
-    loadHistory();
+    fetchHistory();
 });
 
-async function loadHistory() {
+// 获取历史记录核心逻辑
+async function fetchHistory() {
     const token = localStorage.getItem('token');
     if (!token) {
-        window.location.href = 'index.html';
+        window.location.href = 'index.html'; // 未登录踢回首页
         return;
     }
 
-    const listContainer = document.getElementById('history-list');
-
     try {
-        const res = await fetch(`${API_URL}/api/reports`, {
+        const response = await fetch(`${API_BASE_URL}/api/reports/history`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
-        if (!res.ok) throw new Error('Failed to load history');
+        if (!response.ok) throw new Error('Failed to fetch history');
 
-        const reports = await res.json();
-
-        if (reports.length === 0) {
-            listContainer.innerHTML = `
-                <div style="text-align:center; padding:40px; background:white; border-radius:12px; border:1px solid #eee;">
-                    <i class="fas fa-folder-open" style="font-size:40px; color:#ddd; margin-bottom:15px;"></i>
-                    <p>No reports found. Go generate one!</p>
-                    <a href="index.html" class="btn btn-primary" style="margin-top:10px;">Create Report</a>
-                </div>`;
-            return;
-        }
-
-        listContainer.innerHTML = ''; // 清空加载动画
-
-        reports.forEach(report => {
-            // 格式化日期
-            const date = new Date(report.createdAt).toLocaleDateString() + ' ' + new Date(report.createdAt).toLocaleTimeString();
-            const preview = report.content.substring(0, 100) + '...';
-
-            const item = document.createElement('div');
-            item.className = 'history-item';
-            // 简单的卡片样式
-            item.style.cssText = `
-                background: white; 
-                padding: 20px; 
-                border-radius: 12px; 
-                border: 1px solid #eee; 
-                margin-bottom: 15px; 
-                display: flex; 
-                justify-content: space-between; 
-                align-items: center;
-                transition: transform 0.2s;
-            `;
-            item.onmouseover = () => item.style.transform = 'translateY(-2px)';
-            item.onmouseout = () => item.style.transform = 'translateY(0)';
-
-            item.innerHTML = `
-                <div>
-                    <h4 style="margin:0 0 5px 0; color:#333;">${report.title || 'Untitled Report'}</h4>
-                    <div style="font-size:12px; color:#888; margin-bottom:8px;">
-                        <span style="background:#eef2ff; color:#4f46e5; padding:2px 8px; border-radius:4px; margin-right:10px;">${report.templateId || 'Custom'}</span>
-                        <i class="far fa-clock"></i> ${date}
-                    </div>
-                    <p style="font-size:13px; color:#666; margin:0;">${preview}</p>
-                </div>
-                <button class="btn btn-secondary" onclick="viewReport('${report._id}')">View & Download</button>
-            `;
-            listContainer.appendChild(item);
-        });
-
-    } catch (err) {
-        console.error(err);
-        listContainer.innerHTML = `<div style="color:red; text-align:center;">Error loading history. Please try again.</div>`;
+        const reports = await response.json();
+        renderHistoryList(reports);
+    } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('history-list').innerHTML = '<p style="color:white;">无法加载历史记录，请稍后重试。</p>';
     }
 }
 
-// 打开弹窗查看详情
-window.viewReport = async (id) => {
-    const token = localStorage.getItem('token');
-    const modal = document.getElementById('report-modal');
-    const contentBox = document.getElementById('modal-content');
-    
-    contentBox.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading content...';
-    modal.classList.remove('hidden');
+// 渲染列表
+function renderHistoryList(reports) {
+    const listContainer = document.getElementById('history-list');
+    listContainer.innerHTML = ''; // 清空现有内容
 
-    try {
-        const res = await fetch(`${API_URL}/api/reports/${id}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const report = await res.json();
-        
-        currentReportText = report.content;
-        currentReportDate = new Date(report.createdAt).toISOString().slice(0,10);
-
-        // 渲染 Markdown
-        contentBox.innerHTML = marked.parse(report.content);
-
-    } catch (err) {
-        contentBox.innerHTML = 'Error loading content.';
+    if (reports.length === 0) {
+        listContainer.innerHTML = '<p style="color:white;">暂无历史报告。</p>';
+        return;
     }
-};
 
-window.closeReportModal = () => {
-    document.getElementById('report-modal').classList.add('hidden');
-};
+    reports.forEach(report => {
+        const card = document.createElement('div');
+        card.className = 'history-card'; // 确保你的CSS里有这个样式，或者沿用之前的
+        // 简单样式，保证卡片可见
+        card.style.background = 'rgba(255,255,255,0.1)';
+        card.style.padding = '15px';
+        card.style.marginBottom = '10px';
+        card.style.borderRadius = '8px';
+        card.style.color = 'white';
+        card.style.cursor = 'pointer';
 
-// 复用下载逻辑
-window.downloadReport = (type) => {
-    if (!currentReportText) return;
-    const filename = `Report_${currentReportDate}`;
+        const date = new Date(report.createdAt).toLocaleDateString();
+        card.innerHTML = `
+            <h3>${report.title || '未命名报告'}</h3>
+            <p><small>${date}</small></p>
+        `;
+        
+        // 点击卡片显示弹窗
+        card.onclick = () => showReportDetail(report);
+        listContainer.appendChild(card);
+    });
+}
 
-    if (type === 'md') {
-        const blob = new Blob([currentReportText], {type: 'text/markdown;charset=utf-8'});
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = filename + '.md';
-        a.click();
-    } else if (type === 'pdf') {
-        const element = document.getElementById('modal-content');
+// ==========================================
+// 🟢 核心修复：弹窗与导出逻辑
+// ==========================================
+
+// 1. Word 导出函数
+function exportHistoryToWord(content, filename) {
+    if (!content) return alert("内容为空");
+    const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export</title></head><body>";
+    const footer = "</body></html>";
+    let htmlBody = (typeof marked !== 'undefined') ? marked.parse(content) : content.replace(/\n/g, "<br>");
+    const sourceHTML = header + htmlBody + footer;
+    const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+    const link = document.createElement("a");
+    document.body.appendChild(link);
+    link.href = source;
+    link.download = filename + '.doc';
+    link.click();
+    document.body.removeChild(link);
+}
+
+// 2. PDF 导出函数 (快照法 - 修复空白问题)
+function exportHistoryToPDF(content, filename) {
+    if (!content) return alert("内容为空");
+    
+    // 创建临时容器 (不受网页暗色背景干扰)
+    const element = document.createElement('div');
+    element.style.width = '800px';
+    element.style.padding = '40px';
+    element.style.fontFamily = 'Arial, sans-serif';
+    element.style.background = '#fff';
+    element.style.color = '#000';
+    
+    const htmlContent = (typeof marked !== 'undefined') ? marked.parse(content) : content;
+    element.innerHTML = `
+        <h2 style="text-align:center; color:#333;">${filename}</h2>
+        <hr style="margin:20px 0; border:0; border-top:1px solid #ccc;">
+        <div style="line-height:1.6;">${htmlContent}</div>
+        <div style="margin-top:50px; text-align:center; color:#999; font-size:12px;">Generated by Reportify AI</div>
+    `;
+
+    // 检查 html2pdf 是否加载
+    if (typeof html2pdf !== 'undefined') {
         const opt = {
             margin: 10,
             filename: filename + '.pdf',
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
+            html2canvas: { scale: 2, useCORS: true },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
-        html2pdf().set(opt).from(element).save();
+        html2pdf().from(element).set(opt).save();
+    } else {
+        alert("PDF 组件未加载，请刷新页面检查网络。");
     }
-};
+}
+
+// 3. 弹窗显示逻辑 (动态创建，替换旧的 HTML modal)
+function showReportDetail(report) {
+    // 移除旧弹窗
+    const old = document.getElementById('dm');
+    if (old) old.remove();
+    // 同时也移除可能存在的静态HTML弹窗（防止双重弹窗）
+    const staticModal = document.getElementById('report-modal');
+    if (staticModal) staticModal.classList.add('hidden');
+
+    const overlay = document.createElement('div');
+    overlay.id = 'dm';
+    // 使用 Tailwind 类 (如果不生效，会自动回退到无样式，但逻辑仍在)
+    overlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+    // 强制样式确保居中覆盖
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
+    overlay.style.display = 'flex';
+    overlay.style.justifyContent = 'center';
+    overlay.style.alignItems = 'center';
+    overlay.style.zIndex = '9999';
+    
+    const htmlContent = (typeof marked !== 'undefined') ? marked.parse(report.content) : report.content;
+
+    overlay.innerHTML = `
+        <div style="background:white; color:black; width:90%; max-width:800px; height:80%; display:flex; flex-direction:column; border-radius:8px; overflow:hidden;">
+            <div style="padding:20px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
+                <h3 style="margin:0; font-size:20px;">${report.title || '报告详情'}</h3>
+                <button onclick="document.getElementById('dm').remove()" style="background:none; border:none; font-size:24px; cursor:pointer;">&times;</button>
+            </div>
+            <div style="flex:1; padding:20px; overflow-y:auto; line-height:1.6;">
+                ${htmlContent}
+            </div>
+            <div style="padding:20px; background:#f9f9f9; border-top:1px solid #eee; display:flex; justify-content:flex-end; gap:10px;">
+                <button id="btn-word" style="padding:10px 20px; background:#2563EB; color:white; border:none; border-radius:4px; cursor:pointer;">📄 下载 Word</button>
+                <button id="btn-pdf" style="padding:10px 20px; background:#DC2626; color:white; border:none; border-radius:4px; cursor:pointer;">📕 下载 PDF</button>
+                <button onclick="document.getElementById('dm').remove()" style="padding:10px 20px; background:#ccc; border:none; border-radius:4px; cursor:pointer;">关闭</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+
+    // 延时绑定事件，确保DOM已插入
+    setTimeout(() => {
+        document.getElementById('btn-word').onclick = () => exportHistoryToWord(report.content, report.title || 'Report');
+        document.getElementById('btn-pdf').onclick = () => exportHistoryToPDF(report.content, report.title || 'Report');
+    }, 50);
+}
