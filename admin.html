@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reportify Admin Pro</title>
+    <title>Reportify Admin Console</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -11,8 +11,7 @@
         .nav-item.active { background-color: #2563EB; color: white; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
         .nav-item { color: #94a3b8; transition: all 0.2s; }
         .nav-item:hover:not(.active) { background-color: #1e293b; color: white; }
-        /* 隐藏滚动条但保留功能 */
-        .hide-scroll::-webkit-scrollbar { width: 5px; }
+        .hide-scroll::-webkit-scrollbar { width: 6px; }
         .hide-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     </style>
 </head>
@@ -31,14 +30,14 @@
             </div>
             
             <nav class="flex-1 p-4 space-y-2 mt-4">
-                <button onclick="switchView('dashboard')" id="nav-dashboard" class="nav-item active w-full flex items-center gap-3 px-4 py-3 rounded-lg">
-                    <i class="fas fa-chart-pie w-5 text-center"></i> 仪表盘 (Overview)
+                <button onclick="switchView('dashboard')" id="nav-dashboard" class="nav-item active w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left">
+                    <i class="fas fa-chart-pie w-5 text-center"></i> Dashboard
                 </button>
-                <button onclick="switchView('users')" id="nav-users" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg">
-                    <i class="fas fa-users w-5 text-center"></i> 用户管理 (Users)
+                <button onclick="switchView('users')" id="nav-users" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left">
+                    <i class="fas fa-users w-5 text-center"></i> Users Management
                 </button>
-                <button onclick="switchView('feedback')" id="nav-feedback" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg">
-                    <i class="fas fa-inbox w-5 text-center"></i> 消息反馈 (Inbox)
+                <button onclick="switchView('feedback')" id="nav-feedback" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left">
+                    <i class="fas fa-inbox w-5 text-center"></i> Feedback & Inbox
                 </button>
             </nav>
 
@@ -47,11 +46,11 @@
                     <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-xs">AD</div>
                     <div class="flex-1 min-w-0">
                         <p class="text-sm font-medium truncate text-white">Administrator</p>
-                        <p class="text-xs text-slate-400 truncate">Boss Mode</p>
+                        <p class="text-xs text-slate-400 truncate">Super User</p>
                     </div>
                 </div>
                 <button onclick="logout()" class="w-full flex items-center justify-center gap-2 px-4 py-2 text-red-400 hover:bg-red-900/20 rounded transition text-sm">
-                    <i class="fas fa-sign-out-alt"></i> 退出登录
+                    <i class="fas fa-sign-out-alt"></i> Logout
                 </button>
             </div>
         </aside>
@@ -59,10 +58,13 @@
         <div class="flex-1 flex flex-col overflow-hidden relative">
             
             <header class="bg-white shadow-sm h-16 flex items-center justify-between px-8 z-10">
-                <h2 class="text-xl font-bold text-gray-800" id="page-title">仪表盘概览</h2>
-                <button onclick="initData()" class="p-2 text-gray-400 hover:text-blue-600 transition" title="刷新数据">
-                    <i class="fas fa-sync-alt"></i>
-                </button>
+                <h2 class="text-xl font-bold text-gray-800" id="page-title">Dashboard Overview</h2>
+                <div class="flex items-center gap-4">
+                    <span class="text-sm text-gray-500" id="current-date"></span>
+                    <button onclick="initData()" class="p-2 text-gray-400 hover:text-blue-600 transition" title="Refresh Data">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
             </header>
 
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-8 hide-scroll">
@@ -70,32 +72,35 @@
                 <div id="view-dashboard" class="view-section animate-fade-in">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                         <div class="bg-white p-6 rounded-xl shadow-sm border-b-4 border-blue-500">
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">总用户</p>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Total Users</p>
                             <h3 class="text-3xl font-extrabold text-gray-800 mt-2" id="stat-users">-</h3>
                         </div>
                         <div class="bg-white p-6 rounded-xl shadow-sm border-b-4 border-green-500">
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Basic 收入 ($9.9)</p>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Basic Plan ($9.9)</p>
                             <h3 class="text-3xl font-extrabold text-gray-800 mt-2" id="stat-basic">-</h3>
                         </div>
                         <div class="bg-white p-6 rounded-xl shadow-sm border-b-4 border-purple-600">
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Pro 收入 ($19.9)</p>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Pro Plan ($19.9)</p>
                             <h3 class="text-3xl font-extrabold text-gray-800 mt-2" id="stat-pros">-</h3>
                         </div>
                         <div class="bg-white p-6 rounded-xl shadow-sm border-b-4 border-yellow-500">
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">待处理反馈</p>
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Pending Feedback</p>
                             <h3 class="text-3xl font-extrabold text-gray-800 mt-2" id="stat-unread">-</h3>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="bg-white p-6 rounded-xl shadow-sm lg:col-span-1">
-                            <h3 class="font-bold text-gray-700 mb-4">用户构成</h3>
-                            <canvas id="userChart"></canvas>
+                            <h3 class="font-bold text-gray-700 mb-4">User Distribution</h3>
+                            <div class="relative h-64">
+                                <canvas id="userChart"></canvas>
+                            </div>
                         </div>
                         <div class="bg-white p-6 rounded-xl shadow-sm lg:col-span-2">
-                            <h3 class="font-bold text-gray-700 mb-4">最近 5 条动态</h3>
+                            <h3 class="font-bold text-gray-700 mb-4">Recent Feedback Activity</h3>
                             <div id="dash-recent-list" class="space-y-3">
-                                </div>
+                                <div class="text-gray-400 text-sm">Loading...</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -103,27 +108,29 @@
                 <div id="view-users" class="view-section hidden">
                     <div class="bg-white rounded-xl shadow-sm overflow-hidden">
                         <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
-                            <h3 class="font-bold text-gray-800">注册用户列表</h3>
-                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full" id="user-count-badge">0 Users</span>
+                            <h3 class="font-bold text-gray-800">All Registered Users</h3>
+                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full" id="user-count-badge">0</span>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left text-sm">
                                 <thead class="bg-gray-50 text-gray-500 uppercase font-semibold">
                                     <tr>
-                                        <th class="px-6 py-4">用户</th>
-                                        <th class="px-6 py-4">邮箱</th>
-                                        <th class="px-6 py-4">套餐</th>
-                                        <th class="px-6 py-4">注册时间</th>
+                                        <th class="px-6 py-4">Name</th>
+                                        <th class="px-6 py-4">Email</th>
+                                        <th class="px-6 py-4">Plan</th>
+                                        <th class="px-6 py-4">Joined Date</th>
                                     </tr>
                                 </thead>
-                                <tbody id="table-users" class="divide-y divide-gray-100">
-                                    </tbody>
+                                <tbody id="table-users" class="divide-y divide-gray-100"></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
 
                 <div id="view-feedback" class="view-section hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-gray-800 text-lg">Message Inbox</h3>
+                    </div>
                     <div class="grid grid-cols-1 gap-4" id="feedback-grid">
                         </div>
                 </div>
@@ -136,32 +143,35 @@
         const API_BASE = 'https://api.goreportify.com';
         const token = localStorage.getItem('token');
 
-        // 1. 安全验证 & 初始化
+        // Display Date
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+        // 1. Auth Check
         if (!token) {
             window.location.href = 'index.html?error=admin_required';
         } else {
-            // 验证通过，移除遮罩
             setTimeout(() => document.getElementById('auth-check').style.display = 'none', 500);
             initData();
         }
 
-        // 2. 核心数据加载
+        // 2. Fetch Data
         async function initData() {
             try {
-                // 并行加载所有数据
+                const headers = { 'Authorization': `Bearer ${token}` };
+                
                 const [statsRes, msgsRes, usersRes] = await Promise.all([
-                    fetch(`${API_BASE}/api/admin/stats`, { headers: { 'Authorization': `Bearer ${token}` } }),
-                    fetch(`${API_BASE}/api/admin/feedbacks`, { headers: { 'Authorization': `Bearer ${token}` } }),
-                    fetch(`${API_BASE}/api/admin/users`, { headers: { 'Authorization': `Bearer ${token}` } })
+                    fetch(`${API_BASE}/api/admin/stats`, { headers }),
+                    fetch(`${API_BASE}/api/admin/feedbacks`, { headers }),
+                    fetch(`${API_BASE}/api/admin/users`, { headers })
                 ]);
 
                 if (statsRes.status === 403) {
-                    alert("权限拒绝：您不是管理员账号！");
+                    alert("Access Denied: You are not an Admin.");
                     window.location.href = 'index.html';
                     return;
                 }
 
-                if (!statsRes.ok) throw new Error("API Connection Failed");
+                if (!statsRes.ok) throw new Error("Backend Connection Failed");
 
                 const stats = await statsRes.json();
                 const msgs = await msgsRes.json();
@@ -175,28 +185,28 @@
             } catch (err) {
                 console.error(err);
                 if(document.getElementById('stat-users').innerText === '-') {
-                    alert("无法连接服务器。请确保已执行 pm2 restart backend 重启后端！");
+                    alert("Error: Cannot connect to server. Please ensure you have run 'pm2 restart backend'.");
                 }
             }
         }
 
-        // 3. 视图切换逻辑
+        // 3. View Switcher
         window.switchView = function(viewName) {
-            // 隐藏所有视图
+            // Hide all views
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
-            // 显示目标视图
+            // Show target view
             document.getElementById(`view-${viewName}`).classList.remove('hidden');
             
-            // 更新导航栏状态
+            // Update Nav State
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById(`nav-${viewName}`).classList.add('active');
 
-            // 更新标题
-            const titles = { 'dashboard': '仪表盘概览', 'users': '用户数据库', 'feedback': '客户反馈中心' };
+            // Update Title
+            const titles = { 'dashboard': 'Dashboard Overview', 'users': 'User Database', 'feedback': 'Feedback & Inbox' };
             document.getElementById('page-title').innerText = titles[viewName];
         }
 
-        // 4. 渲染函数
+        // 4. Render Functions
         function renderDashboard(data) {
             document.getElementById('stat-users').innerText = data.users;
             document.getElementById('stat-basic').innerText = data.basic;
@@ -207,7 +217,7 @@
         function renderUserTable(users) {
             const tbody = document.getElementById('table-users');
             tbody.innerHTML = '';
-            document.getElementById('user-count-badge').innerText = users.length + ' Latest';
+            document.getElementById('user-count-badge').innerText = users.length;
 
             users.forEach(u => {
                 let badge = '<span class="px-2 py-1 rounded text-xs bg-gray-100 text-gray-500 font-bold">Free</span>';
@@ -216,7 +226,7 @@
                 
                 tbody.innerHTML += `
                     <tr class="hover:bg-gray-50 border-b border-gray-50 last:border-0">
-                        <td class="px-6 py-4 font-medium">${u.name || 'User'}</td>
+                        <td class="px-6 py-4 font-medium text-gray-900">${u.name || 'User'}</td>
                         <td class="px-6 py-4 text-gray-500">${u.email}</td>
                         <td class="px-6 py-4">${badge}</td>
                         <td class="px-6 py-4 text-gray-400">${new Date(u.createdAt).toLocaleDateString()}</td>
@@ -233,43 +243,89 @@
             dashList.innerHTML = '';
 
             if(msgs.length === 0) {
-                container.innerHTML = '<div class="text-center py-10 text-gray-400">暂无反馈数据</div>';
+                const empty = '<div class="text-center py-10 text-gray-400">No feedback messages yet.</div>';
+                container.innerHTML = empty;
+                dashList.innerHTML = empty;
                 return;
             }
 
             msgs.forEach((msg, index) => {
-                const tagColor = msg.type === 'Bug' ? 'bg-red-100 text-red-700' : (msg.type === 'Priority' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-50 text-blue-600');
+                // Colors
+                const tagColor = msg.type === 'Bug' ? 'bg-red-100 text-red-800' : (msg.type === 'Priority' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800');
+                const isVIP = msg.isVIP ? '<span class="ml-2 bg-purple-100 text-purple-700 px-2 py-0.5 rounded text-xs font-bold">VIP</span>' : '';
+                const repliedBadge = msg.status === 'replied' ? '<span class="ml-auto text-green-600 text-xs font-bold"><i class="fas fa-check"></i> Replied</span>' : '';
+
+                // Full Card (Inbox View)
                 const card = `
-                    <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
                         <div class="flex justify-between items-start mb-3">
                             <div class="flex items-center gap-2">
                                 <span class="font-bold text-gray-800">${msg.name}</span>
-                                <span class="text-xs text-gray-400">&lt;${msg.email}&gt;</span>
+                                ${isVIP}
                             </div>
-                            <span class="text-xs text-gray-400">${new Date(msg.submittedAt).toLocaleDateString()}</span>
+                            <div class="flex items-center gap-3">
+                                ${repliedBadge}
+                                <span class="text-xs text-gray-400">${new Date(msg.submittedAt).toLocaleString()}</span>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <span class="${tagColor} px-2 py-1 rounded text-xs font-bold uppercase">${msg.type || 'General'}</span>
-                            ${msg.isVIP ? '<span class="ml-2 bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs font-bold">VIP User</span>' : ''}
+                        <div class="text-xs text-gray-500 mb-4 flex items-center gap-2">
+                            <span class="bg-gray-100 px-2 py-1 rounded">${msg.email}</span>
+                            <span class="${tagColor} px-2 py-1 rounded font-bold uppercase tracking-wide text-[10px]">${msg.type || 'General'}</span>
                         </div>
-                        <p class="text-gray-600 text-sm bg-gray-50 p-3 rounded leading-relaxed">${msg.message}</p>
+                        <p class="text-gray-700 text-sm bg-gray-50 p-4 rounded mb-4 leading-relaxed border border-gray-100">${msg.message}</p>
+                        
+                        <div class="flex justify-end border-t pt-4 border-gray-50">
+                            <button onclick="openReplyModal('${msg._id}', '${msg.name}')" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition shadow-sm flex items-center gap-2">
+                                <i class="fas fa-reply"></i> Reply via Email
+                            </button>
+                        </div>
                     </div>
                 `;
                 container.innerHTML += card;
 
-                // 仪表盘只显示前5条简略版
+                // Mini Item (Dashboard View) - Limit to 5
                 if(index < 5) {
                     dashList.innerHTML += `
-                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded text-sm">
-                            <div class="flex items-center gap-2">
-                                <span class="${tagColor} w-2 h-2 rounded-full"></span>
-                                <span class="font-medium text-gray-700 truncate w-32">${msg.name}</span>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg text-sm border border-gray-100">
+                            <div class="flex items-center gap-3 overflow-hidden">
+                                <span class="w-2 h-2 rounded-full ${msg.type === 'Bug' ? 'bg-red-500' : 'bg-blue-500'} flex-shrink-0"></span>
+                                <span class="font-medium text-gray-700 truncate">${msg.name}</span>
+                                <span class="text-xs text-gray-400 truncate hidden sm:block">- ${msg.message.substring(0, 30)}...</span>
                             </div>
-                            <span class="text-xs text-gray-400">${new Date(msg.submittedAt).toLocaleDateString()}</span>
+                            <span class="text-xs text-gray-400 whitespace-nowrap">${new Date(msg.submittedAt).toLocaleDateString()}</span>
                         </div>
                     `;
                 }
             });
+        }
+
+        // 🟢 Reply Logic
+        async function openReplyModal(id, name) {
+            const reply = prompt(`Reply to ${name} (This will be sent to their email):`, "");
+            
+            if (reply) {
+                try {
+                    const res = await fetch(`${API_BASE}/api/admin/reply`, {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}` 
+                        },
+                        body: JSON.stringify({ feedbackId: id, replyContent: reply })
+                    });
+                    
+                    if(res.ok) {
+                        alert("✅ Reply Sent Successfully!");
+                        initData(); // Refresh to show "Replied" status
+                    } else {
+                        const err = await res.json();
+                        alert("❌ Failed: " + err.message);
+                    }
+                } catch(e) {
+                    console.error(e);
+                    alert("Network Error");
+                }
+            }
         }
 
         function renderCharts(data) {
@@ -280,7 +336,7 @@
             window.myChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Free', 'Basic', 'Pro'],
+                    labels: ['Free Users', 'Basic', 'Pro'],
                     datasets: [{
                         data: [free, data.basic, data.pros],
                         backgroundColor: ['#e2e8f0', '#22c55e', '#9333ea'],
