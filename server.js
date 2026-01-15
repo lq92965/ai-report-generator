@@ -37,22 +37,23 @@ app.use(cors({
 app.use(express.json());
 
 // ==========================================
-// 📧 邮件系统配置 (带防崩溃保护)
+// 📧 邮件系统配置 (尝试 587 端口 + STARTTLS)
 // ==========================================
 let transporter = null;
 try {
     transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
-        port: 465, 
-        secure: true,
+        port: 587, // 🟢 改用 587 端口 (云服务器推荐端口)
+        secure: false, // 587 必须设为 false
+        requireTLS: true, // 强制加密
         auth: {
             user: 'lq92965@gmail.com', 
-            // 🔴 记得填密码，如果没填对也没关系，网站能登录，只是发不出邮件
-            pass: 'cqgkrldvgybewvhi' 
-        }
+            pass: 'cqgkrldvgybewvhi' // 🔴 必填：去掉空格！
+        },
+        connectionTimeout: 10000 // 10秒超时
     });
 } catch (err) {
-    console.error("⚠️ 邮件服务初始化失败，但服务器将继续运行:", err);
+    console.error("⚠️ 邮件配置错误:", err);
 }
 
 // 辅助发送函数
