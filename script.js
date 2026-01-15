@@ -998,43 +998,63 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================
-// 🟢 修复：复制结果按钮逻辑
+// 🟢 最终修复：复制结果按钮逻辑 (已修正 ID 匹配问题)
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. 尝试找到复制按钮 (根据你的截图，按钮文字是 "复制结果")
-    // 我们尝试通过 ID 查找，或者通过 class 查找
-    const copyBtn = document.querySelector('button[onclick="copyResult()"]') || 
-                    Array.from(document.querySelectorAll('button')).find(el => el.textContent.includes('复制结果'));
+    // 1. 精准找到“复制结果”按钮
+    // 我们同时查找可能有 ID 的情况，或者通过文字内容查找
+    const copyBtn = document.getElementById('copy-btn') || 
+                    Array.from(document.querySelectorAll('button')).find(el => el.textContent.trim().includes('复制结果'));
     
-    const outputArea = document.querySelector('#report-output') || document.querySelector('textarea[readonly]');
+    // 2. 🟢 关键修正：这里必须使用和生成报告时一样的 ID ('generated-report')
+    const outputArea = document.getElementById('generated-report') || 
+                       document.getElementById('result') || 
+                       document.querySelector('textarea[readonly]');
 
-    if (copyBtn && outputArea) {
-        // 移除旧的 onclick 属性（如果有），使用新的监听器
+    if (copyBtn) {
+        // 移除旧的 onclick 属性（如果有），防止冲突
         copyBtn.removeAttribute('onclick'); 
         
-        copyBtn.addEventListener('click', async () => {
-            const textToCopy = outputArea.value || outputArea.innerText;
+        // 重新绑定点击事件
+        copyBtn.onclick = async (e) => {
+            e.preventDefault(); // 防止页面跳动
+            e.stopPropagation();
+
+            // 获取文本内容：支持 input/textarea 的 .value 和普通 div 的 .innerText
+            const textToCopy = outputArea ? (outputArea.value || outputArea.innerText) : "";
             
-            if (!textToCopy) return alert("没有可复制的内容");
+            if (!textToCopy || textToCopy.includes('AI is thinking')) {
+                // 如果没内容，或者是正在生成中，提示警告
+                if(window.showToast) window.showToast("没有可复制的内容 (No content)", "warning");
+                else alert("没有可复制的内容");
+                return;
+            }
 
             try {
+                // 执行复制
                 await navigator.clipboard.writeText(textToCopy);
                 
-                // 视觉反馈：按钮变色提示成功
+                // 视觉反馈：按钮变绿，文字变成“已复制”
                 const originalText = copyBtn.textContent;
-                copyBtn.textContent = "✅ 已复制";
-                copyBtn.classList.add('bg-green-600', 'text-white'); // 假设用了 Tailwind
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> 已复制';
+                copyBtn.style.backgroundColor = '#10B981'; // 绿色
+                copyBtn.style.color = 'white';
+                copyBtn.style.borderColor = '#10B981';
                 
+                // 2秒后恢复原状
                 setTimeout(() => {
                     copyBtn.textContent = originalText;
-                    copyBtn.classList.remove('bg-green-600', 'text-white');
+                    copyBtn.style.backgroundColor = ''; 
+                    copyBtn.style.color = '';
+                    copyBtn.style.borderColor = '';
                 }, 2000);
                 
             } catch (err) {
                 console.error('复制失败:', err);
-                alert('复制失败，请手动复制。');
+                alert('复制失败，请手动选中复制。');
             }
-        });
+        };
+    } else {
+        console.warn("未找到复制按钮，请检查 HTML 中按钮文字是否为 '复制结果'");
     }
 });
-
