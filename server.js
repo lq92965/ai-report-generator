@@ -65,12 +65,19 @@ app.use((req, res, next) => {
 // ============================================================
 
 // 5.1 配置发件人 (Gmail)
+// 5.1 配置发件人 (修复版：强制使用 SSL 465 端口)
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com', // 显式指定 Gmail 服务器
+    port: 465,              // 🟢 改用 465 端口 (防止被 DigitalOcean 拦截)
+    secure: true,           // true for 465, false for other ports
     auth: {
-        user:'lq92965@gmail.com', // 你的邮箱
-        pass:'cqgkrldvgybewvhi'  // 🔴 必填：请在此处填入你的 16 位 Google 应用密码
-    }
+        user: 'lq92965@gmail.com', 
+        // 🔴 注意：这里填入你的 16位应用密码，中间不要有空格！
+        // 例如：'abcdefghijklmnop'，而不是 'abcd efgh ...'
+        pass: 'cqgkrldvgybewvhi' 
+    },
+    // 增加连接超时设置，防止无限等待
+    connectionTimeout: 10000 
 });
 
 // 5.2 英文语料库 (Smart Library)
