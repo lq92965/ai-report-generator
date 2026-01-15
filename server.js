@@ -196,6 +196,51 @@ app.post(['/api/generate', '/generate'], authenticateToken, async (req, res) => 
   }
 });
 
+// ... 上面是 /api/generate 的代码 ...
+// ... 
+// app.post(['/api/generate', ...], async (req, res) => {
+//     ...
+// });  <-- 生成报告代码结束在这里
+
+// 👇👇👇【请在这里插入新代码】👇👇👇
+
+// 🟢 [新增] 接收联系/反馈接口 (支持类型分类)
+app.post(['/api/contact', '/contact'], async (req, res) => {
+    try {
+        // 1. 获取前端发来的数据
+        const { name, email, message, type } = req.body;
+        
+        if (!name || !email || !message) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+
+        // 2. 存入数据库 (feedbacks 集合)
+        // 自动标记 VIP：如果类型是 Priority，设为 true
+        const isVIP = (type === 'Priority');
+        
+        await db.collection('feedbacks').insertOne({
+            name,
+            email,
+            type: type || 'General', 
+            message,
+            submittedAt: new Date(),
+            status: 'unread',
+            isVIP: isVIP
+        });
+
+        console.log(`📩 [${type}] New Feedback from: ${email}`);
+        res.status(201).json({ message: "Feedback received successfully" });
+
+    } catch (error) {
+        console.error("Feedback Error:", error);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
+// 👆👆👆【插入结束】👆👆👆
+
+// app.listen(PORT, ...   <-- 这是文件最底部，别动它
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
