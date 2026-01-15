@@ -229,6 +229,85 @@ app.post(['/api/contact', '/contact'], async (req, res) => {
     }
 });
 
+// ==========================================
+// 👑 Admin Dashboard API (老板专用接口 - 最终版)
+// ==========================================
+
+// 1. 中间件：验证管理员权限
+const verifyAdmin = async (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (!token) return res.status(401).json({ message: '未授权 (Unauthorized)' });
+
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        // 查库确认身份
+        const user = await db.collection('users').findOne({ _id: new ObjectId(decoded.userId) });
+        
+        if (user && user.role === 'admin') {
+            req.user = user;
+            next(); // 是老板，放行
+        } else {
+            res.status(403).json({ message: '权限不足：仅限管理员访问' });
+        }
+    } catch (err) {
+        res.status(403).json({ message: 'Token 无效或过期' });
+    }
+};
+
+// 2. 核心统计接口 (区分 Basic / Pro)
+app.get('/api/admin/stats', verifyAdmin, async (req, res) => {
+    try {
+        // 并行查询 5 个数据
+        const [totalUsers, basicCount, proCount, feedbackCount, unreadFeedbacks] = await Promise.all([
+            db.collection('users').countDocuments(), // 总用户
+            db.collection('users').countDocuments({ plan: 'basic' }), // 🟢 Basic 用户 ($9.9)
+            db.collection('users').countDocuments({ plan: 'pro' }),   // 🔴 Pro 用户 ($19.9)
+            db.collection('feedbacks').countDocuments(), // 总反馈条数
+            db.collection('feedbacks').countDocuments({ status: 'unread' }) // 未读消息
+        ]);
+
+        res.json({
+            users: totalUsers,
+            basic: basicCount,
+            pros: proCount,
+            feedbacks: feedbackCount,
+            unread: unreadFeedbacks
+        });
+    } catch (err) {
+        console.error("Admin Stats Error:", err);
+        res.status(500).json({ message: "统计数据获取失败" });
+    }
+});
+
+// 3. 获取反馈消息列表
+app.get('/api/admin/feedbacks', verifyAdmin, async (req, res) => {
+    try {
+        const messages = await db.collection('feedbacks')
+            .find({})
+            .sort({ submittedAt: -1 }) // 最新在前
+            .limit(50)
+            .toArray();
+        res.json(messages);
+    } catch (err) {
+        res.status(500).json({ message: "消息获取失败" });
+    }
+});
+
+// 4. 获取最新注册用户列表
+app.get('/api/admin/users', verifyAdmin, async (req, res) => {
+    try {
+        const users = await db.collection('users')
+            .find({}, { projection: { password: 0 } }) // 不显示密码
+            .sort({ createdAt: -1 })
+            .limit(20)
+            .toArray();
+        res.json(users);
+    } catch (err) {
+        res.status(500).json({ message: "用户获取失败" });
+    }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
