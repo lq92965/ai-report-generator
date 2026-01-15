@@ -68,8 +68,8 @@ app.use((req, res, next) => {
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'lq92965@gmail.com', // 你的邮箱
-        pass: 'cqgk rldv gybe wvhi'  // 🔴 必填：请在此处填入你的 16 位 Google 应用密码
+        user:'lq92965@gmail.com', // 你的邮箱
+        pass:'cqgkrldvgybewvhi'  // 🔴 必填：请在此处填入你的 16 位 Google 应用密码
     }
 });
 
