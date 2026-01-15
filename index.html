@@ -212,26 +212,46 @@
         <section id="contact" class="contact-section">
             <div class="container">
                 <h2 class="section-title">Contact Us</h2>
-                <p class="subtitle">Dedicated support for Professional plan users.</p>
+                <p class="subtitle">
+                    Have a suggestion or found a bug? We'd love to hear from you.<br>
+                    <span style="font-size: 0.9em; color: #2563EB; font-weight: 500;">
+                        <i class="fas fa-crown"></i> Pro users receive priority support.
+                    </span>
+                </p>
+        
                 <form id="contact-form" class="contact-form">
-                    <div class="input-wrapper">
+                     <div class="input-wrapper">
                         <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="input-wrapper">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                        <p id="email-error" class="error-message"></p>
-                    </div>
-                    <div class="input-wrapper full-width">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="6" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit Feedback</button>
-                    <div id="form-status"></div>
-                </form>
-            </div>
-        </section>
+                        <input type="text" id="name" name="name" required placeholder="Your Name">
+                     </div>
+            
+                     <div class="input-wrapper">
+                         <label for="email">Email</label>
+                         <input type="email" id="email" name="email" required placeholder="your@email.com">
+                         <p id="email-error" class="error-message"></p>
+                     </div>
+
+                     <div class="input-wrapper">
+                         <label for="contact-type">Subject / Inquiry Type</label>
+                         <select id="contact-type" name="type" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; background: white;">
+                             <option value="General">General Inquiry (一般咨询)</option>
+                             <option value="Suggestion">Feature Suggestion (产品建议)</option>
+                             <option value="Bug">Report a Bug (Bug 反馈)</option>
+                             <option value="Billing">Billing & Account (账单与账户)</option>
+                             <option value="Priority" style="font-weight:bold; color:#2563EB;">⭐⭐ Priority Support (Pro Users)</option>
+                         </select>
+                     </div>
+
+                     <div class="input-wrapper full-width">
+                         <label for="message">Message</label>
+                         <textarea id="message" name="message" rows="5" required placeholder="How can we help you?"></textarea>
+                     </div>
+            
+                     <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                     <div id="form-status"></div>
+                 </form>
+             </div>
+         </section>
     </main>
 
     <footer class="main-footer">
@@ -326,30 +346,6 @@
     </div>
 </div>
 
-            <div id="signup" class="tab-content">
-                <h2>Create Your Account</h2>
-                <form id="signup-form">
-                    <div class="input-wrapper">
-                        <label for="signup-name">Name</label>
-                        <input type="text" id="signup-name" required>
-                    </div>
-                    <div class="input-wrapper">
-                        <label for="signup-email">Email</label>
-                        <input type="email" id="signup-email" required>
-                    </div>
-                    <div class="input-wrapper">
-                        <label for="signup-password">Password</label>
-                        <input type="password" id="signup-password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary full-width">Create Account</button>
-                </form>
-                <div class="social-login">
-                    <span>OR</span>
-                    <button class="btn-social-google">Sign Up with Google</button>
-                </div>
-            </div>
-        </div>
-    </div>
     
         <script src="nav.js?v=1004"></script>
         <script src="script.js?v=1004"></script>
@@ -366,5 +362,3 @@
     </div>
 </body>
 </html>
-
-
