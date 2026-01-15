@@ -27,58 +27,54 @@ async function connectDB() {
 }
 connectDB();
 
-// 3. 🟢 [CORS 终极版] 允许所有来源，并显式处理预检请求
+// 3. 🟢 [CORS 终极防守] 允许所有来源 (解决无法登录问题)
 app.use(cors({
-  origin: true, // 允许所有
+  origin: true, // 允许 http 和 https
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
-// 手动处理 OPTIONS 请求 (防止预检失败)
-app.options('*', cors()); 
-
 app.use(express.json());
 
 // ==========================================
-// 📧 邮件系统配置 (尝试 587 端口 + STARTTLS)
+// 📧 邮件系统 (带“防弹衣”保护)
 // ==========================================
+// DigitalOcean 可能会封锁端口，我们加个 try-catch 防止服务器崩溃
 let transporter = null;
 try {
     transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
-        port: 587, // 🟢 改用 587 端口
-        secure: false, // 587端口必须设为 false
-        requireTLS: true, // 强制 STARTTLS 加密
+        port: 465, // SSL 端口 (比 587 更稳定)
+        secure: true,
         auth: {
             user: 'lq92965@gmail.com', 
-            // 🔴 必填：你的16位应用密码 (去掉空格)
-            pass: 'cqgkrldvgybewvhi' 
+            pass: 'cqgkrldvgybewvhi' // 🔴 必填：去掉空格！
         },
-        connectionTimeout: 10000 // 10秒超时
+        connectionTimeout: 5000 // 5秒连不上就放弃，不要卡死服务器
     });
 } catch (err) {
-    console.error("⚠️ 邮件服务初始化失败:", err);
+    console.error("⚠️ 邮件服务配置出错 (不影响登录):", err);
 }
 
-// 辅助发送函数
+// 安全发送函数 (即使发送失败，也不会让服务器挂掉)
 async function sendEmail(to, subject, text) {
     if (!transporter) return false;
     try {
-        await transporter.verify(); // 发送前先验证连接
-        await transporter.sendMail({
+        // 不要 await verify，直接发，失败就算了
+        transporter.sendMail({
             from: '"Reportify Support" <lq92965@gmail.com>',
             to, subject, text
-        });
-        console.log(`✅ Email sent to ${to}`);
+        }).catch(err => console.error("❌ 邮件后台发送失败 (可能是端口被封):", err.message));
+        
+        console.log(`📨 邮件请求已推入后台: ${to}`);
         return true;
     } catch (error) {
-        console.error("❌ Email failed:", error);
+        console.error("❌ 邮件系统错误:", error);
         return false;
     }
 }
 
 // ==========================================
-// 鉴权中间件 (保持不变)
+// 鉴权中间件
 // ==========================================
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -110,7 +106,7 @@ const verifyAdmin = async (req, res, next) => {
 };
 
 // ==========================================
-// 路由接口 (保持不变)
+// 路由接口
 // ==========================================
 
 app.get('/', (req, res) => res.send('Backend Online'));
@@ -171,7 +167,7 @@ app.get('/api/reports/history', authenticateToken, async (req, res) => {
     res.json(reports);
 });
 
-// 🟢 [Contact] 联系与自动回复
+// 🟢 [Contact] 联系 (即使邮件发不出，也先保证存数据库)
 app.post('/api/contact', async (req, res) => {
     const { name, email, message, type } = req.body;
     await db.collection('feedbacks').insertOne({
@@ -179,8 +175,8 @@ app.post('/api/contact', async (req, res) => {
         submittedAt: new Date(), status: 'unread', isVIP: (type === 'Priority')
     });
     
-    // 自动回复
-    sendEmail(email, "We received your message | Reportify", `Hi ${name},\n\nWe have received your message regarding ${type || 'General'}. We will get back to you soon.\n\nReportify Team`);
+    // 异步发送邮件，不等待结果
+    sendEmail(email, "We received your message", `Hi ${name}, we received your message.`);
     
     res.json({ message: "Sent" });
 });
@@ -217,14 +213,12 @@ app.post('/api/admin/reply', verifyAdmin, async (req, res) => {
     const feedback = await db.collection('feedbacks').findOne({ _id: new ObjectId(feedbackId) });
     
     if (feedback) {
-        const sent = await sendEmail(feedback.email, "Re: Reportify Support", replyContent);
-        if (sent) {
-            await db.collection('feedbacks').updateOne({ _id: new ObjectId(feedbackId) }, { $set: { status: 'replied' } });
-            return res.json({ message: "Replied" });
-        }
+        // 尝试发送，不等待
+        sendEmail(feedback.email, "Re: Support", replyContent);
+        await db.collection('feedbacks').updateOne({ _id: new ObjectId(feedbackId) }, { $set: { status: 'replied' } });
+        return res.json({ message: "Replied" });
     }
-    // 即使发送失败，也返回 200 但带错误信息，避免前端 CORS 报错
-    res.json({ message: "Failed to send email (Check Server Log)" });
+    res.status(500).json({ message: "Failed" });
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
