@@ -3,145 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reportify 控制台</title>
+    <title>Reportify Admin Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
     <style>
-        /* 页面加载前的遮罩，防止未登录看到内容 */
-        #app-loader { position: fixed; inset: 0; background: white; z-index: 9999; display: flex; justify-content: center; align-items: center; }
+        .nav-item.active { background-color: #2563EB; color: white; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .nav-item { color: #94a3b8; transition: all 0.2s; }
+        .nav-item:hover:not(.active) { background-color: #1e293b; color: white; }
+        /* 隐藏滚动条但保留功能 */
+        .hide-scroll::-webkit-scrollbar { width: 5px; }
+        .hide-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     </style>
 </head>
 <body class="bg-gray-100 font-sans text-gray-800">
 
-    <div id="app-loader"><div class="animate-spin text-4xl text-blue-600"><i class="fas fa-circle-notch"></i></div></div>
+    <div id="auth-check" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
+        <div class="animate-spin text-4xl text-blue-600"><i class="fas fa-circle-notch"></i></div>
+    </div>
 
     <div class="flex h-screen overflow-hidden">
         
-        <aside class="w-64 bg-slate-900 text-white flex-shrink-0 hidden md:flex flex-col">
+        <aside class="w-64 bg-slate-900 text-white flex-shrink-0 flex flex-col transition-all duration-300">
             <div class="p-6 flex items-center gap-3 border-b border-slate-800">
-                <span class="text-2xl">🐦</span>
-                <h1 class="text-xl font-bold tracking-wide">Reportify Admin</h1>
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold">R</div>
+                <h1 class="text-lg font-bold tracking-wide">Reportify Admin</h1>
             </div>
             
-            <nav class="flex-1 p-4 space-y-2">
-                <a href="#" class="flex items-center gap-3 px-4 py-3 bg-blue-600 rounded-lg text-white shadow-lg">
-                    <i class="fas fa-tachometer-alt w-5"></i> 仪表盘概览
-                </a>
-                <a href="#users" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg transition">
-                    <i class="fas fa-users w-5"></i> 用户管理
-                </a>
-                <a href="#feedback" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg transition">
-                    <i class="fas fa-envelope w-5"></i> 消息反馈
-                </a>
-                <a href="#finance" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg transition">
-                    <i class="fas fa-wallet w-5"></i> 财务分析
-                </a>
+            <nav class="flex-1 p-4 space-y-2 mt-4">
+                <button onclick="switchView('dashboard')" id="nav-dashboard" class="nav-item active w-full flex items-center gap-3 px-4 py-3 rounded-lg">
+                    <i class="fas fa-chart-pie w-5 text-center"></i> 仪表盘 (Overview)
+                </button>
+                <button onclick="switchView('users')" id="nav-users" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg">
+                    <i class="fas fa-users w-5 text-center"></i> 用户管理 (Users)
+                </button>
+                <button onclick="switchView('feedback')" id="nav-feedback" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg">
+                    <i class="fas fa-inbox w-5 text-center"></i> 消息反馈 (Inbox)
+                </button>
             </nav>
 
             <div class="p-4 border-t border-slate-800">
-                <button onclick="logout()" class="w-full flex items-center justify-center gap-2 px-4 py-2 text-red-400 hover:bg-red-900/30 rounded transition">
-                    <i class="fas fa-sign-out-alt"></i> 安全退出
+                <div class="flex items-center gap-3 px-4 py-3 mb-2">
+                    <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-xs">AD</div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium truncate text-white">Administrator</p>
+                        <p class="text-xs text-slate-400 truncate">Boss Mode</p>
+                    </div>
+                </div>
+                <button onclick="logout()" class="w-full flex items-center justify-center gap-2 px-4 py-2 text-red-400 hover:bg-red-900/20 rounded transition text-sm">
+                    <i class="fas fa-sign-out-alt"></i> 退出登录
                 </button>
             </div>
         </aside>
 
-        <div class="flex-1 flex flex-col overflow-hidden">
+        <div class="flex-1 flex flex-col overflow-hidden relative">
             
-            <header class="bg-white shadow-sm h-16 flex items-center justify-between px-6 z-10">
-                <h2 class="text-lg font-semibold text-gray-700">今日概况</h2>
-                <div class="flex items-center gap-4">
-                    <span class="text-sm text-gray-500" id="admin-email">Loading...</span>
-                    <div class="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold">A</div>
-                </div>
+            <header class="bg-white shadow-sm h-16 flex items-center justify-between px-8 z-10">
+                <h2 class="text-xl font-bold text-gray-800" id="page-title">仪表盘概览</h2>
+                <button onclick="initData()" class="p-2 text-gray-400 hover:text-blue-600 transition" title="刷新数据">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
             </header>
 
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-8 hide-scroll">
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-blue-500 relative overflow-hidden">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500 uppercase">总用户数</p>
-                                <h3 class="text-3xl font-bold text-gray-800 mt-2" id="stat-users">-</h3>
-                            </div>
-                            <div class="p-3 bg-blue-50 rounded-lg text-blue-600"><i class="fas fa-users text-xl"></i></div>
+                <div id="view-dashboard" class="view-section animate-fade-in">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border-b-4 border-blue-500">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">总用户</p>
+                            <h3 class="text-3xl font-extrabold text-gray-800 mt-2" id="stat-users">-</h3>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border-b-4 border-green-500">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Basic 收入 ($9.9)</p>
+                            <h3 class="text-3xl font-extrabold text-gray-800 mt-2" id="stat-basic">-</h3>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border-b-4 border-purple-600">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Pro 收入 ($19.9)</p>
+                            <h3 class="text-3xl font-extrabold text-gray-800 mt-2" id="stat-pros">-</h3>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border-b-4 border-yellow-500">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">待处理反馈</p>
+                            <h3 class="text-3xl font-extrabold text-gray-800 mt-2" id="stat-unread">-</h3>
                         </div>
                     </div>
 
-                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-purple-500">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500 uppercase">付费用户 (Pro)</p>
-                                <h3 class="text-3xl font-bold text-gray-800 mt-2" id="stat-pros">-</h3>
-                            </div>
-                            <div class="p-3 bg-purple-50 rounded-lg text-purple-600"><i class="fas fa-crown text-xl"></i></div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500 uppercase">基础版 (Basic)</p>
-                                <h3 class="text-3xl font-bold text-gray-800 mt-2" id="stat-basic">-</h3>
-                            </div>
-                            <div class="p-3 bg-green-50 rounded-lg text-green-600"><i class="fas fa-leaf text-xl"></i></div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-yellow-500">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500 uppercase">待处理反馈</p>
-                                <h3 class="text-3xl font-bold text-gray-800 mt-2" id="stat-unread">-</h3>
-                            </div>
-                            <div class="p-3 bg-yellow-50 rounded-lg text-yellow-600"><i class="fas fa-bell text-xl"></i></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                    <div class="bg-white p-6 rounded-xl shadow-sm lg:col-span-1">
-                        <h3 class="text-lg font-bold text-gray-800 mb-4">用户构成分析</h3>
-                        <div class="relative h-64">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-sm lg:col-span-1">
+                            <h3 class="font-bold text-gray-700 mb-4">用户构成</h3>
                             <canvas id="userChart"></canvas>
                         </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm lg:col-span-2">
+                            <h3 class="font-bold text-gray-700 mb-4">最近 5 条动态</h3>
+                            <div id="dash-recent-list" class="space-y-3">
+                                </div>
+                        </div>
                     </div>
-                    
-                    <div class="bg-white rounded-xl shadow-sm lg:col-span-2 flex flex-col">
+                </div>
+
+                <div id="view-users" class="view-section hidden">
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
                         <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
-                            <h3 class="text-lg font-bold text-gray-800">最新反馈 / 留言</h3>
-                            <button onclick="loadData()" class="text-sm text-blue-600 hover:underline">刷新数据</button>
+                            <h3 class="font-bold text-gray-800">注册用户列表</h3>
+                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full" id="user-count-badge">0 Users</span>
                         </div>
-                        <div id="msg-list" class="flex-1 overflow-y-auto max-h-[300px] p-0">
-                            <div class="p-8 text-center text-gray-400">正在获取数据...</div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm">
+                                <thead class="bg-gray-50 text-gray-500 uppercase font-semibold">
+                                    <tr>
+                                        <th class="px-6 py-4">用户</th>
+                                        <th class="px-6 py-4">邮箱</th>
+                                        <th class="px-6 py-4">套餐</th>
+                                        <th class="px-6 py-4">注册时间</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-users" class="divide-y divide-gray-100">
+                                    </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                    <div class="px-6 py-4 border-b border-gray-100">
-                        <h3 class="text-lg font-bold text-gray-800">最新注册用户</h3>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-sm">
-                            <thead class="bg-gray-50 text-gray-600 uppercase tracking-wider font-semibold">
-                                <tr>
-                                    <th class="px-6 py-3">用户</th>
-                                    <th class="px-6 py-3">邮箱</th>
-                                    <th class="px-6 py-3">套餐等级</th>
-                                    <th class="px-6 py-3">注册时间</th>
-                                </tr>
-                            </thead>
-                            <tbody id="user-list" class="divide-y divide-gray-100">
-                                </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="mt-8 text-center text-gray-400 text-sm">
-                    Reportify AI Admin Panel v2.0 &copy; 2026
+                <div id="view-feedback" class="view-section hidden">
+                    <div class="grid grid-cols-1 gap-4" id="feedback-grid">
+                        </div>
                 </div>
 
             </main>
@@ -150,150 +134,167 @@
 
     <script>
         const API_BASE = 'https://api.goreportify.com';
-        
-        // 1. 安全检查 (Security Check)
-        // 只要没有 token，立刻踢回首页，不显示任何 HTML
         const token = localStorage.getItem('token');
+
+        // 1. 安全验证 & 初始化
         if (!token) {
-            window.location.href = 'index.html?error=admin_login_required';
+            window.location.href = 'index.html?error=admin_required';
         } else {
-            // 有 Token 才移除遮罩
-            document.getElementById('app-loader').style.display = 'none';
-            parseTokenEmail();
+            // 验证通过，移除遮罩
+            setTimeout(() => document.getElementById('auth-check').style.display = 'none', 500);
+            initData();
         }
 
-        function parseTokenEmail() {
+        // 2. 核心数据加载
+        async function initData() {
             try {
-                // 简单的 JWT 解析以显示右上角邮箱
-                const base64Url = token.split('.')[1];
-                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                }).join(''));
-                const user = JSON.parse(jsonPayload);
-                // 注意：JWT里通常不存email，除非你存了。如果没有，就显示 Admin
-                document.getElementById('admin-email').innerText = 'Administrator'; 
-            } catch (e) {}
-        }
+                // 并行加载所有数据
+                const [statsRes, msgsRes, usersRes] = await Promise.all([
+                    fetch(`${API_BASE}/api/admin/stats`, { headers: { 'Authorization': `Bearer ${token}` } }),
+                    fetch(`${API_BASE}/api/admin/feedbacks`, { headers: { 'Authorization': `Bearer ${token}` } }),
+                    fetch(`${API_BASE}/api/admin/users`, { headers: { 'Authorization': `Bearer ${token}` } })
+                ]);
 
-        // 2. 初始化加载
-        document.addEventListener('DOMContentLoaded', loadData);
-
-        async function loadData() {
-            try {
-                // 2.1 获取统计
-                const statsRes = await fetch(`${API_BASE}/api/admin/stats`, { headers: { 'Authorization': `Bearer ${token}` } });
-                
-                if (statsRes.status === 401 || statsRes.status === 403) {
-                    alert("权限验证失败：您不是管理员，或登录已过期。");
+                if (statsRes.status === 403) {
+                    alert("权限拒绝：您不是管理员账号！");
                     window.location.href = 'index.html';
                     return;
                 }
-                
+
+                if (!statsRes.ok) throw new Error("API Connection Failed");
+
                 const stats = await statsRes.json();
-                updateStatsCards(stats);
+                const msgs = await msgsRes.json();
+                const users = await usersRes.json();
+
+                renderDashboard(stats);
+                renderUserTable(users);
+                renderFeedbackList(msgs);
                 renderCharts(stats);
-
-                // 2.2 获取消息
-                const msgRes = await fetch(`${API_BASE}/api/admin/feedbacks`, { headers: { 'Authorization': `Bearer ${token}` } });
-                const msgs = await msgRes.json();
-                renderMessages(msgs);
-
-                // 2.3 获取用户
-                const userRes = await fetch(`${API_BASE}/api/admin/users`, { headers: { 'Authorization': `Bearer ${token}` } });
-                const users = await userRes.json();
-                renderUsers(users);
 
             } catch (err) {
                 console.error(err);
-                document.getElementById('stat-users').innerText = 'Err';
-                // 不要在这里报错，可能是网络问题
-            }
-        }
-
-        function updateStatsCards(data) {
-            // 添加简单的计数动画
-            document.getElementById('stat-users').innerText = data.users || 0;
-            document.getElementById('stat-pros').innerText = data.pros || 0;
-            document.getElementById('stat-basic').innerText = data.basic || 0;
-            document.getElementById('stat-unread').innerText = data.unread || 0;
-        }
-
-        function renderCharts(data) {
-            // 销毁旧图表防止重叠
-            const ctx = document.getElementById('userChart').getContext('2d');
-            if (window.myUserChart) window.myUserChart.destroy();
-
-            const freeUsers = data.users - data.basic - data.pros;
-
-            window.myUserChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['免费用户', 'Basic 会员', 'Pro 会员'],
-                    datasets: [{
-                        data: [freeUsers, data.basic, data.pros],
-                        backgroundColor: ['#E5E7EB', '#10B981', '#8B5CF6'], // 灰，绿，紫
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'right' }
-                    }
+                if(document.getElementById('stat-users').innerText === '-') {
+                    alert("无法连接服务器。请确保已执行 pm2 restart backend 重启后端！");
                 }
-            });
-        }
-
-        function renderMessages(msgs) {
-            const container = document.getElementById('msg-list');
-            if (!msgs || msgs.length === 0) {
-                container.innerHTML = '<div class="p-8 text-center text-gray-400">暂无反馈消息</div>';
-                return;
             }
-            container.innerHTML = '';
-            msgs.forEach(msg => {
-                const tagColor = msg.type === 'Bug' ? 'bg-red-100 text-red-700' : (msg.type === 'Priority' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-50 text-blue-600');
-                const isVIP = msg.isVIP ? '<i class="fas fa-crown text-yellow-500 ml-1"></i>' : '';
-                
-                container.innerHTML += `
-                    <div class="p-4 border-b border-gray-50 hover:bg-gray-50 transition">
-                        <div class="flex justify-between mb-1">
-                            <span class="font-bold text-gray-800 text-sm">${msg.name} ${isVIP}</span>
-                            <span class="text-xs text-gray-400">${new Date(msg.submittedAt).toLocaleDateString()}</span>
-                        </div>
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs ${tagColor} px-2 py-0.5 rounded">${msg.type}</span>
-                            <span class="text-xs text-gray-400">${msg.email}</span>
-                        </div>
-                        <p class="text-sm text-gray-600 line-clamp-2">${msg.message}</p>
-                    </div>
-                `;
-            });
         }
 
-        function renderUsers(users) {
-            const tbody = document.getElementById('user-list');
-            tbody.innerHTML = '';
-            users.forEach(user => {
-                let badge = '<span class="px-2 py-1 rounded text-xs bg-gray-200 text-gray-600">Free</span>';
-                if(user.plan === 'basic') badge = '<span class="px-2 py-1 rounded text-xs bg-green-100 text-green-700 font-bold">Basic</span>';
-                if(user.plan === 'pro') badge = '<span class="px-2 py-1 rounded text-xs bg-purple-100 text-purple-700 font-bold">Pro</span>';
-                if(user.role === 'admin') badge = '<span class="px-2 py-1 rounded text-xs bg-black text-white font-bold">ADMIN</span>';
+        // 3. 视图切换逻辑
+        window.switchView = function(viewName) {
+            // 隐藏所有视图
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            // 显示目标视图
+            document.getElementById(`view-${viewName}`).classList.remove('hidden');
+            
+            // 更新导航栏状态
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.getElementById(`nav-${viewName}`).classList.add('active');
 
+            // 更新标题
+            const titles = { 'dashboard': '仪表盘概览', 'users': '用户数据库', 'feedback': '客户反馈中心' };
+            document.getElementById('page-title').innerText = titles[viewName];
+        }
+
+        // 4. 渲染函数
+        function renderDashboard(data) {
+            document.getElementById('stat-users').innerText = data.users;
+            document.getElementById('stat-basic').innerText = data.basic;
+            document.getElementById('stat-pros').innerText = data.pros;
+            document.getElementById('stat-unread').innerText = data.unread;
+        }
+
+        function renderUserTable(users) {
+            const tbody = document.getElementById('table-users');
+            tbody.innerHTML = '';
+            document.getElementById('user-count-badge').innerText = users.length + ' Latest';
+
+            users.forEach(u => {
+                let badge = '<span class="px-2 py-1 rounded text-xs bg-gray-100 text-gray-500 font-bold">Free</span>';
+                if(u.plan === 'basic') badge = '<span class="px-2 py-1 rounded text-xs bg-green-100 text-green-700 font-bold">Basic</span>';
+                if(u.plan === 'pro') badge = '<span class="px-2 py-1 rounded text-xs bg-purple-100 text-purple-700 font-bold">PRO</span>';
+                
                 tbody.innerHTML += `
-                    <tr class="hover:bg-gray-50 transition">
-                        <td class="px-6 py-4 font-medium text-gray-900">${user.name || 'User'}</td>
-                        <td class="px-6 py-4 text-gray-500 text-sm">${user.email}</td>
+                    <tr class="hover:bg-gray-50 border-b border-gray-50 last:border-0">
+                        <td class="px-6 py-4 font-medium">${u.name || 'User'}</td>
+                        <td class="px-6 py-4 text-gray-500">${u.email}</td>
                         <td class="px-6 py-4">${badge}</td>
-                        <td class="px-6 py-4 text-gray-400 text-sm">${new Date(user.createdAt).toLocaleDateString()}</td>
+                        <td class="px-6 py-4 text-gray-400">${new Date(u.createdAt).toLocaleDateString()}</td>
                     </tr>
                 `;
             });
         }
 
-        function logout() {
+        function renderFeedbackList(msgs) {
+            const container = document.getElementById('feedback-grid');
+            const dashList = document.getElementById('dash-recent-list');
+            
+            container.innerHTML = '';
+            dashList.innerHTML = '';
+
+            if(msgs.length === 0) {
+                container.innerHTML = '<div class="text-center py-10 text-gray-400">暂无反馈数据</div>';
+                return;
+            }
+
+            msgs.forEach((msg, index) => {
+                const tagColor = msg.type === 'Bug' ? 'bg-red-100 text-red-700' : (msg.type === 'Priority' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-50 text-blue-600');
+                const card = `
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-gray-800">${msg.name}</span>
+                                <span class="text-xs text-gray-400">&lt;${msg.email}&gt;</span>
+                            </div>
+                            <span class="text-xs text-gray-400">${new Date(msg.submittedAt).toLocaleDateString()}</span>
+                        </div>
+                        <div class="mb-3">
+                            <span class="${tagColor} px-2 py-1 rounded text-xs font-bold uppercase">${msg.type || 'General'}</span>
+                            ${msg.isVIP ? '<span class="ml-2 bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs font-bold">VIP User</span>' : ''}
+                        </div>
+                        <p class="text-gray-600 text-sm bg-gray-50 p-3 rounded leading-relaxed">${msg.message}</p>
+                    </div>
+                `;
+                container.innerHTML += card;
+
+                // 仪表盘只显示前5条简略版
+                if(index < 5) {
+                    dashList.innerHTML += `
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded text-sm">
+                            <div class="flex items-center gap-2">
+                                <span class="${tagColor} w-2 h-2 rounded-full"></span>
+                                <span class="font-medium text-gray-700 truncate w-32">${msg.name}</span>
+                            </div>
+                            <span class="text-xs text-gray-400">${new Date(msg.submittedAt).toLocaleDateString()}</span>
+                        </div>
+                    `;
+                }
+            });
+        }
+
+        function renderCharts(data) {
+            const ctx = document.getElementById('userChart').getContext('2d');
+            if (window.myChart) window.myChart.destroy();
+            const free = data.users - data.basic - data.pros;
+            
+            window.myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Free', 'Basic', 'Pro'],
+                    datasets: [{
+                        data: [free, data.basic, data.pros],
+                        backgroundColor: ['#e2e8f0', '#22c55e', '#9333ea'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    cutout: '70%',
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+        }
+
+        window.logout = function() {
             localStorage.removeItem('token');
             window.location.href = 'index.html';
         }
