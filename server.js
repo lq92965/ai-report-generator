@@ -27,48 +27,46 @@ async function connectDB() {
 }
 connectDB();
 
-// 3. 🟢 [CORS 终极防守] 允许所有来源 (解决无法登录问题)
+// 3. 🟢 [急救修复] CORS 跨域配置 - 允许所有来源
+// 这可以解决你在截图里遇到的 Access to fetch has been blocked 错误
 app.use(cors({
-  origin: true, // 允许 http 和 https
+  origin: true, // 🟢 设置为 true 表示接受任何请求来源 (自动反射)
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
 app.use(express.json());
 
 // ==========================================
-// 📧 邮件系统 (带“防弹衣”保护)
+// 📧 邮件系统配置 (带防崩溃保护)
 // ==========================================
-// DigitalOcean 可能会封锁端口，我们加个 try-catch 防止服务器崩溃
 let transporter = null;
 try {
     transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
-        port: 465, // SSL 端口 (比 587 更稳定)
+        port: 465, 
         secure: true,
         auth: {
             user: 'lq92965@gmail.com', 
-            pass: 'cqgkrldvgybewvhi' // 🔴 必填：去掉空格！
-        },
-        connectionTimeout: 5000 // 5秒连不上就放弃，不要卡死服务器
+            // 🔴 记得填密码，如果没填对也没关系，网站能登录，只是发不出邮件
+            pass: 'cqgkrldvgybewvhi' 
+        }
     });
 } catch (err) {
-    console.error("⚠️ 邮件服务配置出错 (不影响登录):", err);
+    console.error("⚠️ 邮件服务初始化失败，但服务器将继续运行:", err);
 }
 
-// 安全发送函数 (即使发送失败，也不会让服务器挂掉)
+// 辅助发送函数
 async function sendEmail(to, subject, text) {
     if (!transporter) return false;
     try {
-        // 不要 await verify，直接发，失败就算了
-        transporter.sendMail({
+        await transporter.sendMail({
             from: '"Reportify Support" <lq92965@gmail.com>',
             to, subject, text
-        }).catch(err => console.error("❌ 邮件后台发送失败 (可能是端口被封):", err.message));
-        
-        console.log(`📨 邮件请求已推入后台: ${to}`);
+        });
+        console.log(`✅ Email sent to ${to}`);
         return true;
     } catch (error) {
-        console.error("❌ 邮件系统错误:", error);
+        console.error("❌ Email failed:", error);
         return false;
     }
 }
@@ -167,7 +165,7 @@ app.get('/api/reports/history', authenticateToken, async (req, res) => {
     res.json(reports);
 });
 
-// 🟢 [Contact] 联系 (即使邮件发不出，也先保证存数据库)
+// 🟢 [Contact] 联系与自动回复
 app.post('/api/contact', async (req, res) => {
     const { name, email, message, type } = req.body;
     await db.collection('feedbacks').insertOne({
@@ -175,8 +173,8 @@ app.post('/api/contact', async (req, res) => {
         submittedAt: new Date(), status: 'unread', isVIP: (type === 'Priority')
     });
     
-    // 异步发送邮件，不等待结果
-    sendEmail(email, "We received your message", `Hi ${name}, we received your message.`);
+    // 自动回复
+    sendEmail(email, "We received your message | Reportify", `Hi ${name},\n\nWe have received your message regarding ${type || 'General'}. We will get back to you soon.\n\nReportify Team`);
     
     res.json({ message: "Sent" });
 });
@@ -213,10 +211,11 @@ app.post('/api/admin/reply', verifyAdmin, async (req, res) => {
     const feedback = await db.collection('feedbacks').findOne({ _id: new ObjectId(feedbackId) });
     
     if (feedback) {
-        // 尝试发送，不等待
-        sendEmail(feedback.email, "Re: Support", replyContent);
-        await db.collection('feedbacks').updateOne({ _id: new ObjectId(feedbackId) }, { $set: { status: 'replied' } });
-        return res.json({ message: "Replied" });
+        const sent = await sendEmail(feedback.email, "Re: Reportify Support", replyContent);
+        if (sent) {
+            await db.collection('feedbacks').updateOne({ _id: new ObjectId(feedbackId) }, { $set: { status: 'replied' } });
+            return res.json({ message: "Replied" });
+        }
     }
     res.status(500).json({ message: "Failed" });
 });
