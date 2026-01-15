@@ -5,6 +5,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { MongoClient, ObjectId } from 'mongodb';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+// ❌ 已彻底删除 nodemailer，不再尝试发邮件
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 const API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 const MONGO_URI = process.env.MONGO_URI;
 const JWT_SECRET = process.env.JWT_SECRET;
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID; // 确保 .env 文件里有这个
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID; // 确保 .env 里有这个
 
 // 2. 数据库连接
 const client = new MongoClient(MONGO_URI);
@@ -27,7 +28,7 @@ async function connectDB() {
 }
 connectDB();
 
-// 3. CORS 配置 (保持你的急救版配置，确保登录无忧)
+// 3. 🟢 [保持你的原样] CORS 跨域配置 - 允许所有来源
 app.use(cors({
   origin: true, 
   credentials: true,
@@ -36,7 +37,7 @@ app.use(cors({
 app.use(express.json());
 
 // ==========================================
-// 鉴权中间件
+// 鉴权中间件 (保持原样)
 // ==========================================
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -68,24 +69,23 @@ const verifyAdmin = async (req, res, next) => {
 };
 
 // ==========================================
-// 🟢 路由接口
+// 路由接口
 // ==========================================
 
 app.get('/', (req, res) => res.send('Backend Online'));
 
-// 1. 🟢 [修复] Google 登录跳转接口
+// 🟢 [修复] Google 登录跳转接口 (解决 404/400 错误)
 app.get('/auth/google', (req, res) => {
-    if (!GOOGLE_CLIENT_ID) return res.status(500).json({ message: "Google Client ID not configured" });
-    
-    // ⚠️ 注意：这里的 redirectUri 必须和 Google Cloud 后台配置的 "已获授权的重定向 URI" 完全一致
-    // 你的截图显示是 goreportify.com，所以这里不能乱改
+    // ⚠️ 关键点：这里的地址必须和 Google Cloud 后台配置的“重定向 URI”一字不差
+    // 你的截图显示域名是 https://goreportify.com
+    // 如果后台配置的是 https://goreportify.com/ (带斜杠)，这里也要加斜杠
     const redirectUri = 'https://goreportify.com'; 
     
     const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=token&scope=email profile openid`;
     res.json({ url: url });
 });
 
-// 2. 注册
+// 注册 (保持原样)
 app.post('/api/register', async (req, res) => {
     try {
         const { displayName, email, password } = req.body;
@@ -100,7 +100,7 @@ app.post('/api/register', async (req, res) => {
     } catch (e) { res.status(500).json({ message: "Error" }); }
 });
 
-// 3. 登录
+// 登录 (保持原样)
 app.post('/api/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -111,13 +111,13 @@ app.post('/api/login', async (req, res) => {
     } catch (e) { res.status(500).json({ message: "Error" }); }
 });
 
-// 4. 用户信息
+// 用户信息 (保持原样)
 app.get('/api/me', authenticateToken, async (req, res) => {
     const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) }, { projection: { password: 0 } });
     res.json(user);
 });
 
-// 5. 生成报告
+// 生成报告 (保持原样)
 const genAI = new GoogleGenerativeAI(API_KEY);
 app.post('/api/generate', authenticateToken, async (req, res) => {
     try {
@@ -135,13 +135,13 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
     }
 });
 
-// 6. 历史记录
+// 历史记录 (保持原样)
 app.get('/api/reports/history', authenticateToken, async (req, res) => {
     const reports = await db.collection('reports').find({ userId: req.user.userId }).sort({ createdAt: -1 }).toArray();
     res.json(reports);
 });
 
-// 🟢 [Contact] 联系我们 (只存数据库，不发邮件)
+// 🟢 [Contact] 站内信模式 (只存库，不发邮件)
 app.post('/api/contact', async (req, res) => {
     const { name, email, message, type } = req.body;
     await db.collection('feedbacks').insertOne({
@@ -149,30 +149,13 @@ app.post('/api/contact', async (req, res) => {
         submittedAt: new Date(), 
         status: 'unread', 
         isVIP: (type === 'Priority'),
-        reply: null // 初始化回复为空
+        reply: null // 初始回复为空
     });
-    res.json({ message: "Sent" });
+    // 直接返回成功，不需要等待邮件发送
+    res.json({ message: "Message Saved" });
 });
 
-// 🟢 [User Message] 用户获取站内信 (新功能：用户在前台查看回复)
-app.get('/api/my-messages', authenticateToken, async (req, res) => {
-    try {
-        const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
-        // 查找该邮箱下，所有已有回复的消息
-        const messages = await db.collection('feedbacks').find({ 
-            email: user.email,
-            status: 'replied'
-        }).sort({ repliedAt: -1 }).toArray();
-        
-        res.json(messages);
-    } catch (e) { res.status(500).json({ message: "Error" }); }
-});
-
-// ==========================================
-// 👑 Admin API (后台管理)
-// ==========================================
-
-// 统计数据
+// 🟢 [Admin] 统计数据 (区分 Basic/Pro)
 app.get('/api/admin/stats', verifyAdmin, async (req, res) => {
     try {
         const [users, basic, pro, feedbacks, unread] = await Promise.all([
@@ -186,13 +169,13 @@ app.get('/api/admin/stats', verifyAdmin, async (req, res) => {
     } catch (e) { res.status(500).json({ message: "Error" }); }
 });
 
-// 反馈列表
+// 🟢 [Admin] 消息列表
 app.get('/api/admin/feedbacks', verifyAdmin, async (req, res) => {
     const msgs = await db.collection('feedbacks').find({}).sort({ submittedAt: -1 }).limit(50).toArray();
     res.json(msgs);
 });
 
-// 用户列表
+// 🟢 [Admin] 用户列表
 app.get('/api/admin/users', verifyAdmin, async (req, res) => {
     const users = await db.collection('users').find({}, { projection: { password: 0 } }).sort({ createdAt: -1 }).limit(20).toArray();
     res.json(users);
@@ -202,7 +185,7 @@ app.get('/api/admin/users', verifyAdmin, async (req, res) => {
 app.post('/api/admin/reply', verifyAdmin, async (req, res) => {
     const { feedbackId, replyContent } = req.body;
     
-    // 更新数据库：写入回复内容，标记为已回复
+    // 更新数据库，把管理员的回复写进去
     const result = await db.collection('feedbacks').updateOne(
         { _id: new ObjectId(feedbackId) },
         { 
@@ -215,9 +198,9 @@ app.post('/api/admin/reply', verifyAdmin, async (req, res) => {
     );
 
     if (result.modifiedCount > 0) {
-        return res.json({ message: "Reply saved to database" });
+        return res.json({ message: "Reply Saved" });
     }
-    res.status(500).json({ message: "Failed to save reply" });
+    res.status(500).json({ message: "Failed" });
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
