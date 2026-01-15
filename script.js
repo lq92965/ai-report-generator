@@ -1058,3 +1058,92 @@ document.addEventListener('DOMContentLoaded', () => {
         console.warn("未找到复制按钮，请检查 HTML 中按钮文字是否为 '复制结果'");
     }
 });
+
+// ==========================================
+// 🟢 新增功能：联系我们表单逻辑 (支持自动填充 + VIP检测)
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.getElementById('contact-form');
+    const statusDiv = document.getElementById('form-status');
+
+    // 1. 自动填充功能 (如果用户已登录)
+    const token = localStorage.getItem('token');
+    if (token) {
+        // 这里的 API_BASE_URL 确保在你的 script.js 顶部已定义
+        // 如果你的代码里没定义这个变量，请直接写 'https://api.goreportify.com'
+        const baseUrl = (typeof API_BASE_URL !== 'undefined') ? API_BASE_URL : 'https://api.goreportify.com';
+        
+        fetch(`${baseUrl}/api/me`, { headers: { 'Authorization': `Bearer ${token}` } })
+            .then(res => res.json())
+            .then(user => {
+                if (user.email) {
+                    const emailInput = document.getElementById('email');
+                    const nameInput = document.getElementById('name');
+                    if(emailInput) emailInput.value = user.email;
+                    if(nameInput) nameInput.value = user.name || '';
+                    
+                    // 🌟 如果是 Pro 用户，自动选中“优先支持”
+                    if (user.plan === 'pro') {
+                        const typeSelect = document.getElementById('contact-type');
+                        if(typeSelect) typeSelect.value = 'Priority';
+                    }
+                }
+            })
+            .catch(err => console.log("Guest user or fetch error"));
+    }
+
+    // 2. 表单提交拦截
+    if (contactForm) {
+        // 克隆节点以防止重复绑定
+        const newContactForm = contactForm.cloneNode(true);
+        contactForm.parentNode.replaceChild(newContactForm, contactForm);
+
+        newContactForm.addEventListener('submit', async (e) => {
+            e.preventDefault(); 
+
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const typeSelect = document.getElementById('contact-type'); // 获取下拉菜单
+            const msgInput = document.getElementById('message');
+            const btn = newContactForm.querySelector('button');
+            const baseUrl = (typeof API_BASE_URL !== 'undefined') ? API_BASE_URL : 'https://api.goreportify.com';
+
+            // 锁定按钮
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = "Sending...";
+            if(statusDiv) statusDiv.innerHTML = "";
+
+            try {
+                // 发送给后端
+                const res = await fetch(`${baseUrl}/api/contact`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: nameInput.value,
+                        email: emailInput.value,
+                        type: typeSelect ? typeSelect.value : 'General', // 带上类型
+                        message: msgInput.value
+                    })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    if(window.showToast) window.showToast("Message sent! Thanks for your feedback.", "success");
+                    else alert("发送成功！");
+                    newContactForm.reset(); 
+                } else {
+                    throw new Error(data.message || "Failed to send");
+                }
+            } catch (err) {
+                console.error(err);
+                if(window.showToast) window.showToast("Send failed: " + err.message, "error");
+                else alert("发送失败: " + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }
+        });
+    }
+});
