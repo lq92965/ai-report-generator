@@ -115,88 +115,121 @@ function exportHistoryToWord(content, filename) {
 }
 
 // ==========================================
-// 🟢 3. PDF 导出 (移植自首页的完美版：修复空白 + 智能分页)
+// 🟢 PDF 导出 (移植自首页的成功逻辑：可见渲染 + 延时截图)
 // ==========================================
 function exportHistoryToPDF(content, filename) {
-    if (!content) return alert("内容为空");
+    if (!content) {
+        if(window.showToast) window.showToast("内容为空，无法生成 PDF", "error");
+        else alert("内容为空");
+        return;
+    }
 
-    // 1. 转换 Markdown 为 HTML
-    // 确保 history.html 引入了 marked.js
+    // 1. 提示开始 (给用户反馈)
+    if(window.showToast) window.showToast("正在准备 PDF 生成...", "info");
+
+    // 2. 转换 Markdown 为 HTML
     const htmlContent = (typeof marked !== 'undefined') ? marked.parse(content) : content;
-
-    // 2. 创建一个临时的、专门用于打印的容器
-    // 我们不直接用 document.createElement，而是完全模拟首页的结构
-    const container = document.createElement('div');
-    container.style.position = 'absolute';
-    container.style.left = '-9999px'; // 移出屏幕
-    container.style.top = '0';
-    container.style.width = '800px'; // 模拟 A4 宽度
-    container.style.backgroundColor = '#ffffff';
-    container.style.padding = '40px';
-    container.style.fontFamily = 'Helvetica, Arial, sans-serif';
-    container.style.color = '#333';
-    container.style.zIndex = '9999';
-
-    // 3. 填充内容 (带上 CSS 样式，确保不乱码、不断页)
     const dateStr = new Date().toLocaleDateString();
+
+    // 3. 创建容器 (采用首页策略：覆盖在屏幕最上方，确保绝对可见)
+    const container = document.createElement('div');
+    container.style.position = 'fixed'; // 使用 fixed 覆盖视口
+    container.style.top = '0';
+    container.style.left = '0';
+    container.style.width = '100%';
+    container.style.height = '100%';
+    container.style.zIndex = '9999999'; // 确保在最顶层
+    container.style.backgroundColor = '#ffffff'; // 白底
+    container.style.overflowY = 'auto'; 
+    container.style.padding = '0'; // 内部控制 padding
+    
+    // 添加一个临时的“生成中”提示层，以免用户以为死机
+    const loadingMask = document.createElement('div');
+    loadingMask.innerHTML = `<div style="position:fixed; top:20px; right:20px; background:rgba(0,0,0,0.8); color:white; padding:10px 20px; border-radius:5px; z-index:10000000;">⏳ 正在生成 PDF，请稍候...</div>`;
+    document.body.appendChild(loadingMask);
+
+    // 4. 填充内容 (包含打印专用 CSS)
     container.innerHTML = `
-        <style>
-            /* 强制样式，防止被网页其他 CSS 干扰 */
-            h1 { color: #2563EB; font-size: 24px; border-bottom: 2px solid #2563EB; padding-bottom: 10px; margin-bottom: 20px; }
-            h2 { color: #333; font-size: 18px; margin-top: 20px; margin-bottom: 10px; border-left: 4px solid #2563EB; padding-left: 10px; }
-            p, li { line-height: 1.6; margin-bottom: 10px; font-size: 14px; }
-            strong { color: #111; font-weight: bold; }
-            /* 🔴 核心：智能分页，防止文字被切成两半 */
-            p, h2, h3, li, div { page-break-inside: avoid; break-inside: avoid; }
-        </style>
-        
-        <div id="pdf-print-source">
-            <div style="text-align:center; margin-bottom:30px;">
+        <div id="pdf-print-source" style="max-width: 800px; margin: 0 auto; padding: 40px; background: white; color: #333; font-family: 'Helvetica', 'Arial', sans-serif;">
+            <style>
+                /* 强制样式，防止被网页其他 CSS 干扰 */
+                h1 { color: #2563EB; font-size: 24px; border-bottom: 2px solid #2563EB; padding-bottom: 15px; margin-bottom: 25px; }
+                h2 { color: #1F2937; font-size: 18px; margin-top: 25px; margin-bottom: 10px; border-left: 4px solid #2563EB; padding-left: 12px; }
+                h3 { color: #374151; font-size: 16px; margin-top: 20px; font-weight: bold; }
+                p, li { line-height: 1.8; margin-bottom: 12px; font-size: 14px; text-align: justify; }
+                strong { color: #111; font-weight: 700; }
+                code { background: #f3f4f6; padding: 2px 5px; border-radius: 4px; font-family: monospace; color: #DC2626; }
+                pre { background: #1f2937; color: #fff; padding: 15px; border-radius: 8px; overflow-x: auto; margin: 15px 0; }
+                blockquote { border-left: 4px solid #e5e7eb; padding-left: 15px; color: #6b7280; font-style: italic; }
+                
+                /* 🔴 核心：智能分页控制，防止文字被腰斩 */
+                p, h2, h3, li, div, blockquote, pre { 
+                    page-break-inside: avoid; 
+                    break-inside: avoid; 
+                }
+            </style>
+            
+            <div style="text-align:center; margin-bottom:40px;">
                 <h1>${filename}</h1>
-                <p style="color:#666; font-size:12px;">Generated by Reportify AI • ${dateStr}</p>
+                <p style="color:#6b7280; font-size:12px; margin-top:5px;">
+                    Generated by Reportify AI • ${dateStr}
+                </p>
             </div>
             
             <div class="markdown-body">
                 ${htmlContent}
             </div>
 
-            <div style="margin-top:50px; text-align:center; font-size:10px; color:#999; border-top:1px solid #eee; padding-top:10px;">
-                - End of Report -
+            <div style="margin-top:60px; text-align:center; font-size:12px; color:#9ca3af; border-top:1px solid #e5e7eb; padding-top:20px;">
+                © 2026 Reportify AI. All Rights Reserved.
             </div>
         </div>
     `;
 
-    // 4. 必须加入到 body 中，html2pdf 才能读取
+    // 5. 加入 Body
     document.body.appendChild(container);
 
-    // 5. 调用 html2pdf
-    if (typeof html2pdf !== 'undefined') {
-        const opt = {
-            margin:       10,
-            filename:     (filename || 'Report') + '.pdf',
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true, logging: false },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-            // 🔴 开启智能分页模式
-            pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
-        };
+    // 6. 🟢 关键步骤：延时截图 (等待浏览器渲染 DOM)
+    // 既然是 fixed 覆盖，我们需要给浏览器一点时间把内容画出来
+    setTimeout(() => {
+        if (typeof html2pdf !== 'undefined') {
+            const opt = {
+                margin:       10, // mm
+                filename:     (filename || 'Report') + '.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { 
+                    scale: 2, 
+                    useCORS: true, 
+                    logging: false,
+                    scrollY: 0,
+                    windowWidth: document.body.scrollWidth
+                },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+            };
 
-        // 开始生成
-        // 如果有 showToast 就用，没有就忽略
-        if(window.showToast) window.showToast("正在生成 PDF...", "info");
+            // 选中内部的容器进行打印，而不是整个宽屏容器
+            const elementToPrint = container.querySelector('#pdf-print-source');
 
-        html2pdf().set(opt).from(container).save().then(() => {
-            document.body.removeChild(container); // 下载后清理
-            if(window.showToast) window.showToast("PDF 下载成功!", "success");
-        }).catch(err => {
-            console.error(err);
+            html2pdf().set(opt).from(elementToPrint).save()
+                .then(() => {
+                    // 成功后清理
+                    document.body.removeChild(container);
+                    document.body.removeChild(loadingMask);
+                    if(window.showToast) window.showToast("PDF 下载成功!", "success");
+                })
+                .catch(err => {
+                    console.error(err);
+                    document.body.removeChild(container);
+                    document.body.removeChild(loadingMask);
+                    alert("PDF 生成出错，请重试。");
+                });
+        } else {
+            alert("PDF 组件未加载，请刷新页面。");
             document.body.removeChild(container);
-            alert("PDF 生成失败，请重试。");
-        });
-    } else {
-        alert("错误：html2pdf 组件未加载，请刷新页面。");
-        document.body.removeChild(container);
-    }
+            document.body.removeChild(loadingMask);
+        }
+    }, 500); // 🟢 延时 500ms，确保内容绝对渲染完成
 }
 
 // 4. 弹窗显示逻辑 (新增 Markdown 按钮)
