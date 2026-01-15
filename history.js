@@ -30,38 +30,82 @@ async function fetchHistory() {
     }
 }
 
-// 渲染列表
+// 渲染美化后的列表
 function renderHistoryList(reports) {
     const listContainer = document.getElementById('history-list');
     if (!listContainer) return;
     listContainer.innerHTML = ''; 
 
     if (reports.length === 0) {
-        listContainer.innerHTML = '<p style="color:white; text-align:center;">暂无历史报告。</p>';
+        listContainer.innerHTML = `
+            <div class="text-center py-16 bg-white rounded-xl border border-dashed border-gray-300">
+                <p class="text-gray-500 text-lg">📭 暂无历史记录</p>
+                <a href="/" class="text-blue-600 hover:underline mt-2 inline-block">去生成第一份报告 &rarr;</a>
+            </div>
+        `;
         return;
     }
 
-    reports.forEach(report => {
-        const card = document.createElement('div');
-        // 保持你原有的卡片样式或使用内联样式确保显示
-        card.className = 'history-card p-4 mb-4 bg-gray-800 rounded cursor-pointer hover:bg-gray-700 transition';
-        card.style.border = '1px solid #444';
-        card.style.padding = '15px';
-        card.style.marginBottom = '10px';
-        card.style.borderRadius = '8px';
-        card.style.cursor = 'pointer';
+    reports.forEach((report, index) => {
+        // 1. 处理数据，生成标签颜色
+        const dateStr = new Date(report.createdAt).toLocaleDateString() + ' ' + new Date(report.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const typeLabel = formatReportType(report.templateId); // 获取中文类型
+        const orderNum = reports.length - index; // 倒序编号 (最新的显示为最大的数字) 或者 index + 1
         
-        const date = new Date(report.createdAt).toLocaleDateString();
+        // 2. 创建卡片容器
+        const card = document.createElement('div');
+        // 使用 Tailwind 创建宽幅、阴影、悬停效果的卡片
+        card.className = 'group bg-white border border-gray-200 rounded-xl p-5 hover:shadow-lg hover:border-blue-300 transition-all duration-200 cursor-pointer flex flex-col md:flex-row items-start md:items-center justify-between gap-4';
+        
+        // 3. 填充 HTML 内容
         card.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <h3 style="color:white; margin:0; font-size:18px;">${report.title || '未命名报告'}</h3>
-                <small style="color:#aaa;">${date}</small>
+            <div class="flex items-start gap-5 w-full">
+                <div class="hidden md:flex flex-col items-center justify-center w-12 h-12 bg-gray-50 rounded-lg text-gray-400 font-bold text-xl">
+                    #${index + 1}
+                </div>
+
+                <div class="flex-1">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <h3 class="text-lg font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
+                            ${report.title || '未命名报告'}
+                        </h3>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            ${typeLabel}
+                        </span>
+                    </div>
+
+                    <div class="mt-2 flex items-center gap-4 text-sm text-gray-500">
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            ${dateStr}
+                        </span>
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                            AI 助手
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-gray-300 group-hover:text-blue-500 transition-colors self-center pr-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
             </div>
         `;
         
+        // 绑定点击事件
         card.onclick = () => showReportDetail(report);
         listContainer.appendChild(card);
     });
+}
+
+// 辅助函数：将英文 ID 转为中文显示
+function formatReportType(id) {
+    const map = {
+        'daily_summary': '日报总结',
+        'project_proposal': '项目提案',
+        'marketing_copy': '营销文案'
+    };
+    return map[id] || '通用报告';
 }
 
 // ==========================================
