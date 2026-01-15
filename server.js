@@ -27,38 +27,44 @@ async function connectDB() {
 }
 connectDB();
 
-// 3. 🟢 [急救修复] CORS 跨域配置 - 允许所有来源
-// 这可以解决你在截图里遇到的 Access to fetch has been blocked 错误
+// 3. 🟢 [CORS 终极版] 允许所有来源，并显式处理预检请求
 app.use(cors({
-  origin: true, // 🟢 设置为 true 表示接受任何请求来源 (自动反射)
+  origin: true, // 允许所有
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+// 手动处理 OPTIONS 请求 (防止预检失败)
+app.options('*', cors()); 
+
 app.use(express.json());
 
 // ==========================================
-// 📧 邮件系统配置 (带防崩溃保护)
+// 📧 邮件系统配置 (尝试 587 端口 + STARTTLS)
 // ==========================================
 let transporter = null;
 try {
     transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
-        port: 465, 
-        secure: true,
+        port: 587, // 🟢 改用 587 端口
+        secure: false, // 587端口必须设为 false
+        requireTLS: true, // 强制 STARTTLS 加密
         auth: {
             user: 'lq92965@gmail.com', 
-            // 🔴 记得填密码，如果没填对也没关系，网站能登录，只是发不出邮件
+            // 🔴 必填：你的16位应用密码 (去掉空格)
             pass: 'cqgkrldvgybewvhi' 
-        }
+        },
+        connectionTimeout: 10000 // 10秒超时
     });
 } catch (err) {
-    console.error("⚠️ 邮件服务初始化失败，但服务器将继续运行:", err);
+    console.error("⚠️ 邮件服务初始化失败:", err);
 }
 
 // 辅助发送函数
 async function sendEmail(to, subject, text) {
     if (!transporter) return false;
     try {
+        await transporter.verify(); // 发送前先验证连接
         await transporter.sendMail({
             from: '"Reportify Support" <lq92965@gmail.com>',
             to, subject, text
@@ -72,7 +78,7 @@ async function sendEmail(to, subject, text) {
 }
 
 // ==========================================
-// 鉴权中间件
+// 鉴权中间件 (保持不变)
 // ==========================================
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -104,7 +110,7 @@ const verifyAdmin = async (req, res, next) => {
 };
 
 // ==========================================
-// 路由接口
+// 路由接口 (保持不变)
 // ==========================================
 
 app.get('/', (req, res) => res.send('Backend Online'));
@@ -217,7 +223,8 @@ app.post('/api/admin/reply', verifyAdmin, async (req, res) => {
             return res.json({ message: "Replied" });
         }
     }
-    res.status(500).json({ message: "Failed" });
+    // 即使发送失败，也返回 200 但带错误信息，避免前端 CORS 报错
+    res.json({ message: "Failed to send email (Check Server Log)" });
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
