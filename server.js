@@ -5,7 +5,6 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { MongoClient, ObjectId } from 'mongodb';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-// ❌ 移除了 nodemailer，不再尝试发邮件，彻底杜绝崩溃风险
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 const API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 const MONGO_URI = process.env.MONGO_URI;
 const JWT_SECRET = process.env.JWT_SECRET;
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID; // 确保 .env 里有这个
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID; // 确保 .env 文件里有这个
 
 // 2. 数据库连接
 const client = new MongoClient(MONGO_URI);
@@ -37,7 +36,7 @@ app.use(cors({
 app.use(express.json());
 
 // ==========================================
-// 鉴权中间件 (保持不变)
+// 鉴权中间件
 // ==========================================
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -74,10 +73,14 @@ const verifyAdmin = async (req, res, next) => {
 
 app.get('/', (req, res) => res.send('Backend Online'));
 
-// 1. 🟢 [修复] Google 登录跳转接口 (之前缺失导致 404)
+// 1. 🟢 [修复] Google 登录跳转接口
 app.get('/auth/google', (req, res) => {
-    // 构建 Google 官方授权链接
-    const redirectUri = 'https://goreportify.com'; // 登录成功后回跳的地址
+    if (!GOOGLE_CLIENT_ID) return res.status(500).json({ message: "Google Client ID not configured" });
+    
+    // ⚠️ 注意：这里的 redirectUri 必须和 Google Cloud 后台配置的 "已获授权的重定向 URI" 完全一致
+    // 你的截图显示是 goreportify.com，所以这里不能乱改
+    const redirectUri = 'https://goreportify.com'; 
+    
     const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=token&scope=email profile openid`;
     res.json({ url: url });
 });
@@ -138,7 +141,7 @@ app.get('/api/reports/history', authenticateToken, async (req, res) => {
     res.json(reports);
 });
 
-// 🟢 [Contact] 联系我们 (只存库，不发邮件，速度极快)
+// 🟢 [Contact] 联系我们 (只存数据库，不发邮件)
 app.post('/api/contact', async (req, res) => {
     const { name, email, message, type } = req.body;
     await db.collection('feedbacks').insertOne({
@@ -151,7 +154,7 @@ app.post('/api/contact', async (req, res) => {
     res.json({ message: "Sent" });
 });
 
-// 🟢 [User Message] 用户获取站内信 (新功能)
+// 🟢 [User Message] 用户获取站内信 (新功能：用户在前台查看回复)
 app.get('/api/my-messages', authenticateToken, async (req, res) => {
     try {
         const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
@@ -195,7 +198,7 @@ app.get('/api/admin/users', verifyAdmin, async (req, res) => {
     res.json(users);
 });
 
-// 🟢 [Admin Reply] 站内信回复 (存入数据库，不发邮件)
+// 🟢 [Admin Reply] 站内信回复 (存入数据库)
 app.post('/api/admin/reply', verifyAdmin, async (req, res) => {
     const { feedbackId, replyContent } = req.body;
     
