@@ -27,36 +27,37 @@ async function connectDB() {
 }
 connectDB();
 
-// 3. 🟢 [修复] CORS 跨域配置 (允许 http 和 https)
+// 3. 🟢 [急救修复] CORS 跨域配置 - 允许所有来源
+// 这可以解决你在截图里遇到的 Access to fetch has been blocked 错误
 app.use(cors({
-  origin: [
-      'https://goreportify.com', 
-      'https://www.goreportify.com',
-      'http://goreportify.com',      // ✅ 新增：允许 HTTP
-      'http://www.goreportify.com',  // ✅ 新增：允许 HTTP
-      'http://localhost:3000',
-      'http://127.0.0.1:5500' 
-  ],
+  origin: true, // 🟢 设置为 true 表示接受任何请求来源 (自动反射)
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
 app.use(express.json());
 
 // ==========================================
-// 📧 邮件系统配置 (修复版)
+// 📧 邮件系统配置 (带防崩溃保护)
 // ==========================================
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465, // 使用 SSL 端口
-    secure: true,
-    auth: {
-        user: 'lq92965@gmail.com', 
-        pass: 'cqgkrldvgybewvhi' // 🔴 必填：请填入密码，去掉空格！
-    }
-});
+let transporter = null;
+try {
+    transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465, 
+        secure: true,
+        auth: {
+            user: 'lq92965@gmail.com', 
+            // 🔴 记得填密码，如果没填对也没关系，网站能登录，只是发不出邮件
+            pass: 'cqgkrldvgybewvhi' 
+        }
+    });
+} catch (err) {
+    console.error("⚠️ 邮件服务初始化失败，但服务器将继续运行:", err);
+}
 
 // 辅助发送函数
 async function sendEmail(to, subject, text) {
+    if (!transporter) return false;
     try {
         await transporter.sendMail({
             from: '"Reportify Support" <lq92965@gmail.com>',
@@ -140,11 +141,11 @@ app.get('/api/me', authenticateToken, async (req, res) => {
     res.json(user);
 });
 
-// 生成报告 (这里简化处理，确保AI部分不报错)
+// 生成报告
 const genAI = new GoogleGenerativeAI(API_KEY);
 app.post('/api/generate', authenticateToken, async (req, res) => {
     try {
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // 使用稳定模型
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); 
         const result = await model.generateContent(req.body.userPrompt || "Hello");
         const text = result.response.text();
         
@@ -178,7 +179,7 @@ app.post('/api/contact', async (req, res) => {
     res.json({ message: "Sent" });
 });
 
-// 🟢 [Admin] 统计数据 (区分 Basic/Pro)
+// 🟢 [Admin] 统计数据
 app.get('/api/admin/stats', verifyAdmin, async (req, res) => {
     try {
         const [users, basic, pro, feedbacks, unread] = await Promise.all([
