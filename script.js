@@ -997,3 +997,44 @@ document.addEventListener('DOMContentLoaded', () => {
     loadReports();
 });
 
+// ==========================================
+// 🟢 修复：复制结果按钮逻辑
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. 尝试找到复制按钮 (根据你的截图，按钮文字是 "复制结果")
+    // 我们尝试通过 ID 查找，或者通过 class 查找
+    const copyBtn = document.querySelector('button[onclick="copyResult()"]') || 
+                    Array.from(document.querySelectorAll('button')).find(el => el.textContent.includes('复制结果'));
+    
+    const outputArea = document.querySelector('#report-output') || document.querySelector('textarea[readonly]');
+
+    if (copyBtn && outputArea) {
+        // 移除旧的 onclick 属性（如果有），使用新的监听器
+        copyBtn.removeAttribute('onclick'); 
+        
+        copyBtn.addEventListener('click', async () => {
+            const textToCopy = outputArea.value || outputArea.innerText;
+            
+            if (!textToCopy) return alert("没有可复制的内容");
+
+            try {
+                await navigator.clipboard.writeText(textToCopy);
+                
+                // 视觉反馈：按钮变色提示成功
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = "✅ 已复制";
+                copyBtn.classList.add('bg-green-600', 'text-white'); // 假设用了 Tailwind
+                
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                    copyBtn.classList.remove('bg-green-600', 'text-white');
+                }, 2000);
+                
+            } catch (err) {
+                console.error('复制失败:', err);
+                alert('复制失败，请手动复制。');
+            }
+        });
+    }
+});
+
