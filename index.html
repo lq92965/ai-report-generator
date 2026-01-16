@@ -246,9 +246,9 @@
                          </select>
                      </div>
 
-                     <div class="input-wrapper full-width">
-                         <label for="message">Message</label>
-                         <textarea id="message" name="message" rows="5" required placeholder="How can we help you?"></textarea>
+                     <div class="relative">
+                          <textarea id="message" name="message" rows="5" maxlength="1000" required placeholder="请在此描述您的问题 (最多1000字)..." class="w-full border border-gray-300 rounded p-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
+                          <span class="absolute bottom-2 right-2 text-xs text-gray-400">Max 1000 chars</span>
                      </div>
             
                      <button type="submit" class="btn btn-primary">Submit Feedback</button>
