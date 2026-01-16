@@ -185,14 +185,38 @@ app.get('/api/my-messages', authenticateToken, async (req, res) => {
 });
 
 // Admin
+// 🟢 [升级版] 管理员回复 (支持无限追加对话模式)
 app.post('/api/admin/reply', verifyAdmin, async (req, res) => {
     const { feedbackId, replyContent } = req.body;
-    const result = await db.collection('feedbacks').updateOne(
-        { _id: new ObjectId(feedbackId) },
-        { $set: { status: 'replied', reply: replyContent, repliedAt: new Date() } }
-    );
-    if (result.modifiedCount > 0) res.json({ message: "Reply Saved" });
-    else res.status(500).json({ message: "Failed" });
+    
+    // 构造一条新的回复记录
+    const newReplyItem = {
+        role: 'admin',       // 标记是管理员说的
+        message: replyContent,
+        createdAt: new Date()
+    };
+
+    try {
+        const result = await db.collection('feedbacks').updateOne(
+            { _id: new ObjectId(feedbackId) },
+            { 
+                $set: { 
+                    status: 'replied',      // 标记为已回复
+                    repliedAt: new Date(),  // 更新最后回复时间
+                    // 如果是旧数据没有 reply，把它转存到历史里 (可选优化，这里直接由前端兼容显示)
+                },
+                $push: { 
+                    conversation: newReplyItem // 🟢 关键：追加到对话数组中
+                } 
+            }
+        );
+
+        if (result.modifiedCount > 0) res.json({ message: "Reply Sent" });
+        else res.status(500).json({ message: "Failed" });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ message: "Error" });
+    }
 });
 
 app.get('/api/admin/stats', verifyAdmin, async (req, res) => {
