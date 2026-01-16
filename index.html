@@ -339,29 +339,54 @@
     </div>
 </div>
 
-<div id="message-modal" class="hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity duration-300">
-    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden m-4 border border-gray-100">
-        <div class="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center text-white">
-            <h3 class="font-bold text-lg tracking-wide flex items-center gap-2">
-                <i class="fas fa-clipboard-list"></i> My Feedback History (我的反馈)
-            </h3>
-            <button onclick="closeMessageCenter()" class="hover:bg-white/20 rounded-full p-1 w-8 h-8 flex items-center justify-center"><i class="fas fa-times"></i></button>
-        </div>
-        <div id="msg-list-container" class="p-5 h-80 overflow-y-auto bg-slate-50 space-y-4">
-            <div class="flex flex-col items-center justify-center h-full text-gray-400 gap-2">
-                <i class="fas fa-spinner fa-spin text-2xl text-blue-500"></i>
-                <span class="text-sm">Loading...</span>
+<audio id="notification-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=pop-39222.mp3" preload="auto"></audio>
+
+<div id="message-modal" class="hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300 p-4">
+    <div class="bg-white w-full max-w-6xl h-[85vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-gray-100 transform transition-all scale-100">
+        
+        <div class="bg-gradient-to-r from-blue-700 to-blue-600 px-8 py-5 flex justify-between items-center text-white shadow-md flex-shrink-0">
+            <div>
+                <h3 class="font-bold text-xl tracking-wide flex items-center gap-3">
+                    <i class="fas fa-clipboard-list"></i> Feedback History
+                </h3>
+                <p class="text-blue-100 text-xs mt-1">View your inquiries and our responses below.</p>
             </div>
+            <button onclick="closeMessageCenter()" class="bg-white/10 hover:bg-white/20 rounded-full p-2 w-10 h-10 flex items-center justify-center transition backdrop-blur-md cursor-pointer">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+        </div>
+
+        <div id="msg-list-container" class="flex-1 p-8 overflow-y-auto bg-slate-50 space-y-6">
+            <div class="flex flex-col items-center justify-center h-full text-gray-400 gap-3">
+                <i class="fas fa-spinner fa-spin text-3xl text-blue-500"></i>
+                <span class="text-sm font-medium">Loading records...</span>
+            </div>
+        </div>
+
+        <div class="p-4 border-t border-gray-100 bg-white text-center text-xs text-gray-400 flex-shrink-0">
+            For new inquiries, please use the "Contact Us" form on the homepage.
         </div>
     </div>
 </div>
 
-<button onclick="openMessageCenter()" class="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full shadow-2xl z-[9990] flex items-center justify-center transition hover:scale-110" style="display: flex !important;">
-    <i class="fas fa-bell text-xl"></i>
+<button onclick="openMessageCenter()" class="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white w-16 h-16 rounded-full shadow-2xl z-[9990] flex items-center justify-center transition-transform hover:scale-110 group cursor-pointer" title="My Messages">
+    <i class="fas fa-bell text-2xl group-hover:animate-swing"></i>
+    
+    <span id="notif-badge" class="hidden absolute top-0 right-0 h-5 w-5">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-5 w-5 bg-red-600 border-2 border-white"></span>
+    </span>
 </button>
 
 <style>
-    @keyframes swing { 20% { transform: rotate(15deg); } 40% { transform: rotate(-10deg); } 60% { transform: rotate(5deg); } 80% { transform: rotate(-5deg); } 100% { transform: rotate(0deg); } }
+    /* 铃铛摇晃动画 */
+    @keyframes swing { 
+        20% { transform: rotate(15deg); } 
+        40% { transform: rotate(-10deg); } 
+        60% { transform: rotate(5deg); } 
+        80% { transform: rotate(-5deg); } 
+        100% { transform: rotate(0deg); } 
+    }
     .group-hover\:animate-swing { animation: swing 1s ease-in-out infinite; }
 </style>
 
