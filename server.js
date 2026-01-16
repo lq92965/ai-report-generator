@@ -10,14 +10,14 @@ import axios from 'axios';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 配置
+// 1. 核心配置
 const API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 const MONGO_URI = process.env.MONGO_URI;
 const JWT_SECRET = process.env.JWT_SECRET;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID; 
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
-// DB 连接
+// 2. 数据库连接
 const client = new MongoClient(MONGO_URI);
 let db;
 async function connectDB() {
@@ -29,7 +29,7 @@ async function connectDB() {
 }
 connectDB();
 
-// CORS
+// 3. CORS 配置
 app.use(cors({ origin: true, credentials: true, methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'] }));
 app.use(express.json());
 
@@ -61,6 +61,16 @@ const verifyAdmin = async (req, res, next) => {
 // ======================= 路由 =======================
 
 app.get('/', (req, res) => res.send('Backend Online'));
+
+// 🟢 [补回] 模板列表接口 (修复 404 错误)
+app.get('/api/templates', async (req, res) => {
+    const templates = [
+        { _id: 'daily_summary', title: 'Daily Work Summary', category: 'General', isPro: false },
+        { _id: 'project_proposal', title: 'Project Proposal', category: 'Management', isPro: true },
+        { _id: 'marketing_copy', title: 'Marketing Copy', category: 'Marketing', isPro: true },
+    ];
+    res.json(templates);
+});
 
 // --- Google 登录 ---
 app.get('/auth/google', (req, res) => {
@@ -94,7 +104,6 @@ app.get('/api/auth/google/callback', async (req, res) => {
 
 // --- 常规业务 ---
 app.post('/api/register', async (req, res) => {
-    // ... (保持原样)
     try {
         const { displayName, email, password } = req.body;
         const existing = await db.collection('users').findOne({ email });
@@ -106,7 +115,6 @@ app.post('/api/register', async (req, res) => {
 });
 
 app.post('/api/login', async (req, res) => {
-    // ... (保持原样)
     try {
         const { email, password } = req.body;
         const user = await db.collection('users').findOne({ email });
@@ -139,68 +147,44 @@ app.get('/api/reports/history', authenticateToken, async (req, res) => {
 });
 
 // ==========================================
-// 🟢 [核心修改] 站内信系统 (Message System)
+// 🟢 站内信系统 (Message System)
 // ==========================================
 
-// 1. 用户提交反馈 (存入数据库)
+// 1. 用户提交反馈
 app.post('/api/contact', async (req, res) => {
     const { name, email, message, type } = req.body;
-    
-    // 自动判断回复语（仅用于数据库记录，方便管理员看，不发给用户）
-    let autoReply = null;
-    if (type === 'Bug') autoReply = "System: Bug reported. We are checking it.";
-    if (type === 'Priority') autoReply = "System: Priority request received.";
-
     await db.collection('feedbacks').insertOne({
         name, email, type: type || 'General', message,
-        submittedAt: new Date(), 
-        status: 'unread', 
-        isVIP: (type === 'Priority'),
-        reply: autoReply, // 预填自动回复
-        repliedAt: new Date()
+        submittedAt: new Date(), status: 'unread', isVIP: (type === 'Priority'), reply: null
     });
     res.json({ message: "Saved to Database" });
 });
 
-// 2. 用户获取我的消息 (My Messages)
+// 2. 用户获取我的消息
 app.get('/api/my-messages', authenticateToken, async (req, res) => {
     try {
-        // 先找到当前登录用户的邮箱
         const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
-        if (!user) return res.status(404).json({ message: "User not found" });
-
-        // 查找该邮箱发送过的所有反馈 (按时间倒序)
         const messages = await db.collection('feedbacks')
-            .find({ email: user.email }) 
-            .sort({ submittedAt: -1 })
+            .find({ email: user.email, status: 'replied' }) // 只显示已回复的
+            .sort({ repliedAt: -1 })
             .toArray();
-        
         res.json(messages);
     } catch (e) { res.status(500).json({ message: "Error" }); }
 });
 
-// 3. 管理员回复 (只更新数据库)
+// 3. 管理员回复
 app.post('/api/admin/reply', verifyAdmin, async (req, res) => {
     const { feedbackId, replyContent } = req.body;
-    
     const result = await db.collection('feedbacks').updateOne(
         { _id: new ObjectId(feedbackId) },
-        { 
-            $set: { 
-                status: 'replied', 
-                reply: replyContent, // 管理员的回复内容
-                repliedAt: new Date() 
-            } 
-        }
+        { $set: { status: 'replied', reply: replyContent, repliedAt: new Date() } }
     );
-
     if (result.modifiedCount > 0) res.json({ message: "Reply Saved" });
     else res.status(500).json({ message: "Failed" });
 });
 
 // ======================= Admin Stats =======================
 app.get('/api/admin/stats', verifyAdmin, async (req, res) => {
-    // ... (保持原样，略)
     try {
         const [users, basic, pro, feedbacks, unread] = await Promise.all([
             db.collection('users').countDocuments(),
