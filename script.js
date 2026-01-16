@@ -1149,78 +1149,54 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================
-// 🟢 Message Center Logic (English Version)
+// 🟢 站内信前端逻辑 (My Messages)
 // ==========================================
 
-// 打开弹窗
-function openMessageCenter() {
+async function openMessageCenter() {
     const token = localStorage.getItem('token');
     if (!token) {
-        alert("Please login to view messages.");
+        alert("请先登录查看消息 / Please login first.");
         return;
     }
 
+    // 显示弹窗
     const modal = document.getElementById('message-modal');
-    modal.classList.remove('hidden'); // 显示弹窗
-    loadMessages();
-}
+    modal.classList.remove('hidden');
 
-// 关闭弹窗
-function closeMessageCenter() {
-    document.getElementById('message-modal').classList.add('hidden');
-}
-
-// 加载数据
-async function loadMessages() {
     const container = document.getElementById('msg-list-container');
-    const token = localStorage.getItem('token');
+    container.innerHTML = '<p class="text-center text-gray-400 mt-10"><i class="fas fa-spinner fa-spin"></i> Loading...</p>';
 
     try {
         const res = await fetch('https://api.goreportify.com/api/my-messages', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
-        
-        if (!res.ok) throw new Error("Failed");
+
+        if (!res.ok) throw new Error("Failed to load");
         const msgs = await res.json();
 
         container.innerHTML = '';
-        
         if (msgs.length === 0) {
-            container.innerHTML = `
-                <div class="flex flex-col items-center justify-center h-full text-gray-400 gap-3">
-                    <i class="far fa-comments text-4xl text-gray-300"></i>
-                    <p class="text-sm">No messages yet.</p>
-                </div>`;
+            container.innerHTML = '<p class="text-center text-gray-400 mt-10">暂无消息记录 / No messages yet.</p>';
             return;
         }
 
         msgs.forEach(msg => {
-            // 样式处理：如果有回复，显示回复框
+            // 判断是否有管理员回复
             const hasReply = msg.reply ? true : false;
-            
             const replyHtml = hasReply 
-                ? `<div class="mt-3 pt-3 border-t border-gray-100 bg-blue-50/50 p-3 rounded-lg text-sm text-gray-700 animate-fade-in">
-                     <div class="flex items-center gap-2 mb-1 text-blue-600 font-bold text-xs uppercase tracking-wider">
-                        <i class="fas fa-headset"></i> Support Team
-                     </div>
+                ? `<div class="mt-3 pt-3 border-t border-gray-100 bg-blue-50 p-3 rounded text-sm text-gray-700">
+                     <span class="font-bold text-blue-600"><i class="fas fa-user-shield"></i> 客服回复:</span> 
                      ${msg.reply}
                    </div>` 
-                : `<div class="mt-2 flex items-center gap-2 text-xs text-orange-400 italic bg-orange-50 px-2 py-1 rounded w-fit">
-                     <i class="fas fa-clock"></i> Waiting for reply...
-                   </div>`;
+                : `<div class="mt-2 text-xs text-gray-400 italic">等待回复中...</div>`;
 
-            // 消息卡片
             const card = `
-                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition duration-200">
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded font-bold uppercase tracking-wide">
-                            ${msg.type || 'Feedback'}
-                        </span>
-                        <span class="text-[10px] text-gray-400 font-mono">
-                            ${new Date(msg.submittedAt).toLocaleDateString()}
-                        </span>
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                    <div class="flex justify-between items-start">
+                        <span class="font-bold text-gray-800 text-sm">${msg.type || 'Feedback'}</span>
+                        <span class="text-xs text-gray-400">${new Date(msg.submittedAt).toLocaleDateString()}</span>
                     </div>
-                    <p class="text-gray-800 text-sm leading-relaxed mb-3">${msg.message}</p>
+                    <p class="text-gray-600 text-sm mt-1">${msg.message}</p>
                     ${replyHtml}
                 </div>
             `;
@@ -1228,12 +1204,7 @@ async function loadMessages() {
         });
 
     } catch (err) {
-        container.innerHTML = `
-            <div class="flex flex-col items-center justify-center h-full text-red-400 gap-2">
-                <i class="fas fa-exclamation-circle text-2xl"></i>
-                <p class="text-sm">Failed to load messages.</p>
-                <button onclick="loadMessages()" class="text-blue-600 underline text-xs">Retry</button>
-            </div>`;
+        container.innerHTML = '<p class="text-center text-red-400 mt-10">加载失败，请重试</p>';
     }
 }
 
