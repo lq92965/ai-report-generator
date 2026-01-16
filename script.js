@@ -1261,3 +1261,55 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// ============================================================
+// 🚑 紧急补丁：找回右上角登录状态显示逻辑
+// (请粘贴到 script.js 的最末尾，不要覆盖前面的代码)
+// ============================================================
+
+// 1. 检查登录状态 & 切换头像
+function checkLoginState() {
+    const token = localStorage.getItem('token');
+    // 找到我们在 index.html 里加的那个 ID
+    const headerRight = document.getElementById('auth-container');
+
+    // 如果找不到位置，说明 HTML 可能还没加载完或者 ID 写错了
+    if (!headerRight) return;
+
+    if (token) {
+        // --- ✅ 已登录：显示头像和下拉菜单 ---
+        headerRight.innerHTML = `
+            <div class="relative group flex items-center gap-3" style="position: relative;">
+                <span class="text-sm font-medium text-gray-700 hidden md:block">Welcome</span>
+                <button class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold shadow-md hover:bg-blue-700 transition">
+                    <i class="fas fa-user"></i>
+                </button>
+                <div class="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 hidden group-hover:block z-50 overflow-hidden">
+                    <a href="admin.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 border-b border-gray-50" style="display:block; text-decoration:none;">
+                        <i class="fas fa-tachometer-alt mr-2 text-blue-500"></i> Dashboard
+                    </a>
+                    <a href="#" onclick="logout()" class="block px-4 py-3 text-sm text-red-600 hover:bg-red-50" style="display:block; text-decoration:none;">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                    </a>
+                </div>
+            </div>
+        `;
+    } else {
+        // --- ⚪ 未登录：显示登录按钮 ---
+        headerRight.innerHTML = `
+            <button class="btn-login" onclick="openModal('login')" style="margin-right: 15px; cursor: pointer; color: #666; font-weight: 500;">Login</button>
+            <button class="btn btn-primary" onclick="openModal('signup')" style="background: #2563EB; color: white; padding: 8px 20px; border-radius: 99px;">Get Started</button>
+        `;
+    }
+}
+
+// 2. 登出功能
+window.logout = function() {
+    localStorage.removeItem('token');
+    window.location.href = 'index.html'; // 刷新页面
+    showToast("Logged out successfully");
+}
+
+// 3. 自动运行 (页面一加载就检查)
+document.addEventListener('DOMContentLoaded', () => {
+    checkLoginState();
+});
