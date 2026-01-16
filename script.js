@@ -1212,15 +1212,15 @@ window.checkNotifications = async function() {
     } catch (e) { console.error("Notif check failed", e); }
 }
 
-// 4. 加载数据 (左右分栏布局)
+// ==========================================
+// 🟢 修复版：加载消息 (修复了引号闭合问题)
+// ==========================================
 async function loadMessages(markAsRead = false) {
     const container = document.getElementById('msg-list-container');
     const token = localStorage.getItem('token');
     
-    // 如果是第一次打开，显示加载中
-    if(!container.innerHTML.includes('card')) {
-        container.innerHTML = '<div class="flex flex-col items-center justify-center h-full text-gray-400 gap-3"><i class="fas fa-spinner fa-spin text-3xl text-blue-500"></i><span>Loading...</span></div>';
-    }
+    // 加载动画
+    container.innerHTML = '<div class="flex flex-col items-center justify-center h-full text-gray-400 gap-3"><i class="fas fa-spinner fa-spin text-3xl text-blue-500"></i><span>Loading...</span></div>';
 
     try {
         const res = await fetch('https://api.goreportify.com/api/my-messages', {
@@ -1230,15 +1230,18 @@ async function loadMessages(markAsRead = false) {
         if (!res.ok) throw new Error("Failed to load");
         const msgs = await res.json();
 
-        // 如果需要标记为已读 (即用户打开了弹窗)
+        // 🟢 处理通知红点逻辑
         if (markAsRead) {
+            // 如果用户打开了弹窗，更新本地记录
             const repliedCount = msgs.filter(m => m.status === 'replied').length;
-            localStorage.setItem('seen_reply_count', repliedCount); // 更新本地记录
+            localStorage.setItem('seen_reply_count', repliedCount); 
+            
+            // 隐藏红点
             const badge = document.getElementById('notif-badge');
-            if(badge) badge.classList.add('hidden'); // 隐藏红点
+            if(badge) badge.classList.add('hidden');
         }
 
-        container.innerHTML = '';
+        container.innerHTML = ''; // 清空加载动画
 
         if (msgs.length === 0) {
             container.innerHTML = `
@@ -1249,22 +1252,20 @@ async function loadMessages(markAsRead = false) {
             return;
         }
 
+        // 🟢 渲染列表
         msgs.forEach(msg => {
             const isReplied = (msg.status === 'replied');
             const dateStr = new Date(msg.submittedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
             
-            // 🟢 核心：构建回复内容
-            // 优先查找 conversation 数组 (新版)，如果没有则回退到 reply 字段 (旧版)
+            // 构建右侧管理员回复内容
             let adminReplyContent = '';
             
             if (msg.conversation && msg.conversation.length > 0) {
-                // 筛选出管理员的回复
                 const adminMsgs = msg.conversation.filter(c => c.role === 'admin');
                 if (adminMsgs.length > 0) {
-                    // 显示所有回复
                     adminReplyContent = adminMsgs.map(c => `
                         <div class="mb-4 pb-4 border-b border-blue-100 last:border-0 last:mb-0 last:pb-0">
-                            <p class="text-xs text-blue-400 font-bold mb-1 flex items-center gap-1">
+                            <p class="text-xs text-blue-500 font-bold mb-1 flex items-center gap-1">
                                 <i class="fas fa-headset"></i> Support Team (${new Date(c.createdAt).toLocaleDateString()}):
                             </p>
                             <p class="text-gray-800 leading-relaxed">${c.message}</p>
@@ -1272,26 +1273,24 @@ async function loadMessages(markAsRead = false) {
                     `).join('');
                 }
             } else if (msg.reply) {
-                // 旧版兼容
-                adminReplyContent = `
-                    <p class="text-gray-800 leading-relaxed">${msg.reply}</p>
-                `;
+                // 兼容旧数据
+                adminReplyContent = `<p class="text-gray-800 leading-relaxed">${msg.reply}</p>`;
             }
 
-            // 右侧状态栏 (如果没有回复)
+            // 根据是否有回复，决定右侧显示什么
             const rightSideContent = adminReplyContent 
-                ? `<div class="bg-blue-50 border-l-4 border-blue-500 p-5 rounded-r-lg h-full">
+                ? `<div class="bg-blue-50 border-l-4 border-blue-500 p-5 rounded-r-lg h-full overflow-y-auto max-h-60">
                      ${adminReplyContent}
                    </div>`
                 : `<div class="bg-gray-50 border-l-4 border-gray-300 p-5 rounded-r-lg h-full flex flex-col justify-center items-center text-gray-400">
                      <i class="fas fa-clock text-3xl mb-2 text-yellow-400"></i>
                      <p class="font-medium text-sm">Review in progress...</p>
-                     <p class="text-xs mt-1">Our team will reply shortly.</p>
+                     <p class="text-xs mt-1">Waiting for support...</p>
                    </div>`;
 
-            // 🟢 卡片 HTML (左右布局 Grid)
+            // 构建卡片 HTML
             const card = `
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition duration-300">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition duration-300 flex-shrink-0">
                     <div class="bg-gray-50 px-6 py-3 border-b border-gray-100 flex justify-between items-center">
                         <div class="flex items-center gap-3">
                             <span class="bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded font-bold uppercase tracking-wide">
@@ -1303,23 +1302,23 @@ async function loadMessages(markAsRead = false) {
                     </div>
 
                     <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-100">
-                        
                         <div class="p-6">
                             <p class="text-xs text-gray-400 font-bold uppercase mb-2">My Inquiry:</p>
                             <p class="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap">${msg.message}</p>
                         </div>
-
                         <div class="p-0">
                             ${rightSideContent}
                         </div>
                     </div>
                 </div>
             `;
+            // 注意：这里用 += 追加内容
             container.innerHTML += card;
         });
 
     } catch (err) {
-        container.innerHTML = '<p class="text-center text-red-400 mt-10">Network error. Please try again.</p>';
+        console.error(err);
+        container.innerHTML = '<p class="text-center text-red-400 mt-10">Load failed. Please check console.</p>';
     }
 }
 
