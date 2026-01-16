@@ -82,7 +82,7 @@ app.get('/auth/google', (req, res) => {
     res.redirect(url);
 });
 
-// Google 回调
+// 🟢 [修正版] Google 回调 (增加保存头像 picture 逻辑)
 app.get('/api/auth/google/callback', async (req, res) => {
     const code = req.query.code;
     try {
@@ -94,16 +94,24 @@ app.get('/api/auth/google/callback', async (req, res) => {
         const userRes = await axios.get('https://www.googleapis.com/oauth2/v2/userinfo', {
             headers: { Authorization: `Bearer ${tokenRes.data.access_token}` }
         });
-        const { email, name } = userRes.data;
+        
+        // 🟢 获取 Google 头像
+        const { email, name, picture } = userRes.data; 
         
         let user = await db.collection('users').findOne({ email });
         if (!user) {
-            const result = await db.collection('users').insertOne({ name, email, password: null, authProvider: 'google', plan: 'basic', createdAt: new Date() });
+            // 注册新用户 (存入 picture)
+            const result = await db.collection('users').insertOne({ 
+                name, email, picture, // ✅ 存入头像
+                password: null, authProvider: 'google', plan: 'basic', createdAt: new Date() 
+            });
             user = { _id: result.insertedId, plan: 'basic' };
+        } else {
+            // 老用户登录，顺便更新一下头像 (防止头像过期)
+            await db.collection('users').updateOne({ email }, { $set: { picture: picture } });
         }
+
         const token = jwt.sign({ userId: user._id, plan: user.plan }, JWT_SECRET, { expiresIn: '7d' });
-        
-        // 带着 token 跳回首页
         res.redirect(`https://goreportify.com?token=${token}`);
     } catch (error) { 
         console.error("Google Login Error:", error);
