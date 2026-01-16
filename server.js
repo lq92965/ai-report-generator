@@ -5,7 +5,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { MongoClient, ObjectId } from 'mongodb';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-// ❌ 已移除 nodemailer
+import axios from 'axios'; // ✅ 确保你安装了 npm install axios
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,6 +15,7 @@ const API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 const MONGO_URI = process.env.MONGO_URI;
 const JWT_SECRET = process.env.JWT_SECRET;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID; 
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET; // ✅ 必须在 .env 里配置
 
 // 2. 数据库连接
 const client = new MongoClient(MONGO_URI);
@@ -74,24 +75,56 @@ const verifyAdmin = async (req, res, next) => {
 
 app.get('/', (req, res) => res.send('Backend Online'));
 
-// 1. 🟢 [修正] Google 登录跳转接口
+// 1. Google 跳转接口
 app.get('/auth/google', (req, res) => {
-    if (!GOOGLE_CLIENT_ID) return res.status(500).json({ message: "Missing Google Client ID" });
-    
-    // ✅ 必须和你后台截图完全一致！
     const redirectUri = 'https://api.goreportify.com/api/auth/google/callback'; 
-    
     const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=email profile openid`;
     res.json({ url: url });
 });
 
-// 2. 🟢 [新增] Google 回调处理 (防止 404)
-// Google 验证完后会跳到这里，我们先把用户踢回首页，防止报错
-app.get('/api/auth/google/callback', (req, res) => {
-    // 这里简单处理：直接跳回前端首页，带上 code 参数
-    // 你的前端可以从 URL 获取 code 并处理，或者暂时只做跳转
+// 2. 🟢 [核心] Google 回调处理 (这是你之前缺失的新逻辑)
+app.get('/api/auth/google/callback', async (req, res) => {
     const code = req.query.code;
-    res.redirect(`https://goreportify.com?google_login=success&code=${code}`);
+    try {
+        // A. 用 Code 换取 Token (这一步需要 Client Secret)
+        const tokenRes = await axios.post('https://oauth2.googleapis.com/token', {
+            client_id: GOOGLE_CLIENT_ID,
+            client_secret: GOOGLE_CLIENT_SECRET,
+            code: code,
+            grant_type: 'authorization_code',
+            redirect_uri: 'https://api.goreportify.com/api/auth/google/callback'
+        });
+        const { access_token } = tokenRes.data;
+
+        // B. 获取用户信息
+        const userRes = await axios.get('https://www.googleapis.com/oauth2/v2/userinfo', {
+            headers: { Authorization: `Bearer ${access_token}` }
+        });
+        const { email, name, picture } = userRes.data;
+
+        // C. 数据库查找或注册
+        let user = await db.collection('users').findOne({ email });
+        if (!user) {
+            const result = await db.collection('users').insertOne({
+                name, email, 
+                password: null, // Google 用户无密码
+                authProvider: 'google',
+                plan: 'basic', 
+                createdAt: new Date()
+            });
+            user = { _id: result.insertedId, plan: 'basic' };
+        }
+
+        // D. 生成我们自己的 JWT
+        const token = jwt.sign({ userId: user._id, plan: user.plan }, JWT_SECRET, { expiresIn: '7d' });
+
+        // E. 带着 Token 跳回前端 (这才是 script.js 想要的格式)
+        res.redirect(`https://goreportify.com?token=${token}`);
+
+    } catch (error) {
+        console.error("Google Login Error:", error.response?.data || error.message);
+        res.redirect('https://goreportify.com?error=google_login_failed');
+    }
 });
 
 // 3. 注册
@@ -150,26 +183,22 @@ app.get('/api/reports/history', authenticateToken, async (req, res) => {
     res.json(reports);
 });
 
-// 🟢 [Contact] 站内信模式 (只存库，不发邮件)
+// 🟢 Contact (站内信模式)
 app.post('/api/contact', async (req, res) => {
     const { name, email, message, type } = req.body;
     await db.collection('feedbacks').insertOne({
         name, email, type: type || 'General', message,
-        submittedAt: new Date(), 
-        status: 'unread', 
-        isVIP: (type === 'Priority'),
-        reply: null // 初始回复为空
+        submittedAt: new Date(), status: 'unread', isVIP: (type === 'Priority'), reply: null
     });
     res.json({ message: "Message Saved" });
 });
 
-// 🟢 [User Message] 用户获取站内信
+// 🟢 User Message (获取站内信)
 app.get('/api/my-messages', authenticateToken, async (req, res) => {
     try {
         const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
         const messages = await db.collection('feedbacks').find({ 
-            email: user.email,
-            status: 'replied'
+            email: user.email, status: 'replied'
         }).sort({ repliedAt: -1 }).toArray();
         res.json(messages);
     } catch (e) { res.status(500).json({ message: "Error" }); }
@@ -178,7 +207,6 @@ app.get('/api/my-messages', authenticateToken, async (req, res) => {
 // ==========================================
 // 👑 Admin API
 // ==========================================
-
 app.get('/api/admin/stats', verifyAdmin, async (req, res) => {
     try {
         const [users, basic, pro, feedbacks, unread] = await Promise.all([
@@ -202,23 +230,10 @@ app.get('/api/admin/users', verifyAdmin, async (req, res) => {
     res.json(users);
 });
 
-// 🟢 [Admin Reply] 站内信回复
 app.post('/api/admin/reply', verifyAdmin, async (req, res) => {
     const { feedbackId, replyContent } = req.body;
-    const result = await db.collection('feedbacks').updateOne(
-        { _id: new ObjectId(feedbackId) },
-        { 
-            $set: { 
-                status: 'replied', 
-                reply: replyContent, 
-                repliedAt: new Date() 
-            } 
-        }
-    );
-    if (result.modifiedCount > 0) {
-        return res.json({ message: "Reply Saved" });
-    }
-    res.status(500).json({ message: "Failed" });
+    await db.collection('feedbacks').updateOne({ _id: new ObjectId(feedbackId) }, { $set: { status: 'replied', reply: replyContent, repliedAt: new Date() } });
+    res.json({ message: "Reply Saved" });
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
