@@ -5,7 +5,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { MongoClient, ObjectId } from 'mongodb';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-// ❌ 已彻底删除 nodemailer，不再尝试发邮件
+// ❌ 已移除 nodemailer
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 const API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 const MONGO_URI = process.env.MONGO_URI;
 const JWT_SECRET = process.env.JWT_SECRET;
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID; // 确保 .env 里有这个
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID; 
 
 // 2. 数据库连接
 const client = new MongoClient(MONGO_URI);
@@ -28,7 +28,7 @@ async function connectDB() {
 }
 connectDB();
 
-// 3. 🟢 [保持你的原样] CORS 跨域配置 - 允许所有来源
+// 3. CORS 配置
 app.use(cors({
   origin: true, 
   credentials: true,
@@ -37,7 +37,7 @@ app.use(cors({
 app.use(express.json());
 
 // ==========================================
-// 鉴权中间件 (保持原样)
+// 鉴权中间件
 // ==========================================
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -69,23 +69,32 @@ const verifyAdmin = async (req, res, next) => {
 };
 
 // ==========================================
-// 路由接口
+// 🟢 路由接口
 // ==========================================
 
 app.get('/', (req, res) => res.send('Backend Online'));
 
-// 🟢 [修复] Google 登录跳转接口 (解决 404/400 错误)
+// 1. 🟢 [修正] Google 登录跳转接口
 app.get('/auth/google', (req, res) => {
-    // ⚠️ 关键点：这里的地址必须和 Google Cloud 后台配置的“重定向 URI”一字不差
-    // 你的截图显示域名是 https://goreportify.com
-    // 如果后台配置的是 https://goreportify.com/ (带斜杠)，这里也要加斜杠
-    const redirectUri = 'https://goreportify.com'; 
+    if (!GOOGLE_CLIENT_ID) return res.status(500).json({ message: "Missing Google Client ID" });
     
-    const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=token&scope=email profile openid`;
+    // ✅ 必须和你后台截图完全一致！
+    const redirectUri = 'https://api.goreportify.com/api/auth/google/callback'; 
+    
+    const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=email profile openid`;
     res.json({ url: url });
 });
 
-// 注册 (保持原样)
+// 2. 🟢 [新增] Google 回调处理 (防止 404)
+// Google 验证完后会跳到这里，我们先把用户踢回首页，防止报错
+app.get('/api/auth/google/callback', (req, res) => {
+    // 这里简单处理：直接跳回前端首页，带上 code 参数
+    // 你的前端可以从 URL 获取 code 并处理，或者暂时只做跳转
+    const code = req.query.code;
+    res.redirect(`https://goreportify.com?google_login=success&code=${code}`);
+});
+
+// 3. 注册
 app.post('/api/register', async (req, res) => {
     try {
         const { displayName, email, password } = req.body;
@@ -100,7 +109,7 @@ app.post('/api/register', async (req, res) => {
     } catch (e) { res.status(500).json({ message: "Error" }); }
 });
 
-// 登录 (保持原样)
+// 4. 登录
 app.post('/api/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -111,13 +120,13 @@ app.post('/api/login', async (req, res) => {
     } catch (e) { res.status(500).json({ message: "Error" }); }
 });
 
-// 用户信息 (保持原样)
+// 5. 用户信息
 app.get('/api/me', authenticateToken, async (req, res) => {
     const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) }, { projection: { password: 0 } });
     res.json(user);
 });
 
-// 生成报告 (保持原样)
+// 6. 生成报告
 const genAI = new GoogleGenerativeAI(API_KEY);
 app.post('/api/generate', authenticateToken, async (req, res) => {
     try {
@@ -135,7 +144,7 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
     }
 });
 
-// 历史记录 (保持原样)
+// 7. 历史记录
 app.get('/api/reports/history', authenticateToken, async (req, res) => {
     const reports = await db.collection('reports').find({ userId: req.user.userId }).sort({ createdAt: -1 }).toArray();
     res.json(reports);
@@ -151,11 +160,25 @@ app.post('/api/contact', async (req, res) => {
         isVIP: (type === 'Priority'),
         reply: null // 初始回复为空
     });
-    // 直接返回成功，不需要等待邮件发送
     res.json({ message: "Message Saved" });
 });
 
-// 🟢 [Admin] 统计数据 (区分 Basic/Pro)
+// 🟢 [User Message] 用户获取站内信
+app.get('/api/my-messages', authenticateToken, async (req, res) => {
+    try {
+        const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
+        const messages = await db.collection('feedbacks').find({ 
+            email: user.email,
+            status: 'replied'
+        }).sort({ repliedAt: -1 }).toArray();
+        res.json(messages);
+    } catch (e) { res.status(500).json({ message: "Error" }); }
+});
+
+// ==========================================
+// 👑 Admin API
+// ==========================================
+
 app.get('/api/admin/stats', verifyAdmin, async (req, res) => {
     try {
         const [users, basic, pro, feedbacks, unread] = await Promise.all([
@@ -169,23 +192,19 @@ app.get('/api/admin/stats', verifyAdmin, async (req, res) => {
     } catch (e) { res.status(500).json({ message: "Error" }); }
 });
 
-// 🟢 [Admin] 消息列表
 app.get('/api/admin/feedbacks', verifyAdmin, async (req, res) => {
     const msgs = await db.collection('feedbacks').find({}).sort({ submittedAt: -1 }).limit(50).toArray();
     res.json(msgs);
 });
 
-// 🟢 [Admin] 用户列表
 app.get('/api/admin/users', verifyAdmin, async (req, res) => {
     const users = await db.collection('users').find({}, { projection: { password: 0 } }).sort({ createdAt: -1 }).limit(20).toArray();
     res.json(users);
 });
 
-// 🟢 [Admin Reply] 站内信回复 (存入数据库)
+// 🟢 [Admin Reply] 站内信回复
 app.post('/api/admin/reply', verifyAdmin, async (req, res) => {
     const { feedbackId, replyContent } = req.body;
-    
-    // 更新数据库，把管理员的回复写进去
     const result = await db.collection('feedbacks').updateOne(
         { _id: new ObjectId(feedbackId) },
         { 
@@ -196,7 +215,6 @@ app.post('/api/admin/reply', verifyAdmin, async (req, res) => {
             } 
         }
     );
-
     if (result.modifiedCount > 0) {
         return res.json({ message: "Reply Saved" });
     }
