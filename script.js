@@ -1207,3 +1207,56 @@ async function openMessageCenter() {
         container.innerHTML = '<p class="text-center text-red-400 mt-10">加载失败，请重试</p>';
     }
 }
+
+// ==========================================
+// 🟢 联系表单提交逻辑 (修复点击无反应的问题)
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    const submitBtn = document.querySelector('button[type="submit"]'); // 获取页面上的提交按钮
+    
+    // 只有当按钮存在时才运行，防止报错
+    if (submitBtn) {
+        submitBtn.addEventListener('click', async (e) => {
+            e.preventDefault(); // 阻止页面刷新
+
+            // 1. 抓取输入框内容 (兼容不同的ID写法)
+            const name = document.querySelector('input[placeholder*="名字"]')?.value || document.getElementById('name')?.value || 'User';
+            const email = document.querySelector('input[type="email"]')?.value || document.getElementById('email')?.value;
+            const message = document.querySelector('textarea')?.value || document.getElementById('message')?.value;
+            const type = document.querySelector('select')?.value || 'General';
+
+            // 2. 验证
+            if (!email || !message) {
+                alert("请填写邮箱和内容 / Please fill in required fields");
+                return;
+            }
+
+            // 3. 按钮变色提示
+            const oldText = submitBtn.innerText;
+            submitBtn.innerText = "发送中...";
+            submitBtn.disabled = true;
+
+            try {
+                // 4. 发送给后端
+                const res = await fetch('https://api.goreportify.com/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, message, type })
+                });
+
+                if (res.ok) {
+                    alert("✅ 发送成功！请点击右下角的‘消息’按钮查看回复。");
+                    document.querySelector('textarea').value = ''; // 清空内容
+                } else {
+                    alert("❌ 发送失败，请稍后重试");
+                }
+            } catch (err) {
+                console.error(err);
+                alert("网络错误 / Network Error");
+            } finally {
+                submitBtn.innerText = oldText;
+                submitBtn.disabled = false;
+            }
+        });
+    }
+});
