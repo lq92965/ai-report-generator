@@ -132,10 +132,33 @@
                         <h3 class="font-bold text-gray-800 text-lg">Message Inbox</h3>
                     </div>
                     <div class="grid grid-cols-1 gap-4" id="feedback-grid">
-                        </div>
+                    </div>
                 </div>
 
             </main>
+        </div>
+    </div>
+
+    <div id="reply-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg overflow-hidden transform transition-all">
+            <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                <h3 class="font-bold text-gray-700">回复用户 (Reply)</h3>
+                <button onclick="closeReplyModal()" class="text-gray-400 hover:text-red-500 text-xl">&times;</button>
+            </div>
+            <div class="p-6">
+                <div class="mb-4">
+                    <span class="text-xs font-bold text-gray-500 uppercase">To User:</span>
+                    <span id="reply-target-name" class="ml-2 font-medium text-gray-800"></span>
+                </div>
+                <textarea id="reply-content" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none h-40" placeholder="请输入您的回复内容 (站内信)..."></textarea>
+                <input type="hidden" id="current-feedback-id">
+            </div>
+            <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-end gap-3">
+                <button onclick="closeReplyModal()" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-lg text-sm transition">取消</button>
+                <button onclick="sendReply()" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm shadow hover:bg-blue-700 transition flex items-center gap-2">
+                    <i class="fas fa-paper-plane"></i> 发送回复
+                </button>
+            </div>
         </div>
     </div>
 
@@ -185,23 +208,17 @@
             } catch (err) {
                 console.error(err);
                 if(document.getElementById('stat-users').innerText === '-') {
-                    alert("Error: Cannot connect to server. Please ensure you have run 'pm2 restart backend'.");
+                    // alert("Error: Cannot connect to server.");
                 }
             }
         }
 
         // 3. View Switcher
         window.switchView = function(viewName) {
-            // Hide all views
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
-            // Show target view
             document.getElementById(`view-${viewName}`).classList.remove('hidden');
-            
-            // Update Nav State
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById(`nav-${viewName}`).classList.add('active');
-
-            // Update Title
             const titles = { 'dashboard': 'Dashboard Overview', 'users': 'User Database', 'feedback': 'Feedback & Inbox' };
             document.getElementById('page-title').innerText = titles[viewName];
         }
@@ -250,12 +267,15 @@
             }
 
             msgs.forEach((msg, index) => {
-                // Colors
                 const tagColor = msg.type === 'Bug' ? 'bg-red-100 text-red-800' : (msg.type === 'Priority' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800');
                 const isVIP = msg.isVIP ? '<span class="ml-2 bg-purple-100 text-purple-700 px-2 py-0.5 rounded text-xs font-bold">VIP</span>' : '';
-                const repliedBadge = msg.status === 'replied' ? '<span class="ml-auto text-green-600 text-xs font-bold"><i class="fas fa-check"></i> Replied</span>' : '';
+                const repliedBadge = msg.status === 'replied' ? '<span class="ml-auto text-green-600 text-xs font-bold"><i class="fas fa-check"></i> 已回复 (Replied)</span>' : '<span class="ml-auto text-orange-500 text-xs font-bold">未回复 (Pending)</span>';
 
-                // Full Card (Inbox View)
+                // 🟢 修复按钮：改为调用 openReplyModal，并且文字改为“回复”
+                const actionBtn = msg.status === 'replied' 
+                    ? `<button disabled class="bg-gray-100 text-gray-400 px-4 py-2 rounded-lg text-sm cursor-not-allowed">已回复</button>`
+                    : `<button onclick="openReplyModal('${msg._id}', '${msg.name}')" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition shadow-sm flex items-center gap-2"><i class="fas fa-reply"></i> 回复 (Reply)</button>`;
+
                 const card = `
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
                         <div class="flex justify-between items-start mb-3">
@@ -274,16 +294,15 @@
                         </div>
                         <p class="text-gray-700 text-sm bg-gray-50 p-4 rounded mb-4 leading-relaxed border border-gray-100">${msg.message}</p>
                         
+                        ${msg.reply ? `<div class="ml-4 pl-4 border-l-2 border-green-500 mb-4"><p class="text-xs text-gray-500 font-bold">Admin Reply:</p><p class="text-sm text-gray-600">${msg.reply}</p></div>` : ''}
+
                         <div class="flex justify-end border-t pt-4 border-gray-50">
-                            <button onclick="openReplyModal('${msg._id}', '${msg.name}')" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition shadow-sm flex items-center gap-2">
-                                <i class="fas fa-reply"></i> Reply via Email
-                            </button>
+                            ${actionBtn}
                         </div>
                     </div>
                 `;
                 container.innerHTML += card;
 
-                // Mini Item (Dashboard View) - Limit to 5
                 if(index < 5) {
                     dashList.innerHTML += `
                         <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg text-sm border border-gray-100">
@@ -299,32 +318,49 @@
             });
         }
 
-        // 🟢 Reply Logic
-        async function openReplyModal(id, name) {
-            const reply = prompt(`Reply to ${name} (This will be sent to their email):`, "");
+        // 🟢 5. 修复的回复逻辑 (调用弹窗 + API)
+        function openReplyModal(id, name) {
+            document.getElementById('current-feedback-id').value = id;
+            document.getElementById('reply-target-name').innerText = name;
+            document.getElementById('reply-content').value = ''; // 清空内容
+            document.getElementById('reply-modal').classList.remove('hidden'); // 显示弹窗
+        }
+
+        function closeReplyModal() {
+            document.getElementById('reply-modal').classList.add('hidden');
+        }
+
+        async function sendReply() {
+            const id = document.getElementById('current-feedback-id').value;
+            const content = document.getElementById('reply-content').value;
             
-            if (reply) {
-                try {
-                    const res = await fetch(`${API_BASE}/api/admin/reply`, {
-                        method: 'POST',
-                        headers: { 
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}` 
-                        },
-                        body: JSON.stringify({ feedbackId: id, replyContent: reply })
-                    });
-                    
-                    if(res.ok) {
-                        alert("✅ Reply Sent Successfully!");
-                        initData(); // Refresh to show "Replied" status
-                    } else {
-                        const err = await res.json();
-                        alert("❌ Failed: " + err.message);
-                    }
-                } catch(e) {
-                    console.error(e);
-                    alert("Network Error");
+            if (!content) {
+                alert("请输入回复内容");
+                return;
+            }
+
+            try {
+                // 使用站内信 API
+                const res = await fetch(`${API_BASE}/api/admin/reply`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` 
+                    },
+                    body: JSON.stringify({ feedbackId: id, replyContent: content })
+                });
+                
+                if(res.ok) {
+                    alert("✅ 回复已发送 (站内信)！");
+                    closeReplyModal();
+                    initData(); // 刷新列表，看到状态更新
+                } else {
+                    const err = await res.json();
+                    alert("❌ 发送失败: " + err.message);
                 }
+            } catch(e) {
+                console.error(e);
+                alert("网络错误 / Network Error");
             }
         }
 
