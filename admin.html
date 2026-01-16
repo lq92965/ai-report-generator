@@ -252,6 +252,7 @@
             });
         }
 
+        // 🟢 渲染列表 (升级为聊天对话模式)
         function renderFeedbackList(msgs) {
             const container = document.getElementById('feedback-grid');
             const dashList = document.getElementById('dash-recent-list');
@@ -260,56 +261,103 @@
             dashList.innerHTML = '';
 
             if(msgs.length === 0) {
-                const empty = '<div class="text-center py-10 text-gray-400">No feedback messages yet.</div>';
-                container.innerHTML = empty;
-                dashList.innerHTML = empty;
+                container.innerHTML = '<div class="text-center py-10 text-gray-400">No feedback messages yet.</div>';
+                dashList.innerHTML = '<div class="text-center py-10 text-gray-400">Empty</div>';
                 return;
             }
 
             msgs.forEach((msg, index) => {
                 const tagColor = msg.type === 'Bug' ? 'bg-red-100 text-red-800' : (msg.type === 'Priority' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800');
                 const isVIP = msg.isVIP ? '<span class="ml-2 bg-purple-100 text-purple-700 px-2 py-0.5 rounded text-xs font-bold">VIP</span>' : '';
-                const repliedBadge = msg.status === 'replied' ? '<span class="ml-auto text-green-600 text-xs font-bold"><i class="fas fa-check"></i> 已回复 (Replied)</span>' : '<span class="ml-auto text-orange-500 text-xs font-bold">未回复 (Pending)</span>';
+                
+                // 🟢 1. 构建对话历史 HTML
+                let chatHistoryHtml = '';
+                
+                // A. 显示用户最开始的提问 (作为第一条消息)
+                chatHistoryHtml += `
+                    <div class="flex flex-col space-y-2 mb-4">
+                        <div class="flex items-start">
+                            <div class="bg-gray-100 text-gray-800 p-3 rounded-lg rounded-tl-none text-sm max-w-[85%]">
+                                <p class="font-bold text-xs text-gray-500 mb-1">User (${new Date(msg.submittedAt).toLocaleDateString()})</p>
+                                ${msg.message}
+                            </div>
+                        </div>
+                `;
 
-                // 🟢 修复按钮：改为调用 openReplyModal，并且文字改为“回复”
-                const actionBtn = msg.status === 'replied' 
-                    ? `<button disabled class="bg-gray-100 text-gray-400 px-4 py-2 rounded-lg text-sm cursor-not-allowed">已回复</button>`
-                    : `<button onclick="openReplyModal('${msg._id}', '${msg.name}')" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition shadow-sm flex items-center gap-2"><i class="fas fa-reply"></i> 回复 (Reply)</button>`;
+                // B. 显示旧系统的单条回复 (如果有)
+                if (msg.reply) {
+                    chatHistoryHtml += `
+                        <div class="flex items-end justify-end mt-2">
+                            <div class="bg-blue-50 border border-blue-100 text-gray-800 p-3 rounded-lg rounded-tr-none text-sm max-w-[85%]">
+                                <p class="font-bold text-xs text-blue-500 mb-1 text-right">Admin (Old Reply)</p>
+                                ${msg.reply}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // C. 显示新系统的对话列表 (Array)
+                if (msg.conversation && msg.conversation.length > 0) {
+                    msg.conversation.forEach(chat => {
+                        const isAdmin = chat.role === 'admin';
+                        const alignClass = isAdmin ? 'items-end justify-end' : 'items-start';
+                        const bubbleClass = isAdmin 
+                            ? 'bg-blue-600 text-white rounded-tr-none' 
+                            : 'bg-gray-100 text-gray-800 rounded-tl-none';
+                        const senderName = isAdmin ? 'Admin' : 'User';
+                        const timeStr = chat.createdAt ? new Date(chat.createdAt).toLocaleString() : '';
+
+                        chatHistoryHtml += `
+                            <div class="flex ${alignClass} mt-2">
+                                <div class="${bubbleClass} p-3 rounded-lg text-sm max-w-[85%] shadow-sm">
+                                    <p class="text-[10px] opacity-70 mb-1 ${isAdmin ? 'text-right' : ''}">${senderName} ${timeStr}</p>
+                                    ${chat.message}
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+                chatHistoryHtml += `</div>`; // 结束对话容器
+
+                // 🟢 2. 按钮状态：永远允许回复
+                // 即使 status 是 replied，按钮依然可用，文字变成 "追加回复"
+                const actionBtn = `
+                    <button onclick="openReplyModal('${msg._id}', '${msg.name}')" class="bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-lg text-sm transition shadow-sm flex items-center gap-2">
+                        <i class="fas fa-comment-dots"></i> 回复 / 追加 (Reply)
+                    </button>
+                `;
 
                 const card = `
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
-                        <div class="flex justify-between items-start mb-3">
+                        <div class="flex justify-between items-start mb-4 border-b border-gray-50 pb-3">
                             <div class="flex items-center gap-2">
-                                <span class="font-bold text-gray-800">${msg.name}</span>
+                                <span class="font-bold text-gray-800 text-lg">${msg.name}</span>
                                 ${isVIP}
                             </div>
-                            <div class="flex items-center gap-3">
-                                ${repliedBadge}
-                                <span class="text-xs text-gray-400">${new Date(msg.submittedAt).toLocaleString()}</span>
+                            <div class="text-right">
+                                <span class="text-xs text-gray-400 block">${msg.email}</span>
+                                <span class="${tagColor} px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide mt-1 inline-block">${msg.type || 'General'}</span>
                             </div>
                         </div>
-                        <div class="text-xs text-gray-500 mb-4 flex items-center gap-2">
-                            <span class="bg-gray-100 px-2 py-1 rounded">${msg.email}</span>
-                            <span class="${tagColor} px-2 py-1 rounded font-bold uppercase tracking-wide text-[10px]">${msg.type || 'General'}</span>
-                        </div>
-                        <p class="text-gray-700 text-sm bg-gray-50 p-4 rounded mb-4 leading-relaxed border border-gray-100">${msg.message}</p>
                         
-                        ${msg.reply ? `<div class="ml-4 pl-4 border-l-2 border-green-500 mb-4"><p class="text-xs text-gray-500 font-bold">Admin Reply:</p><p class="text-sm text-gray-600">${msg.reply}</p></div>` : ''}
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 mb-4 max-h-80 overflow-y-auto">
+                            ${chatHistoryHtml}
+                        </div>
 
-                        <div class="flex justify-end border-t pt-4 border-gray-50">
+                        <div class="flex justify-end pt-2">
                             ${actionBtn}
                         </div>
                     </div>
                 `;
                 container.innerHTML += card;
 
+                // 仪表盘的小列表保持原样
                 if(index < 5) {
                     dashList.innerHTML += `
                         <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg text-sm border border-gray-100">
                             <div class="flex items-center gap-3 overflow-hidden">
                                 <span class="w-2 h-2 rounded-full ${msg.type === 'Bug' ? 'bg-red-500' : 'bg-blue-500'} flex-shrink-0"></span>
                                 <span class="font-medium text-gray-700 truncate">${msg.name}</span>
-                                <span class="text-xs text-gray-400 truncate hidden sm:block">- ${msg.message.substring(0, 30)}...</span>
                             </div>
                             <span class="text-xs text-gray-400 whitespace-nowrap">${new Date(msg.submittedAt).toLocaleDateString()}</span>
                         </div>
