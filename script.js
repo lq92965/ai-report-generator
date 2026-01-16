@@ -65,36 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentUserPlan = 'basic'; 
 
     // =============================================
-    // 模块 B: 弹窗控制 (Login/Signup Modal)
-    // =============================================
-    const authModalOverlay = document.getElementById('auth-modal-overlay');
-    const closeModalBtn = document.getElementById('close-modal-btn');
-    const authTabs = document.querySelectorAll('.tab-link');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    window.openModal = function(tabToShow = 'login') {
-        if (!authModalOverlay) return;
-        authModalOverlay.classList.remove('hidden');
-        authTabs.forEach(t => t.classList.remove('active'));
-        tabContents.forEach(c => c.classList.remove('active'));
-        const link = document.querySelector(`.tab-link[data-tab="${tabToShow}"]`);
-        const content = document.getElementById(tabToShow);
-        if(link) link.classList.add('active');
-        if(content) content.classList.add('active');
-    };
-
-    window.closeModal = function() {
-        if(authModalOverlay) authModalOverlay.classList.add('hidden');
-    };
-
-    if (closeModalBtn) closeModalBtn.addEventListener('click', window.closeModal);
-    if (authModalOverlay) authModalOverlay.addEventListener('click', (e) => { 
-        if(e.target === authModalOverlay) window.closeModal(); 
-    });
-    authTabs.forEach(t => t.addEventListener('click', () => window.openModal(t.dataset.tab)));
-
-
-    // =============================================
     // 模块 C: 登录与注册表单处理
     // =============================================
     
@@ -746,43 +716,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
-
-    // =============================================
-    // 模块 H: Google 登录按钮点击事件
-    // =============================================
-    const googleBtns = document.querySelectorAll('button');
-    googleBtns.forEach(btn => {
-        // 找到写着 "Google" 的按钮
-        if (btn.textContent && btn.textContent.includes('Google')) {
-            // 克隆按钮以清除可能存在的旧事件
-            const newBtn = btn.cloneNode(true);
-            btn.parentNode.replaceChild(newBtn, btn);
-            
-            newBtn.addEventListener('click', async (e) => {
-                e.preventDefault();
-                const originalText = newBtn.textContent;
-                newBtn.textContent = 'Wait...'; // 给点点击反馈
-                
-                try {
-                    // 1. 找后端要 Google 的跳转链接
-                    const res = await fetch('https://api.goreportify.com/auth/google');
-                    const data = await res.json();
-                    
-                    // 2. 拿到链接，跳过去
-                    if (data.url) {
-                        window.location.href = data.url; 
-                    } else {
-                        showToast('Login server not ready', 'error');
-                    }
-                } catch (err) {
-                    console.error(err);
-                    showToast('Network error connecting to Google', 'error');
-                    newBtn.textContent = originalText;
-                }
-            });
-        }
-    });
-}); 
 
 // End of Script
 
