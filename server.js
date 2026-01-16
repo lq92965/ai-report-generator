@@ -62,7 +62,7 @@ const verifyAdmin = async (req, res, next) => {
 
 app.get('/', (req, res) => res.send('Backend Online'));
 
-// 🟢 [补回] 模板列表接口 (修复 404 错误)
+// 🟢 [补回] 模板列表接口
 app.get('/api/templates', async (req, res) => {
     const templates = [
         { _id: 'daily_summary', title: 'Daily Work Summary', category: 'General', isPro: false },
@@ -72,13 +72,17 @@ app.get('/api/templates', async (req, res) => {
     res.json(templates);
 });
 
-// --- Google 登录 ---
+// 🟢 [核心修复] Google 登录跳转
 app.get('/auth/google', (req, res) => {
     const redirectUri = 'https://api.goreportify.com/api/auth/google/callback'; 
     const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=email profile openid`;
-    res.json({ url: url });
+    
+    // ❌ 之前是 res.json({url}) 导致你看到乱码
+    // ✅ 现在改成直接跳转
+    res.redirect(url);
 });
 
+// Google 回调
 app.get('/api/auth/google/callback', async (req, res) => {
     const code = req.query.code;
     try {
@@ -98,8 +102,13 @@ app.get('/api/auth/google/callback', async (req, res) => {
             user = { _id: result.insertedId, plan: 'basic' };
         }
         const token = jwt.sign({ userId: user._id, plan: user.plan }, JWT_SECRET, { expiresIn: '7d' });
+        
+        // 带着 token 跳回首页
         res.redirect(`https://goreportify.com?token=${token}`);
-    } catch (error) { res.redirect('https://goreportify.com?error=google_login_failed'); }
+    } catch (error) { 
+        console.error("Google Login Error:", error);
+        res.redirect('https://goreportify.com?error=google_login_failed'); 
+    }
 });
 
 // --- 常规业务 ---
@@ -146,11 +155,7 @@ app.get('/api/reports/history', authenticateToken, async (req, res) => {
     res.json(reports);
 });
 
-// ==========================================
-// 🟢 站内信系统 (Message System)
-// ==========================================
-
-// 1. 用户提交反馈
+// --- 站内信 ---
 app.post('/api/contact', async (req, res) => {
     const { name, email, message, type } = req.body;
     await db.collection('feedbacks').insertOne({
@@ -160,19 +165,18 @@ app.post('/api/contact', async (req, res) => {
     res.json({ message: "Saved to Database" });
 });
 
-// 2. 用户获取我的消息
 app.get('/api/my-messages', authenticateToken, async (req, res) => {
     try {
         const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
         const messages = await db.collection('feedbacks')
-            .find({ email: user.email, status: 'replied' }) // 只显示已回复的
+            .find({ email: user.email, status: 'replied' }) 
             .sort({ repliedAt: -1 })
             .toArray();
         res.json(messages);
     } catch (e) { res.status(500).json({ message: "Error" }); }
 });
 
-// 3. 管理员回复
+// Admin
 app.post('/api/admin/reply', verifyAdmin, async (req, res) => {
     const { feedbackId, replyContent } = req.body;
     const result = await db.collection('feedbacks').updateOne(
@@ -183,7 +187,6 @@ app.post('/api/admin/reply', verifyAdmin, async (req, res) => {
     else res.status(500).json({ message: "Failed" });
 });
 
-// ======================= Admin Stats =======================
 app.get('/api/admin/stats', verifyAdmin, async (req, res) => {
     try {
         const [users, basic, pro, feedbacks, unread] = await Promise.all([
