@@ -1147,3 +1147,63 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// ==========================================
+// 🟢 站内信前端逻辑 (My Messages)
+// ==========================================
+
+async function openMessageCenter() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert("请先登录查看消息 / Please login first.");
+        return;
+    }
+
+    // 显示弹窗
+    const modal = document.getElementById('message-modal');
+    modal.classList.remove('hidden');
+    
+    const container = document.getElementById('msg-list-container');
+    container.innerHTML = '<p class="text-center text-gray-400 mt-10"><i class="fas fa-spinner fa-spin"></i> Loading...</p>';
+
+    try {
+        const res = await fetch('https://api.goreportify.com/api/my-messages', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (!res.ok) throw new Error("Failed to load");
+        const msgs = await res.json();
+
+        container.innerHTML = '';
+        if (msgs.length === 0) {
+            container.innerHTML = '<p class="text-center text-gray-400 mt-10">暂无消息记录 / No messages yet.</p>';
+            return;
+        }
+
+        msgs.forEach(msg => {
+            // 判断是否有管理员回复
+            const hasReply = msg.reply ? true : false;
+            const replyHtml = hasReply 
+                ? `<div class="mt-3 pt-3 border-t border-gray-100 bg-blue-50 p-3 rounded text-sm text-gray-700">
+                     <span class="font-bold text-blue-600"><i class="fas fa-user-shield"></i> 客服回复:</span> 
+                     ${msg.reply}
+                   </div>` 
+                : `<div class="mt-2 text-xs text-gray-400 italic">等待回复中...</div>`;
+
+            const card = `
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                    <div class="flex justify-between items-start">
+                        <span class="font-bold text-gray-800 text-sm">${msg.type || 'Feedback'}</span>
+                        <span class="text-xs text-gray-400">${new Date(msg.submittedAt).toLocaleDateString()}</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mt-1">${msg.message}</p>
+                    ${replyHtml}
+                </div>
+            `;
+            container.innerHTML += card;
+        });
+
+    } catch (err) {
+        container.innerHTML = '<p class="text-center text-red-400 mt-10">加载失败，请重试</p>';
+    }
+}
