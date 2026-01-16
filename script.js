@@ -1149,34 +1149,78 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================
-// 🟢 站内信前端逻辑 (Ticket System Style - 工单模式)
+// 🟢 站内信系统 (Ticket Style - English - Notifications)
 // ==========================================
 
-// 1. 打开弹窗
+// 1. 打开弹窗 (同时清除红点)
 window.openMessageCenter = function() {
     const token = localStorage.getItem('token');
     if (!token) {
-        alert("Please login first to view your feedback history.");
+        if(window.showToast) window.showToast("Please login to view history.", "warning");
+        else alert("Please login first.");
         return;
     }
+    
     const modal = document.getElementById('message-modal');
     if(modal) {
         modal.classList.remove('hidden');
-        loadMessages();
+        document.body.style.overflow = 'hidden'; // 禁止背景滚动
+        loadMessages(true); // 传入 true 表示用户已查看，清除红点
     }
 }
 
 // 2. 关闭弹窗
 window.closeMessageCenter = function() {
-    document.getElementById('message-modal').classList.add('hidden');
+    const modal = document.getElementById('message-modal');
+    if(modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
 }
 
-// 3. 加载数据 (工单列表样式)
-async function loadMessages() {
+// 3. 检查是否有新消息 (用于红点和声音)
+// 这个函数建议在页面加载时自动运行
+window.checkNotifications = async function() {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    try {
+        const res = await fetch('https://api.goreportify.com/api/my-messages', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!res.ok) return;
+        const msgs = await res.json();
+
+        // 计算有多少条是 "replied" 状态的
+        const currentRepliedCount = msgs.filter(m => m.status === 'replied').length;
+        // 获取上次看过的数量
+        const lastSeenCount = parseInt(localStorage.getItem('seen_reply_count') || '0');
+
+        // 如果现在的回复比上次多，说明有新消息！
+        if (currentRepliedCount > lastSeenCount) {
+            // A. 显示红点
+            const badge = document.getElementById('notif-badge');
+            if(badge) badge.classList.remove('hidden');
+
+            // B. 播放声音 (需要用户有交互后才能自动播放，Chrome限制)
+            const audio = document.getElementById('notification-sound');
+            if(audio) {
+                audio.volume = 0.5;
+                audio.play().catch(e => console.log("Audio autoplay blocked (normal browser behavior)"));
+            }
+        }
+    } catch (e) { console.error("Notif check failed", e); }
+}
+
+// 4. 加载数据 (左右分栏布局)
+async function loadMessages(markAsRead = false) {
     const container = document.getElementById('msg-list-container');
     const token = localStorage.getItem('token');
     
-    container.innerHTML = '<div class="flex flex-col items-center justify-center h-full text-gray-400 gap-2"><i class="fas fa-spinner fa-spin text-2xl text-blue-500"></i><span class="text-sm">Loading records...</span></div>';
+    // 如果是第一次打开，显示加载中
+    if(!container.innerHTML.includes('card')) {
+        container.innerHTML = '<div class="flex flex-col items-center justify-center h-full text-gray-400 gap-3"><i class="fas fa-spinner fa-spin text-3xl text-blue-500"></i><span>Loading...</span></div>';
+    }
 
     try {
         const res = await fetch('https://api.goreportify.com/api/my-messages', {
@@ -1186,104 +1230,105 @@ async function loadMessages() {
         if (!res.ok) throw new Error("Failed to load");
         const msgs = await res.json();
 
+        // 如果需要标记为已读 (即用户打开了弹窗)
+        if (markAsRead) {
+            const repliedCount = msgs.filter(m => m.status === 'replied').length;
+            localStorage.setItem('seen_reply_count', repliedCount); // 更新本地记录
+            const badge = document.getElementById('notif-badge');
+            if(badge) badge.classList.add('hidden'); // 隐藏红点
+        }
+
         container.innerHTML = '';
-        
-        // 🟢 顶部提示：告诉用户这是历史记录
-        container.innerHTML += `
-            <div class="mb-4 bg-blue-50 text-blue-800 text-xs p-3 rounded border border-blue-100">
-                <i class="fas fa-info-circle"></i> 这里显示您提交的历史反馈及管理员的回复。如需提交新问题，请使用底部的“联系我们”表格。
-                <br>(Here shows your feedback history. Use the 'Contact Us' form below for new inquiries.)
-            </div>
-        `;
 
         if (msgs.length === 0) {
-            container.innerHTML += '<div class="flex flex-col items-center justify-center h-40 text-gray-400"><i class="far fa-folder-open text-3xl mb-2"></i><p>No records found.</p></div>';
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center h-64 text-gray-300">
+                    <i class="far fa-folder-open text-5xl mb-4"></i>
+                    <p class="text-lg">No feedback history found.</p>
+                </div>`;
             return;
         }
 
         msgs.forEach(msg => {
-            // 状态标签
             const isReplied = (msg.status === 'replied');
-            const statusBadge = isReplied 
-                ? `<span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded font-bold border border-green-200">✅ 已回复 (Resolved)</span>` 
-                : `<span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded font-bold border border-yellow-200">⏳ 处理中 (Pending)</span>`;
-
-            // 1. 用户的原始问题 (Ticket Body)
-            let contentHtml = `
-                <div class="mb-3">
-                    <p class="text-xs text-gray-500 font-bold mb-1">My Inquiry (${new Date(msg.submittedAt).toLocaleDateString()}):</p>
-                    <div class="bg-gray-50 text-gray-800 p-3 rounded text-sm border border-gray-100 leading-relaxed">
-                        ${msg.message}
-                    </div>
-                </div>
-            `;
-
-            // 2. 管理员的回复 (Official Response Area)
-            let replyContent = '';
+            const dateStr = new Date(msg.submittedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
             
-            // A. 检查旧版单一回复
-            if (msg.reply) {
-                replyContent += `
-                    <div class="mt-2 text-sm text-gray-700">
-                        ${msg.reply}
-                    </div>
-                `;
-            }
-
-            // B. 检查新版对话记录 (如果有追加回复，按邮件列表方式显示)
+            // 🟢 核心：构建回复内容
+            // 优先查找 conversation 数组 (新版)，如果没有则回退到 reply 字段 (旧版)
+            let adminReplyContent = '';
+            
             if (msg.conversation && msg.conversation.length > 0) {
-                msg.conversation.forEach(chat => {
-                    if (chat.role === 'admin') {
-                        replyContent += `
-                            <div class="mt-3 pt-3 border-t border-blue-100">
-                                <p class="text-xs text-blue-500 font-bold mb-1">
-                                    Admin Update (${new Date(chat.createdAt).toLocaleDateString()}):
-                                </p>
-                                <div class="text-sm text-gray-800">
-                                    ${chat.message}
-                                </div>
-                            </div>
-                        `;
-                    }
-                });
-            }
-
-            // 如果有回复内容，包裹在一个正式的框里
-            if (replyContent) {
-                contentHtml += `
-                    <div class="mt-4 bg-blue-50/50 border-l-4 border-blue-500 p-3 rounded-r">
-                        <div class="flex items-center gap-2 mb-2">
-                            <i class="fas fa-user-shield text-blue-600"></i>
-                            <span class="text-xs font-bold text-blue-800 uppercase">Support Response</span>
+                // 筛选出管理员的回复
+                const adminMsgs = msg.conversation.filter(c => c.role === 'admin');
+                if (adminMsgs.length > 0) {
+                    // 显示所有回复
+                    adminReplyContent = adminMsgs.map(c => `
+                        <div class="mb-4 pb-4 border-b border-blue-100 last:border-0 last:mb-0 last:pb-0">
+                            <p class="text-xs text-blue-400 font-bold mb-1 flex items-center gap-1">
+                                <i class="fas fa-headset"></i> Support Team (${new Date(c.createdAt).toLocaleDateString()}):
+                            </p>
+                            <p class="text-gray-800 leading-relaxed">${c.message}</p>
                         </div>
-                        ${replyContent}
-                    </div>
-                `;
-            } else {
-                contentHtml += `
-                    <div class="mt-3 text-xs text-gray-400 italic pl-2 border-l-2 border-gray-200">
-                        Waiting for support team response...
-                    </div>
+                    `).join('');
+                }
+            } else if (msg.reply) {
+                // 旧版兼容
+                adminReplyContent = `
+                    <p class="text-gray-800 leading-relaxed">${msg.reply}</p>
                 `;
             }
 
-            // 3. 组装卡片
+            // 右侧状态栏 (如果没有回复)
+            const rightSideContent = adminReplyContent 
+                ? `<div class="bg-blue-50 border-l-4 border-blue-500 p-5 rounded-r-lg h-full">
+                     ${adminReplyContent}
+                   </div>`
+                : `<div class="bg-gray-50 border-l-4 border-gray-300 p-5 rounded-r-lg h-full flex flex-col justify-center items-center text-gray-400">
+                     <i class="fas fa-clock text-3xl mb-2 text-yellow-400"></i>
+                     <p class="font-medium text-sm">Review in progress...</p>
+                     <p class="text-xs mt-1">Our team will reply shortly.</p>
+                   </div>`;
+
+            // 🟢 卡片 HTML (左右布局 Grid)
             const card = `
-                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 hover:shadow-md transition duration-200">
-                    <div class="flex justify-between items-center mb-3 border-b border-gray-50 pb-2">
-                        <span class="font-bold text-gray-700 text-sm uppercase tracking-wide">${msg.type || 'Feedback'}</span>
-                        ${statusBadge}
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition duration-300">
+                    <div class="bg-gray-50 px-6 py-3 border-b border-gray-100 flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded font-bold uppercase tracking-wide">
+                                ${msg.type || 'Feedback'}
+                            </span>
+                            <span class="text-xs text-gray-400 font-mono">ID: ${msg._id.slice(-6)}</span>
+                        </div>
+                        <span class="text-xs text-gray-500 font-medium">${dateStr}</span>
                     </div>
-                    ${contentHtml}
+
+                    <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+                        
+                        <div class="p-6">
+                            <p class="text-xs text-gray-400 font-bold uppercase mb-2">My Inquiry:</p>
+                            <p class="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap">${msg.message}</p>
+                        </div>
+
+                        <div class="p-0">
+                            ${rightSideContent}
+                        </div>
+                    </div>
                 </div>
             `;
             container.innerHTML += card;
         });
 
     } catch (err) {
-        container.innerHTML = '<p class="text-center text-red-400 mt-10">Failed to load records.</p>';
+        container.innerHTML = '<p class="text-center text-red-400 mt-10">Network error. Please try again.</p>';
     }
 }
+
+// 5. 初始化时检查通知
+document.addEventListener('DOMContentLoaded', () => {
+    checkNotifications();
+    // 可以设置一个定时器，每30秒检查一次
+    setInterval(checkNotifications, 30000);
+});
 
 // ==========================================
 // 🟢 联系表单提交逻辑 (修复点击无反应的问题)
