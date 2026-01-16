@@ -1149,49 +1149,34 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================
-// 🟢 站内信前端逻辑 (My Messages - 修复版)
+// 🟢 站内信前端逻辑 (Ticket System Style - 工单模式)
 // ==========================================
 
 // 1. 打开弹窗
 window.openMessageCenter = function() {
     const token = localStorage.getItem('token');
     if (!token) {
-        alert("Please login first to view messages.");
+        alert("Please login first to view your feedback history.");
         return;
     }
     const modal = document.getElementById('message-modal');
     if(modal) {
         modal.classList.remove('hidden');
         loadMessages();
-    } else {
-        console.error("找不到 message-modal 元素");
     }
 }
 
-// 2. 🟢 [修复] 关闭弹窗 (绑定到 window 确保 HTML 能调用)
+// 2. 关闭弹窗
 window.closeMessageCenter = function() {
-    const modal = document.getElementById('message-modal');
-    if(modal) modal.classList.add('hidden');
+    document.getElementById('message-modal').classList.add('hidden');
 }
 
-// 3. 🟢 [新增] 快速回复 (其实就是跳转到下方的联系表单)
-window.quickReply = function() {
-    window.closeMessageCenter();
-    // 滚动到联系表单
-    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-    // 聚焦输入框
-    setTimeout(() => {
-        document.getElementById('message').focus();
-        document.getElementById('message').placeholder = "Re: (Type your reply here...)";
-    }, 800);
-}
-
-// 4. 加载数据
+// 3. 加载数据 (工单列表样式)
 async function loadMessages() {
     const container = document.getElementById('msg-list-container');
     const token = localStorage.getItem('token');
     
-    container.innerHTML = '<div class="flex flex-col items-center justify-center h-full text-gray-400 gap-2"><i class="fas fa-spinner fa-spin text-2xl text-blue-500"></i><span class="text-sm">Loading...</span></div>';
+    container.innerHTML = '<div class="flex flex-col items-center justify-center h-full text-gray-400 gap-2"><i class="fas fa-spinner fa-spin text-2xl text-blue-500"></i><span class="text-sm">Loading records...</span></div>';
 
     try {
         const res = await fetch('https://api.goreportify.com/api/my-messages', {
@@ -1203,81 +1188,100 @@ async function loadMessages() {
 
         container.innerHTML = '';
         
-        // 顶部添加“写新消息”按钮
+        // 🟢 顶部提示：告诉用户这是历史记录
         container.innerHTML += `
-            <div class="mb-4 text-center">
-                <button onclick="quickReply()" class="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full hover:bg-gray-200 transition">
-                    <i class="fas fa-pen"></i> New Message / Reply
-                </button>
+            <div class="mb-4 bg-blue-50 text-blue-800 text-xs p-3 rounded border border-blue-100">
+                <i class="fas fa-info-circle"></i> 这里显示您提交的历史反馈及管理员的回复。如需提交新问题，请使用底部的“联系我们”表格。
+                <br>(Here shows your feedback history. Use the 'Contact Us' form below for new inquiries.)
             </div>
         `;
 
         if (msgs.length === 0) {
-            container.innerHTML += '<p class="text-center text-gray-400 mt-10">No messages yet.</p>';
+            container.innerHTML += '<div class="flex flex-col items-center justify-center h-40 text-gray-400"><i class="far fa-folder-open text-3xl mb-2"></i><p>No records found.</p></div>';
             return;
         }
 
         msgs.forEach(msg => {
-            // 🟢 构建对话流 HTML
-            let chatHtml = '';
+            // 状态标签
+            const isReplied = (msg.status === 'replied');
+            const statusBadge = isReplied 
+                ? `<span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded font-bold border border-green-200">✅ 已回复 (Resolved)</span>` 
+                : `<span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded font-bold border border-yellow-200">⏳ 处理中 (Pending)</span>`;
 
-            // 1. 旧版回复兼容
+            // 1. 用户的原始问题 (Ticket Body)
+            let contentHtml = `
+                <div class="mb-3">
+                    <p class="text-xs text-gray-500 font-bold mb-1">My Inquiry (${new Date(msg.submittedAt).toLocaleDateString()}):</p>
+                    <div class="bg-gray-50 text-gray-800 p-3 rounded text-sm border border-gray-100 leading-relaxed">
+                        ${msg.message}
+                    </div>
+                </div>
+            `;
+
+            // 2. 管理员的回复 (Official Response Area)
+            let replyContent = '';
+            
+            // A. 检查旧版单一回复
             if (msg.reply) {
-                chatHtml += `
-                    <div class="mt-3 pt-3 border-t border-gray-100 bg-blue-50 p-3 rounded text-sm text-gray-700">
-                        <span class="font-bold text-blue-600"><i class="fas fa-user-shield"></i> Admin:</span> 
+                replyContent += `
+                    <div class="mt-2 text-sm text-gray-700">
                         ${msg.reply}
                     </div>
                 `;
             }
 
-            // 2. 新版对话流 (Conversation Array)
+            // B. 检查新版对话记录 (如果有追加回复，按邮件列表方式显示)
             if (msg.conversation && msg.conversation.length > 0) {
-                chatHtml += `<div class="mt-3 pt-2 border-t border-gray-100 space-y-2">`;
                 msg.conversation.forEach(chat => {
                     if (chat.role === 'admin') {
-                        // 管理员的消息 (蓝色背景)
-                        chatHtml += `
-                            <div class="flex justify-start">
-                                <div class="bg-blue-100 text-blue-900 p-2 rounded-lg rounded-tl-none text-sm w-fit max-w-[90%]">
-                                    <span class="font-bold text-xs block mb-1">Admin</span>
+                        replyContent += `
+                            <div class="mt-3 pt-3 border-t border-blue-100">
+                                <p class="text-xs text-blue-500 font-bold mb-1">
+                                    Admin Update (${new Date(chat.createdAt).toLocaleDateString()}):
+                                </p>
+                                <div class="text-sm text-gray-800">
                                     ${chat.message}
                                 </div>
-                            </div>`;
-                    } else {
-                        // 用户的消息 (灰色背景 - 如果未来做用户追问功能)
-                        chatHtml += `
-                            <div class="flex justify-end">
-                                <div class="bg-gray-100 text-gray-800 p-2 rounded-lg rounded-tr-none text-sm w-fit max-w-[90%]">
-                                    ${chat.message}
-                                </div>
-                            </div>`;
+                            </div>
+                        `;
                     }
                 });
-                chatHtml += `</div>`;
             }
 
-            // 如果没有任何回复
-            if (!msg.reply && (!msg.conversation || msg.conversation.length === 0)) {
-                chatHtml = `<div class="mt-2 text-xs text-orange-400 italic">Waiting for reply...</div>`;
-            }
-
-            const card = `
-                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 mb-3">
-                    <div class="flex justify-between items-start">
-                        <span class="font-bold text-gray-800 text-sm">${msg.type || 'Feedback'}</span>
-                        <span class="text-xs text-gray-400">${new Date(msg.submittedAt).toLocaleDateString()}</span>
+            // 如果有回复内容，包裹在一个正式的框里
+            if (replyContent) {
+                contentHtml += `
+                    <div class="mt-4 bg-blue-50/50 border-l-4 border-blue-500 p-3 rounded-r">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fas fa-user-shield text-blue-600"></i>
+                            <span class="text-xs font-bold text-blue-800 uppercase">Support Response</span>
+                        </div>
+                        ${replyContent}
                     </div>
-                    <p class="text-gray-600 text-sm mt-2 mb-2">${msg.message}</p>
-                    
-                    ${chatHtml}
+                `;
+            } else {
+                contentHtml += `
+                    <div class="mt-3 text-xs text-gray-400 italic pl-2 border-l-2 border-gray-200">
+                        Waiting for support team response...
+                    </div>
+                `;
+            }
+
+            // 3. 组装卡片
+            const card = `
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 hover:shadow-md transition duration-200">
+                    <div class="flex justify-between items-center mb-3 border-b border-gray-50 pb-2">
+                        <span class="font-bold text-gray-700 text-sm uppercase tracking-wide">${msg.type || 'Feedback'}</span>
+                        ${statusBadge}
+                    </div>
+                    ${contentHtml}
                 </div>
             `;
             container.innerHTML += card;
         });
 
     } catch (err) {
-        container.innerHTML = '<p class="text-center text-red-400 mt-10">Load failed.</p>';
+        container.innerHTML = '<p class="text-center text-red-400 mt-10">Failed to load records.</p>';
     }
 }
 
