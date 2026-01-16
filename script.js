@@ -1626,3 +1626,116 @@ window.closeModal = function() {
     const modal = document.getElementById('auth-modal-overlay');
     if(modal) modal.classList.add('hidden');
 }
+
+// =========================================================
+// 🟢 注册表单校验逻辑 (Validation & UI Logic)
+// =========================================================
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. Tab 切换逻辑 (修复点击没反应的问题)
+    window.openModal = function(tabName) {
+        const modal = document.getElementById('auth-modal-overlay');
+        if(modal) modal.classList.remove('hidden');
+        
+        // 样式切换
+        document.querySelectorAll('.tab-link').forEach(btn => {
+            if(btn.dataset.tab === tabName) {
+                btn.classList.add('text-blue-600', 'border-blue-600', 'bg-white');
+                btn.classList.remove('text-gray-500', 'border-transparent');
+            } else {
+                btn.classList.remove('text-blue-600', 'border-blue-600', 'bg-white');
+                btn.classList.add('text-gray-500', 'border-transparent');
+            }
+        });
+
+        // 内容切换
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.add('hidden');
+        });
+        const target = document.getElementById(tabName);
+        if(target) target.classList.remove('hidden');
+    };
+
+    window.closeModal = function() {
+        const modal = document.getElementById('auth-modal-overlay');
+        if(modal) modal.classList.add('hidden');
+    };
+
+    // 2. 输入框实时校验
+    const nameInput = document.getElementById('signup-name');
+    const emailInput = document.getElementById('signup-email');
+    const passInput = document.getElementById('signup-password');
+    const strengthBox = document.getElementById('password-strength-box');
+
+    // 姓名校验
+    if (nameInput) {
+        nameInput.addEventListener('input', () => {
+            const val = nameInput.value.trim();
+            const feedback = document.getElementById('name-feedback');
+            feedback.classList.remove('hidden');
+            
+            if (val.length < 2) {
+                feedback.innerHTML = '<i class="fas fa-times-circle"></i> Too short (min 2 chars)';
+                feedback.className = 'text-xs mt-1 text-red-500 font-medium';
+            } else {
+                feedback.innerHTML = '<i class="fas fa-check-circle"></i> Looks good';
+                feedback.className = 'text-xs mt-1 text-green-600 font-medium';
+            }
+        });
+    }
+
+    // 邮箱校验
+    if (emailInput) {
+        emailInput.addEventListener('input', () => {
+            const val = emailInput.value.trim();
+            const feedback = document.getElementById('email-feedback');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            feedback.classList.remove('hidden');
+            if (!emailRegex.test(val)) {
+                feedback.innerHTML = '<i class="fas fa-exclamation-circle"></i> Invalid email format';
+                feedback.className = 'text-xs mt-1 text-red-500 font-medium';
+            } else {
+                feedback.innerHTML = '<i class="fas fa-check-circle"></i> Valid format';
+                feedback.className = 'text-xs mt-1 text-green-600 font-medium';
+            }
+        });
+    }
+
+    // 密码强度校验
+    if (passInput) {
+        passInput.addEventListener('focus', () => {
+            if(strengthBox) strengthBox.classList.remove('hidden');
+        });
+
+        passInput.addEventListener('input', () => {
+            const val = passInput.value;
+            const rules = {
+                length: val.length >= 8,
+                upper: /[A-Z]/.test(val) && /[a-z]/.test(val),
+                number: /[0-9]/.test(val),
+                special: /[!@#$%^&*(),.?":{}|<>]/.test(val)
+            };
+
+            const updateItem = (id, isValid) => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                if (isValid) {
+                    el.classList.remove('text-gray-400');
+                    el.classList.add('text-green-600', 'font-bold');
+                    el.innerHTML = '<i class="fas fa-check-circle mr-1"></i> ' + el.innerText;
+                } else {
+                    el.classList.remove('text-green-600', 'font-bold');
+                    el.classList.add('text-gray-400');
+                    // 恢复原始图标
+                    el.innerHTML = '<i class="far fa-circle mr-1 text-[10px]"></i> ' + el.innerText.replace('✓ ', '');
+                }
+            };
+
+            updateItem('req-length', rules.length);
+            updateItem('req-upper', rules.upper);
+            updateItem('req-number', rules.number);
+            updateItem('req-special', rules.special);
+        });
+    }
+});
