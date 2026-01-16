@@ -1218,13 +1218,49 @@ async function loadMessages() {
         }
 
         msgs.forEach(msg => {
-            const hasReply = msg.reply ? true : false;
-            const replyHtml = hasReply 
-                ? `<div class="mt-3 pt-3 border-t border-gray-100 bg-blue-50 p-3 rounded text-sm text-gray-700">
-                     <span class="font-bold text-blue-600"><i class="fas fa-user-shield"></i> Admin:</span> 
-                     ${msg.reply}
-                   </div>` 
-                : `<div class="mt-2 text-xs text-orange-400 italic">Waiting for reply...</div>`;
+            // 🟢 构建对话流 HTML
+            let chatHtml = '';
+
+            // 1. 旧版回复兼容
+            if (msg.reply) {
+                chatHtml += `
+                    <div class="mt-3 pt-3 border-t border-gray-100 bg-blue-50 p-3 rounded text-sm text-gray-700">
+                        <span class="font-bold text-blue-600"><i class="fas fa-user-shield"></i> Admin:</span> 
+                        ${msg.reply}
+                    </div>
+                `;
+            }
+
+            // 2. 新版对话流 (Conversation Array)
+            if (msg.conversation && msg.conversation.length > 0) {
+                chatHtml += `<div class="mt-3 pt-2 border-t border-gray-100 space-y-2">`;
+                msg.conversation.forEach(chat => {
+                    if (chat.role === 'admin') {
+                        // 管理员的消息 (蓝色背景)
+                        chatHtml += `
+                            <div class="flex justify-start">
+                                <div class="bg-blue-100 text-blue-900 p-2 rounded-lg rounded-tl-none text-sm w-fit max-w-[90%]">
+                                    <span class="font-bold text-xs block mb-1">Admin</span>
+                                    ${chat.message}
+                                </div>
+                            </div>`;
+                    } else {
+                        // 用户的消息 (灰色背景 - 如果未来做用户追问功能)
+                        chatHtml += `
+                            <div class="flex justify-end">
+                                <div class="bg-gray-100 text-gray-800 p-2 rounded-lg rounded-tr-none text-sm w-fit max-w-[90%]">
+                                    ${chat.message}
+                                </div>
+                            </div>`;
+                    }
+                });
+                chatHtml += `</div>`;
+            }
+
+            // 如果没有任何回复
+            if (!msg.reply && (!msg.conversation || msg.conversation.length === 0)) {
+                chatHtml = `<div class="mt-2 text-xs text-orange-400 italic">Waiting for reply...</div>`;
+            }
 
             const card = `
                 <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 mb-3">
@@ -1232,8 +1268,9 @@ async function loadMessages() {
                         <span class="font-bold text-gray-800 text-sm">${msg.type || 'Feedback'}</span>
                         <span class="text-xs text-gray-400">${new Date(msg.submittedAt).toLocaleDateString()}</span>
                     </div>
-                    <p class="text-gray-600 text-sm mt-1">${msg.message}</p>
-                    ${replyHtml}
+                    <p class="text-gray-600 text-sm mt-2 mb-2">${msg.message}</p>
+                    
+                    ${chatHtml}
                 </div>
             `;
             container.innerHTML += card;
