@@ -1654,25 +1654,5 @@ window.closeModal = function() {
 
 
 
-// ==========================================
-// 🟢 自动初始化弹窗状态
-// ==========================================
-document.addEventListener('DOMContentLoaded', () => {
-    // 默认激活 Login Tab
-    const loginTab = document.querySelector('.tab-link[data-tab="login"]');
-    const loginContent = document.getElementById('login');
-    
-    if (loginTab && loginContent) {
-        // 重置所有状态
-        document.querySelectorAll('.tab-link').forEach(t => {
-            t.classList.remove('text-blue-600', 'border-blue-600', 'bg-white');
-            t.classList.add('text-gray-500', 'border-transparent');
-        });
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
 
-        // 激活 Login
-        loginTab.classList.add('text-blue-600', 'border-blue-600', 'bg-white');
-        loginTab.classList.remove('text-gray-500', 'border-transparent');
-        loginContent.classList.remove('hidden');
-    }
-});
+
