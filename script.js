@@ -65,22 +65,37 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentUserPlan = 'basic'; 
 
     // =============================================
-    // 模块 B: 弹窗控制 (Login/Signup Modal)
+    // 模块 B: 弹窗控制 (Login/Signup Modal) - 修复版
     // =============================================
     const authModalOverlay = document.getElementById('auth-modal-overlay');
     const closeModalBtn = document.getElementById('close-modal-btn');
     const authTabs = document.querySelectorAll('.tab-link');
     const tabContents = document.querySelectorAll('.tab-content');
 
+    // 🟢 核心修复：定义全局 openModal，确保能移除 hidden 类
     window.openModal = function(tabToShow = 'login') {
         if (!authModalOverlay) return;
-        authModalOverlay.classList.remove('hidden');
-        authTabs.forEach(t => t.classList.remove('active'));
-        tabContents.forEach(c => c.classList.remove('active'));
-        const link = document.querySelector(`.tab-link[data-tab="${tabToShow}"]`);
-        const content = document.getElementById(tabToShow);
-        if(link) link.classList.add('active');
-        if(content) content.classList.add('active');
+        authModalOverlay.classList.remove('hidden'); // 显示遮罩层
+        
+        // 1. 切换 Tab 样式
+        authTabs.forEach(btn => {
+            if (btn.dataset.tab === tabToShow) {
+                btn.classList.add('text-blue-600', 'border-blue-600', 'bg-white');
+                btn.classList.remove('text-gray-500', 'border-transparent');
+            } else {
+                btn.classList.remove('text-blue-600', 'border-blue-600', 'bg-white');
+                btn.classList.add('text-gray-500', 'border-transparent');
+            }
+        });
+
+        // 2. 切换内容区域 (这是之前缺失的关键步骤！)
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.add('hidden'); // 先隐藏所有
+        });
+        const targetContent = document.getElementById(tabToShow);
+        if (targetContent) {
+            targetContent.classList.remove('hidden'); // 再显示目标
+        }
     };
 
     window.closeModal = function() {
@@ -91,8 +106,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (authModalOverlay) authModalOverlay.addEventListener('click', (e) => { 
         if(e.target === authModalOverlay) window.closeModal(); 
     });
-    authTabs.forEach(t => t.addEventListener('click', () => window.openModal(t.dataset.tab)));
 
+    // 绑定点击事件
+    authTabs.forEach(t => t.addEventListener('click', () => window.openModal(t.dataset.tab)));
     // =============================================
     // 模块 C: 登录与注册表单处理
     // =============================================
@@ -1507,54 +1523,63 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================
-// 🟢 注册表单实时校验逻辑 (Validation Logic)
+// 🟢 注册表单实时校验逻辑 (Validation Logic) - 增强版
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
     const nameInput = document.getElementById('signup-name');
     const emailInput = document.getElementById('signup-email');
     const passInput = document.getElementById('signup-password');
-    const strengthBox = document.getElementById('password-strength-box');
-    const submitBtn = document.getElementById('btn-signup-submit');
-
-    // 1. 姓名校验
+    const strengthBox = document.getElementById('password-strength-box'); // 确保 HTML 里有这个 ID
+    
+    // 1. 用户名校验 (10字符限制)
     if (nameInput) {
         nameInput.addEventListener('input', () => {
             const val = nameInput.value.trim();
-            const feedback = document.getElementById('name-feedback');
-            const regex = /^[a-zA-Z\u4e00-\u9fa5\s]+$/; // 允许中文、英文、空格
+            const feedback = document.getElementById('name-feedback'); // 确保 HTML 里有这个 ID
+            
+            if (feedback) {
+                feedback.classList.remove('hidden');
+                feedback.style.fontSize = '12px';
+                feedback.style.marginTop = '4px';
 
-            feedback.classList.remove('hidden');
-            if (val.length < 2) {
-                feedback.innerHTML = '<span class="text-red-500"><i class="fas fa-times-circle"></i> 太短了 (Too short)</span>';
-            } else if (val.length > 20) {
-                feedback.innerHTML = '<span class="text-red-500"><i class="fas fa-times-circle"></i> 太长了 (Max 20 chars)</span>';
-            } else if (!regex.test(val)) {
-                feedback.innerHTML = '<span class="text-red-500"><i class="fas fa-times-circle"></i> 不能包含特殊符号 (No special chars)</span>';
-            } else {
-                feedback.innerHTML = '<span class="text-green-600"><i class="fas fa-check-circle"></i> 格式正确</span>';
+                if (val.length < 2) {
+                    feedback.innerHTML = '<span class="text-red-500"><i class="fas fa-times-circle"></i> 太短了 (至少2个字符)</span>';
+                } else if (val.length > 10) {
+                    feedback.innerHTML = '<span class="text-red-500"><i class="fas fa-times-circle"></i> 太长了 (不超过10个字符)</span>';
+                } else {
+                    feedback.innerHTML = '<span class="text-green-600"><i class="fas fa-check-circle"></i> 格式正确</span>';
+                }
             }
         });
     }
 
-    // 2. 邮箱校验
+    // 2. 邮箱校验 (格式验证)
     if (emailInput) {
         emailInput.addEventListener('input', () => {
             const val = emailInput.value.trim();
             const feedback = document.getElementById('email-feedback');
+            // 简单的邮箱正则
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-            feedback.classList.remove('hidden');
-            if (!emailRegex.test(val)) {
-                feedback.innerHTML = '<span class="text-red-500">请输入有效的邮箱地址 (Invalid format)</span>';
-            } else {
-                feedback.innerHTML = '<span class="text-green-600"><i class="fas fa-check-circle"></i> 格式有效</span>';
-                // 这里未来可以对接后端 API 检查邮箱是否已注册
+            if (feedback) {
+                feedback.classList.remove('hidden');
+                feedback.style.fontSize = '12px';
+                feedback.style.marginTop = '4px';
+
+                if (!val) {
+                    feedback.innerHTML = '';
+                } else if (!emailRegex.test(val)) {
+                    feedback.innerHTML = '<span class="text-red-500"><i class="fas fa-exclamation-circle"></i> 邮箱格式不正确</span>';
+                } else {
+                    feedback.innerHTML = '<span class="text-green-600"><i class="fas fa-check-circle"></i> 邮箱格式有效</span>';
+                }
             }
         });
     }
 
-    // 3. 密码强度校验 (核心)
+    // 3. 密码强度校验 (8位 + 大小写 + 数字 + 符号)
     if (passInput) {
+        // 聚焦时显示规则框
         passInput.addEventListener('focus', () => {
             if(strengthBox) strengthBox.classList.remove('hidden');
         });
@@ -1562,40 +1587,39 @@ document.addEventListener('DOMContentLoaded', () => {
         passInput.addEventListener('input', () => {
             const val = passInput.value;
             
-            // 规则正则
+            // 定义规则
             const rules = {
                 length: val.length >= 8,
-                upper: /[A-Z]/.test(val) && /[a-z]/.test(val),
-                number: /[0-9]/.test(val),
-                special: /[!@#$%^&*(),.?":{}|<>]/.test(val)
+                upper: /[A-Z]/.test(val) && /[a-z]/.test(val), // 包含大小写
+                number: /[0-9]/.test(val),                     // 包含数字
+                special: /[!@#$%^&*(),.?":{}|<>]/.test(val)   // 包含特殊字符
             };
 
             // 更新 UI 函数
             const updateItem = (id, isValid) => {
                 const el = document.getElementById(id);
                 if (!el) return;
+                
                 if (isValid) {
-                    el.classList.remove('text-gray-400');
-                    el.classList.add('text-green-600', 'font-medium');
-                    el.innerHTML = '<i class="fas fa-check-circle mr-1"></i> ' + el.innerText.replace('✓ ', '').replace('○ ', '');
+                    el.className = 'text-green-600 font-bold text-xs transition-colors duration-300';
+                    // 替换图标为勾选
+                    if(!el.innerHTML.includes('check')) {
+                        el.innerHTML = '<i class="fas fa-check-circle mr-1"></i> ' + el.innerText.replace(/^[○✓] /, '');
+                    }
                 } else {
-                    el.classList.remove('text-green-600', 'font-medium');
-                    el.classList.add('text-gray-400');
-                    el.innerHTML = '<i class="far fa-circle mr-1"></i> ' + el.innerText.replace('✓ ', '').replace('○ ', '');
+                    el.className = 'text-gray-400 text-xs transition-colors duration-300';
+                    // 恢复图标为圆圈
+                    if(!el.innerHTML.includes('circle') && !el.innerHTML.includes('○')) {
+                         el.innerHTML = '<i class="far fa-circle mr-1"></i> ' + el.innerText.replace(/^[✓] /, '');
+                    }
                 }
             };
 
+            // 依次更新四项规则状态 (需对应 HTML 中的 ID)
             updateItem('req-length', rules.length);
             updateItem('req-upper', rules.upper);
             updateItem('req-number', rules.number);
             updateItem('req-special', rules.special);
-
-            // 如果全部满足，解锁按钮
-            const allValid = Object.values(rules).every(Boolean);
-            if (submitBtn) {
-                // 这里只是视觉反馈，实际还要结合其他输入框
-                // 简单的做法是：如果不满足，注册按钮点击时拦截
-            }
         });
     }
 });
