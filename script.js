@@ -1,17 +1,18 @@
 /*
  * ===================================================================
- * * Reportify AI - script.js (v22.0 增强验证版)
- * * 状态: 修复表单显示逻辑，增加严格密码/用户校验，修复Google跳转
+ * * Reportify AI - script.js (v26.0 终极全功能完整版)
+ * * 包含：严格验证、支付集成、历史记录、头像上传、消息中心、性能优化
  * ===================================================================
  */
 
-// --- 1. 全局配置与状态 ---
-const API_BASE_URL = 'https://api.goreportify.com';
+const API_BASE_URL = 'https://api.goreportify.com'; // 如果你在本地调试，请改为 http://localhost:5000
 let allTemplates = [];
-let currentUser = null; 
-let currentUserPlan = 'basic'; 
+let currentUser = null;
+let currentUserPlan = 'basic';
 
-// --- 2. 全局工具函数 ---
+// =================================================
+// 1. 全局工具函数 (Toast, SaveAs, Modal)
+// =================================================
 
 window.showToast = function(message, type = 'info') {
     let container = document.getElementById('toast-container');
@@ -25,7 +26,6 @@ window.showToast = function(message, type = 'info') {
     let icon = type === 'success' ? 'fa-check-circle' : (type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle');
     toast.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
     container.appendChild(toast);
-    setTimeout(() => toast.style.opacity = '1', 10);
     setTimeout(() => {
         toast.style.animation = 'fadeOut 0.5s ease forwards';
         setTimeout(() => toast.remove(), 500);
@@ -43,14 +43,14 @@ window.saveAs = function(blob, filename) {
     setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
 };
 
-// --- 3. 弹窗与 Tab 控制 (修复表单不显示的问题) ---
+// 弹窗控制 (挂载在 window 上以便 HTML onclick 调用)
 const authModalOverlay = document.getElementById('auth-modal-overlay');
 
 window.openModal = function(tabToShow = 'login') {
     const overlay = document.getElementById('auth-modal-overlay');
     if (overlay) overlay.classList.remove('hidden');
 
-    // 1. 切换 Tab 按钮样式
+    // 1. 切换 Tab 样式
     document.querySelectorAll('.tab-link').forEach(btn => {
         if (btn.dataset.tab === tabToShow) {
             btn.classList.add('text-blue-600', 'border-blue-600', 'bg-white');
@@ -61,19 +61,12 @@ window.openModal = function(tabToShow = 'login') {
         }
     });
 
-    // 2. 切换表单内容显示 (关键修复)
-    // 假设 HTML 结构是: <div id="login" class="tab-content">...</div>
+    // 2. 切换内容显示 (确保 ID 存在)
     document.querySelectorAll('.tab-content').forEach(content => {
-        // 先隐藏所有内容
         content.classList.add('hidden');
-        content.style.display = 'none'; // 双重保险
     });
-
-    const targetContent = document.getElementById(tabToShow);
-    if (targetContent) {
-        targetContent.classList.remove('hidden');
-        targetContent.style.display = 'block'; // 强制显示
-    }
+    const target = document.getElementById(tabToShow);
+    if (target) target.classList.remove('hidden');
 };
 
 window.closeModal = function() {
@@ -81,30 +74,12 @@ window.closeModal = function() {
     if (overlay) overlay.classList.add('hidden');
 };
 
-// --- 4. 初始化流程 ---
-document.addEventListener('DOMContentLoaded', async () => {
-    handleGoogleCallback();
-    await fetchUserProfile();
-    
-    setupAuthUI();          // 登录/注册/Google逻辑
-    setupGenerator();       
-    setupTemplates();       
-    setupExport();          
-    setupPayment();         
-    setupContactForm();     
-    setupHistoryLoader();   
-    setupMessageCenter();   
-    setupUserDropdown();    
-
-    console.log("Reportify AI v22.0 Initialized");
-});
-
 // =================================================
-//  模块详情
+// 2. 初始化流程 (DOMContentLoaded)
 // =================================================
 
-// --- 模块 A: Google 回调 ---
-function handleGoogleCallback() {
+// Google 回调处理 (最优先)
+document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = urlParams.get('token');
     const errorFromUrl = urlParams.get('error');
@@ -114,14 +89,37 @@ function handleGoogleCallback() {
         window.history.replaceState({}, document.title, window.location.pathname);
         showToast('Login Successful!', 'success');
         setTimeout(() => window.location.href = 'index.html', 500);
+        return;
     }
     if (errorFromUrl) {
         showToast('Google Login Failed', 'error');
         window.history.replaceState({}, document.title, window.location.pathname);
     }
-}
+});
 
-// --- 模块 B: 用户信息 ---
+// 主初始化逻辑
+document.addEventListener('DOMContentLoaded', async () => {
+    await fetchUserProfile(); // 等待用户信息获取完毕
+
+    setupAuthUI();          // 认证弹窗 & 严格验证
+    setupUserDropdown();    // 用户菜单
+    setupMessageCenter();   // 消息中心 (小铃铛)
+    setupGenerator();       // 核心生成器
+    setupTemplates();       // 模板加载
+    setupExport();          // 导出功能
+    setupPayment();         // 支付功能 (已补全)
+    setupContactForm();     // 联系表单
+    setupHistoryLoader();   // 历史记录 (已补全)
+    setupAvatarUpload();    // 头像上传 (已增强)
+
+    console.log("Reportify AI v26.0 (Full) Initialized");
+});
+
+// =================================================
+// 3. 模块详解
+// =================================================
+
+// --- 模块 A: 用户信息获取 ---
 async function fetchUserProfile() {
     const token = localStorage.getItem('token');
     if (!token) return;
@@ -130,149 +128,254 @@ async function fetchUserProfile() {
         if (res.ok) {
             currentUser = await res.json();
             currentUserPlan = currentUser.plan || 'basic';
-        } else if (res.status === 401) {
+        } else {
+            // Token 失效，清理掉
             localStorage.removeItem('token');
             currentUser = null;
         }
-    } catch (e) { console.error(e); }
+    } catch (e) { console.error("Profile Fetch Error:", e); }
 }
 
-// --- 模块 C: 认证 UI (含验证与 Google 修复) ---
+// --- 模块 B: 用户菜单 (Dropdown) ---
+function setupUserDropdown() {
+    const headerRight = document.getElementById('auth-container');
+    if (!headerRight) return;
+
+    if (!currentUser) {
+        // 未登录
+        headerRight.innerHTML = `
+            <button class="text-gray-600 hover:text-blue-600 font-medium px-3 py-2 mr-2" onclick="openModal('login')">Login</button>
+            <button class="bg-blue-600 text-white px-5 py-2 rounded-full font-bold shadow-lg hover:bg-blue-700" onclick="openModal('signup')">Get Started</button>
+        `;
+    } else {
+        // 已登录
+        const initial = currentUser.name ? currentUser.name.charAt(0).toUpperCase() : 'U';
+        const avatarHTML = currentUser.picture 
+            ? `<img src="${currentUser.picture}" class="w-10 h-10 rounded-full border-2 border-white shadow-md cursor-pointer hover:opacity-90 object-cover" onclick="toggleUserMenu()">`
+            : `<button onclick="toggleUserMenu()" class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold shadow-md cursor-pointer border-2 border-white">${initial}</button>`;
+
+        headerRight.innerHTML = `
+            <div class="relative flex items-center gap-3">
+                <span class="text-sm font-medium text-gray-700 hidden md:block">Hi, ${currentUser.name}</span>
+                ${avatarHTML}
+                
+                <div id="user-dropdown" class="hidden absolute right-0 top-14 w-56 bg-white rounded-xl shadow-2xl border border-gray-100 z-[9999] overflow-hidden animate-fade-in">
+                    <div class="px-4 py-3 border-b border-gray-50 bg-gray-50">
+                        <p class="text-xs text-gray-500 font-semibold uppercase">Account</p>
+                        <p class="text-sm font-bold text-gray-800 truncate">${currentUser.email}</p>
+                    </div>
+                    
+                    <a href="profile.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2">
+                        <i class="fas fa-user-circle text-blue-500"></i> My Profile
+                    </a>
+
+                    <a href="usage.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2">
+                        <i class="fas fa-chart-pie text-green-500"></i> Usage Stats
+                    </a>
+
+                    <a href="subscription.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2">
+                        <i class="fas fa-credit-card text-purple-500"></i> Subscription
+                    </a>
+
+                    ${currentUser.role === 'admin' ? `
+                    <a href="admin.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2">
+                        <i class="fas fa-shield-alt text-red-500"></i> Admin Panel
+                    </a>` : ''}
+
+                    <a href="#" onclick="logout()" class="block px-4 py-3 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
+        `;
+    }
+}
+
+window.toggleUserMenu = function() {
+    const menu = document.getElementById('user-dropdown');
+    if (menu) menu.classList.toggle('hidden');
+};
+window.logout = function() {
+    localStorage.removeItem('token');
+    window.location.href = 'index.html';
+};
+// 点击空白关闭菜单
+window.onclick = function(event) {
+    if (!event.target.closest('#auth-container')) {
+        const menu = document.getElementById('user-dropdown');
+        if (menu && !menu.classList.contains('hidden')) menu.classList.add('hidden');
+    }
+};
+
+// --- 模块 C: 头像上传 (增强版) ---
+function setupAvatarUpload() {
+    const uploadInput = document.getElementById('upload-avatar');
+    if (!uploadInput) return; 
+
+    uploadInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // 1. 大小限制 (2MB)
+        if (file.size > 2 * 1024 * 1024) {
+            showToast('Image too large (Max 2MB)', 'error');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('avatar', file);
+        const token = localStorage.getItem('token');
+        
+        showToast('Uploading avatar...', 'info');
+
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/upload-avatar`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` }, // 浏览器自动设置 Content-Type
+                body: formData
+            });
+
+            if (res.ok) {
+                showToast('Avatar updated!', 'success');
+                setTimeout(() => window.location.reload(), 1000);
+            } else {
+                showToast('Upload failed', 'error');
+            }
+        } catch (err) {
+            showToast('Network error', 'error');
+        }
+    });
+}
+
+// --- 模块 D: 认证 UI (带严格验证) ---
 function setupAuthUI() {
-    // 1. 绑定关闭按钮
     const closeModalBtn = document.getElementById('close-modal-btn');
     if (closeModalBtn) closeModalBtn.addEventListener('click', window.closeModal);
-    const overlay = document.getElementById('auth-modal-overlay');
-    if (overlay) overlay.addEventListener('click', (e) => { if (e.target === overlay) window.closeModal(); });
-
-    // 2. 绑定 Tab 切换
+    
+    // Tab 切换
     document.querySelectorAll('.tab-link').forEach(t => {
         t.addEventListener('click', () => window.openModal(t.dataset.tab));
     });
 
-    // 3. 登录表单处理
+    // 1. 登录表单
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
         const newForm = loginForm.cloneNode(true);
         loginForm.parentNode.replaceChild(newForm, loginForm);
         newForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const submitBtn = newForm.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Verifying...';
-
+            const btn = newForm.querySelector('button[type="submit"]');
+            const oldText = btn.innerText;
+            btn.innerText = 'Logging in...'; btn.disabled = true;
             try {
                 const email = document.getElementById('login-email').value;
                 const password = document.getElementById('login-password').value;
                 const res = await fetch(`${API_BASE_URL}/api/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password }),
+                    body: JSON.stringify({ email, password })
                 });
                 const data = await res.json();
-                if (!res.ok) throw new Error(data.message || 'Login failed');
-
+                if (!res.ok) throw new Error(data.message);
+                
                 localStorage.setItem('token', data.token);
-                showToast("Welcome back!", "success");
+                showToast('Login Success!', 'success');
                 window.closeModal();
-                setTimeout(() => window.location.reload(), 800);
+                setTimeout(() => window.location.reload(), 500);
             } catch (err) {
-                showToast(err.message, "error");
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
+                showToast(err.message, 'error');
+                btn.disabled = false; btn.innerText = oldText;
             }
         });
     }
 
-    // 4. 注册表单处理 (含严格验证)
+    // 2. 注册表单 (严格验证)
     const signupForm = document.getElementById('signup-form');
     if (signupForm) {
-        const newSignupForm = signupForm.cloneNode(true);
-        signupForm.parentNode.replaceChild(newSignupForm, signupForm);
+        const newForm = signupForm.cloneNode(true);
+        signupForm.parentNode.replaceChild(newForm, signupForm);
         
-        // 启动验证监听
-        setupStrictValidation();
+        const nameInput = document.getElementById('signup-name');
+        const emailInput = document.getElementById('signup-email');
+        const passInput = document.getElementById('signup-password');
+        const strengthBox = document.getElementById('password-strength-box');
 
-        newSignupForm.addEventListener('submit', async (e) => {
+        // 实时校验
+        if(passInput) {
+            passInput.addEventListener('focus', () => { if(strengthBox) strengthBox.classList.remove('hidden'); });
+            passInput.addEventListener('input', () => {
+                const val = passInput.value;
+                const rules = {
+                    length: val.length >= 8,
+                    upper: /[A-Z]/.test(val) && /[a-z]/.test(val),
+                    number: /[0-9]/.test(val),
+                    special: /[!@#$%^&*(),.?":{}|<>]/.test(val)
+                };
+                const updateItem = (id, isValid) => {
+                    const el = document.getElementById(id);
+                    if(el) {
+                        el.className = isValid ? 'text-green-600 font-bold text-xs' : 'text-gray-400 text-xs';
+                        el.innerHTML = isValid ? `<i class="fas fa-check-circle mr-1"></i> ${el.innerText.replace(/^[○✓] /, '')}` : `<i class="far fa-circle mr-1"></i> ${el.innerText.replace(/^[✓] /, '')}`;
+                    }
+                };
+                updateItem('req-length', rules.length);
+                updateItem('req-upper', rules.upper);
+                updateItem('req-number', rules.number);
+                updateItem('req-special', rules.special);
+            });
+        }
+
+        newForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const submitBtn = newSignupForm.querySelector('button[type="submit"]');
+            const btn = document.getElementById('btn-signup-submit');
             
-            // 再次进行最终校验，防止通过开发者工具启用按钮
-            if (!validateAllFields()) {
-                showToast("Please fix the errors in the form.", "error");
-                return;
-            }
+            // 最终校验
+            const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (nameInput.value.length > 10) { showToast('Name too long (max 10)', 'error'); return; }
+            if (!emailRegex.test(emailInput.value)) { showToast('Invalid Email', 'error'); return; }
+            if (!passRegex.test(passInput.value)) { showToast('Password too weak', 'error'); return; }
 
-            const originalText = submitBtn.textContent;
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Creating...';
-
+            const oldText = btn.innerText;
+            btn.innerText = 'Creating...'; btn.disabled = true;
             try {
-                const name = document.getElementById('signup-name').value;
-                const email = document.getElementById('signup-email').value;
-                const password = document.getElementById('signup-password').value;
-
                 const res = await fetch(`${API_BASE_URL}/api/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ displayName: name, email, password }),
+                    body: JSON.stringify({ displayName: nameInput.value, email: emailInput.value, password: passInput.value })
                 });
                 const data = await res.json();
-                if (!res.ok) throw new Error(data.message || 'Registration failed');
-
-                showToast('Account Created! Please Login.', 'success');
+                if (!res.ok) throw new Error(data.message);
+                showToast('Account Created!', 'success');
                 window.openModal('login');
-                newSignupForm.reset();
             } catch (err) {
-                showToast(err.message, "error");
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
+                showToast(err.message, 'error');
+                btn.disabled = false; btn.innerText = oldText;
             }
         });
     }
 
-    // 5. Google 登录按钮修复
-    // 查找所有 Google 按钮，并重新绑定
+    // 3. Google 按钮修复 (防止提交表单)
     const googleBtns = document.querySelectorAll('button');
     googleBtns.forEach(btn => {
-        // 通过内容或类名识别 Google 按钮
         if ((btn.textContent && btn.textContent.toLowerCase().includes('google')) || btn.classList.contains('google-btn')) {
             const newBtn = btn.cloneNode(true);
             btn.parentNode.replaceChild(newBtn, btn);
-            
-            // 关键：防止它是 form 里的 submit 按钮
-            newBtn.type = 'button'; 
-
+            newBtn.type = 'button'; // 关键修复
             newBtn.addEventListener('click', async (e) => {
-                e.preventDefault(); // 阻止任何表单提交
+                e.preventDefault();
                 e.stopPropagation();
-                
-                const originalText = newBtn.innerHTML;
-                newBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
-                
                 try {
-                    // 请求后端获取 Google 授权跳转链接
                     const res = await fetch(`${API_BASE_URL}/auth/google`);
-                    if (!res.ok) throw new Error("Auth server unreachable");
-                    
                     const data = await res.json();
-                    if (data.url) {
-                        window.location.href = data.url; // 这里进行真正的跳转
-                    } else {
-                        throw new Error("Invalid response from server");
-                    }
-                } catch (err) {
-                    console.error("Google Auth Error:", err);
-                    showToast('Cannot connect to Google Login.', 'error');
-                    newBtn.innerHTML = originalText;
-                }
+                    if (data.url) window.location.href = data.url;
+                } catch (err) { showToast('Connection Error', 'error'); }
             });
         }
     });
 
-    // 6. Free 按钮逻辑
+    // 4. Free 按钮
     document.querySelectorAll('button').forEach(btn => {
         if (btn.id === 'btn-select-free' || btn.textContent.includes('Start Free')) {
             const newBtn = btn.cloneNode(true);
@@ -286,366 +389,278 @@ function setupAuthUI() {
     });
 }
 
-// --- 模块 C-2: 严格验证逻辑 ---
-function setupStrictValidation() {
-    const nameInput = document.getElementById('signup-name');
-    const emailInput = document.getElementById('signup-email');
-    const passInput = document.getElementById('signup-password');
-    const submitBtn = document.querySelector('#signup-form button[type="submit"]');
+// --- 模块 E: 消息中心 (优化版) ---
+function setupMessageCenter() {
+    const bellBtn = document.querySelector('button[title="My Messages"]') || document.getElementById('btn-message-center');
+    if(bellBtn) {
+        const newBtn = bellBtn.cloneNode(true);
+        bellBtn.parentNode.replaceChild(newBtn, bellBtn);
+        newBtn.addEventListener('click', window.openMessageCenter);
+    }
+    checkNotifications();
+    setInterval(checkNotifications, 30000);
+}
 
-    // 错误提示容器 (如果没有就动态创建)
-    const getErrorSpan = (input) => {
-        let span = input.nextElementSibling;
-        if (!span || !span.classList.contains('validation-msg')) {
-            span = document.createElement('div');
-            span.className = 'validation-msg text-xs mt-1 text-left';
-            input.parentNode.insertBefore(span, input.nextSibling);
+window.openMessageCenter = function() {
+    const token = localStorage.getItem('token');
+    if (!token) { showToast("Please login first.", "warning"); return; }
+    const modal = document.getElementById('message-modal');
+    if(modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        loadMessages(true);
+    }
+};
+window.closeMessageCenter = function() {
+    const modal = document.getElementById('message-modal');
+    if(modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+};
+window.checkNotifications = async function() {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/my-messages`, { headers: { 'Authorization': `Bearer ${token}` } });
+        if (!res.ok) return;
+        const msgs = await res.json();
+        const currentReplied = msgs.filter(m => m.status === 'replied').length;
+        const lastSeen = parseInt(localStorage.getItem('seen_reply_count') || '0');
+        if (currentReplied > lastSeen) {
+            const badge = document.getElementById('notif-badge');
+            if(badge) badge.classList.remove('hidden');
         }
-        return span;
-    };
+    } catch (e) {}
+};
 
-    // 1. 用户名校验 (不超过 10 字符)
-    const checkName = () => {
-        const val = nameInput.value.trim();
-        const span = getErrorSpan(nameInput);
-        if (val.length === 0) {
-            span.innerHTML = ''; return false;
-        }
-        if (val.length > 10) {
-            span.innerHTML = '<span class="text-red-500">❌ 最多10个字符 (Max 10 chars)</span>';
-            return false;
-        }
-        span.innerHTML = '<span class="text-green-600">✅ OK</span>';
-        return true;
-    };
+async function loadMessages(markAsRead = false) {
+    const container = document.getElementById('msg-list-container');
+    const token = localStorage.getItem('token');
+    container.innerHTML = '<div class="flex flex-col items-center justify-center h-full text-gray-400 gap-3"><i class="fas fa-spinner fa-spin text-3xl text-blue-500"></i><span>Loading...</span></div>';
 
-    // 2. 邮箱校验 (正则)
-    const checkEmail = () => {
-        const val = emailInput.value.trim();
-        const span = getErrorSpan(emailInput);
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (val.length === 0) {
-            span.innerHTML = ''; return false;
-        }
-        if (!emailRegex.test(val)) {
-            span.innerHTML = '<span class="text-red-500">❌ 格式错误 (Invalid Email)</span>';
-            return false;
-        }
-        span.innerHTML = '<span class="text-green-600">✅ OK</span>';
-        return true;
-    };
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/my-messages`, { headers: { 'Authorization': `Bearer ${token}` } });
+        const msgs = await res.json();
 
-    // 3. 密码校验 (8位 + 大小写 + 数字 + 特殊字符)
-    const checkPass = () => {
-        const val = passInput.value;
-        const span = getErrorSpan(passInput);
-        
-        // 四个硬性条件
-        const hasUpper = /[A-Z]/.test(val);
-        const hasLower = /[a-z]/.test(val);
-        const hasNumber = /[0-9]/.test(val);
-        const hasSpecial = /[\W_]/.test(val); // \W 匹配非单词字符，包括特殊符号
-        const isLongEnough = val.length >= 8;
-
-        if (val.length === 0) {
-            span.innerHTML = ''; return false;
+        if (markAsRead) {
+            const repliedCount = msgs.filter(m => m.status === 'replied').length;
+            localStorage.setItem('seen_reply_count', repliedCount);
+            const badge = document.getElementById('notif-badge');
+            if(badge) badge.classList.add('hidden');
         }
 
-        if (hasUpper && hasLower && hasNumber && hasSpecial && isLongEnough) {
-            span.innerHTML = '<span class="text-green-600">✅ 密码强度合格 (Strong)</span>';
-            return true;
-        } else {
-            span.innerHTML = `
-                <div class="text-red-500 flex flex-col gap-1">
-                    <span>${isLongEnough ? '✅' : '❌'} 至少8位 (Min 8 chars)</span>
-                    <span>${hasUpper ? '✅' : '❌'} 大写字母 (Uppercase)</span>
-                    <span>${hasLower ? '✅' : '❌'} 小写字母 (Lowercase)</span>
-                    <span>${hasNumber ? '✅' : '❌'} 数字 (Number)</span>
-                    <span>${hasSpecial ? '✅' : '❌'} 特殊字符 (Special char)</span>
+        container.innerHTML = '';
+        if (msgs.length === 0) {
+            container.innerHTML = '<div class="flex flex-col items-center justify-center h-64 text-gray-300"><i class="far fa-folder-open text-5xl mb-4"></i><p>No feedback history found.</p></div>';
+            return;
+        }
+
+        // 性能优化：一次性插入 HTML
+        let htmlBuffer = '';
+        msgs.forEach(msg => {
+            const dateStr = new Date(msg.submittedAt).toLocaleDateString();
+            let adminReplyContent = '';
+            if (msg.conversation && msg.conversation.length > 0) {
+                const adminMsgs = msg.conversation.filter(c => c.role === 'admin');
+                if(adminMsgs.length > 0) {
+                    adminReplyContent = adminMsgs.map(c => `
+                        <div class="mb-4 pb-4 border-b border-blue-100 last:border-0 last:mb-0 last:pb-0">
+                            <p class="text-xs text-blue-500 font-bold mb-1 flex items-center gap-1"><i class="fas fa-headset"></i> Support:</p>
+                            <p class="text-gray-800 leading-relaxed">${c.message}</p>
+                        </div>
+                    `).join('');
+                }
+            } else if (msg.reply) {
+                adminReplyContent = `<p class="text-gray-800 leading-relaxed">${msg.reply}</p>`;
+            }
+
+            const rightSide = adminReplyContent 
+                ? `<div class="bg-blue-50 border-l-4 border-blue-500 p-5 rounded-r-lg h-full overflow-y-auto max-h-60">${adminReplyContent}</div>`
+                : `<div class="bg-gray-50 border-l-4 border-gray-300 p-5 rounded-r-lg h-full flex flex-col justify-center items-center text-gray-400">
+                     <i class="fas fa-clock text-3xl mb-2 text-yellow-400"></i>
+                     <p class="font-medium text-sm">Review in progress...</p>
+                   </div>`;
+
+            htmlBuffer += `
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-4 flex-shrink-0">
+                    <div class="bg-gray-50 px-6 py-3 border-b border-gray-100 flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded font-bold uppercase tracking-wide">${msg.type || 'Feedback'}</span>
+                            <span class="text-xs text-gray-400 font-mono">ID: ${msg._id.slice(-6)}</span>
+                        </div>
+                        <span class="text-xs text-gray-500 font-medium">${dateStr}</span>
+                    </div>
+                    <div class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+                        <div class="p-6">
+                            <p class="text-xs text-gray-400 font-bold uppercase mb-2">My Inquiry:</p>
+                            <p class="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap">${msg.message}</p>
+                        </div>
+                        <div class="p-0">${rightSide}</div>
+                    </div>
                 </div>
             `;
-            return false;
-        }
-    };
-
-    // 统一检查并控制按钮
-    const validateForm = () => {
-        const isNameOk = checkName();
-        const isEmailOk = checkEmail();
-        const isPassOk = checkPass();
-        
-        if (submitBtn) {
-            if (isNameOk && isEmailOk && isPassOk) {
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-            } else {
-                submitBtn.disabled = true;
-                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            }
-        }
-    };
-
-    if (nameInput) nameInput.addEventListener('input', validateForm);
-    if (emailInput) emailInput.addEventListener('input', validateForm);
-    if (passInput) passInput.addEventListener('input', validateForm);
-    
-    // 初始化时先禁用
-    if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        });
+        container.innerHTML = htmlBuffer;
+    } catch (err) {
+        container.innerHTML = '<p class="text-center text-red-400 mt-10">Load failed.</p>';
     }
 }
 
-// 暴露给提交事件使用
-function validateAllFields() {
-    const nameInput = document.getElementById('signup-name');
-    const emailInput = document.getElementById('signup-email');
-    const passInput = document.getElementById('signup-password');
-    if(!nameInput || !emailInput || !passInput) return false;
-
-    const name = nameInput.value.trim();
-    const email = emailInput.value.trim();
-    const pass = passInput.value;
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // 严格密码正则：至少8位，包含大小写、数字、特殊字符
-    const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-
-    return (name.length > 0 && name.length <= 10) && 
-           emailRegex.test(email) && 
-           passRegex.test(pass);
-}
-
-// --- 模块 D: 模板加载 ---
+// --- 模块 F: 生成器与模板 ---
 async function setupTemplates() {
     const templateSelect = document.getElementById('template');
     if (!templateSelect) return;
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`${API_BASE_URL}/api/templates`, {
-            headers: token ? { 'Authorization': `Bearer ${token}` } : {}
-        });
-        if (!response.ok) return;
-        allTemplates = await response.json();
-        if (allTemplates.length === 0) return;
-
-        templateSelect.innerHTML = '<option value="" disabled selected>Select a Report Type...</option>';
-        const groups = {};
-        allTemplates.forEach(t => {
-            const cat = t.category || 'Custom';
-            if (!groups[cat]) groups[cat] = [];
-            groups[cat].push(t);
-        });
-
-        for (const [category, items] of Object.entries(groups)) {
-            const optgroup = document.createElement('optgroup');
-            optgroup.label = category;
-            items.forEach(t => {
-                const option = document.createElement('option');
-                option.value = t._id;
-                const isLocked = t.isPro && currentUserPlan !== 'pro';
-                option.textContent = `${isLocked ? '🔒 ' : ''}${t.title}`;
-                optgroup.appendChild(option);
+        const res = await fetch(`${API_BASE_URL}/api/templates`, { headers: token ? { 'Authorization': `Bearer ${token}` } : {} });
+        if(res.ok) {
+            allTemplates = await res.json();
+            templateSelect.innerHTML = '<option value="" disabled selected>Select a Report Type...</option>';
+            // 分组逻辑
+            const groups = {};
+            allTemplates.forEach(t => {
+                const cat = t.category || 'Custom';
+                if (!groups[cat]) groups[cat] = [];
+                groups[cat].push(t);
             });
-            templateSelect.appendChild(optgroup);
-        }
-        setupDynamicInputs(templateSelect);
-    } catch (error) { console.error('Template Load Error:', error); }
-}
-
-function setupDynamicInputs(templateSelect) {
-    let dynamicContainer = document.getElementById('dynamic-inputs-container');
-    if (!dynamicContainer) {
-        dynamicContainer = document.createElement('div');
-        dynamicContainer.id = 'dynamic-inputs-container';
-        dynamicContainer.className = 'settings-grid';
-        dynamicContainer.style.marginBottom = '20px';
-        if (templateSelect.closest('.form-group')) templateSelect.closest('.form-group').after(dynamicContainer);
-    }
-    templateSelect.addEventListener('change', () => {
-        const template = allTemplates.find(t => t._id === templateSelect.value);
-        const promptTextarea = document.getElementById('key-points');
-        dynamicContainer.innerHTML = '';
-        if (promptTextarea) promptTextarea.value = '';
-        if (!template) return;
-
-        if (template.variables && template.variables.length > 0) {
-            if (promptTextarea) promptTextarea.placeholder = "Additional notes...";
-            template.variables.forEach(variable => {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'input-wrapper mb-4';
-                const label = document.createElement('label');
-                label.className = 'block font-semibold mb-1 text-sm text-gray-700';
-                label.textContent = variable.label || variable.id;
-                let input;
-                if (variable.type === 'textarea') {
-                    input = document.createElement('textarea');
-                    input.rows = 3;
-                } else {
-                    input = document.createElement('input');
-                    input.type = 'text';
+            for (const [category, items] of Object.entries(groups)) {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = category;
+                items.forEach(t => {
+                    const option = document.createElement('option');
+                    option.value = t._id;
+                    const isLocked = t.isPro && currentUserPlan !== 'pro';
+                    option.textContent = `${isLocked ? '🔒 ' : ''}${t.title}`;
+                    optgroup.appendChild(option);
+                });
+                templateSelect.appendChild(optgroup);
+            }
+            
+            // 动态输入框
+            templateSelect.addEventListener('change', () => {
+                const t = allTemplates.find(x => x._id === templateSelect.value);
+                const container = document.getElementById('dynamic-inputs-container');
+                const textarea = document.getElementById('key-points');
+                if(container) container.innerHTML = '';
+                if(t && t.variables) {
+                    if(textarea) textarea.placeholder = "Additional notes...";
+                    t.variables.forEach(v => {
+                        const div = document.createElement('div');
+                        div.className = 'input-wrapper mb-3';
+                        div.innerHTML = `<label class="block text-sm font-bold mb-1">${v.label}</label><input class="dynamic-input w-full border p-2 rounded outline-none focus:ring-2 focus:ring-blue-500" data-key="${v.id}" placeholder="${v.placeholder||''}">`;
+                        container.appendChild(div);
+                    });
+                } else if(textarea) {
+                    textarea.placeholder = "Enter key points here...";
                 }
-                input.className = 'dynamic-input w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 outline-none';
-                input.dataset.key = variable.id;
-                input.placeholder = variable.placeholder || '';
-                wrapper.appendChild(label);
-                wrapper.appendChild(input);
-                dynamicContainer.appendChild(wrapper);
             });
-        } else {
-            if (promptTextarea) promptTextarea.placeholder = "Enter key points here...";
         }
-    });
+    } catch(e) {}
 }
 
-// --- 模块 E: 生成器 ---
 function setupGenerator() {
-    const generateBtn = document.getElementById('generate-btn');
-    if (!generateBtn) return;
-    const newGenerateBtn = generateBtn.cloneNode(true);
-    generateBtn.parentNode.replaceChild(newGenerateBtn, generateBtn);
-
-    newGenerateBtn.addEventListener('click', async () => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            showToast('Please log in first.', 'error');
-            window.openModal('login');
-            return;
-        }
-        const promptEl = document.getElementById('key-points') || document.getElementById('prompt');
-        const resultBox = document.getElementById('generated-report') || document.getElementById('result');
-        const templateSelect = document.getElementById('template');
-        const roleSelect = document.getElementById('role');
-        const toneSelect = document.getElementById('tone');
-        const langSelect = document.getElementById('language');
-        const inputs = {};
-        document.querySelectorAll('.dynamic-input').forEach(el => {
-            if (el.dataset.key) inputs[el.dataset.key] = el.value;
-        });
-
-        const userPromptText = promptEl ? promptEl.value.trim() : "";
-        if (!userPromptText && Object.keys(inputs).length === 0) {
-            alert('Please enter content.');
-            if (promptEl) promptEl.focus();
-            return;
-        }
-
-        const originalText = newGenerateBtn.textContent;
-        newGenerateBtn.disabled = true;
-        newGenerateBtn.textContent = 'Generating...';
-        if (resultBox) {
-            if (resultBox.tagName === 'TEXTAREA') resultBox.value = "AI is thinking...";
-            else resultBox.innerText = "AI is thinking...";
-        }
-
-        try {
-            const res = await fetch(`${API_BASE_URL}/api/generate`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                body: JSON.stringify({
-                    userPrompt: userPromptText,
-                    role: roleSelect ? roleSelect.value : "General",
-                    tone: toneSelect ? toneSelect.value : "Professional",
-                    language: langSelect ? langSelect.value : "English",
-                    templateId: templateSelect ? templateSelect.value : "daily_summary",
-                    inputs: inputs
-                }),
-            });
-            const data = await res.json();
-            if (res.status === 403) {
-                showToast(`Limit Reached: ${data.error}`, 'error');
-                if (resultBox) resultBox.value = "Quota exceeded.";
-            } else if (res.status === 401) {
-                showToast('Session expired.', 'warning');
-                localStorage.removeItem('token');
-            } else if (!res.ok) {
-                throw new Error(data.error || 'Server Error');
-            } else {
-                if (resultBox) {
-                    if (resultBox.tagName === 'TEXTAREA') {
-                        resultBox.value = data.generatedText;
-                        resultBox.style.height = 'auto';
-                        resultBox.style.height = resultBox.scrollHeight + 'px';
-                    } else {
-                        resultBox.innerText = data.generatedText;
-                    }
-                }
-                showToast("Report Generated!", "success");
+    const btn = document.getElementById('generate-btn');
+    if(btn) {
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        newBtn.addEventListener('click', async () => {
+            const token = localStorage.getItem('token');
+            if(!token) { window.openModal('login'); return; }
+            
+            const promptEl = document.getElementById('key-points');
+            const resultBox = document.getElementById('generated-report');
+            const inputs = {};
+            document.querySelectorAll('.dynamic-input').forEach(i => inputs[i.dataset.key] = i.value);
+            
+            const userPromptText = promptEl ? promptEl.value.trim() : "";
+            if (!userPromptText && Object.keys(inputs).length === 0) {
+                alert('Please enter content.');
+                if (promptEl) promptEl.focus();
+                return;
             }
-        } catch (err) {
-            showToast(`Failed: ${err.message}`, 'error');
-        } finally {
-            newGenerateBtn.disabled = false;
-            newGenerateBtn.textContent = originalText;
-        }
-    });
 
-    // 复制按钮
-    const copyBtn = document.getElementById('copy-btn');
-    if (copyBtn) {
-        const newCopyBtn = copyBtn.cloneNode(true);
-        copyBtn.parentNode.replaceChild(newCopyBtn, copyBtn);
-        newCopyBtn.onclick = async (e) => {
-            e.preventDefault();
-            const resultBox = document.getElementById('generated-report') || document.getElementById('result');
-            const textToCopy = resultBox ? (resultBox.value || resultBox.innerText) : "";
-            if (!textToCopy || textToCopy.includes('AI is thinking')) return;
+            const oldText = newBtn.innerText;
+            newBtn.innerText = 'Generating...'; newBtn.disabled = true;
+            if(resultBox) resultBox.innerText = "AI is thinking...";
+
             try {
-                await navigator.clipboard.writeText(textToCopy);
-                newCopyBtn.innerHTML = '<i class="fas fa-check"></i> Copied';
-                setTimeout(() => newCopyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy', 2000);
-            } catch (err) { alert('Copy failed.'); }
-        };
+                const res = await fetch(`${API_BASE_URL}/api/generate`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                    body: JSON.stringify({
+                        userPrompt: userPromptText,
+                        templateId: document.getElementById('template').value,
+                        inputs: inputs,
+                        role: document.getElementById('role')?.value || 'General',
+                        tone: document.getElementById('tone')?.value || 'Professional',
+                        language: document.getElementById('language')?.value || 'English'
+                    })
+                });
+                const data = await res.json();
+                if(res.ok && resultBox) {
+                    resultBox.innerText = data.generatedText;
+                    showToast('Generated!', 'success');
+                } else {
+                    if(resultBox) resultBox.innerText = "Error: " + (data.error || "Failed");
+                }
+            } catch(e) {
+                if(resultBox) resultBox.innerText = "Network Error";
+            } finally {
+                newBtn.innerText = oldText; newBtn.disabled = false;
+            }
+        });
     }
 }
 
-// --- 模块 F: 导出 ---
+// --- 模块 G: 导出与复制 ---
 function setupExport() {
-    const exportButtons = document.querySelectorAll('.export-btn');
-    const getResultContent = () => {
-        const box = document.getElementById('generated-report') || document.getElementById('result');
-        return box ? (box.tagName === 'TEXTAREA' ? box.value : box.innerText) : "";
-    };
-    exportButtons.forEach(button => {
-        const newBtn = button.cloneNode(true);
-        button.parentNode.replaceChild(newBtn, button);
+    document.querySelectorAll('.export-btn').forEach(btn => {
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
         newBtn.addEventListener('click', () => {
-            const format = newBtn.dataset.format || newBtn.textContent.trim();
-            const text = getResultContent();
-            if (!text || text.length < 5) { showToast('Generate report first.', 'warning'); return; }
+            const content = document.getElementById('generated-report')?.innerText;
+            if(!content || content.length < 5 || content.includes('AI is thinking')) { showToast('Generate report first', 'warning'); return; }
+            const format = newBtn.dataset.format || newBtn.innerText.trim();
             const filename = `Report_${new Date().toISOString().slice(0,10)}`;
-
-            if (format === 'Markdown') {
-                saveAs(new Blob([text], {type: 'text/markdown;charset=utf-8'}), `${filename}.md`);
-                showToast("Markdown downloaded.", "success");
-            } else if (format.includes('Word')) {
-                exportToWord(text, filename);
-            } else if (format.includes('PDF')) {
-                exportToPDF(text, filename);
+            
+            if(format === 'Markdown') {
+                saveAs(new Blob([content], {type: 'text/plain'}), filename + '.md');
+            } else if (format.includes('Word') && typeof docx !== 'undefined') {
+                const doc = new docx.Document({ sections: [{ children: content.split('\n').map(t=>new docx.Paragraph(t)) }]});
+                docx.Packer.toBlob(doc).then(b => saveAs(b, filename + '.docx'));
+            } else if (format.includes('PDF') && typeof html2pdf !== 'undefined') {
+                const el = document.createElement('div');
+                el.innerHTML = marked ? marked.parse(content) : content;
+                html2pdf().from(el).save(filename + '.pdf');
             }
         });
     });
-}
-// Word/PDF 导出函数保持不变，此处简化展示
-function exportToWord(text, filename) {
-    if (typeof docx === 'undefined') { showToast('Engine loading...', 'info'); return; }
-    const doc = new docx.Document({ sections: [{ children: text.split('\n').map(l => new docx.Paragraph({text: l})) }] });
-    docx.Packer.toBlob(doc).then(b => saveAs(b, `${filename}.docx`));
-}
-function exportToPDF(text, filename) {
-    if (typeof html2pdf === 'undefined' || typeof marked === 'undefined') { showToast('Engine missing.', 'error'); return; }
-    const div = document.createElement('div');
-    div.innerHTML = marked.parse(text);
-    html2pdf().from(div).save(`${filename}.pdf`);
+
+    const copyBtn = document.getElementById('copy-btn');
+    if(copyBtn) {
+        const newCopy = copyBtn.cloneNode(true);
+        copyBtn.parentNode.replaceChild(newCopy, copyBtn);
+        newCopy.addEventListener('click', () => {
+            const t = document.getElementById('generated-report')?.innerText;
+            if(t && !t.includes('AI is thinking')) { 
+                navigator.clipboard.writeText(t); 
+                const original = newCopy.innerHTML;
+                newCopy.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(() => newCopy.innerHTML = original, 2000);
+            }
+        });
+    }
 }
 
-// --- 模块 G: 支付 ---
+// --- 模块 H: 支付 (已完全恢复) ---
 function setupPayment() {
     const payButtons = document.querySelectorAll('.choose-plan-btn');
     const paymentModal = document.getElementById('payment-modal-overlay');
     const closePaymentBtn = document.getElementById('close-payment-btn');
     const paypalContainer = document.getElementById('paypal-button-container');
 
+    // 价格卡片点选效果
     document.querySelectorAll('.pricing-card').forEach(card => {
         card.addEventListener('click', (e) => {
             if (e.target.closest('button')) return;
@@ -655,7 +670,10 @@ function setupPayment() {
     });
 
     if (closePaymentBtn && paymentModal) {
-        closePaymentBtn.addEventListener('click', () => paymentModal.style.display = 'none');
+        closePaymentBtn.addEventListener('click', () => {
+             paymentModal.style.display = 'none';
+             if (paypalContainer) paypalContainer.innerHTML = '';
+        });
         paymentModal.addEventListener('click', (e) => { if (e.target === paymentModal) paymentModal.style.display = 'none'; });
     }
 
@@ -666,22 +684,34 @@ function setupPayment() {
             e.preventDefault();
             const token = localStorage.getItem('token');
             if (!token) { window.openModal('login'); return; }
+            
             const planType = newBtn.dataset.plan;
             const amount = planType === 'basic' ? '9.90' : '19.90';
+            const planName = planType === 'basic' ? 'Basic Plan' : 'Pro Plan';
+
             if (paymentModal) paymentModal.style.display = 'flex';
+            const label = document.getElementById('payment-plan-name');
+            if(label) label.textContent = planName;
+
             if (window.paypal && paypalContainer) {
                 paypalContainer.innerHTML = '';
                 window.paypal.Buttons({
-                    createOrder: (data, actions) => actions.order.create({ purchase_units: [{ amount: { value: amount } }] }),
+                    createOrder: (data, actions) => actions.order.create({ purchase_units: [{ description: planName, amount: { value: amount } }] }),
                     onApprove: (data, actions) => actions.order.capture().then(async () => {
                         paymentModal.style.display = 'none';
-                        await fetch(`${API_BASE_URL}/api/upgrade-plan`, {
-                            method: 'POST', 
-                            headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
-                            body: JSON.stringify({ plan: planType })
-                        });
-                        showToast('Upgraded!', 'success');
-                        setTimeout(() => window.location.reload(), 1500);
+                        try {
+                            const res = await fetch(`${API_BASE_URL}/api/upgrade-plan`, {
+                                method: 'POST', 
+                                headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
+                                body: JSON.stringify({ plan: planType })
+                            });
+                            if(res.ok) {
+                                showToast('Upgraded Successfully!', 'success');
+                                setTimeout(() => window.location.href = 'usage.html', 1500);
+                            } else {
+                                showToast('Upgrade failed', 'error');
+                            }
+                        } catch(e) { showToast('Network Error', 'error'); }
                     })
                 }).render('#paypal-button-container');
             }
@@ -689,71 +719,88 @@ function setupPayment() {
     });
 }
 
-// --- 模块 H: 联系表单 ---
-function setupContactForm() {
-    const contactForm = document.getElementById('contact-form');
-    if (currentUser) {
-        const emailInput = document.getElementById('email');
-        const nameInput = document.getElementById('name');
-        if (emailInput) emailInput.value = currentUser.email || '';
-        if (nameInput) nameInput.value = currentUser.name || '';
+// --- 模块 I: 历史记录加载 (已完全恢复) ---
+async function setupHistoryLoader() {
+    const container = document.getElementById('report-list');
+    if (!container) return; // 不在历史页
+
+    const token = localStorage.getItem('token');
+    if (!token) { container.innerHTML = '<div class="text-center py-10">Please login.</div>'; return; }
+    
+    container.innerHTML = '<div class="text-center py-10">Loading...</div>';
+    
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/reports`, { headers: { 'Authorization': `Bearer ${token}` } });
+        const reports = await res.json();
+        
+        if(reports.length === 0) {
+            container.innerHTML = '<div class="text-center py-10 text-gray-500">No reports found.</div>';
+            return;
+        }
+        
+        container.innerHTML = '';
+        reports.forEach(report => {
+            const card = document.createElement('div');
+            card.className = "bg-white p-6 rounded-lg shadow hover:shadow-md transition border border-gray-100 mb-4";
+            const preview = report.content.replace(/[#*`]/g, '').slice(0, 100) + '...';
+            card.innerHTML = `
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h4 class="text-lg font-bold text-gray-800 mb-1">${report.title || 'Untitled'}</h4>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full">${report.type || 'General'}</span>
+                            <span class="text-xs text-gray-400">📅 ${new Date(report.createdAt).toLocaleDateString()}</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">${preview}</p>
+                    </div>
+                    <button class="px-4 py-2 border rounded hover:bg-gray-50 text-sm font-medium">View</button>
+                </div>
+            `;
+            // 点击逻辑（简单弹窗示例）
+            card.querySelector('button').addEventListener('click', () => {
+                alert("Detailed view would open here.\n\n" + report.content.slice(0, 200) + "...");
+            });
+            container.appendChild(card);
+        });
+    } catch(e) {
+        container.innerHTML = '<div class="text-center text-red-500">Error loading reports.</div>';
     }
-    if (contactForm) {
-        const newForm = contactForm.cloneNode(true);
-        contactForm.parentNode.replaceChild(newForm, contactForm);
+}
+
+// --- 模块 J: 联系表单 ---
+function setupContactForm() {
+    const form = document.getElementById('contact-form');
+    // 自动填充
+    if(currentUser) {
+        const n = document.getElementById('name');
+        const e = document.getElementById('email');
+        if(n) n.value = currentUser.name;
+        if(e) e.value = currentUser.email;
+    }
+
+    if(form) {
+        const newForm = form.cloneNode(true);
+        form.parentNode.replaceChild(newForm, form);
         newForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = newForm.querySelector('button');
-            const original = btn.textContent;
-            btn.disabled = true; btn.textContent = 'Sending...';
+            const oldText = btn.innerText;
+            btn.disabled = true; btn.innerText = 'Sending...';
             try {
-                const data = {
-                    name: document.getElementById('name').value,
-                    email: document.getElementById('email').value,
-                    message: document.getElementById('message').value,
-                    type: document.getElementById('contact-type')?.value || 'General'
-                };
-                const res = await fetch(`${API_BASE_URL}/api/contact`, {
-                    method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)
+                await fetch(`${API_BASE_URL}/api/contact`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        name: document.getElementById('name').value,
+                        email: document.getElementById('email').value,
+                        message: document.getElementById('message').value,
+                        type: document.getElementById('contact-type')?.value || 'General'
+                    })
                 });
-                if (res.ok) { showToast("Sent!", "success"); newForm.reset(); }
-            } catch(e) { showToast("Error", "error"); }
-            finally { btn.disabled = false; btn.textContent = original; }
+                showToast('Message sent!', 'success');
+                newForm.reset();
+            } catch(e) { showToast('Error sending', 'error'); }
+            finally { btn.disabled = false; btn.innerText = oldText; }
         });
     }
 }
-
-// --- 模块 I: 历史与消息 ---
-function setupHistoryLoader() { /* 与之前逻辑一致，略以节省篇幅 */ }
-function setupMessageCenter() { /* 与之前逻辑一致 */ }
-
-// --- 模块 K: 用户菜单 ---
-function setupUserDropdown() {
-    const headerRight = document.getElementById('auth-container');
-    if (!headerRight) return;
-    if (!currentUser) {
-        headerRight.innerHTML = `
-            <button class="text-gray-600 hover:text-blue-600 font-medium px-3 py-2 mr-2" onclick="openModal('login')">Login</button>
-            <button class="bg-blue-600 text-white px-5 py-2 rounded-full font-bold shadow-lg hover:bg-blue-700" onclick="openModal('signup')">Get Started</button>
-        `;
-    } else {
-        const initial = currentUser.name ? currentUser.name.charAt(0).toUpperCase() : 'U';
-        const avatar = currentUser.picture 
-            ? `<img src="${currentUser.picture}" class="w-10 h-10 rounded-full border-2 border-white shadow-md cursor-pointer" onclick="toggleUserMenu()">`
-            : `<button onclick="toggleUserMenu()" class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold shadow-md cursor-pointer">${initial}</button>`;
-        headerRight.innerHTML = `
-            <div class="relative flex items-center gap-3">
-                <span class="text-sm font-medium text-gray-700 hidden md:block">Hi, ${currentUser.name}</span>
-                ${avatar}
-                <div id="user-dropdown" class="hidden absolute right-0 top-14 w-56 bg-white rounded-xl shadow-2xl border border-gray-100 z-[9999] overflow-hidden">
-                     <div class="px-4 py-3 border-b bg-gray-50"><p class="text-sm font-bold truncate">${currentUser.email}</p></div>
-                     <a href="usage.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50">My Account</a>
-                     <a href="#" onclick="logout()" class="block px-4 py-3 text-sm text-red-600 hover:bg-red-50">Logout</a>
-                </div>
-            </div>
-        `;
-    }
-}
-window.toggleUserMenu = function() { const m = document.getElementById('user-dropdown'); if(m) m.classList.toggle('hidden'); };
-window.logout = function() { localStorage.removeItem('token'); window.location.reload(); };
-window.onclick = function(e) { if(!e.target.closest('#auth-container')) { const m = document.getElementById('user-dropdown'); if(m) m.classList.add('hidden'); }};
