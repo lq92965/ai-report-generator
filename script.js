@@ -908,11 +908,11 @@ function setupUserDropdown() {
                 ${avatar}
                 <div id="user-dropdown" class="hidden absolute right-0 top-14 w-56 bg-white rounded-xl shadow-2xl border border-gray-100 z-[9999] overflow-hidden">
                      <div class="px-4 py-3 border-b bg-gray-50"><p class="text-sm font-bold truncate">${currentUser.email}</p></div>
-                     <a href="profile.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2">
-                         <i class="fas fa-user-circle text-blue-500"></i> My Account (我的账户)
+                     <a href="account.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2">
+                         <i class="fas fa-user-circle text-blue-500"></i> My Account 
                      </a>
                      <a href="usage.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2">
-                         <i class="fas fa-chart-pie text-green-500"></i> Usage Stats (使用统计)
+                         <i class="fas fa-chart-pie text-green-500"></i> Usage Stats 
                      </a>
                      <a href="#" onclick="logout()" class="block px-4 py-3 text-sm text-red-600 hover:bg-red-50">Logout</a>
                 </div>
@@ -923,3 +923,4 @@ function setupUserDropdown() {
 window.toggleUserMenu = function() { const m = document.getElementById('user-dropdown'); if(m) m.classList.toggle('hidden'); };
 window.logout = function() { localStorage.removeItem('token'); window.location.reload(); };
 window.onclick = function(e) { if(!e.target.closest('#auth-container')) { const m = document.getElementById('user-dropdown'); if(m) m.classList.add('hidden'); }};
+
