@@ -1,12 +1,12 @@
 /*
  * ===================================================================
- * * Reportify AI - script.js (v22.0 增强验证版)
- * * 状态: 修复表单显示逻辑，增加严格密码/用户校验，修复Google跳转
+ * * Reportify AI - script.js (v22.1 修复版)
+ * * 状态: 修复 SyntaxError (缺少括号)，修复 HTML 字符串排版错误
  * ===================================================================
  */
 
 // --- 1. 全局配置与状态 ---
-const API_BASE_URL = 'https://api.goreportify.com';
+const API_BASE_URL = 'https://api.goreportify.com'; // 确保这个地址是你后端的真实地址
 let allTemplates = [];
 let currentUser = null; 
 let currentUserPlan = 'basic'; 
@@ -43,7 +43,7 @@ window.saveAs = function(blob, filename) {
     setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
 };
 
-// --- 3. 弹窗与 Tab 控制 (修复表单不显示的问题) ---
+// --- 3. 弹窗与 Tab 控制 ---
 const authModalOverlay = document.getElementById('auth-modal-overlay');
 
 window.openModal = function(tabToShow = 'login') {
@@ -61,18 +61,16 @@ window.openModal = function(tabToShow = 'login') {
         }
     });
 
-    // 2. 切换表单内容显示 (关键修复)
-    // 假设 HTML 结构是: <div id="login" class="tab-content">...</div>
+    // 2. 切换表单内容显示
     document.querySelectorAll('.tab-content').forEach(content => {
-        // 先隐藏所有内容
         content.classList.add('hidden');
-        content.style.display = 'none'; // 双重保险
+        content.style.display = 'none';
     });
 
     const targetContent = document.getElementById(tabToShow);
     if (targetContent) {
         targetContent.classList.remove('hidden');
-        targetContent.style.display = 'block'; // 强制显示
+        targetContent.style.display = 'block';
     }
 };
 
@@ -81,7 +79,7 @@ window.closeModal = function() {
     if (overlay) overlay.classList.add('hidden');
 };
 
-// --- 4. 初始化流程 ---
+// --- 4. 初始化流程 (Main Logic) ---
 document.addEventListener('DOMContentLoaded', async () => {
     handleGoogleCallback();
     await fetchUserProfile();
@@ -96,46 +94,51 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupMessageCenter();   
     setupUserDropdown();    
     setupAvatarUpload();
-    console.log("Reportify AI v22.0 Initialized");
+    console.log("Reportify AI v22.1 Initialized");
 
-    // 🟢 新增：如果在 usage.html 页面，加载数据
-    // --- 新增：用量页面加载逻辑 ---
-if (window.location.pathname.includes('usage.html')) {
-    loadRealUsageData();
-}
-
-async function loadRealUsageData() {
-    const usedEl = document.getElementById('usage-used');
-    const totalEl = document.getElementById('usage-total');
-    const planEl = document.getElementById('usage-plan');
-
-    try {
-        const token = localStorage.getItem('token');
-        // 强制请求后端最新的 /api/me 数据
-        const res = await fetch('/api/me', {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-
-        if (res.ok) {
-            const user = await res.json();
-
-            // 填充页面数据
-            if (planEl) planEl.innerText = (user.plan || 'Free').toUpperCase();
-
-            // 获取后端算出来的 usageCount
-            const count = user.usageCount || 0;
-            const limit = user.plan === 'pro' ? 'Unlimited' : 10; // 假设免费版限制10次
-
-            if (usedEl) usedEl.innerText = count;
-            if (totalEl) totalEl.innerText = limit;
-        }
-    } catch (e) {
-        console.error("加载用量数据失败", e);
+    // --- 用量页面加载逻辑 ---
+    if (window.location.pathname.includes('usage.html')) {
+        loadRealUsageData();
     }
-}
+
+    // 定义内部函数：加载用量数据
+    async function loadRealUsageData() {
+        const usedEl = document.getElementById('usage-used');
+        const totalEl = document.getElementById('usage-total');
+        const planEl = document.getElementById('usage-plan');
+
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) return; // 没有token就不查了
+
+            // 强制请求后端最新的 /api/me 数据
+            const res = await fetch('/api/me', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (res.ok) {
+                const user = await res.json();
+
+                // 填充页面数据
+                if (planEl) planEl.innerText = (user.plan || 'Free').toUpperCase();
+
+                // 获取后端算出来的 usageCount
+                const count = user.usageCount || 0;
+                const limit = user.plan === 'pro' ? 'Unlimited' : 10; 
+
+                if (usedEl) usedEl.innerText = count;
+                if (totalEl) totalEl.innerText = limit;
+            }
+        } catch (e) {
+            console.error("加载用量数据失败", e);
+        }
+    }
+
+}); // <--- 【修复关键点】这里之前少了这个闭合标签，导致整个文件报错！
+
 
 // =================================================
-//  模块详情
+//  模块详情 (Functions)
 // =================================================
 
 // --- 模块 A: Google 回调 ---
@@ -172,7 +175,7 @@ async function fetchUserProfile() {
     } catch (e) { console.error(e); }
 }
 
-// --- 模块 C: 认证 UI (含验证与 Google 修复) ---
+// --- 模块 C: 认证 UI ---
 function setupAuthUI() {
     // 1. 绑定关闭按钮
     const closeModalBtn = document.getElementById('close-modal-btn');
@@ -220,20 +223,18 @@ function setupAuthUI() {
         });
     }
 
-    // 4. 注册表单处理 (含严格验证)
+    // 4. 注册表单处理
     const signupForm = document.getElementById('signup-form');
     if (signupForm) {
         const newSignupForm = signupForm.cloneNode(true);
         signupForm.parentNode.replaceChild(newSignupForm, signupForm);
         
-        // 启动验证监听
         setupStrictValidation();
 
         newSignupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitBtn = newSignupForm.querySelector('button[type="submit"]');
             
-            // 再次进行最终校验，防止通过开发者工具启用按钮
             if (!validateAllFields()) {
                 showToast("Please fix the errors in the form.", "error");
                 return;
@@ -269,32 +270,26 @@ function setupAuthUI() {
     }
 
     // 5. Google 登录按钮修复
-    // 查找所有 Google 按钮，并重新绑定
     const googleBtns = document.querySelectorAll('button');
     googleBtns.forEach(btn => {
-        // 通过内容或类名识别 Google 按钮
         if ((btn.textContent && btn.textContent.toLowerCase().includes('google')) || btn.classList.contains('google-btn')) {
             const newBtn = btn.cloneNode(true);
             btn.parentNode.replaceChild(newBtn, btn);
-            
-            // 关键：防止它是 form 里的 submit 按钮
             newBtn.type = 'button'; 
-
             newBtn.addEventListener('click', async (e) => {
-                e.preventDefault(); // 阻止任何表单提交
+                e.preventDefault(); 
                 e.stopPropagation();
                 
                 const originalText = newBtn.innerHTML;
                 newBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
                 
                 try {
-                    // 请求后端获取 Google 授权跳转链接
                     const res = await fetch(`${API_BASE_URL}/auth/google`);
                     if (!res.ok) throw new Error("Auth server unreachable");
                     
                     const data = await res.json();
                     if (data.url) {
-                        window.location.href = data.url; // 这里进行真正的跳转
+                        window.location.href = data.url; 
                     } else {
                         throw new Error("Invalid response from server");
                     }
@@ -328,7 +323,6 @@ function setupStrictValidation() {
     const passInput = document.getElementById('signup-password');
     const submitBtn = document.querySelector('#signup-form button[type="submit"]');
 
-    // 错误提示容器 (如果没有就动态创建)
     const getErrorSpan = (input) => {
         let span = input.nextElementSibling;
         if (!span || !span.classList.contains('validation-msg')) {
@@ -339,13 +333,10 @@ function setupStrictValidation() {
         return span;
     };
 
-    // 1. 用户名校验 (不超过 10 字符)
     const checkName = () => {
         const val = nameInput.value.trim();
         const span = getErrorSpan(nameInput);
-        if (val.length === 0) {
-            span.innerHTML = ''; return false;
-        }
+        if (val.length === 0) { span.innerHTML = ''; return false; }
         if (val.length > 10) {
             span.innerHTML = '<span class="text-red-500">❌ 最多10个字符 (Max 10 chars)</span>';
             return false;
@@ -354,14 +345,11 @@ function setupStrictValidation() {
         return true;
     };
 
-    // 2. 邮箱校验 (正则)
     const checkEmail = () => {
         const val = emailInput.value.trim();
         const span = getErrorSpan(emailInput);
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (val.length === 0) {
-            span.innerHTML = ''; return false;
-        }
+        if (val.length === 0) { span.innerHTML = ''; return false; }
         if (!emailRegex.test(val)) {
             span.innerHTML = '<span class="text-red-500">❌ 格式错误 (Invalid Email)</span>';
             return false;
@@ -370,21 +358,17 @@ function setupStrictValidation() {
         return true;
     };
 
-    // 3. 密码校验 (8位 + 大小写 + 数字 + 特殊字符)
     const checkPass = () => {
         const val = passInput.value;
         const span = getErrorSpan(passInput);
         
-        // 四个硬性条件
         const hasUpper = /[A-Z]/.test(val);
         const hasLower = /[a-z]/.test(val);
         const hasNumber = /[0-9]/.test(val);
-        const hasSpecial = /[\W_]/.test(val); // \W 匹配非单词字符，包括特殊符号
+        const hasSpecial = /[\W_]/.test(val); 
         const isLongEnough = val.length >= 8;
 
-        if (val.length === 0) {
-            span.innerHTML = ''; return false;
-        }
+        if (val.length === 0) { span.innerHTML = ''; return false; }
 
         if (hasUpper && hasLower && hasNumber && hasSpecial && isLongEnough) {
             span.innerHTML = '<span class="text-green-600">✅ 密码强度合格 (Strong)</span>';
@@ -403,7 +387,6 @@ function setupStrictValidation() {
         }
     };
 
-    // 统一检查并控制按钮
     const validateForm = () => {
         const isNameOk = checkName();
         const isEmailOk = checkEmail();
@@ -424,14 +407,12 @@ function setupStrictValidation() {
     if (emailInput) emailInput.addEventListener('input', validateForm);
     if (passInput) passInput.addEventListener('input', validateForm);
     
-    // 初始化时先禁用
     if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
     }
 }
 
-// 暴露给提交事件使用
 function validateAllFields() {
     const nameInput = document.getElementById('signup-name');
     const emailInput = document.getElementById('signup-email');
@@ -443,7 +424,6 @@ function validateAllFields() {
     const pass = passInput.value;
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // 严格密码正则：至少8位，包含大小写、数字、特殊字符
     const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
     return (name.length > 0 && name.length <= 10) && 
@@ -451,7 +431,7 @@ function validateAllFields() {
            passRegex.test(pass);
 }
 
-// --- 新增函数：处理头像上传 ---
+// --- 处理头像上传 (核心修复) ---
 function setupAvatarUpload() {
     // 获取刚才在 HTML 里加的那个 input
     const fileInput = document.getElementById('upload-avatar');
@@ -487,7 +467,7 @@ function setupAvatarUpload() {
 
                 // 更新本地缓存
                 if (currentUser) {
-                    currentUser.avatar = data.avatarUrl;
+                    currentUser.picture = data.avatarUrl; // 注意：后端返回的是 picture 或 avatarUrl，要保持一致
                     localStorage.setItem('user', JSON.stringify(currentUser));
                 }
             } else {
@@ -710,7 +690,6 @@ function setupExport() {
         });
     });
 }
-// Word/PDF 导出函数保持不变，此处简化展示
 function exportToWord(text, filename) {
     if (typeof docx === 'undefined') { showToast('Engine loading...', 'info'); return; }
     const doc = new docx.Document({ sections: [{ children: text.split('\n').map(l => new docx.Paragraph({text: l})) }] });
@@ -808,22 +787,21 @@ function setupContactForm() {
 }
 
 // --- 模块 I: 历史与消息 ---
-function setupHistoryLoader() { /* 与之前逻辑一致，略以节省篇幅 */ }
-// --- 修复版：消息中心完整逻辑 ---
+function setupHistoryLoader() { 
+    // ... 如果你有详细的历史记录加载代码，保留它，否则这里是空的
+}
+
 function setupMessageCenter() {
-    // 1. 绑定右下角悬浮按钮
     const bellBtn = document.querySelector('button[title="My Messages"]');
     if(bellBtn) {
         const newBtn = bellBtn.cloneNode(true);
         bellBtn.parentNode.replaceChild(newBtn, bellBtn);
         newBtn.addEventListener('click', window.openMessageCenter);
     }
-    // 2. 启动自动检查
     checkNotifications();
     setInterval(checkNotifications, 30000);
 }
 
-// 必须确保这三个函数在全局作用域中存在
 window.openMessageCenter = function() {
     const token = localStorage.getItem('token');
     if (!token) { showToast("Please login first.", "warning"); return; }
@@ -847,7 +825,6 @@ window.checkNotifications = async function() {
         const res = await fetch(`${API_BASE_URL}/api/my-messages`, { headers: { 'Authorization': `Bearer ${token}` } });
         if (!res.ok) return;
         const msgs = await res.json();
-        // 如果有回复，显示红点
         const currentRepliedCount = msgs.filter(m => m.status === 'replied').length;
         const lastSeenCount = parseInt(localStorage.getItem('seen_reply_count') || '0');
         if (currentRepliedCount > lastSeenCount) {
@@ -880,22 +857,20 @@ async function loadMessages(markAsRead = false) {
             return;
         }
 
-        // 渲染消息卡片
         msgs.forEach(msg => {
             const dateStr = new Date(msg.submittedAt).toLocaleDateString();
             let replyHtml = msg.reply 
                 ? `<div class="bg-blue-50 p-3 mt-3 rounded text-sm text-gray-800 border-l-4 border-blue-500">
-                     <strong>Admin:</strong> ${msg.reply}
+                      <strong>Admin:</strong> ${msg.reply}
                    </div>` 
                 : `<div class="text-xs text-gray-400 mt-2 italic">Pending reply...</div>`;
                 
-            // 如果有对话记录（新版）
             if(msg.conversation && msg.conversation.length > 0) {
                  const adminMsgs = msg.conversation.filter(c => c.role === 'admin');
                  if(adminMsgs.length > 0) {
                     replyHtml = adminMsgs.map(c => 
                         `<div class="bg-blue-50 p-3 mt-3 rounded text-sm text-gray-800 border-l-4 border-blue-500">
-                            <strong>Admin:</strong> ${c.message}
+                             <strong>Admin:</strong> ${c.message}
                          </div>`).join('');
                  }
             }
@@ -944,7 +919,7 @@ function setupUserDropdown() {
                      </a>
                      <a href="#" onclick="logout()" class="block px-4 py-3 text-sm text-red-600 hover:bg-red-50">Logout</a>
                 </div>
-            </div>account
+            </div>
         `;
     }
 }
