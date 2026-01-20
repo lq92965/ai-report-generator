@@ -99,25 +99,40 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log("Reportify AI v22.0 Initialized");
 
     // 🟢 新增：如果在 usage.html 页面，加载数据
-    if (window.location.pathname.includes('usage.html')) {
-        const usedEl = document.getElementById('usage-used');   // 对应 HTML 里的 "0" (已用)
-        const totalEl = document.getElementById('usage-total'); // 对应 HTML 里的 "/ 0" (总额)
-        const planEl = document.getElementById('usage-plan-name'); // 对应 "当前计划: BASIC"
+    // --- 新增：用量页面加载逻辑 ---
+if (window.location.pathname.includes('usage.html')) {
+    loadRealUsageData();
+}
 
-        if (currentUser) {
-            // 更新计划名称
-            if (planEl) planEl.innerText = currentUser.plan === 'pro' ? 'PROFESSIONAL' : 'BASIC';
-            
-            // 更新数字 (假设后端返回了 usageCount)
-            // 如果后端没返回 usageCount，这里暂时显示模拟数据或需要后端配合
-            const used = currentUser.usageCount || 0; 
-            const limit = currentUser.plan === 'pro' ? 'Unlimited' : 5; 
-            
-            if (usedEl) usedEl.innerText = used;
+async function loadRealUsageData() {
+    const usedEl = document.getElementById('usage-used');
+    const totalEl = document.getElementById('usage-total');
+    const planEl = document.getElementById('usage-plan');
+
+    try {
+        const token = localStorage.getItem('token');
+        // 强制请求后端最新的 /api/me 数据
+        const res = await fetch('/api/me', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (res.ok) {
+            const user = await res.json();
+
+            // 填充页面数据
+            if (planEl) planEl.innerText = (user.plan || 'Free').toUpperCase();
+
+            // 获取后端算出来的 usageCount
+            const count = user.usageCount || 0;
+            const limit = user.plan === 'pro' ? 'Unlimited' : 10; // 假设免费版限制10次
+
+            if (usedEl) usedEl.innerText = count;
             if (totalEl) totalEl.innerText = limit;
         }
+    } catch (e) {
+        console.error("加载用量数据失败", e);
     }
-});
+}
 
 // =================================================
 //  模块详情
@@ -438,36 +453,49 @@ function validateAllFields() {
 
 // --- 新增函数：处理头像上传 ---
 function setupAvatarUpload() {
-    // 监听 profile.html 里的文件上传控件
-    const uploadInput = document.getElementById('upload-avatar');
-    if (!uploadInput) return; 
+    // 获取刚才在 HTML 里加的那个 input
+    const fileInput = document.getElementById('upload-avatar');
+    const avatarImg = document.getElementById('profile-avatar');
 
-    uploadInput.addEventListener('change', async (e) => {
+    // 如果页面上没找到这两个元素，就不执行（防止报错）
+    if (!fileInput || !avatarImg) return; 
+
+    // 1. 点击头像图片时，触发文件选择框的点击
+    avatarImg.onclick = () => fileInput.click();
+
+    // 2. 当用户选好文件后
+    fileInput.addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (!file) return;
 
         const formData = new FormData();
         formData.append('avatar', file);
 
-        const token = localStorage.getItem('token');
-        showToast('Uploading avatar...', 'info');
-
         try {
-            const res = await fetch(`${API_BASE_URL}/api/upload-avatar`, {
+            alert('正在上传，请稍候...');
+            const token = localStorage.getItem('token');
+            const res = await fetch('/api/upload-avatar', {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` },
                 body: formData
             });
 
+            const data = await res.json();
             if (res.ok) {
-                showToast('Avatar updated!', 'success');
-                setTimeout(() => window.location.reload(), 1000); // 刷新显示新头像
+                alert('头像修改成功！');
+                avatarImg.src = data.avatarUrl; // 立即刷新显示的图片
+
+                // 更新本地缓存
+                if (currentUser) {
+                    currentUser.avatar = data.avatarUrl;
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+                }
             } else {
-                showToast('Upload failed', 'error');
+                alert('上传失败: ' + data.message);
             }
         } catch (err) {
             console.error(err);
-            showToast('Network error', 'error');
+            alert('网络错误');
         }
     });
 }
@@ -916,11 +944,10 @@ function setupUserDropdown() {
                      </a>
                      <a href="#" onclick="logout()" class="block px-4 py-3 text-sm text-red-600 hover:bg-red-50">Logout</a>
                 </div>
-            </div>
+            </div>account
         `;
     }
 }
 window.toggleUserMenu = function() { const m = document.getElementById('user-dropdown'); if(m) m.classList.toggle('hidden'); };
 window.logout = function() { localStorage.removeItem('token'); window.location.reload(); };
 window.onclick = function(e) { if(!e.target.closest('#auth-container')) { const m = document.getElementById('user-dropdown'); if(m) m.classList.add('hidden'); }};
-
