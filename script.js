@@ -433,17 +433,29 @@ function validateAllFields() {
 
 // --- 处理头像上传 (核心修复) ---
 function setupAvatarUpload() {
-    // 获取刚才在 HTML 里加的那个 input
     const fileInput = document.getElementById('upload-avatar');
     const avatarImg = document.getElementById('profile-avatar');
+    const triggerBtn = document.getElementById('btn-trigger-upload'); // 获取刚才修改的按钮
 
-    // 如果页面上没找到这两个元素，就不执行（防止报错）
-    if (!fileInput || !avatarImg) return; 
+    if (!fileInput) return; 
 
-    // 1. 点击头像图片时，触发文件选择框的点击
-    avatarImg.onclick = () => fileInput.click();
+    // 1. 绑定点击事件 (解决弹窗两次：统一在这里处理)
+    // 点击图片 -> 触发文件选择
+    if (avatarImg) {
+        avatarImg.onclick = (e) => {
+            e.stopPropagation(); // 防止冒泡
+            fileInput.click();
+        };
+    }
+    // 点击按钮 -> 触发文件选择
+    if (triggerBtn) {
+        triggerBtn.onclick = (e) => {
+            e.stopPropagation(); // 防止冒泡
+            fileInput.click();
+        };
+    }
 
-    // 2. 当用户选好文件后
+    // 2. 监听文件选中 (解决语言和 404 问题)
     fileInput.addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -452,30 +464,43 @@ function setupAvatarUpload() {
         formData.append('avatar', file);
 
         try {
-            alert('正在上传，请稍候...');
+            // [修改点 1] 改为英文提示
+            const originalSrc = avatarImg ? avatarImg.src : '';
+            alert('Uploading photo, please wait...'); 
+
             const token = localStorage.getItem('token');
-            const res = await fetch('/api/upload-avatar', {
+            
+            // [修改点 2] 关键修复：使用 API_BASE_URL 拼接完整路径
+            // 之前是 fetch('/api/upload-avatar') 导致找不到地址(404)
+            const res = await fetch(`${API_BASE_URL}/api/upload-avatar`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` },
                 body: formData
             });
 
             const data = await res.json();
-            if (res.ok) {
-                alert('头像修改成功！');
-                avatarImg.src = data.avatarUrl; // 立即刷新显示的图片
 
-                // 更新本地缓存
+            if (res.ok) {
+                // [修改点 3] 成功提示改为英文
+                alert('Profile photo updated successfully!');
+                if (avatarImg) avatarImg.src = data.avatarUrl; 
+                
                 if (currentUser) {
-                    currentUser.picture = data.avatarUrl; // 注意：后端返回的是 picture 或 avatarUrl，要保持一致
+                    currentUser.picture = data.avatarUrl;
                     localStorage.setItem('user', JSON.stringify(currentUser));
                 }
+                // 刷新页面以确保所有地方都更新
+                setTimeout(() => window.location.reload(), 500);
             } else {
-                alert('上传失败: ' + data.message);
+                throw new Error(data.message || 'Upload failed');
             }
         } catch (err) {
             console.error(err);
-            alert('网络错误');
+            // [修改点 4] 错误提示改为英文
+            alert('Error: ' + err.message);
+        } finally {
+            // 清空 input，这样用户下次选同一张图也能触发 change 事件
+            fileInput.value = '';
         }
     });
 }
