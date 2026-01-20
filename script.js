@@ -6,7 +6,7 @@
  */
 
 // --- 1. 全局配置与状态 ---
-const API_BASE_URL = 'https://api.goreportify.com'; // 确保这个地址是你后端的真实地址
+const API_BASE_URL = 'http://localhost:3000'; // 确保这个地址是你后端的真实地址
 let allTemplates = [];
 let currentUser = null; 
 let currentUserPlan = 'basic'; 
@@ -950,4 +950,10 @@ function setupUserDropdown() {
 }
 window.toggleUserMenu = function() { const m = document.getElementById('user-dropdown'); if(m) m.classList.toggle('hidden'); };
 window.logout = function() { localStorage.removeItem('token'); window.location.reload(); };
-window.onclick = function(e) { if(!e.target.closest('#auth-container')) { const m = document.getElementById('user-dropdown'); if(m) m.classList.add('hidden'); }};
+window.onclick = function(e) { 
+    if(!e.target.closest('#auth-container')) { 
+        const m = document.getElementById('user-dropdown'); 
+        if(m) m.classList.add('hidden'); 
+    }
+};
+}); // <--- 这一行非常重要！没有它整个文件都会报错！
