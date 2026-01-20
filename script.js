@@ -95,8 +95,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupHistoryLoader();   
     setupMessageCenter();   
     setupUserDropdown();    
-
+    setupAvatarUpload();
     console.log("Reportify AI v22.0 Initialized");
+
+    // 🟢 新增：如果在 usage.html 页面，加载数据
+    if (window.location.pathname.includes('usage.html')) {
+        const usedEl = document.getElementById('usage-used');   // 对应 HTML 里的 "0" (已用)
+        const totalEl = document.getElementById('usage-total'); // 对应 HTML 里的 "/ 0" (总额)
+        const planEl = document.getElementById('usage-plan-name'); // 对应 "当前计划: BASIC"
+
+        if (currentUser) {
+            // 更新计划名称
+            if (planEl) planEl.innerText = currentUser.plan === 'pro' ? 'PROFESSIONAL' : 'BASIC';
+            
+            // 更新数字 (假设后端返回了 usageCount)
+            // 如果后端没返回 usageCount，这里暂时显示模拟数据或需要后端配合
+            const used = currentUser.usageCount || 0; 
+            const limit = currentUser.plan === 'pro' ? 'Unlimited' : 5; 
+            
+            if (usedEl) usedEl.innerText = used;
+            if (totalEl) totalEl.innerText = limit;
+        }
+    }
 });
 
 // =================================================
@@ -416,6 +436,42 @@ function validateAllFields() {
            passRegex.test(pass);
 }
 
+// --- 新增函数：处理头像上传 ---
+function setupAvatarUpload() {
+    // 监听 profile.html 里的文件上传控件
+    const uploadInput = document.getElementById('upload-avatar');
+    if (!uploadInput) return; 
+
+    uploadInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('avatar', file);
+
+        const token = localStorage.getItem('token');
+        showToast('Uploading avatar...', 'info');
+
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/upload-avatar`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: formData
+            });
+
+            if (res.ok) {
+                showToast('Avatar updated!', 'success');
+                setTimeout(() => window.location.reload(), 1000); // 刷新显示新头像
+            } else {
+                showToast('Upload failed', 'error');
+            }
+        } catch (err) {
+            console.error(err);
+            showToast('Network error', 'error');
+        }
+    });
+}
+
 // --- 模块 D: 模板加载 ---
 async function setupTemplates() {
     const templateSelect = document.getElementById('template');
@@ -725,7 +781,112 @@ function setupContactForm() {
 
 // --- 模块 I: 历史与消息 ---
 function setupHistoryLoader() { /* 与之前逻辑一致，略以节省篇幅 */ }
-function setupMessageCenter() { /* 与之前逻辑一致 */ }
+// --- 修复版：消息中心完整逻辑 ---
+function setupMessageCenter() {
+    // 1. 绑定右下角悬浮按钮
+    const bellBtn = document.querySelector('button[title="My Messages"]');
+    if(bellBtn) {
+        const newBtn = bellBtn.cloneNode(true);
+        bellBtn.parentNode.replaceChild(newBtn, bellBtn);
+        newBtn.addEventListener('click', window.openMessageCenter);
+    }
+    // 2. 启动自动检查
+    checkNotifications();
+    setInterval(checkNotifications, 30000);
+}
+
+// 必须确保这三个函数在全局作用域中存在
+window.openMessageCenter = function() {
+    const token = localStorage.getItem('token');
+    if (!token) { showToast("Please login first.", "warning"); return; }
+    const modal = document.getElementById('message-modal');
+    if(modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        loadMessages(true);
+    }
+};
+
+window.closeMessageCenter = function() {
+    const modal = document.getElementById('message-modal');
+    if(modal) { modal.classList.add('hidden'); document.body.style.overflow = ''; }
+};
+
+window.checkNotifications = async function() {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/my-messages`, { headers: { 'Authorization': `Bearer ${token}` } });
+        if (!res.ok) return;
+        const msgs = await res.json();
+        // 如果有回复，显示红点
+        const currentRepliedCount = msgs.filter(m => m.status === 'replied').length;
+        const lastSeenCount = parseInt(localStorage.getItem('seen_reply_count') || '0');
+        if (currentRepliedCount > lastSeenCount) {
+            const badge = document.getElementById('notif-badge');
+            if(badge) badge.classList.remove('hidden');
+        }
+    } catch (e) {}
+};
+
+async function loadMessages(markAsRead = false) {
+    const container = document.getElementById('msg-list-container');
+    const token = localStorage.getItem('token');
+    
+    container.innerHTML = '<div class="text-center text-gray-400 mt-10">Loading...</div>';
+
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/my-messages`, { headers: { 'Authorization': `Bearer ${token}` } });
+        const msgs = await res.json();
+
+        if (markAsRead) {
+            const repliedCount = msgs.filter(m => m.status === 'replied').length;
+            localStorage.setItem('seen_reply_count', repliedCount);
+            const badge = document.getElementById('notif-badge');
+            if(badge) badge.classList.add('hidden');
+        }
+
+        container.innerHTML = '';
+        if (msgs.length === 0) {
+            container.innerHTML = '<div class="text-center text-gray-400 mt-10">No messages found.</div>';
+            return;
+        }
+
+        // 渲染消息卡片
+        msgs.forEach(msg => {
+            const dateStr = new Date(msg.submittedAt).toLocaleDateString();
+            let replyHtml = msg.reply 
+                ? `<div class="bg-blue-50 p-3 mt-3 rounded text-sm text-gray-800 border-l-4 border-blue-500">
+                     <strong>Admin:</strong> ${msg.reply}
+                   </div>` 
+                : `<div class="text-xs text-gray-400 mt-2 italic">Pending reply...</div>`;
+                
+            // 如果有对话记录（新版）
+            if(msg.conversation && msg.conversation.length > 0) {
+                 const adminMsgs = msg.conversation.filter(c => c.role === 'admin');
+                 if(adminMsgs.length > 0) {
+                    replyHtml = adminMsgs.map(c => 
+                        `<div class="bg-blue-50 p-3 mt-3 rounded text-sm text-gray-800 border-l-4 border-blue-500">
+                            <strong>Admin:</strong> ${c.message}
+                         </div>`).join('');
+                 }
+            }
+
+            container.innerHTML += `
+                <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-200 mb-4">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-bold text-gray-700">${msg.type}</span>
+                        <span class="text-xs text-gray-400">${dateStr}</span>
+                    </div>
+                    <p class="text-gray-600 text-sm">${msg.message}</p>
+                    ${replyHtml}
+                </div>
+            `;
+        });
+    } catch (err) {
+        container.innerHTML = '<p class="text-center text-red-400">Load failed.</p>';
+    }
+}
 
 // --- 模块 K: 用户菜单 ---
 function setupUserDropdown() {
@@ -747,7 +908,12 @@ function setupUserDropdown() {
                 ${avatar}
                 <div id="user-dropdown" class="hidden absolute right-0 top-14 w-56 bg-white rounded-xl shadow-2xl border border-gray-100 z-[9999] overflow-hidden">
                      <div class="px-4 py-3 border-b bg-gray-50"><p class="text-sm font-bold truncate">${currentUser.email}</p></div>
-                     <a href="usage.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50">My Account</a>
+                     <a href="profile.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2">
+                         <i class="fas fa-user-circle text-blue-500"></i> My Account (我的账户)
+                     </a>
+                     <a href="usage.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2">
+                         <i class="fas fa-chart-pie text-green-500"></i> Usage Stats (使用统计)
+                     </a>
                      <a href="#" onclick="logout()" class="block px-4 py-3 text-sm text-red-600 hover:bg-red-50">Logout</a>
                 </div>
             </div>
