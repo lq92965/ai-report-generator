@@ -1051,17 +1051,26 @@ async function loadProfilePageData() {
     if (emailInput) emailInput.value = currentUser.email || '';
 }
 
-// --- 新增模块: 专门负责给账户页(account.html)画大头像 ---
+// --- [补全] 账户页大头像加载函数 ---
 async function loadAccountPageAvatar() {
+    console.log("正在尝试加载大头像..."); // 调试日志
+    
     // 1. 确保拿到用户信息
     if (!currentUser) await fetchUserProfile();
-    if (!currentUser || !currentUser.picture) return;
+    if (!currentUser || !currentUser.picture) {
+        console.log("没有用户信息或头像，跳过。");
+        return;
+    }
 
-    // 2. 找到你在 HTML 里刚加了 ID 的那个大相框
+    // 2. 找到大相框
     const bigAvatar = document.getElementById('account-hub-avatar');
     
-    // 3. 把头像填进去 (使用 getFullImageUrl 修补链接)
+    // 3. 填入图片
     if (bigAvatar) {
-        bigAvatar.src = getFullImageUrl(currentUser.picture);
+        const fullUrl = getFullImageUrl(currentUser.picture);
+        console.log("找到大头像元素，正在更新为:", fullUrl);
+        bigAvatar.src = fullUrl;
+    } else {
+        console.error("错误：在页面上找不到 id='account-hub-avatar' 的元素！");
     }
 }
