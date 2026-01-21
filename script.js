@@ -110,11 +110,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupAvatarUpload();
     console.log("Reportify AI v22.1 Initialized");
 
-    // --- 用量页面加载逻辑 ---
+    // ... 现有的代码 ...
     if (window.location.pathname.includes('profile.html')) {
         loadProfilePageData();
-        setupProfileForm(); // <--- 新增这行，激活保存按钮
+        setupProfileForm();
     }
+
+    // ⬇️⬇️⬇️ 插入这一段 ⬇️⬇️⬇️
+    // 如果打开的是账户页，就呼叫画师干活！
+    if (window.location.pathname.includes('account.html')) {
+        loadAccountPageAvatar();
+    }
+    // ⬆️⬆️⬆️ 插入结束 ⬆️⬆️⬆️
 
     // 定义内部函数：加载用量数据
     async function loadRealUsageData() {
@@ -1039,4 +1046,19 @@ async function loadProfilePageData() {
     // 防止页面上没有这些 ID 导致报错
     if (nameInput) nameInput.value = currentUser.name || '';
     if (emailInput) emailInput.value = currentUser.email || '';
+}
+
+// --- 新增模块: 专门负责给账户页(account.html)画大头像 ---
+async function loadAccountPageAvatar() {
+    // 1. 确保拿到用户信息
+    if (!currentUser) await fetchUserProfile();
+    if (!currentUser || !currentUser.picture) return;
+
+    // 2. 找到你在 HTML 里刚加了 ID 的那个大相框
+    const bigAvatar = document.getElementById('account-hub-avatar');
+    
+    // 3. 把头像填进去 (使用 getFullImageUrl 修补链接)
+    if (bigAvatar) {
+        bigAvatar.src = getFullImageUrl(currentUser.picture);
+    }
 }
