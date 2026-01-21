@@ -7,9 +7,8 @@
 
 // --- 1. 全局配置与状态 ---
 // --- 智能配置：自动判断是 本地开发 还是 线上环境 ---
-const API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-    ? 'http://localhost:3000'           // 如果你在本地运行，就连本地
-    : 'https://api.goreportify.com';    // 如果用户在公网访问，就连线上
+// 因为你还没把 server.js 部署到线上，所以必须强制连本地！
+const API_BASE_URL = 'http://localhost:3000';
 let allTemplates = [];
 let currentUser = null; 
 let currentUserPlan = 'basic'; 
@@ -981,3 +980,4 @@ async function loadProfilePageData() {
     if (nameInput) nameInput.value = currentUser.name || '';
     if (emailInput) emailInput.value = currentUser.email || '';
 }
+
