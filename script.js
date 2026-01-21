@@ -111,8 +111,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log("Reportify AI v22.1 Initialized");
 
     // --- 用量页面加载逻辑 ---
-    if (window.location.pathname.includes('usage.html')) {
-        loadRealUsageData();
+    if (window.location.pathname.includes('profile.html')) {
+        loadProfilePageData();
+        setupProfileForm(); // <--- 新增这行，激活保存按钮
     }
 
     // 定义内部函数：加载用量数据
@@ -446,6 +447,7 @@ function validateAllFields() {
 }
 
 // --- 修改点 B：头像上传逻辑 ---
+
 function setupAvatarUpload() {
     const fileInput = document.getElementById('upload-avatar');
     const avatarImg = document.getElementById('profile-avatar');
@@ -453,15 +455,10 @@ function setupAvatarUpload() {
 
     if (!fileInput) return;
 
-    // 绑定点击事件 (点击图片或按钮都能触发选择文件)
-    if (avatarImg) {
-        avatarImg.onclick = (e) => { e.stopPropagation(); fileInput.click(); };
-    }
-    if (triggerBtn) {
-        triggerBtn.onclick = (e) => { e.stopPropagation(); fileInput.click(); };
-    }
+    const triggerUpload = (e) => { e.stopPropagation(); fileInput.click(); };
+    if (avatarImg) avatarImg.onclick = triggerUpload;
+    if (triggerBtn) triggerBtn.onclick = triggerUpload;
 
-    // 监听文件选中
     fileInput.addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -470,9 +467,9 @@ function setupAvatarUpload() {
         formData.append('avatar', file);
 
         try {
-            alert('Uploading...'); // 提示正在上传
+            // 修改点1：用 showToast 代替 alert，不打断用户
+            showToast('Uploading photo...', 'info'); 
             
-            // 发送请求
             const token = localStorage.getItem('token');
             const res = await fetch(`${API_BASE_URL}/api/upload-avatar`, {
                 method: 'POST',
@@ -483,29 +480,81 @@ function setupAvatarUpload() {
             const data = await res.json();
 
             if (res.ok) {
-                alert('Success!'); 
+                // 修改点2：成功后自动提示，不需要点确定
+                showToast('Profile photo updated!', 'success'); 
                 
-                // --- 关键修改：上传成功后，立即用 getFullImageUrl 显示新图片 ---
-                if (avatarImg) {
-                    avatarImg.src = getFullImageUrl(data.avatarUrl);
-                }
+                if (avatarImg) avatarImg.src = getFullImageUrl(data.avatarUrl);
 
-                // 更新本地缓存的用户信息
+                // 同时更新右上角头像 (立即生效)
                 if (currentUser) {
                     currentUser.picture = data.avatarUrl;
                     localStorage.setItem('user', JSON.stringify(currentUser));
+                    setupUserDropdown(); // 重新渲染右上角
                 }
             } else {
-                alert('Failed: ' + data.message);
+                showToast(data.message || 'Upload failed', 'error');
             }
         } catch (err) {
             console.error(err);
-            alert('Error: ' + err.message);
+            showToast('Network error', 'error');
         } finally {
-            // 清空文件框，保证下次选同一张图也能触发
             fileInput.value = '';
         }
     });
+}
+
+// --- 新增：处理个人资料表单提交 ---
+function setupProfileForm() {
+    const saveBtn = document.querySelector('.save-btn');
+    // 防止重复绑定，先克隆
+    if(saveBtn) {
+        const newBtn = saveBtn.cloneNode(true);
+        saveBtn.parentNode.replaceChild(newBtn, saveBtn);
+        
+        newBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('profile-name').value;
+            const job = document.getElementById('profile-job').value; // 确保HTML有 id="profile-job"
+            const bio = document.getElementById('profile-bio').value; // 确保HTML有 id="profile-bio"
+
+            const originalText = newBtn.innerText;
+            newBtn.innerText = 'Saving...';
+            newBtn.disabled = true;
+
+            try {
+                const token = localStorage.getItem('token');
+                const res = await fetch(`${API_BASE_URL}/api/update-profile`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` 
+                    },
+                    body: JSON.stringify({ name, job, bio })
+                });
+
+                if (res.ok) {
+                    showToast('Profile saved successfully!', 'success');
+                    // 更新本地缓存
+                    if(currentUser) {
+                        currentUser.name = name;
+                        currentUser.job = job;
+                        currentUser.bio = bio;
+                        localStorage.setItem('user', JSON.stringify(currentUser));
+                        setupUserDropdown(); // 更新右上角名字
+                    }
+                } else {
+                    showToast('Failed to save', 'error');
+                }
+            } catch (err) {
+                console.error(err);
+                showToast('Network error', 'error');
+            } finally {
+                newBtn.innerText = originalText;
+                newBtn.disabled = false;
+            }
+        });
+    }
 }
 
 // --- 模块 D: 模板加载 ---
@@ -919,24 +968,32 @@ async function loadMessages(markAsRead = false) {
     }
 }
 
-// --- 模块 K: 用户菜单 ---
+// --- 模块 K: 用户菜单 (修复版：支持显示头像) ---
 function setupUserDropdown() {
     const headerRight = document.getElementById('auth-container');
     if (!headerRight) return;
+    
     if (!currentUser) {
         headerRight.innerHTML = `
             <button class="text-gray-600 hover:text-blue-600 font-medium px-3 py-2 mr-2" onclick="openModal('login')">Login</button>
             <button class="bg-blue-600 text-white px-5 py-2 rounded-full font-bold shadow-lg hover:bg-blue-700" onclick="openModal('signup')">Get Started</button>
         `;
     } else {
+        // 1. 获取名字首字母
         const initial = currentUser.name ? currentUser.name.charAt(0).toUpperCase() : 'U';
-        const avatar = currentUser.picture 
-            ? `<img src="${currentUser.picture}" class="w-10 h-10 rounded-full border-2 border-white shadow-md cursor-pointer" onclick="toggleUserMenu()">`
+        
+        // 2. 处理图片链接 (关键修改：使用 getFullImageUrl)
+        const picUrl = currentUser.picture ? getFullImageUrl(currentUser.picture) : null;
+
+        // 3. 生成头像 HTML (有图显示图，没图显示字母)
+        const avatarHtml = picUrl
+            ? `<img src="${picUrl}" class="w-10 h-10 rounded-full border-2 border-white shadow-md cursor-pointer" onclick="toggleUserMenu()">`
             : `<button onclick="toggleUserMenu()" class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold shadow-md cursor-pointer">${initial}</button>`;
+
         headerRight.innerHTML = `
             <div class="relative flex items-center gap-3">
                 <span class="text-sm font-medium text-gray-700 hidden md:block">Hi, ${currentUser.name}</span>
-                ${avatar}
+                ${avatarHtml}
                 <div id="user-dropdown" class="hidden absolute right-0 top-14 w-56 bg-white rounded-xl shadow-2xl border border-gray-100 z-[9999] overflow-hidden">
                      <div class="px-4 py-3 border-b bg-gray-50"><p class="text-sm font-bold truncate">${currentUser.email}</p></div>
                      <a href="account.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2">
@@ -951,6 +1008,7 @@ function setupUserDropdown() {
         `;
     }
 }
+
 window.toggleUserMenu = function() { const m = document.getElementById('user-dropdown'); if(m) m.classList.toggle('hidden'); };
 window.logout = function() { localStorage.removeItem('token'); window.location.reload(); };
 window.onclick = function(e) { 
@@ -980,4 +1038,3 @@ async function loadProfilePageData() {
     if (nameInput) nameInput.value = currentUser.name || '';
     if (emailInput) emailInput.value = currentUser.email || '';
 }
-
