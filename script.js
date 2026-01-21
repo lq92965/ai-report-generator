@@ -466,10 +466,10 @@ function setupAvatarUpload() {
         const formData = new FormData();
         formData.append('avatar', file);
 
+        // 使用 showToast 显示 "正在上传..."
+        showToast('Uploading...', 'info'); 
+
         try {
-            // 修改点1：用 showToast 代替 alert，不打断用户
-            showToast('Uploading photo...', 'info'); 
-            
             const token = localStorage.getItem('token');
             const res = await fetch(`${API_BASE_URL}/api/upload-avatar`, {
                 method: 'POST',
@@ -480,16 +480,14 @@ function setupAvatarUpload() {
             const data = await res.json();
 
             if (res.ok) {
-                // 修改点2：成功后自动提示，不需要点确定
-                showToast('Profile photo updated!', 'success'); 
+                // 成功：只显示轻提示，不弹窗
+                showToast('Success!', 'success');
                 
                 if (avatarImg) avatarImg.src = getFullImageUrl(data.avatarUrl);
-
-                // 同时更新右上角头像 (立即生效)
                 if (currentUser) {
                     currentUser.picture = data.avatarUrl;
                     localStorage.setItem('user', JSON.stringify(currentUser));
-                    setupUserDropdown(); // 重新渲染右上角
+                    setupUserDropdown(); // 立即更新右上角
                 }
             } else {
                 showToast(data.message || 'Upload failed', 'error');
@@ -974,34 +972,22 @@ function setupUserDropdown() {
     if (!headerRight) return;
     
     if (!currentUser) {
-        headerRight.innerHTML = `
-            <button class="text-gray-600 hover:text-blue-600 font-medium px-3 py-2 mr-2" onclick="openModal('login')">Login</button>
-            <button class="bg-blue-600 text-white px-5 py-2 rounded-full font-bold shadow-lg hover:bg-blue-700" onclick="openModal('signup')">Get Started</button>
-        `;
+        headerRight.innerHTML = `<button class="text-gray-600 hover:text-blue-600 font-medium px-3 py-2 mr-2" onclick="openModal('login')">Login</button><button class="bg-blue-600 text-white px-5 py-2 rounded-full font-bold shadow-lg hover:bg-blue-700" onclick="openModal('signup')">Get Started</button>`;
     } else {
-        // 1. 获取名字首字母
         const initial = currentUser.name ? currentUser.name.charAt(0).toUpperCase() : 'U';
-        
-        // 2. 处理图片链接 (关键修改：使用 getFullImageUrl)
         const picUrl = currentUser.picture ? getFullImageUrl(currentUser.picture) : null;
-
-        // 3. 生成头像 HTML (有图显示图，没图显示字母)
         const avatarHtml = picUrl
             ? `<img src="${picUrl}" class="w-10 h-10 rounded-full border-2 border-white shadow-md cursor-pointer" onclick="toggleUserMenu()">`
             : `<button onclick="toggleUserMenu()" class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold shadow-md cursor-pointer">${initial}</button>`;
 
         headerRight.innerHTML = `
             <div class="relative flex items-center gap-3">
-                <span class="text-sm font-medium text-gray-700 hidden md:block">Hi, ${currentUser.name}</span>
+                <span class="text-sm font-medium text-gray-700 block">Hi, ${currentUser.name || 'User'}</span>
                 ${avatarHtml}
                 <div id="user-dropdown" class="hidden absolute right-0 top-14 w-56 bg-white rounded-xl shadow-2xl border border-gray-100 z-[9999] overflow-hidden">
                      <div class="px-4 py-3 border-b bg-gray-50"><p class="text-sm font-bold truncate">${currentUser.email}</p></div>
-                     <a href="account.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2">
-                         <i class="fas fa-user-circle text-blue-500"></i> My Account 
-                     </a>
-                     <a href="usage.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2">
-                         <i class="fas fa-chart-pie text-green-500"></i> Usage Stats 
-                     </a>
+                     <a href="profile.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2"><i class="fas fa-user-circle text-blue-500"></i> My Profile</a>
+                     <a href="usage.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2"><i class="fas fa-chart-pie text-green-500"></i> Usage Stats</a>
                      <a href="#" onclick="logout()" class="block px-4 py-3 text-sm text-red-600 hover:bg-red-50">Logout</a>
                 </div>
             </div>
