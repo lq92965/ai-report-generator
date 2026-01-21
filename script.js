@@ -6,10 +6,25 @@
  */
 
 // --- 1. 全局配置与状态 ---
-const API_BASE_URL = 'http://localhost:3000'; // 确保这个地址是你后端的真实地址
+// --- 智能配置：自动判断是 本地开发 还是 线上环境 ---
+const API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:3000'           // 如果你在本地运行，就连本地
+    : 'https://api.goreportify.com';    // 如果用户在公网访问，就连线上
 let allTemplates = [];
 let currentUser = null; 
 let currentUserPlan = 'basic'; 
+
+// --- 工具函数：自动补全图片链接 ---
+function getFullImageUrl(path) {
+    if (!path) return 'https://via.placeholder.com/150'; 
+    if (path.startsWith('http')) return path; // 如果已经是完整链接（如Google头像），直接用
+    
+    // 关键：如果是上传的图片，加上当前的 API 地址前缀
+    if (path.startsWith('/uploads')) {
+        return `${API_BASE_URL}${path}`;
+    }
+    return path;
+}
 
 // --- 2. 全局工具函数 ---
 
@@ -431,31 +446,23 @@ function validateAllFields() {
            passRegex.test(pass);
 }
 
-// --- 处理头像上传 (核心修复) ---
+// --- 修改点 B：头像上传逻辑 ---
 function setupAvatarUpload() {
     const fileInput = document.getElementById('upload-avatar');
     const avatarImg = document.getElementById('profile-avatar');
-    const triggerBtn = document.getElementById('btn-trigger-upload'); // 获取刚才修改的按钮
+    const triggerBtn = document.getElementById('btn-trigger-upload');
 
-    if (!fileInput) return; 
+    if (!fileInput) return;
 
-    // 1. 绑定点击事件 (解决弹窗两次：统一在这里处理)
-    // 点击图片 -> 触发文件选择
+    // 绑定点击事件 (点击图片或按钮都能触发选择文件)
     if (avatarImg) {
-        avatarImg.onclick = (e) => {
-            e.stopPropagation(); // 防止冒泡
-            fileInput.click();
-        };
+        avatarImg.onclick = (e) => { e.stopPropagation(); fileInput.click(); };
     }
-    // 点击按钮 -> 触发文件选择
     if (triggerBtn) {
-        triggerBtn.onclick = (e) => {
-            e.stopPropagation(); // 防止冒泡
-            fileInput.click();
-        };
+        triggerBtn.onclick = (e) => { e.stopPropagation(); fileInput.click(); };
     }
 
-    // 2. 监听文件选中 (解决语言和 404 问题)
+    // 监听文件选中
     fileInput.addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -464,14 +471,10 @@ function setupAvatarUpload() {
         formData.append('avatar', file);
 
         try {
-            // [修改点 1] 改为英文提示
-            const originalSrc = avatarImg ? avatarImg.src : '';
-            alert('Uploading photo, please wait...'); 
-
-            const token = localStorage.getItem('token');
+            alert('Uploading...'); // 提示正在上传
             
-            // [修改点 2] 关键修复：使用 API_BASE_URL 拼接完整路径
-            // 之前是 fetch('/api/upload-avatar') 导致找不到地址(404)
+            // 发送请求
+            const token = localStorage.getItem('token');
             const res = await fetch(`${API_BASE_URL}/api/upload-avatar`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` },
@@ -481,25 +484,26 @@ function setupAvatarUpload() {
             const data = await res.json();
 
             if (res.ok) {
-                // [修改点 3] 成功提示改为英文
-                alert('Profile photo updated successfully!');
-                if (avatarImg) avatarImg.src = data.avatarUrl; 
+                alert('Success!'); 
                 
+                // --- 关键修改：上传成功后，立即用 getFullImageUrl 显示新图片 ---
+                if (avatarImg) {
+                    avatarImg.src = getFullImageUrl(data.avatarUrl);
+                }
+
+                // 更新本地缓存的用户信息
                 if (currentUser) {
                     currentUser.picture = data.avatarUrl;
                     localStorage.setItem('user', JSON.stringify(currentUser));
                 }
-                // 刷新页面以确保所有地方都更新
-                setTimeout(() => window.location.reload(), 500);
             } else {
-                throw new Error(data.message || 'Upload failed');
+                alert('Failed: ' + data.message);
             }
         } catch (err) {
             console.error(err);
-            // [修改点 4] 错误提示改为英文
             alert('Error: ' + err.message);
         } finally {
-            // 清空 input，这样用户下次选同一张图也能触发 change 事件
+            // 清空文件框，保证下次选同一张图也能触发
             fileInput.value = '';
         }
     });
@@ -957,3 +961,23 @@ window.onclick = function(e) {
     }
 };
 
+// --- 修改点 A：加载个人资料页数据 ---
+async function loadProfilePageData() {
+    // 1. 确保拿到用户信息
+    if (!currentUser) await fetchUserProfile();
+    if (!currentUser) return;
+
+    // 2. 填充头像 (关键：这里使用了 getFullImageUrl 来修补链接)
+    const avatarImg = document.getElementById('profile-avatar');
+    if (avatarImg) {
+        avatarImg.src = getFullImageUrl(currentUser.picture);
+    }
+
+    // 3. 填充名字和邮箱
+    const nameInput = document.getElementById('profile-name');
+    const emailInput = document.getElementById('profile-email');
+    
+    // 防止页面上没有这些 ID 导致报错
+    if (nameInput) nameInput.value = currentUser.name || '';
+    if (emailInput) emailInput.value = currentUser.email || '';
+}
