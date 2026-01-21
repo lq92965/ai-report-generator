@@ -111,17 +111,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log("Reportify AI v22.1 Initialized");
 
     // ... 现有的代码 ...
-    if (window.location.pathname.includes('profile.html')) {
+    if (window.location.pathname.includes('profile')) {
         loadProfilePageData();
         setupProfileForm();
     }
 
-    // ⬇️⬇️⬇️ 插入这一段 ⬇️⬇️⬇️
-    // 如果打开的是账户页，就呼叫画师干活！
-    if (window.location.pathname.includes('account.html')) {
+    // 修改：只要路径里包含 'account' 就执行
+    if (window.location.pathname.includes('account')) {
         loadAccountPageAvatar();
     }
-    // ⬆️⬆️⬆️ 插入结束 ⬆️⬆️⬆️
+    
+    // 同理，用量页也建议改一下，防止以后出问题
+    if (window.location.pathname.includes('usage')) {
+        loadRealUsageData(); // 假设你有这个函数
+    }
 
     // 定义内部函数：加载用量数据
     async function loadRealUsageData() {
