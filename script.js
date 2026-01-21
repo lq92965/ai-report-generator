@@ -966,28 +966,44 @@ async function loadMessages(markAsRead = false) {
     }
 }
 
-// --- 模块 K: 用户菜单 (修复版：支持显示头像) ---
+// --- 模块 K: 用户菜单 (最终优化版) ---
 function setupUserDropdown() {
     const headerRight = document.getElementById('auth-container');
     if (!headerRight) return;
     
+    // 如果没有登录
     if (!currentUser) {
-        headerRight.innerHTML = `<button class="text-gray-600 hover:text-blue-600 font-medium px-3 py-2 mr-2" onclick="openModal('login')">Login</button><button class="bg-blue-600 text-white px-5 py-2 rounded-full font-bold shadow-lg hover:bg-blue-700" onclick="openModal('signup')">Get Started</button>`;
+        headerRight.innerHTML = `
+            <button class="text-gray-600 hover:text-blue-600 font-medium px-3 py-2 mr-2" onclick="openModal('login')">Login</button>
+            <button class="bg-blue-600 text-white px-5 py-2 rounded-full font-bold shadow-lg hover:bg-blue-700" onclick="openModal('signup')">Get Started</button>
+        `;
     } else {
-        const initial = currentUser.name ? currentUser.name.charAt(0).toUpperCase() : 'U';
+        // 1. 获取显示名称 (优先名字，没有名字显示邮箱，还没有就显示 'User')
+        const displayName = currentUser.name || currentUser.email.split('@')[0] || 'User';
+        
+        // 2. 获取头像链接
         const picUrl = currentUser.picture ? getFullImageUrl(currentUser.picture) : null;
+        const initial = displayName.charAt(0).toUpperCase();
+
+        // 3. 生成头像 HTML (强制圆形 + 裁剪)
+        // 这里的 object-cover 和 rounded-full 是关键，保证头像是圆的
         const avatarHtml = picUrl
-            ? `<img src="${picUrl}" class="w-10 h-10 rounded-full border-2 border-white shadow-md cursor-pointer" onclick="toggleUserMenu()">`
+            ? `<img src="${picUrl}" class="w-10 h-10 rounded-full border-2 border-white shadow-md cursor-pointer object-cover" onclick="toggleUserMenu()">`
             : `<button onclick="toggleUserMenu()" class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold shadow-md cursor-pointer">${initial}</button>`;
 
+        // 4. 渲染 (去掉了 "Hi, "，直接显示名字)
         headerRight.innerHTML = `
             <div class="relative flex items-center gap-3">
-                <span class="text-sm font-medium text-gray-700 block">Hi, ${currentUser.name || 'User'}</span>
+                <span class="text-sm font-medium text-gray-700 block">${displayName}</span>
                 ${avatarHtml}
                 <div id="user-dropdown" class="hidden absolute right-0 top-14 w-56 bg-white rounded-xl shadow-2xl border border-gray-100 z-[9999] overflow-hidden">
                      <div class="px-4 py-3 border-b bg-gray-50"><p class="text-sm font-bold truncate">${currentUser.email}</p></div>
-                     <a href="profile.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2"><i class="fas fa-user-circle text-blue-500"></i> My Profile</a>
-                     <a href="usage.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2"><i class="fas fa-chart-pie text-green-500"></i> Usage Stats</a>
+                     <a href="profile.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2">
+                        <i class="fas fa-user-circle text-blue-500"></i> My Profile
+                     </a>
+                     <a href="usage.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2">
+                        <i class="fas fa-chart-pie text-green-500"></i> Usage Stats
+                     </a>
                      <a href="#" onclick="logout()" class="block px-4 py-3 text-sm text-red-600 hover:bg-red-50">Logout</a>
                 </div>
             </div>
