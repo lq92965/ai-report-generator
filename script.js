@@ -1,29 +1,19 @@
-/*
- * ===================================================================
- * * Reportify AI - script.js
- * * 依赖: config.js (必须在 HTML 中先引入 config.js)
- * ===================================================================
- */
+/* Reportify AI - script.js */
 
-// --- 1. 全局配置与状态 ---
-
-// [关键] 从 CONFIG 中获取 API 地址
-// 这样我们在 script.js 下面的几百行代码里，依然可以用 API_BASE_URL 这个变量名，
-// 不需要去全文搜索替换，既安全又省事。
-const API_BASE_URL = CONFIG.API_BASE_URL;
-
-// [关键] 检查 getFullImageUrl 是否存在
-// config.js 应该已经定义了这个函数。为了防止报错，我们做一个保险。
-if (typeof getFullImageUrl === 'undefined') {
-    console.error("错误: 未加载 config.js! 请确保在 HTML 中先引入 config.js");
+// --- 1. 获取全局配置 ---
+// 如果 config.js 没加载，就报错提醒
+if (!window.CONFIG) {
+    console.error("❌ 严重错误: config.js 未加载！请在 HTML 中检查 script 顺序。");
 }
 
+// 定义本地变量，方便下面使用
+const API_BASE_URL = window.CONFIG ? window.CONFIG.API_BASE_URL : 'http://localhost:3000';
+
+// 全局状态
 let allTemplates = [];
 let currentUser = null; 
 let currentUserPlan = 'basic'; 
 
-// --- 2. 全局工具函数 ---
-// (注意：原来这里的 getFullImageUrl 函数已经被删除了，因为 config.js 里有)
 
 // --- 2. 全局工具函数 ---
 
