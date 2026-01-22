@@ -22,7 +22,8 @@ const CONFIG = {
 // 全局工具：自动补全图片链接
 // 放在这里，所有页面都能用，不用重复写
 function getFullImageUrl(path) {
-    if (!path) return 'https://via.placeholder.com/150';
+    // 如果没有头像，返回默认的灰色 SVG 图标
+    if (!path) return 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4=';
     if (path.startsWith('http')) return path;
     // 使用配置好的 API 地址拼接
     if (path.startsWith('/uploads')) {
