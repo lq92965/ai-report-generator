@@ -26,24 +26,27 @@
         </div>
 
         <div style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
-            <div style="display: flex; gap: 50px;">
-                <div style="flex-shrink: 0; text-align: center;">
-                     <div style="text-align: center; margin-bottom: 30px;">
-                          <div style="position: relative; display: inline-block; width: 120px; height: 120px;">
-                               <img id="profile-avatar"
-                                    src="https://via.placeholder.com/150"
-                                    alt="Profile Avatar"
-                                    style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); cursor: pointer;"
-                                    onclick="document.getElementById('upload-avatar').click()">
-                     </div>
-
-                    <input type="file" id="upload-avatar" accept="image/*" style="display: none;">
-                    <div style="margin-top: 15px;">
-                         <button type="button" id="btn-trigger-upload" style="background-color: #f3f4f6; border: 1px solid #d1d5db; color: #374151; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500;">
-                            更换照片
-                         </button>
-                    </div>
+            <div style="display: flex; gap: 50px; align-items: flex-start; margin-top: 30px;">
+    
+            <div style="flex-shrink: 0; text-align: center; width: 150px;">
+                <div style="position: relative; display: inline-block; margin-bottom: 15px;">
+                     <img id="profile-avatar" 
+                          src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4=" 
+                          alt="Profile Avatar" 
+                          style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #fff; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer; background-color: #f3f4f6;"
+                          onclick="document.getElementById('upload-avatar').click()">
                 </div>
+
+                <input type="file" id="upload-avatar" accept="image/*" style="display: none;">
+
+                <button type="button" id="btn-trigger-upload" 
+                        onclick="document.getElementById('upload-avatar').click()"
+                        style="background-color: #f3f4f6; border: 1px solid #d1d5db; color: #374151; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; width: 100%;">
+                    更换照片
+                </button>
+            </div>
+
+            </div>
 
                 <div style="flex-grow: 1;">
                     <form id="profile-form" onsubmit="return false;">
