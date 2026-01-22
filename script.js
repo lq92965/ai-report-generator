@@ -1,13 +1,7 @@
-/* Reportify AI - script.js */
+// --- 1. 获取全局配置 (防崩溃安全模式) ---
+// 即使 config.js 还没加载完，这里也会自动使用 localhost，保证代码不报错！
+const API_BASE_URL = (window.CONFIG && window.CONFIG.API_BASE_URL) || 'http://localhost:3000';
 
-// --- 1. 获取全局配置 ---
-// 如果 config.js 没加载，就报错提醒
-if (!window.CONFIG) {
-    console.error("❌ 严重错误: config.js 未加载！请在 HTML 中检查 script 顺序。");
-}
-
-// 定义本地变量，方便下面使用
-const { API_BASE_URL } = window.CONFIG;
 // 全局状态
 let allTemplates = [];
 let currentUser = null; 
@@ -1063,4 +1057,3 @@ async function loadAccountPageAvatar() {
         console.error("错误：在页面上找不到 id='account-hub-avatar' 的元素！");
     }
 }
-
