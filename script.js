@@ -1,12 +1,29 @@
-// --- 1. 获取全局配置 (防崩溃安全模式) ---
-// 即使 config.js 还没加载完，这里也会自动使用 localhost，保证代码不报错！
-const API_BASE_URL = (window.CONFIG && window.CONFIG.API_BASE_URL) || 'http://localhost:3000';
+// --- 1. 核心配置 (手动管理) ---
+// 如果你在本地开发，请用 http://localhost:3000
+// 如果上线，请改为 https://goreportify.com
+const API_BASE_URL = 'https://goreportify.com';
+
 
 // 全局状态
 let allTemplates = [];
 let currentUser = null; 
 let currentUserPlan = 'basic'; 
 
+// [新增] 图片地址处理工具 (必须加在这里，否则后面会报错)
+function getFullImageUrl(path) {
+    // 1. 定义默认头像 (Base64灰色圆底图)，防止图片裂开
+    const DEFAULT_ICON = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4=';
+
+    // 2. 拦截脏数据 (如果数据库存的是那个打不开的国外网站，强制用默认图)
+    if (!path || path.includes('via.placeholder.com')) return DEFAULT_ICON;
+
+    // 3. 如果已经是完整链接 (比如 Base64 或 http)，直接返回
+    if (path.startsWith('data:') || path.startsWith('http')) return path;
+
+    // 4. 如果是本地路径，拼接 API 地址
+    const cleanPath = path.startsWith('/') ? path : '/' + path;
+    return `${API_BASE_URL}${cleanPath}`;
+}
 
 // --- 2. 全局工具函数 ---
 
@@ -1034,59 +1051,40 @@ async function loadProfilePageData() {
     if (emailInput) emailInput.value = currentUser.email || '';
 }
 
-// =================================================
-// 🟢 [重构] 统一的头像加载逻辑 (防御性编程版)
-// =================================================
-
+// --- [重写] 账户页头像加载 (强制圆框版) ---
 async function loadAccountPageAvatar() {
-    console.log("🔍 [System] 开始加载账户页大头像..."); 
-
-    // 1. 获取大头像元素
+    console.log("正在加载账户页头像...");
     const bigAvatar = document.getElementById('account-hub-avatar');
-    if (!bigAvatar) {
-        console.warn("⚠️ 页面上没找到 id='account-hub-avatar' 的元素，跳过。");
-        return;
-    }
+    
+    // 如果页面上没这个元素（比如在首页），直接退出
+    if (!bigAvatar) return;
 
-    // 2. 准备默认头像 (SVG Base64)，作为最后的保底
-    // 注意：这里直接硬编码，防止 config 读取失败
-    const FALLBACK_AVATAR = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4=';
+    // 1. 确保有用户信息
+    if (!currentUser) await fetchUserProfile();
 
-    // 3. 绑定错误处理 (这是关键！)
-    // 如果图片加载失败 (被浏览器拦截、404等)，立刻换成默认图，保证不裂开
-    bigAvatar.onerror = function() {
-        console.error("❌ 图片加载被拦截或失败，已自动切换回默认头像。");
-        this.src = FALLBACK_AVATAR;
-        // 保持圆形样式
-        this.style.objectFit = 'cover';
-        this.style.borderRadius = '50%';
-    };
-
-    // 4. 确保拿到用户信息
-    // 如果全局变量没准备好，尝试重新获取
-    if (!currentUser) {
-        console.log("⏳ 用户信息未就绪，尝试重新获取...");
-        await fetchUserProfile();
-    }
-
-    // 5. 决定使用什么图片地址
-    let targetUrl = FALLBACK_AVATAR; // 默认先用保底图
-
+    // 2. 计算图片地址
+    let finalUrl;
     if (currentUser && currentUser.picture) {
-        // 使用 config.js 里的工具处理地址 (如果 config 没加载，就用原值)
-        if (window.getFullImageUrl) {
-            targetUrl = window.getFullImageUrl(currentUser.picture);
-        } else {
-            // 降级处理：手动拼接
-            const pic = currentUser.picture;
-            if (pic.startsWith('http') || pic.startsWith('data:')) targetUrl = pic;
-            else targetUrl = `http://localhost:3000${pic.startsWith('/')?'':'/'}${pic}`;
-        }
+        finalUrl = getFullImageUrl(currentUser.picture);
     } else {
-        console.log("ℹ️ 用户未上传头像，使用默认图。");
+        finalUrl = getFullImageUrl(null); // 获取默认图
     }
 
-    // 6. 执行赋值
-    console.log("✅ 更新头像地址为:", targetUrl);
-    bigAvatar.src = targetUrl;
+    // 3. [关键] 强制应用样式 (解决大方块问题)
+    // 不管 HTML/CSS 怎么写，这里强制把它变成圆的
+    bigAvatar.style.width = '100px';
+    bigAvatar.style.height = '100px';
+    bigAvatar.style.borderRadius = '50%'; // 变圆
+    bigAvatar.style.objectFit = 'cover';  // 裁剪防变形
+    bigAvatar.style.border = '4px solid #fff';
+    bigAvatar.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
+
+    // 4. 设置图片与错误处理
+    bigAvatar.src = finalUrl;
+    
+    // 如果加载失败（被墙或404），自动切回默认图
+    bigAvatar.onerror = function() {
+        console.warn("头像加载失败，已切换为默认图");
+        this.src = getFullImageUrl(null);
+    };
 }
