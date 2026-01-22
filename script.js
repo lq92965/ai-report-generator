@@ -1034,26 +1034,59 @@ async function loadProfilePageData() {
     if (emailInput) emailInput.value = currentUser.email || '';
 }
 
-// --- [补全] 账户页大头像加载函数 ---
+// =================================================
+// 🟢 [重构] 统一的头像加载逻辑 (防御性编程版)
+// =================================================
+
 async function loadAccountPageAvatar() {
-    console.log("正在尝试加载大头像..."); // 调试日志
-    
-    // 1. 确保拿到用户信息
-    if (!currentUser) await fetchUserProfile();
-    if (!currentUser || !currentUser.picture) {
-        console.log("没有用户信息或头像，跳过。");
+    console.log("🔍 [System] 开始加载账户页大头像..."); 
+
+    // 1. 获取大头像元素
+    const bigAvatar = document.getElementById('account-hub-avatar');
+    if (!bigAvatar) {
+        console.warn("⚠️ 页面上没找到 id='account-hub-avatar' 的元素，跳过。");
         return;
     }
 
-    // 2. 找到大相框
-    const bigAvatar = document.getElementById('account-hub-avatar');
-    
-    // 3. 填入图片
-    if (bigAvatar) {
-        const fullUrl = getFullImageUrl(currentUser.picture);
-        console.log("找到大头像元素，正在更新为:", fullUrl);
-        bigAvatar.src = fullUrl;
-    } else {
-        console.error("错误：在页面上找不到 id='account-hub-avatar' 的元素！");
+    // 2. 准备默认头像 (SVG Base64)，作为最后的保底
+    // 注意：这里直接硬编码，防止 config 读取失败
+    const FALLBACK_AVATAR = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4=';
+
+    // 3. 绑定错误处理 (这是关键！)
+    // 如果图片加载失败 (被浏览器拦截、404等)，立刻换成默认图，保证不裂开
+    bigAvatar.onerror = function() {
+        console.error("❌ 图片加载被拦截或失败，已自动切换回默认头像。");
+        this.src = FALLBACK_AVATAR;
+        // 保持圆形样式
+        this.style.objectFit = 'cover';
+        this.style.borderRadius = '50%';
+    };
+
+    // 4. 确保拿到用户信息
+    // 如果全局变量没准备好，尝试重新获取
+    if (!currentUser) {
+        console.log("⏳ 用户信息未就绪，尝试重新获取...");
+        await fetchUserProfile();
     }
+
+    // 5. 决定使用什么图片地址
+    let targetUrl = FALLBACK_AVATAR; // 默认先用保底图
+
+    if (currentUser && currentUser.picture) {
+        // 使用 config.js 里的工具处理地址 (如果 config 没加载，就用原值)
+        if (window.getFullImageUrl) {
+            targetUrl = window.getFullImageUrl(currentUser.picture);
+        } else {
+            // 降级处理：手动拼接
+            const pic = currentUser.picture;
+            if (pic.startsWith('http') || pic.startsWith('data:')) targetUrl = pic;
+            else targetUrl = `http://localhost:3000${pic.startsWith('/')?'':'/'}${pic}`;
+        }
+    } else {
+        console.log("ℹ️ 用户未上传头像，使用默认图。");
+    }
+
+    // 6. 执行赋值
+    console.log("✅ 更新头像地址为:", targetUrl);
+    bigAvatar.src = targetUrl;
 }
