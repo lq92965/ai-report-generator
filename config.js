@@ -21,13 +21,26 @@ const CONFIG = {
 
 // 全局工具：自动补全图片链接
 // 放在这里，所有页面都能用，不用重复写
+// --- 修复版图片处理函数 (拦截坏地址) ---
 function getFullImageUrl(path) {
-    // 如果没有头像，返回默认的灰色 SVG 图标
-    if (!path) return 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4=';
+    // 1. 定义那个永远不会挂的灰色默认图
+    const DEFAULT_ICON = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4=';
+
+    // 2. 如果没有路径，直接返回默认图
+    if (!path) return DEFAULT_ICON;
+
+    // 3. 🚨【核心拦截】🚨
+    // 如果数据库里存的是那个打不开的国外网站，立刻拦截，强制返回默认图！
+    if (path.includes('via.placeholder.com')) {
+        return DEFAULT_ICON;
+    }
+
+    // 4. 正常逻辑
     if (path.startsWith('http')) return path;
-    // 使用配置好的 API 地址拼接
     if (path.startsWith('/uploads')) {
         return `${CONFIG.API_BASE_URL}${path}`;
     }
-    return path;
+    
+    // 其他情况返回默认图
+    return DEFAULT_ICON;
 }
