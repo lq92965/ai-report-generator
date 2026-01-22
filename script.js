@@ -7,8 +7,7 @@ if (!window.CONFIG) {
 }
 
 // 定义本地变量，方便下面使用
-const API_BASE_URL = window.CONFIG ? window.CONFIG.API_BASE_URL : 'http://localhost:3000';
-
+const { API_BASE_URL } = window.CONFIG;
 // 全局状态
 let allTemplates = [];
 let currentUser = null; 
@@ -1064,3 +1063,4 @@ async function loadAccountPageAvatar() {
         console.error("错误：在页面上找不到 id='account-hub-avatar' 的元素！");
     }
 }
+
