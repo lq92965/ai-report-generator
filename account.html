@@ -1,80 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Account - Reportify AI</title>
-    <link rel="stylesheet" href="style.css?v=3.0">
-</head>
-<body style="align-items: stretch !important; display: block !important;">
-    <header class="main-header account-header">
-          <div class="container">
-            <a href="index.html" class="logo">
-                <span class="logo-icon">🐦</span>
-                <span>Reportify AI</span>
-            </a>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html#features">Features</a></li>
-                    <li><a href="index.html#pricing">Pricing</a></li>
-                    <li><a href="index.html#generator">Generator</a></li>
-                </ul>
-            </nav>
-            <div id="auth-container" class="header-actions">
-                </div>
-            </div>
-        </header>
-        
-        <section class="generator-section account-hub">
-            <div class="container">
-            <a href="index.html" class="btn-back" style="margin-bottom: 20px; display: inline-block; text-decoration: none; color: #333;">&larr; Back to Home</a>
-            
-            <h2 class="section-title">My Account</h2>
-            <p class="section-subtitle">Manage your profile, security, and subscription settings.</p>
-            <div style="text-align: center; margin-bottom: 30px;">
-                <div style="display: inline-block; position: relative;">
-                     <img id="account-hub-avatar"
-                          src="https://via.placeholder.com/150"
-                          alt="Profile"
-                          style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 4px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-                </div>
-            </div>
-            <div class="account-hub-grid">
-                <a href="profile.html" class="hub-card">
-                    <h3>Profile</h3>
-                    <p>Update your display name and avatar.</p>
-                </a>
-                
-                <a href="security.html" class="hub-card">
-                    <h3>Security</h3>
-                    <p>Change your password and manage sessions.</p>
-                </a>
-                
-                <a href="subscription.html" class="hub-card">
-                    <h3>Subscription & Billing</h3>
-                    <p>Manage your plan and upgrade to Pro.</p>
-                </a>
-                
-                <a href="usage.html" class="hub-card">
-                    <h3>Usage & Limits</h3>
-                    <p>Check your AI generation and template quotas.</p>
-                </a>
-                
-                <a href="history.html" class="hub-card">
-                    <h3>My Reports</h3>
-                    <p>View and download your past AI reports.</p>
-                </a>
-            </div>
-        </div>
-    </section>
+/* config.js - 全局配置中心 */
+
+// 1. 定义全局配置 (挂在 window 上，防止报错)
+window.CONFIG = {
+    // 后端 API 地址 (本地开发用 localhost:3000)
+    API_BASE_URL: 'http://localhost:3000',
     
-    <footer class="main-footer">
-        <div class="container">
-            <p>&copy; 2025 Reportify AI. All Rights Reserved.</p>
-        </div>
-    </footer>
+    // 默认头像 (Base64 灰色人像，不需要联网，永远不裂)
+    DEFAULT_AVATAR: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4='
+};
+
+// 2. 定义全局图片处理函数
+window.getFullImageUrl = function(path) {
+    // 情况A: 没有路径，或者路径包含那个被墙的国外网站 -> 返回默认图
+    if (!path || path.includes('via.placeholder.com')) {
+        return window.CONFIG.DEFAULT_AVATAR;
+    }
     
-    <script src="config.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
+    // 情况B: 已经是 Base64 或者 完整链接 (http开头) -> 直接用
+    if (path.startsWith('data:') || path.startsWith('http')) {
+        return path;
+    }
+    
+    // 情况C: 本地上传的图片 (uploads开头) -> 拼接 API 地址
+    // 确保前面有斜杠
+    const cleanPath = path.startsWith('/') ? path : '/' + path;
+    return window.CONFIG.API_BASE_URL + cleanPath;
+};
+
+console.log("✅ Config loaded. API:", window.CONFIG.API_BASE_URL);
