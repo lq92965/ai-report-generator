@@ -4,81 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的账户 - Reportify AI</title>
-    <link rel="stylesheet" href="style.css?v=5.0">
+    <link rel="stylesheet" href="style.css?v=6.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* 页面容器限制 */
+        /* 1. 强制容器宽度，防止被挤压 */
         .account-hub .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 20px;
+            max-width: 1200px !important;
+            width: 90% !important;
+            margin: 0 auto !important;
+            padding: 40px 20px !important;
         }
 
-        /* 网格布局核心代码 */
+        /* 2. 强制网格布局 (核心修复) */
         .account-hub-grid {
-            display: grid;
-            /* 自动适应宽度，每列最窄 280px，能放几个放几个 */
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px; /* 卡片之间的间距 */
-            margin-top: 40px;
+            display: grid !important;
+            /* 强制每列最小 250px，不够就换行 */
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+            gap: 25px !important;
+            margin-top: 40px !important;
+            width: 100% !important;
         }
 
-        /* 单个卡片样式 */
+        /* 3. 卡片样式增强 */
         .hub-card {
-            background: white;
-            padding: 30px;
-            border-radius: 16px;
-            border: 1px solid #eaeaea;
-            text-decoration: none; /* 去掉下划线 */
-            color: inherit;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
+            background: white !important;
+            padding: 30px !important;
+            border-radius: 12px !important;
+            border: 1px solid #e5e7eb !important;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important;
+            text-decoration: none !important;
+            color: inherit !important;
+            transition: transform 0.2s !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            min-height: 120px !important; /* 保证高度一致 */
         }
 
-        /* 鼠标悬停效果 */
         .hub-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            border-color: #3b82f6;
+            transform: translateY(-5px) !important;
+            border-color: #2563eb !important;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1) !important;
         }
 
-        /* 卡片标题 */
         .hub-card h3 {
-            margin: 0 0 10px 0;
-            font-size: 1.2rem;
-            color: #111;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            margin: 0 0 8px 0 !important;
+            font-size: 1.1rem !important;
+            font-weight: 700 !important;
+            color: #1f2937 !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
         }
 
-        /* 卡片描述 */
         .hub-card p {
-            margin: 0;
-            color: #666;
-            font-size: 0.95rem;
-            line-height: 1.5;
+            margin: 0 !important;
+            color: #6b7280 !important;
+            font-size: 0.9rem !important;
         }
 
-        /* 图标装饰 */
-        .hub-card i {
-            color: #3b82f6;
-            font-size: 1.1rem;
-        }
-
-        /* 修正大头像区域 */
+        /* 修复大头像居中 */
         .avatar-section {
-            text-align: center; 
-            margin-bottom: 50px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid #eee;
+            text-align: center !important;
+            margin-bottom: 40px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
         }
     </style>
 </head>
@@ -104,10 +96,10 @@
             <a href="index.html" class="btn-back" style="margin-bottom: 20px; display: inline-block; text-decoration: none; color: #666;">&larr; 返回首页</a>
             
             <div class="avatar-section">
-                <h2 class="section-title" style="margin-bottom: 10px;">我的账户</h2>
-                <p class="section-subtitle" style="color:#888;">管理您的个人资料、安全和订阅设置。</p>
+                <h2 style="font-size: 2rem; margin-bottom: 10px;">我的账户</h2>
+                <p style="color: #666;">管理您的个人资料、安全和订阅设置。</p>
                 
-                <div style="margin-top: 30px; display: flex; justify-content: center;">
+                <div style="margin-top: 30px;">
                     <img id="account-hub-avatar" 
                          src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4=" 
                          alt="Profile" 
@@ -117,27 +109,27 @@
             
             <div class="account-hub-grid">
                 <a href="profile.html" class="hub-card">
-                    <h3><i class="fas fa-user-edit"></i> 轮廓 (Profile)</h3>
+                    <h3><i class="fas fa-user-edit" style="color:#3b82f6;"></i> 轮廓 (Profile)</h3>
                     <p>更新您的显示名称和头像。</p>
                 </a>
                 
                 <a href="security.html" class="hub-card">
-                    <h3><i class="fas fa-shield-alt"></i> 安全</h3>
+                    <h3><i class="fas fa-shield-alt" style="color:#10b981;"></i> 安全</h3>
                     <p>修改您的登录密码。</p>
                 </a>
                 
                 <a href="subscription.html" class="hub-card">
-                    <h3><i class="fas fa-credit-card"></i> 订阅</h3>
+                    <h3><i class="fas fa-credit-card" style="color:#8b5cf6;"></i> 订阅</h3>
                     <p>管理您的会员计划。</p>
                 </a>
                 
                 <a href="usage.html" class="hub-card">
-                    <h3><i class="fas fa-chart-line"></i> 用法</h3>
+                    <h3><i class="fas fa-chart-line" style="color:#f59e0b;"></i> 用法</h3>
                     <p>查看您本月的使用额度。</p>
                 </a>
                 
                 <a href="history.html" class="hub-card">
-                    <h3><i class="fas fa-history"></i> 我的报告</h3>
+                    <h3><i class="fas fa-history" style="color:#ef4444;"></i> 我的报告</h3>
                     <p>查看并导出您生成的历史文档。</p>
                 </a>
             </div>
