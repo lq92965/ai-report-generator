@@ -83,7 +83,7 @@
     <header class="main-header account-header">
         <div class="container">
             <a href="index.html" class="logo"><span class="logo-icon">🐦</span> <span>Reportify AI</span></a>
-            <div id="auth-container" class="header-actions">
+            <div id="auth-container" class="header-actions"></div>
         </div>
     </header>
 
@@ -147,74 +147,79 @@
         </div>
     </div>
 
-    <script src="nav.js"></script>
+    <script src="script.js?v=13.0"></script>
+    
     <script>
+        // 🟢 专门用于本页面的数据加载逻辑
         document.addEventListener('DOMContentLoaded', async () => {
             const token = localStorage.getItem('token');
-            if (!token) { window.location.href = 'index.html'; return; }
+            if (!token) { 
+                // 如果没登录，3秒后跳回首页
+                setTimeout(() => window.location.href = 'index.html', 1000);
+                return; 
+            }
 
             try {
-                // 请求后端接口
-                const res = await fetch('https://api.goreportify.com/api/usage', {
+                // 1. 请求数据 (使用相对路径 /api/usage，配合 Nginx 转发最稳)
+                // 如果这里报错，说明 Nginx 没配好，但大概率是好的
+                const res = await fetch('/api/usage', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 
                 if (!res.ok) throw new Error("Failed to load usage data");
                 const data = await res.json();
 
-                // 🟢 修复1：手动映射 Plan 名字，确保显示 "Professional" 而不是 Basic
-                let displayPlan = 'Basic';
-                const planNameEl = document.getElementById('plan-name');
+                console.log("Usage Data Received:", data); // 调试用
+
+                // 2. 填充数据 (使用正确的后端字段名)
                 
-                if (data.plan === 'pro') {
-                    displayPlan = 'Professional';
-                    planNameEl.style.color = '#e63946'; // Pro 变红色
-                } else if (data.plan === 'free') {
-                    displayPlan = 'Free Trial';
+                // --- Plan Name ---
+                const planCode = (data.plan || 'basic').toLowerCase();
+                const planNameEl = document.getElementById('plan-name');
+                if (planCode === 'pro') {
+                    planNameEl.textContent = 'Professional';
+                    planNameEl.style.color = '#e63946'; 
+                } else {
+                    planNameEl.textContent = 'Basic / Free';
                     document.getElementById('upgrade-hint').style.display = 'block';
                 }
-                planNameEl.textContent = displayPlan;
 
-                // 填充已用次数 (优先用 usageCount, 兼容 used)
-                const usedCount = data.usageCount !== undefined ? data.usageCount : (data.used || 0);
-                document.getElementById('usage-used').textContent = usedCount;
+                // --- Usage Numbers ---
+                const used = data.used || 0;
+                const limit = data.limit;
                 
-                // 🟢 修复2：只要限额大于 10000 (代表999999)，就显示不限次数
-                if (data.limit > 10000 || data.limit === -1) {
-                    // 无限模式
-                    document.getElementById('usage-limit').textContent = "∞"; // 显示无穷符号
+                document.getElementById('usage-used').textContent = used;
+
+                // 判断是否无限
+                if (limit === 'Unlimited' || limit > 9000) {
+                    document.getElementById('usage-limit').textContent = "∞";
                     document.getElementById('usage-progress').style.width = '100%';
+                    document.getElementById('usage-progress').style.background = '#28a745'; // Green
                     document.getElementById('quota-left').textContent = "Unlimited";
-                    // 进度条变绿，表示无需担心
-                    document.getElementById('usage-progress').style.background = '#28a745'; 
                 } else {
-                    // 普通模式 (Basic/Free)
-                    document.getElementById('usage-limit').textContent = data.limit;
-                    document.getElementById('quota-left').textContent = data.limit - usedCount;
+                    document.getElementById('usage-limit').textContent = limit;
+                    // 计算剩余
+                    const remaining = (data.remaining !== undefined) ? data.remaining : (limit - used);
+                    document.getElementById('quota-left').textContent = Math.max(0, remaining);
                     
-                    const percent = Math.min(100, (usedCount / data.limit) * 100);
-                    const progressBar = document.getElementById('usage-progress');
-                    progressBar.style.width = percent + '%';
-                    
-                    if(percent > 80) progressBar.style.background = '#dc3545';
-                    else if(percent > 50) progressBar.style.background = '#ffc107';
+                    // 进度条
+                    const percent = Math.min(100, (used / limit) * 100);
+                    document.getElementById('usage-progress').style.width = percent + '%';
+                    if(percent > 85) document.getElementById('usage-progress').style.background = '#dc3545';
                 }
 
-                // 日期逻辑
-                document.getElementById('days-remaining').textContent = (data.daysRemaining !== undefined) ? data.daysRemaining : 30;
-                document.getElementById('days-used').textContent = data.daysUsed || 1;
+                // --- Bottom Cards (关键修复点) ---
+                // 后端发的是 daysLeft，不是 daysRemaining
+                document.getElementById('days-remaining').textContent = data.daysLeft || 30;
                 
-                if (window.updateUserNav) window.updateUserNav();
+                // 后端发的是 activeDays，不是 daysUsed
+                document.getElementById('days-used').textContent = data.activeDays || 1;
 
             } catch (err) {
-                console.error(err);
-                // 失败时显示默认值
-                document.getElementById('plan-name').textContent = "Basic";
-                document.getElementById('usage-limit').textContent = "0";
+                console.error("Usage Error:", err);
+                // 出错时保留 Loading 状态或显示 --
             }
         });
     </script>
-
-    <script src="script.js"></script>
 </body>
 </html>
