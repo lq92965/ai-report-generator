@@ -1,11 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Account - Reportify AI</title>
-    <link rel="stylesheet" href="style.css?v=3.0">
+    <title>我的账户 - Reportify AI</title>
+    <link rel="stylesheet" href="style.css?v=5.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* 页面容器限制 */
+        .account-hub .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* 网格布局核心代码 */
+        .account-hub-grid {
+            display: grid;
+            /* 自动适应宽度，每列最窄 280px，能放几个放几个 */
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px; /* 卡片之间的间距 */
+            margin-top: 40px;
+        }
+
+        /* 单个卡片样式 */
+        .hub-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid #eaeaea;
+            text-decoration: none; /* 去掉下划线 */
+            color: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 鼠标悬停效果 */
+        .hub-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            border-color: #3b82f6;
+        }
+
+        /* 卡片标题 */
+        .hub-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+            color: #111;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* 卡片描述 */
+        .hub-card p {
+            margin: 0;
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* 图标装饰 */
+        .hub-card i {
+            color: #3b82f6;
+            font-size: 1.1rem;
+        }
+
+        /* 修正大头像区域 */
+        .avatar-section {
+            text-align: center; 
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
 </head>
 <body>
     <header class="main-header account-header">
@@ -16,8 +91,8 @@
             </a>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="index.html#features">Features</a></li>
-                    <li><a href="index.html#pricing">Pricing</a></li>
+                    <li><a href="index.html#features">特征</a></li>
+                    <li><a href="index.html#pricing">定价</a></li>
                 </ul>
             </nav>
             <div id="auth-container" class="header-actions"></div>
@@ -26,40 +101,44 @@
     
     <section class="generator-section account-hub">
         <div class="container">
-            <a href="index.html" class="btn-back" style="margin-bottom: 20px; display: inline-block; text-decoration: none; color: #333;">&larr; Back to Home</a>
+            <a href="index.html" class="btn-back" style="margin-bottom: 20px; display: inline-block; text-decoration: none; color: #666;">&larr; 返回首页</a>
             
-            <h2 class="section-title">My Account</h2>
-            <p class="section-subtitle">Manage your profile, security, and subscription settings.</p>
-            
-            <div style="text-align: center; margin-bottom: 40px;">
-                <div style="display: inline-block; position: relative; width: 100px; height: 100px;">
+            <div class="avatar-section">
+                <h2 class="section-title" style="margin-bottom: 10px;">我的账户</h2>
+                <p class="section-subtitle" style="color:#888;">管理您的个人资料、安全和订阅设置。</p>
+                
+                <div style="margin-top: 30px; display: flex; justify-content: center;">
                     <img id="account-hub-avatar" 
-                         src="https://via.placeholder.com/150" 
+                         src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4=" 
                          alt="Profile" 
-                         style="width: 100px !important; height: 100px !important; border-radius: 50% !important; object-fit: cover !important; border: 4px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: block;">
+                         style="width: 120px !important; height: 120px !important; border-radius: 50% !important; object-fit: cover !important; border: 4px solid #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
                 </div>
             </div>
             
             <div class="account-hub-grid">
                 <a href="profile.html" class="hub-card">
-                    <h3>Profile</h3>
-                    <p>Update your display name and avatar.</p>
+                    <h3><i class="fas fa-user-edit"></i> 轮廓 (Profile)</h3>
+                    <p>更新您的显示名称和头像。</p>
                 </a>
+                
                 <a href="security.html" class="hub-card">
-                    <h3>Security</h3>
-                    <p>Change your password.</p>
+                    <h3><i class="fas fa-shield-alt"></i> 安全</h3>
+                    <p>修改您的登录密码。</p>
                 </a>
+                
                 <a href="subscription.html" class="hub-card">
-                    <h3>Subscription</h3>
-                    <p>Manage your plan.</p>
+                    <h3><i class="fas fa-credit-card"></i> 订阅</h3>
+                    <p>管理您的会员计划。</p>
                 </a>
+                
                 <a href="usage.html" class="hub-card">
-                    <h3>Usage</h3>
-                    <p>Check your limits.</p>
+                    <h3><i class="fas fa-chart-line"></i> 用法</h3>
+                    <p>查看您本月的使用额度。</p>
                 </a>
+                
                 <a href="history.html" class="hub-card">
-                    <h3>My Reports</h3>
-                    <p>View past reports.</p>
+                    <h3><i class="fas fa-history"></i> 我的报告</h3>
+                    <p>查看并导出您生成的历史文档。</p>
                 </a>
             </div>
         </div>
@@ -67,7 +146,7 @@
     
     <footer class="main-footer">
         <div class="container">
-            <p>&copy; 2026 Reportify AI. All Rights Reserved.</p>
+            <p>&copy; 2026 Reportify AI. 版权所有。</p>
         </div>
     </footer>
     
