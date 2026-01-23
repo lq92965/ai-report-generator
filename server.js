@@ -2,10 +2,18 @@ import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
 import { GoogleGenerativeAI } from "@google/generative-ai"; 
-import { MongoClient, ObjectId } from 'mongodb';
+// ⬇️ 关键修改：必须引入 ObjectId，否则下面会报错
+import { MongoClient, ObjectId } from 'mongodb'; 
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
+import multer from 'multer';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// 修复路径定义
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -32,6 +40,23 @@ connectDB();
 // 3. CORS 配置
 app.use(cors({ origin: true, credentials: true, methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'] }));
 app.use(express.json());
+// --- 修改开始：让浏览器能访问 uploads 里的图片 ---
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// --- 修改结束 ---
+// ... 保留上面的 app.use ...
+
+// --- 关键修复：使用绝对路径保存文件 ---
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        // 使用 path.join 确保一定能找到这个文件夹
+        cb(null, path.join(__dirname, 'uploads')); 
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, 'avatar-' + uniqueSuffix + path.extname(file.originalname));
+    }
+});
+const upload = multer({ storage: storage });
 
 // 鉴权中间件
 const authenticateToken = (req, res, next) => {
@@ -141,9 +166,69 @@ app.post('/api/login', async (req, res) => {
     } catch (e) { res.status(500).json({ message: "Error" }); }
 });
 
+// --- 修改：获取用户信息 + 统计用量 ---
 app.get('/api/me', authenticateToken, async (req, res) => {
-    const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) }, { projection: { password: 0 } });
-    res.json(user);
+    try {
+        const user = await db.collection('users').findOne(
+            { _id: new ObjectId(req.user.userId) }, 
+            { projection: { password: 0 } }
+        );
+        
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        // 统计 reports 集合中，该用户的报告数量
+        const usageCount = await db.collection('reports').countDocuments({ userId: req.user.userId });
+
+        // 合并数据返回
+        res.json({ ...user, usageCount });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ message: "Error" });
+    }
+});
+
+// --- 新增：头像上传接口 ---
+app.post('/api/upload-avatar', authenticateToken, upload.single('avatar'), async (req, res) => {
+    try {
+        if (!req.file) return res.status(400).json({ message: '请上传文件' });
+        
+        // 注意：这里返回给前端的 URL 依然是相对的，方便浏览器访问
+        const avatarUrl = `/uploads/${req.file.filename}`;
+        
+        await db.collection('users').updateOne(
+            { _id: new ObjectId(req.user.userId) },
+            { $set: { picture: avatarUrl } } 
+        );
+        
+        res.json({ message: '上传成功', avatarUrl });
+    } catch (e) {
+        // --- 关键：在终端打印具体错误，方便排查 ---
+        console.error("上传失败详情:", e); 
+        res.status(500).json({ message: "服务器内部错误" });
+    }
+});
+
+// --- 新增：更新个人资料 (名字、职位、简介) ---
+app.post('/api/update-profile', authenticateToken, async (req, res) => {
+    try {
+        const { name, job, bio } = req.body;
+        
+        // 构建要更新的数据对象
+        const updateData = {};
+        if (name !== undefined) updateData.name = name;
+        if (job !== undefined) updateData.job = job; // 确保数据库里想存这个字段
+        if (bio !== undefined) updateData.bio = bio;
+
+        await db.collection('users').updateOne(
+            { _id: new ObjectId(req.user.userId) },
+            { $set: updateData }
+        );
+
+        res.json({ message: 'Profile updated successfully', user: updateData });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ message: "Server Error" });
+    }
 });
 
 // --- AI 生成 ---
@@ -240,6 +325,55 @@ app.get('/api/admin/feedbacks', verifyAdmin, async (req, res) => {
 app.get('/api/admin/users', verifyAdmin, async (req, res) => {
     const users = await db.collection('users').find({}, { projection: { password: 0 } }).sort({ createdAt: -1 }).limit(20).toArray();
     res.json(users);
+});
+
+// ==========================================
+// 🟢 [新增] 获取用户历史报告接口
+// ==========================================
+app.get('/api/history', authenticateToken, async (req, res) => {
+    try {
+        // 1. 获取当前登录用户的邮箱 (从 Token 里解密出来的)
+        const userEmail = req.user.email; 
+        console.log("正在查询历史记录，用户:", userEmail);
+
+        // 2. 去数据库 'reports' 集合里查找该用户的报告
+        // (注意：如果你生成报告时存的集合名不是 'reports'，请修改这里)
+        const reports = await db.collection('reports')
+            .find({ userEmail: userEmail }) 
+            .sort({ createdAt: -1 }) // 按时间倒序排列（最新的在前面）
+            .toArray();
+
+        // 3. 返回数据给前端
+        res.json(reports);
+        
+    } catch (error) {
+        console.error("历史记录获取失败:", error);
+        res.status(500).json({ message: "Failed to fetch history" });
+    }
+});
+
+// ==========================================
+// 🟢 [新增] 删除单条报告接口
+// ==========================================
+app.delete('/api/history/:id', authenticateToken, async (req, res) => {
+    try {
+        const reportId = req.params.id;
+        const userEmail = req.user.email;
+
+        const result = await db.collection('reports').deleteOne({
+            _id: new ObjectId(reportId),
+            userEmail: userEmail // 确保只能删除自己的
+        });
+
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ message: "Report not found or unauthorized" });
+        }
+
+        res.json({ message: "Report deleted successfully" });
+    } catch (error) {
+        console.error("删除失败:", error);
+        res.status(500).json({ message: "Delete failed" });
+    }
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
