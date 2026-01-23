@@ -4,73 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Account - Reportify AI</title>
-    <link rel="stylesheet" href="style.css?v=7.0">
+    <link rel="stylesheet" href="style.css?v=8.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* 1. Container Settings */
+        /* 1. Container Fix */
         .account-hub .container {
             max-width: 1200px !important;
-            width: 90% !important;
+            width: 95% !important;
             margin: 0 auto !important;
-            padding: 40px 20px !important;
+            padding: 40px 15px !important;
         }
 
-        /* 2. Grid Layout (Adjusted min-width to 220px to show grid earlier) */
-        .account-hub-grid {
-            display: grid !important;
-            /* If screen is wide, it will be multi-column. If narrow, single column. */
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+        /* 2. THE NEW GRID SYSTEM (Flexbox) */
+        .final-grid-container {
+            display: flex !important;
+            flex-wrap: wrap !important; /* Allow items to wrap */
             gap: 25px !important;
             margin-top: 40px !important;
             width: 100% !important;
+            justify-content: flex-start !important; /* Align left */
         }
 
-        /* 3. Card Styling */
-        .hub-card {
+        /* 3. THE NEW CARD STYLE */
+        .final-card {
+            /* Flex Logic: Grow=1, Shrink=1, Basis=280px */
+            /* This means each card tries to be at least 280px wide */
+            flex: 1 1 280px !important; 
+            max-width: 100% !important; /* Prevent overflow on mobile */
+            
             background: white !important;
             padding: 30px !important;
-            border-radius: 12px !important;
+            border-radius: 16px !important;
             border: 1px solid #e5e7eb !important;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important;
             text-decoration: none !important;
             color: inherit !important;
-            transition: transform 0.2s !important;
+            transition: all 0.2s ease !important;
             display: flex !important;
             flex-direction: column !important;
             justify-content: center !important;
-            min-height: 120px !important;
+            min-height: 140px !important;
         }
 
-        .hub-card:hover {
+        .final-card:hover {
             transform: translateY(-5px) !important;
             border-color: #2563eb !important;
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1) !important;
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.1) !important;
         }
 
-        .hub-card h3 {
-            margin: 0 0 8px 0 !important;
-            font-size: 1.2rem !important;
+        .final-card h3 {
+            margin: 0 0 10px 0 !important;
+            font-size: 1.25rem !important;
             font-weight: 700 !important;
-            color: #1f2937 !important;
+            color: #111827 !important;
             display: flex !important;
             align-items: center !important;
-            gap: 10px !important;
+            gap: 12px !important;
         }
 
-        .hub-card p {
+        .final-card p {
             margin: 0 !important;
             color: #6b7280 !important;
             font-size: 0.95rem !important;
+            line-height: 1.5 !important;
         }
 
-        /* Avatar Section Styling */
+        /* Icons Color */
+        .final-card i {
+            font-size: 1.2em;
+        }
+
+        /* Avatar Section */
         .avatar-section {
             text-align: center !important;
-            margin-bottom: 40px !important;
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: center !important;
+            margin-bottom: 50px !important;
         }
     </style>
 </head>
@@ -96,10 +104,10 @@
             <a href="index.html" class="btn-back" style="margin-bottom: 20px; display: inline-block; text-decoration: none; color: #666;">&larr; Back to Home</a>
             
             <div class="avatar-section">
-                <h2 style="font-size: 2rem; margin-bottom: 10px; color: #111;">My Account</h2>
-                <p style="color: #666;">Manage your profile, security, and subscription settings.</p>
+                <h2 style="font-size: 2.2rem; margin-bottom: 10px; color: #111; font-weight: 800;">My Account</h2>
+                <p style="color: #666; font-size: 1.1rem;">Manage your profile, security, and subscription settings.</p>
                 
-                <div style="margin-top: 30px;">
+                <div style="margin-top: 30px; display: flex; justify-content: center;">
                     <img id="account-hub-avatar" 
                          src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4=" 
                          alt="Profile" 
@@ -107,28 +115,28 @@
                 </div>
             </div>
             
-            <div class="account-hub-grid">
-                <a href="profile.html" class="hub-card">
+            <div class="final-grid-container">
+                <a href="profile.html" class="final-card">
                     <h3><i class="fas fa-user-edit" style="color:#3b82f6;"></i> Profile</h3>
                     <p>Update your display name and avatar.</p>
                 </a>
                 
-                <a href="security.html" class="hub-card">
+                <a href="security.html" class="final-card">
                     <h3><i class="fas fa-shield-alt" style="color:#10b981;"></i> Security</h3>
                     <p>Change your login password.</p>
                 </a>
                 
-                <a href="subscription.html" class="hub-card">
+                <a href="subscription.html" class="final-card">
                     <h3><i class="fas fa-credit-card" style="color:#8b5cf6;"></i> Subscription</h3>
                     <p>Manage your membership plan.</p>
                 </a>
                 
-                <a href="usage.html" class="hub-card">
+                <a href="usage.html" class="final-card">
                     <h3><i class="fas fa-chart-line" style="color:#f59e0b;"></i> Usage</h3>
                     <p>Check your monthly limits.</p>
                 </a>
                 
-                <a href="history.html" class="hub-card">
+                <a href="history.html" class="final-card">
                     <h3><i class="fas fa-history" style="color:#ef4444;"></i> My Reports</h3>
                     <p>View and export your history.</p>
                 </a>
