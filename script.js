@@ -1009,12 +1009,65 @@ window.deleteReport = async function(id) {
     } catch(e) { showToast("Error", "error"); }
 };
 
-// 简单的查看逻辑（弹窗显示）
+// --- 🟢 [重写] 漂亮的查看报告逻辑 ---
 window.viewReport = function(id) {
+    // 1. 找到数据
     const item = window.currentHistoryData.find(r => r._id === id);
-    if(item) {
-        // 这里简单弹个窗，或者你可以做一个专门的 Modal
-        alert(item.content); 
+    if (!item) return;
+
+    // 2. 获取弹窗元素
+    const modal = document.getElementById('report-view-modal');
+    const titleEl = document.getElementById('modal-title');
+    const bodyEl = document.getElementById('modal-body');
+    const copyBtn = document.getElementById('modal-copy-btn');
+
+    if (!modal) return;
+
+    // 3. 填充内容
+    titleEl.innerText = item.title || 'Generated Report';
+    
+    // 关键：使用 marked 库把 Markdown 变成漂亮的 HTML
+    // 如果没有 marked 库，就退化成普通文本
+    if (typeof marked !== 'undefined') {
+        bodyEl.innerHTML = marked.parse(item.content);
+    } else {
+        bodyEl.innerHTML = item.content.replace(/\n/g, '<br>');
+    }
+
+    // 4. 绑定复制按钮功能
+    copyBtn.onclick = function() {
+        navigator.clipboard.writeText(item.content).then(() => {
+            const originalText = copyBtn.innerText;
+            copyBtn.innerText = 'Copied!';
+            setTimeout(() => copyBtn.innerText = originalText, 2000);
+        });
+    };
+
+    // 5. 显示弹窗 (使用 Flex 布局以保证居中)
+    modal.style.display = 'flex';
+    // 禁止背景滚动
+    document.body.style.overflow = 'hidden';
+};
+
+// 关闭弹窗的函数
+window.closeViewModal = function() {
+    const modal = document.getElementById('report-view-modal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = ''; // 恢复滚动
+    }
+};
+
+// 点击遮罩层也能关闭
+window.onclick = function(event) {
+    const modal = document.getElementById('report-view-modal');
+    if (event.target == modal) {
+        closeViewModal();
+    }
+    // (保留原本的用户菜单关闭逻辑)
+    if(!event.target.closest('#auth-container')) { 
+        const m = document.getElementById('user-dropdown'); 
+        if(m) m.classList.add('hidden'); 
     }
 };
 
