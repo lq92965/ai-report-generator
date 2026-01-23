@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usage & Limits - Reportify AI</title>
-    <link rel="stylesheet" href="style.css?v=14.0">
+    <link rel="stylesheet" href="style.css?v=15.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* 强制横向排列，手机端自动垂直 */
         .stats-grid {
             display: flex;
             flex-direction: row;
@@ -52,7 +51,6 @@
             margin-top: 5px;
         }
 
-        /* 进度条 */
         .progress-container {
             background: #e9ecef;
             border-radius: 20px;
@@ -146,33 +144,28 @@
         </div>
     </div>
 
-    <script src="script.js?v=14.0"></script>
+    <script src="script.js?v=15.0"></script>
     
     <script>
-        // 🟢 专门用于本页面的数据加载逻辑
         document.addEventListener('DOMContentLoaded', async () => {
             const token = localStorage.getItem('token');
             if (!token) { 
-                // 如果没登录，1秒后跳回首页
                 setTimeout(() => window.location.href = 'index.html', 1000);
                 return; 
             }
 
             try {
-                // 1. 请求数据 (使用相对路径 /api/usage，配合 Nginx 转发最稳)
-                // 这样无论是在 goreportify.com 还是 api.goreportify.com 都能通
+                // 🟢 关键修复：直接请求 api.goreportify.com，绕过 Nginx 主域名限制
                 const res = await fetch('https://api.goreportify.com/api/usage', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 
-                if (!res.ok) throw new Error("Failed to load usage data");
+                if (!res.ok) throw new Error(`Server returned ${res.status}`);
                 const data = await res.json();
 
-                console.log("Usage Data Received:", data); // 调试用
+                console.log("Usage Data:", data);
 
-                // 2. 填充数据 (🟢 修复点：字段名对应后端)
-                
-                // --- Plan Name ---
+                // --- 1. 填充计划 ---
                 const planCode = (data.plan || 'basic').toLowerCase();
                 const planNameEl = document.getElementById('plan-name');
                 if (planCode === 'pro') {
@@ -183,40 +176,39 @@
                     document.getElementById('upgrade-hint').style.display = 'block';
                 }
 
-                // --- Usage Numbers ---
+                // --- 2. 填充数字 ---
                 const used = data.used || 0;
                 const limit = data.limit;
                 
                 document.getElementById('usage-used').textContent = used;
 
-                // 判断是否无限
+                // 无限模式判断
                 if (limit === 'Unlimited' || limit > 9000) {
                     document.getElementById('usage-limit').textContent = "∞";
                     document.getElementById('usage-progress').style.width = '100%';
-                    document.getElementById('usage-progress').style.background = '#28a745'; // Green
+                    document.getElementById('usage-progress').style.background = '#28a745';
                     document.getElementById('quota-left').textContent = "Unlimited";
                 } else {
                     document.getElementById('usage-limit').textContent = limit;
-                    // 计算剩余 (优先用 remaining)
                     const remaining = (data.remaining !== undefined) ? data.remaining : (limit - used);
                     document.getElementById('quota-left').textContent = Math.max(0, remaining);
                     
-                    // 进度条
                     const percent = Math.min(100, (used / limit) * 100);
                     document.getElementById('usage-progress').style.width = percent + '%';
                     if(percent > 85) document.getElementById('usage-progress').style.background = '#dc3545';
                 }
 
-                // --- Bottom Cards (🟢 关键修复点：名字要对！) ---
-                // 后端发的是 daysLeft，这里就得接 daysLeft
+                // --- 3. 填充底部卡片 ---
+                // 后端发 daysLeft -> 对应前端 days-remaining
                 document.getElementById('days-remaining').textContent = data.daysLeft || 30;
                 
-                // 后端发的是 activeDays，这里就得接 activeDays
+                // 后端发 activeDays -> 对应前端 days-used
                 document.getElementById('days-used').textContent = data.activeDays || 1;
 
             } catch (err) {
-                console.error("Usage Error:", err);
-                document.getElementById('plan-name').textContent = "Error";
+                console.error("Usage Load Error:", err);
+                document.getElementById('plan-name').textContent = "Error loading data";
+                // 可以在这里加一个 Toast 提示用户
             }
         });
     </script>
