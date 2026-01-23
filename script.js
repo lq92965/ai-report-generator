@@ -126,38 +126,51 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadRealUsageData(); // 假设你有这个函数
     }
 
-    // 定义内部函数：加载用量数据
-    async function loadRealUsageData() {
-        const usedEl = document.getElementById('usage-used');
-        const totalEl = document.getElementById('usage-total');
-        const planEl = document.getElementById('usage-plan');
+    // --- [重写] 加载用量数据 (修复链接 + 补充底部数据) ---
+async function loadRealUsageData() {
+    // 1. 获取页面上的元素 ID
+    const usedEl = document.getElementById('usage-used');
+    const totalEl = document.getElementById('usage-total');
+    const planEl = document.getElementById('usage-plan');
+    
+    // 获取底部三个卡片的 ID (请确保 usage.html 里有这些 ID)
+    // 建议你把 usage.html 里的数字 span 分别加上 id="usage-remaining", id="usage-days", id="usage-active"
+    // 如果没有 ID，我们尝试用 querySelector 获取
+    const remainingEl = document.getElementById('usage-remaining') || document.querySelector('.card-remaining h3') || document.querySelectorAll('.stat-card h3')[0];
+    const daysEl = document.getElementById('usage-days') || document.querySelector('.card-days h3') || document.querySelectorAll('.stat-card h3')[1];
+    const activeEl = document.getElementById('usage-active') || document.querySelector('.card-active h3') || document.querySelectorAll('.stat-card h3')[2];
 
-        try {
-            const token = localStorage.getItem('token');
-            if (!token) return; // 没有token就不查了
+    try {
+        const token = localStorage.getItem('token');
+        if (!token) return;
 
-            // 强制请求后端最新的 /api/me 数据
-            const res = await fetch('/api/me', {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
+        // 🟢 关键修复：必须使用 API_BASE_URL，不能直接写 '/api/...'
+        // 并且我们改用刚才新写的 /api/usage 接口，数据更全
+        const res = await fetch(`${API_BASE_URL}/api/usage`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
 
-            if (res.ok) {
-                const user = await res.json();
+        if (res.ok) {
+            const data = await res.json();
 
-                // 填充页面数据
-                if (planEl) planEl.innerText = (user.plan || 'Free').toUpperCase();
+            // 2. 填充数据
+            if (planEl) planEl.innerText = data.plan;
+            if (usedEl) usedEl.innerText = data.used;
+            if (totalEl) totalEl.innerText = data.limit;
 
-                // 获取后端算出来的 usageCount
-                const count = user.usageCount || 0;
-                const limit = user.plan === 'pro' ? 'Unlimited' : 10; 
-
-                if (usedEl) usedEl.innerText = count;
-                if (totalEl) totalEl.innerText = limit;
-            }
-        } catch (e) {
-            console.error("加载用量数据失败", e);
+            // 3. 填充底部三个数据
+            if (remainingEl) remainingEl.innerText = data.remaining;
+            if (daysEl) daysEl.innerText = data.daysLeft;
+            if (activeEl) activeEl.innerText = data.activeDays;
+            
+            console.log("用量数据加载成功:", data);
+        } else {
+            console.error("加载用量失败，后端返回:", res.status);
         }
+    } catch (e) {
+        console.error("加载用量网络错误", e);
     }
+}
 
 }); // <--- 【修复关键点】这里之前少了这个闭合标签，导致整个文件报错！
 
