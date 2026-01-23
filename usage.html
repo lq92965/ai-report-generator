@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usage & Limits - Reportify AI</title>
-    <link rel="stylesheet" href="style.css?v=13.0">
+    <link rel="stylesheet" href="style.css?v=14.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* 强制横向排列，手机端自动垂直 */
@@ -43,7 +43,7 @@
             font-size: 0.95rem;
             color: #666;
             font-weight: 600;
-            text-transform: uppercase; /* 英文习惯 */
+            text-transform: uppercase;
         }
         
         .stat-desc {
@@ -70,7 +70,6 @@
             transition: width 0.8s ease-in-out;
         }
         
-        /* 手机端适配 */
         @media (max-width: 768px) {
             .stats-grid { flex-direction: column; }
             .container { padding: 0 15px; }
@@ -147,21 +146,21 @@
         </div>
     </div>
 
-    <script src="script.js?v=13.0"></script>
+    <script src="script.js?v=14.0"></script>
     
     <script>
         // 🟢 专门用于本页面的数据加载逻辑
         document.addEventListener('DOMContentLoaded', async () => {
             const token = localStorage.getItem('token');
             if (!token) { 
-                // 如果没登录，3秒后跳回首页
+                // 如果没登录，1秒后跳回首页
                 setTimeout(() => window.location.href = 'index.html', 1000);
                 return; 
             }
 
             try {
                 // 1. 请求数据 (使用相对路径 /api/usage，配合 Nginx 转发最稳)
-                // 如果这里报错，说明 Nginx 没配好，但大概率是好的
+                // 这样无论是在 goreportify.com 还是 api.goreportify.com 都能通
                 const res = await fetch('/api/usage', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
@@ -171,7 +170,7 @@
 
                 console.log("Usage Data Received:", data); // 调试用
 
-                // 2. 填充数据 (使用正确的后端字段名)
+                // 2. 填充数据 (🟢 修复点：字段名对应后端)
                 
                 // --- Plan Name ---
                 const planCode = (data.plan || 'basic').toLowerCase();
@@ -198,7 +197,7 @@
                     document.getElementById('quota-left').textContent = "Unlimited";
                 } else {
                     document.getElementById('usage-limit').textContent = limit;
-                    // 计算剩余
+                    // 计算剩余 (优先用 remaining)
                     const remaining = (data.remaining !== undefined) ? data.remaining : (limit - used);
                     document.getElementById('quota-left').textContent = Math.max(0, remaining);
                     
@@ -208,16 +207,16 @@
                     if(percent > 85) document.getElementById('usage-progress').style.background = '#dc3545';
                 }
 
-                // --- Bottom Cards (关键修复点) ---
-                // 后端发的是 daysLeft，不是 daysRemaining
+                // --- Bottom Cards (🟢 关键修复点：名字要对！) ---
+                // 后端发的是 daysLeft，这里就得接 daysLeft
                 document.getElementById('days-remaining').textContent = data.daysLeft || 30;
                 
-                // 后端发的是 activeDays，不是 daysUsed
+                // 后端发的是 activeDays，这里就得接 activeDays
                 document.getElementById('days-used').textContent = data.activeDays || 1;
 
             } catch (err) {
                 console.error("Usage Error:", err);
-                // 出错时保留 Loading 状态或显示 --
+                document.getElementById('plan-name').textContent = "Error";
             }
         });
     </script>
