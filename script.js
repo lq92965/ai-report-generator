@@ -976,45 +976,65 @@ async function loadMessages(markAsRead = false) {
     }
 }
 
-// --- 模块 K: 用户菜单 (最终优化版) ---
+// --- 模块 K: 用户菜单 (修复版：强制圆形 + 垂直居中 + 优先显名) ---
 function setupUserDropdown() {
     const headerRight = document.getElementById('auth-container');
     if (!headerRight) return;
     
-    // 如果没有登录
+    // 1. 如果没有登录
     if (!currentUser) {
         headerRight.innerHTML = `
-            <button class="text-gray-600 hover:text-blue-600 font-medium px-3 py-2 mr-2" onclick="openModal('login')">Login</button>
-            <button class="bg-blue-600 text-white px-5 py-2 rounded-full font-bold shadow-lg hover:bg-blue-700" onclick="openModal('signup')">Get Started</button>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <button onclick="openModal('login')" style="background:none; border:none; cursor:pointer; font-weight:500; color:#555;">Login</button>
+                <button onclick="openModal('signup')" style="background:#2563eb; color:white; border:none; padding:8px 20px; border-radius:20px; cursor:pointer; font-weight:bold;">Get Started</button>
+            </div>
         `;
     } else {
-        // 1. 获取显示名称 (优先名字，没有名字显示邮箱，还没有就显示 'User')
-        const displayName = currentUser.name || currentUser.email.split('@')[0] || 'User';
+        // 2. 获取显示名称 (优先显示 Name，没有则显示邮箱前缀)
+        // 注意：这里确保读取的是 currentUser.name
+        const displayName = currentUser.name || currentUser.displayName || currentUser.email.split('@')[0] || 'User';
         
-        // 2. 获取头像链接
+        // 3. 获取头像链接
         const picUrl = currentUser.picture ? getFullImageUrl(currentUser.picture) : null;
         const initial = displayName.charAt(0).toUpperCase();
 
-        // 3. 生成头像 HTML (强制圆形 + 裁剪)
-        // 这里的 object-cover 和 rounded-full 是关键，保证头像是圆的
+        // 4. 生成头像 HTML (内联样式，强制覆盖所有 CSS)
+        // border-radius: 50% -> 保证圆
+        // object-fit: cover -> 保证不拉伸
         const avatarHtml = picUrl
-            ? `<img src="${picUrl}" class="w-10 h-10 rounded-full border-2 border-white shadow-md cursor-pointer object-cover" onclick="toggleUserMenu()">`
-            : `<button onclick="toggleUserMenu()" class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold shadow-md cursor-pointer">${initial}</button>`;
+            ? `<img src="${picUrl}" alt="Avatar" 
+                   style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer;" 
+                   onclick="toggleUserMenu()">`
+            : `<div onclick="toggleUserMenu()" 
+                   style="width: 40px; height: 40px; border-radius: 50%; background-color: #2563eb; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                   ${initial}
+               </div>`;
 
-        // 4. 渲染 (去掉了 "Hi, "，直接显示名字)
+        // 5. 渲染容器 (Flexbox 强制居中)
         headerRight.innerHTML = `
-            <div class="relative flex items-center gap-3">
-                <span class="text-sm font-medium text-gray-700 block">${displayName}</span>
+            <div style="position: relative; display: flex; align-items: center; gap: 12px;">
+                <span style="font-size: 14px; font-weight: 500; color: #333;">${displayName}</span>
                 ${avatarHtml}
-                <div id="user-dropdown" class="hidden absolute right-0 top-14 w-56 bg-white rounded-xl shadow-2xl border border-gray-100 z-[9999] overflow-hidden">
-                     <div class="px-4 py-3 border-b bg-gray-50"><p class="text-sm font-bold truncate">${currentUser.email}</p></div>
-                     <a href="profile.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2">
-                        <i class="fas fa-user-circle text-blue-500"></i> My Profile
+                
+                <div id="user-dropdown" class="hidden" 
+                     style="position: absolute; right: 0; top: 55px; width: 200px; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #eee; z-index: 9999; overflow: hidden; text-align: left;">
+                     
+                     <div style="padding: 12px 16px; border-bottom: 1px solid #f3f4f6; background-color: #f9fafb;">
+                        <p style="font-size: 12px; color: #6b7280; margin: 0;">Signed in as</p>
+                        <p style="font-size: 14px; font-weight: bold; color: #111; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${currentUser.email}</p>
+                     </div>
+
+                     <a href="profile.html" style="display: block; padding: 10px 16px; color: #374151; text-decoration: none; font-size: 14px; transition: background 0.2s;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">
+                        <i class="fas fa-user-circle" style="margin-right: 8px; color: #3b82f6;"></i> My Profile
                      </a>
-                     <a href="usage.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 border-b border-gray-50 flex items-center gap-2">
-                        <i class="fas fa-chart-pie text-green-500"></i> Usage Stats
+                     
+                     <a href="usage.html" style="display: block; padding: 10px 16px; color: #374151; text-decoration: none; font-size: 14px; transition: background 0.2s;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">
+                        <i class="fas fa-chart-pie" style="margin-right: 8px; color: #10b981;"></i> Usage Stats
                      </a>
-                     <a href="#" onclick="logout()" class="block px-4 py-3 text-sm text-red-600 hover:bg-red-50">Logout</a>
+
+                     <a href="#" onclick="logout()" style="display: block; padding: 10px 16px; color: #ef4444; text-decoration: none; font-size: 14px; border-top: 1px solid #f3f4f6; transition: background 0.2s;" onmouseover="this.style.background='#fef2f2'" onmouseout="this.style.background='white'">
+                        <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i> Logout
+                     </a>
                 </div>
             </div>
         `;
@@ -1088,4 +1108,3 @@ async function loadAccountPageAvatar() {
         this.src = getFullImageUrl(null);
     };
 }
-
