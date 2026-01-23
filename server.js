@@ -83,6 +83,45 @@ const verifyAdmin = async (req, res, next) => {
     } catch (err) { res.status(403).json({ message: 'Token Invalid' }); }
 };
 
+// ==========================================
+// 🟢 [置顶] 用量统计接口 (放在这里最安全)
+// ==========================================
+app.get('/api/usage', authenticateToken, async (req, res) => {
+    try {
+        // 如果 req.user 为空，说明 Token 解析失败但没被拦截，返回 401
+        if (!req.user || !req.user.email) {
+            return res.status(401).json({ message: "Invalid User Token" });
+        }
+
+        const userEmail = req.user.email;
+        const user = await db.collection('users').findOne({ email: userEmail });
+        
+        // 默认数据，防止 user 为空时报错
+        const plan = user?.plan || 'basic';
+        const usageCount = user?.usageCount || 0;
+        const totalLimit = plan === 'pro' ? 1000 : 10;
+        
+        // 计算天数
+        const now = new Date();
+        const joinDate = new Date(user?.createdAt || now);
+        const activeDays = Math.ceil(Math.abs(now - joinDate) / (86400000)) || 1;
+        const daysLeft = 30 - now.getDate();
+
+        res.json({
+            plan: plan.toUpperCase(),
+            used: usageCount,
+            limit: plan === 'pro' ? 'Unlimited' : totalLimit,
+            remaining: Math.max(0, totalLimit - usageCount),
+            daysLeft: Math.max(1, daysLeft),
+            activeDays: activeDays
+        });
+
+    } catch (error) {
+        console.error("Usage API Error:", error);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
 // ======================= 路由 =======================
 
 app.get('/', (req, res) => res.send('Backend Online'));
@@ -373,50 +412,6 @@ app.delete('/api/history/:id', authenticateToken, async (req, res) => {
     } catch (error) {
         console.error("删除失败:", error);
         res.status(500).json({ message: "Delete failed" });
-    }
-});
-
-// ==========================================
-// 🟢 [新增] 用量统计专用接口
-// ==========================================
-app.get('/api/usage', authenticateToken, async (req, res) => {
-    try {
-        const userEmail = req.user.email;
-        // 1. 获取最新用户数据
-        const user = await db.collection('users').findOne({ email: userEmail });
-        if (!user) return res.status(404).json({ message: "User not found" });
-
-        // 2. 计算基础数据
-        const plan = user.plan || 'basic';
-        const usageCount = user.usageCount || 0;
-        const totalLimit = plan === 'pro' ? 1000 : 10; // Pro给1000次，Basic给10次
-        const remaining = totalLimit - usageCount;
-
-        // 3. 计算时间数据
-        const now = new Date();
-        const joinDate = new Date(user.createdAt || new Date()); // 如果没有注册时间，就按今天算
-        
-        // 计算活跃天数 (今天 - 注册那天)
-        const diffTime = Math.abs(now - joinDate);
-        const activeDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-
-        // 计算剩余天数 (假设每月1号重置，或者简单的30天周期)
-        // 这里简单处理：假设每个月30天，计算距离下个月1号还有几天
-        const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-        const daysLeft = daysInMonth - now.getDate();
-
-        res.json({
-            plan: plan.toUpperCase(),
-            used: usageCount,
-            limit: plan === 'pro' ? 'Unlimited' : totalLimit,
-            remaining: remaining < 0 ? 0 : remaining,
-            daysLeft: daysLeft,
-            activeDays: activeDays
-        });
-
-    } catch (error) {
-        console.error("Usage Error:", error);
-        res.status(500).json({ message: "Server Error" });
     }
 });
 
