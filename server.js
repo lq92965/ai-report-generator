@@ -376,4 +376,48 @@ app.delete('/api/history/:id', authenticateToken, async (req, res) => {
     }
 });
 
+// ==========================================
+// 🟢 [新增] 用量统计专用接口
+// ==========================================
+app.get('/api/usage', authenticateToken, async (req, res) => {
+    try {
+        const userEmail = req.user.email;
+        // 1. 获取最新用户数据
+        const user = await db.collection('users').findOne({ email: userEmail });
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        // 2. 计算基础数据
+        const plan = user.plan || 'basic';
+        const usageCount = user.usageCount || 0;
+        const totalLimit = plan === 'pro' ? 1000 : 10; // Pro给1000次，Basic给10次
+        const remaining = totalLimit - usageCount;
+
+        // 3. 计算时间数据
+        const now = new Date();
+        const joinDate = new Date(user.createdAt || new Date()); // 如果没有注册时间，就按今天算
+        
+        // 计算活跃天数 (今天 - 注册那天)
+        const diffTime = Math.abs(now - joinDate);
+        const activeDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+
+        // 计算剩余天数 (假设每月1号重置，或者简单的30天周期)
+        // 这里简单处理：假设每个月30天，计算距离下个月1号还有几天
+        const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+        const daysLeft = daysInMonth - now.getDate();
+
+        res.json({
+            plan: plan.toUpperCase(),
+            used: usageCount,
+            limit: plan === 'pro' ? 'Unlimited' : totalLimit,
+            remaining: remaining < 0 ? 0 : remaining,
+            daysLeft: daysLeft,
+            activeDays: activeDays
+        });
+
+    } catch (error) {
+        console.error("Usage Error:", error);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
