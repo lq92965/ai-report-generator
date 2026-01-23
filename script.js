@@ -871,32 +871,32 @@ function setupContactForm() {
     }
 }
 
-// --- 模块 I: 历史记录加载器 (修复版) ---
+// --- 模块 I: 历史记录加载器 (增强版：带下载功能) ---
 function setupHistoryLoader() {
-    // 只有在历史页才执行
+    // 1. 只有在历史页才执行
     if (!window.location.pathname.includes('history')) return;
 
-    // 暴露给全局，方便按钮点击
+    // 定义一个全局变量存数据，方便下载时提取内容
+    window.currentHistoryData = [];
+
+    // 2. 加载数据的主函数
     window.loadHistoryData = async function() {
         const container = document.getElementById('history-container');
         if (!container) return;
 
-        // 1. 显示加载中
         container.innerHTML = `
             <div style="text-align: center; padding: 50px; color: #888;">
                 <i class="fas fa-spinner fa-spin fa-2x"></i>
-                <p style="margin-top: 10px;">Loading your reports...</p>
+                <p style="margin-top: 10px;">Loading...</p>
             </div>`;
 
         try {
             const token = localStorage.getItem('token');
             if (!token) {
-                container.innerHTML = `<div style="text-align:center; padding:40px;">Please login to view history.</div>`;
+                container.innerHTML = `<div style="text-align:center; padding:40px;">Please login.</div>`;
                 return;
             }
 
-            // 2. 请求后端数据
-            // 注意：这里假设后端接口是 /api/history，如果后端是 /api/generations 请自行调整
             const res = await fetch(`${API_BASE_URL}/api/history`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -904,33 +904,46 @@ function setupHistoryLoader() {
             if (!res.ok) throw new Error("Failed to fetch history");
 
             const reports = await res.json();
+            window.currentHistoryData = reports; // 保存数据供下载用
 
-            // 3. 渲染列表
             if (reports.length === 0) {
-                container.innerHTML = `<div style="text-align:center; padding:40px; color:#666;">No reports found. Go generate one!</div>`;
+                container.innerHTML = `<div style="text-align:center; padding:40px; color:#666;">No reports found.</div>`;
                 return;
             }
 
+            // 3. 渲染列表 (这里把下载按钮加回来！)
             container.innerHTML = reports.map(item => {
-                const date = new Date(item.createdAt).toLocaleDateString() + ' ' + new Date(item.createdAt).toLocaleTimeString();
-                // 截取前 100 个字作为预览
-                const preview = (item.content || "").substring(0, 150) + "...";
+                const date = new Date(item.createdAt).toLocaleDateString();
+                const preview = (item.content || "").substring(0, 120) + "...";
                 
                 return `
-                <div style="background: white; border: 1px solid #eee; border-radius: 10px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 5px 15px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 5px rgba(0,0,0,0.05)'">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                        <span style="font-weight: bold; color: #2563eb; font-size: 1.1em;">${item.title || 'Untitled Report'}</span>
-                        <span style="font-size: 0.85em; color: #888;">${date}</span>
+                <div style="background: white; border: 1px solid #eee; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: transform 0.2s;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center;">
+                        <span style="font-weight: bold; color: #333; font-size: 1.1em;">${item.title || 'Report'}</span>
+                        <span style="font-size: 0.8em; color: #999;">${date}</span>
                     </div>
-                    <div style="font-size: 0.9em; color: #555; line-height: 1.6; margin-bottom: 15px;">
+                    <div style="font-size: 0.9em; color: #666; line-height: 1.6; margin-bottom: 15px; height: 4.8em; overflow: hidden;">
                         ${preview}
                     </div>
-                    <div style="text-align: right;">
-                        <button onclick="viewReport('${item._id}')" style="color: #2563eb; background: none; border: none; cursor: pointer; font-weight: 500; margin-right: 15px;">
-                            <i class="far fa-eye"></i> View
+                    
+                    <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #f0f0f0; padding-top: 10px;">
+                        <button onclick="downloadHistoryItem('${item._id}', 'md')" title="Markdown" style="color: #444; background: #f3f4f6; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">
+                            <i class="fab fa-markdown"></i>
                         </button>
-                        <button onclick="deleteReport('${item._id}')" style="color: #ef4444; background: none; border: none; cursor: pointer; font-weight: 500;">
-                            <i class="far fa-trash-alt"></i> Delete
+                        <button onclick="downloadHistoryItem('${item._id}', 'word')" title="Word" style="color: #2b579a; background: #e8f0fe; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">
+                            <i class="fas fa-file-word"></i>
+                        </button>
+                        <button onclick="downloadHistoryItem('${item._id}', 'pdf')" title="PDF" style="color: #b30b00; background: #fee2e2; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">
+                            <i class="fas fa-file-pdf"></i>
+                        </button>
+                        
+                        <div style="width: 1px; background: #ddd; margin: 0 5px;"></div>
+
+                        <button onclick="viewReport('${item._id}')" style="color: #2563eb; background: none; border: none; cursor: pointer; font-weight: 500;">
+                            View
+                        </button>
+                        <button onclick="deleteReport('${item._id}')" style="color: #ef4444; background: none; border: none; cursor: pointer;">
+                            <i class="fas fa-trash-alt"></i>
                         </button>
                     </div>
                 </div>
@@ -939,32 +952,69 @@ function setupHistoryLoader() {
 
         } catch (err) {
             console.error(err);
-            container.innerHTML = `<div style="text-align:center; padding:40px; color: #ef4444;">Failed to load history. <br><small>${err.message}</small></div>`;
+            container.innerHTML = `<div style="text-align:center;">Load failed.</div>`;
         }
     };
 
-    // 立即执行加载
+    // 3. 实现下载功能的具体逻辑
+    window.downloadHistoryItem = function(id, type) {
+        // 从缓存中找到这条报告
+        const item = window.currentHistoryData.find(r => r._id === id);
+        if (!item || !item.content) {
+            showToast("Content not found", "error");
+            return;
+        }
+
+        const filename = (item.title || "Report").replace(/[^a-z0-9]/gi, '_') + `_${new Date().toISOString().slice(0,10)}`;
+
+        if (type === 'md') {
+            const blob = new Blob([item.content], { type: 'text/markdown;charset=utf-8' });
+            saveAs(blob, `${filename}.md`);
+            showToast("Markdown downloaded", "success");
+        } 
+        else if (type === 'word') {
+            if (typeof docx === 'undefined') { showToast("Word engine loading...", "info"); return; }
+            // 复用简单的 Word 导出逻辑
+            const doc = new docx.Document({
+                sections: [{ children: item.content.split('\n').map(line => new docx.Paragraph({ text: line })) }]
+            });
+            docx.Packer.toBlob(doc).then(blob => saveAs(blob, `${filename}.docx`));
+            showToast("Word downloaded", "success");
+        } 
+        else if (type === 'pdf') {
+            if (typeof html2pdf === 'undefined') { showToast("PDF engine loading...", "info"); return; }
+            // 临时创建一个隐藏的 div 用来生成 PDF
+            const element = document.createElement('div');
+            // 如果有 marked 库就转 HTML，没有就直接放文本
+            element.innerHTML = (typeof marked !== 'undefined') ? marked.parse(item.content) : item.content.replace(/\n/g, '<br>');
+            element.style.padding = '20px';
+            
+            html2pdf().from(element).save(`${filename}.pdf`);
+            showToast("PDF downloaded", "success");
+        }
+    };
+
+    // 启动加载
     loadHistoryData();
 }
 
-// 补充：查看详情和删除的逻辑 (如果之前没有的话)
-window.viewReport = function(id) {
-    alert("View report functionality to be implemented for ID: " + id);
-    // 可以在这里写逻辑跳转到详情页，例如： window.location.href = `view.html?id=${id}`;
-};
-
+// 补充 View 和 Delete (保持你原来的，不用变，这里为了完整性列出)
 window.deleteReport = async function(id) {
-    if(!confirm("Are you sure you want to delete this report?")) return;
+    if(!confirm("Delete this report?")) return;
     try {
         const token = localStorage.getItem('token');
-        await fetch(`${API_BASE_URL}/api/history/${id}`, {
-            method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        showToast("Report deleted", "success");
-        loadHistoryData(); // 刷新列表
-    } catch(e) {
-        showToast("Delete failed", "error");
+        await fetch(`${API_BASE_URL}/api/history/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        loadHistoryData();
+        showToast("Deleted", "success");
+    } catch(e) { showToast("Error", "error"); }
+};
+
+// 简单的查看逻辑（弹窗显示）
+window.viewReport = function(id) {
+    const item = window.currentHistoryData.find(r => r._id === id);
+    if(item) {
+        // 这里简单弹个窗，或者你可以做一个专门的 Modal
+        alert(item.content); 
     }
 };
 
