@@ -161,7 +161,7 @@
             try {
                 // 1. 请求数据 (使用相对路径 /api/usage，配合 Nginx 转发最稳)
                 // 这样无论是在 goreportify.com 还是 api.goreportify.com 都能通
-                const res = await fetch('/api/usage', {
+                const res = await fetch('https://api.goreportify.com/api/usage', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 
