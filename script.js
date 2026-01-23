@@ -871,10 +871,102 @@ function setupContactForm() {
     }
 }
 
-// --- 模块 I: 历史与消息 ---
-function setupHistoryLoader() { 
-    // ... 如果你有详细的历史记录加载代码，保留它，否则这里是空的
+// --- 模块 I: 历史记录加载器 (修复版) ---
+function setupHistoryLoader() {
+    // 只有在历史页才执行
+    if (!window.location.pathname.includes('history')) return;
+
+    // 暴露给全局，方便按钮点击
+    window.loadHistoryData = async function() {
+        const container = document.getElementById('history-container');
+        if (!container) return;
+
+        // 1. 显示加载中
+        container.innerHTML = `
+            <div style="text-align: center; padding: 50px; color: #888;">
+                <i class="fas fa-spinner fa-spin fa-2x"></i>
+                <p style="margin-top: 10px;">Loading your reports...</p>
+            </div>`;
+
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                container.innerHTML = `<div style="text-align:center; padding:40px;">Please login to view history.</div>`;
+                return;
+            }
+
+            // 2. 请求后端数据
+            // 注意：这里假设后端接口是 /api/history，如果后端是 /api/generations 请自行调整
+            const res = await fetch(`${API_BASE_URL}/api/history`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (!res.ok) throw new Error("Failed to fetch history");
+
+            const reports = await res.json();
+
+            // 3. 渲染列表
+            if (reports.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding:40px; color:#666;">No reports found. Go generate one!</div>`;
+                return;
+            }
+
+            container.innerHTML = reports.map(item => {
+                const date = new Date(item.createdAt).toLocaleDateString() + ' ' + new Date(item.createdAt).toLocaleTimeString();
+                // 截取前 100 个字作为预览
+                const preview = (item.content || "").substring(0, 150) + "...";
+                
+                return `
+                <div style="background: white; border: 1px solid #eee; border-radius: 10px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 5px 15px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 2px 5px rgba(0,0,0,0.05)'">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="font-weight: bold; color: #2563eb; font-size: 1.1em;">${item.title || 'Untitled Report'}</span>
+                        <span style="font-size: 0.85em; color: #888;">${date}</span>
+                    </div>
+                    <div style="font-size: 0.9em; color: #555; line-height: 1.6; margin-bottom: 15px;">
+                        ${preview}
+                    </div>
+                    <div style="text-align: right;">
+                        <button onclick="viewReport('${item._id}')" style="color: #2563eb; background: none; border: none; cursor: pointer; font-weight: 500; margin-right: 15px;">
+                            <i class="far fa-eye"></i> View
+                        </button>
+                        <button onclick="deleteReport('${item._id}')" style="color: #ef4444; background: none; border: none; cursor: pointer; font-weight: 500;">
+                            <i class="far fa-trash-alt"></i> Delete
+                        </button>
+                    </div>
+                </div>
+                `;
+            }).join('');
+
+        } catch (err) {
+            console.error(err);
+            container.innerHTML = `<div style="text-align:center; padding:40px; color: #ef4444;">Failed to load history. <br><small>${err.message}</small></div>`;
+        }
+    };
+
+    // 立即执行加载
+    loadHistoryData();
 }
+
+// 补充：查看详情和删除的逻辑 (如果之前没有的话)
+window.viewReport = function(id) {
+    alert("View report functionality to be implemented for ID: " + id);
+    // 可以在这里写逻辑跳转到详情页，例如： window.location.href = `view.html?id=${id}`;
+};
+
+window.deleteReport = async function(id) {
+    if(!confirm("Are you sure you want to delete this report?")) return;
+    try {
+        const token = localStorage.getItem('token');
+        await fetch(`${API_BASE_URL}/api/history/${id}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        showToast("Report deleted", "success");
+        loadHistoryData(); // 刷新列表
+    } catch(e) {
+        showToast("Delete failed", "error");
+    }
+};
 
 function setupMessageCenter() {
     const bellBtn = document.querySelector('button[title="My Messages"]');
