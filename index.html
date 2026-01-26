@@ -33,15 +33,21 @@
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
-            <a href="usage.html#share-area" style="text-decoration: none; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); transition: transform 0.2s; margin-right: 15px;">
-                <i class="fas fa-gift"></i>
-                <span class="hide-mobile-text">Get Free Credits</span>
-            </a>
-            <style> @media(max-width:600px){ .hide-mobile-text{display:none!important;} } </style>
-            <div id="auth-container" class="header-actions">
-                <button class="btn-login" onclick="openModal('login')" style="margin-right: 10px; cursor: pointer;">Login</button>
-                <button class="btn btn-primary" onclick="openModal('signup')">Get Started</button>
+            
+            <div style="display: flex; align-items: center; gap: 15px;">
+    
+                <a href="usage.html#share-area" style="text-decoration: none; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); transition: transform 0.2s;">
+                    <i class="fas fa-gift"></i>
+                    <span class="hide-mobile-text">Get Free Credits</span>
+                </a>
+
+                <div id="auth-container" class="header-actions">
+                     <button class="btn-login" onclick="openModal('login')">Login</button>
+                    <button class="btn btn-primary" onclick="openModal('signup')">Sign Up</button>
+                </div>
+
             </div>
+            <style> @media(max-width:600px){ .hide-mobile-text{display:none!important;} } </style>
         </div>
     </header>
 
