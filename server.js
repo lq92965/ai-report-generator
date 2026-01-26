@@ -109,37 +109,47 @@ app.get('/auth/google', (req, res) => {
     // ✅ 现在改成直接跳转
     res.redirect(url);
 });
+
 // ==========================================
-// 🟢 [升级版] 用量统计 (完全保留你的ID修复逻辑)
+// 🟢 [完美版] 用量统计 (自动补全邀请码)
 // ==========================================
 app.get('/api/usage', authenticateToken, async (req, res) => {
     try {
-        // 1. 检查 userId (保留原逻辑)
-        if (!req.user || !req.user.userId) {
-            return res.status(401).json({ message: "Invalid Token: Missing userId" });
+        if (!req.user || !req.user.userId) return res.status(401).json({ message: "Invalid Token" });
+
+        // 1. 查找用户
+        let user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        // 🟢 [核心修复]：如果是老用户(没有邀请码)，立刻生成一个并保存！
+        if (!user.referralCode) {
+            const rawName = user.name || user.email.split('@')[0];
+            const cleanName = rawName.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().substring(0, 3);
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            const newCode = `${cleanName}${randomNum}`;
+            
+            // 更新数据库
+            await db.collection('users').updateOne(
+                { _id: user._id },
+                { $set: { referralCode: newCode } }
+            );
+            // 更新内存里的 user 对象，以便下面返回
+            user.referralCode = newCode;
         }
 
-        // 2. 查找用户 (保留原逻辑)
-        const user = await db.collection('users').findOne({ 
-            _id: new ObjectId(req.user.userId) 
-        });
-
-        if (!user) return res.status(404).json({ message: "User not found in DB" });
-
-        // 3. 计算数据 (调整了 limit 逻辑以匹配 Free/Basic 策略)
+        // 2. 计算限额逻辑 (保持不变)
         const plan = user.plan || 'basic';
         const usageCount = user.usageCount || 0;
-        
         let totalLimit = 0;
         if (plan === 'free') totalLimit = 3;
         if (plan === 'basic') totalLimit = 45;
-        // Pro 用户 totalLimit 仅作参考
 
         const now = new Date();
         const joinDate = new Date(user.createdAt || now);
-        const activeDays = Math.ceil(Math.abs(now - joinDate) / (1000 * 60 * 60 * 24)) || 1;
+        const activeDays = Math.ceil(Math.abs(now - joinDate) / (86400000)) || 1;
         const daysLeft = 30 - now.getDate();
 
+        // 3. 返回数据
         res.json({
             plan: plan.toUpperCase(),
             used: usageCount,
@@ -147,10 +157,8 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
             remaining: plan === 'pro' ? 9999 : Math.max(0, totalLimit - usageCount),
             daysLeft: daysLeft > 0 ? daysLeft : 1,
             activeDays: activeDays,
-
-            // 🟢 新增：把备用金和邀请码传给前端
             bonusCredits: user.bonusCredits || 0,
-            referralCode: user.referralCode || 'GenerateFirst'
+            referralCode: user.referralCode // 现在绝对会有值了！
         });
 
     } catch (error) {
@@ -158,6 +166,7 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
         res.status(500).json({ message: "Server Error" });
     }
 });
+
 // 🟢 [修正版] Google 回调 (增加保存头像 picture 逻辑)
 app.get('/api/auth/google/callback', async (req, res) => {
     const code = req.query.code;
