@@ -79,23 +79,39 @@
         .btn-copy:active { transform: scale(0.95); }
 
         /* 社交按钮区域 */
-        .social-actions { display: flex; gap: 15px; margin-top: 15px; }
+        .social-actions { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); /* 3列等宽 */
+            gap: 15px; 
+            margin-top: 20px; 
+        }
+
+        /* 移动端适配：屏幕太小变成 2列 */
+        @media (max-width: 600px) {
+            .social-actions { grid-template-columns: repeat(2, 1fr); }
+        }
+
         .btn-social {
-            flex: 1;
             display: flex; align-items: center; justify-content: center; gap: 8px;
             padding: 12px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
             font-size: 0.9rem;
-            transition: transform 0.2s;
-            border: 1px solid transparent;
+            transition: all 0.2s;
+            color: white !important; /* 强制白色文字 */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
-        .btn-social:hover { transform: translateY(-3px); shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        
-        .btn-x { background: #000; color: white; }
-        .btn-wa { background: #25D366; color: white; }
-        .btn-email { background: #f1f5f9; color: #334155; border-color: #e2e8f0; }
+        .btn-social:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        .btn-social i { font-size: 1.1rem; }
+
+        /* 🟢 各大平台品牌色 */
+        .btn-x { background: #000; }
+        .btn-wa { background: #25D366; }
+        .btn-in { background: #0077b5; } /* LinkedIn */
+        .btn-fb { background: #1877F2; } /* Facebook */
+        .btn-tg { background: #229ED9; } /* Telegram */
+        .btn-rd { background: #FF4500; } /* Reddit */
 
         /* --- 🟢 Toast 提示框 (替代 alert) --- */
         #toast {
@@ -202,13 +218,23 @@
 
                 <div class="social-actions">
                     <a href="#" id="share-x" target="_blank" class="btn-social btn-x">
-                        <i class="fab fa-twitter"></i> Post
+                        <i class="fab fa-x-twitter"></i> <span>X</span>
                     </a>
                     <a href="#" id="share-wa" target="_blank" class="btn-social btn-wa">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
+                        <i class="fab fa-whatsapp"></i> <span>WhatsApp</span>
                     </a>
-                    <a href="#" id="share-mail" class="btn-social btn-email">
-                        <i class="far fa-envelope"></i> Email
+                    <a href="#" id="share-in" target="_blank" class="btn-social btn-in">
+                        <i class="fab fa-linkedin"></i> <span>LinkedIn</span>
+                    </a>
+
+                    <a href="#" id="share-fb" target="_blank" class="btn-social btn-fb">
+                        <i class="fab fa-facebook"></i> <span>Facebook</span>
+                    </a>
+                    <a href="#" id="share-tg" target="_blank" class="btn-social btn-tg">
+                        <i class="fab fa-telegram"></i> <span>Telegram</span>
+                    </a>
+                    <a href="#" id="share-rd" target="_blank" class="btn-social btn-rd">
+                        <i class="fab fa-reddit"></i> <span>Reddit</span>
                     </a>
                 </div>
             </div>
@@ -312,27 +338,41 @@
             }
         });
 
-        // 🟢 智能更新链接函数
+        // 🟢 全能分享链接生成器
         function updateShareLinks(code) {
-            // 生成你的网站专属链接
             const shareUrl = `https://goreportify.com?ref=${code}`;
-            const shareText = `Use Reportify AI to generate professional reports in seconds! Sign up with my link to get +5 Free Credits:`;
-            
+            const shareText = `I use Reportify AI to generate professional reports in seconds! Sign up to get +5 Free Credits.`;
+            const shareTextEncoded = encodeURIComponent(shareText);
+            const shareUrlEncoded = encodeURIComponent(shareUrl);
+
             // 更新输入框
             document.getElementById('share-link-input').value = shareUrl;
 
-            // 更新社交按钮链接 (自动调用 APP 发送)
-            // Twitter
+            // --- 第一排 ---
+            // 1. X (Twitter)
             document.getElementById('share-x').href = 
-                `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
-            
-            // WhatsApp
+                `https://twitter.com/intent/tweet?text=${shareTextEncoded}&url=${shareUrlEncoded}`;
+    
+            // 2. WhatsApp
             document.getElementById('share-wa').href = 
                 `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
-                
-            // Email
-            document.getElementById('share-mail').href = 
-                `mailto:?subject=Try Reportify AI&body=${encodeURIComponent(shareText + '\n\n' + shareUrl)}`;
+        
+            // 3. LinkedIn
+            document.getElementById('share-in').href = 
+                `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrlEncoded}`;
+
+            // --- 第二排 (新增) ---
+            // 4. Facebook
+            document.getElementById('share-fb').href = 
+                `https://www.facebook.com/sharer/sharer.php?u=${shareUrlEncoded}`;
+
+            // 5. Telegram
+            document.getElementById('share-tg').href = 
+                `https://t.me/share/url?url=${shareUrlEncoded}&text=${shareTextEncoded}`;
+
+            // 6. Reddit
+            document.getElementById('share-rd').href = 
+                `https://www.reddit.com/submit?url=${shareUrlEncoded}&title=${shareTextEncoded}`;
         }
 
         // 🟢 优雅的复制功能
