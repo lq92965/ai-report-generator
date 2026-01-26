@@ -4,83 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usage & Limits - Reportify AI</title>
-    <link rel="stylesheet" href="style.css?v=15.0">
+    <link rel="stylesheet" href="style.css?v=18.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .stats-grid {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            gap: 20px;
+        /* --- 原有样式保持不变 --- */
+        .stats-grid { display: flex; flex-direction: row; justify-content: space-between; gap: 20px; margin-top: 40px; }
+        .stat-box { flex: 1; background: #f8f9fa; border-radius: 16px; padding: 25px 20px; text-align: center; border: 1px solid #eee; box-shadow: 0 2px 8px rgba(0,0,0,0.03); transition: transform 0.2s; }
+        .stat-box:hover { transform: translateY(-3px); border-color: #007bff; }
+        .stat-number { font-size: 2.5rem; font-weight: 800; color: #333; margin: 15px 0 5px; }
+        .stat-label { font-size: 0.95rem; color: #666; font-weight: 600; text-transform: uppercase; }
+        .stat-desc { font-size: 0.8rem; color: #999; margin-top: 5px; }
+        .progress-container { background: #e9ecef; border-radius: 20px; height: 24px; width: 100%; margin: 20px 0 10px; overflow: hidden; position: relative; }
+        .progress-bar { background: linear-gradient(90deg, #007bff, #00c6ff); height: 100%; border-radius: 20px; width: 0%; transition: width 0.8s ease-in-out; }
+        
+        /* --- 🟢 新增：高端分享卡片样式 --- */
+        .share-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 30px;
             margin-top: 40px;
-        }
-        
-        .stat-box {
-            flex: 1;
-            background: #f8f9fa;
-            border-radius: 16px;
-            padding: 25px 20px;
-            text-align: center;
-            border: 1px solid #eee;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-            transition: transform 0.2s;
-        }
-        
-        .stat-box:hover {
-            transform: translateY(-3px);
-            border-color: #007bff;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #333;
-            margin: 15px 0 5px;
-        }
-        
-        .stat-label {
-            font-size: 0.95rem;
-            color: #666;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        
-        .stat-desc {
-            font-size: 0.8rem; 
-            color: #999; 
-            margin-top: 5px;
-        }
-
-        .progress-container {
-            background: #e9ecef;
-            border-radius: 20px;
-            height: 24px;
-            width: 100%;
-            margin: 20px 0 10px;
-            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             position: relative;
+            overflow: hidden;
         }
-        .progress-bar {
-            background: linear-gradient(90deg, #007bff, #00c6ff);
-            height: 100%;
-            border-radius: 20px;
-            width: 0%;
-            transition: width 0.8s ease-in-out;
+        .share-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
+        .share-title { font-size: 1.4rem; font-weight: 800; color: #1e293b; display: flex; align-items: center; gap: 10px; }
+        .share-badge { 
+            background: #ecfdf5; color: #059669; 
+            padding: 5px 15px; border-radius: 20px; 
+            font-size: 0.9rem; font-weight: 700;
+            border: 1px solid #a7f3d0;
+        }
+
+        /* 链接输入框区域 */
+        .link-box {
+            display: flex;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .link-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 10px 15px;
+            color: #475569;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            outline: none;
+            font-weight: 600;
+        }
+        .btn-copy {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-copy:hover { background: #1d4ed8; transform: translateY(-1px); }
+        .btn-copy:active { transform: scale(0.95); }
+
+        /* 社交按钮区域 */
+        .social-actions { display: flex; gap: 15px; margin-top: 15px; }
+        .btn-social {
+            flex: 1;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.2s;
+            border: 1px solid transparent;
+        }
+        .btn-social:hover { transform: translateY(-3px); shadow: 0 4px 12px rgba(0,0,0,0.1); }
         
+        .btn-x { background: #000; color: white; }
+        .btn-wa { background: #25D366; color: white; }
+        .btn-email { background: #f1f5f9; color: #334155; border-color: #e2e8f0; }
+
+        /* --- 🟢 Toast 提示框 (替代 alert) --- */
+        #toast {
+            visibility: hidden;
+            min-width: 280px;
+            background-color: #1e293b;
+            color: #fff;
+            text-align: center;
+            border-radius: 50px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 0.95rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+
+        /* 移动端适配 */
         @media (max-width: 768px) {
             .stats-grid { flex-direction: column; }
             .container { padding: 0 15px; }
             h1 { font-size: 1.8rem; }
+            .social-actions { flex-direction: column; }
+            .hide-mobile { display: none; }
         }
     </style>
 </head>
 <body style="background-color: #f8f9fa;">
 
     <header class="main-header account-header">
-        <div class="container">
+        <div class="container" style="display: flex; align-items: center; justify-content: space-between;">
             <a href="index.html" class="logo"><span class="logo-icon">🐦</span> <span>Reportify AI</span></a>
-            <div id="auth-container" class="header-actions"></div>
+            
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <a href="usage.html" style="text-decoration: none; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); transition: transform 0.2s;">
+                    <i class="fas fa-gift"></i> 
+                    <span class="hide-mobile">Get Free Credits</span>
+                </a>
+
+                <div id="auth-container" class="header-actions"></div>
+            </div>
         </div>
     </header>
 
@@ -118,25 +183,33 @@
 
             <hr style="border: 0; border-top: 1px solid #eee; margin: 0 20px;">
 
-            <div style="margin: 30px 0; background: linear-gradient(to right, #f0f9ff, #e0f2fe); border: 1px solid #bae6fd; padding: 25px; border-radius: 16px; position: relative; overflow: hidden; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-                <i class="fas fa-gift" style="position: absolute; right: -10px; bottom: -20px; font-size: 100px; color: #0ea5e9; opacity: 0.1; pointer-events: none;"></i>
-    
-                <div>
-                    <h3 style="margin: 0; color: #0284c7; font-size: 1.3rem; display: flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-ticket-alt"></i> Bonus Credits: <span id="bonus-val" style="font-size: 1.6rem; font-weight: 800; color: #0ea5e9;">0</span>
-                    </h3>
-                    <p style="margin: 8px 0 0; color: #555; font-size: 0.9rem;">
-                        Invite a friend = <strong>+5 Permanent Credits</strong>.<br>
-                        <span style="font-size: 0.8rem; color: #777;">Auto-used when your main limit runs out.</span>
-                    </p>
+            <div class="share-card">
+                <div class="share-header">
+                    <div class="share-title"><i class="fas fa-gift" style="color: #8b5cf6;"></i> Invite & Earn</div>
+                    <div class="share-badge">
+                        Your Bonus: <span id="bonus-val">0</span>
+                    </div>
                 </div>
 
-                <div style="text-align: right; z-index: 2;">
-                    <p style="font-size: 0.75rem; color: #666; margin-bottom: 5px; font-weight: 600; text-transform: uppercase;">Your Invite Code</p>
-                    <div onclick="copyReferralCode()" style="background: white; padding: 10px 20px; border-radius: 10px; border: 2px dashed #0ea5e9; font-family: monospace; font-weight: 800; font-size: 1.2rem; color: #333; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; transition: transform 0.2s;">
-                        <span id="ref-code-display">...</span>
-                        <i class="far fa-copy" style="color: #0ea5e9;"></i>
-                    </div>
+                <p style="color: #64748b; margin-bottom: 15px; font-size: 0.95rem;">
+                    For every friend who joins using your link, you both get <strong>+5 Permanent Credits</strong>.
+                </p>
+
+                <div class="link-box">
+                    <input type="text" class="link-input" id="share-link-input" readonly value="Loading your link...">
+                    <button class="btn-copy" onclick="copyLink()">Copy</button>
+                </div>
+
+                <div class="social-actions">
+                    <a href="#" id="share-x" target="_blank" class="btn-social btn-x">
+                        <i class="fab fa-twitter"></i> Post
+                    </a>
+                    <a href="#" id="share-wa" target="_blank" class="btn-social btn-wa">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                    <a href="#" id="share-mail" class="btn-social btn-email">
+                        <i class="far fa-envelope"></i> Email
+                    </a>
                 </div>
             </div>
 
@@ -166,7 +239,9 @@
         </div>
     </div>
 
-    <script src="script.js?v=15.0"></script>
+    <div id="toast"><i class="fas fa-check-circle"></i> Link Copied to Clipboard!</div>
+
+    <script src="script.js?v=18.0"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
@@ -177,7 +252,7 @@
             }
 
             try {
-                // 🟢 关键修复：直接请求 api.goreportify.com，绕过 Nginx 主域名限制
+                // 请求数据
                 const res = await fetch('https://api.goreportify.com/api/usage', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
@@ -185,13 +260,16 @@
                 if (!res.ok) throw new Error(`Server returned ${res.status}`);
                 const data = await res.json();
                 
-                // 🟢 填充备用金和邀请码
+                // 🟢 1. 更新分享卡片数据
+                const myCode = data.referralCode || 'ERROR';
                 document.getElementById('bonus-val').innerText = data.bonusCredits || 0;
-                document.getElementById('ref-code-display').innerText = data.referralCode || 'GenerateFirst';
+                
+                // 更新链接生成逻辑
+                updateShareLinks(myCode);
 
                 console.log("Usage Data:", data);
 
-                // --- 1. 填充计划 ---
+                // --- 2. 填充计划 ---
                 const planCode = (data.plan || 'basic').toLowerCase();
                 const planNameEl = document.getElementById('plan-name');
                 if (planCode === 'pro') {
@@ -202,7 +280,7 @@
                     document.getElementById('upgrade-hint').style.display = 'block';
                 }
 
-                // --- 2. 填充数字 ---
+                // --- 3. 填充用量数字 ---
                 const used = data.used || 0;
                 const limit = data.limit;
                 
@@ -224,26 +302,58 @@
                     if(percent > 85) document.getElementById('usage-progress').style.background = '#dc3545';
                 }
 
-                // --- 3. 填充底部卡片 ---
-                // 后端发 daysLeft -> 对应前端 days-remaining
+                // --- 4. 填充底部卡片 ---
                 document.getElementById('days-remaining').textContent = data.daysLeft || 30;
-                
-                // 后端发 activeDays -> 对应前端 days-used
                 document.getElementById('days-used').textContent = data.activeDays || 1;
 
             } catch (err) {
                 console.error("Usage Load Error:", err);
                 document.getElementById('plan-name').textContent = "Error loading data";
-                // 可以在这里加一个 Toast 提示用户
             }
         });
-        // 🟢 复制邀请码功能
-            function copyReferralCode() {
-                const code = document.getElementById('ref-code-display').innerText;
-                navigator.clipboard.writeText(code).then(() => {
-                    alert("Invite Code Copied: " + code);
-                });
-          }
+
+        // 🟢 智能更新链接函数
+        function updateShareLinks(code) {
+            // 生成你的网站专属链接
+            const shareUrl = `https://goreportify.com?ref=${code}`;
+            const shareText = `Use Reportify AI to generate professional reports in seconds! Sign up with my link to get +5 Free Credits:`;
+            
+            // 更新输入框
+            document.getElementById('share-link-input').value = shareUrl;
+
+            // 更新社交按钮链接 (自动调用 APP 发送)
+            // Twitter
+            document.getElementById('share-x').href = 
+                `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+            
+            // WhatsApp
+            document.getElementById('share-wa').href = 
+                `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
+                
+            // Email
+            document.getElementById('share-mail').href = 
+                `mailto:?subject=Try Reportify AI&body=${encodeURIComponent(shareText + '\n\n' + shareUrl)}`;
+        }
+
+        // 🟢 优雅的复制功能
+        function copyLink() {
+            const copyText = document.getElementById("share-link-input");
+            
+            // 选中并复制
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // 手机适配
+            
+            navigator.clipboard.writeText(copyText.value).then(() => {
+                showToast(); // 显示提示框
+            });
+        }
+
+        // 🟢 Toast 显示逻辑
+        function showToast() {
+            const x = document.getElementById("toast");
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        }
     </script>
 </body>
 </html>
