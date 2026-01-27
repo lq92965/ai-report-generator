@@ -453,37 +453,68 @@ app.get('/api/my-messages', authenticateToken, async (req, res) => {
 });
 
 // Admin
-// 🟢 [升级版] 管理员回复 (支持无限追加对话模式)
-app.post('/api/admin/reply', verifyAdmin, async (req, res) => {
-    const { feedbackId, replyContent } = req.body;
-    
-    // 构造一条新的回复记录
-    const newReplyItem = {
-        role: 'admin',       // 标记是管理员说的
-        message: replyContent,
-        createdAt: new Date()
-    };
-
+// ==========================================
+// 🟢 [修复版] 管理员回复接口 (防崩溃)
+// ==========================================
+app.post('/api/admin/reply', authenticateToken, async (req, res) => {
     try {
-        const result = await db.collection('feedbacks').updateOne(
+        // 1. 权限检查
+        const adminUser = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
+        if (!adminUser || adminUser.role !== 'admin') {
+            return res.status(403).json({ error: "Access denied" });
+        }
+
+        const { feedbackId, replyContent } = req.body;
+        
+        if (!feedbackId || !replyContent) {
+            return res.status(400).json({ error: "Missing ID or content" });
+        }
+
+        // 2. 查找原消息以获取用户邮箱
+        const feedback = await db.collection('contact_messages').findOne({ _id: new ObjectId(feedbackId) });
+        if (!feedback) return res.status(404).json({ error: "Message not found" });
+
+        // 3. 构建新的对话对象
+        const newReply = {
+            role: 'admin',
+            message: replyContent,
+            createdAt: new Date()
+        };
+
+        // 4. 更新数据库 (推送到 conversation 数组，并标记为已回复)
+        // 注意：使用了 $push 和 $set 并行
+        await db.collection('contact_messages').updateOne(
             { _id: new ObjectId(feedbackId) },
             { 
-                $set: { 
-                    status: 'replied',      // 标记为已回复
-                    repliedAt: new Date(),  // 更新最后回复时间
-                    // 如果是旧数据没有 reply，把它转存到历史里 (可选优化，这里直接由前端兼容显示)
-                },
-                $push: { 
-                    conversation: newReplyItem // 🟢 关键：追加到对话数组中
-                } 
+                $push: { conversation: newReply },
+                $set: { status: 'replied', reply: replyContent, repliedAt: new Date() }
             }
         );
 
-        if (result.modifiedCount > 0) res.json({ message: "Reply Sent" });
-        else res.status(500).json({ message: "Failed" });
-    } catch (e) {
-        console.error(e);
-        res.status(500).json({ message: "Error" });
+        // 5. 尝试发送邮件通知 (包裹在 try-catch 中，防止邮件配置错误导致整个接口崩溃)
+        try {
+            // 这里假设你已经配置了 transporter，如果没有配置，这一步会跳过
+            if (typeof transporter !== 'undefined') {
+                await transporter.sendMail({
+                    from: '"Reportify Support" <no-reply@goreportify.com>',
+                    to: feedback.email,
+                    subject: 'New Reply to your Feedback - Reportify AI',
+                    text: `Hello ${feedback.name},\n\nAdmin has replied to your message:\n\n"${replyContent}"\n\nLog in to your dashboard to view the full conversation.\n\nBest,\nReportify Team`
+                });
+                console.log(`Email sent to ${feedback.email}`);
+            }
+        } catch (emailErr) {
+            console.error("Email sending failed (Non-fatal):", emailErr.message);
+            // 注意：这里我们不返回错误给前端，因为站内信已经回复成功了
+        }
+
+        // 6. 返回成功
+        res.json({ message: "Reply sent successfully" });
+
+    } catch (error) {
+        console.error("Reply API Critical Error:", error);
+        // 返回具体错误信息，方便调试
+        res.status(500).json({ error: error.message || "Server Internal Error" });
     }
 });
 
