@@ -800,20 +800,65 @@ function exportToPDF(text, filename) {
     html2pdf().from(div).save(`${filename}.pdf`);
 }
 
-// --- 模块 G: 支付 ---
+// --- 模块 G: 支付 (修复版：支持点击切换选中状态) ---
 function setupPayment() {
+    const cards = document.querySelectorAll('.pricing-card');
+    
+    // 如果页面上没有价格卡片，直接退出
+    if (cards.length === 0) return;
+
+    // 定义样式常量 (Tailwind CSS 类名)
+    const activeClasses = ['border-blue-600', 'ring-2', 'ring-blue-500', 'shadow-xl', 'transform', 'scale-105'];
+    const inactiveClasses = ['border-gray-200', 'shadow-sm'];
+    
+    const btnActiveClasses = ['bg-blue-600', 'text-white', 'border-transparent'];
+    const btnInactiveClasses = ['bg-white', 'text-blue-600', 'border-gray-200', 'hover:bg-gray-50'];
+
+    // 辅助函数：激活指定卡片
+    const activateCard = (targetCard) => {
+        // 1. 重置所有卡片为“未选中”状态
+        cards.forEach(c => {
+            c.classList.remove(...activeClasses);
+            c.classList.add(...inactiveClasses);
+            
+            // 重置按钮样式
+            const btn = c.querySelector('button, a.btn');
+            if (btn) {
+                btn.classList.remove(...btnActiveClasses);
+                btn.classList.add(...btnInactiveClasses);
+                // 确保按钮有基础边框类
+                if (!btn.classList.contains('border')) btn.classList.add('border');
+            }
+        });
+
+        // 2. 设置目标卡片为“选中”状态
+        targetCard.classList.remove(...inactiveClasses);
+        targetCard.classList.add(...activeClasses);
+
+        // 设置目标按钮样式
+        const targetBtn = targetCard.querySelector('button, a.btn');
+        if (targetBtn) {
+            targetBtn.classList.remove(...btnInactiveClasses);
+            targetBtn.classList.add(...btnActiveClasses);
+        }
+    };
+
+    // 绑定点击事件
+    cards.forEach(card => {
+        card.addEventListener('click', (e) => {
+            // 视觉切换
+            activateCard(card);
+
+            // 如果点击的是按钮，继续执行原有的支付/跳转逻辑
+            // (这里不需要return，因为我们希望点击整个卡片也能高亮)
+        });
+    });
+
+    // --- 原有的支付按钮逻辑 (保留) ---
     const payButtons = document.querySelectorAll('.choose-plan-btn');
     const paymentModal = document.getElementById('payment-modal-overlay');
     const closePaymentBtn = document.getElementById('close-payment-btn');
     const paypalContainer = document.getElementById('paypal-button-container');
-
-    document.querySelectorAll('.pricing-card').forEach(card => {
-        card.addEventListener('click', (e) => {
-            if (e.target.closest('button')) return;
-            document.querySelectorAll('.pricing-card').forEach(c => c.classList.remove('plan-active'));
-            card.classList.add('plan-active');
-        });
-    });
 
     if (closePaymentBtn && paymentModal) {
         closePaymentBtn.addEventListener('click', () => paymentModal.style.display = 'none');
@@ -821,14 +866,24 @@ function setupPayment() {
     }
 
     payButtons.forEach(btn => {
+        // 防止重复绑定，先克隆
         const newBtn = btn.cloneNode(true);
         btn.parentNode.replaceChild(newBtn, btn);
+        
         newBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation(); // 防止冒泡导致卡片点击事件触发两次（虽然影响不大）
+            
+            // 确保视觉上也选中该卡片
+            const card = newBtn.closest('.pricing-card');
+            if (card) activateCard(card);
+
             const token = localStorage.getItem('token');
             if (!token) { window.openModal('login'); return; }
+            
             const planType = newBtn.dataset.plan;
             const amount = planType === 'basic' ? '9.90' : '19.90';
+            
             if (paymentModal) paymentModal.style.display = 'flex';
             if (window.paypal && paypalContainer) {
                 paypalContainer.innerHTML = '';
@@ -841,7 +896,7 @@ function setupPayment() {
                             headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
                             body: JSON.stringify({ plan: planType })
                         });
-                        showToast('Upgraded!', 'success');
+                        showToast('Upgraded Successfully!', 'success');
                         setTimeout(() => window.location.reload(), 1500);
                     })
                 }).render('#paypal-button-container');
