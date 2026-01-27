@@ -3,427 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reportify AI - AI Report Generator</title>
-    
+    <title>Upgrade Plan - Reportify AI</title>
+    <link rel="stylesheet" href="style.css?v=9.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docx@7.1.0/build/index.js"></script>  
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> 
-    
     <script src="https://www.paypal.com/sdk/js?client-id=AeJjXRJe0H2XbqAwcw8zNA3-3ms0im4_QhK8E9p9FwzivH6yjFqjs-yus4oyZUTnG8Rx8udHY_DXl2Rc&currency=USD"></script>
-
-    <link rel="stylesheet" href="style.css?v=3.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
-<body class="font-sans antialiased"> <header class="main-header">
+<body style="background-color: #f8f9fa;">
+
+    <header class="main-header account-header">
         <div class="container">
             <a href="index.html" class="logo">
-                <span class="logo-icon">🐦</span>
-                <span>Reportify AI</span>
+                <span class="logo-icon">🐦</span> <span>Reportify AI</span>
             </a>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#generator">Generator</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="index.html#generator">Generator</a></li>
+                    <li><a href="account.html">My Account</a></li>
                 </ul>
             </nav>
-            
-            <div style="display: flex; align-items: center; gap: 15px;">
-    
-                <a href="usage.html#share-area" style="text-decoration: none; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); transition: transform 0.2s;">
-                    <i class="fas fa-gift"></i>
-                    <span class="hide-mobile-text">Get Free Credits</span>
-                </a>
-
-                <div id="auth-container" class="header-actions">
-                     <button class="btn-login" onclick="openModal('login')">Login</button>
-                    <button class="btn btn-primary" onclick="openModal('signup')">Sign Up</button>
-                </div>
-
-            </div>
-            <style> @media(max-width:600px){ .hide-mobile-text{display:none!important;} } </style>
+            <div id="auth-container" class="header-actions"></div>
         </div>
     </header>
 
-    <main>
-        <section id="hero" class="hero-section">
-            <div class="container">
-                <h1>Generate in Seconds, Report with Confidence.</h1>
-                <p class="subtitle">Save time and boost your productivity. Let our AI handle the paperwork while you focus on what matters.</p>
-                <div class="cta-buttons">
-                    <a href="#generator" class="btn btn-primary btn-large">Get Started</a>
-                    <a href="#features" class="btn btn-secondary btn-large">Learn More</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="features" class="features-section">
-            <div class="container">
-                <h2 class="section-title">Everything You Need to Succeed</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <h3>Chaos to Clarity</h3>
-                        <p>Stop struggling with formatting. Just drop in your messy bullet points or rough notes. Our engine instantly structures them into a coherent, logic-first narrative.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Business-Ready Formats</h3>
-                        <p>Don't just get text; get a document. Export directly to professionally styled <strong>Word</strong> or <strong>PDF</strong>. Ready to be presented immediately.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Role-Adaptive Engine</h3>
-                        <p>Reportify adapts to your specific role—whether you are a <strong>Manager</strong> needing brevity or a <strong>Marketer</strong> needing persuasion. It speaks your industry's language.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="pricing" class="pricing-section">
-            <div class="container">
-                <h2 class="section-title">Choose Your Plan</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pricing-grid pt-4" style="display: grid;"> <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer hover:shadow-lg relative flex flex-col justify-between" data-plan="free">
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Free Trial</h3>
-                            <div class="text-3xl font-extrabold text-gray-900 mb-6">$0<span class="text-sm font-normal text-gray-500">/ 7 days</span></div>
-            
-                            <ul class="space-y-3 mb-8 text-sm text-gray-600">
-                                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> <strong>3 Reports</strong> per day</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Standard AI Model</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Word Export</li>
-                                <li class="flex items-center gap-2 opacity-50"><i class="fas fa-times-circle"></i> Smart AI Engine</li>
-                                <li class="flex items-center gap-2 opacity-50"><i class="fas fa-times-circle"></i> Long Input (100k)</li>
-                            </ul>
-                        </div>
-        
-                        <button class="w-full py-3 rounded-lg font-bold transition-all duration-200 bg-white text-blue-600 border border-gray-200 hover:bg-gray-50 choose-plan-btn" data-plan="free">Start Free</button>
-                    </div>
-
-                    <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer hover:shadow-lg relative flex flex-col justify-between" data-plan="basic">
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Basic</h3>
-                            <div class="text-3xl font-extrabold text-gray-900 mb-6">$9.90<span class="text-sm font-normal text-gray-500">/ mo</span></div>
-                            <ul class="space-y-3 mb-8 text-sm text-gray-600">
-                                <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> <strong>45 Reports</strong> / month</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> <strong>Smart AI</strong> Engine</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> Input Limit: <strong>5,000 chars</strong></li>
-                                <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> PDF & Word Export</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-info-circle text-gray-400"></i> Professional Tone Only</li>
-                            </ul>
-                        </div>
-                        <button class="w-full py-3 rounded-lg font-bold transition-all duration-200 bg-white text-blue-600 border border-gray-200 hover:bg-gray-50 choose-plan-btn" data-plan="basic">Choose Basic</button>
-                    </div>
-
-                    <div class="pricing-card border-blue-600 border-2 ring-4 ring-blue-500/20 shadow-xl transform scale-105 rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer relative flex flex-col justify-between z-10" data-plan="pro">
-                        <div class="absolute top-0 right-0 transform translate-x-2 -translate-y-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md uppercase tracking-wider">
-                            Best Value
-                        </div>
-        
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Professional</h3>
-                            <div class="text-3xl font-extrabold text-gray-900 mb-6">$19.90<span class="text-sm font-normal text-gray-500">/ mo</span></div>
-                            <ul class="space-y-3 mb-8 text-sm text-gray-600">
-                                <li class="flex items-center gap-2"><i class="fas fa-bolt text-green-500"></i> <strong>Unlimited</strong> Generation</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-brain text-green-500"></i> <strong>Advanced AI</strong> Engine</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-file-alt text-green-500"></i> Long Input: <strong>100k chars</strong></li>
-                                <li class="flex items-center gap-2"><i class="fas fa-star text-green-500"></i> <strong>All Tones</strong> Unlocked</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-crown text-green-500"></i> Priority Support</li>
-                            </ul>
-                        </div>
-                        <button class="w-full py-3 rounded-lg font-bold transition-all duration-200 bg-blue-600 text-white border-transparent hover:bg-blue-700 choose-plan-btn" data-plan="pro">Choose Pro</button>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <section id="generator" class="generator-section">
-             <div class="container">
-                <h2 class="section-title">Create Your Report</h2>
-                <div class="generator-container">
-                    <div class="form-group settings-grid">
-                        <div class="input-wrapper">
-                            <label for="template">Report Type</label>
-                            <select id="template" name="template">
-                                <option value="general" selected>General Summary</option>
-                                <option value="daily_standup">Daily Standup (Daily Progress)</option>
-                                <option value="weekly_pulse">Weekly Pulse (Weekly Report)</option>
-                                <option value="project_update">Project Status Update</option>
-                                <option value="monthly_review">Monthly Review (Pro)</option>
-                                <option value="quarterly_report">Quarterly Report (Pro)</option>
-                            </select>
-                        </div>
-
-                        <div class="input-wrapper">
-                            <label for="detail-level">Detail Level</label>
-                            <select id="detail-level" name="detail-level">
-                                <option value="Brief">Brief (Bullet points)</option>
-                                <option value="Standard" selected>Standard (Balanced)</option>
-                                <option value="Detailed">Detailed (Comprehensive)</option>
-                            </select>
-                        </div>
-
-                        <div class="input-wrapper">
-                            <label for="role">Your Role</label>
-                            <select id="role" name="role" required>
-                                <option value="General" selected>General Consultant</option>
-                                <option value="Management">Senior Executive / Manager</option>
-                                <option value="Marketing">Marketing Director</option>
-                                <option value="Sales">Sales Executive</option>
-                                <option value="Tech">Lead Engineer / CTO</option>
-                                <option value="Operations">Operations Manager</option>
-                                <option value="HR">HR Director</option>
-                            </select>
-                        </div>
-
-                        <div class="input-wrapper">
-                            <label for="tone">Tone / Style</label>
-                            <select id="tone" name="tone">
-                                <option value="Professional" selected>Professional</option>
-                                <option value="Conversational">Conversational</option>
-                                <option value="Direct">Direct / Blunt</option>
-                                <option value="Persuasive">Persuasive</option>
-                            </select>
-                        </div>
-
-                        <div class="input-wrapper">
-                            <label for="language">Language</label>
-                            <select id="language" name="language">
-                                <option value="English">English</option>
-                                <option value="Chinese">Chinese (简体中文)</option>
-                                <option value="Japanese">Japanese</option>
-                                <option value="Korean">Korean</option>
-                                <option value="Spanish">Spanish</option>
-                                <option value="German">German</option>
-                                <option value="French">French</option>
-                                <option value="Portuguese">Portuguese</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="prompt">Key points for the report</label>
-                        <textarea id="key-points" name="prompt" rows="8" placeholder="Example: \n- Weekly summary of project progress.\n- Key achievements and next steps."></textarea>
-                    </div>
-                    <div class="form-group action-buttons">
-                        <button id="generate-btn" class="btn btn-primary">Generate Report</button>
-                        <button id="copy-btn" class="btn btn-secondary">Copy Result</button>
-                    </div>
-                    <div class="form-group">
-                        <label for="result">Generated Report</label>
-                        <div id="generated-report" class="result-box">The generated report will appear here...</div>
-                    </div>
-                    <div class="form-group">
-                        <label>Export As</label>
-                        <div class="export-options">
-                            <button class="export-btn" data-format="Word">Word</button>
-                            <button class="export-btn" data-format="Markdown">Markdown</button>
-                            <button class="export-btn premium-feature" data-format="PDF">
-                                PDF
-                                <span>Pro</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="contact-section">
-            <div class="container">
-                <h2 class="section-title">Contact Us</h2>
-                <p class="subtitle">
-                    Have a suggestion or found a bug? We'd love to hear from you.<br>
-                    <span style="font-size: 0.9em; color: #2563EB; font-weight: 500;">
-                        <i class="fas fa-crown"></i> Pro users receive priority support.
-                    </span>
-                </p>
-        
-                <form id="contact-form" class="contact-form">
-                     <div class="input-wrapper">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required placeholder="Your Name">
-                     </div>
-            
-                     <div class="input-wrapper">
-                         <label for="email">Email</label>
-                         <input type="email" id="email" name="email" required placeholder="your@email.com">
-                         <p id="email-error" class="error-message"></p>
-                     </div>
-
-                     <div class="input-wrapper">
-                         <label for="contact-type">Subject / Inquiry Type</label>
-                         <select id="contact-type" name="type" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; background: white;">
-                             <option value="General">General Inquiry </option>
-                             <option value="Suggestion">Feature Suggestion </option>
-                             <option value="Bug">Report a Bug </option>
-                             <option value="Billing">Billing & Account </option>
-                             <option value="Priority" style="font-weight:bold; color:#2563EB;">⭐⭐ Priority Support (Pro Users)</option>
-                         </select>
-                     </div>
-
-                     <div class="input-wrapper full-width">
-                          <label for="message" style="display:block; margin-bottom:5px; font-weight:500;">Message</label>
-                          <div style="position: relative;">
-                               <textarea id="message" name="message" rows="5" maxlength="1000" required 
-                                    placeholder="Please describe your question or feedback here (max 1000 chars)..."
-                                    style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; resize: vertical; font-family: inherit; outline: none;"></textarea>
-        
-                               <span style="position: absolute; bottom: 8px; right: 10px; font-size: 12px; color: #aaa; pointer-events: none;">
-                                   Max 1000
-                               </span>
-                          </div>
-                     </div>
-            
-                     <button type="submit" class="btn btn-primary">Submit Feedback</button>
-                     <div id="form-status"></div>
-                 </form>
-             </div>
-         </section>
-    </main>
-
-    <footer class="main-footer">
-       <div class="container">
-            <p>&copy; 2025 Reportify AI. All Rights Reserved.</p>
-       </div>
-    </footer>
-    
-    <div id="auth-modal-overlay" class="hidden fixed inset-0 z-[10000] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300">
-    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden transform scale-100 transition-transform duration-300 relative mx-4">
-        
-        <button onclick="window.closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition z-10 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
-            <i class="fas fa-times text-xl"></i>
-        </button>
-
-        <div class="flex border-b border-gray-200 bg-gray-50">
-            <button class="tab-link active flex-1 py-4 text-sm font-bold text-gray-500 hover:text-blue-600 transition border-b-2 border-transparent" data-tab="login" onclick="window.openModal('login')">
-                Login
-            </button>
-            <button class="tab-link flex-1 py-4 text-sm font-bold text-gray-500 hover:text-blue-600 transition border-b-2 border-transparent" data-tab="signup" onclick="window.openModal('signup')">
-                Sign Up
-            </button>
-        </div>
-
-        <div class="p-8">
-            
-            <div class="mb-6">
-                <button onclick="window.location.href='https://api.goreportify.com/auth/google'" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-3 rounded-lg transition shadow-sm group">
-                    <i class="fab fa-google text-red-500 text-xl group-hover:scale-110 transition-transform"></i>
-                    <span>Continue with Google</span>
-                </button>
-                <div class="relative mt-6">
-                    <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200"></div></div>
-                    <div class="relative flex justify-center text-xs uppercase font-bold tracking-wider"><span class="bg-white px-2 text-gray-400">Or</span></div>
-                </div>
-            </div>
-
-            <div id="login" class="tab-content hidden">
-                <form id="login-form" class="space-y-5">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-600 uppercase mb-2">Email Address</label>
-                        <input type="email" id="login-email" placeholder="name@company.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <label class="block text-xs font-bold text-gray-600 uppercase">Password</label>
-                            <a href="#" class="text-xs text-blue-600 hover:underline font-medium">Forgot?</a>
-                        </div>
-                        <input type="password" id="login-password" placeholder="Enter password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
-                    </div>
-                    <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition transform active:scale-95">
-                        Log In
-                    </button>
-                </form>
-            </div>
-
-            <div id="signup" class="tab-content hidden">
-                <form id="signup-form" class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Full Name</label>
-                        <input type="text" id="signup-name" placeholder="e.g. John Doe" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
-                        <p id="name-feedback" class="text-xs mt-1 text-red-500 hidden font-medium"></p>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Email</label>
-                        <input type="email" id="signup-email" placeholder="name@company.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
-                        <p id="email-feedback" class="text-xs mt-1 text-red-500 hidden font-medium"></p>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Password</label>
-                        <input type="password" id="signup-password" placeholder="8+ chars" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
-                        <div id="password-strength-box" class="mt-3 bg-gray-50 p-3 rounded border border-gray-200 hidden transition-all">
-                            <p class="text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wide">Security Check:</p>
-                            <ul class="text-xs space-y-1 text-gray-400 font-medium">
-                                <li id="req-length"><i class="far fa-circle mr-1 text-[10px]"></i> 8+ chars</li>
-                                <li id="req-upper"><i class="far fa-circle mr-1 text-[10px]"></i> Uppercase</li>
-                                <li id="req-number"><i class="far fa-circle mr-1 text-[10px]"></i> Number</li>
-                                <li id="req-special"><i class="far fa-circle mr-1 text-[10px]"></i> Symbol</li>
-                            </ul>
-                        </div>
-                    </div>
-                        <button type="submit" id="btn-signup-submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
-                            Create Account
-                        </button>
-                    </form>
-                </div>
-
-            </div>
+    <div style="width: 100%; background: #f8f9fa; padding: 20px 0;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; text-align: left;">
+            <a href="account.html" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #666; font-size: 0.9rem; font-weight: 600;">
+                <i class="fas fa-arrow-left"></i> Back to Account Hub
+            </a>
         </div>
     </div>
 
-<audio id="notification-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=pop-39222.mp3" preload="auto"></audio>
+    <section id="pricing" class="pricing-section" style="padding: 2rem 0;">
+        <div class="container" style="max-width: 1200px; margin: 0 auto 40px; text-align: center; padding: 0 20px;">
+            <h1 style="font-size: 2.5rem; color: #333; margin-bottom: 10px;">Choose Your Plan</h1>
+            <p style="color: #666; font-size: 1rem; margin-bottom: 2rem;">
+                Unlock the full potential of AI reporting.
+            </p>
+            <span style="font-size: 0.9rem; background: #eef; padding: 6px 12px; border-radius: 20px; color: #555;">
+                Current Plan: <span id="current-plan-badge" style="font-weight:bold; color:#007bff">LOADING...</span>
+            </span>
+        </div>
 
-<div id="message-modal" class="hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300 p-4">
-    <div class="bg-white w-full max-w-6xl h-[85vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-gray-100 transform transition-all scale-100">
+        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pricing-grid" style="display: grid; padding-top: 10px;">
+                
+                <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer hover:shadow-lg relative flex flex-col justify-between" data-plan="free">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Free Trial</h3>
+                        <div class="text-3xl font-extrabold text-gray-900 mb-6">$0<span class="text-sm font-normal text-gray-500">/ 7 days</span></div>
+                        
+                        <ul class="space-y-3 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0;">
+                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-green-500 mr-2"></i> <strong>3 Reports</strong> per day</li>
+                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-green-500 mr-2"></i> Standard AI Model</li>
+                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-green-500 mr-2"></i> Word Export</li>
+                            <li class="flex items-center gap-2 mb-2 opacity-50"><i class="fas fa-times-circle mr-2"></i> Smart AI Engine</li>
+                            <li class="flex items-center gap-2 mb-2 opacity-50"><i class="fas fa-times-circle mr-2"></i> Long Input (100k)</li>
+                        </ul>
+                    </div>
+                    <button class="w-full py-3 rounded-lg font-bold transition-all duration-200 bg-white text-blue-600 border border-gray-200 hover:bg-gray-50 choose-plan-btn" data-plan="free">Start Free</button>
+                </div>
+
+                <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer hover:shadow-lg relative flex flex-col justify-between" data-plan="basic">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Basic</h3>
+                        <div class="text-3xl font-extrabold text-gray-900 mb-6">$9.90<span class="text-sm font-normal text-gray-500">/ mo</span></div>
+                        <ul class="space-y-3 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0;">
+                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-blue-500 mr-2"></i> <strong>45 Reports</strong> / month</li>
+                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-blue-500 mr-2"></i> <strong>Smart AI</strong> Engine</li>
+                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-blue-500 mr-2"></i> Input Limit: <strong>5,000 chars</strong></li>
+                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-blue-500 mr-2"></i> PDF & Word Export</li>
+                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-info-circle text-gray-400 mr-2"></i> Professional Tone Only</li>
+                        </ul>
+                    </div>
+                    <button class="w-full py-3 rounded-lg font-bold transition-all duration-200 bg-white text-blue-600 border border-gray-200 hover:bg-gray-50 choose-plan-btn" data-plan="basic">Select Basic</button>
+                </div>
+
+                <div class="pricing-card border-blue-600 border-2 ring-4 ring-blue-500/20 shadow-xl transform scale-105 rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer relative flex flex-col justify-between z-10" data-plan="pro">
+                    <div class="absolute top-0 right-0 transform translate-x-2 -translate-y-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md uppercase tracking-wider">
+                        Recommended
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Professional</h3>
+                        <div class="text-3xl font-extrabold text-gray-900 mb-6">$19.90<span class="text-sm font-normal text-gray-500">/ mo</span></div>
+                        <ul class="space-y-3 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0;">
+                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-bolt text-green-500 mr-2"></i> <strong>Unlimited</strong> Generation</li>
+                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-brain text-green-500 mr-2"></i> <strong>Advanced AI</strong> Engine</li>
+                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-file-alt text-green-500 mr-2"></i> Long Input: <strong>100k chars</strong></li>
+                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-star text-green-500 mr-2"></i> <strong>All Tones</strong> Unlocked</li>
+                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-crown text-green-500 mr-2"></i> Priority Support</li>
+                        </ul>
+                    </div>
+                    <button class="w-full py-3 rounded-lg font-bold transition-all duration-200 bg-blue-600 text-white border-transparent hover:bg-blue-700 choose-plan-btn" data-plan="pro">Choose Pro</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
         
-        <div class="bg-gradient-to-r from-blue-700 to-blue-600 px-8 py-5 flex justify-between items-center text-white shadow-md flex-shrink-0">
-            <div>
-                <h3 class="font-bold text-xl tracking-wide flex items-center gap-3">
-                    <i class="fas fa-clipboard-list"></i> Feedback History
-                </h3>
-                <p class="text-blue-100 text-xs mt-1">View your inquiries and our responses below.</p>
-            </div>
-            <button onclick="closeMessageCenter()" class="bg-white/10 hover:bg-white/20 rounded-full p-2 w-10 h-10 flex items-center justify-center transition backdrop-blur-md cursor-pointer">
-                <i class="fas fa-times text-lg"></i>
-            </button>
-        </div>
+    <div style="text-align: center; margin: 40px 0; color: #999; font-size: 0.8rem;">
+        <p><i class="fab fa-paypal"></i> Secure payment via PayPal. Cancel anytime.</p>
+    </div>
 
-        <div id="msg-list-container" class="flex-1 p-8 overflow-y-auto bg-slate-50 space-y-6">
-            <div class="flex flex-col items-center justify-center h-full text-gray-400 gap-3">
-                <i class="fas fa-spinner fa-spin text-3xl text-blue-500"></i>
-                <span class="text-sm font-medium">Loading records...</span>
-            </div>
-        </div>
-
-        <div class="p-4 border-t border-gray-100 bg-white text-center text-xs text-gray-400 flex-shrink-0">
-            For new inquiries, please use the "Contact Us" form on the homepage.
+    <div id="payment-modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 450px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+            <span id="close-payment-btn" style="position: absolute; top: 10px; right: 15px; font-size: 28px; cursor: pointer; color: #666;">&times;</span>
+            
+            <h3 style="text-align: center; margin-bottom: 5px; color: #333;">Complete Your Purchase</h3>
+            <p id="payment-plan-name" style="text-align: center; color: #007bff; font-weight: bold; margin-bottom: 25px; font-size: 1.1rem;">Plan Name</p>
+            
+            <div id="paypal-button-container"></div>
         </div>
     </div>
-</div>
 
-<button onclick="openMessageCenter()" class="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white w-16 h-16 rounded-full shadow-2xl z-[9990] flex items-center justify-center transition-transform hover:scale-110 group cursor-pointer" title="My Messages">
-    <i class="fas fa-bell text-2xl group-hover:animate-swing"></i>
-    
-    <span id="notif-badge" class="hidden absolute top-0 right-0 h-5 w-5">
-        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-        <span class="relative inline-flex rounded-full h-5 w-5 bg-red-600 border-2 border-white"></span>
-    </span>
-</button>
+    <script src="nav.js"></script>
+    <script src="script.js?v=10.0"></script> 
 
-<style>
-    /* 铃铛摇晃动画 */
-    @keyframes swing { 
-        20% { transform: rotate(15deg); } 
-        40% { transform: rotate(-10deg); } 
-        60% { transform: rotate(5deg); } 
-        80% { transform: rotate(-5deg); } 
-        100% { transform: rotate(0deg); } 
-    }
-    .group-hover\:animate-swing { animation: swing 1s ease-in-out infinite; }
-</style>
-
-<script src="script.js"></script>
 </body>
 </html>
