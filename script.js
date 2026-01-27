@@ -1184,7 +1184,7 @@ async function loadMessages(markAsRead = false) {
     }
 }
 
-// --- 模块 K: 用户菜单 (修复版：强制圆形 + 垂直居中 + 优先显名) ---
+// --- 模块 K: 用户菜单 (修复版：已加入管理员入口) ---
 function setupUserDropdown() {
     const headerRight = document.getElementById('auth-container');
     if (!headerRight) return;
@@ -1198,17 +1198,14 @@ function setupUserDropdown() {
             </div>
         `;
     } else {
-        // 2. 获取显示名称 (优先显示 Name，没有则显示邮箱前缀)
-        // 注意：这里确保读取的是 currentUser.name
+        // 2. 获取显示名称
         const displayName = currentUser.name || currentUser.displayName || currentUser.email.split('@')[0] || 'User';
         
         // 3. 获取头像链接
         const picUrl = currentUser.picture ? getFullImageUrl(currentUser.picture) : null;
         const initial = displayName.charAt(0).toUpperCase();
 
-        // 4. 生成头像 HTML (内联样式，强制覆盖所有 CSS)
-        // border-radius: 50% -> 保证圆
-        // object-fit: cover -> 保证不拉伸
+        // 4. 生成头像 HTML
         const avatarHtml = picUrl
             ? `<img src="${picUrl}" alt="Avatar" 
                    style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer;" 
@@ -1218,7 +1215,14 @@ function setupUserDropdown() {
                    ${initial}
                </div>`;
 
-        // 5. 渲染容器 (Flexbox 强制居中)
+        // 🟢 [关键新增] 如果是管理员，生成这个红色的按钮HTML
+        const adminLinkHtml = (currentUser.role === 'admin') ? `
+            <a href="admin.html" style="display: block; padding: 10px 16px; color: #dc2626; text-decoration: none; font-size: 14px; font-weight: bold; transition: background 0.2s; border-top: 1px solid #f3f4f6;" onmouseover="this.style.background='#fef2f2'" onmouseout="this.style.background='white'">
+                <i class="fas fa-shield-alt" style="margin-right: 8px;"></i> Admin Dashboard
+            </a>
+        ` : '';
+
+        // 6. 渲染菜单
         headerRight.innerHTML = `
             <div style="position: relative; display: flex; align-items: center; gap: 12px;">
                 <span style="font-size: 14px; font-weight: 500; color: #333;">${displayName}</span>
@@ -1239,6 +1243,8 @@ function setupUserDropdown() {
                      <a href="usage.html" style="display: block; padding: 10px 16px; color: #374151; text-decoration: none; font-size: 14px; transition: background 0.2s;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='white'">
                         <i class="fas fa-chart-pie" style="margin-right: 8px; color: #10b981;"></i> Usage Stats
                      </a>
+
+                     ${adminLinkHtml}
 
                      <a href="#" onclick="logout()" style="display: block; padding: 10px 16px; color: #ef4444; text-decoration: none; font-size: 14px; border-top: 1px solid #f3f4f6; transition: background 0.2s;" onmouseover="this.style.background='#fef2f2'" onmouseout="this.style.background='white'">
                         <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i> Logout
