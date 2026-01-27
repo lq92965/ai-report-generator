@@ -454,7 +454,7 @@ app.get('/api/my-messages', authenticateToken, async (req, res) => {
 
 // Admin
 // ==========================================
-// 🟢 [修复版] 管理员回复接口 (防崩溃)
+// 🟢 [智能修复版] 管理员回复接口 (自动查找表名)
 // ==========================================
 app.post('/api/admin/reply', authenticateToken, async (req, res) => {
     try {
@@ -470,9 +470,28 @@ app.post('/api/admin/reply', authenticateToken, async (req, res) => {
             return res.status(400).json({ error: "Missing ID or content" });
         }
 
-        // 2. 查找原消息以获取用户邮箱
-        const feedback = await db.collection('contact_messages').findOne({ _id: new ObjectId(feedbackId) });
-        if (!feedback) return res.status(404).json({ error: "Message not found" });
+        console.log(`[Admin Reply] Trying to reply to ID: ${feedbackId}`);
+
+        // 2. 🟢 智能查找：在所有可能的表名中寻找这条消息
+        const possibleCollections = ['contact_messages', 'feedbacks', 'messages', 'contacts'];
+        let feedback = null;
+        let targetCollection = '';
+
+        for (const colName of possibleCollections) {
+            const found = await db.collection(colName).findOne({ _id: new ObjectId(feedbackId) });
+            if (found) {
+                feedback = found;
+                targetCollection = colName;
+                console.log(`[Admin Reply] Found message in collection: ${colName}`);
+                break; // 找到了就停止
+            }
+        }
+
+        // 如果在所有表里都找不到
+        if (!feedback) {
+            console.log(`[Admin Reply] Error: Message not found in any collection.`);
+            return res.status(404).json({ error: "Message not found (Check DB collection name)" });
+        }
 
         // 3. 构建新的对话对象
         const newReply = {
@@ -481,9 +500,8 @@ app.post('/api/admin/reply', authenticateToken, async (req, res) => {
             createdAt: new Date()
         };
 
-        // 4. 更新数据库 (推送到 conversation 数组，并标记为已回复)
-        // 注意：使用了 $push 和 $set 并行
-        await db.collection('contact_messages').updateOne(
+        // 4. 更新数据库 (使用找到的正确表名 targetCollection)
+        await db.collection(targetCollection).updateOne(
             { _id: new ObjectId(feedbackId) },
             { 
                 $push: { conversation: newReply },
@@ -491,30 +509,25 @@ app.post('/api/admin/reply', authenticateToken, async (req, res) => {
             }
         );
 
-        // 5. 尝试发送邮件通知 (包裹在 try-catch 中，防止邮件配置错误导致整个接口崩溃)
+        // 5. 尝试发送邮件通知
         try {
-            // 这里假设你已经配置了 transporter，如果没有配置，这一步会跳过
             if (typeof transporter !== 'undefined') {
                 await transporter.sendMail({
                     from: '"Reportify Support" <no-reply@goreportify.com>',
                     to: feedback.email,
-                    subject: 'New Reply to your Feedback - Reportify AI',
-                    text: `Hello ${feedback.name},\n\nAdmin has replied to your message:\n\n"${replyContent}"\n\nLog in to your dashboard to view the full conversation.\n\nBest,\nReportify Team`
+                    subject: 'New Reply from Reportify AI',
+                    text: `Hello ${feedback.name},\n\nAdmin has replied:\n\n"${replyContent}"\n\nLogin to view full history.\n\nBest,\nReportify Team`
                 });
-                console.log(`Email sent to ${feedback.email}`);
             }
         } catch (emailErr) {
-            console.error("Email sending failed (Non-fatal):", emailErr.message);
-            // 注意：这里我们不返回错误给前端，因为站内信已经回复成功了
+            console.error("Email sending skipped:", emailErr.message);
         }
 
-        // 6. 返回成功
         res.json({ message: "Reply sent successfully" });
 
     } catch (error) {
-        console.error("Reply API Critical Error:", error);
-        // 返回具体错误信息，方便调试
-        res.status(500).json({ error: error.message || "Server Internal Error" });
+        console.error("Reply API Error:", error);
+        res.status(500).json({ error: error.message });
     }
 });
 
