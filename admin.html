@@ -13,6 +13,42 @@
         .nav-item:hover:not(.active) { background-color: #1e293b; color: white; }
         .hide-scroll::-webkit-scrollbar { width: 6px; }
         .hide-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    /* --- 📱 1. 手机端自适应 (Mobile) --- */
+    @media (max-width: 768px) {
+        body > div { flex-direction: column; }
+        aside { width: 100% !important; height: auto !important; min-height: auto; }
+        aside nav { display: flex; overflow-x: auto; padding-bottom: 5px; }
+        aside nav a { white-space: nowrap; margin-right: 10px; padding: 10px 15px; }
+        aside .p-6 { display: none; } /* 手机端隐藏侧边栏标题 */
+        main { width: 100% !important; padding: 10px !important; }
+        .grid { grid-template-columns: 1fr !important; }
+    }
+
+    /* --- 🔔 2. 消息红点 (Red Dot) --- */
+    .badge {
+    background-color: #ef4444;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 99px;
+    /* 配合 HTML 里的 absolute 定位 */
+    display: none; 
+    line-height: 1;
+    }
+
+    /* --- 🍞 3. 美化提示框 (Toast) --- */
+    #toast-container { position: fixed; top: 20px; right: 20px; z-index: 10000; }
+    .toast-msg {
+        background: white; border-left: 4px solid #10b981;
+        padding: 15px 20px; border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        display: flex; align-items: center; gap: 15px;
+        margin-bottom: 10px; min-width: 300px;
+        animation: slideIn 0.3s ease-out;
+    }
+    .toast-msg.error { border-left-color: #ef4444; }
+    @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
     </style>
 </head>
 <body class="bg-gray-100 font-sans text-gray-800">
@@ -36,8 +72,10 @@
                 <button onclick="switchView('users')" id="nav-users" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left">
                     <i class="fas fa-users w-5 text-center"></i> Users Management
                 </button>
-                <button onclick="switchView('feedback')" id="nav-feedback" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left">
+                <button onclick="switchView('feedback')" id="nav-feedback" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left relative">
                     <i class="fas fa-inbox w-5 text-center"></i> Feedback & Inbox
+    
+                    <span id="msg-badge" class="badge absolute right-4 top-3">0</span>
                 </button>
             </nav>
 
@@ -163,6 +201,20 @@
     </div>
 
     <script>
+        // 🟢 显示美化提示框的函数
+        function showToast(title, message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast-msg ${type}`;
+            toast.innerHTML = `
+                <div>
+                    <div style="font-weight:bold; color:#333;">${title}</div>
+                    <div style="font-size:0.9em; color:#666;">${message}</div>
+                </div>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => { toast.remove(); }, 3000);
+        }
         const API_BASE = 'https://api.goreportify.com';
         const token = localStorage.getItem('token');
 
@@ -229,6 +281,15 @@
             document.getElementById('stat-basic').innerText = data.basic;
             document.getElementById('stat-pros').innerText = data.pros;
             document.getElementById('stat-unread').innerText = data.unread;
+
+            // 🔔 控制侧边栏红点
+            const badge = document.getElementById('msg-badge');
+            if (data.unread > 0) {
+                badge.style.display = 'inline-block'; // 显示
+                badge.innerText = data.unread > 99 ? '99+' : data.unread; // 更新数字
+            } else {
+                badge.style.display = 'none'; // 隐藏
+            }
         }
 
         function renderUserTable(users) {
@@ -378,37 +439,54 @@
             document.getElementById('reply-modal').classList.add('hidden');
         }
 
-        async function sendReply() {
-            const id = document.getElementById('current-feedback-id').value;
-            const content = document.getElementById('reply-content').value;
-            
+        async function sendReply(feedbackId) {
+            // 1. 获取输入框内容 (尝试获取弹窗里的 textarea)
+            // 假设你的弹窗输入框没有ID，我们尝试用 querySelector 抓取
+            const textarea = document.querySelector('#reply-modal textarea') || document.querySelector('textarea'); 
+            const content = textarea ? textarea.value : '';
+
             if (!content) {
-                alert("请输入回复内容");
+                showToast('错误', '请输入回复内容', 'error');
                 return;
             }
 
+            // 2. 按钮变更为“发送中...”
+            // 尝试找到“发送回复”按钮
+            const sendBtns = document.querySelectorAll('button');
+            let targetBtn = null;
+            sendBtns.forEach(btn => { if(btn.innerText.includes('发送回复')) targetBtn = btn; });
+    
+            if(targetBtn) { targetBtn.disabled = true; targetBtn.innerText = '发送中...'; }
+
             try {
-                // 使用站内信 API
-                const res = await fetch(`${API_BASE}/api/admin/reply`, {
+                const token = localStorage.getItem('token');
+                const res = await fetch('https://api.goreportify.com/api/admin/reply', {
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}` 
+                        'Authorization': `Bearer ${token}`
                     },
-                    body: JSON.stringify({ feedbackId: id, replyContent: content })
+                    body: JSON.stringify({ feedbackId, replyContent: content })
                 });
-                
-                if(res.ok) {
-                    alert("✅ 回复已发送 (站内信)！");
-                    closeReplyModal();
-                    initData(); // 刷新列表，看到状态更新
+
+                if (res.ok) {
+                    showToast('发送成功', '回复已送达用户邮箱及站内信！');
+    
+                    // 关闭弹窗
+                    closeReplyModal(); 
+
+                    // 🟢 修正：调用正确的刷新函数
+                    initData(); 
+    
+                    // 清空输入框
+                    if(textarea) textarea.value = '';
                 } else {
-                    const err = await res.json();
-                    alert("❌ 发送失败: " + err.message);
+                    showToast('发送失败', '服务器返回错误', 'error');
                 }
-            } catch(e) {
-                console.error(e);
-                alert("网络错误 / Network Error");
+            } catch (e) {
+                showToast('网络错误', e.message, 'error');
+            } finally {
+                if(targetBtn) { targetBtn.disabled = false; targetBtn.innerText = '发送回复'; }
             }
         }
 
@@ -439,5 +517,6 @@
             window.location.href = 'index.html';
         }
     </script>
+    <div id="toast-container"></div>
 </body>
 </html>
