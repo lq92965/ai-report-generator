@@ -439,19 +439,25 @@
             document.getElementById('reply-modal').classList.add('hidden');
         }
 
-        async function sendReply(feedbackId) {
-            // 1. 获取输入框内容 (尝试获取弹窗里的 textarea)
-            // 假设你的弹窗输入框没有ID，我们尝试用 querySelector 抓取
+        // 🟢 [最终修复版] 发送回复逻辑
+        async function sendReply() { // 注意：这里去掉了括号里的 feedbackId
+            
+            // 1. 自动从隐藏输入框获取 ID
+            const feedbackId = document.getElementById('current-feedback-id').value;
+            
+            // 2. 获取回复内容
             const textarea = document.querySelector('#reply-modal textarea') || document.querySelector('textarea'); 
             const content = textarea ? textarea.value : '';
 
+            // 安全检查
+            if (!feedbackId) {
+                return showToast('错误', '无法获取消息ID，请刷新重试', 'error');
+            }
             if (!content) {
-                showToast('错误', '请输入回复内容', 'error');
-                return;
+                return showToast('错误', '请输入回复内容', 'error');
             }
 
-            // 2. 按钮变更为“发送中...”
-            // 尝试找到“发送回复”按钮
+            // 3. 按钮变更为“发送中...”
             const sendBtns = document.querySelectorAll('button');
             let targetBtn = null;
             sendBtns.forEach(btn => { if(btn.innerText.includes('发送回复')) targetBtn = btn; });
@@ -475,13 +481,15 @@
                     // 关闭弹窗
                     closeReplyModal(); 
 
-                    // 🟢 修正：调用正确的刷新函数
+                    // 刷新数据
                     initData(); 
     
                     // 清空输入框
                     if(textarea) textarea.value = '';
                 } else {
-                    showToast('发送失败', '服务器返回错误', 'error');
+                    // 如果后端返回错误，尝试读取具体原因
+                    const errData = await res.json();
+                    showToast('发送失败', errData.error || '服务器拒绝请求', 'error');
                 }
             } catch (e) {
                 showToast('网络错误', e.message, 'error');
