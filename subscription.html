@@ -46,60 +46,58 @@
         </div>
 
         <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pricing-grid" style="display: grid; padding-top: 10px;">
-                
-                <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer hover:shadow-lg relative flex flex-col justify-between" data-plan="free">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Free Trial</h3>
-                        <div class="text-3xl font-extrabold text-gray-900 mb-6">$0<span class="text-sm font-normal text-gray-500">/ 7 days</span></div>
-                        
-                        <ul class="space-y-3 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0;">
-                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-green-500 mr-2"></i> <strong>3 Reports</strong> per day</li>
-                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-green-500 mr-2"></i> Standard AI Model</li>
-                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-green-500 mr-2"></i> Word Export</li>
-                            <li class="flex items-center gap-2 mb-2 opacity-50"><i class="fas fa-times-circle mr-2"></i> Smart AI Engine</li>
-                            <li class="flex items-center gap-2 mb-2 opacity-50"><i class="fas fa-times-circle mr-2"></i> Long Input (100k)</li>
-                        </ul>
-                    </div>
-                    <button class="w-full py-3 rounded-lg font-bold transition-all duration-200 bg-white text-blue-600 border border-gray-200 hover:bg-gray-50 choose-plan-btn" data-plan="free">Start Free</button>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pricing-grid pt-12 pb-8" style="display: grid;">
+            
+            <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer hover:shadow-lg relative flex flex-col justify-between" data-plan="free">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Free Trial</h3>
+                    <div class="text-3xl font-extrabold text-gray-900 mb-6">$0<span class="text-sm font-normal text-gray-500">/ 7 days</span></div>
+                    <ul class="space-y-3 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0;">
+                        <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-green-500 mr-2"></i> <strong>3 Reports</strong> per day</li>
+                        <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-green-500 mr-2"></i> Standard AI Model</li>
+                        <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-green-500 mr-2"></i> Word Export</li>
+                        <li class="flex items-center gap-2 mb-2 opacity-50"><i class="fas fa-times-circle mr-2"></i> Smart AI Engine</li>
+                        <li class="flex items-center gap-2 mb-2 opacity-50"><i class="fas fa-times-circle mr-2"></i> Long Input (100k)</li>
+                    </ul>
                 </div>
-
-                <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer hover:shadow-lg relative flex flex-col justify-between" data-plan="basic">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Basic</h3>
-                        <div class="text-3xl font-extrabold text-gray-900 mb-6">$9.90<span class="text-sm font-normal text-gray-500">/ mo</span></div>
-                        <ul class="space-y-3 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0;">
-                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-blue-500 mr-2"></i> <strong>45 Reports</strong> / month</li>
-                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-blue-500 mr-2"></i> <strong>Smart AI</strong> Engine</li>
-                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-blue-500 mr-2"></i> Input Limit: <strong>5,000 chars</strong></li>
-                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-blue-500 mr-2"></i> PDF & Word Export</li>
-                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-info-circle text-gray-400 mr-2"></i> Professional Tone Only</li>
-                        </ul>
-                    </div>
-                    <button class="w-full py-3 rounded-lg font-bold transition-all duration-200 bg-white text-blue-600 border border-gray-200 hover:bg-gray-50 choose-plan-btn" data-plan="basic">Select Basic</button>
-                </div>
-
-                <div class="pricing-card border-blue-600 border-2 ring-4 ring-blue-500/20 shadow-xl transform scale-105 rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer relative flex flex-col justify-between z-10" data-plan="pro">
-                    <div class="absolute top-0 right-0 transform translate-x-2 -translate-y-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md uppercase tracking-wider">
-                        Recommended
-                    </div>
-                    
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Professional</h3>
-                        <div class="text-3xl font-extrabold text-gray-900 mb-6">$19.90<span class="text-sm font-normal text-gray-500">/ mo</span></div>
-                        <ul class="space-y-3 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0;">
-                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-bolt text-green-500 mr-2"></i> <strong>Unlimited</strong> Generation</li>
-                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-brain text-green-500 mr-2"></i> <strong>Advanced AI</strong> Engine</li>
-                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-file-alt text-green-500 mr-2"></i> Long Input: <strong>100k chars</strong></li>
-                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-star text-green-500 mr-2"></i> <strong>All Tones</strong> Unlocked</li>
-                            <li class="flex items-center gap-2 mb-2"><i class="fas fa-crown text-green-500 mr-2"></i> Priority Support</li>
-                        </ul>
-                    </div>
-                    <button class="w-full py-3 rounded-lg font-bold transition-all duration-200 bg-blue-600 text-white border-transparent hover:bg-blue-700 choose-plan-btn" data-plan="pro">Choose Pro</button>
-                </div>
-
+                <button class="w-full py-3 rounded-lg font-bold transition-all duration-200 bg-white text-blue-600 border border-gray-200 hover:bg-gray-50 choose-plan-btn" data-plan="free">Start Free</button>
             </div>
+
+            <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer hover:shadow-lg relative flex flex-col justify-between" data-plan="basic">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Basic</h3>
+                    <div class="text-3xl font-extrabold text-gray-900 mb-6">$9.90<span class="text-sm font-normal text-gray-500">/ mo</span></div>
+                    <ul class="space-y-3 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0;">
+                        <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-blue-500 mr-2"></i> <strong>45 Reports</strong> / month</li>
+                        <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-blue-500 mr-2"></i> <strong>Smart AI</strong> Engine</li>
+                        <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-blue-500 mr-2"></i> Input Limit: <strong>5,000 chars</strong></li>
+                        <li class="flex items-center gap-2 mb-2"><i class="fas fa-check text-blue-500 mr-2"></i> PDF & Word Export</li>
+                        <li class="flex items-center gap-2 mb-2"><i class="fas fa-info-circle text-gray-400 mr-2"></i> Professional Tone Only</li>
+                    </ul>
+                </div>
+                <button class="w-full py-3 rounded-lg font-bold transition-all duration-200 bg-white text-blue-600 border border-gray-200 hover:bg-gray-50 choose-plan-btn" data-plan="basic">Select Basic</button>
+            </div>
+
+            <div class="pricing-card border-blue-600 border-2 ring-4 ring-blue-500/20 shadow-xl transform scale-105 rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer relative flex flex-col justify-between z-10" data-plan="pro">
+                <div class="absolute top-0 right-0 transform translate-x-2 -translate-y-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md uppercase tracking-wider">
+                    Recommended
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Professional</h3>
+                    <div class="text-3xl font-extrabold text-gray-900 mb-6">$19.90<span class="text-sm font-normal text-gray-500">/ mo</span></div>
+                    <ul class="space-y-3 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0;">
+                        <li class="flex items-center gap-2 mb-2"><i class="fas fa-bolt text-green-500 mr-2"></i> <strong>Unlimited</strong> Generation</li>
+                        <li class="flex items-center gap-2 mb-2"><i class="fas fa-brain text-green-500 mr-2"></i> <strong>Advanced AI</strong> Engine</li>
+                        <li class="flex items-center gap-2 mb-2"><i class="fas fa-file-alt text-green-500 mr-2"></i> Long Input: <strong>100k chars</strong></li>
+                        <li class="flex items-center gap-2 mb-2"><i class="fas fa-star text-green-500 mr-2"></i> <strong>All Tones</strong> Unlocked</li>
+                        <li class="flex items-center gap-2 mb-2"><i class="fas fa-crown text-green-500 mr-2"></i> Priority Support</li>
+                    </ul>
+                </div>
+                <button class="w-full py-3 rounded-lg font-bold transition-all duration-200 bg-blue-600 text-white border-transparent hover:bg-blue-700 choose-plan-btn" data-plan="pro">Choose Pro</button>
+            </div>
+
         </div>
+    </div>
     </section>
         
     <div style="text-align: center; margin: 40px 0; color: #999; font-size: 0.8rem;">
