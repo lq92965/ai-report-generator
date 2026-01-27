@@ -198,7 +198,7 @@
                     </div>
                     <div class="form-group">
                         <label for="prompt">Key points for the report</label>
-                        <textarea id="key-points" name="prompt" rows="8" placeholder="例如：&#10;- 上周总结：完成项目A的数据分析。&#10;- 本周计划：根据分析结果制定优化方案。&#10;- 需要的帮助：请市场部提供用户反馈数据。"></textarea>
+                        <textarea id="key-points" name="prompt" rows="8" placeholder="Example: \n- Weekly summary of project progress.\n- Key achievements and next steps."></textarea>
                     </div>
                     <div class="form-group action-buttons">
                         <button id="generate-btn" class="btn btn-primary">Generate Report</button>
@@ -248,10 +248,10 @@
                      <div class="input-wrapper">
                          <label for="contact-type">Subject / Inquiry Type</label>
                          <select id="contact-type" name="type" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; background: white;">
-                             <option value="General">General Inquiry (一般咨询)</option>
-                             <option value="Suggestion">Feature Suggestion (产品建议)</option>
-                             <option value="Bug">Report a Bug (Bug 反馈)</option>
-                             <option value="Billing">Billing & Account (账单与账户)</option>
+                             <option value="General">General Inquiry </option>
+                             <option value="Suggestion">Feature Suggestion </option>
+                             <option value="Bug">Report a Bug </option>
+                             <option value="Billing">Billing & Account </option>
                              <option value="Priority" style="font-weight:bold; color:#2563EB;">⭐⭐ Priority Support (Pro Users)</option>
                          </select>
                      </div>
@@ -260,7 +260,7 @@
                           <label for="message" style="display:block; margin-bottom:5px; font-weight:500;">Message</label>
                           <div style="position: relative;">
                                <textarea id="message" name="message" rows="5" maxlength="1000" required 
-                                    placeholder="请在此描述您的问题 (最多1000字)..." 
+                                    placeholder="Please describe your question or feedback here (max 1000 chars)..."
                                     style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; resize: vertical; font-family: inherit; outline: none;"></textarea>
         
                                <span style="position: absolute; bottom: 8px; right: 10px; font-size: 12px; color: #aaa; pointer-events: none;">
