@@ -800,109 +800,128 @@ function exportToPDF(text, filename) {
     html2pdf().from(div).save(`${filename}.pdf`);
 }
 
-// --- 模块 G: 支付 (修复版：支持点击切换选中状态) ---
+// --- 模块 G: 支付与卡片交互逻辑 (全能修复版) ---
 function setupPayment() {
     const cards = document.querySelectorAll('.pricing-card');
-    
-    // 如果页面上没有价格卡片，直接退出
-    if (cards.length === 0) return;
-
-    // 定义样式常量 (Tailwind CSS 类名)
-    const activeClasses = ['border-blue-600', 'ring-2', 'ring-blue-500', 'shadow-xl', 'transform', 'scale-105'];
-    const inactiveClasses = ['border-gray-200', 'shadow-sm'];
-    
-    const btnActiveClasses = ['bg-blue-600', 'text-white', 'border-transparent'];
-    const btnInactiveClasses = ['bg-white', 'text-blue-600', 'border-gray-200', 'hover:bg-gray-50'];
-
-    // 辅助函数：激活指定卡片
-    const activateCard = (targetCard) => {
-        // 1. 重置所有卡片为“未选中”状态
-        cards.forEach(c => {
-            c.classList.remove(...activeClasses);
-            c.classList.add(...inactiveClasses);
-            
-            // 重置按钮样式
-            const btn = c.querySelector('button, a.btn');
-            if (btn) {
-                btn.classList.remove(...btnActiveClasses);
-                btn.classList.add(...btnInactiveClasses);
-                // 确保按钮有基础边框类
-                if (!btn.classList.contains('border')) btn.classList.add('border');
-            }
-        });
-
-        // 2. 设置目标卡片为“选中”状态
-        targetCard.classList.remove(...inactiveClasses);
-        targetCard.classList.add(...activeClasses);
-
-        // 设置目标按钮样式
-        const targetBtn = targetCard.querySelector('button, a.btn');
-        if (targetBtn) {
-            targetBtn.classList.remove(...btnInactiveClasses);
-            targetBtn.classList.add(...btnActiveClasses);
-        }
-    };
-
-    // 绑定点击事件
-    cards.forEach(card => {
-        card.addEventListener('click', (e) => {
-            // 视觉切换
-            activateCard(card);
-
-            // 如果点击的是按钮，继续执行原有的支付/跳转逻辑
-            // (这里不需要return，因为我们希望点击整个卡片也能高亮)
-        });
-    });
-
-    // --- 原有的支付按钮逻辑 (保留) ---
-    const payButtons = document.querySelectorAll('.choose-plan-btn');
     const paymentModal = document.getElementById('payment-modal-overlay');
     const closePaymentBtn = document.getElementById('close-payment-btn');
     const paypalContainer = document.getElementById('paypal-button-container');
 
-    if (closePaymentBtn && paymentModal) {
-        closePaymentBtn.addEventListener('click', () => paymentModal.style.display = 'none');
-        paymentModal.addEventListener('click', (e) => { if (e.target === paymentModal) paymentModal.style.display = 'none'; });
-    }
+    // 1. 样式定义 (用于切换蓝色框)
+    const activeCardClasses = ['border-blue-600', 'ring-2', 'ring-blue-500', 'shadow-xl', 'scale-105', 'z-10'];
+    const inactiveCardClasses = ['border-gray-200', 'shadow-sm'];
+    const activeBtnClasses = ['bg-blue-600', 'text-white', 'border-transparent', 'hover:bg-blue-700'];
+    const inactiveBtnClasses = ['bg-white', 'text-blue-600', 'border-gray-200', 'hover:bg-gray-50'];
 
+    // 2. 激活卡片视觉效果的函数
+    const activateCard = (targetCard) => {
+        // 重置所有卡片
+        cards.forEach(c => {
+            c.classList.remove(...activeCardClasses);
+            c.classList.add(...inactiveCardClasses);
+            c.classList.remove('transform'); // 移除放大效果基础类，防止冲突
+
+            // 重置按钮
+            const btn = c.querySelector('.choose-plan-btn');
+            if (btn) {
+                btn.classList.remove(...activeBtnClasses);
+                btn.classList.add(...inactiveBtnClasses);
+            }
+        });
+
+        // 激活当前卡片
+        targetCard.classList.remove(...inactiveCardClasses);
+        targetCard.classList.add(...activeCardClasses);
+        targetCard.classList.add('transform'); // 加回放大
+
+        // 激活当前按钮
+        const targetBtn = targetCard.querySelector('.choose-plan-btn');
+        if (targetBtn) {
+            targetBtn.classList.remove(...inactiveBtnClasses);
+            targetBtn.classList.add(...activeBtnClasses);
+        }
+    };
+
+    // 3. 绑定卡片点击事件 (视觉切换)
+    cards.forEach(card => {
+        card.addEventListener('click', (e) => {
+            // 只要点的不是按钮本身(按钮有自己的逻辑)，就切换视觉
+            // 但为了体验，点按钮同时也切换视觉，所以直接调用
+            activateCard(card);
+        });
+    });
+
+    // 4. 绑定按钮点击事件 (核心业务逻辑)
+    const payButtons = document.querySelectorAll('.choose-plan-btn');
     payButtons.forEach(btn => {
-        // 防止重复绑定，先克隆
+        // 克隆节点防止重复绑定
         const newBtn = btn.cloneNode(true);
         btn.parentNode.replaceChild(newBtn, btn);
-        
+
         newBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            e.stopPropagation(); // 防止冒泡导致卡片点击事件触发两次（虽然影响不大）
+            e.stopPropagation(); // 防止触发卡片点击(虽然上面处理了，保险起见)
             
-            // 确保视觉上也选中该卡片
+            // 确保视觉同步
             const card = newBtn.closest('.pricing-card');
-            if (card) activateCard(card);
+            if(card) activateCard(card);
 
+            const planType = newBtn.dataset.plan; // 获取 plan: free, basic, pro
             const token = localStorage.getItem('token');
-            if (!token) { window.openModal('login'); return; }
-            
-            const planType = newBtn.dataset.plan;
+
+            // --- 逻辑 A: 免费版 ---
+            if (planType === 'free') {
+                if (token) {
+                    // 已登录：跳转到生成器或使用页
+                    window.location.href = 'usage.html'; 
+                } else {
+                    // 未登录：弹窗注册
+                    window.openModal('signup');
+                }
+                return;
+            }
+
+            // --- 逻辑 B: 付费版 (Basic / Pro) ---
+            if (!token) {
+                // 未登录：先登录
+                showToast('Please login to upgrade.', 'info');
+                window.openModal('login');
+                return;
+            }
+
+            // 已登录：直接弹出支付窗口 (这是你想要的逻辑)
             const amount = planType === 'basic' ? '9.90' : '19.90';
             
             if (paymentModal) paymentModal.style.display = 'flex';
             if (window.paypal && paypalContainer) {
-                paypalContainer.innerHTML = '';
+                paypalContainer.innerHTML = ''; // 清空旧按钮
                 window.paypal.Buttons({
                     createOrder: (data, actions) => actions.order.create({ purchase_units: [{ amount: { value: amount } }] }),
                     onApprove: (data, actions) => actions.order.capture().then(async () => {
                         paymentModal.style.display = 'none';
-                        await fetch(`${API_BASE_URL}/api/upgrade-plan`, {
-                            method: 'POST', 
-                            headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
-                            body: JSON.stringify({ plan: planType })
-                        });
-                        showToast('Upgraded Successfully!', 'success');
-                        setTimeout(() => window.location.reload(), 1500);
+                        // 调用后端升级接口
+                        try {
+                            await fetch(`${API_BASE_URL}/api/upgrade-plan`, {
+                                method: 'POST', 
+                                headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
+                                body: JSON.stringify({ plan: planType })
+                            });
+                            showToast('Upgraded Successfully!', 'success');
+                            setTimeout(() => window.location.reload(), 1500);
+                        } catch(err) {
+                            showToast('Upgrade failed, contact support.', 'error');
+                        }
                     })
                 }).render('#paypal-button-container');
             }
         });
     });
+
+    // 绑定关闭支付弹窗
+    if (closePaymentBtn && paymentModal) {
+        closePaymentBtn.addEventListener('click', () => paymentModal.style.display = 'none');
+        paymentModal.addEventListener('click', (e) => { if (e.target === paymentModal) paymentModal.style.display = 'none'; });
+    }
 }
 
 // --- 模块 H: 联系表单 ---
