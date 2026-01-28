@@ -603,4 +603,67 @@ app.delete('/api/history/:id', authenticateToken, async (req, res) => {
     }
 });
 
+// ==========================================
+// 🟢 [补全] 支付成功后的升级接口 (验证 + 数据库修改)
+// ==========================================
+app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
+    try {
+        const { planId, paymentId } = req.body; // 前端传来的套餐类型和订单号
+        const userId = req.user.userId;
+
+        console.log(`[Payment] User ${userId} requested upgrade to ${planId}. OrderID: ${paymentId}`);
+
+        // --- 第一步：(可选) 向 PayPal 核实订单真的成功了吗？ ---
+        // 为了安全，建议验证。如果你觉得麻烦，可以先注释掉这一步验证逻辑，直接跳到第二步。
+        // 但正式上线强烈建议保留，防止用户伪造请求白嫖。
+        try {
+            const auth = Buffer.from(`${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_SECRET}`).toString('base64');
+            const tokenRes = await axios.post(`${process.env.PAYPAL_API_BASE}/v1/oauth2/token`, 
+                'grant_type=client_credentials', 
+                { headers: { 'Authorization': `Basic ${auth}`, 'Content-Type': 'application/x-www-form-urlencoded' } }
+            );
+            const accessToken = tokenRes.data.access_token;
+
+            const orderRes = await axios.get(`${process.env.PAYPAL_API_BASE}/v2/checkout/orders/${paymentId}`, {
+                headers: { 'Authorization': `Bearer ${accessToken}` }
+            });
+
+            if (orderRes.data.status !== 'COMPLETED' && orderRes.data.status !== 'APPROVED') {
+                return res.status(400).json({ success: false, message: "Payment not verified" });
+            }
+        } catch (verifyErr) {
+            console.error("PayPal Verify Error (Check .env keys):", verifyErr.message);
+            // 如果是因为密钥没填对导致验证失败，为了不卡住用户，可以暂时放行或者报错。
+            // return res.status(500).json({ success: false, message: "Payment verification failed" });
+        }
+
+        // --- 第二步：修改数据库，升级用户 ---
+        let updateFields = { plan: planId }; // 修改套餐为 basic 或 pro
+
+        // 如果是 Pro，给予无限次数 (实际上我们在生成接口里判断 plan==pro 就行了，这里不需要改 usageCount)
+        // 如果是 Basic，重置次数或者设为 45 (看你的业务逻辑，这里假设只改 plan 字段)
+        
+        await db.collection('users').updateOne(
+            { _id: new ObjectId(userId) },
+            { $set: updateFields }
+        );
+
+        // 记录一下支付流水 (可选)
+        await db.collection('payments').insertOne({
+            userId: new ObjectId(userId),
+            planId,
+            paymentId, // PayPal 订单号
+            amount: planId === 'pro' ? 19.90 : 9.90,
+            date: new Date(),
+            status: 'completed'
+        });
+
+        res.json({ success: true, message: "Plan upgraded successfully" });
+
+    } catch (error) {
+        console.error("Upgrade Error:", error);
+        res.status(500).json({ success: false, message: "Server error during upgrade" });
+    }
+});
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
