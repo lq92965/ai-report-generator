@@ -770,6 +770,53 @@ function setupGenerator() {
     }
 }
 
+// 🟢 [补回丢失的模块] 初始化导出按钮
+function setupExport() {
+    // 找到页面上那三个按钮：Word, Markdown, PDF
+    const exportButtons = document.querySelectorAll('.export-btn');
+    
+    exportButtons.forEach(button => {
+        // 1. 克隆按钮（为了移除可能存在的旧事件绑定，防止重复触发）
+        const newBtn = button.cloneNode(true);
+        button.parentNode.replaceChild(newBtn, button);
+
+        // 2. 绑定点击事件
+        newBtn.addEventListener('click', () => {
+            // 获取按钮上的格式标记 (Word/Markdown/PDF)
+            const format = newBtn.dataset.format || newBtn.innerText.trim();
+            // 获取现在的显示框 (注意：现在是 div 了)
+            const reportBox = document.getElementById('generated-report');
+            
+            // 检查有没有内容
+            if (!reportBox || reportBox.innerText.includes('AI 生成的精美报告')) {
+                showToast('请先生成报告', 'warning');
+                return;
+            }
+
+            // 生成文件名
+            const filename = `Report_${new Date().toISOString().slice(0,10)}`;
+
+            // 3. 根据格式调用不同的下载函数
+            if (format.includes('Word')) {
+                // Word 导出：传入 innerHTML (带格式)
+                exportToWord(reportBox.innerHTML, filename);
+            } 
+            else if (format.includes('PDF')) {
+                // PDF 导出：传入 innerHTML (带格式)
+                exportToPDF(reportBox.innerHTML, filename);
+            } 
+            else if (format.includes('Markdown')) {
+                // Markdown 导出：传入 innerText (纯文本)
+                // 如果你想做的更高级，可以用 turndown 库转 HTML 为 MD，这里先用简单文本
+                const text = reportBox.innerText;
+                const blob = new Blob([text], {type: 'text/markdown;charset=utf-8'});
+                saveAs(blob, `${filename}.md`);
+                showToast("Markdown 下载成功", "success");
+            }
+        });
+    });
+}
+
 // 🟢 [终极版] PDF 导出：自动排版 + 无水印 + 无感加载
 function exportToPDF(content, filename) {
     // 1. 检查 content 是不是纯文本，如果是，先转成 HTML
