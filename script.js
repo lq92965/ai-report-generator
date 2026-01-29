@@ -102,7 +102,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupGenerator();       
     setupTemplates();       
     setupExport();          
-    setupPayment();         
+    setupPayment();      
+    setupCopyBtn();   
     setupContactForm();     
     setupHistoryLoader();   
     setupMessageCenter();   
@@ -786,6 +787,49 @@ function setupExport() {
     }
 }
 
+// 🟢 [补丁] 修复复制按钮功能
+function setupCopyBtn() {
+    const copyBtn = document.getElementById('copy-btn');
+    const resultBox = document.getElementById('generated-report');
+
+    if (copyBtn && resultBox) {
+        // 克隆按钮，清除旧的事件绑定
+        const newCopyBtn = copyBtn.cloneNode(true);
+        copyBtn.parentNode.replaceChild(newCopyBtn, copyBtn);
+
+        newCopyBtn.addEventListener('click', async () => {
+            // 获取纯文本内容
+            const textToCopy = resultBox.innerText;
+
+            // 简单的防误触检查
+            if (!textToCopy || textToCopy.includes('AI 生成的精美报告')) {
+                showToast('没有什么可复制的', 'warning');
+                return;
+            }
+
+            try {
+                await navigator.clipboard.writeText(textToCopy);
+                
+                // 按钮变身：显示“已复制”
+                const originalText = newCopyBtn.innerHTML;
+                newCopyBtn.innerHTML = '<i class="fas fa-check"></i> 已复制';
+                newCopyBtn.classList.add('bg-green-600', 'text-white'); // 变绿
+                
+                // 2秒后恢复
+                setTimeout(() => {
+                    newCopyBtn.innerHTML = originalText;
+                    newCopyBtn.classList.remove('bg-green-600', 'text-white');
+                }, 2000);
+                
+                showToast('内容已复制到剪贴板', 'success');
+            } catch (err) {
+                console.error('复制失败:', err);
+                showToast('复制失败，请手动复制', 'error');
+            }
+        });
+    }
+}
+
 // 3. 统一导出处理函数 (Router)
 function doExport(type) {
     const reportBox = document.getElementById('generated-report');
@@ -846,61 +890,119 @@ function exportToWord(htmlContent, filename) {
     showToast("Word Downloaded!", "success");
 }
 
-// 5. [重构版] PDF 导出 (解决了白屏、内容为空)
-function exportToPDF(sourceElement, filename) {
+// 🟢 [移植成功版] PDF 导出 (源自 History 逻辑：全屏覆盖渲染，确保 100% 有内容)
+function exportToPDF(content, filename) {
     if (typeof html2pdf === 'undefined') {
-        showToast('PDF engine not loaded. Please refresh.', 'error');
+        showToast('PDF 引擎未加载，请刷新页面', 'error');
         return;
     }
 
-    showToast("Generating PDF (High Quality)...", "info");
+    // 1. 提示用户
+    showToast("正在准备 PDF 生成...", "info");
 
-    // 配置项
-    const opt = {
-        margin:       [15, 15, 15, 15], // mm (上下左右)
-        filename:     `${filename}.pdf`,
-        image:        { type: 'jpeg', quality: 0.98 }, // 高质量图片
-        html2canvas:  { 
-            scale: 2, // 2倍清晰度
-            useCORS: true, // 允许跨域图片
-            logging: false,
-            letterRendering: true,
-        },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] } // 智能分页
-    };
+    // 2. 处理内容：如果你传入的是 HTML (主页)，直接用；如果是 Markdown，转一下
+    // 你的主页现在已经是漂亮的 HTML 了，所以这一步会直接用 content
+    let htmlContent = content;
+    if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
+        htmlContent = marked.parse(content);
+    }
+    
+    const dateStr = new Date().toLocaleDateString();
 
-    // 🟢 关键技巧：克隆元素并清洗，去除可能导致白屏的滚动条和限制
-    const clone = sourceElement.cloneNode(true);
-    
-    // 给克隆元素应用“打印专用”样式，强制重置宽高
-    clone.style.width = '800px'; 
-    clone.style.height = 'auto';
-    clone.style.maxHeight = 'none';
-    clone.style.overflow = 'visible';
-    clone.style.background = 'white';
-    clone.style.padding = '40px';
-    clone.style.margin = '0 auto';
-    clone.classList.remove('overflow-y-auto'); // 移除滚动条
-    
-    // 创建一个临时容器放在屏幕外 (但在 DOM 中)
+    // 3. 创建容器 (核心策略：覆盖在屏幕最上方，确保浏览器必须渲染它)
     const container = document.createElement('div');
-    container.style.position = 'fixed';
-    container.style.top = '-10000px'; // 移出屏幕
+    container.style.position = 'fixed'; 
+    container.style.top = '0';
     container.style.left = '0';
-    container.style.zIndex = '-1';
-    container.appendChild(clone);
+    container.style.width = '100%';
+    container.style.height = '100%';
+    container.style.zIndex = '9999999'; // 确保在最顶层
+    container.style.backgroundColor = '#ffffff'; // 白底
+    container.style.overflowY = 'auto'; 
+    container.style.padding = '0';
+    
+    // 添加一个临时的“生成中”提示层，体验更好
+    const loadingMask = document.createElement('div');
+    loadingMask.innerHTML = `<div style="position:fixed; top:20px; right:20px; background:rgba(37, 99, 235, 0.9); color:white; padding:12px 24px; border-radius:8px; z-index:10000000; display:flex; align-items:center; gap:10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <i class="fas fa-spinner fa-spin"></i> 正在生成 PDF，请稍候...
+    </div>`;
+    document.body.appendChild(loadingMask);
+
+    // 4. 填充内容 (包含 History 同款的打印专用 CSS)
+    container.innerHTML = `
+        <div id="pdf-print-source" style="max-width: 800px; margin: 0 auto; padding: 40px; background: white; color: #333; font-family: 'Helvetica', 'Arial', sans-serif;">
+            <style>
+                /* 强制样式，保证和 History 里一样好看 */
+                h1 { color: #2563EB; font-size: 24px; border-bottom: 2px solid #2563EB; padding-bottom: 15px; margin-bottom: 25px; }
+                h2 { color: #1F2937; font-size: 18px; margin-top: 25px; margin-bottom: 10px; border-left: 4px solid #2563EB; padding-left: 12px; }
+                h3 { color: #374151; font-size: 16px; margin-top: 20px; font-weight: bold; }
+                p, li { line-height: 1.8; margin-bottom: 12px; font-size: 14px; text-align: justify; }
+                strong { color: #111; font-weight: 700; }
+                code { background: #f3f4f6; padding: 2px 5px; border-radius: 4px; font-family: monospace; color: #DC2626; }
+                pre { background: #1f2937; color: #fff; padding: 15px; border-radius: 8px; overflow-x: auto; margin: 15px 0; }
+                blockquote { border-left: 4px solid #e5e7eb; padding-left: 15px; color: #6b7280; font-style: italic; background: #f9fafb; padding: 10px; }
+                
+                /* 🔴 核心：智能分页控制，防止文字被腰斩 */
+                p, h2, h3, li, div, blockquote, pre { 
+                    page-break-inside: avoid; 
+                    break-inside: avoid; 
+                }
+            </style>
+            
+            <div style="text-align:center; margin-bottom:40px;">
+                <h1>${filename}</h1>
+                <p style="color:#6b7280; font-size:12px; margin-top:5px;">
+                    Generated by Reportify AI • ${dateStr}
+                </p>
+            </div>
+            
+            <div class="markdown-body">
+                ${htmlContent}
+            </div>
+
+            <div style="margin-top:60px; text-align:center; font-size:12px; color:#9ca3af; border-top:1px solid #e5e7eb; padding-top:20px;">
+                © 2026 Reportify AI. All Rights Reserved.
+            </div>
+        </div>
+    `;
+
+    // 5. 加入 Body，让浏览器渲染它
     document.body.appendChild(container);
 
-    // 生成
-    html2pdf().set(opt).from(clone).save().then(() => {
-        document.body.removeChild(container); // 清理
-        showToast("PDF Downloaded!", "success");
-    }).catch(err => {
-        console.error("PDF Error:", err);
-        document.body.removeChild(container);
-        showToast("PDF Generation Failed.", "error");
-    });
+    // 6. 延时截图 (给浏览器 800ms 渲染时间，确保万无一失)
+    setTimeout(() => {
+        const opt = {
+            margin:       10, // mm
+            filename:     `${filename}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { 
+                scale: 2, 
+                useCORS: true, 
+                logging: false,
+                scrollY: 0,
+                windowWidth: 1024 // 强制宽度，防止手机上排版错乱
+            },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+        };
+
+        // 选中内部的容器进行打印
+        const elementToPrint = container.querySelector('#pdf-print-source');
+
+        html2pdf().set(opt).from(elementToPrint).save()
+            .then(() => {
+                // 成功后清理现场
+                document.body.removeChild(container);
+                document.body.removeChild(loadingMask);
+                showToast("PDF 下载成功!", "success");
+            })
+            .catch(err => {
+                console.error(err);
+                document.body.removeChild(container);
+                document.body.removeChild(loadingMask);
+                showToast("PDF 生成出错，请重试。", "error");
+            });
+    }, 800); // 0.8秒后截图，稳！
 }
 
 // --- 模块 G: 支付与卡片交互逻辑 (全能修复版) ---
