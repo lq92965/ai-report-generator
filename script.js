@@ -793,39 +793,36 @@ function exportToWord(text, filename) {
     const doc = new docx.Document({ sections: [{ children: text.split('\n').map(l => new docx.Paragraph({text: l})) }] });
     docx.Packer.toBlob(doc).then(b => saveAs(b, `${filename}.docx`));
 }
-// 🟢 [修复版] PDF 导出函数 (移植自 History 的成功逻辑)
+// 🟢 [专业版] PDF 导出函数 (隐身模式 + 进度提示)
 function exportToPDF(text, filename) {
     if (typeof html2pdf === 'undefined' || typeof marked === 'undefined') { 
         showToast('PDF 引擎未加载，请刷新页面', 'error'); 
         return; 
     }
 
-    // 1. 提示开始
-    showToast("正在准备 PDF 生成...", "info");
+    // 1. 给用户一个优雅的等待提示 (代替白屏闪烁)
+    const loadingToast = document.createElement('div');
+    loadingToast.innerHTML = `<div style="position:fixed; top:20px; right:20px; background:#2563eb; color:white; padding:12px 24px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15); z-index:10000000; display:flex; align-items:center; gap:10px; font-size:14px;">
+        <i class="fas fa-spinner fa-spin"></i> 正在生成 PDF，请稍候...
+    </div>`;
+    document.body.appendChild(loadingToast);
 
     // 2. 转换 Markdown 为 HTML
     const htmlContent = marked.parse(text);
     const dateStr = new Date().toLocaleDateString();
 
-    // 3. 创建容器 (覆盖在屏幕最上方，确保绝对可见)
+    // 3. 创建容器 (关键修改：移到屏幕可视范围之外)
     const container = document.createElement('div');
     container.style.position = 'fixed'; 
+    container.style.left = '-10000px'; // 👈 核心修改：把它扔到屏幕左边很远的地方
     container.style.top = '0';
-    container.style.left = '0';
-    container.style.width = '100%';
-    container.style.height = '100%';
-    container.style.zIndex = '9999999'; // 确保在最顶层
-    container.style.backgroundColor = '#ffffff'; // 白底
-    container.style.overflowY = 'auto'; 
+    container.style.width = '800px';   // 固定宽度，保证排版一致
+    container.style.zIndex = '-1';     // 藏在图层最底下
+    container.style.backgroundColor = '#ffffff';
     
-    // 添加一个临时加载遮罩，防止用户乱点
-    const loadingMask = document.createElement('div');
-    loadingMask.innerHTML = `<div style="position:fixed; top:20px; right:20px; background:rgba(0,0,0,0.8); color:white; padding:10px 20px; border-radius:5px; z-index:10000000;">⏳ 正在生成 PDF...</div>`;
-    document.body.appendChild(loadingMask);
-
-    // 4. 填充内容 (包含打印专用 CSS)
+    // 4. 填充内容 (保持专业的打印样式)
     container.innerHTML = `
-        <div id="pdf-print-source" style="max-width: 800px; margin: 0 auto; padding: 40px; background: white; color: #333; font-family: 'Helvetica', 'Arial', sans-serif;">
+        <div id="pdf-print-source" style="width: 100%; padding: 40px; background: white; color: #333; font-family: 'Helvetica', 'Arial', sans-serif;">
             <style>
                 h1 { color: #2563EB; font-size: 24px; border-bottom: 2px solid #2563EB; padding-bottom: 15px; margin-bottom: 25px; }
                 h2 { color: #1F2937; font-size: 18px; margin-top: 25px; margin-bottom: 10px; border-left: 4px solid #2563EB; padding-left: 12px; }
@@ -835,7 +832,7 @@ function exportToPDF(text, filename) {
                 code { background: #f3f4f6; padding: 2px 5px; border-radius: 4px; font-family: monospace; color: #DC2626; }
                 pre { background: #1f2937; color: #fff; padding: 15px; border-radius: 8px; overflow-x: auto; margin: 15px 0; }
                 blockquote { border-left: 4px solid #e5e7eb; padding-left: 15px; color: #6b7280; font-style: italic; }
-                /* 防止文字被腰斩 */
+                /* 智能分页控制 */
                 p, h2, h3, li, div, blockquote, pre { page-break-inside: avoid; break-inside: avoid; }
             </style>
             
@@ -856,36 +853,40 @@ function exportToPDF(text, filename) {
         </div>
     `;
 
-    // 5. 【关键】把它放到页面上，浏览器才能渲染
     document.body.appendChild(container);
 
-    // 6. 延时截图 (等待渲染)
+    // 5. 生成 PDF
+    // 因为在屏幕外，用户看不见，所以我们可以稍微缩短延时，或者保持 500ms 以确保渲染稳定
     setTimeout(() => {
         const opt = {
             margin:       10,
             filename:     `${filename}.pdf`,
             image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true, logging: false, scrollY: 0 },
+            html2canvas:  { 
+                scale: 2, 
+                useCORS: true, 
+                logging: false,
+                windowWidth: 800 // 告诉截图引擎画布宽度是 800
+            },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
             pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
         };
 
-        // 只截取内容部分
         const elementToPrint = container.querySelector('#pdf-print-source');
 
         html2pdf().set(opt).from(elementToPrint).save()
             .then(() => {
                 document.body.removeChild(container);
-                document.body.removeChild(loadingMask);
+                document.body.removeChild(loadingToast);
                 showToast("PDF 下载成功!", "success");
             })
             .catch(err => {
                 console.error(err);
                 document.body.removeChild(container);
-                document.body.removeChild(loadingMask);
+                document.body.removeChild(loadingToast);
                 showToast("PDF 生成出错", "error");
             });
-    }, 500); // 等待 500ms
+    }, 500); 
 }
 
 // --- 模块 G: 支付与卡片交互逻辑 (全能修复版) ---
