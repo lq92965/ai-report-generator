@@ -787,55 +787,64 @@ function setupExport() {
     }
 }
 
-// 🟢 [补丁] 修复复制按钮功能
+// 🟢 [升级版] 复制按钮 (支持复制 格式/Rich Text)
 function setupCopyBtn() {
     const copyBtn = document.getElementById('copy-btn');
     const resultBox = document.getElementById('generated-report');
 
     if (copyBtn && resultBox) {
-        // 克隆按钮，清除旧的事件绑定
+        // 克隆按钮防止重复绑定
         const newCopyBtn = copyBtn.cloneNode(true);
         copyBtn.parentNode.replaceChild(newCopyBtn, copyBtn);
 
         newCopyBtn.addEventListener('click', async () => {
-            // 获取纯文本内容
-            const textToCopy = resultBox.innerText;
-
-            // 简单的防误触检查
-            if (!textToCopy || textToCopy.includes('AI 生成的精美报告')) {
+            // 防空检查
+            if (!resultBox.innerText || resultBox.innerText.includes('AI 生成的精美报告')) {
                 showToast('没有什么可复制的', 'warning');
                 return;
             }
 
             try {
-                await navigator.clipboard.writeText(textToCopy);
+                // 💎 核心升级：同时写入 纯文本 和 HTML
+                // 这样粘贴到记事本是文本，粘贴到 Word/微信 就是带格式的
+                const textPlain = new Blob([resultBox.innerText], { type: 'text/plain' });
+                const textHtml = new Blob([resultBox.innerHTML], { type: 'text/html' });
                 
-                // 按钮变身：显示“已复制”
+                const clipboardItem = new ClipboardItem({
+                    'text/plain': textPlain,
+                    'text/html': textHtml
+                });
+
+                await navigator.clipboard.write([clipboardItem]);
+                
+                // 按钮反馈动画
                 const originalText = newCopyBtn.innerHTML;
-                newCopyBtn.innerHTML = '<i class="fas fa-check"></i> 已复制';
-                newCopyBtn.classList.add('bg-green-600', 'text-white'); // 变绿
+                newCopyBtn.innerHTML = '<i class="fas fa-check"></i> 已复制格式';
+                newCopyBtn.classList.add('bg-green-600', 'text-white');
                 
-                // 2秒后恢复
                 setTimeout(() => {
                     newCopyBtn.innerHTML = originalText;
                     newCopyBtn.classList.remove('bg-green-600', 'text-white');
                 }, 2000);
                 
-                showToast('内容已复制到剪贴板', 'success');
+                showToast('内容(含格式)已复制!', 'success');
+
             } catch (err) {
-                console.error('复制失败:', err);
-                showToast('复制失败，请手动复制', 'error');
+                console.error('高级复制失败，尝试普通复制:', err);
+                // 降级处理：如果浏览器不支持高级复制，只复制文本
+                navigator.clipboard.writeText(resultBox.innerText);
+                showToast('已复制纯文本', 'success');
             }
         });
     }
 }
 
-// 3. 统一导出处理函数 (Router)
+// 🟢 [修复版] 统一导出处理函数
 function doExport(type) {
     const reportBox = document.getElementById('generated-report');
     
-    // 检查是否为空或还是占位符
-    if (!reportBox || reportBox.innerText.length < 20 || reportBox.innerText.includes('AI 生成的精美报告')) {
+    // 检查是否为空
+    if (!reportBox || reportBox.innerText.length < 5 || reportBox.innerText.includes('AI 生成的精美报告')) {
         showToast('Please generate a report first.', 'warning');
         return;
     }
@@ -844,10 +853,13 @@ function doExport(type) {
 
     if (type === 'word') {
         exportToWord(reportBox.innerHTML, filename);
-    } else if (type === 'pdf') {
-        exportToPDF(reportBox, filename); // 传入 DOM 元素
-    } else if (type === 'markdown') {
-        // 简单转 MD：提取纯文本 (后续可加 turndown 库做更好转换)
+    } 
+    else if (type === 'pdf') {
+        // ❌ 错误写法: exportToPDF(reportBox, filename); 
+        // ✅ 正确写法: 传入 innerHTML (字符串)
+        exportToPDF(reportBox.innerHTML, filename); 
+    } 
+    else if (type === 'markdown') {
         const text = reportBox.innerText; 
         const blob = new Blob([text], {type: 'text/markdown;charset=utf-8'});
         saveAs(blob, `${filename}.md`);
@@ -890,18 +902,18 @@ function exportToWord(htmlContent, filename) {
     showToast("Word Downloaded!", "success");
 }
 
-// 🟢 [移植成功版] PDF 导出 (源自 History 逻辑：全屏覆盖渲染，确保 100% 有内容)
+// 🟢 [History同款逻辑] PDF 导出函数 (覆盖层渲染法 - 最稳妥)
 function exportToPDF(content, filename) {
     if (typeof html2pdf === 'undefined') {
         showToast('PDF 引擎未加载，请刷新页面', 'error');
         return;
     }
 
-    // 1. 提示用户
+    // 1. 提示开始
     showToast("正在准备 PDF 生成...", "info");
 
-    // 2. 处理内容：如果你传入的是 HTML (主页)，直接用；如果是 Markdown，转一下
-    // 你的主页现在已经是漂亮的 HTML 了，所以这一步会直接用 content
+    // 2. 智能处理内容
+    // 如果 content 包含 HTML 标签(主页传来的)，直接用；否则(可能是MD)尝试解析
     let htmlContent = content;
     if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
         htmlContent = marked.parse(content);
@@ -909,30 +921,29 @@ function exportToPDF(content, filename) {
     
     const dateStr = new Date().toLocaleDateString();
 
-    // 3. 创建容器 (核心策略：覆盖在屏幕最上方，确保浏览器必须渲染它)
+    // 3. 创建全屏容器 (History 页面的成功秘诀：覆盖在最上层，强迫浏览器渲染)
     const container = document.createElement('div');
     container.style.position = 'fixed'; 
     container.style.top = '0';
     container.style.left = '0';
     container.style.width = '100%';
     container.style.height = '100%';
-    container.style.zIndex = '9999999'; // 确保在最顶层
-    container.style.backgroundColor = '#ffffff'; // 白底
+    container.style.zIndex = '9999999'; 
+    container.style.backgroundColor = '#ffffff'; 
     container.style.overflowY = 'auto'; 
     container.style.padding = '0';
     
-    // 添加一个临时的“生成中”提示层，体验更好
+    // 加载提示遮罩
     const loadingMask = document.createElement('div');
     loadingMask.innerHTML = `<div style="position:fixed; top:20px; right:20px; background:rgba(37, 99, 235, 0.9); color:white; padding:12px 24px; border-radius:8px; z-index:10000000; display:flex; align-items:center; gap:10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
         <i class="fas fa-spinner fa-spin"></i> 正在生成 PDF，请稍候...
     </div>`;
     document.body.appendChild(loadingMask);
 
-    // 4. 填充内容 (包含 History 同款的打印专用 CSS)
+    // 4. 填充内容 (内嵌样式，保证和 History 样式一致)
     container.innerHTML = `
         <div id="pdf-print-source" style="max-width: 800px; margin: 0 auto; padding: 40px; background: white; color: #333; font-family: 'Helvetica', 'Arial', sans-serif;">
             <style>
-                /* 强制样式，保证和 History 里一样好看 */
                 h1 { color: #2563EB; font-size: 24px; border-bottom: 2px solid #2563EB; padding-bottom: 15px; margin-bottom: 25px; }
                 h2 { color: #1F2937; font-size: 18px; margin-top: 25px; margin-bottom: 10px; border-left: 4px solid #2563EB; padding-left: 12px; }
                 h3 { color: #374151; font-size: 16px; margin-top: 20px; font-weight: bold; }
@@ -941,12 +952,8 @@ function exportToPDF(content, filename) {
                 code { background: #f3f4f6; padding: 2px 5px; border-radius: 4px; font-family: monospace; color: #DC2626; }
                 pre { background: #1f2937; color: #fff; padding: 15px; border-radius: 8px; overflow-x: auto; margin: 15px 0; }
                 blockquote { border-left: 4px solid #e5e7eb; padding-left: 15px; color: #6b7280; font-style: italic; background: #f9fafb; padding: 10px; }
-                
-                /* 🔴 核心：智能分页控制，防止文字被腰斩 */
-                p, h2, h3, li, div, blockquote, pre { 
-                    page-break-inside: avoid; 
-                    break-inside: avoid; 
-                }
+                /* 防截断 */
+                p, h2, h3, li, div, blockquote, pre { page-break-inside: avoid; break-inside: avoid; }
             </style>
             
             <div style="text-align:center; margin-bottom:40px;">
@@ -966,10 +973,9 @@ function exportToPDF(content, filename) {
         </div>
     `;
 
-    // 5. 加入 Body，让浏览器渲染它
     document.body.appendChild(container);
 
-    // 6. 延时截图 (给浏览器 800ms 渲染时间，确保万无一失)
+    // 5. 延时截图 (给浏览器 0.8秒 渲染时间)
     setTimeout(() => {
         const opt = {
             margin:       10, // mm
@@ -980,18 +986,16 @@ function exportToPDF(content, filename) {
                 useCORS: true, 
                 logging: false,
                 scrollY: 0,
-                windowWidth: 1024 // 强制宽度，防止手机上排版错乱
+                windowWidth: 1024 
             },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
             pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
         };
 
-        // 选中内部的容器进行打印
         const elementToPrint = container.querySelector('#pdf-print-source');
 
         html2pdf().set(opt).from(elementToPrint).save()
             .then(() => {
-                // 成功后清理现场
                 document.body.removeChild(container);
                 document.body.removeChild(loadingMask);
                 showToast("PDF 下载成功!", "success");
@@ -1002,7 +1006,7 @@ function exportToPDF(content, filename) {
                 document.body.removeChild(loadingMask);
                 showToast("PDF 生成出错，请重试。", "error");
             });
-    }, 800); // 0.8秒后截图，稳！
+    }, 800); 
 }
 
 // --- 模块 G: 支付与卡片交互逻辑 (全能修复版) ---
