@@ -213,7 +213,14 @@
                     </div>
                     <div class="form-group">
                         <label for="result">Generated Report</label>
-                        <div id="generated-report" class="result-box">The generated report will appear here...</div>
+                        <div id="generated-report" 
+                            class="w-full p-6 border border-gray-300 rounded-lg bg-gray-50 overflow-y-auto prose max-w-none text-gray-800" 
+                            style="min-height: 400px; max-height: 600px; font-family: sans-serif; line-height: 1.6; background: #fafafa;">
+                            <div class="text-gray-400 italic text-center mt-20">
+                               <i class="fas fa-magic mb-2" style="font-size: 24px; color: #ddd;"></i><br>
+                               AI 生成的精美报告将显示在这里...
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Export As</label>
@@ -372,7 +379,6 @@
         </div>
     </div>
 
-
 <div id="message-modal" class="hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300 p-4">
     <div class="bg-white w-full max-w-6xl h-[85vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-gray-100 transform transition-all scale-100">
         
@@ -436,4 +442,3 @@
     </div>
 </body>
 </html>
-
