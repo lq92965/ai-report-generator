@@ -660,10 +660,16 @@ function setupDynamicInputs(templateSelect) {
     });
 }
 
-// --- 模块 E: 生成器 ---
+// ========================================================
+// 🟢 核心修复模块：生成器、渲染引擎、导出引擎
+// ========================================================
+
+// 1. 生成器逻辑 (含自动样式应用)
 function setupGenerator() {
     const generateBtn = document.getElementById('generate-btn');
     if (!generateBtn) return;
+
+    // 克隆按钮防止重复绑定
     const newGenerateBtn = generateBtn.cloneNode(true);
     generateBtn.parentNode.replaceChild(newGenerateBtn, generateBtn);
 
@@ -674,243 +680,227 @@ function setupGenerator() {
             window.openModal('login');
             return;
         }
+
         const promptEl = document.getElementById('key-points') || document.getElementById('prompt');
-        const resultBox = document.getElementById('generated-report') || document.getElementById('result');
         const templateSelect = document.getElementById('template');
         const roleSelect = document.getElementById('role');
         const toneSelect = document.getElementById('tone');
-        const langSelect = document.getElementById('language');
-        const inputs = {};
-        document.querySelectorAll('.dynamic-input').forEach(el => {
-            if (el.dataset.key) inputs[el.dataset.key] = el.value;
-        });
+        const resultBox = document.getElementById('generated-report');
 
-        const userPromptText = promptEl ? promptEl.value.trim() : "";
-        if (!userPromptText && Object.keys(inputs).length === 0) {
-            alert('Please enter content.');
-            if (promptEl) promptEl.focus();
+        if (!promptEl || !promptEl.value.trim()) {
+            showToast('Please enter report details.', 'warning');
             return;
         }
 
-        const originalText = newGenerateBtn.textContent;
+        // UI 进入加载状态
+        const originalText = newGenerateBtn.innerHTML;
         newGenerateBtn.disabled = true;
-        newGenerateBtn.textContent = 'Generating...';
-        if (resultBox) {
-            if (resultBox.tagName === 'TEXTAREA') resultBox.value = "AI is thinking...";
-            else resultBox.innerText = "AI is thinking...";
-        }
+        newGenerateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+        
+        // 预先清空并显示加载动画
+        resultBox.innerHTML = `
+            <div class="flex flex-col items-center justify-center h-64 text-gray-400">
+                <i class="fas fa-magic fa-spin fa-2x mb-4 text-blue-500"></i>
+                <p>Analyzing structure...</p>
+            </div>
+        `;
 
         try {
             const res = await fetch(`${API_BASE_URL}/api/generate`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify({
-                    userPrompt: userPromptText,
+                    userPrompt: promptEl.value.trim(),
                     role: roleSelect ? roleSelect.value : "General",
                     tone: toneSelect ? toneSelect.value : "Professional",
-                    language: langSelect ? langSelect.value : "English",
-                    templateId: templateSelect ? templateSelect.value : "daily_summary",
-                    inputs: inputs
+                    templateId: templateSelect ? templateSelect.value : "general",
+                    language: document.getElementById('language')?.value || "English"
                 }),
             });
-            const data = await res.json();
-            if (res.status === 403) {
-                showToast(`Limit Reached: ${data.error}`, 'error');
-                if (resultBox) resultBox.value = "Quota exceeded.";
-            } else if (res.status === 401) {
-                showToast('Session expired.', 'warning');
-                localStorage.removeItem('token');
-            } else if (!res.ok) {
-                throw new Error(data.error || 'Server Error');
-            } else {
-                if (resultBox) {
-                    if (resultBox.tagName === 'TEXTAREA') {
-                        resultBox.value = data.generatedText;
-                        resultBox.style.height = 'auto';
-                        resultBox.style.height = resultBox.scrollHeight + 'px';
-                    } else {
-                        // 🟢 核心修改：使用 marked 解析 Markdown，并放入 innerHTML
-                        if (typeof marked !== 'undefined') {
-                            resultBox.innerHTML = marked.parse(data.generatedText);
-                        } else {
-                            // 如果 marked 库没加载，就只显示纯文本（保底）
-                            resultBox.innerText = data.generatedText;
-                        }
 
-                        // 自动滚动到顶部
-                        resultBox.scrollTop = 0;
-                    }
+            const data = await res.json();
+
+            if (!res.ok) throw new Error(data.error || 'Generation failed');
+
+            // 🟢 [核心优化]：渲染 Markdown + 应用专业皮肤
+            if (typeof marked !== 'undefined') {
+                const htmlContent = marked.parse(data.generatedText);
+                resultBox.innerHTML = htmlContent;
+                
+                // 根据角色/模板应用 CSS 皮肤
+                resultBox.className = "w-full p-8 border border-gray-300 rounded-lg bg-white shadow-sm overflow-y-auto prose max-w-none text-gray-800"; // 重置基础类
+                
+                const role = roleSelect ? roleSelect.value : "";
+                const template = templateSelect ? templateSelect.value : "";
+
+                if (role === 'Management' || toneSelect.value === 'Professional') {
+                    resultBox.classList.add('theme-corporate'); // 商务风
+                } else if (role === 'Marketing' || toneSelect.value === 'Persuasive') {
+                    resultBox.classList.add('theme-creative'); // 创意风
+                } else {
+                    resultBox.classList.add('theme-modern'); // 默认现代风
                 }
-                showToast("Report Generated!", "success");
+
+            } else {
+                resultBox.innerText = data.generatedText; // 降级处理
             }
+
+            showToast("Report Generated Successfully!", "success");
+
         } catch (err) {
-            showToast(`Failed: ${err.message}`, 'error');
+            console.error(err);
+            resultBox.innerHTML = `<p class="text-red-500 text-center mt-10">Error: ${err.message}</p>`;
+            showToast(err.message, 'error');
         } finally {
             newGenerateBtn.disabled = false;
-            newGenerateBtn.textContent = originalText;
+            newGenerateBtn.innerHTML = originalText;
         }
     });
-
-    // 复制按钮
-    const copyBtn = document.getElementById('copy-btn');
-    if (copyBtn) {
-        const newCopyBtn = copyBtn.cloneNode(true);
-        copyBtn.parentNode.replaceChild(newCopyBtn, copyBtn);
-        newCopyBtn.onclick = async (e) => {
-            e.preventDefault();
-            const resultBox = document.getElementById('generated-report') || document.getElementById('result');
-            const textToCopy = resultBox ? (resultBox.value || resultBox.innerText) : "";
-            if (!textToCopy || textToCopy.includes('AI is thinking')) return;
-            try {
-                await navigator.clipboard.writeText(textToCopy);
-                newCopyBtn.innerHTML = '<i class="fas fa-check"></i> Copied';
-                setTimeout(() => newCopyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy', 2000);
-            } catch (err) { alert('Copy failed.'); }
-        };
-    }
 }
 
-// 🟢 [补回丢失的模块] 初始化导出按钮
+// 2. 导出功能初始化 (解决了 setupExport is not defined)
 function setupExport() {
-    // 找到页面上那三个按钮：Word, Markdown, PDF
-    const exportButtons = document.querySelectorAll('.export-btn');
-    
-    exportButtons.forEach(button => {
-        // 1. 克隆按钮（为了移除可能存在的旧事件绑定，防止重复触发）
-        const newBtn = button.cloneNode(true);
-        button.parentNode.replaceChild(newBtn, button);
+    // 绑定 Word 按钮
+    const wordBtn = document.querySelector('button[data-format="Word"]');
+    if(wordBtn) {
+        // 克隆去除旧事件
+        const newBtn = wordBtn.cloneNode(true);
+        wordBtn.parentNode.replaceChild(newBtn, wordBtn);
+        newBtn.addEventListener('click', () => doExport('word'));
+    }
 
-        // 2. 绑定点击事件
-        newBtn.addEventListener('click', () => {
-            // 获取按钮上的格式标记 (Word/Markdown/PDF)
-            const format = newBtn.dataset.format || newBtn.innerText.trim();
-            // 获取现在的显示框 (注意：现在是 div 了)
-            const reportBox = document.getElementById('generated-report');
-            
-            // 检查有没有内容
-            if (!reportBox || reportBox.innerText.includes('AI 生成的精美报告')) {
-                showToast('请先生成报告', 'warning');
-                return;
-            }
+    // 绑定 PDF 按钮
+    const pdfBtn = document.querySelector('button[data-format="PDF"]');
+    if(pdfBtn) {
+        const newBtn = pdfBtn.cloneNode(true);
+        pdfBtn.parentNode.replaceChild(newBtn, pdfBtn);
+        newBtn.addEventListener('click', () => doExport('pdf'));
+    }
 
-            // 生成文件名
-            const filename = `Report_${new Date().toISOString().slice(0,10)}`;
-
-            // 3. 根据格式调用不同的下载函数
-            if (format.includes('Word')) {
-                // Word 导出：传入 innerHTML (带格式)
-                exportToWord(reportBox.innerHTML, filename);
-            } 
-            else if (format.includes('PDF')) {
-                // PDF 导出：传入 innerHTML (带格式)
-                exportToPDF(reportBox.innerHTML, filename);
-            } 
-            else if (format.includes('Markdown')) {
-                // Markdown 导出：传入 innerText (纯文本)
-                // 如果你想做的更高级，可以用 turndown 库转 HTML 为 MD，这里先用简单文本
-                const text = reportBox.innerText;
-                const blob = new Blob([text], {type: 'text/markdown;charset=utf-8'});
-                saveAs(blob, `${filename}.md`);
-                showToast("Markdown 下载成功", "success");
-            }
-        });
-    });
+    // 绑定 Markdown 按钮
+    const mdBtn = document.querySelector('button[data-format="Markdown"]');
+    if(mdBtn) {
+        const newBtn = mdBtn.cloneNode(true);
+        mdBtn.parentNode.replaceChild(newBtn, mdBtn);
+        newBtn.addEventListener('click', () => doExport('markdown'));
+    }
 }
 
-// 🟢 [终极版] PDF 导出：自动排版 + 无水印 + 无感加载
-function exportToPDF(content, filename) {
-    // 1. 检查 content 是不是纯文本，如果是，先转成 HTML
-    // 因为我们现在主页已经是 HTML 了，传进来的 content 应该包含标签
-    // 但为了保险（比如从历史记录里传纯文本过来），我们判断一下
-    let htmlContent = content;
-    if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
-        htmlContent = marked.parse(content);
+// 3. 统一导出处理函数 (Router)
+function doExport(type) {
+    const reportBox = document.getElementById('generated-report');
+    
+    // 检查是否为空或还是占位符
+    if (!reportBox || reportBox.innerText.length < 20 || reportBox.innerText.includes('AI 生成的精美报告')) {
+        showToast('Please generate a report first.', 'warning');
+        return;
     }
 
-    if (typeof html2pdf === 'undefined') { 
-        showToast('PDF 引擎未加载，请刷新页面', 'error'); 
-        return; 
-    }
+    const filename = `Report_${new Date().toISOString().slice(0,10)}`;
 
-    // 2. 创建一个“全屏遮罩”，挡住所有操作，显示加载动画
-    // 这样用户就看不到后台的排版过程，体验非常丝滑
-    const loadingMask = document.createElement('div');
-    Object.assign(loadingMask.style, {
-        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
-        backgroundColor: 'rgba(255, 255, 255, 0.95)', // 微微一点透，显得高级
-        zIndex: '99999999', display: 'flex', flexDirection: 'column',
-        justifyContent: 'center', alignItems: 'center', backdropFilter: 'blur(5px)'
-    });
-    loadingMask.innerHTML = `
-        <i class="fas fa-circle-notch fa-spin fa-3x" style="color:#2563eb; margin-bottom:20px;"></i>
-        <h3 style="font-family:sans-serif; color:#333; font-size:18px; font-weight:bold;">正在为您生成专业 PDF...</h3>
-        <p style="color:#666; font-size:14px; margin-top:5px;">保持格式，去除水印</p>
+    if (type === 'word') {
+        exportToWord(reportBox.innerHTML, filename);
+    } else if (type === 'pdf') {
+        exportToPDF(reportBox, filename); // 传入 DOM 元素
+    } else if (type === 'markdown') {
+        // 简单转 MD：提取纯文本 (后续可加 turndown 库做更好转换)
+        const text = reportBox.innerText; 
+        const blob = new Blob([text], {type: 'text/markdown;charset=utf-8'});
+        saveAs(blob, `${filename}.md`);
+        showToast("Markdown Downloaded", "success");
+    }
+}
+
+// 4. [修复版] Word 导出 (解决了 exportToWord is not defined)
+function exportToWord(htmlContent, filename) {
+    showToast("Preparing Word document...", "info");
+    
+    // 包装完整的 HTML 结构，确保 Word 能识别格式
+    const header = `
+        <html xmlns:o='urn:schemas-microsoft-com:office:office' 
+              xmlns:w='urn:schemas-microsoft-com:office:word' 
+              xmlns='http://www.w3.org/TR/REC-html40'>
+        <head><meta charset='utf-8'><title>${filename}</title>
+        <style>
+            body { font-family: 'Calibri', sans-serif; font-size: 11pt; line-height: 1.5; }
+            h1 { font-size: 18pt; color: #2e74b5; border-bottom: 1px solid #2e74b5; padding-bottom: 10px; margin-bottom: 20px; }
+            h2 { font-size: 14pt; color: #1f4d78; margin-top: 20px; }
+            p { margin-bottom: 10px; text-align: justify; }
+            ul { margin-bottom: 10px; }
+            blockquote { border-left: 4px solid #ccc; padding-left: 10px; color: #666; font-style: italic; }
+        </style>
+        </head><body>
     `;
-    document.body.appendChild(loadingMask);
+    const footer = "</body></html>";
+    const sourceHTML = header + htmlContent + footer;
 
-    // 3. 创建实际的“打印纸” (隐藏在遮罩下面)
+    const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+    
+    const fileDownload = document.createElement("a");
+    document.body.appendChild(fileDownload);
+    fileDownload.href = source;
+    fileDownload.download = `${filename}.doc`;
+    fileDownload.click();
+    document.body.removeChild(fileDownload);
+    
+    showToast("Word Downloaded!", "success");
+}
+
+// 5. [重构版] PDF 导出 (解决了白屏、内容为空)
+function exportToPDF(sourceElement, filename) {
+    if (typeof html2pdf === 'undefined') {
+        showToast('PDF engine not loaded. Please refresh.', 'error');
+        return;
+    }
+
+    showToast("Generating PDF (High Quality)...", "info");
+
+    // 配置项
+    const opt = {
+        margin:       [15, 15, 15, 15], // mm (上下左右)
+        filename:     `${filename}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 }, // 高质量图片
+        html2canvas:  { 
+            scale: 2, // 2倍清晰度
+            useCORS: true, // 允许跨域图片
+            logging: false,
+            letterRendering: true,
+        },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] } // 智能分页
+    };
+
+    // 🟢 关键技巧：克隆元素并清洗，去除可能导致白屏的滚动条和限制
+    const clone = sourceElement.cloneNode(true);
+    
+    // 给克隆元素应用“打印专用”样式，强制重置宽高
+    clone.style.width = '800px'; 
+    clone.style.height = 'auto';
+    clone.style.maxHeight = 'none';
+    clone.style.overflow = 'visible';
+    clone.style.background = 'white';
+    clone.style.padding = '40px';
+    clone.style.margin = '0 auto';
+    clone.classList.remove('overflow-y-auto'); // 移除滚动条
+    
+    // 创建一个临时容器放在屏幕外 (但在 DOM 中)
     const container = document.createElement('div');
-    Object.assign(container.style, {
-        position: 'absolute', top: '0', left: '0', width: '100%',
-        zIndex: '99999990', backgroundColor: 'white' // 比遮罩层低一层
-    });
-
-    // 4. 填充纯净内容 (这里去掉了所有 Logo 和 页眉页脚)
-    container.innerHTML = `
-        <div id="pdf-source" style="max-width: 800px; margin: 0 auto; padding: 50px 40px; background: white; color: #333; font-family: 'Helvetica', 'Arial', sans-serif;">
-            <style>
-                h1 { color: #111; font-size: 24px; font-weight: 800; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 25px; }
-                h2 { color: #2563EB; font-size: 18px; font-weight: 700; margin-top: 30px; margin-bottom: 10px; }
-                h3 { color: #333; font-size: 16px; font-weight: 600; margin-top: 20px; }
-                p, li { line-height: 1.8; color: #333; font-size: 14px; margin-bottom: 8px; text-align: justify; }
-                strong { color: #000; font-weight: 700; }
-                ul { list-style-type: disc; padding-left: 20px; margin-bottom: 10px; }
-                ol { list-style-type: decimal; padding-left: 20px; margin-bottom: 10px; }
-                blockquote { border-left: 4px solid #2563EB; background: #f3f4f6; padding: 10px 15px; color: #555; font-style: italic; margin: 15px 0; }
-                code { background: #f1f1f1; padding: 2px 5px; border-radius: 4px; font-family: monospace; color: #d63384; font-size: 0.9em; }
-                /* 关键：防止文字被分页切断 */
-                p, h2, h3, li, blockquote, pre { page-break-inside: avoid; }
-            </style>
-
-            <div class="markdown-body">
-                ${htmlContent}
-            </div>
-        </div>
-    `;
-
+    container.style.position = 'fixed';
+    container.style.top = '-10000px'; // 移出屏幕
+    container.style.left = '0';
+    container.style.zIndex = '-1';
+    container.appendChild(clone);
     document.body.appendChild(container);
 
-    // 5. 启动截图生成 (延时 800ms 确保图片和字体加载)
-    setTimeout(() => {
-        const opt = {
-            margin:       [15, 15, 15, 15], // 上右下左边距
-            filename:     `${filename}.pdf`,
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { 
-                scale: 2, // 2倍清晰度，打印出来不糊
-                useCORS: true, 
-                logging: false,
-                windowWidth: 1024
-            },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
-
-        const element = container.querySelector('#pdf-source');
-
-        html2pdf().set(opt).from(element).save()
-            .then(() => {
-                // 成功后，清理现场
-                document.body.removeChild(container);
-                document.body.removeChild(loadingMask);
-                showToast("PDF 下载成功!", "success");
-            })
-            .catch(err => {
-                console.error(err);
-                document.body.removeChild(container);
-                document.body.removeChild(loadingMask);
-                showToast("PDF 生成失败，请重试", "error");
-            });
-    }, 800); 
+    // 生成
+    html2pdf().set(opt).from(clone).save().then(() => {
+        document.body.removeChild(container); // 清理
+        showToast("PDF Downloaded!", "success");
+    }).catch(err => {
+        console.error("PDF Error:", err);
+        document.body.removeChild(container);
+        showToast("PDF Generation Failed.", "error");
+    });
 }
 
 // --- 模块 G: 支付与卡片交互逻辑 (全能修复版) ---
