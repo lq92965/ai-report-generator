@@ -729,7 +729,16 @@ function setupGenerator() {
                         resultBox.style.height = 'auto';
                         resultBox.style.height = resultBox.scrollHeight + 'px';
                     } else {
-                        resultBox.innerText = data.generatedText;
+                        // 🟢 核心修改：使用 marked 解析 Markdown，并放入 innerHTML
+                        if (typeof marked !== 'undefined') {
+                            resultBox.innerHTML = marked.parse(data.generatedText);
+                        } else {
+                            // 如果 marked 库没加载，就只显示纯文本（保底）
+                            resultBox.innerText = data.generatedText;
+                        }
+
+                        // 自动滚动到顶部
+                        resultBox.scrollTop = 0;
                     }
                 }
                 showToast("Report Generated!", "success");
@@ -761,142 +770,98 @@ function setupGenerator() {
     }
 }
 
-// --- 模块 F: 导出 ---
-function setupExport() {
-    const exportButtons = document.querySelectorAll('.export-btn');
-    const getResultContent = () => {
-        const box = document.getElementById('generated-report') || document.getElementById('result');
-        return box ? (box.tagName === 'TEXTAREA' ? box.value : box.innerText) : "";
-    };
-    exportButtons.forEach(button => {
-        const newBtn = button.cloneNode(true);
-        button.parentNode.replaceChild(newBtn, button);
-        newBtn.addEventListener('click', () => {
-            const format = newBtn.dataset.format || newBtn.textContent.trim();
-            const text = getResultContent();
-            if (!text || text.length < 5) { showToast('Generate report first.', 'warning'); return; }
-            const filename = `Report_${new Date().toISOString().slice(0,10)}`;
+// 🟢 [终极版] PDF 导出：自动排版 + 无水印 + 无感加载
+function exportToPDF(content, filename) {
+    // 1. 检查 content 是不是纯文本，如果是，先转成 HTML
+    // 因为我们现在主页已经是 HTML 了，传进来的 content 应该包含标签
+    // 但为了保险（比如从历史记录里传纯文本过来），我们判断一下
+    let htmlContent = content;
+    if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
+        htmlContent = marked.parse(content);
+    }
 
-            if (format === 'Markdown') {
-                saveAs(new Blob([text], {type: 'text/markdown;charset=utf-8'}), `${filename}.md`);
-                showToast("Markdown downloaded.", "success");
-            } else if (format.includes('Word')) {
-                exportToWord(text, filename);
-            } else if (format.includes('PDF')) {
-                exportToPDF(text, filename);
-            }
-        });
-    });
-}
-function exportToWord(text, filename) {
-    if (typeof docx === 'undefined') { showToast('Engine loading...', 'info'); return; }
-    const doc = new docx.Document({ sections: [{ children: text.split('\n').map(l => new docx.Paragraph({text: l})) }] });
-    docx.Packer.toBlob(doc).then(b => saveAs(b, `${filename}.docx`));
-}
-// 🟢 [回归稳妥版] PDF 导出函数 (复用 History 逻辑，100% 有内容)
-function exportToPDF(text, filename) {
-    if (typeof html2pdf === 'undefined' || typeof marked === 'undefined') { 
+    if (typeof html2pdf === 'undefined') { 
         showToast('PDF 引擎未加载，请刷新页面', 'error'); 
         return; 
     }
 
-    // 1. 提示用户
-    showToast("正在生成 PDF，请勿关闭...", "info");
-
-    // 2. 准备内容
-    const htmlContent = marked.parse(text);
-    const dateStr = new Date().toLocaleDateString();
-
-    // 3. 创建全屏容器 (和 History 逻辑一样：覆盖在屏幕最上方)
-    // 这样做是为了确保浏览器必须渲染它，保证 PDF 里有字
-    const container = document.createElement('div');
-    container.style.position = 'fixed'; 
-    container.style.top = '0';
-    container.style.left = '0';
-    container.style.width = '100%';
-    container.style.height = '100%';
-    container.style.zIndex = '9999999'; // 放在最顶层
-    container.style.backgroundColor = '#ffffff'; // 白底
-    container.style.overflowY = 'auto'; // 允许内部滚动
-    
-    // 4. 加一个漂亮的“加载中”遮罩，让这个白屏看起来像功能，而不是Bug
+    // 2. 创建一个“全屏遮罩”，挡住所有操作，显示加载动画
+    // 这样用户就看不到后台的排版过程，体验非常丝滑
     const loadingMask = document.createElement('div');
+    Object.assign(loadingMask.style, {
+        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)', // 微微一点透，显得高级
+        zIndex: '99999999', display: 'flex', flexDirection: 'column',
+        justifyContent: 'center', alignItems: 'center', backdropFilter: 'blur(5px)'
+    });
     loadingMask.innerHTML = `
-        <div style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); text-align:center; color:#555;">
-            <i class="fas fa-spinner fa-spin fa-3x" style="color:#2563eb; margin-bottom:15px;"></i>
-            <h3 style="font-family:sans-serif;">正在生成高清 PDF...</h3>
-            <p style="font-size:12px; color:#999;">请稍候，马上就好</p>
-        </div>
+        <i class="fas fa-circle-notch fa-spin fa-3x" style="color:#2563eb; margin-bottom:20px;"></i>
+        <h3 style="font-family:sans-serif; color:#333; font-size:18px; font-weight:bold;">正在为您生成专业 PDF...</h3>
+        <p style="color:#666; font-size:14px; margin-top:5px;">保持格式，去除水印</p>
     `;
-    // 把加载提示放在容器之上，但不要放进 pdf-print-source 里，否则会被打印进去
-    container.appendChild(loadingMask);
+    document.body.appendChild(loadingMask);
 
-    // 5. 填充要打印的实际内容 (隐藏在加载动画下面，但真实存在)
-    const printContent = document.createElement('div');
-    printContent.id = 'pdf-print-source';
-    printContent.style.maxWidth = '800px';
-    printContent.style.margin = '0 auto';
-    printContent.style.padding = '40px';
-    printContent.style.background = 'white';
-    printContent.style.fontFamily = "'Helvetica', 'Arial', sans-serif";
-    printContent.style.color = "#333";
-    
-    printContent.innerHTML = `
-        <style>
-            h1 { color: #2563EB; font-size: 24px; border-bottom: 2px solid #2563EB; padding-bottom: 15px; margin-bottom: 25px; }
-            h2 { color: #1F2937; font-size: 18px; margin-top: 25px; margin-bottom: 10px; border-left: 4px solid #2563EB; padding-left: 12px; }
-            h3 { color: #374151; font-size: 16px; margin-top: 20px; font-weight: bold; }
-            p, li { line-height: 1.8; margin-bottom: 12px; font-size: 14px; text-align: justify; }
-            code { background: #f3f4f6; padding: 2px 5px; border-radius: 4px; font-family: monospace; color: #DC2626; }
-            pre { background: #1f2937; color: #fff; padding: 15px; border-radius: 8px; overflow-x: auto; margin: 15px 0; }
-            blockquote { border-left: 4px solid #e5e7eb; padding-left: 15px; color: #6b7280; font-style: italic; }
-            /* 分页控制 */
-            p, h2, h3, li, div, blockquote, pre { page-break-inside: avoid; break-inside: avoid; }
-        </style>
-        
-        <div style="text-align:center; margin-bottom:40px;">
-            <h1>${filename}</h1>
-            <p style="color:#6b7280; font-size:12px; margin-top:5px;">Generated by Reportify AI • ${dateStr}</p>
-        </div>
-        
-        <div class="markdown-body">
-            ${htmlContent}
-        </div>
+    // 3. 创建实际的“打印纸” (隐藏在遮罩下面)
+    const container = document.createElement('div');
+    Object.assign(container.style, {
+        position: 'absolute', top: '0', left: '0', width: '100%',
+        zIndex: '99999990', backgroundColor: 'white' // 比遮罩层低一层
+    });
 
-        <div style="margin-top:60px; text-align:center; font-size:12px; color:#9ca3af; border-top:1px solid #e5e7eb; padding-top:20px;">
-            © 2026 Reportify AI. All Rights Reserved.
+    // 4. 填充纯净内容 (这里去掉了所有 Logo 和 页眉页脚)
+    container.innerHTML = `
+        <div id="pdf-source" style="max-width: 800px; margin: 0 auto; padding: 50px 40px; background: white; color: #333; font-family: 'Helvetica', 'Arial', sans-serif;">
+            <style>
+                h1 { color: #111; font-size: 24px; font-weight: 800; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 25px; }
+                h2 { color: #2563EB; font-size: 18px; font-weight: 700; margin-top: 30px; margin-bottom: 10px; }
+                h3 { color: #333; font-size: 16px; font-weight: 600; margin-top: 20px; }
+                p, li { line-height: 1.8; color: #333; font-size: 14px; margin-bottom: 8px; text-align: justify; }
+                strong { color: #000; font-weight: 700; }
+                ul { list-style-type: disc; padding-left: 20px; margin-bottom: 10px; }
+                ol { list-style-type: decimal; padding-left: 20px; margin-bottom: 10px; }
+                blockquote { border-left: 4px solid #2563EB; background: #f3f4f6; padding: 10px 15px; color: #555; font-style: italic; margin: 15px 0; }
+                code { background: #f1f1f1; padding: 2px 5px; border-radius: 4px; font-family: monospace; color: #d63384; font-size: 0.9em; }
+                /* 关键：防止文字被分页切断 */
+                p, h2, h3, li, blockquote, pre { page-break-inside: avoid; }
+            </style>
+
+            <div class="markdown-body">
+                ${htmlContent}
+            </div>
         </div>
     `;
 
-    container.appendChild(printContent);
     document.body.appendChild(container);
 
-    // 6. 延时截图 (给浏览器 800ms 渲染时间，确保万无一失)
+    // 5. 启动截图生成 (延时 800ms 确保图片和字体加载)
     setTimeout(() => {
         const opt = {
-            margin:       10,
+            margin:       [15, 15, 15, 15], // 上右下左边距
             filename:     `${filename}.pdf`,
             image:        { type: 'jpeg', quality: 0.98 },
             html2canvas:  { 
-                scale: 2, 
+                scale: 2, // 2倍清晰度，打印出来不糊
                 useCORS: true, 
                 logging: false,
-                scrollY: 0,
-                windowWidth: 1024 // 强制设定宽度，防止手机端排版错乱
+                windowWidth: 1024
             },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-            pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
-        html2pdf().set(opt).from(printContent).save()
+        const element = container.querySelector('#pdf-source');
+
+        html2pdf().set(opt).from(element).save()
             .then(() => {
-                document.body.removeChild(container); // 移除白屏
+                // 成功后，清理现场
+                document.body.removeChild(container);
+                document.body.removeChild(loadingMask);
                 showToast("PDF 下载成功!", "success");
             })
             .catch(err => {
                 console.error(err);
                 document.body.removeChild(container);
-                showToast("PDF 生成出错", "error");
+                document.body.removeChild(loadingMask);
+                showToast("PDF 生成失败，请重试", "error");
             });
     }, 800); 
 }
