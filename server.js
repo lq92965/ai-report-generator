@@ -364,7 +364,7 @@ app.post('/api/update-profile', authenticateToken, async (req, res) => {
 // --- AI 生成 ---
 const genAI = new GoogleGenerativeAI(API_KEY);
 // ==========================================
-// 🟢 [升级版] 生成接口 (含自动扣费逻辑)
+// 🟢 [升级版] 生成接口 (含自动扣费 + 模型双保险切换)
 // ==========================================
 app.post('/api/generate', authenticateToken, async (req, res) => {
     try {
@@ -398,10 +398,35 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
             return res.status(403).json({ error: "Limit reached! Invite friends to get more credits." });
         }
 
-        // 3. 调用 AI (你原本的逻辑)
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); 
-        const result = await model.generateContent(req.body.userPrompt || "Hello");
-        const text = result.response.text();
+        // 3. 调用 AI (双保险逻辑)
+        const prompt = req.body.userPrompt || "Hello";
+        let text = "";
+
+        // 从环境变量读取模型名称 (如果没有设置，则使用默认值)
+        const primaryModelName = process.env.GEMINI_MODEL_PRIMARY || "gemini-3-flash-preview";
+        const backupModelName = process.env.GEMINI_MODEL_BACKUP || "gemini-2.5-flash";
+
+        try {
+            // 👉 尝试主力模型
+            console.log(`🤖 Trying Primary Model: ${primaryModelName}`);
+            const model = genAI.getGenerativeModel({ model: primaryModelName });
+            const result = await model.generateContent(prompt);
+            text = result.response.text();
+        } catch (primaryError) {
+            console.warn(`⚠️ Primary Model (${primaryModelName}) Failed:`, primaryError.message);
+            console.log(`🔄 Switching to Backup Model: ${backupModelName}`);
+
+            try {
+                // 👉 主力失败，尝试备用模型
+                const modelBackup = genAI.getGenerativeModel({ model: backupModelName });
+                const resultBackup = await modelBackup.generateContent(prompt);
+                text = resultBackup.response.text();
+            } catch (backupError) {
+                // 👉 两个都挂了，抛出错误
+                console.error(`❌ Backup Model also failed:`, backupError.message);
+                throw new Error("AI Service Unavailable (Both models failed)");
+            }
+        }
 
         // 4. 保存报告 (保留)
         await db.collection('reports').insertOne({ 
@@ -421,8 +446,9 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
         res.json({ generatedText: text });
 
     } catch (e) { 
-        console.error("AI Error:", e);
-        res.status(500).json({ error: "AI Error" }); 
+        console.error("AI API Error:", e.message);
+        // 返回具体错误给前端，方便调试
+        res.status(500).json({ error: "AI Service Error: " + e.message }); 
     }
 });
 
