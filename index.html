@@ -15,6 +15,60 @@
     <script src="https://www.paypal.com/sdk/js?client-id=AVnSKKHaiFxJKn4HMqGyKeXBhxZ1W-Qs3w7PSP8maz3c2O8jGg_o_nLHt7IUJQjwKHQBZyIVKaJuUPBc&currency=USD"></script>
 
     <link rel="stylesheet" href="style.css?v=3.0">
+    <style>
+    /* 1. 基础容器设置 */
+    #generated-report {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        line-height: 1.75;
+        color: #374151;
+        background: #ffffff;
+        transition: all 0.3s ease;
+    }
+
+    /* 2. 排版细节 (Markdown 渲染后的样式) */
+    #generated-report h1 { font-size: 2.25rem; font-weight: 800; color: #111827; margin-top: 0; margin-bottom: 1.5rem; letter-spacing: -0.025em; line-height: 1.1; }
+    #generated-report h2 { font-size: 1.5rem; font-weight: 700; color: #1f2937; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem; }
+    #generated-report h3 { font-size: 1.25rem; font-weight: 600; color: #374151; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+    #generated-report p { margin-bottom: 1.25rem; text-align: justify; }
+    #generated-report ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    #generated-report ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    #generated-report li { margin-bottom: 0.5rem; padding-left: 0.5rem; }
+    #generated-report strong { color: #000; font-weight: 700; }
+    #generated-report blockquote { border-left: 4px solid #3b82f6; background-color: #eff6ff; padding: 1rem 1.5rem; font-style: italic; color: #1e40af; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+    #generated-report code { background-color: #f3f4f6; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-family: monospace; font-size: 0.9em; color: #ef4444; }
+    #generated-report hr { border: 0; border-top: 1px solid #e5e7eb; margin: 2.5rem 0; }
+
+    /* 3. 风格化主题 (Themes) */
+    
+    /* 👔 商务/管理风格 (Corporate) - 严肃、权威 */
+    .theme-corporate {
+        font-family: 'Merriweather', 'Georgia', serif; /* 衬线体，显得正式 */
+    }
+    .theme-corporate h1 { color: #1e3a8a; border-bottom: 3px solid #1e3a8a; padding-bottom: 20px; text-align: center; }
+    .theme-corporate h2 { color: #1e40af; border-left: 5px solid #1e40af; padding-left: 15px; border-bottom: none !important; }
+    
+    /* ⚡ 日报/周报风格 (Modern) - 清晰、高效 */
+    .theme-modern {
+        font-family: 'Inter', sans-serif;
+    }
+    .theme-modern h1 { color: #059669; } /* 绿色系，代表进度/健康 */
+    .theme-modern ul li::marker { color: #059669; }
+
+    /* 🎨 创意/营销风格 (Creative) - 活泼、鲜明 */
+    .theme-creative {
+        font-family: 'Poppins', sans-serif;
+    }
+    .theme-creative h1 { background: -webkit-linear-gradient(45deg, #6366f1, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .theme-creative blockquote { border-left-color: #ec4899; background: #fdf2f8; color: #db2777; }
+
+    /* 4. 打印专用样式 (解决 PDF 白屏和格式问题) */
+    @media print {
+        body * { visibility: hidden; }
+        #pdf-export-container, #pdf-export-container * { visibility: visible; }
+        #pdf-export-container { position: absolute; left: 0; top: 0; width: 100%; }
+    }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
