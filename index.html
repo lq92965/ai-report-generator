@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/docx@7.1.0/build/index.js"></script>  
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> 
-    
+    <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
     <script src="https://www.paypal.com/sdk/js?client-id=AVnSKKHaiFxJKn4HMqGyKeXBhxZ1W-Qs3w7PSP8maz3c2O8jGg_o_nLHt7IUJQjwKHQBZyIVKaJuUPBc&currency=USD"></script>
 
     <link rel="stylesheet" href="style.css?v=3.0">
@@ -278,19 +278,29 @@
                     </div>
                     <div class="form-group">
                         <label>Export As</label>
-                        <div class="export-options" style="display: flex; gap: 10px; flex-wrap: wrap;">
-                            <button class="export-btn" data-format="Word" style="background: #2563eb; color: white; border: none; flex: 2; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: bold; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);">
+                        <div class="export-options" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px;">
+                            <button class="export-btn" onclick="exportToWord(currentReportContent, 'Report')" style="background: #2563eb; color: white; border: none; height: 44px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
                                 <i class="fas fa-file-word"></i> 
-                                <span>Download Professional Word</span>
+                                <span>Word 文档</span>
                             </button>
 
-                            <button class="export-btn" data-format="Markdown" style="flex: 1; background: #fff; border: 1px solid #e5e7eb; color: #374151;">
-                                <i class="fab fa-markdown"></i> Markdown
+                            <button class="export-btn" onclick="exportToPPT(currentReportContent, 'Report')" style="background: #e05242; color: white; border: none; height: 44px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
+                                <i class="fas fa-file-powerpoint"></i> 
+                                <span>智能 PPT</span>
                             </button>
 
-                            <button class="export-btn" disabled title="Coming Soon" style="background: #f3f4f6; color: #bbb; border: 1px solid #eee; cursor: not-allowed; width: 50px; display: flex; justify-content: center;">
-                                <i class="fas fa-file-pdf"></i>
+                            <button class="export-btn" onclick="shareReportLink()" style="background: #10b981; color: white; border: none; height: 44px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
+                                <i class="fas fa-link"></i> 
+                                <span>分享链接</span>
                             </button>
+
+                            <button class="export-btn" onclick="emailReport()" style="background: #f3f4f6; color: #4b5563; border: 1px solid #e5e7eb; height: 44px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
+                                <i class="fas fa-envelope"></i> 
+                                <span>邮件</span>
+                            </button>
+                        </div>
+                        <div style="text-align: center; margin-top: 10px;">
+                            <a href="#" onclick="exportToMD(currentReportContent, 'Report'); return false;" style="color: #9ca3af; font-size: 12px; text-decoration: none;">下载 Markdown 源码</a>
                         </div>
                     </div>
                 </div>
