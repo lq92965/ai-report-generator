@@ -1,11 +1,13 @@
 // ==============================================================
-// 🟢 history.js - 最终完整版
-// 功能：渲染历史记录 + Word/PPT/MD 引擎 + 分享功能
+// 🟢 history.js - 修复连接问题 + Word/PPT 引擎
 // ==============================================================
 
-const API_BASE_URL = 'https://api.goreportify.com'; 
+// 🔴 修复点：如果你没有专门配置 api.goreportify.com，请留空。
+// 留空 '' 代表使用当前域名的 /api 路径 (例如 https://goreportify.com/api)
+const API_BASE_URL = ''; 
+// 如果你是在本地测试，可能需要改为 'http://localhost:3000'
 
-// 全局变量存储当前数据，方便按钮调用
+// 全局变量存储数据
 window.currentHistoryData = [];
 
 // 页面加载时获取历史记录
@@ -21,7 +23,12 @@ async function fetchHistory() {
         return;
     }
 
+    // 显示加载状态（如果页面上有 spinner）
+    const list = document.getElementById('history-list');
+    if(list) list.innerHTML = '<div style="text-align:center; padding: 40px; color:#666;">正在加载您的报告...</div>';
+
     try {
+        // 发送请求
         const response = await fetch(`${API_BASE_URL}/api/reports/history`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -29,18 +36,20 @@ async function fetchHistory() {
         if (!response.ok) throw new Error('Failed to fetch history');
 
         const reports = await response.json();
-        // 存入全局变量
-        window.currentHistoryData = reports;
+        window.currentHistoryData = reports; // 存入全局变量
         renderHistoryList(reports);
     } catch (error) {
-        console.error('Error:', error);
-        const list = document.getElementById('history-list');
-        if(list) list.innerHTML = '<div class="text-center py-10 text-gray-500">无法加载历史记录，请检查网络。</div>';
+        console.error('API Error:', error);
+        if(list) list.innerHTML = `
+            <div class="text-center py-10 text-gray-500">
+                <p>⚠️ 无法连接到服务器</p>
+                <button onclick="location.reload()" class="mt-2 text-blue-600 underline">重试</button>
+            </div>`;
     }
 }
 
 // ==============================================================
-// 🎨 渲染列表 (集成 4 按钮 Grid 布局)
+// 🎨 渲染列表 (Word / PPT / 分享 / 邮件)
 // ==============================================================
 function renderHistoryList(reports) {
     const listContainer = document.getElementById('history-list');
@@ -64,7 +73,6 @@ function renderHistoryList(reports) {
         const card = document.createElement('div');
         card.className = 'group bg-white border border-gray-200 rounded-xl p-5 hover:shadow-lg transition-all duration-200 mb-4';
         
-        // 这里的 HTML 结构做了调整：上面是信息，下面是按钮组
         card.innerHTML = `
             <div class="flex justify-between items-start cursor-pointer" onclick="showReportDetailById('${report._id}')">
                 <div class="flex items-center gap-4">
@@ -88,37 +96,28 @@ function renderHistoryList(reports) {
 
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; border-top: 1px solid #f3f4f6; padding-top: 15px;">
                 
-                <button onclick="downloadHistoryItem('${report._id}', 'word')" 
-                        style="background: #2563eb; color: white; border: none; height: 36px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" 
-                        title="下载 Word 文档">
+                <button onclick="downloadHistoryItem('${report._id}', 'word')" class="flex items-center justify-center h-9 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition" title="下载 Word">
                     <i class="fas fa-file-word"></i>
                 </button>
 
-                <button onclick="downloadHistoryItem('${report._id}', 'ppt')" 
-                        style="background: #e05242; color: white; border: none; height: 36px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" 
-                        title="导出 PPT">
+                <button onclick="downloadHistoryItem('${report._id}', 'ppt')" class="flex items-center justify-center h-9 bg-red-500 text-white rounded-md hover:bg-red-600 transition" title="下载 PPT">
                     <i class="fas fa-file-powerpoint"></i>
                 </button>
 
-                <button onclick="shareReportLink()" 
-                        style="background: #10b981; color: white; border: none; height: 36px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" 
-                        title="复制分享链接">
+                <button onclick="shareReportLink()" class="flex items-center justify-center h-9 bg-green-500 text-white rounded-md hover:bg-green-600 transition" title="复制链接">
                     <i class="fas fa-link"></i>
                 </button>
 
-                <button onclick="emailReport()" 
-                        style="background: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db; height: 36px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" 
-                        title="邮件发送">
+                <button onclick="emailReport()" class="flex items-center justify-center h-9 bg-gray-100 text-gray-600 border border-gray-200 rounded-md hover:bg-gray-200 transition" title="邮件发送">
                     <i class="fas fa-envelope"></i>
                 </button>
             </div>
         `;
-        
         listContainer.appendChild(card);
     });
 }
 
-// 辅助：通过ID查找并打开详情
+// 辅助：打开详情
 window.showReportDetailById = function(id) {
     const item = window.currentHistoryData.find(r => r._id === id);
     if (item) showReportDetail(item);
@@ -126,59 +125,39 @@ window.showReportDetailById = function(id) {
 
 
 // ==============================================================
-// 🟢 1. [Word 引擎]：商业级完美排版 (复用主页逻辑)
+// 🟢 1. [Word 引擎]：专业版 (宋体/封面/页眉页脚)
 // ==============================================================
 function exportToWord(content, filename) {
     if(window.showToast) window.showToast("正在生成专业 Word 文档...", "info");
 
-    // 1. 准备内容
     let htmlBody = content;
     if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
         htmlBody = marked.parse(content);
     }
 
-    // 2. Word 专用 XML 头
     const docXml = `
-        <xml>
-            <w:WordDocument>
-                <w:View>Print</w:View>
-                <w:Zoom>100</w:Zoom>
-                <w:DoNotOptimizeForBrowser/>
-            </w:WordDocument>
-        </xml>
+        <xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml>
     `;
 
-    // 3. 专业的 CSS 样式 (宋体、页边距、标题色)
     const css = `
         <style>
-            @page {
-                size: 21cm 29.7cm; margin: 2.5cm;
-                mso-page-orientation: portrait;
-                mso-header: url("header_footer_ref") h1;
-                mso-footer: url("header_footer_ref") f1;
-            }
+            @page { size: 21cm 29.7cm; margin: 2.5cm; mso-page-orientation: portrait; mso-header: url("header_footer_ref") h1; mso-footer: url("header_footer_ref") f1; }
             @page Section1 { }
             div.Section1 { page: Section1; }
-            
             body { font-family: "SimSun", "宋体", serif; font-size: 12pt; line-height: 1.5; text-align: justify; }
             h1, h2, h3 { font-family: "SimHei", "黑体", sans-serif; color: #000; }
             h1 { font-size: 22pt; text-align: center; border-bottom: 2px solid #2563EB; padding-bottom: 10px; margin-bottom: 20px; }
             h2 { font-size: 16pt; border-left: 6px solid #2563EB; background: #f5f5f5; padding: 5px 10px; margin-top: 20px; }
             h3 { font-size: 14pt; font-weight: bold; margin-top: 15px; }
             blockquote { border-left: 4px solid #999; background: #f9f9f9; padding: 10px; font-family: "KaiTi", "楷体"; }
-            
-            /* 表格优化 */
             table { border-collapse: collapse; width: 100%; margin: 15px 0; border: 1px solid #000; }
             td, th { border: 1px solid #000; padding: 8px; vertical-align: top; }
             th { background: #f0f0f0; font-weight: bold; }
-
-            /* 页眉页脚样式 */
             p.MsoHeader, p.MsoFooter { font-size: 9pt; font-family: "Calibri", sans-serif; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
             p.MsoFooter { border-bottom: none; border-top: 1px solid #ddd; padding-top: 5px; text-align: center; }
         </style>
     `;
 
-    // 4. 组装 HTML
     const wordHTML = `
         <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'>
         <head><meta charset='utf-8'><title>${filename}</title>${docXml}${css}</head>
@@ -190,9 +169,7 @@ function exportToWord(content, filename) {
                     <p style="font-size:12pt; color:#666;">${new Date().toLocaleDateString()}</p>
                 </div>
                 <br clear=all style='mso-special-character:line-break; page-break-before:always'>
-                
                 ${htmlBody}
-
                 <table id='header_footer_ref' style='display:none'>
                     <tr><td><div style='mso-element:header' id=h1><p class=MsoHeader><span style='float:left'>Reportify AI Professional Report</span><span style='float:right'>${new Date().toLocaleDateString()}</span><span style='clear:both'></span></p></div></td></tr>
                     <tr><td><div style='mso-element:footer' id=f1><p class=MsoFooter><span style='mso-field-code:" PAGE "'></span> / <span style='mso-field-code:" NUMPAGES "'></span></p></div></td></tr>
@@ -202,7 +179,6 @@ function exportToWord(content, filename) {
         </html>
     `;
 
-    // 5. 触发下载
     const blob = new Blob([wordHTML], { type: 'application/msword' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -212,13 +188,11 @@ function exportToWord(content, filename) {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-
     if(window.showToast) window.showToast("Word 文档下载成功!", "success");
 }
 
-
 // ==============================================================
-// 🟢 2. [PPT 引擎]：智能生成 PPT
+// 🟢 2. [PPT 引擎]：智能生成
 // ==============================================================
 function exportToPPT(content, filename) {
     if (typeof PptxGenJS === 'undefined') {
@@ -231,40 +205,25 @@ function exportToPPT(content, filename) {
     pptx.layout = 'LAYOUT_16x9'; 
     pptx.title = filename;
 
-    // 1. 封面页
+    // 封面
     let slide = pptx.addSlide();
     slide.background = { color: 'F3F4F6' };
     slide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '100%', h: 0.5, fill: { color: '2563EB' } });
-    slide.addText(filename.replace(/_/g, ' '), { 
-        x: 0.5, y: 2.5, w: '90%', fontSize: 36, fontFace: 'SimHei', color: '1F2937', align: 'center', bold: true 
-    });
-    slide.addText(`生成日期: ${new Date().toLocaleDateString()}`, { 
-        x: 0.5, y: 3.5, w: '90%', fontSize: 18, fontFace: 'SimHei', color: '6B7280', align: 'center' 
-    });
+    slide.addText(filename.replace(/_/g, ' '), { x: 0.5, y: 2.5, w: '90%', fontSize: 36, fontFace: 'SimHei', color: '1F2937', align: 'center', bold: true });
+    slide.addText(`生成日期: ${new Date().toLocaleDateString()}`, { x: 0.5, y: 3.5, w: '90%', fontSize: 18, fontFace: 'SimHei', color: '6B7280', align: 'center' });
 
-    // 2. 解析内容
-    const sections = content.split(/\n(?=#+ )/); // 按标题切割
+    // 内容页
+    const sections = content.split(/\n(?=#+ )/); 
     sections.forEach(section => {
         if (!section.trim()) return;
         let lines = section.trim().split('\n');
         let rawTitle = lines[0].replace(/#+\s*/, '').trim(); 
-        let bodyText = lines.slice(1).join('\n').trim().replace(/[*_~`]/g, ''); // 简单清洗
-        
+        let bodyText = lines.slice(1).join('\n').trim().replace(/[*_~`]/g, ''); 
         if (bodyText.length > 500) bodyText = bodyText.substring(0, 500) + "...";
 
         let s = pptx.addSlide();
-        // 标题
-        s.addText(rawTitle, { 
-            x: 0.5, y: 0.5, w: '90%', h: 0.8, 
-            fontSize: 24, fontFace: 'SimHei', color: '2563EB', bold: true,
-            border: { type: 'bottom', pt: 2, color: 'E5E7EB' } 
-        });
-        // 正文
-        s.addText(bodyText, { 
-            x: 0.5, y: 1.5, w: '90%', h: 5.0, 
-            fontSize: 16, fontFace: 'Microsoft YaHei', color: '374151', valign: 'top' 
-        });
-        // 页码
+        s.addText(rawTitle, { x: 0.5, y: 0.5, w: '90%', h: 0.8, fontSize: 24, fontFace: 'SimHei', color: '2563EB', bold: true, border: { type: 'bottom', pt: 2, color: 'E5E7EB' } });
+        s.addText(bodyText, { x: 0.5, y: 1.5, w: '90%', h: 5.0, fontSize: 16, fontFace: 'Microsoft YaHei', color: '374151', valign: 'top' });
         s.addSlideNumber({ x: '90%', y: '90%', fontSize: 10, color: '999999' });
     });
 
@@ -273,12 +232,9 @@ function exportToPPT(content, filename) {
         .catch(err => { if(window.showToast) window.showToast("PPT 生成失败", "error"); });
 }
 
-
 // ==============================================================
-// 🟢 3. [其他导出与分享]
+// 🟢 3. [其他]：Markdown / Share / Email
 // ==============================================================
-
-// Markdown 导出
 function exportToMD(content, filename) {
     if (!content) return;
     const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
@@ -293,7 +249,6 @@ function exportToMD(content, filename) {
     if (typeof showToast === 'function') showToast("Markdown 下载成功!", "success");
 }
 
-// 分享链接
 function shareReportLink() {
     const mockLink = `https://goreportify.com/share/${Math.random().toString(36).substr(2, 9)}`;
     navigator.clipboard.writeText(mockLink).then(() => {
@@ -301,18 +256,12 @@ function shareReportLink() {
     });
 }
 
-// 邮件发送
 function emailReport() {
     window.location.href = `mailto:?subject=AI Report&body=Please check the report.`;
     if(window.showToast) showToast("已唤起邮件客户端", "info");
 }
 
-
-// ==============================================================
-// 🟢 4. [路由与详情]
-// ==============================================================
-
-// 下载路由器
+// 下载路由
 window.downloadHistoryItem = function(id, type) {
     const item = window.currentHistoryData ? window.currentHistoryData.find(r => r._id === id) : null;
     if (!item || !item.content) {
@@ -327,8 +276,7 @@ window.downloadHistoryItem = function(id, type) {
     else if (type === 'md') exportToMD(item.content, filename);
 };
 
-
-// 详情弹窗 (也移除了 PDF，加了 PPT)
+// 详情弹窗 (去掉了 PDF 按钮)
 function showReportDetail(report) {
     const existing = document.getElementById('dm-overlay');
     if (existing) existing.remove();
@@ -382,7 +330,6 @@ function showReportDetail(report) {
     document.getElementById('btn-close-x').onclick = closeFunc;
     document.getElementById('btn-close').onclick = closeFunc;
     
-    // 绑定下载事件
     document.getElementById('btn-word').onclick = () => exportToWord(report.content, report.title);
     document.getElementById('btn-ppt').onclick = () => exportToPPT(report.content, report.title);
     document.getElementById('btn-md').onclick = () => exportToMD(report.content, report.title);
