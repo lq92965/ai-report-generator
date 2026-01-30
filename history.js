@@ -80,157 +80,205 @@ function renderHistoryList(reports) {
     });
 }
 
-// ==========================================
-// 🟢 核心修复区：下载逻辑与弹窗
-// ==========================================
+// ==============================================================
+// 🟢 [黄金标准] 导出引擎 (复用于 History，保持全站体验一致)
+// ==============================================================
 
-// 1. Markdown 导出 (新增)
-function exportHistoryToMD(content, filename) {
-    if (!content) return alert("内容为空");
-    const blob = new Blob([content], { type: 'text/markdown' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = (filename || 'report') + '.md';
-    link.click();
-    URL.revokeObjectURL(url);
-}
-
-// 2. Word 导出
-function exportHistoryToWord(content, filename) {
-    if (!content) return alert("内容为空");
-    const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export</title></head><body>";
-    const footer = "</body></html>";
-    // 简单处理换行，Markdown 转 HTML
-    let htmlBody = (typeof marked !== 'undefined') ? marked.parse(content) : content.replace(/\n/g, "<br>");
-    const sourceHTML = header + htmlBody + footer;
+// 1. [通用] Word 导出：带格式，完美兼容 Office
+function exportToWord(content, filename) {
+    if (typeof showToast === 'function') showToast("正在生成 Word 文档...", "info");
     
+    // 如果是纯文本，尝试转 HTML 以保留格式
+    let htmlBody = content;
+    if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
+        htmlBody = marked.parse(content);
+    }
+
+    // 包装完整的 HTML 结构
+    const header = `
+        <html xmlns:o='urn:schemas-microsoft-com:office:office' 
+              xmlns:w='urn:schemas-microsoft-com:office:word' 
+              xmlns='http://www.w3.org/TR/REC-html40'>
+        <head><meta charset='utf-8'><title>${filename}</title>
+        <style>
+            body { font-family: 'Calibri', sans-serif; font-size: 11pt; line-height: 1.5; }
+            h1 { font-size: 18pt; color: #2e74b5; border-bottom: 1px solid #2e74b5; padding-bottom: 10px; margin-bottom: 20px; }
+            h2 { font-size: 14pt; color: #1f4d78; margin-top: 20px; }
+            p { margin-bottom: 10px; text-align: justify; }
+            ul { margin-bottom: 10px; }
+            blockquote { border-left: 4px solid #ccc; padding-left: 10px; color: #666; font-style: italic; }
+        </style>
+        </head><body>
+    `;
+    const footer = "</body></html>";
+    const sourceHTML = header + htmlBody + footer;
+
     const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
-    const link = document.createElement("a");
-    document.body.appendChild(link);
-    link.href = source;
-    link.download = (filename || 'report') + '.doc';
-    link.click();
-    document.body.removeChild(link);
+    const fileDownload = document.createElement("a");
+    document.body.appendChild(fileDownload);
+    fileDownload.href = source;
+    fileDownload.download = `${filename}.doc`;
+    fileDownload.click();
+    document.body.removeChild(fileDownload);
+    
+    if (typeof showToast === 'function') showToast("Word 下载成功!", "success");
 }
 
-// ==========================================
-// 🟢 PDF 导出 (移植自首页的成功逻辑：可见渲染 + 延时截图)
-// ==========================================
-function exportHistoryToPDF(content, filename) {
-    if (!content) {
-        if(window.showToast) window.showToast("内容为空，无法生成 PDF", "error");
-        else alert("内容为空");
+// 2. [通用] PDF 导出：系统字体 + 0.8秒极速 + 无限高度
+function exportToPDF(content, filename) {
+    if (typeof html2pdf === 'undefined') {
+        alert('PDF 引擎未加载，请刷新页面');
         return;
     }
 
-    // 1. 提示开始 (给用户反馈)
-    if(window.showToast) window.showToast("正在准备 PDF 生成...", "info");
-
-    // 2. 转换 Markdown 为 HTML
-    const htmlContent = (typeof marked !== 'undefined') ? marked.parse(content) : content;
-    const dateStr = new Date().toLocaleDateString();
-
-    // 3. 创建容器 (采用首页策略：覆盖在屏幕最上方，确保绝对可见)
-    const container = document.createElement('div');
-    container.style.position = 'fixed'; // 使用 fixed 覆盖视口
-    container.style.top = '0';
-    container.style.left = '0';
-    container.style.width = '100%';
-    container.style.height = '100%';
-    container.style.zIndex = '9999999'; // 确保在最顶层
-    container.style.backgroundColor = '#ffffff'; // 白底
-    container.style.overflowY = 'auto'; 
-    container.style.padding = '0'; // 内部控制 padding
-    
-    // 添加一个临时的“生成中”提示层，以免用户以为死机
+    // 启动遮罩
     const loadingMask = document.createElement('div');
-    loadingMask.innerHTML = `<div style="position:fixed; top:20px; right:20px; background:rgba(0,0,0,0.8); color:white; padding:10px 20px; border-radius:5px; z-index:10000000;">⏳ 正在生成 PDF，请稍候...</div>`;
+    Object.assign(loadingMask.style, {
+        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
+        backgroundColor: '#ffffff', 
+        zIndex: '999999999', 
+        display: 'flex', flexDirection: 'column',
+        justifyContent: 'center', alignItems: 'center'
+    });
+    loadingMask.innerHTML = `
+        <div style="text-align: center;">
+            <i class="fas fa-bolt fa-spin fa-3x" style="color:#2563eb; margin-bottom:20px;"></i>
+            <h3 style="font-family:sans-serif; color:#333; font-size:18px; font-weight:bold;">正在极速生成 PDF...</h3>
+            <p style="color:#999; font-size:12px; margin-top:5px;">History 专属通道</p>
+        </div>
+    `;
     document.body.appendChild(loadingMask);
 
-    // 4. 填充内容 (包含打印专用 CSS)
+    // 准备内容
+    let htmlContent = content;
+    if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
+        htmlContent = marked.parse(content);
+    }
+
+    // 创建容器 (absolute 防止截断)
+    const container = document.createElement('div');
+    Object.assign(container.style, {
+        position: 'absolute', top: '0', left: '0', width: '100%',
+        zIndex: '99999', backgroundColor: 'white', padding: '0', margin: '0'
+    });
+
+    // 填充内容 (使用系统字体 stack)
     container.innerHTML = `
-        <div id="pdf-print-source" style="max-width: 800px; margin: 0 auto; padding: 40px; background: white; color: #333; font-family: 'Helvetica', 'Arial', sans-serif;">
+        <div id="pdf-print-source" style="max-width: 800px; margin: 0 auto; padding: 50px 40px; background: white; color: #111;">
             <style>
-                /* 强制样式，防止被网页其他 CSS 干扰 */
-                h1 { color: #2563EB; font-size: 24px; border-bottom: 2px solid #2563EB; padding-bottom: 15px; margin-bottom: 25px; }
-                h2 { color: #1F2937; font-size: 18px; margin-top: 25px; margin-bottom: 10px; border-left: 4px solid #2563EB; padding-left: 12px; }
-                h3 { color: #374151; font-size: 16px; margin-top: 20px; font-weight: bold; }
-                p, li { line-height: 1.8; margin-bottom: 12px; font-size: 14px; text-align: justify; }
-                strong { color: #111; font-weight: 700; }
-                code { background: #f3f4f6; padding: 2px 5px; border-radius: 4px; font-family: monospace; color: #DC2626; }
-                pre { background: #1f2937; color: #fff; padding: 15px; border-radius: 8px; overflow-x: auto; margin: 15px 0; }
-                blockquote { border-left: 4px solid #e5e7eb; padding-left: 15px; color: #6b7280; font-style: italic; }
-                
-                /* 🔴 核心：智能分页控制，防止文字被腰斩 */
-                p, h2, h3, li, div, blockquote, pre { 
-                    page-break-inside: avoid; 
-                    break-inside: avoid; 
+                /* 系统原生字体，速度最快，最稳 */
+                body, h1, h2, h3, p, li, div {
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft YaHei", sans-serif !important;
                 }
+                html, body { height: auto !important; overflow: visible !important; }
+                
+                h1 { color: #2563EB; font-size: 26px; border-bottom: 2px solid #2563EB; padding-bottom: 15px; margin-bottom: 25px; line-height: 1.3; }
+                h2 { color: #1F2937; font-size: 20px; margin-top: 30px; margin-bottom: 12px; font-weight: bold; }
+                h3 { color: #374151; font-size: 16px; margin-top: 20px; font-weight: bold; }
+                p, li { line-height: 1.8; margin-bottom: 10px; font-size: 14px; text-align: justify; color: #333; }
+                strong { color: #000; font-weight: 700; }
+                blockquote { border-left: 4px solid #e5e7eb; padding-left: 15px; color: #555; font-style: italic; background: #f9fafb; padding: 12px; margin: 15px 0; }
+                code { background: #f3f4f6; padding: 2px 5px; border-radius: 4px; font-family: monospace; color: #d63384; font-size: 0.9em; }
+                
+                p, h2, h3, li, div, blockquote, pre { page-break-inside: avoid; }
             </style>
-            
-            <div style="text-align:center; margin-bottom:40px;">
-                <h1>${filename}</h1>
-                <p style="color:#6b7280; font-size:12px; margin-top:5px;">
-                    Generated by Reportify AI • ${dateStr}
-                </p>
-            </div>
             
             <div class="markdown-body">
                 ${htmlContent}
             </div>
-
-            <div style="margin-top:60px; text-align:center; font-size:12px; color:#9ca3af; border-top:1px solid #e5e7eb; padding-top:20px;">
-                © 2026 Reportify AI. All Rights Reserved.
-            </div>
         </div>
     `;
 
-    // 5. 加入 Body
     document.body.appendChild(container);
 
-    // 6. 🟢 关键步骤：延时截图 (等待浏览器渲染 DOM)
-    // 既然是 fixed 覆盖，我们需要给浏览器一点时间把内容画出来
+    // 启动生成 (0.5秒)
     setTimeout(() => {
-        if (typeof html2pdf !== 'undefined') {
-            const opt = {
-                margin:       10, // mm
-                filename:     (filename || 'Report') + '.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { 
-                    scale: 2, 
-                    useCORS: true, 
-                    logging: false,
-                    scrollY: 0,
-                    windowWidth: document.body.scrollWidth
-                },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
-            };
+        window.scrollTo(0, 0); // 强制回顶
 
-            // 选中内部的容器进行打印，而不是整个宽屏容器
-            const elementToPrint = container.querySelector('#pdf-print-source');
+        const element = container.querySelector('#pdf-print-source');
+        const totalHeight = element.scrollHeight;
 
-            html2pdf().set(opt).from(elementToPrint).save()
-                .then(() => {
-                    // 成功后清理
-                    document.body.removeChild(container);
-                    document.body.removeChild(loadingMask);
-                    if(window.showToast) window.showToast("PDF 下载成功!", "success");
-                })
-                .catch(err => {
-                    console.error(err);
-                    document.body.removeChild(container);
-                    document.body.removeChild(loadingMask);
-                    alert("PDF 生成出错，请重试。");
-                });
-        } else {
-            alert("PDF 组件未加载，请刷新页面。");
-            document.body.removeChild(container);
-            document.body.removeChild(loadingMask);
-        }
-    }, 500); // 🟢 延时 500ms，确保内容绝对渲染完成
+        const opt = {
+            margin:       [15, 15, 15, 15],
+            filename:     `${filename}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { 
+                scale: 2, 
+                useCORS: true, 
+                logging: false,
+                scrollY: 0,
+                windowWidth: 1024,
+                height: totalHeight + 50, // 强制全高度
+                windowHeight: totalHeight + 100
+            },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+        };
+
+        html2pdf().set(opt).from(element).save()
+            .then(() => {
+                document.body.removeChild(container);
+                document.body.removeChild(loadingMask);
+                if (typeof showToast === 'function') showToast("PDF 下载成功!", "success");
+            })
+            .catch(err => {
+                console.error("PDF Error:", err);
+                document.body.removeChild(container);
+                document.body.removeChild(loadingMask);
+                alert("PDF 生成出错");
+            });
+    }, 500); 
 }
+// 3. [通用] Markdown 导出：纯文本，原汁原味
+function exportToMD(content, filename) {
+    if (!content) return;
+
+    // 创建 Blob 对象 (纯文本类型)
+    const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
+    
+    // 创建下载链接
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${filename}.md`;
+    
+    // 触发下载
+    document.body.appendChild(link);
+    link.click();
+    
+    // 清理内存
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    if (typeof showToast === 'function') showToast("Markdown 下载成功!", "success");
+}
+
+// 4. [路由中心] 统一处理 History 页面的下载请求
+window.downloadHistoryItem = function(id, type) {
+    // 1. 从全局缓存中找到那条历史记录
+    const item = window.currentHistoryData ? window.currentHistoryData.find(r => r._id === id) : null;
+    
+    if (!item || !item.content) {
+        if(window.showToast) window.showToast("未找到报告内容", "error");
+        return;
+    }
+
+    // 2. 生成文件名 (去除特殊字符)
+    const safeTitle = (item.title || "Report").replace(/[^a-zA-Z0-9\u4e00-\u9fa5]/g, '_');
+    const filename = `${safeTitle}_${new Date().toISOString().slice(0,10)}`;
+
+    // 3. 分发给对应的专业引擎
+    if (type === 'md') {
+        exportToMD(item.content, filename); // 👈 现在调用封装好的函数
+    } 
+    else if (type === 'word') {
+        exportToWord(item.content, filename);
+    } 
+    else if (type === 'pdf') {
+        exportToPDF(item.content, filename);
+    }
+};
+
 
 // 4. 弹窗显示逻辑 (新增 Markdown 按钮)
 function showReportDetail(report) {
