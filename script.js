@@ -902,26 +902,23 @@ function exportToWord(htmlContent, filename) {
     showToast("Word Downloaded!", "success");
 }
 
-// 🟢 [History同款逻辑] PDF 导出函数 (覆盖层渲染法 - 最稳妥)
+// 🟢 [终极纯净版] PDF 导出：无水印 + 提速 + 完美格式
 function exportToPDF(content, filename) {
     if (typeof html2pdf === 'undefined') {
         showToast('PDF 引擎未加载，请刷新页面', 'error');
         return;
     }
 
-    // 1. 提示开始
-    showToast("正在准备 PDF 生成...", "info");
+    // 1. 提示用户
+    showToast("正在导出纯净版 PDF...", "info");
 
-    // 2. 智能处理内容
-    // 如果 content 包含 HTML 标签(主页传来的)，直接用；否则(可能是MD)尝试解析
+    // 2. 处理内容 (HTML 或 Markdown 转 HTML)
     let htmlContent = content;
     if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
         htmlContent = marked.parse(content);
     }
-    
-    const dateStr = new Date().toLocaleDateString();
 
-    // 3. 创建全屏容器 (History 页面的成功秘诀：覆盖在最上层，强迫浏览器渲染)
+    // 3. 创建全屏覆盖容器 (确保内容被渲染)
     const container = document.createElement('div');
     container.style.position = 'fixed'; 
     container.style.top = '0';
@@ -933,63 +930,57 @@ function exportToPDF(content, filename) {
     container.style.overflowY = 'auto'; 
     container.style.padding = '0';
     
-    // 加载提示遮罩
+    // 加载动画 (挡在最上面)
     const loadingMask = document.createElement('div');
-    loadingMask.innerHTML = `<div style="position:fixed; top:20px; right:20px; background:rgba(37, 99, 235, 0.9); color:white; padding:12px 24px; border-radius:8px; z-index:10000000; display:flex; align-items:center; gap:10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-        <i class="fas fa-spinner fa-spin"></i> 正在生成 PDF，请稍候...
+    loadingMask.innerHTML = `<div style="position:fixed; top:20px; right:20px; background:rgba(37, 99, 235, 0.9); color:white; padding:10px 20px; border-radius:8px; z-index:10000000; display:flex; align-items:center; gap:10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <i class="fas fa-circle-notch fa-spin"></i> 正在导出...
     </div>`;
     document.body.appendChild(loadingMask);
 
-    // 4. 填充内容 (内嵌样式，保证和 History 样式一致)
+    // 4. 填充内容 (❌ 已删除标题、页眉、页脚，只保留核心内容)
     container.innerHTML = `
-        <div id="pdf-print-source" style="max-width: 800px; margin: 0 auto; padding: 40px; background: white; color: #333; font-family: 'Helvetica', 'Arial', sans-serif;">
+        <div id="pdf-print-source" style="max-width: 800px; margin: 0 auto; padding: 50px 40px; background: white; color: #333; font-family: 'Helvetica', 'Arial', sans-serif;">
             <style>
-                h1 { color: #2563EB; font-size: 24px; border-bottom: 2px solid #2563EB; padding-bottom: 15px; margin-bottom: 25px; }
-                h2 { color: #1F2937; font-size: 18px; margin-top: 25px; margin-bottom: 10px; border-left: 4px solid #2563EB; padding-left: 12px; }
+                /* 核心排版样式 (保留美观度) */
+                h1 { color: #2563EB; font-size: 24px; border-bottom: 2px solid #2563EB; padding-bottom: 10px; margin-bottom: 20px; }
+                h2 { color: #1F2937; font-size: 18px; margin-top: 25px; margin-bottom: 10px; font-weight: bold; }
                 h3 { color: #374151; font-size: 16px; margin-top: 20px; font-weight: bold; }
-                p, li { line-height: 1.8; margin-bottom: 12px; font-size: 14px; text-align: justify; }
-                strong { color: #111; font-weight: 700; }
+                p, li { line-height: 1.6; margin-bottom: 10px; font-size: 14px; text-align: justify; color: #333; }
+                strong { color: #000; font-weight: 700; }
                 code { background: #f3f4f6; padding: 2px 5px; border-radius: 4px; font-family: monospace; color: #DC2626; }
                 pre { background: #1f2937; color: #fff; padding: 15px; border-radius: 8px; overflow-x: auto; margin: 15px 0; }
-                blockquote { border-left: 4px solid #e5e7eb; padding-left: 15px; color: #6b7280; font-style: italic; background: #f9fafb; padding: 10px; }
-                /* 防截断 */
-                p, h2, h3, li, div, blockquote, pre { page-break-inside: avoid; break-inside: avoid; }
+                blockquote { border-left: 4px solid #e5e7eb; padding-left: 15px; color: #555; font-style: italic; background: #f9fafb; padding: 10px; margin: 15px 0; }
+                
+                /* 智能分页，防止切断文字 */
+                p, h2, h3, li, div, blockquote, pre { 
+                    page-break-inside: avoid; 
+                }
             </style>
-            
-            <div style="text-align:center; margin-bottom:40px;">
-                <h1>${filename}</h1>
-                <p style="color:#6b7280; font-size:12px; margin-top:5px;">
-                    Generated by Reportify AI • ${dateStr}
-                </p>
-            </div>
             
             <div class="markdown-body">
                 ${htmlContent}
-            </div>
-
-            <div style="margin-top:60px; text-align:center; font-size:12px; color:#9ca3af; border-top:1px solid #e5e7eb; padding-top:20px;">
-                © 2026 Reportify AI. All Rights Reserved.
             </div>
         </div>
     `;
 
     document.body.appendChild(container);
 
-    // 5. 延时截图 (给浏览器 0.8秒 渲染时间)
+    // 5. 启动截图 (⚡️ 提速：延时缩短为 300ms)
     setTimeout(() => {
         const opt = {
-            margin:       10, // mm
+            margin:       [15, 15, 15, 15], // 上右下左边距 15mm
             filename:     `${filename}.pdf`,
             image:        { type: 'jpeg', quality: 0.98 },
             html2canvas:  { 
-                scale: 2, 
+                scale: 2, // 保持清晰度
                 useCORS: true, 
                 logging: false,
                 scrollY: 0,
                 windowWidth: 1024 
             },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-            pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+            // 移除 legacy 模式可能稍微提速
+            pagebreak:    { mode: ['avoid-all', 'css'] } 
         };
 
         const elementToPrint = container.querySelector('#pdf-print-source');
@@ -1004,9 +995,9 @@ function exportToPDF(content, filename) {
                 console.error(err);
                 document.body.removeChild(container);
                 document.body.removeChild(loadingMask);
-                showToast("PDF 生成出错，请重试。", "error");
+                showToast("PDF 生成出错", "error");
             });
-    }, 800); 
+    }, 300); // ⚡️ 300ms 足够渲染了，比之前快一倍以上
 }
 
 // --- 模块 G: 支付与卡片交互逻辑 (全能修复版) ---
