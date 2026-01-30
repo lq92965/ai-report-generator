@@ -901,151 +901,180 @@ function exportToWord(htmlContent, filename) {
     
     showToast("Word Downloaded!", "success");
 }
-
-// 🟢 [专业级] PDF 导出：宋体公文风 + 预览渲染模式 (彻底解决截断)
+// 🟢 [终极融合版] PDF 导出：双核引擎 + 专业公文排版 (SimSun/SimHei)
 function exportToPDF(content, filename) {
     if (typeof html2pdf === 'undefined') {
         showToast('PDF 引擎未加载，请刷新页面', 'error');
         return;
     }
 
-    // 1. 准备内容 (HTML处理)
+    // 1. 准备内容
     let htmlContent = content;
     if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
         htmlContent = marked.parse(content);
     }
 
-    // 2. 创建“打印预览层” (Visible Preview Layer)
-    // 核心策略：不再隐藏！而是把它做成一个漂亮的“预览弹窗”。
-    // 只有东西真的显示在屏幕上，浏览器才会老老实实把长图画完。
-    const previewOverlay = document.createElement('div');
-    Object.assign(previewOverlay.style, {
-        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
-        backgroundColor: 'rgba(50, 50, 50, 0.95)', // 深色背景，聚焦内容
-        zIndex: '9999999', 
-        overflowY: 'auto', // 允许滚动查看
-        display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '40px'
-    });
-
-    // 3. 提示栏
-    const statusNew = document.createElement('div');
-    statusNew.innerHTML = `
-        <div style="color:white; font-family:sans-serif; margin-bottom:20px; text-align:center;">
-            <i class="fas fa-print fa-spin" style="font-size:24px; margin-bottom:10px;"></i><br>
-            正在生成专业版式 PDF...<br>
-            <span style="font-size:12px; opacity:0.8;">请勿关闭，生成后将自动下载</span>
-        </div>
-    `;
-    previewOverlay.appendChild(statusNew);
-
-    // 4. 创建“A4纸”容器
-    const container = document.createElement('div');
-    container.id = 'pdf-print-source'; // 标记ID
-    Object.assign(container.style, {
-        width: '794px', // A4 标准宽度 (96dpi)
-        minHeight: '1123px', // A4 标准高度
-        backgroundColor: 'white',
-        padding: '40px 50px', // 标准公文页边距
-        boxShadow: '0 0 20px rgba(0,0,0,0.5)', // 阴影效果
-        marginBottom: '50px',
-        color: '#000' // 纯黑字
-    });
-
-    // 5. 注入核心 CSS (专业报告标准)
-    container.innerHTML = `
+    // ============================================================
+    // 🎨 定义专业样式表 (这是核心！让预览和打印都用这套漂亮皮肤)
+    // ============================================================
+    const professionalStyle = `
         <style>
-            /* --- 字体系统：严格本地化，拒绝网络请求 --- */
-            /* 标题：黑体 (SimHei) / 微软雅黑 */
+            /* --- 1. 字体系统 (公文标准) --- */
+            /* 标题：黑体 / 微软雅黑 (Windows) / STHeiti (Mac) */
             h1, h2, h3, h4, strong, b {
                 font-family: "SimHei", "Microsoft YaHei", "STHeiti", sans-serif !important;
-                color: #000; /* 标题纯黑，庄重 */
+                color: #000; /* 纯黑标题，严肃专业 */
             }
             
-            /* 正文：宋体 (SimSun) / 仿宋 - 这种字体打印出来最清晰、最专业 */
+            /* 正文：宋体 (Windows) / 仿宋 / STSong (Mac) */
+            /* 这种字体打印出来最有质感，像书本一样 */
             body, p, li, div, blockquote, span {
-                font-family: "SimSun", "STSong", "Songti SC", "NSimSun", serif !important;
+                font-family: "SimSun", "FangSong", "STSong", "Songti SC", serif !important;
                 font-size: 12pt; /* 标准字号 */
-                line-height: 1.6; /* 黄金阅读行距 */
-                text-align: justify; /* 两端对齐 */
+                line-height: 1.6; /* 舒适行距 */
+                text-align: justify; /* 两端对齐，整齐划一 */
                 letter-spacing: 0.5px;
             }
 
-            /* --- 版式细节 --- */
+            /* --- 2. 版式细节 --- */
+            /* 大标题：居中，下划线 */
             h1 { 
-                font-size: 22pt; 
+                font-size: 24pt; 
+                font-weight: 800;
                 text-align: center; 
-                border-bottom: 2px solid #000; 
+                border-bottom: 3px solid #000; 
                 padding-bottom: 15px; 
                 margin-bottom: 30px; 
                 margin-top: 10px;
             }
             
+            /* 二级标题：左侧粗线条装饰，浅灰背景条 */
             h2 { 
                 font-size: 16pt; 
-                border-left: 6px solid #000; /* 纯黑左侧条 */
+                font-weight: 700;
+                border-left: 8px solid #2563EB; /* 蓝色引导线 */
                 padding-left: 12px; 
                 margin-top: 30px; 
                 margin-bottom: 15px; 
-                background: #f8f8f8; /* 浅灰背景条 */
-                padding-top: 5px;
-                padding-bottom: 5px;
+                background: #f8f9fa; /* 极淡的灰色背景条，增加层次感 */
+                padding-top: 8px;
+                padding-bottom: 8px;
+                border-radius: 0 4px 4px 0;
             }
             
+            /* 三级标题：加粗 */
             h3 { 
                 font-size: 14pt; 
+                font-weight: 600;
                 margin-top: 20px; 
                 margin-bottom: 10px; 
                 padding-left: 5px;
             }
 
-            p { margin-bottom: 12px; text-indent: 0; }
-            
-            /* 列表缩进优化 */
+            /* 段落与列表 */
+            p { margin-bottom: 12px; }
             ul, ol { padding-left: 2em; margin-bottom: 12px; }
-            li { margin-bottom: 4px; }
+            li { margin-bottom: 6px; }
 
             /* 引用块：公文备注风格 */
             blockquote {
-                border: 1px solid #ddd;
-                border-left: 4px solid #666;
-                background-color: #f9f9f9;
-                padding: 15px;
+                border: 1px solid #eee;
+                border-left: 4px solid #999;
+                background-color: #fcfcfc;
+                padding: 15px 20px;
                 margin: 20px 0;
-                font-family: "KaiTi", "楷体", serif !important; /* 引用内容用楷体 */
-                color: #444;
+                font-family: "KaiTi", "楷体", serif !important; /* 引用内容用楷体，区分度高 */
+                color: #555;
+                font-style: italic;
             }
 
             /* 代码块：简约风 */
             code { 
-                background: #f4f4f4; 
-                padding: 2px 5px; 
-                border-radius: 3px; 
+                background: #f3f4f6; 
+                padding: 2px 6px; 
+                border-radius: 4px; 
                 font-family: Consolas, monospace !important; 
                 font-size: 0.9em; 
+                color: #c7254e;
             }
 
-            /* --- 智能分页控制 (防止文字腰斩) --- */
+            /* --- 3. 智能分页控制 (防止文字腰斩) --- */
             p, blockquote, li { page-break-inside: avoid; }
             h1, h2, h3 { page-break-after: avoid; }
             img, table { page-break-inside: avoid; }
         </style>
+    `;
 
+    // 组装最终的 HTML 内容 (加上封面头和 CSS)
+    const finalHTML = `
+        ${professionalStyle}
         <div class="markdown-body">
+            <div style="text-align: center; margin-bottom: 50px;">
+                <h1 style="border:none; margin-bottom: 5px;">${filename.replace(/_/g, ' ')}</h1>
+                <p style="font-size: 10pt; color: #666; font-family: sans-serif;">
+                    Generated by Reportify AI • ${new Date().toLocaleDateString()}
+                </p>
+                <hr style="border: 0; border-top: 1px solid #000; margin-top: 20px;">
+            </div>
             ${htmlContent}
         </div>
     `;
 
-    // 6. 组装并显示
-    previewOverlay.appendChild(container);
+    // ============================================================
+    // 🎨 第一步：创建“视觉预览层” (给用户看，带滚动条)
+    // ============================================================
+    const previewOverlay = document.createElement('div');
+    Object.assign(previewOverlay.style, {
+        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
+        backgroundColor: 'rgba(50, 50, 50, 0.98)', // 深色背景
+        zIndex: '9999999', 
+        overflowY: 'auto', // 允许用户滚动查看
+        display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '20px'
+    });
+
+    // 顶部提示栏
+    previewOverlay.innerHTML = `
+        <div style="color:white; font-family:sans-serif; margin-bottom:15px; text-align:center; flex-shrink: 0;">
+            <i class="fas fa-print fa-spin" style="font-size:24px; margin-bottom:10px;"></i><br>
+            <span style="font-weight:bold; font-size:16px;">正在生成专业排版...</span><br>
+            <span style="font-size:12px; opacity:0.8;">(所见即所得，自动处理长文分页)</span>
+        </div>
+        <div id="preview-paper" style="width:794px; min-height:1123px; background:white; padding:50px; color:#000; box-shadow:0 0 20px rgba(0,0,0,0.5); margin-bottom:50px;">
+            </div>
+    `;
     document.body.appendChild(previewOverlay);
 
-    // 7. 启动截图 (延时 1.5秒，确保渲染完成)
+    // ============================================================
+    // 🖨️ 第二步：创建“打印专用层” (给程序看，无限制，绝对完整)
+    // ============================================================
+    const printContainer = document.createElement('div');
+    Object.assign(printContainer.style, {
+        position: 'absolute', 
+        top: '0', 
+        left: '0', 
+        width: '794px', // 锁定A4宽度
+        zIndex: '-9999', // 藏在最底下
+        backgroundColor: 'white',
+        padding: '50px', // 内边距 (和预览层保持一致)
+        margin: '0'
+    });
+
+    // 填充内容
+    // 1. 填充预览层
+    previewOverlay.querySelector('#preview-paper').innerHTML = finalHTML;
+    // 2. 填充打印层
+    printContainer.innerHTML = finalHTML;
+    document.body.appendChild(printContainer);
+
+    // ============================================================
+    // 🚀 第三步：启动打印引擎
+    // ============================================================
     setTimeout(() => {
-        const element = container;
-        const totalHeight = element.scrollHeight; // 获取真实高度
+        // 强制计算打印容器的真实高度
+        const totalHeight = printContainer.scrollHeight;
 
         const opt = {
-            margin:       [15, 10, 15, 10], // 上右下左 (mm)
+            margin:       [15, 15, 15, 15], // 上右下左 (mm)
             filename:     `${filename}.pdf`,
             image:        { type: 'jpeg', quality: 1 }, // 最高画质
             html2canvas:  { 
@@ -1053,27 +1082,30 @@ function exportToPDF(content, filename) {
                 useCORS: true, 
                 logging: false,
                 scrollY: 0,
-                windowWidth: 1024,
-                height: totalHeight, // 强制全高度
-                windowHeight: totalHeight + 100 
+                width: 794,
+                windowWidth: 794, 
+                height: totalHeight, // 🔴 核心：强制全高度截取
+                windowHeight: totalHeight
             },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
             pagebreak:    { mode: ['css', 'legacy'] }
         };
 
-        html2pdf().set(opt).from(element).save()
+        html2pdf().set(opt).from(printContainer).save()
             .then(() => {
-                // 下载成功后，移除预览层
                 document.body.removeChild(previewOverlay);
+                document.body.removeChild(printContainer);
                 showToast("PDF 下载成功!", "success");
             })
             .catch(err => {
                 console.error("PDF Error:", err);
                 document.body.removeChild(previewOverlay);
-                showToast("PDF 生成出错，请重试", "error");
+                document.body.removeChild(printContainer);
+                showToast("PDF 生成出错", "error");
             });
-    }, 1500); 
+    }, 1500); // 1.5秒缓冲
 }
+
 
 // --- 模块 G: 支付与卡片交互逻辑 (全能修复版) ---
 function setupPayment() {
