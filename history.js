@@ -4,7 +4,7 @@
 
 // 🔴 修复点：如果你没有专门配置 api.goreportify.com，请留空。
 // 留空 '' 代表使用当前域名的 /api 路径 (例如 https://goreportify.com/api)
-const API_BASE_URL = ''; 
+const API_BASE_URL = 'https://api.goreportify.com'; 
 // 如果你是在本地测试，可能需要改为 'http://localhost:3000'
 
 // 全局变量存储数据
