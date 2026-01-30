@@ -1011,7 +1011,7 @@ function exportToPDF(content, filename) {
                 document.body.removeChild(loadingMask);
                 showToast("PDF 生成失败", "error");
             });
-    }, 1000); // 1秒等待，确保万无一失
+    }, 500); // 0.5秒等待，确保万无一失
 }
 
 // --- 模块 G: 支付与卡片交互逻辑 (全能修复版) ---
@@ -1610,3 +1610,4 @@ async function loadAccountPageAvatar() {
         this.src = getFullImageUrl(null);
     };
 }
+
