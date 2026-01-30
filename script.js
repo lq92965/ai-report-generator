@@ -867,39 +867,123 @@ function doExport(type) {
     }
 }
 
-// 4. [修复版] Word 导出 (解决了 exportToWord is not defined)
-function exportToWord(htmlContent, filename) {
-    showToast("Preparing Word document...", "info");
-    
-    // 包装完整的 HTML 结构，确保 Word 能识别格式
-    const header = `
-        <html xmlns:o='urn:schemas-microsoft-com:office:office' 
-              xmlns:w='urn:schemas-microsoft-com:office:word' 
-              xmlns='http://www.w3.org/TR/REC-html40'>
-        <head><meta charset='utf-8'><title>${filename}</title>
-        <style>
-            body { font-family: 'Calibri', sans-serif; font-size: 11pt; line-height: 1.5; }
-            h1 { font-size: 18pt; color: #2e74b5; border-bottom: 1px solid #2e74b5; padding-bottom: 10px; margin-bottom: 20px; }
-            h2 { font-size: 14pt; color: #1f4d78; margin-top: 20px; }
-            p { margin-bottom: 10px; text-align: justify; }
-            ul { margin-bottom: 10px; }
-            blockquote { border-left: 4px solid #ccc; padding-left: 10px; color: #666; font-style: italic; }
-        </style>
-        </head><body>
-    `;
-    const footer = "</body></html>";
-    const sourceHTML = header + htmlContent + footer;
+// 🟢 [商业级] Word 导出引擎：带页眉页脚 + 专业排版 + 封面
+function exportToWord(content, filename) {
+    showToast("正在生成专业 Word 文档...", "info");
 
-    const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
-    
-    const fileDownload = document.createElement("a");
-    document.body.appendChild(fileDownload);
-    fileDownload.href = source;
-    fileDownload.download = `${filename}.doc`;
-    fileDownload.click();
-    document.body.removeChild(fileDownload);
-    
-    showToast("Word Downloaded!", "success");
+    // 1. 准备内容 (Markdown 转 HTML)
+    let htmlBody = content;
+    if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
+        htmlBody = marked.parse(content);
+    }
+
+    // 2. 定义 Word 专用 XML 命名空间 (这是实现页眉页脚的关键)
+    const docXml = `
+        <xml>
+            <w:WordDocument>
+                <w:View>Print</w:View>
+                <w:Zoom>100</w:Zoom>
+                <w:DoNotOptimizeForBrowser/>
+            </w:WordDocument>
+        </xml>
+    `;
+
+    // 3. 定义 CSS (复用我们之前的宋体/公文风，Word 能完美识别这些 CSS)
+    const css = `
+        <style>
+            @page {
+                size: 21cm 29.7cm; /* A4 */
+                margin: 2.5cm 2.5cm 2.5cm 2.5cm; /* 标准公文边距 */
+                mso-page-orientation: portrait;
+                /* 定义页眉页脚引用 */
+                mso-header: url("header_footer_ref") h1;
+                mso-footer: url("header_footer_ref") f1;
+            }
+            @page Section1 { }
+            div.Section1 { page: Section1; }
+            
+            /* 字体系统 */
+            body { font-family: "SimSun", "宋体", serif; font-size: 12pt; line-height: 1.5; text-align: justify; }
+            h1, h2, h3 { font-family: "SimHei", "黑体", sans-serif; color: #000; }
+            
+            /* 标题样式 */
+            h1 { font-size: 22pt; text-align: center; border-bottom: 2px solid #2563EB; padding-bottom: 10px; margin-bottom: 20px; }
+            h2 { font-size: 16pt; border-left: 6px solid #2563EB; background: #f5f5f5; padding: 5px 10px; margin-top: 20px; }
+            h3 { font-size: 14pt; font-weight: bold; margin-top: 15px; }
+            
+            /* 细节修饰 */
+            blockquote { border-left: 4px solid #999; background: #f9f9f9; padding: 10px; font-family: "KaiTi", "楷体"; }
+            table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+            td, th { border: 1px solid #000; padding: 8px; }
+            th { background: #f0f0f0; font-weight: bold; }
+            
+            /* 页眉页脚样式 */
+            p.MsoHeader, p.MsoFooter { font-size: 9pt; font-family: "Calibri", sans-serif; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+            p.MsoFooter { border-bottom: none; border-top: 1px solid #ddd; padding-top: 5px; text-align: center; }
+        </style>
+    `;
+
+    // 4. 组装 Word 内容 (包含封面、正文、隐藏的页眉页脚定义)
+    // 注意：这里使用了 Office 特有的 mso- 语法
+    const wordHTML = `
+        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'>
+        <head>
+            <meta charset='utf-8'>
+            <title>${filename}</title>
+            ${docXml}
+            ${css}
+        </head>
+        <body>
+            <div class="Section1">
+                <div style="text-align:center; margin-top:100px; margin-bottom:200px;">
+                    <h1 style="font-size:36pt; border:none; color:#2563EB;">${filename.replace(/_/g, ' ')}</h1>
+                    <p style="font-size:14pt; margin-top:20px;">Created by Reportify AI</p>
+                    <p style="font-size:12pt; color:#666;">${new Date().toLocaleDateString()}</p>
+                </div>
+                
+                <br clear=all style='mso-special-character:line-break; page-break-before:always'>
+                
+                ${htmlBody}
+
+                <table id='header_footer_ref' style='display:none'>
+                    <tr>
+                        <td>
+                            <div style='mso-element:header' id=h1>
+                                <p class=MsoHeader>
+                                    <span style='float:left'>Reportify AI Professional Report</span>
+                                    <span style='float:right'>${new Date().toLocaleDateString()}</span>
+                                    <span style='clear:both'></span>
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style='mso-element:footer' id=f1>
+                                <p class=MsoFooter>
+                                    <span style='mso-field-code:" PAGE "'></span> / <span style='mso-field-code:" NUMPAGES "'></span>
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </body>
+        </html>
+    `;
+
+    // 5. 触发下载
+    const blob = new Blob([wordHTML], { type: 'application/msword' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${filename}.doc`; // .doc 兼容性最好，Word 打开会自动渲染 XML
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    showToast("Word 文档下载成功!", "success");
 }
 
 // 🟢 [核武器版] PDF 导出：Iframe 物理隔离 + 100%完整 + 专业排版
