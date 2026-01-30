@@ -902,148 +902,175 @@ function exportToWord(htmlContent, filename) {
     showToast("Word Downloaded!", "success");
 }
 
-// 🟢 [专业投行版] PDF 导出：宋体/衬线体 + 紧凑排版 + 智能分页
+// 🟢 [专业级] PDF 导出：宋体公文风 + 预览渲染模式 (彻底解决截断)
 function exportToPDF(content, filename) {
     if (typeof html2pdf === 'undefined') {
         showToast('PDF 引擎未加载，请刷新页面', 'error');
         return;
     }
 
-    // 1. 启动全屏遮罩
-    const loadingMask = document.createElement('div');
-    Object.assign(loadingMask.style, {
-        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
-        backgroundColor: 'rgba(255, 255, 255, 0.98)', 
-        zIndex: '999999999', 
-        display: 'flex', flexDirection: 'column',
-        justifyContent: 'center', alignItems: 'center'
-    });
-    loadingMask.innerHTML = `
-        <div style="text-align: center;">
-            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem; border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-            <h3 style="font-family: 'SimHei', sans-serif; color:#333; font-size:18px; font-weight:bold; margin-top:20px;">正在排版专业报告...</h3>
-            <p style="color:#666; font-size:12px;">格式化为标准商业文档 A4</p>
-        </div>
-        <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
-    `;
-    document.body.appendChild(loadingMask);
-
-    // 2. 准备内容
+    // 1. 准备内容 (HTML处理)
     let htmlContent = content;
     if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
         htmlContent = marked.parse(content);
     }
 
-    // 3. 创建专业文档容器 (模拟 Word 文档)
-    const container = document.createElement('div');
-    Object.assign(container.style, {
-        position: 'absolute', top: '0', left: '0', width: '100%',
-        zIndex: '-1', // 藏在后面
-        backgroundColor: 'white'
+    // 2. 创建“打印预览层” (Visible Preview Layer)
+    // 核心策略：不再隐藏！而是把它做成一个漂亮的“预览弹窗”。
+    // 只有东西真的显示在屏幕上，浏览器才会老老实实把长图画完。
+    const previewOverlay = document.createElement('div');
+    Object.assign(previewOverlay.style, {
+        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
+        backgroundColor: 'rgba(50, 50, 50, 0.95)', // 深色背景，聚焦内容
+        zIndex: '9999999', 
+        overflowY: 'auto', // 允许滚动查看
+        display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '40px'
     });
 
-    // 4. 填充内容 (这是核心：完全重写 CSS 以符合打印标准)
+    // 3. 提示栏
+    const statusNew = document.createElement('div');
+    statusNew.innerHTML = `
+        <div style="color:white; font-family:sans-serif; margin-bottom:20px; text-align:center;">
+            <i class="fas fa-print fa-spin" style="font-size:24px; margin-bottom:10px;"></i><br>
+            正在生成专业版式 PDF...<br>
+            <span style="font-size:12px; opacity:0.8;">请勿关闭，生成后将自动下载</span>
+        </div>
+    `;
+    previewOverlay.appendChild(statusNew);
+
+    // 4. 创建“A4纸”容器
+    const container = document.createElement('div');
+    container.id = 'pdf-print-source'; // 标记ID
+    Object.assign(container.style, {
+        width: '794px', // A4 标准宽度 (96dpi)
+        minHeight: '1123px', // A4 标准高度
+        backgroundColor: 'white',
+        padding: '40px 50px', // 标准公文页边距
+        boxShadow: '0 0 20px rgba(0,0,0,0.5)', // 阴影效果
+        marginBottom: '50px',
+        color: '#000' // 纯黑字
+    });
+
+    // 5. 注入核心 CSS (专业报告标准)
     container.innerHTML = `
-        <div id="pdf-print-source" style="width: 794px; margin: 0 auto; background: white; padding: 40px 50px; color: #000;">
-            <style>
-                /* --- 字体系统：商业报告标准 --- */
-                /* 正文：宋体 (Windows) / STSong (Mac) / Times New Roman */
-                body, p, li, div, blockquote {
-                    font-family: "SimSun", "STSong", "Times New Roman", serif !important;
-                    font-size: 12pt;
-                    line-height: 1.6;
-                    color: #000; /* 纯黑，打印更清晰 */
-                    text-align: justify; /* 两端对齐，显得专业 */
-                }
-                
-                /* 标题：黑体 / Helvetica */
-                h1, h2, h3, h4, strong, b {
-                    font-family: "Microsoft YaHei", "SimHei", "Helvetica Neue", Arial, sans-serif !important;
-                    color: #000; /* 商业报告通常不用蓝色标题，用纯黑更严肃，或者深蓝 */
-                }
-
-                /* --- 排版细节 --- */
-                h1 { font-size: 24pt; font-weight: 800; margin-bottom: 24px; text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; }
-                h2 { font-size: 16pt; font-weight: 700; margin-top: 24px; margin-bottom: 12px; border-left: 5px solid #2563EB; padding-left: 10px; }
-                h3 { font-size: 14pt; font-weight: 600; margin-top: 18px; margin-bottom: 8px; }
-                
-                p { margin-bottom: 10px; }
-                ul, ol { margin-bottom: 10px; padding-left: 24px; }
-                li { margin-bottom: 4px; }
-
-                /* 引用块：模仿公文格式 */
-                blockquote {
-                    border-left: 3px solid #666;
-                    background-color: #f9f9f9;
-                    padding: 10px 20px;
-                    margin: 15px 0;
-                    font-style: italic;
-                    color: #444;
-                }
-
-                /* 代码块：精简 */
-                code { background: #f0f0f0; padding: 2px 4px; border-radius: 3px; font-family: monospace; font-size: 0.9em; }
-
-                /* --- 关键：智能分页控制 --- */
-                /* 允许段落被切断，防止大片空白 */
-                p, li { page-break-inside: auto; } 
-                
-                /* 标题不能单独在页面底部，必须带着后面的一段内容 */
-                h1, h2, h3 { page-break-after: avoid; page-break-inside: avoid; }
-                
-                /* 避免表格和引用被切断 */
-                blockquote, pre, table { page-break-inside: avoid; }
-            </style>
+        <style>
+            /* --- 字体系统：严格本地化，拒绝网络请求 --- */
+            /* 标题：黑体 (SimHei) / 微软雅黑 */
+            h1, h2, h3, h4, strong, b {
+                font-family: "SimHei", "Microsoft YaHei", "STHeiti", sans-serif !important;
+                color: #000; /* 标题纯黑，庄重 */
+            }
             
-            <div style="text-align: center; margin-bottom: 60px; padding-top: 20px;">
-                <h1 style="border:none; margin-bottom: 10px;">${filename.replace(/_/g, ' ')}</h1>
-                <p style="text-align: center; color: #666; font-size: 10pt;">Generated by Reportify AI • ${new Date().toLocaleDateString()}</p>
-                <hr style="border: 0; border-top: 1px solid #ccc; margin-top: 20px;">
-            </div>
+            /* 正文：宋体 (SimSun) / 仿宋 - 这种字体打印出来最清晰、最专业 */
+            body, p, li, div, blockquote, span {
+                font-family: "SimSun", "STSong", "Songti SC", "NSimSun", serif !important;
+                font-size: 12pt; /* 标准字号 */
+                line-height: 1.6; /* 黄金阅读行距 */
+                text-align: justify; /* 两端对齐 */
+                letter-spacing: 0.5px;
+            }
 
-            <div class="markdown-body">
-                ${htmlContent}
-            </div>
+            /* --- 版式细节 --- */
+            h1 { 
+                font-size: 22pt; 
+                text-align: center; 
+                border-bottom: 2px solid #000; 
+                padding-bottom: 15px; 
+                margin-bottom: 30px; 
+                margin-top: 10px;
+            }
+            
+            h2 { 
+                font-size: 16pt; 
+                border-left: 6px solid #000; /* 纯黑左侧条 */
+                padding-left: 12px; 
+                margin-top: 30px; 
+                margin-bottom: 15px; 
+                background: #f8f8f8; /* 浅灰背景条 */
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+            
+            h3 { 
+                font-size: 14pt; 
+                margin-top: 20px; 
+                margin-bottom: 10px; 
+                padding-left: 5px;
+            }
+
+            p { margin-bottom: 12px; text-indent: 0; }
+            
+            /* 列表缩进优化 */
+            ul, ol { padding-left: 2em; margin-bottom: 12px; }
+            li { margin-bottom: 4px; }
+
+            /* 引用块：公文备注风格 */
+            blockquote {
+                border: 1px solid #ddd;
+                border-left: 4px solid #666;
+                background-color: #f9f9f9;
+                padding: 15px;
+                margin: 20px 0;
+                font-family: "KaiTi", "楷体", serif !important; /* 引用内容用楷体 */
+                color: #444;
+            }
+
+            /* 代码块：简约风 */
+            code { 
+                background: #f4f4f4; 
+                padding: 2px 5px; 
+                border-radius: 3px; 
+                font-family: Consolas, monospace !important; 
+                font-size: 0.9em; 
+            }
+
+            /* --- 智能分页控制 (防止文字腰斩) --- */
+            p, blockquote, li { page-break-inside: avoid; }
+            h1, h2, h3 { page-break-after: avoid; }
+            img, table { page-break-inside: avoid; }
+        </style>
+
+        <div class="markdown-body">
+            ${htmlContent}
         </div>
     `;
 
-    document.body.appendChild(container);
+    // 6. 组装并显示
+    previewOverlay.appendChild(container);
+    document.body.appendChild(previewOverlay);
 
-    // 5. 启动生成
-    // 使用 1.5秒 等待，配合 window.scrollTo 确保完整
+    // 7. 启动截图 (延时 1.5秒，确保渲染完成)
     setTimeout(() => {
-        window.scrollTo(0, 0); 
+        const element = container;
+        const totalHeight = element.scrollHeight; // 获取真实高度
 
-        const element = container.querySelector('#pdf-print-source');
-        
         const opt = {
-            margin:       [20, 0, 20, 0], // 上下保留边距，左右由 CSS 控制
+            margin:       [15, 10, 15, 10], // 上右下左 (mm)
             filename:     `${filename}.pdf`,
-            image:        { type: 'jpeg', quality: 1 }, // 最高质量
+            image:        { type: 'jpeg', quality: 1 }, // 最高画质
             html2canvas:  { 
-                scale: 2, 
+                scale: 2, // 2倍清晰度
                 useCORS: true, 
                 logging: false,
                 scrollY: 0,
-                windowWidth: 1200, // 宽一点防止挤压
-                // ⭐ 移除 height 限制，让它自动检测，或者使用 document.body.scrollHeight
+                windowWidth: 1024,
+                height: totalHeight, // 强制全高度
+                windowHeight: totalHeight + 100 
             },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-            // ⭐ 启用 CSS 分页模式，这是最智能的
-            pagebreak:    { mode: ['css', 'legacy'] } 
+            pagebreak:    { mode: ['css', 'legacy'] }
         };
 
         html2pdf().set(opt).from(element).save()
             .then(() => {
-                document.body.removeChild(container);
-                document.body.removeChild(loadingMask);
+                // 下载成功后，移除预览层
+                document.body.removeChild(previewOverlay);
                 showToast("PDF 下载成功!", "success");
             })
             .catch(err => {
                 console.error("PDF Error:", err);
-                document.body.removeChild(container);
-                document.body.removeChild(loadingMask);
-                showToast("PDF 生成出错", "error");
+                document.body.removeChild(previewOverlay);
+                showToast("PDF 生成出错，请重试", "error");
             });
     }, 1500); 
 }
