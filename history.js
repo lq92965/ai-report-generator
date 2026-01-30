@@ -84,44 +84,90 @@ function renderHistoryList(reports) {
 // 🟢 [黄金标准] 导出引擎 (复用于 History，保持全站体验一致)
 // ==============================================================
 
-// 1. [通用] Word 导出：带格式，完美兼容 Office
+// ==============================================================
+// 🟢 [History] 商业级 Word 导出引擎 (带页眉页脚+完美排版)
+// ==============================================================
 function exportToWord(content, filename) {
-    if (typeof showToast === 'function') showToast("正在生成 Word 文档...", "info");
-    
-    // 如果是纯文本，尝试转 HTML 以保留格式
+    if(window.showToast) window.showToast("正在生成专业 Word 文档...", "info");
+
+    // 1. 准备内容
     let htmlBody = content;
     if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
         htmlBody = marked.parse(content);
     }
 
-    // 包装完整的 HTML 结构
-    const header = `
-        <html xmlns:o='urn:schemas-microsoft-com:office:office' 
-              xmlns:w='urn:schemas-microsoft-com:office:word' 
-              xmlns='http://www.w3.org/TR/REC-html40'>
-        <head><meta charset='utf-8'><title>${filename}</title>
-        <style>
-            body { font-family: 'Calibri', sans-serif; font-size: 11pt; line-height: 1.5; }
-            h1 { font-size: 18pt; color: #2e74b5; border-bottom: 1px solid #2e74b5; padding-bottom: 10px; margin-bottom: 20px; }
-            h2 { font-size: 14pt; color: #1f4d78; margin-top: 20px; }
-            p { margin-bottom: 10px; text-align: justify; }
-            ul { margin-bottom: 10px; }
-            blockquote { border-left: 4px solid #ccc; padding-left: 10px; color: #666; font-style: italic; }
-        </style>
-        </head><body>
+    // 2. Word 专用 XML 头 (定义视图和缩放)
+    const docXml = `
+        <xml>
+            <w:WordDocument>
+                <w:View>Print</w:View>
+                <w:Zoom>100</w:Zoom>
+                <w:DoNotOptimizeForBrowser/>
+            </w:WordDocument>
+        </xml>
     `;
-    const footer = "</body></html>";
-    const sourceHTML = header + htmlBody + footer;
 
-    const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
-    const fileDownload = document.createElement("a");
-    document.body.appendChild(fileDownload);
-    fileDownload.href = source;
-    fileDownload.download = `${filename}.doc`;
-    fileDownload.click();
-    document.body.removeChild(fileDownload);
-    
-    if (typeof showToast === 'function') showToast("Word 下载成功!", "success");
+    // 3. 专业的 CSS 样式 (宋体、页边距、标题色)
+    const css = `
+        <style>
+            @page {
+                size: 21cm 29.7cm; margin: 2.5cm;
+                mso-page-orientation: portrait;
+                mso-header: url("header_footer_ref") h1;
+                mso-footer: url("header_footer_ref") f1;
+            }
+            @page Section1 { }
+            div.Section1 { page: Section1; }
+
+            body { font-family: "SimSun", "宋体", serif; font-size: 12pt; line-height: 1.5; text-align: justify; }
+            h1, h2, h3 { font-family: "SimHei", "黑体", sans-serif; color: #000; }
+            h1 { font-size: 22pt; text-align: center; border-bottom: 2px solid #2563EB; padding-bottom: 10px; margin-bottom: 20px; }
+            h2 { font-size: 16pt; border-left: 6px solid #2563EB; background: #f5f5f5; padding: 5px 10px; margin-top: 20px; }
+            h3 { font-size: 14pt; font-weight: bold; margin-top: 15px; }
+            blockquote { border-left: 4px solid #999; background: #f9f9f9; padding: 10px; font-family: "KaiTi", "楷体"; }
+
+            /* 页眉页脚样式 */
+            p.MsoHeader, p.MsoFooter { font-size: 9pt; font-family: "Calibri", sans-serif; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+            p.MsoFooter { border-bottom: none; border-top: 1px solid #ddd; padding-top: 5px; text-align: center; }
+        </style>
+    `;
+
+    // 4. 组装 HTML (含封面和页眉页脚定义)
+    const wordHTML = `
+        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'>
+        <head><meta charset='utf-8'><title>${filename}</title>${docXml}${css}</head>
+        <body>
+            <div class="Section1">
+                <div style="text-align:center; margin-top:100px; margin-bottom:200px;">
+                    <h1 style="font-size:36pt; border:none; color:#2563EB;">${filename.replace(/_/g, ' ')}</h1>
+                    <p style="font-size:14pt; margin-top:20px;">Created by Reportify AI</p>
+                    <p style="font-size:12pt; color:#666;">${new Date().toLocaleDateString()}</p>
+                </div>
+                <br clear=all style='mso-special-character:line-break; page-break-before:always'>
+
+                ${htmlBody}
+
+                <table id='header_footer_ref' style='display:none'>
+                    <tr><td><div style='mso-element:header' id=h1><p class=MsoHeader><span style='float:left'>Reportify AI Professional Report</span><span style='float:right'>${new Date().toLocaleDateString()}</span><span style='clear:both'></span></p></div></td></tr>
+                    <tr><td><div style='mso-element:footer' id=f1><p class=MsoFooter><span style='mso-field-code:" PAGE "'></span> / <span style='mso-field-code:" NUMPAGES "'></span></p></div></td></tr>
+                </table>
+            </div>
+        </body>
+        </html>
+    `;
+
+    // 5. 触发下载
+    const blob = new Blob([wordHTML], { type: 'application/msword' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${filename}.doc`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    if(window.showToast) window.showToast("Word 文档下载成功!", "success");
 }
 
 // 2. [通用] PDF 导出：系统字体 + 0.8秒极速 + 无限高度
