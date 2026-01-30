@@ -867,17 +867,19 @@ function doExport(type) {
     }
 }
 
-// 🟢 [商业级] Word 导出引擎：带页眉页脚 + 专业排版 + 封面
+// ==============================================================
+// 🟢 1. [Word 引擎 2.0]：精益求精版 (优化字体回退、行距、封面)
+// ==============================================================
 function exportToWord(content, filename) {
+    if (!content) { showToast("暂无内容可导出", "error"); return; }
     showToast("正在生成专业 Word 文档...", "info");
 
-    // 1. 准备内容 (Markdown 转 HTML)
     let htmlBody = content;
     if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
         htmlBody = marked.parse(content);
     }
 
-    // 2. 定义 Word 专用 XML 命名空间 (这是实现页眉页脚的关键)
+    // Word 专用 XML 头部
     const docXml = `
         <xml>
             <w:WordDocument>
@@ -888,266 +890,198 @@ function exportToWord(content, filename) {
         </xml>
     `;
 
-    // 3. 定义 CSS (复用我们之前的宋体/公文风，Word 能完美识别这些 CSS)
+    // 优化后的 CSS：增加宋体优先，优化表格边框
     const css = `
         <style>
             @page {
-                size: 21cm 29.7cm; /* A4 */
-                margin: 2.5cm 2.5cm 2.5cm 2.5cm; /* 标准公文边距 */
+                size: 21cm 29.7cm; margin: 2.54cm;
                 mso-page-orientation: portrait;
-                /* 定义页眉页脚引用 */
                 mso-header: url("header_footer_ref") h1;
                 mso-footer: url("header_footer_ref") f1;
             }
             @page Section1 { }
             div.Section1 { page: Section1; }
             
-            /* 字体系统 */
-            body { font-family: "SimSun", "宋体", serif; font-size: 12pt; line-height: 1.5; text-align: justify; }
-            h1, h2, h3 { font-family: "SimHei", "黑体", sans-serif; color: #000; }
+            body { font-family: "SimSun", "宋体", "Times New Roman", serif; font-size: 12pt; line-height: 1.6; text-align: justify; }
+            h1, h2, h3, h4 { font-family: "SimHei", "黑体", "Arial", sans-serif; color: #000; font-weight: bold; }
+            h1 { font-size: 22pt; text-align: center; border-bottom: 2px solid #2563EB; padding-bottom: 12px; margin-bottom: 24px; }
+            h2 { font-size: 16pt; border-left: 5px solid #2563EB; background: #F3F4F6; padding: 6px 12px; margin-top: 24px; margin-bottom: 12px; }
+            h3 { font-size: 14pt; margin-top: 18px; margin-bottom: 10px; color: #333; }
+            p { margin-bottom: 10px; }
             
-            /* 标题样式 */
-            h1 { font-size: 22pt; text-align: center; border-bottom: 2px solid #2563EB; padding-bottom: 10px; margin-bottom: 20px; }
-            h2 { font-size: 16pt; border-left: 6px solid #2563EB; background: #f5f5f5; padding: 5px 10px; margin-top: 20px; }
-            h3 { font-size: 14pt; font-weight: bold; margin-top: 15px; }
-            
-            /* 细节修饰 */
-            blockquote { border-left: 4px solid #999; background: #f9f9f9; padding: 10px; font-family: "KaiTi", "楷体"; }
-            table { border-collapse: collapse; width: 100%; margin: 15px 0; }
-            td, th { border: 1px solid #000; padding: 8px; }
+            /* 表格优化 */
+            table { border-collapse: collapse; width: 100%; margin: 15px 0; border: 1px solid #000; }
+            td, th { border: 1px solid #000; padding: 8px; vertical-align: top; }
             th { background: #f0f0f0; font-weight: bold; }
             
-            /* 页眉页脚样式 */
+            /* 引用块 */
+            blockquote { border-left: 4px solid #666; background: #f9f9f9; padding: 10px 15px; font-family: "KaiTi", "楷体"; color: #444; margin: 15px 0; }
+
+            /* 页眉页脚 */
             p.MsoHeader, p.MsoFooter { font-size: 9pt; font-family: "Calibri", sans-serif; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
             p.MsoFooter { border-bottom: none; border-top: 1px solid #ddd; padding-top: 5px; text-align: center; }
         </style>
     `;
 
-    // 4. 组装 Word 内容 (包含封面、正文、隐藏的页眉页脚定义)
-    // 注意：这里使用了 Office 特有的 mso- 语法
     const wordHTML = `
         <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'>
-        <head>
-            <meta charset='utf-8'>
-            <title>${filename}</title>
-            ${docXml}
-            ${css}
-        </head>
+        <head><meta charset='utf-8'><title>${filename}</title>${docXml}${css}</head>
         <body>
             <div class="Section1">
-                <div style="text-align:center; margin-top:100px; margin-bottom:200px;">
-                    <h1 style="font-size:36pt; border:none; color:#2563EB;">${filename.replace(/_/g, ' ')}</h1>
-                    <p style="font-size:14pt; margin-top:20px;">Created by Reportify AI</p>
-                    <p style="font-size:12pt; color:#666;">${new Date().toLocaleDateString()}</p>
+                <div style="text-align:center; padding-top:150px; padding-bottom:200px;">
+                    <h1 style="font-size:32pt; border:none; color:#2563EB; margin-bottom:30px;">${filename.replace(/_/g, ' ')}</h1>
+                    <p style="font-size:16pt; font-family:'SimHei';">专业分析报告</p>
+                    <p style="font-size:12pt; color:#666; margin-top:50px;">生成日期：${new Date().toLocaleDateString()}</p>
+                    <p style="font-size:12pt; color:#666;">Reportify AI 智能引擎</p>
                 </div>
-                
                 <br clear=all style='mso-special-character:line-break; page-break-before:always'>
                 
                 ${htmlBody}
 
                 <table id='header_footer_ref' style='display:none'>
-                    <tr>
-                        <td>
-                            <div style='mso-element:header' id=h1>
-                                <p class=MsoHeader>
-                                    <span style='float:left'>Reportify AI Professional Report</span>
-                                    <span style='float:right'>${new Date().toLocaleDateString()}</span>
-                                    <span style='clear:both'></span>
-                                </p>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div style='mso-element:footer' id=f1>
-                                <p class=MsoFooter>
-                                    <span style='mso-field-code:" PAGE "'></span> / <span style='mso-field-code:" NUMPAGES "'></span>
-                                </p>
-                            </div>
-                        </td>
-                    </tr>
+                    <tr><td><div style='mso-element:header' id=h1><p class=MsoHeader><span style='float:left'>${filename}</span><span style='float:right'>Reportify AI</span><span style='clear:both'></span></p></div></td></tr>
+                    <tr><td><div style='mso-element:footer' id=f1><p class=MsoFooter><span style='mso-field-code:" PAGE "'></span> / <span style='mso-field-code:" NUMPAGES "'></span></p></div></td></tr>
                 </table>
             </div>
         </body>
         </html>
     `;
 
-    // 5. 触发下载
     const blob = new Blob([wordHTML], { type: 'application/msword' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${filename}.doc`; // .doc 兼容性最好，Word 打开会自动渲染 XML
+    link.download = `${filename}.doc`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-
     showToast("Word 文档下载成功!", "success");
 }
 
-// 🟢 [核武器版] PDF 导出：Iframe 物理隔离 + 100%完整 + 专业排版
-function exportToPDF(content, filename) {
-    if (typeof html2pdf === 'undefined') {
-        showToast('PDF 引擎未加载，请刷新页面', 'error');
+// ==============================================================
+// 🟢 2. [PPT 引擎]：智能解析 Markdown 自动生成幻灯片
+// ==============================================================
+function exportToPPT(content, filename) {
+    if (typeof PptxGenJS === 'undefined') {
+        showToast('PPT 引擎正在加载中，请稍后重试...', 'error');
         return;
     }
+    showToast("正在生成智能 PPT...", "info");
 
-    // 1. 准备内容
-    let htmlContent = content;
-    if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
-        htmlContent = marked.parse(content);
-    }
+    const pptx = new PptxGenJS();
+    pptx.layout = 'LAYOUT_16x9'; // 宽屏比例
+    
+    // 设置元数据
+    pptx.author = 'Reportify AI';
+    pptx.company = 'Reportify AI';
+    pptx.title = filename;
 
-    // 2. 显示预览遮罩 (仅供用户观看，不参与打印)
-    // 这样用户能看到漂亮的界面，但这只是个“幌子”，真正的打印在后台 iframe 里进行
-    const previewOverlay = document.createElement('div');
-    Object.assign(previewOverlay.style, {
-        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
-        backgroundColor: 'rgba(50, 50, 50, 0.98)', 
-        zIndex: '9999999', 
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'
+    // --- 1. 封面页 ---
+    let slide = pptx.addSlide();
+    slide.background = { color: 'F3F4F6' }; // 浅灰背景
+    // 蓝色装饰条
+    slide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '100%', h: 0.5, fill: { color: '2563EB' } });
+    // 标题
+    slide.addText(filename.replace(/_/g, ' '), { 
+        x: 0.5, y: 2.5, w: '90%', fontSize: 36, fontFace: 'SimHei', color: '1F2937', align: 'center', bold: true 
     });
-    previewOverlay.innerHTML = `
-        <div style="text-align: center; color: white;">
-            <i class="fas fa-print fa-spin" style="font-size:30px; margin-bottom:15px;"></i>
-            <h3 style="font-family: sans-serif; font-size: 18px;">正在启用虚拟打印机...</h3>
-            <p style="font-size: 12px; opacity: 0.8; margin-top: 5px;">正在后台构建完整长图 (约 2 秒)</p>
-        </div>
-    `;
-    document.body.appendChild(previewOverlay);
-
-    // ============================================================
-    // 🚀 核心黑科技：创建 Iframe 沙箱 (虚拟打印机)
-    // ============================================================
-    // 我们创建一个看不见的 iframe，把它强制设为 A4 宽度。
-    // 在这个沙箱里，没有任何干扰，高度无限延伸。
-    const iframe = document.createElement('iframe');
-    Object.assign(iframe.style, {
-        position: 'absolute',
-        width: '850px',   // 略宽于 A4 (794px) 以防止文字换行溢出
-        height: '0px',    // 不占位
-        left: '-10000px', // 移出屏幕外
-        top: '0',
-        border: 'none'
+    // 副标题
+    slide.addText(`生成日期: ${new Date().toLocaleDateString()}`, { 
+        x: 0.5, y: 3.5, w: '90%', fontSize: 18, fontFace: 'SimHei', color: '6B7280', align: 'center' 
     });
-    document.body.appendChild(iframe);
+    // Logo/Footer
+    slide.addText("Created by Reportify AI", { 
+        x: 0.5, y: 6.5, w: '90%', fontSize: 12, color: '9CA3AF', align: 'center' 
+    });
 
-    // 3. 定义最强的专业排版 CSS (完全保留你喜欢的样式)
-    const professionalStyle = `
-        <style>
-            /* 全局重置 */
-            html, body { 
-                margin: 0; padding: 0; 
-                background: white; 
-                width: 100%; 
-                height: auto !important; /* 强制无限高度 */
-                overflow: visible !important;
-            }
+    // --- 2. 智能解析内容 (简单版) ---
+    // 将 markdown 按标题 (# 或 ##) 切割成数组
+    const sections = content.split(/\n(?=#+ )/); // 正则：换行符后跟着一个或多个#号
 
-            /* 容器设置 */
-            .pdf-container {
-                width: 750px; /* 内容真实宽度 */
-                margin: 0 auto;
-                padding: 40px 50px; 
-                box-sizing: border-box;
-            }
+    sections.forEach(section => {
+        if (!section.trim()) return;
 
-            /* --- 字体系统 --- */
-            h1, h2, h3, h4, strong, b {
-                font-family: "SimHei", "Microsoft YaHei", "STHeiti", sans-serif !important;
-                color: #000;
-            }
-            body, p, li, div, blockquote, span {
-                font-family: "SimSun", "FangSong", "STSong", "Songti SC", serif !important;
-                font-size: 12pt; 
-                line-height: 1.6; 
-                text-align: justify;
-                letter-spacing: 0.5px;
-                color: #000;
-            }
+        // 提取标题和正文
+        let lines = section.trim().split('\n');
+        let rawTitle = lines[0].replace(/#+\s*/, '').trim(); // 去掉 # 号
+        let bodyText = lines.slice(1).join('\n').trim();
 
-            /* --- 版式细节 --- */
-            h1 { font-size: 24pt; font-weight: 800; text-align: center; border-bottom: 3px solid #000; padding-bottom: 15px; margin-bottom: 30px; margin-top: 10px; }
-            h2 { font-size: 16pt; font-weight: 700; border-left: 8px solid #2563EB; padding-left: 12px; margin-top: 30px; margin-bottom: 15px; background: #f8f9fa; padding-top: 8px; padding-bottom: 8px; }
-            h3 { font-size: 14pt; font-weight: 600; margin-top: 20px; margin-bottom: 10px; }
-            p { margin-bottom: 12px; }
-            ul, ol { padding-left: 2em; margin-bottom: 12px; }
-            li { margin-bottom: 6px; }
-            
-            /* 引用块 */
-            blockquote { border: 1px solid #eee; border-left: 4px solid #999; background-color: #fcfcfc; padding: 15px 20px; margin: 20px 0; font-family: "KaiTi", "楷体", serif !important; color: #555; font-style: italic; }
-            
-            /* 代码块 */
-            code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-family: Consolas, monospace !important; font-size: 0.9em; color: #c7254e; }
+        // 过滤掉只有符号的行
+        bodyText = bodyText.replace(/[*_~`]/g, ''); // 简单清洗 Markdown 符号
+        
+        // 如果内容太长，进行截断 (PPT 放不下太多字)
+        if (bodyText.length > 500) {
+            bodyText = bodyText.substring(0, 500) + "... (内容较长，请查看详细报告)";
+        }
 
-            /* --- 智能分页 --- */
-            p, blockquote, li { page-break-inside: avoid; }
-            h1, h2, h3 { page-break-after: avoid; }
-            img, table { page-break-inside: avoid; }
-        </style>
-    `;
+        // 创建新页面
+        let s = pptx.addSlide();
+        
+        // 页面标题
+        s.addText(rawTitle, { 
+            x: 0.5, y: 0.5, w: '90%', h: 0.8, 
+            fontSize: 24, fontFace: 'SimHei', color: '2563EB', bold: true,
+            border: { pt: 0, color: 'FFFFFF', type: 'none' },
+            border: { type: 'bottom', pt: 2, color: 'E5E7EB' } // 底部下划线
+        });
 
-    // 4. 写入 Iframe 文档
-    const doc = iframe.contentWindow.document;
-    doc.open();
-    doc.write(`
-        <!DOCTYPE html>
-        <html>
-        <head><meta charset="utf-8">${professionalStyle}</head>
-        <body>
-            <div class="pdf-container">
-                <div style="text-align: center; margin-bottom: 40px;">
-                    <h1 style="border:none; margin-bottom: 5px;">${filename.replace(/_/g, ' ')}</h1>
-                    <hr style="border: 0; border-top: 2px solid #000; margin-top: 10px;">
-                </div>
-                ${htmlContent}
-            </div>
-        </body>
-        </html>
-    `);
-    doc.close();
+        // 页面正文
+        s.addText(bodyText, { 
+            x: 0.5, y: 1.5, w: '90%', h: 5.0, 
+            fontSize: 16, fontFace: 'Microsoft YaHei', color: '374151', 
+            valign: 'top', lineSpacing: 28 
+        });
 
-    // 5. 启动打印 (在沙箱中进行)
-    setTimeout(() => {
-        // 获取沙箱内的真实高度
-        const body = iframe.contentWindow.document.body;
-        const totalHeight = body.scrollHeight;
+        // 页码
+        s.addSlideNumber({ x: '90%', y: '90%', fontSize: 10, color: '999999' });
+    });
 
-        const opt = {
-            margin:       [10, 10, 10, 10], 
-            filename:     `${filename}.pdf`,
-            image:        { type: 'jpeg', quality: 1 },
-            html2canvas:  { 
-                scale: 2, 
-                useCORS: true, 
-                logging: false,
-                scrollY: 0,
-                // ⭐ 锁定画布宽度，彻底解决“偏了/切了”的问题
-                width: 794,
-                windowWidth: 794, 
-                // ⭐ 锁定画布高度，彻底解决“截断”问题
-                height: totalHeight + 50,
-                windowHeight: totalHeight + 100
-            },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-            pagebreak:    { mode: ['css', 'legacy'] }
-        };
+    // 导出
+    pptx.writeFile({ fileName: `${filename}.pptx` })
+        .then(() => showToast("PPT 下载成功!", "success"))
+        .catch(err => showToast("PPT 生成失败", "error"));
+}
 
-        // 目标是 iframe 里的 body
-        html2pdf().set(opt).from(body).save()
-            .then(() => {
-                document.body.removeChild(previewOverlay);
-                document.body.removeChild(iframe); // 销毁沙箱
-                showToast("PDF 下载成功!", "success");
-            })
-            .catch(err => {
-                console.error("PDF Error:", err);
-                document.body.removeChild(previewOverlay);
-                document.body.removeChild(iframe);
-                showToast("PDF 生成出错", "error");
-            });
-    }, 2000); // 给 2秒 缓冲，确保 iframe 内部渲染完毕
+// ==============================================================
+// 🟢 3. [在线分享]：模拟生成链接
+// ==============================================================
+function shareReportLink() {
+    // 因为目前没有后端存储分享页，我们模拟一个
+    // 在真实生产环境，这里会请求 API 生成短链
+    const mockLink = `https://goreportify.com/share/${Math.random().toString(36).substr(2, 9)}`;
+    
+    // 复制到剪贴板
+    navigator.clipboard.writeText(mockLink).then(() => {
+        showToast(`分享链接已复制: ${mockLink}`, "success");
+    }, () => {
+        showToast("复制失败，请重试", "error");
+    });
+}
+
+// ==============================================================
+// 🟢 4. [邮件发送]：调用系统邮件客户端
+// ==============================================================
+function emailReport() {
+    const subject = encodeURIComponent("分享一份 AI 生成的报告");
+    const body = encodeURIComponent("您好，\n\n这是我使用 Reportify AI 生成的专业报告，请查收附件（需手动添加下载的 Word 文档）。\n\n\nGenerated by Reportify AI");
+    
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    showToast("已唤起邮件客户端", "info");
+}
+
+// 🟢 5. [Markdown 导出] (保留备用)
+function exportToMD(content, filename) {
+    if (!content) return;
+    const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${filename}.md`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
 }
 
 // --- 模块 G: 支付与卡片交互逻辑 (全能修复版) ---
