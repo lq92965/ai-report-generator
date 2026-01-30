@@ -94,23 +94,23 @@ app.get('/', (req, res) => res.send('Backend Online'));
 app.get('/api/templates', async (req, res) => {
     const templates = [
         // === Routine / 常规汇报 ===
-        { _id: 'daily_standup', title: 'Daily Standup (日报)', category: 'Routine', isPro: false },
-        { _id: 'weekly_pulse', title: 'Weekly Pulse (周报)', category: 'Routine', isPro: false },
-        { _id: 'monthly_review', title: 'Monthly Review (月报)', category: 'Routine', isPro: true },
+        { _id: 'daily_standup', title: 'Daily Standup', category: 'Routine', isPro: false },
+        { _id: 'weekly_pulse', title: 'Weekly Pulse', category: 'Routine', isPro: false },
+        { _id: 'monthly_review', title: 'Monthly Review', category: 'Routine', isPro: true },
         
         // === Strategic / 战略规划 ===
-        { _id: 'quarterly_report', title: 'Quarterly Analysis (季报)', category: 'Strategic', isPro: true },
-        { _id: 'annual_summary', title: 'Annual Report (年报)', category: 'Strategic', isPro: true },
-        { _id: 'project_proposal', title: 'Project Proposal (项目提案)', category: 'Strategic', isPro: true },
+        { _id: 'quarterly_report', title: 'Quarterly Analysis', category: 'Strategic', isPro: true },
+        { _id: 'annual_summary', title: 'Annual Report', category: 'Strategic', isPro: true },
+        { _id: 'project_proposal', title: 'Project Proposal', category: 'Strategic', isPro: true },
         
         // === Professional / 专业文档 ===
-        { _id: 'meeting_minutes', title: 'Meeting Minutes (会议纪要)', category: 'Professional', isPro: false },
-        { _id: 'research_summary', title: 'Research Summary (调研报告)', category: 'Professional', isPro: true },
-        { _id: 'incident_report', title: 'Incident Report (事故报告)', category: 'Professional', isPro: true },
+        { _id: 'meeting_minutes', title: 'Meeting Minutes', category: 'Professional', isPro: false },
+        { _id: 'research_summary', title: 'Research Summary', category: 'Professional', isPro: true },
+        { _id: 'incident_report', title: 'Incident Report', category: 'Professional', isPro: true },
 
         // === Marketing / 营销 ===
-        { _id: 'marketing_copy', title: 'Marketing Copy (营销文案)', category: 'Marketing', isPro: true },
-        { _id: 'social_media', title: 'Social Media Post (社媒文案)', category: 'Marketing', isPro: false }
+        { _id: 'marketing_copy', title: 'Marketing Copy', category: 'Marketing', isPro: true },
+        { _id: 'social_media', title: 'Social Media Post', category: 'Marketing', isPro: false }
     ];
     res.json(templates);
 });
@@ -708,3 +708,4 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
