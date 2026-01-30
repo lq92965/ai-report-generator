@@ -278,12 +278,18 @@
                     </div>
                     <div class="form-group">
                         <label>Export As</label>
-                        <div class="export-options">
-                            <button class="export-btn" data-format="Word">Word</button>
-                            <button class="export-btn" data-format="Markdown">Markdown</button>
-                            <button class="export-btn premium-feature" data-format="PDF">
-                                PDF
-                                <span>Pro</span>
+                        <div class="export-options" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="export-btn" data-format="Word" style="background: #2563eb; color: white; border: none; flex: 2; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: bold; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);">
+                                <i class="fas fa-file-word"></i> 
+                                <span>Download Professional Word</span>
+                            </button>
+
+                            <button class="export-btn" data-format="Markdown" style="flex: 1; background: #fff; border: 1px solid #e5e7eb; color: #374151;">
+                                <i class="fab fa-markdown"></i> Markdown
+                            </button>
+
+                            <button class="export-btn" disabled title="Coming Soon" style="background: #f3f4f6; color: #bbb; border: 1px solid #eee; cursor: not-allowed; width: 50px; display: flex; justify-content: center;">
+                                <i class="fas fa-file-pdf"></i>
                             </button>
                         </div>
                     </div>
@@ -496,4 +502,3 @@
     </div>
 </body>
 </html>
-
