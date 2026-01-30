@@ -902,53 +902,67 @@ function exportToWord(htmlContent, filename) {
     showToast("Word Downloaded!", "success");
 }
 
-// 🟢 [幽灵模式] PDF 导出：隐形渲染 + 自动长图 + 无标题
+// 🟢 [终极完美版] PDF 导出：新建容器法 (解决截断 + 格式乱 + 闪屏)
 function exportToPDF(content, filename) {
     if (typeof html2pdf === 'undefined') {
         showToast('PDF 引擎未加载，请刷新页面', 'error');
         return;
     }
 
-    // 1. 简单提示 (不挡屏幕)
-    showToast("正在后台生成 PDF，请稍候...", "info");
+    // 1. 创建全屏白色遮罩 (让用户等待时只看动画，不看乱糟糟的排版)
+    const loadingMask = document.createElement('div');
+    Object.assign(loadingMask.style, {
+        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
+        backgroundColor: '#ffffff', // 纯白不透明
+        zIndex: '999999999', // 最高层级
+        display: 'flex', flexDirection: 'column',
+        justifyContent: 'center', alignItems: 'center'
+    });
+    loadingMask.innerHTML = `
+        <div style="text-align: center;">
+            <i class="fas fa-circle-notch fa-spin fa-3x" style="color:#2563eb; margin-bottom:20px;"></i>
+            <h3 style="font-family:sans-serif; color:#333; font-size:18px; font-weight:bold;">正在为您生成长图 PDF...</h3>
+            <p style="color:#666; font-size:14px; margin-top:5px;">保持格式，绝不截断</p>
+        </div>
+    `;
+    document.body.appendChild(loadingMask);
 
-    // 2. 准备内容
+    // 2. 准备内容 (确保是 HTML)
     let htmlContent = content;
     if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
         htmlContent = marked.parse(content);
     }
 
-    // 3. 创建“幽灵容器”
-    // 关键点 A: position: absolute (允许高度无限延伸，解决截断问题)
-    // 关键点 B: z-index: -9999 + opacity: 0 (藏在网页最底下且透明，解决“白屏太丑”问题)
+    // 3. ✨ 关键步骤：创建一个崭新的容器 (不克隆旧的) ✨
+    // 这个容器没有高度限制，可以无限延伸
     const container = document.createElement('div');
     Object.assign(container.style, {
-        position: 'absolute',
-        top: '0',
-        left: '0',
-        width: '800px', // 锁定A4宽度，防止排版乱
-        zIndex: '-9999', // 沉底
-        opacity: '0',    // 透明 (用户看不见，但浏览器能渲染)
+        position: 'absolute', // 绝对定位，允许撑开页面
+        top: '0', left: '0', width: '100%',
+        zIndex: '99999', // 在遮罩下面，但在网页上面
         backgroundColor: 'white',
-        padding: '0',
-        margin: '0',
-        pointerEvents: 'none' // 防止误触
+        padding: '0', margin: '0'
     });
 
-    // 4. 填充纯净内容 (❌ 删除了所有标题、日期、页眉页脚)
+    // 4. 填充排版好的内容
     container.innerHTML = `
-        <div id="pdf-print-source" style="padding: 40px; background: white; font-family: 'Helvetica', 'Arial', sans-serif; color: #333;">
+        <div id="pdf-print-source" style="max-width: 800px; margin: 0 auto; padding: 50px 40px; background: white; color: #333; font-family: 'Helvetica', 'Arial', sans-serif;">
             <style>
-                /* 专业的排版样式 */
-                h1 { color: #2563EB; font-size: 24px; border-bottom: 2px solid #2563EB; padding-bottom: 10px; margin-bottom: 20px; }
-                h2 { color: #1F2937; font-size: 18px; margin-top: 25px; margin-bottom: 10px; font-weight: bold; }
-                h3 { color: #374151; font-size: 16px; margin-top: 20px; font-weight: bold; }
-                p, li { line-height: 1.6; margin-bottom: 10px; font-size: 14px; text-align: justify; }
-                strong { color: #000; font-weight: 700; }
-                code { background: #f3f4f6; padding: 2px 5px; border-radius: 4px; font-family: monospace; color: #DC2626; }
-                blockquote { border-left: 4px solid #e5e7eb; padding-left: 15px; color: #555; font-style: italic; background: #f9fafb; padding: 10px; margin: 15px 0; }
+                /* 强制重置样式，确保没有滚动条干扰 */
+                html, body { height: auto !important; overflow: visible !important; }
                 
-                /* 防止文字被分页切断 */
+                /* 专业的排版样式 */
+                h1 { color: #2563EB; font-size: 26px; border-bottom: 2px solid #2563EB; padding-bottom: 15px; margin-bottom: 25px; line-height: 1.2; }
+                h2 { color: #1F2937; font-size: 20px; margin-top: 30px; margin-bottom: 12px; font-weight: bold; border-left: 4px solid #2563EB; padding-left: 10px; }
+                h3 { color: #374151; font-size: 16px; margin-top: 20px; font-weight: bold; }
+                p, li { line-height: 1.8; margin-bottom: 10px; font-size: 14px; text-align: justify; color: #333; }
+                strong { color: #000; font-weight: 700; }
+                ul { list-style-type: disc; padding-left: 20px; }
+                ol { list-style-type: decimal; padding-left: 20px; }
+                blockquote { border-left: 4px solid #e5e7eb; padding-left: 15px; color: #6b7280; font-style: italic; background: #f9fafb; padding: 12px; margin: 15px 0; }
+                code { background: #f3f4f6; padding: 2px 5px; border-radius: 4px; font-family: monospace; color: #DC2626; font-size: 0.9em; }
+                
+                /* 🔴 核心：防止分页截断文字 */
                 p, h2, h3, li, div, blockquote, pre { 
                     page-break-inside: avoid; 
                 }
@@ -960,12 +974,14 @@ function exportToPDF(content, filename) {
         </div>
     `;
 
-    // 5. 挂载到 Body (虽然看不见，但在 DOM 里，html2pdf 就能截图)
     document.body.appendChild(container);
 
-    // 6. 启动生成
-    // 稍微给 500ms 让图片和字体加载，保证不缺内容
+    // 5. 启动生成 (给 1秒 让浏览器渲染长页面)
     setTimeout(() => {
+        // 显式计算实际高度，告诉截图工具“我有这么高，别截断了”
+        const element = container.querySelector('#pdf-print-source');
+        const totalHeight = element.scrollHeight;
+
         const opt = {
             margin:       [15, 15, 15, 15],
             filename:     `${filename}.pdf`,
@@ -974,28 +990,28 @@ function exportToPDF(content, filename) {
                 scale: 2, 
                 useCORS: true, 
                 logging: false,
-                windowWidth: 800, // 强制宽度
                 scrollY: 0,
-                // 关键：告诉截图工具去抓取整个容器的高度，不要只抓屏幕高度
-                height: container.scrollHeight 
+                windowWidth: 1024,
+                height: totalHeight + 100, // ⭐ 强行把高度设为内容高度，再加点余量
+                windowHeight: totalHeight + 200
             },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
             pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
         };
 
-        const elementToPrint = container.querySelector('#pdf-print-source');
-
-        html2pdf().set(opt).from(elementToPrint).save()
+        html2pdf().set(opt).from(element).save()
             .then(() => {
-                document.body.removeChild(container); // 悄悄清理掉
+                document.body.removeChild(container);
+                document.body.removeChild(loadingMask);
                 showToast("PDF 下载成功!", "success");
             })
             .catch(err => {
                 console.error("PDF Error:", err);
                 document.body.removeChild(container);
-                showToast("PDF 生成出错", "error");
+                document.body.removeChild(loadingMask);
+                showToast("PDF 生成失败", "error");
             });
-    }, 500); 
+    }, 1000); // 1秒等待，确保万无一失
 }
 
 // --- 模块 G: 支付与卡片交互逻辑 (全能修复版) ---
