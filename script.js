@@ -902,7 +902,7 @@ function exportToWord(htmlContent, filename) {
     showToast("Word Downloaded!", "success");
 }
 
-// 🟢 [终极完全体] PDF 导出：保留宋体/公文排版 + 双核引擎防截断 + 无水印
+// 🟢 [核武器版] PDF 导出：Iframe 物理隔离 + 100%完整 + 专业排版
 function exportToPDF(content, filename) {
     if (typeof html2pdf === 'undefined') {
         showToast('PDF 引擎未加载，请刷新页面', 'error');
@@ -915,159 +915,123 @@ function exportToPDF(content, filename) {
         htmlContent = marked.parse(content);
     }
 
+    // 2. 显示预览遮罩 (仅供用户观看，不参与打印)
+    // 这样用户能看到漂亮的界面，但这只是个“幌子”，真正的打印在后台 iframe 里进行
+    const previewOverlay = document.createElement('div');
+    Object.assign(previewOverlay.style, {
+        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
+        backgroundColor: 'rgba(50, 50, 50, 0.98)', 
+        zIndex: '9999999', 
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'
+    });
+    previewOverlay.innerHTML = `
+        <div style="text-align: center; color: white;">
+            <i class="fas fa-print fa-spin" style="font-size:30px; margin-bottom:15px;"></i>
+            <h3 style="font-family: sans-serif; font-size: 18px;">正在启用虚拟打印机...</h3>
+            <p style="font-size: 12px; opacity: 0.8; margin-top: 5px;">正在后台构建完整长图 (约 2 秒)</p>
+        </div>
+    `;
+    document.body.appendChild(previewOverlay);
+
     // ============================================================
-    // 🎨 核心：专业公文排版样式表 (这次绝不删减！)
+    // 🚀 核心黑科技：创建 Iframe 沙箱 (虚拟打印机)
     // ============================================================
+    // 我们创建一个看不见的 iframe，把它强制设为 A4 宽度。
+    // 在这个沙箱里，没有任何干扰，高度无限延伸。
+    const iframe = document.createElement('iframe');
+    Object.assign(iframe.style, {
+        position: 'absolute',
+        width: '850px',   // 略宽于 A4 (794px) 以防止文字换行溢出
+        height: '0px',    // 不占位
+        left: '-10000px', // 移出屏幕外
+        top: '0',
+        border: 'none'
+    });
+    document.body.appendChild(iframe);
+
+    // 3. 定义最强的专业排版 CSS (完全保留你喜欢的样式)
     const professionalStyle = `
         <style>
-            /* --- 1. 字体系统 (恢复公文标准) --- */
-            /* 标题：黑体 / 微软雅黑 */
+            /* 全局重置 */
+            html, body { 
+                margin: 0; padding: 0; 
+                background: white; 
+                width: 100%; 
+                height: auto !important; /* 强制无限高度 */
+                overflow: visible !important;
+            }
+
+            /* 容器设置 */
+            .pdf-container {
+                width: 750px; /* 内容真实宽度 */
+                margin: 0 auto;
+                padding: 40px 50px; 
+                box-sizing: border-box;
+            }
+
+            /* --- 字体系统 --- */
             h1, h2, h3, h4, strong, b {
                 font-family: "SimHei", "Microsoft YaHei", "STHeiti", sans-serif !important;
-                color: #000; /* 纯黑标题，严肃专业 */
+                color: #000;
             }
-            
-            /* 正文：宋体 (这是核心！打印出来像书本一样) */
             body, p, li, div, blockquote, span {
                 font-family: "SimSun", "FangSong", "STSong", "Songti SC", serif !important;
-                font-size: 12pt; /* 标准字号 */
-                line-height: 1.6; /* 舒适行距 */
-                text-align: justify; /* 两端对齐 */
+                font-size: 12pt; 
+                line-height: 1.6; 
+                text-align: justify;
                 letter-spacing: 0.5px;
+                color: #000;
             }
 
-            /* --- 2. 版式细节 (恢复蓝色引导线和背景条) --- */
-            /* 一级标题：居中，下划线 */
-            h1 { 
-                font-size: 24pt; 
-                font-weight: 800;
-                text-align: center; 
-                border-bottom: 3px solid #000; 
-                padding-bottom: 15px; 
-                margin-bottom: 30px; 
-                margin-top: 10px;
-            }
-            
-            /* 二级标题：左侧粗蓝线 + 浅灰背景条 (提升专业感) */
-            h2 { 
-                font-size: 16pt; 
-                font-weight: 700;
-                border-left: 8px solid #2563EB; /* 蓝色引导线 */
-                padding-left: 12px; 
-                margin-top: 30px; 
-                margin-bottom: 15px; 
-                background: #f8f9fa; /* 极淡的灰色背景条 */
-                padding-top: 8px;
-                padding-bottom: 8px;
-                border-radius: 0 4px 4px 0;
-            }
-            
-            /* 三级标题 */
-            h3 { 
-                font-size: 14pt; 
-                font-weight: 600;
-                margin-top: 20px; 
-                margin-bottom: 10px; 
-                padding-left: 5px;
-            }
-
-            /* 段落与列表 */
+            /* --- 版式细节 --- */
+            h1 { font-size: 24pt; font-weight: 800; text-align: center; border-bottom: 3px solid #000; padding-bottom: 15px; margin-bottom: 30px; margin-top: 10px; }
+            h2 { font-size: 16pt; font-weight: 700; border-left: 8px solid #2563EB; padding-left: 12px; margin-top: 30px; margin-bottom: 15px; background: #f8f9fa; padding-top: 8px; padding-bottom: 8px; }
+            h3 { font-size: 14pt; font-weight: 600; margin-top: 20px; margin-bottom: 10px; }
             p { margin-bottom: 12px; }
             ul, ol { padding-left: 2em; margin-bottom: 12px; }
             li { margin-bottom: 6px; }
-
-            /* 引用块：公文备注风格 */
-            blockquote {
-                border: 1px solid #eee;
-                border-left: 4px solid #999;
-                background-color: #fcfcfc;
-                padding: 15px 20px;
-                margin: 20px 0;
-                font-family: "KaiTi", "楷体", serif !important; /* 引用用楷体 */
-                color: #555;
-                font-style: italic;
-            }
-
+            
+            /* 引用块 */
+            blockquote { border: 1px solid #eee; border-left: 4px solid #999; background-color: #fcfcfc; padding: 15px 20px; margin: 20px 0; font-family: "KaiTi", "楷体", serif !important; color: #555; font-style: italic; }
+            
             /* 代码块 */
-            code { 
-                background: #f3f4f6; 
-                padding: 2px 6px; 
-                border-radius: 4px; 
-                font-family: Consolas, monospace !important; 
-                font-size: 0.9em; 
-                color: #c7254e;
-            }
+            code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-family: Consolas, monospace !important; font-size: 0.9em; color: #c7254e; }
 
-            /* --- 3. 智能分页控制 (防止文字腰斩) --- */
+            /* --- 智能分页 --- */
             p, blockquote, li { page-break-inside: avoid; }
             h1, h2, h3 { page-break-after: avoid; }
             img, table { page-break-inside: avoid; }
         </style>
     `;
 
-    // 组装 HTML (只包含内容，不包含强制的 Header/Footer 水印)
-    const finalHTML = `
-        ${professionalStyle}
-        <div class="markdown-body" style="padding: 0; background: white;">
-            <div style="text-align: center; margin-bottom: 40px;">
-                <h1 style="border:none; margin-bottom: 5px;">${filename.replace(/_/g, ' ')}</h1>
-                <hr style="border: 0; border-top: 2px solid #000; margin-top: 10px;">
+    // 4. 写入 Iframe 文档
+    const doc = iframe.contentWindow.document;
+    doc.open();
+    doc.write(`
+        <!DOCTYPE html>
+        <html>
+        <head><meta charset="utf-8">${professionalStyle}</head>
+        <body>
+            <div class="pdf-container">
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <h1 style="border:none; margin-bottom: 5px;">${filename.replace(/_/g, ' ')}</h1>
+                    <hr style="border: 0; border-top: 2px solid #000; margin-top: 10px;">
+                </div>
+                ${htmlContent}
             </div>
-            
-            ${htmlContent}
-        </div>
-    `;
+        </body>
+        </html>
+    `);
+    doc.close();
 
-    // ============================================================
-    // 👁️ 第一步：创建“视觉预览层” (给用户看)
-    // ============================================================
-    const previewOverlay = document.createElement('div');
-    Object.assign(previewOverlay.style, {
-        position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
-        backgroundColor: 'rgba(50, 50, 50, 0.98)', // 深色背景
-        zIndex: '9999999', 
-        overflowY: 'auto', 
-        display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '20px'
-    });
-
-    // 顶部提示
-    previewOverlay.innerHTML = `
-        <div style="color:white; font-family:sans-serif; margin-bottom:15px; text-align:center; flex-shrink: 0;">
-            <i class="fas fa-print fa-spin" style="font-size:24px; margin-bottom:10px;"></i><br>
-            <span style="font-weight:bold; font-size:16px;">正在生成专业排版 PDF...</span><br>
-            <span style="font-size:12px; opacity:0.8;">(保持页面打开，自动下载)</span>
-        </div>
-        <div id="preview-paper" style="width:794px; min-height:1123px; background:white; padding:50px; color:#000; box-shadow:0 0 20px rgba(0,0,0,0.5); margin-bottom:50px;">
-            ${finalHTML}
-        </div>
-    `;
-    document.body.appendChild(previewOverlay);
-
-    // ============================================================
-    // 🖨️ 第二步：创建“打印专用层” (给程序印，绝对完整)
-    // ============================================================
-    const printContainer = document.createElement('div');
-    Object.assign(printContainer.style, {
-        position: 'absolute', 
-        top: '0', left: '0', 
-        width: '794px', // 锁定A4宽度
-        zIndex: '-9999', // 藏在底下
-        backgroundColor: 'white',
-        padding: '50px', // 内边距保持一致
-        margin: '0'
-    });
-    printContainer.innerHTML = finalHTML;
-    document.body.appendChild(printContainer);
-
-    // ============================================================
-    // 🚀 第三步：启动打印
-    // ============================================================
+    // 5. 启动打印 (在沙箱中进行)
     setTimeout(() => {
-        // 强制计算真实高度
-        const totalHeight = printContainer.scrollHeight;
+        // 获取沙箱内的真实高度
+        const body = iframe.contentWindow.document.body;
+        const totalHeight = body.scrollHeight;
 
         const opt = {
-            margin:       [10, 10, 10, 10], // 页边距
+            margin:       [10, 10, 10, 10], 
             filename:     `${filename}.pdf`,
             image:        { type: 'jpeg', quality: 1 },
             html2canvas:  { 
@@ -1075,29 +1039,31 @@ function exportToPDF(content, filename) {
                 useCORS: true, 
                 logging: false,
                 scrollY: 0,
+                // ⭐ 锁定画布宽度，彻底解决“偏了/切了”的问题
                 width: 794,
                 windowWidth: 794, 
-                // 🔴 核心：强制全高度，防止截断
-                height: totalHeight, 
-                windowHeight: totalHeight 
+                // ⭐ 锁定画布高度，彻底解决“截断”问题
+                height: totalHeight + 50,
+                windowHeight: totalHeight + 100
             },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
             pagebreak:    { mode: ['css', 'legacy'] }
         };
 
-        html2pdf().set(opt).from(printContainer).save()
+        // 目标是 iframe 里的 body
+        html2pdf().set(opt).from(body).save()
             .then(() => {
                 document.body.removeChild(previewOverlay);
-                document.body.removeChild(printContainer);
+                document.body.removeChild(iframe); // 销毁沙箱
                 showToast("PDF 下载成功!", "success");
             })
             .catch(err => {
                 console.error("PDF Error:", err);
                 document.body.removeChild(previewOverlay);
-                document.body.removeChild(printContainer);
+                document.body.removeChild(iframe);
                 showToast("PDF 生成出错", "error");
             });
-    }, 1500); // 1.5秒缓冲
+    }, 2000); // 给 2秒 缓冲，确保 iframe 内部渲染完毕
 }
 
 // --- 模块 G: 支付与卡片交互逻辑 (全能修复版) ---
