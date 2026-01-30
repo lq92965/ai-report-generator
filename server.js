@@ -90,12 +90,27 @@ const verifyAdmin = async (req, res, next) => {
 
 app.get('/', (req, res) => res.send('Backend Online'));
 
-// 🟢 [补回] 模板列表接口
+// 🟢 [完整版] 模板列表接口 (涵盖日报、周报、年报等)
 app.get('/api/templates', async (req, res) => {
     const templates = [
-        { _id: 'daily_summary', title: 'Daily Work Summary', category: 'General', isPro: false },
-        { _id: 'project_proposal', title: 'Project Proposal', category: 'Management', isPro: true },
-        { _id: 'marketing_copy', title: 'Marketing Copy', category: 'Marketing', isPro: true },
+        // === Routine / 常规汇报 ===
+        { _id: 'daily_standup', title: 'Daily Standup (日报)', category: 'Routine', isPro: false },
+        { _id: 'weekly_pulse', title: 'Weekly Pulse (周报)', category: 'Routine', isPro: false },
+        { _id: 'monthly_review', title: 'Monthly Review (月报)', category: 'Routine', isPro: true },
+        
+        // === Strategic / 战略规划 ===
+        { _id: 'quarterly_report', title: 'Quarterly Analysis (季报)', category: 'Strategic', isPro: true },
+        { _id: 'annual_summary', title: 'Annual Report (年报)', category: 'Strategic', isPro: true },
+        { _id: 'project_proposal', title: 'Project Proposal (项目提案)', category: 'Strategic', isPro: true },
+        
+        // === Professional / 专业文档 ===
+        { _id: 'meeting_minutes', title: 'Meeting Minutes (会议纪要)', category: 'Professional', isPro: false },
+        { _id: 'research_summary', title: 'Research Summary (调研报告)', category: 'Professional', isPro: true },
+        { _id: 'incident_report', title: 'Incident Report (事故报告)', category: 'Professional', isPro: true },
+
+        // === Marketing / 营销 ===
+        { _id: 'marketing_copy', title: 'Marketing Copy (营销文案)', category: 'Marketing', isPro: true },
+        { _id: 'social_media', title: 'Social Media Post (社媒文案)', category: 'Marketing', isPro: false }
     ];
     res.json(templates);
 });
