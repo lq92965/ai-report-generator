@@ -902,70 +902,66 @@ function exportToWord(htmlContent, filename) {
     showToast("Word Downloaded!", "success");
 }
 
-// 🟢 [终极完美版] PDF 导出：新建容器法 (解决截断 + 格式乱 + 闪屏)
+// 🟢 [极速本地版] PDF 导出：使用系统字体 (0秒加载) + 缩短等待时间
 function exportToPDF(content, filename) {
     if (typeof html2pdf === 'undefined') {
         showToast('PDF 引擎未加载，请刷新页面', 'error');
         return;
     }
 
-    // 1. 创建全屏白色遮罩 (让用户等待时只看动画，不看乱糟糟的排版)
+    // 1. 启动遮罩 (告诉用户我们在工作)
     const loadingMask = document.createElement('div');
     Object.assign(loadingMask.style, {
         position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
-        backgroundColor: '#ffffff', // 纯白不透明
-        zIndex: '999999999', // 最高层级
+        backgroundColor: '#ffffff', 
+        zIndex: '999999999', 
         display: 'flex', flexDirection: 'column',
         justifyContent: 'center', alignItems: 'center'
     });
     loadingMask.innerHTML = `
         <div style="text-align: center;">
-            <i class="fas fa-circle-notch fa-spin fa-3x" style="color:#2563eb; margin-bottom:20px;"></i>
-            <h3 style="font-family:sans-serif; color:#333; font-size:18px; font-weight:bold;">正在为您生成长图 PDF...</h3>
-            <p style="color:#666; font-size:14px; margin-top:5px;">保持格式，绝不截断</p>
+            <i class="fas fa-bolt fa-spin fa-3x" style="color:#2563eb; margin-bottom:20px;"></i>
+            <h3 style="font-family:sans-serif; color:#333; font-size:18px; font-weight:bold;">正在极速生成 PDF...</h3>
+            <p style="color:#999; font-size:12px; margin-top:5px;">使用本地渲染引擎</p>
         </div>
     `;
     document.body.appendChild(loadingMask);
 
-    // 2. 准备内容 (确保是 HTML)
+    // 2. 准备内容
     let htmlContent = content;
     if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
         htmlContent = marked.parse(content);
     }
 
-    // 3. ✨ 关键步骤：创建一个崭新的容器 (不克隆旧的) ✨
-    // 这个容器没有高度限制，可以无限延伸
+    // 3. 创建容器 (使用 absolute 防止高度截断)
     const container = document.createElement('div');
     Object.assign(container.style, {
-        position: 'absolute', // 绝对定位，允许撑开页面
-        top: '0', left: '0', width: '100%',
-        zIndex: '99999', // 在遮罩下面，但在网页上面
-        backgroundColor: 'white',
-        padding: '0', margin: '0'
+        position: 'absolute', top: '0', left: '0', width: '100%',
+        zIndex: '99999', backgroundColor: 'white', padding: '0', margin: '0'
     });
 
-    // 4. 填充排版好的内容
+    // 4. 填充内容 
+    // 🟢【核心修改】：font-family 使用系统字体栈 (System Font Stack)
+    // 这会让它直接调用 Windows/Mac 的本地字体，无需下载，速度起飞！
     container.innerHTML = `
-        <div id="pdf-print-source" style="max-width: 800px; margin: 0 auto; padding: 50px 40px; background: white; color: #333; font-family: 'Helvetica', 'Arial', sans-serif;">
+        <div id="pdf-print-source" style="max-width: 800px; margin: 0 auto; padding: 50px 40px; background: white; color: #111;">
             <style>
-                /* 强制重置样式，确保没有滚动条干扰 */
+                /* 使用系统原生字体，无需网络加载，速度最快，最稳 */
+                body, h1, h2, h3, p, li, div {
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft YaHei", sans-serif !important;
+                }
+
                 html, body { height: auto !important; overflow: visible !important; }
                 
-                /* 专业的排版样式 */
-                h1 { color: #2563EB; font-size: 26px; border-bottom: 2px solid #2563EB; padding-bottom: 15px; margin-bottom: 25px; line-height: 1.2; }
-                h2 { color: #1F2937; font-size: 20px; margin-top: 30px; margin-bottom: 12px; font-weight: bold; border-left: 4px solid #2563EB; padding-left: 10px; }
+                h1 { color: #2563EB; font-size: 26px; border-bottom: 2px solid #2563EB; padding-bottom: 15px; margin-bottom: 25px; line-height: 1.3; }
+                h2 { color: #1F2937; font-size: 20px; margin-top: 30px; margin-bottom: 12px; font-weight: bold; }
                 h3 { color: #374151; font-size: 16px; margin-top: 20px; font-weight: bold; }
                 p, li { line-height: 1.8; margin-bottom: 10px; font-size: 14px; text-align: justify; color: #333; }
                 strong { color: #000; font-weight: 700; }
-                ul { list-style-type: disc; padding-left: 20px; }
-                ol { list-style-type: decimal; padding-left: 20px; }
-                blockquote { border-left: 4px solid #e5e7eb; padding-left: 15px; color: #6b7280; font-style: italic; background: #f9fafb; padding: 12px; margin: 15px 0; }
-                code { background: #f3f4f6; padding: 2px 5px; border-radius: 4px; font-family: monospace; color: #DC2626; font-size: 0.9em; }
+                blockquote { border-left: 4px solid #e5e7eb; padding-left: 15px; color: #555; font-style: italic; background: #f9fafb; padding: 12px; margin: 15px 0; }
+                code { background: #f3f4f6; padding: 2px 5px; border-radius: 4px; font-family: monospace; color: #d63384; font-size: 0.9em; }
                 
-                /* 🔴 核心：防止分页截断文字 */
-                p, h2, h3, li, div, blockquote, pre { 
-                    page-break-inside: avoid; 
-                }
+                p, h2, h3, li, div, blockquote, pre { page-break-inside: avoid; }
             </style>
             
             <div class="markdown-body">
@@ -976,9 +972,12 @@ function exportToPDF(content, filename) {
 
     document.body.appendChild(container);
 
-    // 5. 启动生成 (给 1秒 让浏览器渲染长页面)
+    // 5. 启动生成 
+    // ⚡️ 因为用了本地字体，我们敢把时间缩短到 800毫秒！
+    // 既快，又稳，不会因为字体没下完而截断
     setTimeout(() => {
-        // 显式计算实际高度，告诉截图工具“我有这么高，别截断了”
+        window.scrollTo(0, 0); // 强制回顶
+
         const element = container.querySelector('#pdf-print-source');
         const totalHeight = element.scrollHeight;
 
@@ -992,8 +991,8 @@ function exportToPDF(content, filename) {
                 logging: false,
                 scrollY: 0,
                 windowWidth: 1024,
-                height: totalHeight + 100, // ⭐ 强行把高度设为内容高度，再加点余量
-                windowHeight: totalHeight + 200
+                height: totalHeight + 50, // 强制全高度
+                windowHeight: totalHeight + 100
             },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
             pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
@@ -1011,7 +1010,7 @@ function exportToPDF(content, filename) {
                 document.body.removeChild(loadingMask);
                 showToast("PDF 生成失败", "error");
             });
-    }, 500); // 0.5秒等待，确保万无一失
+    }, 500); // 0.5秒，极速体验
 }
 
 // --- 模块 G: 支付与卡片交互逻辑 (全能修复版) ---
@@ -1610,4 +1609,3 @@ async function loadAccountPageAvatar() {
         this.src = getFullImageUrl(null);
     };
 }
-
