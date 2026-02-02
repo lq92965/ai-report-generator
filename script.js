@@ -102,7 +102,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupAuthUI();          // 登录/注册/Google逻辑
     setupGenerator();       
     setupTemplates();       
-    setupExport();          
     setupPayment();      
     setupCopyBtn();   
     setupContactForm();     
@@ -1655,3 +1654,4 @@ async function loadAccountPageAvatar() {
         this.src = getFullImageUrl(null);
     };
 }
+
