@@ -4,7 +4,7 @@
 
 // 🔴 修复点：如果你没有专门配置 api.goreportify.com，请留空。
 // 留空 '' 代表使用当前域名的 /api 路径 (例如 https://goreportify.com/api)
-const API_BASE_URL = 'https://api.goreportify.com'; 
+const API_BASE_URL = ''; 
 // 如果你是在本地测试，可能需要改为 'http://localhost:3000'
 
 // 全局变量存储数据
@@ -96,19 +96,27 @@ function renderHistoryList(reports) {
 
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; border-top: 1px solid #f3f4f6; padding-top: 15px;">
                 
-                <button onclick="downloadHistoryItem('${report._id}', 'word')" class="flex items-center justify-center h-9 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition" title="下载 Word">
+                <button onclick="downloadHistoryItem('${report._id}', 'word')" 
+                        style="background: #2563eb; color: white; border: none; height: 36px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" 
+                        title="下载 Word 文档">
                     <i class="fas fa-file-word"></i>
                 </button>
 
-                <button onclick="downloadHistoryItem('${report._id}', 'ppt')" class="flex items-center justify-center h-9 bg-red-500 text-white rounded-md hover:bg-red-600 transition" title="下载 PPT">
+                <button onclick="downloadHistoryItem('${report._id}', 'ppt')" 
+                        style="background: #e05242; color: white; border: none; height: 36px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" 
+                        title="导出 PPT">
                     <i class="fas fa-file-powerpoint"></i>
                 </button>
 
-                <button onclick="shareReportLink()" class="flex items-center justify-center h-9 bg-green-500 text-white rounded-md hover:bg-green-600 transition" title="复制链接">
+                <button onclick="shareReportLink()" 
+                        style="background: #10b981; color: white; border: none; height: 36px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" 
+                        title="复制分享链接">
                     <i class="fas fa-link"></i>
                 </button>
 
-                <button onclick="emailReport()" class="flex items-center justify-center h-9 bg-gray-100 text-gray-600 border border-gray-200 rounded-md hover:bg-gray-200 transition" title="邮件发送">
+                <button onclick="emailReport()" 
+                        style="background: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db; height: 36px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" 
+                        title="邮件发送">
                     <i class="fas fa-envelope"></i>
                 </button>
             </div>
