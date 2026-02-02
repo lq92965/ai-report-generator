@@ -1,13 +1,14 @@
 // --- 1. 核心配置 (手动管理) ---
 // 如果你在本地开发，请用 http://localhost:3000
 // 如果上线，请改为 https://goreportify.com
-const API_BASE_URL = 'https://api.goreportify.com';
+const API_BASE_URL = '';
 
 
 // 全局状态
 let allTemplates = [];
 let currentUser = null; 
 let currentUserPlan = 'basic'; 
+window.currentReportContent = "";
 
 // [新增] 图片地址处理工具 (必须加在这里，否则后面会报错)
 function getFullImageUrl(path) {
@@ -720,7 +721,7 @@ function setupGenerator() {
             });
 
             const data = await res.json();
-
+            window.currentReportContent = data.generatedText;
             if (!res.ok) throw new Error(data.error || 'Generation failed');
 
             // 🟢 [核心优化]：渲染 Markdown + 应用专业皮肤
@@ -759,33 +760,7 @@ function setupGenerator() {
     });
 }
 
-// 2. 导出功能初始化 (解决了 setupExport is not defined)
-function setupExport() {
-    // 绑定 Word 按钮
-    const wordBtn = document.querySelector('button[data-format="Word"]');
-    if(wordBtn) {
-        // 克隆去除旧事件
-        const newBtn = wordBtn.cloneNode(true);
-        wordBtn.parentNode.replaceChild(newBtn, wordBtn);
-        newBtn.addEventListener('click', () => doExport('word'));
-    }
 
-    // 绑定 PDF 按钮
-    const pdfBtn = document.querySelector('button[data-format="PDF"]');
-    if(pdfBtn) {
-        const newBtn = pdfBtn.cloneNode(true);
-        pdfBtn.parentNode.replaceChild(newBtn, pdfBtn);
-        newBtn.addEventListener('click', () => doExport('pdf'));
-    }
-
-    // 绑定 Markdown 按钮
-    const mdBtn = document.querySelector('button[data-format="Markdown"]');
-    if(mdBtn) {
-        const newBtn = mdBtn.cloneNode(true);
-        mdBtn.parentNode.replaceChild(newBtn, mdBtn);
-        newBtn.addEventListener('click', () => doExport('markdown'));
-    }
-}
 
 // 🟢 [升级版] 复制按钮 (支持复制 格式/Rich Text)
 function setupCopyBtn() {
