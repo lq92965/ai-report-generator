@@ -934,104 +934,108 @@ function exportToWord(content, filename) {
 }
 
 // ==============================================================
-// 🟢 [旗舰版 4.0] PPT 引擎：专业商务风格 + 智能排版
+// 🟢 [V5.0 修复版] PPT 引擎：智能识别首屏 + 英文提示 + 样式分离
 // ==============================================================
 function exportToPPT(content, filename) {
     if (typeof PptxGenJS === 'undefined') {
-        if(window.showToast) window.showToast('PPT 引擎加载中...', 'error');
+        if(window.showToast) window.showToast('PPT Engine Loading...', 'error');
         return;
     }
-    if(window.showToast) window.showToast("正在生成专业版 PPT 初稿...", "info");
+    if(window.showToast) window.showToast("Generating Professional PPT Draft...", "info");
 
     const pptx = new PptxGenJS();
     pptx.layout = 'LAYOUT_16x9'; 
     pptx.title = filename;
 
-    // --- 定义主题色 ---
-    const themeDarkBlue = '1E3A8A'; // 深蓝 (用于强调)
-    const themeLightBlue = '3B82F6'; // 亮蓝 (用于装饰)
-    const textDark = '374151'; // 深灰文本
-    const bgClean = 'F8FAFC'; // 干净背景
+    // 颜色配置
+    const themeDark = '1E3A8A'; 
+    const themeLight = '3B82F6'; 
+    const textDark = '374151'; 
 
-    // ====================
-    // 1. 设计封面页
-    // ====================
+    // --- 1. 封面页 (保持不变) ---
     let slide = pptx.addSlide();
-    slide.background = { color: bgClean };
-
-    // 设计元素：左侧深蓝大色块
-    slide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '35%', h: '100%', fill: { color: themeDarkBlue } });
-    // 设计元素：右侧顶部亮蓝装饰条
-    slide.addShape(pptx.ShapeType.rect, { x: '35%', y: 0.5, w: '65%', h: 0.15, fill: { color: themeLightBlue } });
-
-    // 封面标题 (白色，在左侧色块上)
+    slide.background = { color: 'F8FAFC' };
+    slide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '35%', h: '100%', fill: { color: themeDark } });
+    slide.addShape(pptx.ShapeType.rect, { x: '35%', y: 0.5, w: '65%', h: 0.15, fill: { color: themeLight } });
     slide.addText(filename.replace(/_/g, ' '), { 
         x: 0.2, y: 2.5, w: '31%', h: 3,
-        fontSize: 36, fontFace: 'Arial Black', color: 'FFFFFF', align: 'left', bold: true, valign: 'middle'
+        fontSize: 32, fontFace: 'Arial Black', color: 'FFFFFF', align: 'left', bold: true, valign: 'middle'
     });
-    
-    // 生成信息 (右侧)
-    slide.addText("PROFESSIONAL REPORT DRAFT", { 
-        x: '38%', y: 3.5, w: '50%', fontSize: 14, color: themeLightBlue, bold: true, charSpacing: 3
-    });
-    slide.addText(`Generated Date: ${new Date().toLocaleDateString()}`, { 
-        x: '38%', y: 4.0, w: '50%', fontSize: 12, color: textDark
-    });
-    slide.addText("Powered by Reportify AI", { 
-        x: '38%', y: 6.5, w: '50%', fontSize: 10, color: '9CA3AF'
-    });
+    slide.addText("PROFESSIONAL REPORT DRAFT", { x: '38%', y: 3.5, fontSize: 14, color: themeLight, bold: true, charSpacing: 3 });
+    slide.addText(`Date: ${new Date().toLocaleDateString()}`, { x: '38%', y: 4.0, fontSize: 12, color: textDark });
 
-
-    // ====================
-    // 2. 设计内容页
-    // ====================
+    // --- 2. 内容页 (智能逻辑修复) ---
+    // 按 Markdown 标题切分
     const sections = content.split(/\n(?=#+ )/); 
 
     sections.forEach(section => {
         if (!section.trim()) return;
 
         let lines = section.trim().split('\n');
-        let rawTitle = lines[0].replace(/#+\s*/, '').trim(); 
+        let firstLine = lines[0].trim();
+        let rawTitle = "";
+        let bodyText = "";
+
+        // 🟢 [核心修复] 判断第一行是不是标题 (以 # 开头)
+        // 如果不是 # 开头，说明这是引言/摘要，手动给它加个标题
+        if (firstLine.startsWith('#')) {
+            rawTitle = firstLine.replace(/#+\s*/, '').trim();
+            bodyText = lines.slice(1).join('\n').trim();
+        } else {
+            rawTitle = "Executive Summary"; // 默认标题，防止爆版
+            bodyText = section.trim();
+        }
+
         // 清洗 Markdown 符号
-        let bodyText = lines.slice(1).join('\n').trim().replace(/[*_~`]/g, ''); 
-        
-        // --- 智能字号逻辑 ---
+        bodyText = bodyText.replace(/[*_~`]/g, ''); 
+
+        // 🟢 [样式修复] 截断逻辑优化：英文 + 独立样式
+        let isTruncated = false;
+        if (bodyText.length > 700) {
+            bodyText = bodyText.substring(0, 700) + "...";
+            isTruncated = true;
+        }
+
+        // 智能字号
         let fontSize = 16; 
         if (bodyText.length > 300) fontSize = 14;
         if (bodyText.length > 500) fontSize = 12;
-        // 截断过长内容
-        if (bodyText.length > 750) {
-            bodyText = bodyText.substring(0, 750) + "...\n[内容过长，请参考完整报告文档]";
-        }
 
         let s = pptx.addSlide();
-        s.background = { color: bgClean };
+        s.background = { color: 'F8FAFC' };
         
-        // 设计元素：顶部导航条装饰
-        s.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '100%', h: 0.8, fill: { color: themeDarkBlue } });
-        s.addShape(pptx.ShapeType.rect, { x: 0, y: 0.8, w: '100%', h: 0.05, fill: { color: themeLightBlue } });
+        // 顶部导航条
+        s.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '100%', h: 0.8, fill: { color: themeDark } });
+        s.addShape(pptx.ShapeType.rect, { x: 0, y: 0.8, w: '100%', h: 0.05, fill: { color: themeLight } });
 
-        // 页面标题 (白色，在顶部条上)
+        // 页面标题
         s.addText(rawTitle, { 
             x: 0.5, y: 0.1, w: '90%', h: 0.6, 
             fontSize: 24, fontFace: 'Arial', color: 'FFFFFF', bold: true, valign: 'middle'
         });
 
-        // 页面正文 (带智能字号)
+        // 页面正文
         s.addText(bodyText, { 
-            x: 0.5, y: 1.3, w: '90%', h: 5.2, 
-            fontSize: fontSize, 
-            fontFace: 'Arial', color: textDark, 
+            x: 0.5, y: 1.3, w: '90%', h: 5.0, 
+            fontSize: fontSize, fontFace: 'Arial', color: textDark, 
             valign: 'top', lineSpacing: fontSize * 1.4
         });
 
-        // 设计元素：底部简单的页脚装饰
+        // 🟢 [样式修复] 独立的截断提示 (底部、灰色、斜体、英文)
+        if (isTruncated) {
+            s.addText("[ Content truncated. Please refer to the full Word report for details. ]", {
+                x: 0.5, y: 6.3, w: '90%', h: 0.5,
+                fontSize: 10, color: '9CA3AF', italic: true, align: 'center'
+            });
+        }
+
+        // 页脚
         s.addShape(pptx.ShapeType.line, { x: 0.5, y: 6.8, w: '90%', h:0, line: {color: 'E5E7EB', width: 1} });
         s.addText("Reportify AI - Confidential Draft", { x: 0.5, y: 6.9, fontSize: 9, color: '9CA3AF' });
     });
 
     pptx.writeFile({ fileName: `Draft_${filename}.pptx` })
-        .then(() => { if(window.showToast) window.showToast("PPT Draft 下载成功!", "success"); });
+        .then(() => { if(window.showToast) window.showToast("PPT Draft Downloaded!", "success"); });
 }
 
 // ==============================================================
