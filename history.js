@@ -1,9 +1,11 @@
 // ==============================================================
-// 🟢 history.js - 无冲突修复版 (已修复 API_BASE_URL 报错)
+// 🟢 history.js - 最终修复版
 // ==============================================================
 
-// 🟢 [关键修改] 改名，避免与 script.js 里的 API_BASE_URL 冲突
-const HISTORY_API_URL = ''; 
+// 🟢 [关键] 不要在这里重新定义 API_BASE_URL，直接使用 script.js 里的全局变量
+// 这样就彻底解决了 "Identifier has already been declared" 报错
+// const API_BASE_URL = '';  <-- 这行必须删掉
+
 window.currentHistoryData = [];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -22,8 +24,8 @@ async function fetchHistory() {
     if(list) list.innerHTML = '<div style="text-align:center; padding: 40px; color:#666;">Loading Reports...</div>';
 
     try {
-        // 🟢 使用新变量名 HISTORY_API_URL
-        const response = await fetch(`${HISTORY_API_URL}/api/reports/history`, {
+        // 直接使用全局 API_BASE_URL
+        const response = await fetch(`${API_BASE_URL}/api/reports/history`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
@@ -38,7 +40,7 @@ async function fetchHistory() {
     }
 }
 
-// 2. 渲染列表 (按钮组：PPT Draft / Word / Markdown / Email)
+// 2. 渲染列表 (按钮组已修复：PPT Draft / Word / Markdown / Email - 无 PDF)
 function renderHistoryList(reports) {
     const listContainer = document.getElementById('history-list');
     if (!listContainer) return;
@@ -120,8 +122,7 @@ window.deleteReport = async function(id) {
     if(!confirm("Are you sure you want to delete this report?")) return;
     try {
         const token = localStorage.getItem('token');
-        // 🟢 使用新变量名
-        await fetch(`${HISTORY_API_URL}/api/history/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        await fetch(`${API_BASE_URL}/api/history/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
         fetchHistory();
         if(window.showToast) window.showToast("Deleted", "success");
     } catch(e) { if(window.showToast) window.showToast("Error", "error"); }
@@ -145,7 +146,7 @@ window.downloadHistoryItem = function(id, type) {
 };
 
 // ==============================================================
-// 🟢 [Word 引擎] 无封面
+// 🟢 [Word 引擎]：无封面纯净版
 // ==============================================================
 function exportToWord(content, filename) {
     if(window.showToast) window.showToast("Generating Word Doc...", "info");
@@ -196,7 +197,7 @@ function exportToWord(content, filename) {
 }
 
 // ==============================================================
-// 🟢 [PPT 引擎] V5.0 蓝色商务版
+// 🟢 [PPT 引擎]：V5.0 蓝色商务风
 // ==============================================================
 function exportToPPT(content, filename) {
     if (typeof PptxGenJS === 'undefined') {
@@ -213,6 +214,7 @@ function exportToPPT(content, filename) {
     const themeLight = '3B82F6'; 
     const textDark = '374151'; 
 
+    // 封面
     let slide = pptx.addSlide();
     slide.background = { color: 'F8FAFC' };
     slide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '35%', h: '100%', fill: { color: themeDark } });
@@ -223,6 +225,7 @@ function exportToPPT(content, filename) {
     slide.addText("PROFESSIONAL REPORT DRAFT", { x: '38%', y: 3.5, fontSize: 14, color: themeLight, bold: true, charSpacing: 3 });
     slide.addText(`Date: ${new Date().toLocaleDateString()}`, { x: '38%', y: 4.0, fontSize: 12, color: textDark });
 
+    // 内容页
     const sections = content.split(/\n(?=#+ )/); 
     sections.forEach(section => {
         if (!section.trim()) return;
@@ -262,6 +265,9 @@ function exportToPPT(content, filename) {
     pptx.writeFile({ fileName: `Draft_${filename}.pptx` });
 }
 
+// ==============================================================
+// 🟢 3. [其他]：Markdown / Email
+// ==============================================================
 function exportToMD(content, filename) {
     if (!content) return;
     const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
