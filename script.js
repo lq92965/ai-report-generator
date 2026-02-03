@@ -996,8 +996,7 @@ function exportToPPT(content, filename) {
             valign: 'top', lineSpacing: 24 
         });
 
-        // 页码
-        s.addSlideNumber({ x: '95%', y: '92%', fontSize: 10, color: '999999' });
+        
     });
 
     pptx.writeFile({ fileName: `${filename}.pptx` })
