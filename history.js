@@ -94,28 +94,28 @@ function renderHistoryList(reports) {
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; border-top: 1px solid #f3f4f6; padding-top: 15px;">
+            <div style="display: flex; gap: 10px; margin-top: 15px; border-top: 1px solid #f3f4f6; padding-top: 15px;">
                 
                 <button onclick="downloadHistoryItem('${report._id}', 'word')" 
-                        style="background: #2563eb; color: white; border: none; height: 36px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" 
-                        title="Word">
-                    <i class="fas fa-file-word"></i>
+                        style="background: #2563eb; color: white; border: none; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: background 0.2s;" 
+                        title="Word Doc">
+                    <i class="fas fa-file-word"></i> Word
                 </button>
 
                 <button onclick="downloadHistoryItem('${report._id}', 'ppt')" 
-                        style="background: #e05242; color: white; border: none; height: 36px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" 
+                        style="background: #e05242; color: white; border: none; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: background 0.2s;" 
                         title="PPT Draft">
-                    <i class="fas fa-file-powerpoint"></i>
+                    <i class="fas fa-file-powerpoint"></i> PPT Draft
                 </button>
 
                 <button onclick="downloadHistoryItem('${report._id}', 'md')" 
-                        style="background: #374151; color: white; border: none; height: 36px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" 
-                        title="Markdown">
-                    <i class="fab fa-markdown"></i>
+                        style="background: #374151; color: white; border: none; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: background 0.2s;" 
+                        title="Markdown Source">
+                    <i class="fab fa-markdown"></i> Markdown
                 </button>
 
-                <button onclick="emailReport('${report._id}')" ... > 
-                        style="background: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db; height: 36px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;" 
+                <button onclick="emailReport('${report._id}')" 
+                        style="background: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: background 0.2s;" 
                         title="Email">
                     <i class="fas fa-envelope"></i>
                 </button>
@@ -131,41 +131,32 @@ window.showReportDetailById = function(id) {
     if (item) showReportDetail(item);
 }
 
-
-// ==============================================================
-// 🟢 1. [Word 引擎]：专业版 (宋体/封面/页眉页脚)
-// ==============================================================
+// 🟢 [同步主页] Word 引擎：无封面纯净版
 function exportToWord(content, filename) {
-    if(window.showToast) window.showToast("正在生成专业 Word 文档...", "info");
+    if(window.showToast) window.showToast("Generating Word Doc...", "info");
 
     let htmlBody = content;
     if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
         htmlBody = marked.parse(content);
     }
 
-    const docXml = `
-        <xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml>
-    `;
-
+    const docXml = `<xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml>`;
+    
+    // 这里的 CSS 保持简单，确保 Word 识别
     const css = `
         <style>
             @page { size: 21cm 29.7cm; margin: 2.5cm; mso-page-orientation: portrait; mso-header: url("header_footer_ref") h1; mso-footer: url("header_footer_ref") f1; }
-            @page Section1 { }
-            div.Section1 { page: Section1; }
             body { font-family: "SimSun", "宋体", serif; font-size: 12pt; line-height: 1.5; text-align: justify; }
             h1, h2, h3 { font-family: "SimHei", "黑体", sans-serif; color: #000; }
             h1 { font-size: 22pt; text-align: center; border-bottom: 2px solid #2563EB; padding-bottom: 10px; margin-bottom: 20px; }
             h2 { font-size: 16pt; border-left: 6px solid #2563EB; background: #f5f5f5; padding: 5px 10px; margin-top: 20px; }
-            h3 { font-size: 14pt; font-weight: bold; margin-top: 15px; }
-            blockquote { border-left: 4px solid #999; background: #f9f9f9; padding: 10px; font-family: "KaiTi", "楷体"; }
-            table { border-collapse: collapse; width: 100%; margin: 15px 0; border: 1px solid #000; }
-            td, th { border: 1px solid #000; padding: 8px; vertical-align: top; }
-            th { background: #f0f0f0; font-weight: bold; }
-            p.MsoHeader, p.MsoFooter { font-size: 9pt; font-family: "Calibri", sans-serif; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
-            p.MsoFooter { border-bottom: none; border-top: 1px solid #ddd; padding-top: 5px; text-align: center; }
+            table { border-collapse: collapse; width: 100%; border: 1px solid #000; }
+            td, th { border: 1px solid #000; padding: 8px; }
+            p.MsoHeader, p.MsoFooter { font-size: 9pt; border-bottom: 1px solid #ddd; }
         </style>
     `;
 
+    // 🟢 关键修改：去掉了 <div style="text-align:center..."> 那个封面块
     const wordHTML = `
         <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'>
         <head><meta charset='utf-8'><title>${filename}</title>${docXml}${css}</head>
@@ -173,7 +164,7 @@ function exportToWord(content, filename) {
             <div class="Section1">
                 ${htmlBody}
                 <table id='header_footer_ref' style='display:none'>
-                    <tr><td><div style='mso-element:header' id=h1><p class=MsoHeader><span style='float:left'>Reportify AI Professional Report</span><span style='float:right'>${new Date().toLocaleDateString()}</span><span style='clear:both'></span></p></div></td></tr>
+                    <tr><td><div style='mso-element:header' id=h1><p class=MsoHeader><span style='float:left'>${filename}</span><span style='float:right'>Reportify AI</span><span style='clear:both'></span></p></div></td></tr>
                     <tr><td><div style='mso-element:footer' id=f1><p class=MsoFooter><span style='mso-field-code:" PAGE "'></span> / <span style='mso-field-code:" NUMPAGES "'></span></p></div></td></tr>
                 </table>
             </div>
@@ -190,112 +181,73 @@ function exportToWord(content, filename) {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-    if(window.showToast) window.showToast("Word 文档下载成功!", "success");
 }
 
-// ==============================================================
-// 🟢 [V5.0 修复版] PPT 引擎：智能识别首屏 + 英文提示 + 样式分离
-// ==============================================================
+// 🟢 [同步主页] PPT 引擎 V5.0：智能识别 + 英文提示 + 蓝色商务风
 function exportToPPT(content, filename) {
     if (typeof PptxGenJS === 'undefined') {
         if(window.showToast) window.showToast('PPT Engine Loading...', 'error');
         return;
     }
-    if(window.showToast) window.showToast("Generating Professional PPT Draft...", "info");
+    if(window.showToast) window.showToast("Generating PPT Draft...", "info");
 
     const pptx = new PptxGenJS();
     pptx.layout = 'LAYOUT_16x9'; 
     pptx.title = filename;
 
-    // 颜色配置
     const themeDark = '1E3A8A'; 
     const themeLight = '3B82F6'; 
     const textDark = '374151'; 
 
-    // --- 1. 封面页 (保持不变) ---
+    // 封面
     let slide = pptx.addSlide();
     slide.background = { color: 'F8FAFC' };
     slide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '35%', h: '100%', fill: { color: themeDark } });
     slide.addShape(pptx.ShapeType.rect, { x: '35%', y: 0.5, w: '65%', h: 0.15, fill: { color: themeLight } });
     slide.addText(filename.replace(/_/g, ' '), { 
-        x: 0.2, y: 2.5, w: '31%', h: 3,
-        fontSize: 32, fontFace: 'Arial Black', color: 'FFFFFF', align: 'left', bold: true, valign: 'middle'
+        x: 0.2, y: 2.5, w: '31%', h: 3, fontSize: 32, fontFace: 'Arial Black', color: 'FFFFFF', align: 'left', bold: true, valign: 'middle'
     });
     slide.addText("PROFESSIONAL REPORT DRAFT", { x: '38%', y: 3.5, fontSize: 14, color: themeLight, bold: true, charSpacing: 3 });
     slide.addText(`Date: ${new Date().toLocaleDateString()}`, { x: '38%', y: 4.0, fontSize: 12, color: textDark });
 
-    // --- 2. 内容页 (智能逻辑修复) ---
-    // 按 Markdown 标题切分
+    // 内容页
     const sections = content.split(/\n(?=#+ )/); 
-
     sections.forEach(section => {
         if (!section.trim()) return;
-
         let lines = section.trim().split('\n');
         let firstLine = lines[0].trim();
-        let rawTitle = "";
-        let bodyText = "";
+        let rawTitle = "", bodyText = "";
 
-        // 🟢 [核心修复] 判断第一行是不是标题 (以 # 开头)
-        // 如果不是 # 开头，说明这是引言/摘要，手动给它加个标题
         if (firstLine.startsWith('#')) {
             rawTitle = firstLine.replace(/#+\s*/, '').trim();
             bodyText = lines.slice(1).join('\n').trim();
         } else {
-            rawTitle = "Executive Summary"; // 默认标题，防止爆版
+            rawTitle = "Executive Summary";
             bodyText = section.trim();
         }
-
-        // 清洗 Markdown 符号
         bodyText = bodyText.replace(/[*_~`]/g, ''); 
 
-        // 🟢 [样式修复] 截断逻辑优化：英文 + 独立样式
         let isTruncated = false;
-        if (bodyText.length > 700) {
-            bodyText = bodyText.substring(0, 700) + "...";
-            isTruncated = true;
-        }
-
-        // 智能字号
+        if (bodyText.length > 700) { bodyText = bodyText.substring(0, 700) + "..."; isTruncated = true; }
         let fontSize = 16; 
         if (bodyText.length > 300) fontSize = 14;
         if (bodyText.length > 500) fontSize = 12;
 
         let s = pptx.addSlide();
         s.background = { color: 'F8FAFC' };
-        
-        // 顶部导航条
         s.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '100%', h: 0.8, fill: { color: themeDark } });
         s.addShape(pptx.ShapeType.rect, { x: 0, y: 0.8, w: '100%', h: 0.05, fill: { color: themeLight } });
+        s.addText(rawTitle, { x: 0.5, y: 0.1, w: '90%', h: 0.6, fontSize: 24, fontFace: 'Arial', color: 'FFFFFF', bold: true, valign: 'middle' });
+        s.addText(bodyText, { x: 0.5, y: 1.3, w: '90%', h: 5.0, fontSize: fontSize, fontFace: 'Arial', color: textDark, valign: 'top', lineSpacing: fontSize * 1.4 });
 
-        // 页面标题
-        s.addText(rawTitle, { 
-            x: 0.5, y: 0.1, w: '90%', h: 0.6, 
-            fontSize: 24, fontFace: 'Arial', color: 'FFFFFF', bold: true, valign: 'middle'
-        });
-
-        // 页面正文
-        s.addText(bodyText, { 
-            x: 0.5, y: 1.3, w: '90%', h: 5.0, 
-            fontSize: fontSize, fontFace: 'Arial', color: textDark, 
-            valign: 'top', lineSpacing: fontSize * 1.4
-        });
-
-        // 🟢 [样式修复] 独立的截断提示 (底部、灰色、斜体、英文)
         if (isTruncated) {
-            s.addText("[ Content truncated. Please refer to the full Word report for details. ]", {
-                x: 0.5, y: 6.3, w: '90%', h: 0.5,
-                fontSize: 10, color: '9CA3AF', italic: true, align: 'center'
-            });
+            s.addText("[ Content truncated. Refer to full report. ]", { x: 0.5, y: 6.3, w: '90%', fontSize: 10, color: '9CA3AF', italic: true, align: 'center' });
         }
-
-        // 页脚
         s.addShape(pptx.ShapeType.line, { x: 0.5, y: 6.8, w: '90%', h:0, line: {color: 'E5E7EB', width: 1} });
         s.addText("Reportify AI - Confidential Draft", { x: 0.5, y: 6.9, fontSize: 9, color: '9CA3AF' });
     });
 
-    pptx.writeFile({ fileName: `Draft_${filename}.pptx` })
-        .then(() => { if(window.showToast) window.showToast("PPT Draft Downloaded!", "success"); });
+    pptx.writeFile({ fileName: `Draft_${filename}.pptx` });
 }
 
 // ==============================================================
