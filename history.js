@@ -1,21 +1,16 @@
 // ==============================================================
-// 🟢 history.js - 修复连接问题 + Word/PPT 引擎
+// 🟢 history.js - 无冲突修复版 (已修复 API_BASE_URL 报错)
 // ==============================================================
 
-// 🔴 修复点：如果你没有专门配置 api.goreportify.com，请留空。
-// 留空 '' 代表使用当前域名的 /api 路径 (例如 https://goreportify.com/api)
-const API_BASE_URL = ''; 
-// 如果你是在本地测试，可能需要改为 'http://localhost:3000'
-
-// 全局变量存储数据
+// 🟢 [关键修改] 改名，避免与 script.js 里的 API_BASE_URL 冲突
+const HISTORY_API_URL = ''; 
 window.currentHistoryData = [];
 
-// 页面加载时获取历史记录
 document.addEventListener('DOMContentLoaded', () => {
     fetchHistory();
 });
 
-// 获取历史记录
+// 1. 获取历史记录
 async function fetchHistory() {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -23,52 +18,40 @@ async function fetchHistory() {
         return;
     }
 
-    // 显示加载状态（如果页面上有 spinner）
     const list = document.getElementById('history-list');
-    if(list) list.innerHTML = '<div style="text-align:center; padding: 40px; color:#666;">正在加载您的报告...</div>';
+    if(list) list.innerHTML = '<div style="text-align:center; padding: 40px; color:#666;">Loading Reports...</div>';
 
     try {
-        // 发送请求
-        const response = await fetch(`${API_BASE_URL}/api/reports/history`, {
+        // 🟢 使用新变量名 HISTORY_API_URL
+        const response = await fetch(`${HISTORY_API_URL}/api/reports/history`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
         if (!response.ok) throw new Error('Failed to fetch history');
 
         const reports = await response.json();
-        window.currentHistoryData = reports; // 存入全局变量
+        window.currentHistoryData = reports; 
         renderHistoryList(reports);
     } catch (error) {
         console.error('API Error:', error);
-        if(list) list.innerHTML = `
-            <div class="text-center py-10 text-gray-500">
-                <p>⚠️ 无法连接到服务器</p>
-                <button onclick="location.reload()" class="mt-2 text-blue-600 underline">重试</button>
-            </div>`;
+        if(list) list.innerHTML = `<div style="text-align:center; py-10">⚠️ Connection Failed <br><a href="#" onclick="location.reload()">Retry</a></div>`;
     }
 }
 
-// ==============================================================
-// 🎨 渲染列表 (Word / PPT / 分享 / 邮件)
-// ==============================================================
+// 2. 渲染列表 (按钮组：PPT Draft / Word / Markdown / Email)
 function renderHistoryList(reports) {
     const listContainer = document.getElementById('history-list');
     if (!listContainer) return;
     listContainer.innerHTML = ''; 
 
     if (reports.length === 0) {
-        listContainer.innerHTML = `
-            <div class="text-center py-16 bg-white rounded-xl border border-dashed border-gray-300">
-                <p class="text-gray-500 text-lg">📭 暂无历史记录</p>
-                <a href="index.html" class="text-blue-600 hover:underline mt-2 inline-block">去生成第一份报告 &rarr;</a>
-            </div>
-        `;
+        listContainer.innerHTML = `<div class="text-center py-16 text-gray-500">No reports found.</div>`;
         return;
     }
 
     reports.forEach((report, index) => {
         const dateStr = new Date(report.createdAt).toLocaleDateString();
-        const typeLabel = report.templateId || '通用报告';
+        const typeLabel = report.templateId || 'Report';
         
         const card = document.createElement('div');
         card.className = 'group bg-white border border-gray-200 rounded-xl p-5 hover:shadow-lg transition-all duration-200 mb-4';
@@ -81,7 +64,7 @@ function renderHistoryList(reports) {
                     </div>
                     <div>
                         <div class="flex items-center gap-2">
-                            <h3 class="font-bold text-gray-800 text-lg hover:text-blue-600 transition">${report.title || '未命名报告'}</h3>
+                            <h3 class="font-bold text-gray-800 text-lg hover:text-blue-600 transition">${report.title || 'Untitled Report'}</h3>
                             <span class="px-2 py-0.5 rounded text-xs bg-blue-100 text-blue-700">${typeLabel}</span>
                         </div>
                         <div class="text-sm text-gray-400 mt-1">
@@ -89,35 +72,37 @@ function renderHistoryList(reports) {
                         </div>
                     </div>
                 </div>
-                <div class="text-gray-300">
-                    <i class="fas fa-expand-alt"></i>
-                </div>
+                <div class="text-gray-300"><i class="fas fa-expand-alt"></i></div>
             </div>
 
             <div style="display: flex; gap: 10px; margin-top: 15px; border-top: 1px solid #f3f4f6; padding-top: 15px;">
                 
                 <button onclick="downloadHistoryItem('${report._id}', 'word')" 
                         style="background: #2563eb; color: white; border: none; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: background 0.2s;" 
-                        title="Word Doc">
-                    <i class="fas fa-file-word"></i> Word
+                        title="Download Word">
+                    <i class="fas fa-file-word"></i> <span style="font-size:13px;">Word</span>
                 </button>
 
                 <button onclick="downloadHistoryItem('${report._id}', 'ppt')" 
                         style="background: #e05242; color: white; border: none; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: background 0.2s;" 
-                        title="PPT Draft">
-                    <i class="fas fa-file-powerpoint"></i> PPT Draft
+                        title="Download PPT Draft">
+                    <i class="fas fa-file-powerpoint"></i> <span style="font-size:13px;">PPT Draft</span>
                 </button>
 
                 <button onclick="downloadHistoryItem('${report._id}', 'md')" 
                         style="background: #374151; color: white; border: none; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: background 0.2s;" 
-                        title="Markdown Source">
-                    <i class="fab fa-markdown"></i> Markdown
+                        title="Download Markdown">
+                    <i class="fab fa-markdown"></i> <span style="font-size:13px;">Markdown</span>
                 </button>
 
                 <button onclick="emailReport('${report._id}')" 
                         style="background: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: background 0.2s;" 
-                        title="Email">
+                        title="Email Report">
                     <i class="fas fa-envelope"></i>
+                </button>
+
+                <button onclick="deleteReport('${report._id}')" style="margin-left: auto; color: #ef4444; background: none; border: none; cursor: pointer;">
+                    <i class="fas fa-trash-alt"></i>
                 </button>
             </div>
         `;
@@ -125,13 +110,43 @@ function renderHistoryList(reports) {
     });
 }
 
-// 辅助：打开详情
+// 3. 辅助函数
 window.showReportDetailById = function(id) {
     const item = window.currentHistoryData.find(r => r._id === id);
     if (item) showReportDetail(item);
 }
 
-// 🟢 [同步主页] Word 引擎：无封面纯净版
+window.deleteReport = async function(id) {
+    if(!confirm("Are you sure you want to delete this report?")) return;
+    try {
+        const token = localStorage.getItem('token');
+        // 🟢 使用新变量名
+        await fetch(`${HISTORY_API_URL}/api/history/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        fetchHistory();
+        if(window.showToast) window.showToast("Deleted", "success");
+    } catch(e) { if(window.showToast) window.showToast("Error", "error"); }
+};
+
+// ==============================================================
+// 🟢 [下载路由]
+// ==============================================================
+window.downloadHistoryItem = function(id, type) {
+    const item = window.currentHistoryData ? window.currentHistoryData.find(r => r._id === id) : null;
+    if (!item || !item.content) {
+        if(window.showToast) window.showToast("Content not found", "error");
+        return;
+    }
+    const safeTitle = (item.title || "Report").replace(/[^a-zA-Z0-9\u4e00-\u9fa5]/g, '_');
+    const filename = `${safeTitle}_${new Date().toISOString().slice(0,10)}`;
+
+    if (type === 'word') exportToWord(item.content, filename);
+    else if (type === 'ppt') exportToPPT(item.content, filename);
+    else if (type === 'md') exportToMD(item.content, filename);
+};
+
+// ==============================================================
+// 🟢 [Word 引擎] 无封面
+// ==============================================================
 function exportToWord(content, filename) {
     if(window.showToast) window.showToast("Generating Word Doc...", "info");
 
@@ -141,8 +156,6 @@ function exportToWord(content, filename) {
     }
 
     const docXml = `<xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml>`;
-    
-    // 这里的 CSS 保持简单，确保 Word 识别
     const css = `
         <style>
             @page { size: 21cm 29.7cm; margin: 2.5cm; mso-page-orientation: portrait; mso-header: url("header_footer_ref") h1; mso-footer: url("header_footer_ref") f1; }
@@ -156,7 +169,6 @@ function exportToWord(content, filename) {
         </style>
     `;
 
-    // 🟢 关键修改：去掉了 <div style="text-align:center..."> 那个封面块
     const wordHTML = `
         <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'>
         <head><meta charset='utf-8'><title>${filename}</title>${docXml}${css}</head>
@@ -183,7 +195,9 @@ function exportToWord(content, filename) {
     URL.revokeObjectURL(url);
 }
 
-// 🟢 [同步主页] PPT 引擎 V5.0：智能识别 + 英文提示 + 蓝色商务风
+// ==============================================================
+// 🟢 [PPT 引擎] V5.0 蓝色商务版
+// ==============================================================
 function exportToPPT(content, filename) {
     if (typeof PptxGenJS === 'undefined') {
         if(window.showToast) window.showToast('PPT Engine Loading...', 'error');
@@ -199,7 +213,6 @@ function exportToPPT(content, filename) {
     const themeLight = '3B82F6'; 
     const textDark = '374151'; 
 
-    // 封面
     let slide = pptx.addSlide();
     slide.background = { color: 'F8FAFC' };
     slide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '35%', h: '100%', fill: { color: themeDark } });
@@ -210,7 +223,6 @@ function exportToPPT(content, filename) {
     slide.addText("PROFESSIONAL REPORT DRAFT", { x: '38%', y: 3.5, fontSize: 14, color: themeLight, bold: true, charSpacing: 3 });
     slide.addText(`Date: ${new Date().toLocaleDateString()}`, { x: '38%', y: 4.0, fontSize: 12, color: textDark });
 
-    // 内容页
     const sections = content.split(/\n(?=#+ )/); 
     sections.forEach(section => {
         if (!section.trim()) return;
@@ -250,9 +262,6 @@ function exportToPPT(content, filename) {
     pptx.writeFile({ fileName: `Draft_${filename}.pptx` });
 }
 
-// ==============================================================
-// 🟢 3. [其他]：Markdown / Share / Email
-// ==============================================================
 function exportToMD(content, filename) {
     if (!content) return;
     const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
@@ -264,52 +273,22 @@ function exportToMD(content, filename) {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-    if (typeof showToast === 'function') showToast("Markdown 下载成功!", "success");
+    if (typeof showToast === 'function') showToast("Markdown Downloaded", "success");
 }
 
-function shareReportLink() {
-    const mockLink = `https://goreportify.com/share/${Math.random().toString(36).substr(2, 9)}`;
-    navigator.clipboard.writeText(mockLink).then(() => {
-        if(window.showToast) showToast(`分享链接已复制: ${mockLink}`, "success");
-    });
-}
-
-// 🟢 [优化版] 历史记录邮件发送：支持根据 ID 自动下载
 function emailReport(id) {
-    // 1. 如果传入了 ID，先触发下载
     if (id) {
-        showToast("正在下载文档以供附件...", "info");
-        // 调用已有的下载逻辑，类型为 'word'
+        if(window.showToast) window.showToast("Downloading Word attachment...", "info");
         downloadHistoryItem(id, 'word');
     }
-
-    // 2. 延时唤起邮件
     setTimeout(() => {
         const subject = encodeURIComponent("Sharing an AI-generated report");
-        const body = encodeURIComponent("Hello，\n\nThis is a professional report I generated using Reportify AI.\n\n[Attachment Instructions]: The system has automatically downloaded a Word document for you. Please manually drag and drop this file into the attachment.\n\nGenerated by Reportify AI");
+        const body = encodeURIComponent("Hello,\n\nPlease find the attached report.\n\n[Note]: I have downloaded the Word document for you. Please attach it manually.\n\nGenerated by Reportify AI");
         window.location.href = `mailto:?subject=${subject}&body=${body}`;
-        
-        const msg = id ? "The email has been opened. Please manually add the attachment you just downloaded." : "The email client has been activated";
-        showToast(msg, "success");
     }, 1000);
 }
 
-// 下载路由
-window.downloadHistoryItem = function(id, type) {
-    const item = window.currentHistoryData ? window.currentHistoryData.find(r => r._id === id) : null;
-    if (!item || !item.content) {
-        if(window.showToast) window.showToast("未找到报告内容", "error");
-        return;
-    }
-    const safeTitle = (item.title || "Report").replace(/[^a-zA-Z0-9\u4e00-\u9fa5]/g, '_');
-    const filename = `${safeTitle}_${new Date().toISOString().slice(0,10)}`;
-
-    if (type === 'word') exportToWord(item.content, filename);
-    else if (type === 'ppt') exportToPPT(item.content, filename);
-    else if (type === 'md') exportToMD(item.content, filename);
-};
-
-// 详情弹窗 (去掉了 PDF 按钮)
+// 详情弹窗
 function showReportDetail(report) {
     const existing = document.getElementById('dm-overlay');
     if (existing) existing.remove();
@@ -319,51 +298,28 @@ function showReportDetail(report) {
     Object.assign(overlay.style, {
         position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
         backgroundColor: 'rgba(0,0,0,0.7)', zIndex: 10000,
-        display: 'flex', justifyContent: 'center', alignItems: 'center', opacity: 0, transition: 'opacity 0.3s'
+        display: 'flex', justifyContent: 'center', alignItems: 'center'
     });
 
     const htmlContent = (typeof marked !== 'undefined') ? marked.parse(report.content) : report.content;
 
     overlay.innerHTML = `
-        <div class="bg-white w-11/12 max-w-4xl h-5/6 rounded-xl shadow-2xl flex flex-col overflow-hidden transform scale-95 transition-transform duration-300" id="dm-modal">
+        <div class="bg-white w-11/12 max-w-4xl h-5/6 rounded-xl shadow-2xl flex flex-col overflow-hidden" id="dm-modal">
             <div class="px-8 py-5 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-                <h3 class="text-xl font-bold text-gray-800">${report.title || '报告详情'}</h3>
+                <h3 class="text-xl font-bold text-gray-800">${report.title || 'Report Detail'}</h3>
                 <button id="btn-close-x" class="text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
             </div>
             <div class="flex-1 p-10 overflow-y-auto prose max-w-none">
                 ${htmlContent}
             </div>
-            <div class="px-8 py-5 bg-gray-50 border-t border-gray-100 flex justify-end gap-3 flex-wrap">
-                <button id="btn-word" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-sm flex items-center transition">
-                    <i class="fas fa-file-word mr-2"></i> Word
-                </button>
-                <button id="btn-ppt" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg shadow-sm flex items-center transition">
-                    <i class="fas fa-file-powerpoint mr-2"></i> PPT
-                </button>
-                <button id="btn-md" class="px-4 py-2 bg-gray-800 hover:bg-gray-900 text-white rounded-lg shadow-sm flex items-center transition">
-                    <i class="fab fa-markdown mr-2"></i> Markdown
-                </button>
-                <button id="btn-close" class="px-4 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-lg transition">关闭</button>
+            <div class="px-8 py-5 bg-gray-50 border-t border-gray-100 flex justify-end gap-3">
+                <button id="btn-close" class="px-4 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-lg">Close</button>
             </div>
         </div>
     `;
     
     document.body.appendChild(overlay);
-
-    requestAnimationFrame(() => {
-        overlay.style.opacity = '1';
-        overlay.querySelector('#dm-modal').classList.replace('scale-95', 'scale-100');
-    });
-
-    const closeFunc = () => {
-        overlay.style.opacity = '0';
-        setTimeout(() => overlay.remove(), 300);
-    };
-
+    const closeFunc = () => overlay.remove();
     document.getElementById('btn-close-x').onclick = closeFunc;
     document.getElementById('btn-close').onclick = closeFunc;
-    
-    document.getElementById('btn-word').onclick = () => exportToWord(report.content, report.title);
-    document.getElementById('btn-ppt').onclick = () => exportToPPT(report.content, report.title);
-    document.getElementById('btn-md').onclick = () => exportToMD(report.content, report.title);
 }
