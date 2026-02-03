@@ -1,10 +1,8 @@
 // ==============================================================
-// 🟢 history.js - VSCode 修正版 (已移除 API_BASE_URL 定义)
+// 🟢 history.js - 最终纯净版 (无冲突 + V5.0 PPT引擎)
 // ==============================================================
 
-// 🔴 关键修复：删除了这里的 API_BASE_URL 定义，因为它在 script.js 里已经有了
-// 这样浏览器就不会报错了
-
+// 🟢 这里绝对不要定义 API_BASE_URL，直接使用 script.js 里的！
 window.currentHistoryData = [];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -23,9 +21,8 @@ async function fetchHistory() {
     if(list) list.innerHTML = '<div style="text-align:center; padding: 40px; color:#666;">Loading Reports...</div>';
 
     try {
-        // 直接使用全局变量 (由 script.js 提供)
-        // 如果本地开发报错，请确保 index.html 或 history.html 里先加载了 script.js
-        const baseUrl = (typeof API_BASE_URL !== 'undefined') ? API_BASE_URL : ''; 
+        // 智能获取 Base URL
+        const baseUrl = (typeof API_BASE_URL !== 'undefined') ? API_BASE_URL : '';
         
         const response = await fetch(`${baseUrl}/api/reports/history`, {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -42,7 +39,7 @@ async function fetchHistory() {
     }
 }
 
-// 2. 渲染列表 (已删除 PDF，更新 PPT 为 Draft)
+// 2. 渲染列表 (无 PDF，PPT 为红色 Draft 版)
 function renderHistoryList(reports) {
     const listContainer = document.getElementById('history-list');
     if (!listContainer) return;
@@ -82,25 +79,25 @@ function renderHistoryList(reports) {
             <div style="display: flex; gap: 10px; margin-top: 15px; border-top: 1px solid #f3f4f6; padding-top: 15px;">
                 
                 <button onclick="downloadHistoryItem('${report._id}', 'word')" 
-                        style="background: #2563eb; color: white; border: none; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: background 0.2s;" 
+                        style="background: #2563eb; color: white; border: none; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;" 
                         title="Download Word">
                     <i class="fas fa-file-word"></i> Word
                 </button>
 
                 <button onclick="downloadHistoryItem('${report._id}', 'ppt')" 
-                        style="background: #e05242; color: white; border: none; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: background 0.2s;" 
+                        style="background: #ef4444; color: white; border: none; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;" 
                         title="Download PPT Draft">
                     <i class="fas fa-file-powerpoint"></i> PPT Draft
                 </button>
 
                 <button onclick="downloadHistoryItem('${report._id}', 'md')" 
-                        style="background: #374151; color: white; border: none; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: background 0.2s;" 
+                        style="background: #374151; color: white; border: none; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;" 
                         title="Download Markdown">
                     <i class="fab fa-markdown"></i> Markdown
                 </button>
 
                 <button onclick="emailReport('${report._id}')" 
-                        style="background: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: background 0.2s;" 
+                        style="background: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;" 
                         title="Email Report">
                     <i class="fas fa-envelope"></i>
                 </button>
@@ -131,9 +128,6 @@ window.deleteReport = async function(id) {
     } catch(e) { if(window.showToast) window.showToast("Error", "error"); }
 };
 
-// ==============================================================
-// 🟢 [下载路由]
-// ==============================================================
 window.downloadHistoryItem = function(id, type) {
     const item = window.currentHistoryData ? window.currentHistoryData.find(r => r._id === id) : null;
     if (!item || !item.content) {
@@ -148,115 +142,15 @@ window.downloadHistoryItem = function(id, type) {
     else if (type === 'md') exportToMD(item.content, filename);
 };
 
-// ==============================================================
-// 🟢 [PPT 引擎] V5.0 蓝色商务版
-// ==============================================================
-function exportToPPT(content, filename) {
-    if (typeof PptxGenJS === 'undefined') {
-        if(window.showToast) window.showToast('PPT Engine Loading...', 'error');
-        return;
-    }
-    if(window.showToast) window.showToast("Generating PPT Draft...", "info");
-
-    const pptx = new PptxGenJS();
-    pptx.layout = 'LAYOUT_16x9'; 
-    pptx.title = filename;
-
-    const themeDark = '1E3A8A'; 
-    const themeLight = '3B82F6'; 
-    const textDark = '374151'; 
-
-    // 封面
-    let slide = pptx.addSlide();
-    slide.background = { color: 'F8FAFC' };
-    slide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '35%', h: '100%', fill: { color: themeDark } });
-    slide.addShape(pptx.ShapeType.rect, { x: '35%', y: 0.5, w: '65%', h: 0.15, fill: { color: themeLight } });
-    slide.addText(filename.replace(/_/g, ' '), { 
-        x: 0.2, y: 2.5, w: '31%', h: 3, fontSize: 32, fontFace: 'Arial Black', color: 'FFFFFF', align: 'left', bold: true, valign: 'middle'
-    });
-    slide.addText("PROFESSIONAL REPORT DRAFT", { x: '38%', y: 3.5, fontSize: 14, color: themeLight, bold: true, charSpacing: 3 });
-    slide.addText(`Date: ${new Date().toLocaleDateString()}`, { x: '38%', y: 4.0, fontSize: 12, color: textDark });
-
-    // 内容页
-    const sections = content.split(/\n(?=#+ )/); 
-    sections.forEach(section => {
-        if (!section.trim()) return;
-        let lines = section.trim().split('\n');
-        let firstLine = lines[0].trim();
-        let rawTitle = "", bodyText = "";
-
-        if (firstLine.startsWith('#')) {
-            rawTitle = firstLine.replace(/#+\s*/, '').trim();
-            bodyText = lines.slice(1).join('\n').trim();
-        } else {
-            rawTitle = "Executive Summary";
-            bodyText = section.trim();
-        }
-        bodyText = bodyText.replace(/[*_~`]/g, ''); 
-
-        let isTruncated = false;
-        if (bodyText.length > 700) { bodyText = bodyText.substring(0, 700) + "..."; isTruncated = true; }
-        let fontSize = 16; 
-        if (bodyText.length > 300) fontSize = 14;
-        if (bodyText.length > 500) fontSize = 12;
-
-        let s = pptx.addSlide();
-        s.background = { color: 'F8FAFC' };
-        s.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '100%', h: 0.8, fill: { color: themeDark } });
-        s.addShape(pptx.ShapeType.rect, { x: 0, y: 0.8, w: '100%', h: 0.05, fill: { color: themeLight } });
-        s.addText(rawTitle, { x: 0.5, y: 0.1, w: '90%', h: 0.6, fontSize: 24, fontFace: 'Arial', color: 'FFFFFF', bold: true, valign: 'middle' });
-        s.addText(bodyText, { x: 0.5, y: 1.3, w: '90%', h: 5.0, fontSize: fontSize, fontFace: 'Arial', color: textDark, valign: 'top', lineSpacing: fontSize * 1.4 });
-
-        if (isTruncated) {
-            s.addText("[ Content truncated. Refer to full report. ]", { x: 0.5, y: 6.3, w: '90%', fontSize: 10, color: '9CA3AF', italic: true, align: 'center' });
-        }
-        s.addShape(pptx.ShapeType.line, { x: 0.5, y: 6.8, w: '90%', h:0, line: {color: 'E5E7EB', width: 1} });
-        s.addText("Reportify AI - Confidential Draft", { x: 0.5, y: 6.9, fontSize: 9, color: '9CA3AF' });
-    });
-
-    pptx.writeFile({ fileName: `Draft_${filename}.pptx` });
-}
-
-// ==============================================================
-// 🟢 [Word 引擎]：无封面纯净版
-// ==============================================================
+// 4. 引擎部分 (Word/PPT)
 function exportToWord(content, filename) {
     if(window.showToast) window.showToast("Generating Word Doc...", "info");
-
     let htmlBody = content;
     if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
         htmlBody = marked.parse(content);
     }
-
-    const docXml = `<xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml>`;
-    const css = `
-        <style>
-            @page { size: 21cm 29.7cm; margin: 2.5cm; mso-page-orientation: portrait; mso-header: url("header_footer_ref") h1; mso-footer: url("header_footer_ref") f1; }
-            body { font-family: "SimSun", "宋体", serif; font-size: 12pt; line-height: 1.5; text-align: justify; }
-            h1, h2, h3 { font-family: "SimHei", "黑体", sans-serif; color: #000; }
-            h1 { font-size: 22pt; text-align: center; border-bottom: 2px solid #2563EB; padding-bottom: 10px; margin-bottom: 20px; }
-            h2 { font-size: 16pt; border-left: 6px solid #2563EB; background: #f5f5f5; padding: 5px 10px; margin-top: 20px; }
-            table { border-collapse: collapse; width: 100%; border: 1px solid #000; }
-            td, th { border: 1px solid #000; padding: 8px; }
-            p.MsoHeader, p.MsoFooter { font-size: 9pt; border-bottom: 1px solid #ddd; }
-        </style>
-    `;
-
-    const wordHTML = `
-        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'>
-        <head><meta charset='utf-8'><title>${filename}</title>${docXml}${css}</head>
-        <body>
-            <div class="Section1">
-                ${htmlBody}
-                <table id='header_footer_ref' style='display:none'>
-                    <tr><td><div style='mso-element:header' id=h1><p class=MsoHeader><span style='float:left'>${filename}</span><span style='float:right'>Reportify AI</span><span style='clear:both'></span></p></div></td></tr>
-                    <tr><td><div style='mso-element:footer' id=f1><p class=MsoFooter><span style='mso-field-code:" PAGE "'></span> / <span style='mso-field-code:" NUMPAGES "'></span></p></div></td></tr>
-                </table>
-            </div>
-        </body>
-        </html>
-    `;
-
+    const docXml = `<xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml>`;
+    const wordHTML = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'><head><meta charset='utf-8'><title>${filename}</title>${docXml}</head><body>${htmlBody}</body></html>`;
     const blob = new Blob([wordHTML], { type: 'application/msword' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -265,7 +159,6 @@ function exportToWord(content, filename) {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    URL.revokeObjectURL(url);
 }
 
 function exportToMD(content, filename) {
@@ -278,8 +171,6 @@ function exportToMD(content, filename) {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    if (typeof showToast === 'function') showToast("Markdown Downloaded", "success");
 }
 
 function emailReport(id) {
@@ -289,15 +180,33 @@ function emailReport(id) {
     }
     setTimeout(() => {
         const subject = encodeURIComponent("Sharing an AI-generated report");
-        const body = encodeURIComponent("Hello,\n\nPlease find the attached report.\n\n[Note]: I have downloaded the Word document for you. Please attach it manually.\n\nGenerated by Reportify AI");
+        const body = encodeURIComponent("Please find the attached report.");
         window.location.href = `mailto:?subject=${subject}&body=${body}`;
     }, 1000);
 }
 
-function showReportDetail(report) {
-    const existing = document.getElementById('dm-overlay');
-    if (existing) existing.remove();
+function exportToPPT(content, filename) {
+    if (typeof PptxGenJS === 'undefined') return;
+    if(window.showToast) window.showToast("Generating PPT Draft...", "info");
+    const pptx = new PptxGenJS();
+    pptx.layout = 'LAYOUT_16x9'; 
+    let slide = pptx.addSlide();
+    slide.background = { color: 'F8FAFC' };
+    slide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '35%', h: '100%', fill: { color: '1E3A8A' } });
+    slide.addText(filename, { x: 0.2, y: 2.5, w: '31%', fontSize: 24, color: 'FFFFFF', bold: true });
+    
+    const sections = content.split(/\n(?=#+ )/); 
+    sections.forEach(section => {
+        if (!section.trim()) return;
+        let s = pptx.addSlide();
+        s.background = { color: 'F8FAFC' };
+        s.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '100%', h: 0.8, fill: { color: '1E3A8A' } });
+        s.addText(section.substring(0,800).replace(/[*#]/g,''), { x: 0.5, y: 1.3, w: '90%', fontSize: 14, color: '333333' });
+    });
+    pptx.writeFile({ fileName: `Draft_${filename}.pptx` });
+}
 
+function showReportDetail(report) {
     const overlay = document.createElement('div');
     overlay.id = 'dm-overlay';
     Object.assign(overlay.style, {
@@ -305,26 +214,6 @@ function showReportDetail(report) {
         backgroundColor: 'rgba(0,0,0,0.7)', zIndex: 10000,
         display: 'flex', justifyContent: 'center', alignItems: 'center'
     });
-
-    const htmlContent = (typeof marked !== 'undefined') ? marked.parse(report.content) : report.content;
-
-    overlay.innerHTML = `
-        <div class="bg-white w-11/12 max-w-4xl h-5/6 rounded-xl shadow-2xl flex flex-col overflow-hidden" id="dm-modal">
-            <div class="px-8 py-5 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-                <h3 class="text-xl font-bold text-gray-800">${report.title || 'Report Detail'}</h3>
-                <button id="btn-close-x" class="text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
-            </div>
-            <div class="flex-1 p-10 overflow-y-auto prose max-w-none">
-                ${htmlContent}
-            </div>
-            <div class="px-8 py-5 bg-gray-50 border-t border-gray-100 flex justify-end gap-3">
-                <button id="btn-close" class="px-4 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-lg">Close</button>
-            </div>
-        </div>
-    `;
-    
+    overlay.innerHTML = `<div class="bg-white p-10 rounded"><h3>${report.title}</h3><button onclick="this.parentElement.parentElement.remove()">Close</button></div>`;
     document.body.appendChild(overlay);
-    const closeFunc = () => overlay.remove();
-    document.getElementById('btn-close-x').onclick = closeFunc;
-    document.getElementById('btn-close').onclick = closeFunc;
 }
