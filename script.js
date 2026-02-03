@@ -1,7 +1,7 @@
 // --- 1. 核心配置 (手动管理) ---
 // 如果你在本地开发，请用 http://localhost:3000
 // 如果上线，请改为 https://goreportify.com
-const API_BASE_URL = '';
+const API_BASE_URL = 'https://api.goreportify.com';
 
 
 // 全局状态
@@ -1688,4 +1688,3 @@ async function loadAccountPageAvatar() {
         this.src = getFullImageUrl(null);
     };
 }
-
