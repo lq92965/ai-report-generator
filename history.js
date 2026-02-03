@@ -1,10 +1,9 @@
 // ==============================================================
-// 🟢 history.js - 最终修复版
+// 🟢 history.js - VSCode 修正版 (已移除 API_BASE_URL 定义)
 // ==============================================================
 
-// 🟢 [关键] 不要在这里重新定义 API_BASE_URL，直接使用 script.js 里的全局变量
-// 这样就彻底解决了 "Identifier has already been declared" 报错
-// const API_BASE_URL = '';  <-- 这行必须删掉
+// 🔴 关键修复：删除了这里的 API_BASE_URL 定义，因为它在 script.js 里已经有了
+// 这样浏览器就不会报错了
 
 window.currentHistoryData = [];
 
@@ -24,8 +23,11 @@ async function fetchHistory() {
     if(list) list.innerHTML = '<div style="text-align:center; padding: 40px; color:#666;">Loading Reports...</div>';
 
     try {
-        // 直接使用全局 API_BASE_URL
-        const response = await fetch(`${API_BASE_URL}/api/reports/history`, {
+        // 直接使用全局变量 (由 script.js 提供)
+        // 如果本地开发报错，请确保 index.html 或 history.html 里先加载了 script.js
+        const baseUrl = (typeof API_BASE_URL !== 'undefined') ? API_BASE_URL : ''; 
+        
+        const response = await fetch(`${baseUrl}/api/reports/history`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
@@ -40,7 +42,7 @@ async function fetchHistory() {
     }
 }
 
-// 2. 渲染列表 (按钮组已修复：PPT Draft / Word / Markdown / Email - 无 PDF)
+// 2. 渲染列表 (已删除 PDF，更新 PPT 为 Draft)
 function renderHistoryList(reports) {
     const listContainer = document.getElementById('history-list');
     if (!listContainer) return;
@@ -82,19 +84,19 @@ function renderHistoryList(reports) {
                 <button onclick="downloadHistoryItem('${report._id}', 'word')" 
                         style="background: #2563eb; color: white; border: none; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: background 0.2s;" 
                         title="Download Word">
-                    <i class="fas fa-file-word"></i> <span style="font-size:13px;">Word</span>
+                    <i class="fas fa-file-word"></i> Word
                 </button>
 
                 <button onclick="downloadHistoryItem('${report._id}', 'ppt')" 
                         style="background: #e05242; color: white; border: none; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: background 0.2s;" 
                         title="Download PPT Draft">
-                    <i class="fas fa-file-powerpoint"></i> <span style="font-size:13px;">PPT Draft</span>
+                    <i class="fas fa-file-powerpoint"></i> PPT Draft
                 </button>
 
                 <button onclick="downloadHistoryItem('${report._id}', 'md')" 
                         style="background: #374151; color: white; border: none; height: 36px; padding: 0 15px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: background 0.2s;" 
                         title="Download Markdown">
-                    <i class="fab fa-markdown"></i> <span style="font-size:13px;">Markdown</span>
+                    <i class="fab fa-markdown"></i> Markdown
                 </button>
 
                 <button onclick="emailReport('${report._id}')" 
@@ -122,7 +124,8 @@ window.deleteReport = async function(id) {
     if(!confirm("Are you sure you want to delete this report?")) return;
     try {
         const token = localStorage.getItem('token');
-        await fetch(`${API_BASE_URL}/api/history/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        const baseUrl = (typeof API_BASE_URL !== 'undefined') ? API_BASE_URL : ''; 
+        await fetch(`${baseUrl}/api/history/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
         fetchHistory();
         if(window.showToast) window.showToast("Deleted", "success");
     } catch(e) { if(window.showToast) window.showToast("Error", "error"); }
@@ -146,58 +149,7 @@ window.downloadHistoryItem = function(id, type) {
 };
 
 // ==============================================================
-// 🟢 [Word 引擎]：无封面纯净版
-// ==============================================================
-function exportToWord(content, filename) {
-    if(window.showToast) window.showToast("Generating Word Doc...", "info");
-
-    let htmlBody = content;
-    if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
-        htmlBody = marked.parse(content);
-    }
-
-    const docXml = `<xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml>`;
-    const css = `
-        <style>
-            @page { size: 21cm 29.7cm; margin: 2.5cm; mso-page-orientation: portrait; mso-header: url("header_footer_ref") h1; mso-footer: url("header_footer_ref") f1; }
-            body { font-family: "SimSun", "宋体", serif; font-size: 12pt; line-height: 1.5; text-align: justify; }
-            h1, h2, h3 { font-family: "SimHei", "黑体", sans-serif; color: #000; }
-            h1 { font-size: 22pt; text-align: center; border-bottom: 2px solid #2563EB; padding-bottom: 10px; margin-bottom: 20px; }
-            h2 { font-size: 16pt; border-left: 6px solid #2563EB; background: #f5f5f5; padding: 5px 10px; margin-top: 20px; }
-            table { border-collapse: collapse; width: 100%; border: 1px solid #000; }
-            td, th { border: 1px solid #000; padding: 8px; }
-            p.MsoHeader, p.MsoFooter { font-size: 9pt; border-bottom: 1px solid #ddd; }
-        </style>
-    `;
-
-    const wordHTML = `
-        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'>
-        <head><meta charset='utf-8'><title>${filename}</title>${docXml}${css}</head>
-        <body>
-            <div class="Section1">
-                ${htmlBody}
-                <table id='header_footer_ref' style='display:none'>
-                    <tr><td><div style='mso-element:header' id=h1><p class=MsoHeader><span style='float:left'>${filename}</span><span style='float:right'>Reportify AI</span><span style='clear:both'></span></p></div></td></tr>
-                    <tr><td><div style='mso-element:footer' id=f1><p class=MsoFooter><span style='mso-field-code:" PAGE "'></span> / <span style='mso-field-code:" NUMPAGES "'></span></p></div></td></tr>
-                </table>
-            </div>
-        </body>
-        </html>
-    `;
-
-    const blob = new Blob([wordHTML], { type: 'application/msword' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${filename}.doc`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-}
-
-// ==============================================================
-// 🟢 [PPT 引擎]：V5.0 蓝色商务风
+// 🟢 [PPT 引擎] V5.0 蓝色商务版
 // ==============================================================
 function exportToPPT(content, filename) {
     if (typeof PptxGenJS === 'undefined') {
@@ -266,8 +218,56 @@ function exportToPPT(content, filename) {
 }
 
 // ==============================================================
-// 🟢 3. [其他]：Markdown / Email
+// 🟢 [Word 引擎]：无封面纯净版
 // ==============================================================
+function exportToWord(content, filename) {
+    if(window.showToast) window.showToast("Generating Word Doc...", "info");
+
+    let htmlBody = content;
+    if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
+        htmlBody = marked.parse(content);
+    }
+
+    const docXml = `<xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml>`;
+    const css = `
+        <style>
+            @page { size: 21cm 29.7cm; margin: 2.5cm; mso-page-orientation: portrait; mso-header: url("header_footer_ref") h1; mso-footer: url("header_footer_ref") f1; }
+            body { font-family: "SimSun", "宋体", serif; font-size: 12pt; line-height: 1.5; text-align: justify; }
+            h1, h2, h3 { font-family: "SimHei", "黑体", sans-serif; color: #000; }
+            h1 { font-size: 22pt; text-align: center; border-bottom: 2px solid #2563EB; padding-bottom: 10px; margin-bottom: 20px; }
+            h2 { font-size: 16pt; border-left: 6px solid #2563EB; background: #f5f5f5; padding: 5px 10px; margin-top: 20px; }
+            table { border-collapse: collapse; width: 100%; border: 1px solid #000; }
+            td, th { border: 1px solid #000; padding: 8px; }
+            p.MsoHeader, p.MsoFooter { font-size: 9pt; border-bottom: 1px solid #ddd; }
+        </style>
+    `;
+
+    const wordHTML = `
+        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'>
+        <head><meta charset='utf-8'><title>${filename}</title>${docXml}${css}</head>
+        <body>
+            <div class="Section1">
+                ${htmlBody}
+                <table id='header_footer_ref' style='display:none'>
+                    <tr><td><div style='mso-element:header' id=h1><p class=MsoHeader><span style='float:left'>${filename}</span><span style='float:right'>Reportify AI</span><span style='clear:both'></span></p></div></td></tr>
+                    <tr><td><div style='mso-element:footer' id=f1><p class=MsoFooter><span style='mso-field-code:" PAGE "'></span> / <span style='mso-field-code:" NUMPAGES "'></span></p></div></td></tr>
+                </table>
+            </div>
+        </body>
+        </html>
+    `;
+
+    const blob = new Blob([wordHTML], { type: 'application/msword' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${filename}.doc`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}
+
 function exportToMD(content, filename) {
     if (!content) return;
     const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
@@ -294,7 +294,6 @@ function emailReport(id) {
     }, 1000);
 }
 
-// 详情弹窗
 function showReportDetail(report) {
     const existing = document.getElementById('dm-overlay');
     if (existing) existing.remove();
