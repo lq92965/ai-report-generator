@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupPayment();      
     setupCopyBtn();   
     setupContactForm();     
-    setupHistoryLoader();   
+    //setupHistoryLoader();   
     setupMessageCenter();   
     setupUserDropdown();    
     setupAvatarUpload();
@@ -1688,3 +1688,4 @@ async function loadAccountPageAvatar() {
         this.src = getFullImageUrl(null);
     };
 }
+
