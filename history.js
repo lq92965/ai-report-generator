@@ -264,9 +264,7 @@ function exportToPPT(content, filename) {
             fontSize: 15, fontFace: 'Microsoft YaHei', color: '374151', 
             valign: 'top', lineSpacing: 24 
         });
-
-        // 页码
-        s.addSlideNumber({ x: '95%', y: '92%', fontSize: 10, color: '999999' });
+        
     });
 
     pptx.writeFile({ fileName: `${filename}.pptx` })
