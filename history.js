@@ -379,7 +379,7 @@ function emailReport(reportId) {
 }
 
 // 🟢 [新增] Markdown 下载功能
-function downloadMarkdown() {
+function exportToMD(content, filename) {
     const content = window.currentReportContent; // 获取全局存储的 Markdown 原文
     if (!content) {
         showToast("没有可下载的内容", "warning");
