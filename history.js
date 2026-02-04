@@ -24,7 +24,7 @@ async function fetchHistory() {
         // 智能获取 Base URL
         const baseUrl = (typeof API_BASE_URL !== 'undefined') ? API_BASE_URL : '';
         
-        const response = await fetch(`${baseUrl}/api/my-reports`, {
+        const response = await fetch(`${baseUrl}/api/history`, {
             method: 'GET',
             headers: { 'Authorization': `Bearer ${token}` }
         });
