@@ -54,8 +54,11 @@ function renderHistoryList(reports) {
     reports.forEach((report, index) => {
         const rawContent = report.content || "";
         const firstLine = rawContent.split('\n')[0].replace(/[#*`]/g, '').trim();
-        const displayTitle = report.title || (firstLine.length > 5 ? firstLine.substring(0, 30) + "..." : "Untitled Analysis");
+        const displayTitle = report.title || (firstLine.length > 30 ? firstLine.substring(0,30) + "..." : firstLine);
         
+        // 🟢 关键修复：定义漏掉的 typeLabel 变量
+        const typeLabel = report.templateId || 'Analysis';
+
         const card = document.createElement('div');
         // 关键修改：移除 rounded-xl 和过重的边框，改为横向宽屏布局
         card.style = "display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid #f1f5f9; gap: 20px; width: 100%;";        
