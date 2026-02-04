@@ -25,23 +25,20 @@
     </header>
 
     <section class="generator-section" style="min-height: 80vh;">
-        <div class="container">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <div>
-                    <a href="account.html" class="btn-back" style="text-decoration: none; color: #666; margin-bottom: 10px; display: inline-block;">&larr; Back to Account</a>
-                    <h2 class="section-title" style="text-align: left; margin: 0;">History & Reports</h2>
+        <div class="container" style="max-width: 100%; padding: 0 40px;"> <div style="margin-bottom: 30px;">
+                <a href="account.html" class="btn-back" style="text-decoration: none; color: #94a3b8; margin-bottom: 15px; display: inline-flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-arrow-left"></i> Back to Account Hub
+                </a>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2 class="section-title" style="text-align: left; margin: 0; font-weight: 600; color: #1e293b;">History & Reports</h2>
+                    <button onclick="fetchHistory()" style="padding: 8px 15px; background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; color: #64748b;">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
                 </div>
-                <button onclick="loadHistoryData()" style="padding: 8px 15px; background: #f3f4f6; border: 1px solid #ddd; border-radius: 5px; cursor: pointer;">
-                    <i class="fas fa-sync-alt"></i> Refresh
-                </button>
             </div>
 
-            <div id="history-container">
-                <div style="text-align: center; padding: 50px; color: #888;">
-                    <i class="fas fa-spinner fa-spin fa-2x"></i>
-                    <p style="margin-top: 10px;">Loading your reports...</p>
+            <div id="history-container" style="width: 100%;">
                 </div>
-            </div>
         </div>
     </section>
 
