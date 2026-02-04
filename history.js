@@ -374,22 +374,22 @@ function emailReport(reportId) {
 }
 
 // 🟢 [新增] Markdown 下载功能
-function exportToMD(content, filename) { // 🟢 直接使用参数中的 content
+function exportToMD(content, filename) { 
     if (!content) {
         if(window.showToast) window.showToast("No content", "warning");
         return;
     }
-    
-    const filename = `Report_${new Date().toISOString().slice(0,10)}.md`;
-    const url = URL.createObjectURL(blob);
+    // 🟢 修复：删除重复声明的 filename，直接使用参数中的 content 和 filename
+    const reportBlob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(reportBlob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = filename;
+    link.download = `${filename}.md`; // 🟢 统一使用 .md 后缀
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-    showToast("Markdown 源码已下载", "success");
+    if(window.showToast) window.showToast("Markdown 源码已下载", "success");
 }
 
 function showReportDetail(report) {
