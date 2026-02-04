@@ -42,7 +42,7 @@ async function fetchHistory() {
 
 // 2. 渲染列表 (无 PDF，PPT 为红色 Draft 版)
 function renderHistoryList(reports) {
-    const listContainer = document.getElementById('history-list') || document.getElementById('history-container');
+    const listContainer = document.getElementById('history-container') || document.getElementById('history-list');
     if (!listContainer) return;
     listContainer.innerHTML = ''; 
 
@@ -52,49 +52,55 @@ function renderHistoryList(reports) {
     }
 
     reports.forEach((report, index) => {
-        const rawContent = report.content || "";
-        const firstLine = rawContent.split('\n')[0].replace(/[#*`]/g, '').trim();
-        const displayTitle = report.title || (firstLine.length > 30 ? firstLine.substring(0,30) + "..." : firstLine);
+        // 1. 数据准备
+        const dateObj = new Date(report.createdAt);
+        const dateShort = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
+        const dateFull = dateObj.toLocaleDateString();
         
-        // 🟢 关键修复：定义漏掉的 typeLabel 变量
-        const typeLabel = report.templateId || 'Analysis';
-        const dateStr = new Date(report.createdAt).toLocaleDateString(); // 必须加上这一行
+        // 动态标题提取逻辑 (提取正文第一句作为预览)
+        const rawContent = report.content || "";
+        const lines = rawContent.split('\n').filter(l => l.trim() !== "");
+        const displayTitle = report.title || (lines[0] ? lines[0].replace(/[#*`]/g, '').substring(0, 50) : "Untitled Report");
+        const previewText = lines[1] ? lines[1].replace(/[#*`]/g, '').substring(0, 100) + "..." : "No additional preview available.";
+
+        // 2. 创建卡片容器
         const card = document.createElement('div');
-        // 关键修改：移除 rounded-xl 和过重的边框，改为横向宽屏布局
-        card.style = "display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid #f1f5f9; gap: 20px; width: 100%;";        
+        // 对齐参考图的卡片样式：阴影、圆角、内边距、底部外边距
+        card.className = 'bg-white border border-gray-200 rounded-xl p-6 mb-6 shadow-sm hover:shadow-md transition-shadow';
+        
         card.innerHTML = `
-            <div class="flex-1 w-full">
-                <div class="flex items-center gap-3">
-                    <h3 class="text-gray-700 font-medium text-lg">${report.title || 'Untitled Report'}</h3>
-                    <span class="text-xs text-gray-400 border border-gray-200 px-2 py-0.5 rounded">${typeLabel}</span>
-                </div>
-                <div class="text-xs text-gray-400 mt-1">
-                    <i class="far fa-calendar-alt mr-1"></i> ${dateStr}
-                </div>
+            <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-50">
+                <h3 class="text-lg font-bold text-gray-800">- ${dateShort}</h3>
+                <span class="text-sm text-gray-300">${dateFull}</span>
             </div>
 
-            <div class="flex items-center gap-2 flex-wrap md:flex-nowrap">
-                <button onclick="showReportDetailById('${report._id}')" class="px-3 py-1.5 text-blue-600 hover:bg-blue-50 rounded text-sm transition font-medium">
-                    <i class="fas fa-eye mr-1"></i> View
+            <div class="mb-6">
+                <p class="text-gray-700 font-medium mb-2">${displayTitle}</p>
+                <p class="text-gray-500 text-sm leading-relaxed">${previewText}</p>
+            </div>
+
+            <div class="flex justify-end items-center gap-3 pt-4 border-t border-gray-50">
+                <button onclick="showReportDetailById('${report._id}')" class="p-2 text-blue-500 hover:bg-blue-50 rounded-full transition" title="View Detail">
+                    <i class="fas fa-expand-alt"></i>
                 </button>
                 
-                <button onclick="downloadHistoryItem('${report._id}', 'word')" class="px-3 py-1.5 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition">
-                    Word
+                <button onclick="downloadHistoryItem('${report._id}', 'word')" class="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition" title="Download Word">
+                    <i class="fas fa-file-word"></i>
                 </button>
                 
-                <button onclick="downloadHistoryItem('${report._id}', 'ppt')" class="px-3 py-1.5 bg-red-500 text-white rounded text-sm hover:bg-red-600 transition">
-                    PPT Draft
+                <button onclick="downloadHistoryItem('${report._id}', 'ppt')" class="p-2 text-red-500 hover:bg-red-50 rounded-full transition" title="Download PPT Draft">
+                    <i class="fas fa-file-powerpoint"></i>
                 </button>
                 
-                <button onclick="downloadHistoryItem('${report._id}', 'md')" class="px-3 py-1.5 bg-gray-700 text-white rounded text-sm hover:bg-gray-800 transition">
-                    Markdown
+                <button onclick="downloadHistoryItem('${report._id}', 'md')" class="p-2 text-gray-600 hover:bg-gray-100 rounded-full transition" title="Download Markdown">
+                    <i class="fab fa-markdown"></i>
                 </button>
 
-                <button onclick="emailReport('${report._id}')" class="p-2 text-gray-400 hover:text-blue-500 transition">
+                <button onclick="emailReport('${report._id}')" class="p-2 text-gray-400 hover:bg-gray-50 rounded-full transition">
                     <i class="fas fa-envelope"></i>
                 </button>
 
-                <button onclick="deleteReport('${report._id}')" class="p-2 text-gray-300 hover:text-red-500 transition ml-2">
+                <button onclick="deleteReport('${report._id}')" class="p-2 text-gray-200 hover:text-red-500 transition ml-2">
                     <i class="fas fa-trash-alt"></i>
                 </button>
             </div>
