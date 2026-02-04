@@ -65,24 +65,25 @@ function renderHistoryList(reports) {
         card.style = "background: white; border: 1px solid #eef2f6; border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);";
         
         card.innerHTML = `
-            <div style="display: flex; justify-content: flex-end; align-items: center; gap: 12px; border-top: 1px solid #f1f5f9; padding-top: 15px;">
-                <button onclick="downloadHistoryItem('${report._id}', 'md')" style="background: #374151; color: white; border: none; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'" title="Markdown">
-                    <i class="fab fa-markdown"></i>
-                </button>
-                <button onclick="downloadHistoryItem('${report._id}', 'word')" style="background: #2563eb; color: white; border: none; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'" title="Word">
-                    <i class="fas fa-file-word"></i>
-                </button>
-                <button onclick="downloadHistoryItem('${report._id}', 'ppt')" style="background: #ef4444; color: white; border: none; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'" title="PPT Draft">
-                    <i class="fas fa-file-powerpoint"></i>
-                </button>
-                
-                <div style="width: 1px; height: 20px; background: #e2e8f0; margin: 0 5px;"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #f8fafc; padding-bottom: 10px;">
+                <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: #1e293b;">- ${dateShort}</h3>
+                <span style="font-size: 12px; color: #cbd5e1;">${dateObj.toLocaleDateString()}</span>
+            </div>
 
-                <button onclick="showReportDetailById('${report._id}')" style="background: none; border: none; color: #2563eb; font-weight: 600; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 5px;">
-                    View <i class="fas fa-expand-alt" style="font-size: 12px;"></i>
-                </button>
+            <div style="margin-bottom: 20px;">
+                <p style="color: #475569; font-weight: 600; margin-bottom: 8px; font-size: 15px;">${report.title || 'Report Analysis'}</p>
+                <p style="color: #94a3b8; font-size: 13px; line-height: 1.6;">${previewText}</p>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px;">
+                <button onclick="downloadHistoryItem('${report._id}', 'md')" style="background: #f1f5f9; color: #64748b; border: none; width: 34px; height: 34px; border-radius: 6px; cursor: pointer;" title="Markdown"><i class="fab fa-markdown"></i></button>
+                <button onclick="downloadHistoryItem('${report._id}', 'word')" style="background: #eff6ff; color: #2563eb; border: none; width: 34px; height: 34px; border-radius: 6px; cursor: pointer;" title="Word"><i class="fas fa-file-word"></i></button>
+                <button onclick="downloadHistoryItem('${report._id}', 'ppt')" style="background: #fef2f2; color: #ef4444; border: none; width: 34px; height: 34px; border-radius: 6px; cursor: pointer;" title="PPT Draft"><i class="fas fa-file-powerpoint"></i></button>
                 
-                <button onclick="deleteReport('${report._id}')" style="background: none; border: none; color: #fca5a5; cursor: pointer; margin-left: 10px;"><i class="fas fa-trash-alt"></i></button>
+                <div style="width: 1px; height: 18px; background: #e2e8f0; margin: 0 5px;"></div>
+
+                <button onclick="showReportDetailById('${report._id}')" style="background: none; border: none; color: #2563eb; font-weight: 600; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 4px;">view <i class="fas fa-expand-alt" style="font-size: 12px;"></i></button>
+                <button onclick="deleteReport('${report._id}')" style="background: none; border: none; color: #fca5a5; cursor: pointer; margin-left: 5px;"><i class="fas fa-trash-alt"></i></button>
             </div>
         `;
         listContainer.appendChild(card);
