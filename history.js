@@ -52,9 +52,9 @@ function renderHistoryList(reports) {
     }
 
     reports.forEach((report, index) => {
-        const dateStr = new Date(report.createdAt).toLocaleDateString();
-        const rawTitle = report.title || `${report.templateId || 'Report'}_${reports.length - index}`;
-        const displayTitle = rawTitle.charAt(0).toUpperCase() + rawTitle.slice(1);
+        const rawContent = report.content || "";
+        const firstLine = rawContent.split('\n')[0].replace(/[#*`]/g, '').trim();
+        const displayTitle = report.title || (firstLine.length > 5 ? firstLine.substring(0, 30) + "..." : "Untitled Analysis");
         
         const card = document.createElement('div');
         // 关键修改：移除 rounded-xl 和过重的边框，改为横向宽屏布局
