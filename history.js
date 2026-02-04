@@ -65,25 +65,24 @@ function renderHistoryList(reports) {
         card.style = "background: white; border: 1px solid #eef2f6; border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);";
         
         card.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #f8fafc; padding-bottom: 10px;">
-                <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: #1e293b;">- ${dateShort}</h3>
-                <span style="font-size: 12px; color: #cbd5e1;">${dateObj.toLocaleDateString()}</span>
-            </div>
-
-            <div style="margin-bottom: 20px;">
-                <p style="color: #475569; font-weight: 600; margin-bottom: 8px; font-size: 15px;">${report.title || 'Report Analysis'}</p>
-                <p style="color: #94a3b8; font-size: 13px; line-height: 1.6;">${previewText}</p>
-            </div>
-
-            <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px;">
-                <button onclick="downloadHistoryItem('${report._id}', 'md')" style="background: #f1f5f9; color: #64748b; border: none; width: 34px; height: 34px; border-radius: 6px; cursor: pointer;" title="Markdown"><i class="fab fa-markdown"></i></button>
-                <button onclick="downloadHistoryItem('${report._id}', 'word')" style="background: #eff6ff; color: #2563eb; border: none; width: 34px; height: 34px; border-radius: 6px; cursor: pointer;" title="Word"><i class="fas fa-file-word"></i></button>
-                <button onclick="downloadHistoryItem('${report._id}', 'ppt')" style="background: #fef2f2; color: #ef4444; border: none; width: 34px; height: 34px; border-radius: 6px; cursor: pointer;" title="PPT Draft"><i class="fas fa-file-powerpoint"></i></button>
+            <div style="display: flex; justify-content: flex-end; align-items: center; gap: 12px; border-top: 1px solid #f1f5f9; padding-top: 15px;">
+                <button onclick="downloadHistoryItem('${report._id}', 'md')" style="background: #374151; color: white; border: none; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'" title="Markdown">
+                    <i class="fab fa-markdown"></i>
+                </button>
+                <button onclick="downloadHistoryItem('${report._id}', 'word')" style="background: #2563eb; color: white; border: none; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'" title="Word">
+                    <i class="fas fa-file-word"></i>
+                </button>
+                <button onclick="downloadHistoryItem('${report._id}', 'ppt')" style="background: #ef4444; color: white; border: none; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'" title="PPT Draft">
+                    <i class="fas fa-file-powerpoint"></i>
+                </button>
                 
-                <div style="width: 1px; height: 18px; background: #e2e8f0; margin: 0 5px;"></div>
+                <div style="width: 1px; height: 20px; background: #e2e8f0; margin: 0 5px;"></div>
 
-                <button onclick="showReportDetailById('${report._id}')" style="background: none; border: none; color: #2563eb; font-weight: 600; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 4px;">看详情 <i class="fas fa-expand-alt" style="font-size: 12px;"></i></button>
-                <button onclick="deleteReport('${report._id}')" style="background: none; border: none; color: #fca5a5; cursor: pointer; margin-left: 5px;"><i class="fas fa-trash-alt"></i></button>
+                <button onclick="showReportDetailById('${report._id}')" style="background: none; border: none; color: #2563eb; font-weight: 600; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 5px;">
+                    View <i class="fas fa-expand-alt" style="font-size: 12px;"></i>
+                </button>
+                
+                <button onclick="deleteReport('${report._id}')" style="background: none; border: none; color: #fca5a5; cursor: pointer; margin-left: 10px;"><i class="fas fa-trash-alt"></i></button>
             </div>
         `;
         listContainer.appendChild(card);
@@ -186,13 +185,34 @@ function exportToPPT(content, filename) {
 }
 
 function showReportDetail(report) {
-    const overlay = document.createElement('div');
-    overlay.id = 'dm-overlay';
-    Object.assign(overlay.style, {
-        position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
-        backgroundColor: 'rgba(0,0,0,0.7)', zIndex: 10000,
-        display: 'flex', justifyContent: 'center', alignItems: 'center'
-    });
-    overlay.innerHTML = `<div class="bg-white p-10 rounded"><h3>${report.title}</h3><button onclick="this.parentElement.parentElement.remove()">Close</button></div>`;
-    document.body.appendChild(overlay);
+    const modal = document.getElementById('report-view-modal');
+    const titleEl = document.getElementById('modal-title');
+    const bodyEl = document.getElementById('modal-body');
+    
+    titleEl.innerText = report.title || "Report Detail";
+    
+    // 渲染 Markdown
+    if (typeof marked !== 'undefined') {
+        bodyEl.innerHTML = marked.parse(report.content || "");
+    } else {
+        bodyEl.innerText = report.content || "";
+    }
+
+    // 2. 注入右下角悬浮按钮组
+    const actionContainer = document.createElement('div');
+    actionContainer.style = "position: absolute; bottom: 30px; right: 30px; display: flex; gap: 10px; z-index: 100;";
+    actionContainer.innerHTML = `
+        <button onclick="downloadHistoryItem('${report._id}', 'word')" style="box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); background: #2563eb; color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-weight: 600;">Word</button>
+        <button onclick="downloadHistoryItem('${report._id}', 'ppt')" style="box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); background: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-weight: 600;">PPT</button>
+        <button onclick="deleteReport('${report._id}')" style="background: #fff; color: #f87171; border: 1px solid #fecaca; padding: 10px 20px; border-radius: 30px; cursor: pointer;">Delete</button>
+    `;
+    
+    // 清除旧的按钮并添加新的
+    const oldActions = bodyEl.parentElement.querySelector('.modal-actions');
+    if (oldActions) oldActions.remove();
+    actionContainer.className = 'modal-actions';
+    bodyEl.parentElement.appendChild(actionContainer);
+
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // 禁止背景滚动
 }
