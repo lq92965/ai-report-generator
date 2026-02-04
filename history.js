@@ -164,15 +164,79 @@ window.downloadHistoryItem = function(id, type) {
     else if (type === 'md') exportToMD(item.content, filename);
 };
 
-// 4. 引擎部分 (Word/PPT)
+// ==============================================================
+// 🟢 1. [Word 引擎 2.0]：精益求精版 (优化字体回退、行距、封面)
+// ==============================================================
 function exportToWord(content, filename) {
-    if(window.showToast) window.showToast("Generating Word Doc...", "info");
+    if (!content) { showToast("暂无内容可导出", "error"); return; }
+    showToast("正在生成专业 Word 文档...", "info");
+
     let htmlBody = content;
     if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
         htmlBody = marked.parse(content);
     }
-    const docXml = `<xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml>`;
-    const wordHTML = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'><head><meta charset='utf-8'><title>${filename}</title>${docXml}</head><body>${htmlBody}</body></html>`;
+
+    // Word 专用 XML 头部
+    const docXml = `
+        <xml>
+            <w:WordDocument>
+                <w:View>Print</w:View>
+                <w:Zoom>100</w:Zoom>
+                <w:DoNotOptimizeForBrowser/>
+            </w:WordDocument>
+        </xml>
+    `;
+
+    // 优化后的 CSS：增加宋体优先，优化表格边框
+    const css = `
+        <style>
+            @page {
+                size: 21cm 29.7cm; margin: 2.54cm;
+                mso-page-orientation: portrait;
+                mso-header: url("header_footer_ref") h1;
+                mso-footer: url("header_footer_ref") f1;
+            }
+            @page Section1 { }
+            div.Section1 { page: Section1; }
+            
+            body { font-family: "SimSun", "宋体", "Times New Roman", serif; font-size: 12pt; line-height: 1.6; text-align: justify; }
+            h1, h2, h3, h4 { font-family: "SimHei", "黑体", "Arial", sans-serif; color: #000; font-weight: bold; }
+            h1 { font-size: 22pt; text-align: center; border-bottom: 2px solid #2563EB; padding-bottom: 12px; margin-bottom: 24px; }
+            h2 { font-size: 16pt; border-left: 5px solid #2563EB; background: #F3F4F6; padding: 6px 12px; margin-top: 24px; margin-bottom: 12px; }
+            h3 { font-size: 14pt; margin-top: 18px; margin-bottom: 10px; color: #333; }
+            p { margin-bottom: 10px; }
+            
+            /* 表格优化 */
+            table { border-collapse: collapse; width: 100%; margin: 15px 0; border: 1px solid #000; }
+            td, th { border: 1px solid #000; padding: 8px; vertical-align: top; }
+            th { background: #f0f0f0; font-weight: bold; }
+            
+            /* 引用块 */
+            blockquote { border-left: 4px solid #666; background: #f9f9f9; padding: 10px 15px; font-family: "KaiTi", "楷体"; color: #444; margin: 15px 0; }
+
+            /* 页眉页脚 */
+            p.MsoHeader, p.MsoFooter { font-size: 9pt; font-family: "Calibri", sans-serif; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+            p.MsoFooter { border-bottom: none; border-top: 1px solid #ddd; padding-top: 5px; text-align: center; }
+        </style>
+    `;
+
+    const wordHTML = `
+        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'>
+        <head><meta charset='utf-8'><title>${filename}</title>${docXml}${css}</head>
+        <body>
+            <div class="Section1">
+               
+                ${htmlBody}
+
+                <table id='header_footer_ref' style='display:none'>
+                    <tr><td><div style='mso-element:header' id=h1><p class=MsoHeader><span style='float:left'>${filename}</span><span style='float:right'>Reportify AI</span><span style='clear:both'></span></p></div></td></tr>
+                    <tr><td><div style='mso-element:footer' id=f1><p class=MsoFooter><span style='mso-field-code:" PAGE "'></span> / <span style='mso-field-code:" NUMPAGES "'></span></p></div></td></tr>
+                </table>
+            </div>
+        </body>
+        </html>
+    `;
+
     const blob = new Blob([wordHTML], { type: 'application/msword' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -181,51 +245,158 @@ function exportToWord(content, filename) {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    showToast("Word 文档下载成功!", "success");
 }
 
-function exportToMD(content, filename) {
-    if (!content) return;
-    const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${filename}.md`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-function emailReport(id) {
-    if (id) {
-        if(window.showToast) window.showToast("Downloading Word attachment...", "info");
-        downloadHistoryItem(id, 'word');
+// ==============================================================
+// 🟢 [V5.0 修复版] PPT 引擎：智能识别首屏 + 英文提示 + 样式分离
+// ==============================================================
+function exportToPPT(content, filename) {
+    if (typeof PptxGenJS === 'undefined') {
+        if(window.showToast) window.showToast('PPT Engine Loading...', 'error');
+        return;
     }
+    if(window.showToast) window.showToast("Generating Professional PPT Draft...", "info");
+
+    const pptx = new PptxGenJS();
+    pptx.layout = 'LAYOUT_16x9'; 
+    pptx.title = filename;
+
+    // 颜色配置
+    const themeDark = '1E3A8A'; 
+    const themeLight = '3B82F6'; 
+    const textDark = '374151'; 
+
+    // --- 1. 封面页 (保持不变) ---
+    let slide = pptx.addSlide();
+    slide.background = { color: 'F8FAFC' };
+    slide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '35%', h: '100%', fill: { color: themeDark } });
+    slide.addShape(pptx.ShapeType.rect, { x: '35%', y: 0.5, w: '65%', h: 0.15, fill: { color: themeLight } });
+    slide.addText(filename.replace(/_/g, ' '), { 
+        x: 0.2, y: 2.5, w: '31%', h: 3,
+        fontSize: 32, fontFace: 'Arial Black', color: 'FFFFFF', align: 'left', bold: true, valign: 'middle'
+    });
+    slide.addText("PROFESSIONAL REPORT DRAFT", { x: '38%', y: 3.5, fontSize: 14, color: themeLight, bold: true, charSpacing: 3 });
+    slide.addText(`Date: ${new Date().toLocaleDateString()}`, { x: '38%', y: 4.0, fontSize: 12, color: textDark });
+
+    // --- 2. 内容页 (智能逻辑修复) ---
+    // 按 Markdown 标题切分
+    const sections = content.split(/\n(?=#+ )/); 
+
+    sections.forEach(section => {
+        if (!section.trim()) return;
+
+        let lines = section.trim().split('\n');
+        let firstLine = lines[0].trim();
+        let rawTitle = "";
+        let bodyText = "";
+
+        // 🟢 [核心修复] 判断第一行是不是标题 (以 # 开头)
+        // 如果不是 # 开头，说明这是引言/摘要，手动给它加个标题
+        if (firstLine.startsWith('#')) {
+            rawTitle = firstLine.replace(/#+\s*/, '').trim();
+            bodyText = lines.slice(1).join('\n').trim();
+        } else {
+            rawTitle = "Executive Summary"; // 默认标题，防止爆版
+            bodyText = section.trim();
+        }
+
+        // 清洗 Markdown 符号
+        bodyText = bodyText.replace(/[*_~`]/g, ''); 
+
+        // 🟢 [样式修复] 截断逻辑优化：英文 + 独立样式
+        let isTruncated = false;
+        if (bodyText.length > 700) {
+            bodyText = bodyText.substring(0, 700) + "...";
+            isTruncated = true;
+        }
+
+        // 智能字号
+        let fontSize = 16; 
+        if (bodyText.length > 300) fontSize = 14;
+        if (bodyText.length > 500) fontSize = 12;
+
+        let s = pptx.addSlide();
+        s.background = { color: 'F8FAFC' };
+        
+        // 顶部导航条
+        s.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '100%', h: 0.8, fill: { color: themeDark } });
+        s.addShape(pptx.ShapeType.rect, { x: 0, y: 0.8, w: '100%', h: 0.05, fill: { color: themeLight } });
+
+        // 页面标题
+        s.addText(rawTitle, { 
+            x: 0.5, y: 0.1, w: '90%', h: 0.6, 
+            fontSize: 24, fontFace: 'Arial', color: 'FFFFFF', bold: true, valign: 'middle'
+        });
+
+        // 页面正文
+        s.addText(bodyText, { 
+            x: 0.5, y: 1.3, w: '90%', h: 5.0, 
+            fontSize: fontSize, fontFace: 'Arial', color: textDark, 
+            valign: 'top', lineSpacing: fontSize * 1.4
+        });
+
+        // 🟢 [样式修复] 独立的截断提示 (底部、灰色、斜体、英文)
+        if (isTruncated) {
+            s.addText("[ Content truncated. Please refer to the full Word report for details. ]", {
+                x: 0.5, y: 6.3, w: '90%', h: 0.5,
+                fontSize: 10, color: '9CA3AF', italic: true, align: 'center'
+            });
+        }
+
+        // 页脚
+        s.addShape(pptx.ShapeType.line, { x: 0.5, y: 6.8, w: '90%', h:0, line: {color: 'E5E7EB', width: 1} });
+        s.addText("Reportify AI - Confidential Draft", { x: 0.5, y: 6.9, fontSize: 9, color: '9CA3AF' });
+    });
+
+    pptx.writeFile({ fileName: `Draft_${filename}.pptx` })
+        .then(() => { if(window.showToast) window.showToast("PPT Draft Downloaded!", "success"); });
+}
+
+// 🟢 [优化版] 邮件发送：先下载文档，再打开邮件
+function emailReport(reportId) {
+    // 从缓存中获取当前报告数据
+    const item = window.currentHistoryData.find(r => r._id === reportId);
+    if (!item || !item.content) {
+        if(window.showToast) window.showToast('Report content not found', 'warning');
+        return;
+    }
+
+    if(window.showToast) window.showToast("Downloading Word attachment...", "info");
+    const safeTitle = (item.title || "Report").replace(/[^a-zA-Z0-9\u4e00-\u9fa5]/g, '_');
+    const filename = `${safeTitle}_${new Date().toISOString().slice(0,10)}`;
+
+    // 自动触发 Word 下载
+    exportToWord(item.content, filename);
+
+    // 延时打开邮件客户端
     setTimeout(() => {
         const subject = encodeURIComponent("Sharing an AI-generated report");
-        const body = encodeURIComponent("Please find the attached report.");
+        const body = encodeURIComponent("Hello,\n\nThis is a report generated using Reportify AI.\n\n[Attachment]: Please manually attach the downloaded Word file.");
         window.location.href = `mailto:?subject=${subject}&body=${body}`;
     }, 1000);
 }
 
-function exportToPPT(content, filename) {
-    if (typeof PptxGenJS === 'undefined') return;
-    if(window.showToast) window.showToast("Generating PPT Draft...", "info");
-    const pptx = new PptxGenJS();
-    pptx.layout = 'LAYOUT_16x9'; 
-    let slide = pptx.addSlide();
-    slide.background = { color: 'F8FAFC' };
-    slide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '35%', h: '100%', fill: { color: '1E3A8A' } });
-    slide.addText(filename, { x: 0.2, y: 2.5, w: '31%', fontSize: 24, color: 'FFFFFF', bold: true });
+// 🟢 [新增] Markdown 下载功能
+function downloadMarkdown() {
+    const content = window.currentReportContent; // 获取全局存储的 Markdown 原文
+    if (!content) {
+        showToast("没有可下载的内容", "warning");
+        return;
+    }
     
-    const sections = content.split(/\n(?=#+ )/); 
-    sections.forEach(section => {
-        if (!section.trim()) return;
-        let s = pptx.addSlide();
-        s.background = { color: 'F8FAFC' };
-        s.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '100%', h: 0.8, fill: { color: '1E3A8A' } });
-        s.addText(section.substring(0,800).replace(/[*#]/g,''), { x: 0.5, y: 1.3, w: '90%', fontSize: 14, color: '333333' });
-    });
-    pptx.writeFile({ fileName: `Draft_${filename}.pptx` });
+    const filename = `Report_${new Date().toISOString().slice(0,10)}.md`;
+    const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    showToast("Markdown 源码已下载", "success");
 }
 
 function showReportDetail(report) {
