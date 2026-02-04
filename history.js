@@ -52,57 +52,38 @@ function renderHistoryList(reports) {
     }
 
     reports.forEach((report, index) => {
-        // 1. 数据准备
         const dateObj = new Date(report.createdAt);
         const dateShort = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日`;
-        const dateFull = dateObj.toLocaleDateString();
         
-        // 动态标题提取逻辑 (提取正文第一句作为预览)
+        // 动态预览：取第二行或截取正文
         const rawContent = report.content || "";
         const lines = rawContent.split('\n').filter(l => l.trim() !== "");
-        const displayTitle = report.title || (lines[0] ? lines[0].replace(/[#*`]/g, '').substring(0, 50) : "Untitled Report");
-        const previewText = lines[1] ? lines[1].replace(/[#*`]/g, '').substring(0, 100) + "..." : "No additional preview available.";
+        const previewText = lines[1] ? lines[1].replace(/[#*`]/g, '').substring(0, 120) + "..." : "No additional content available.";
 
-        // 2. 创建卡片容器
         const card = document.createElement('div');
-        // 对齐参考图的卡片样式：阴影、圆角、内边距、底部外边距
-        card.className = 'bg-white border border-gray-200 rounded-xl p-6 mb-6 shadow-sm hover:shadow-md transition-shadow';
+        // 🟢 核心样式：白色背景、大圆角、柔和阴影、底部间距
+        card.style = "background: white; border: 1px solid #eef2f6; border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);";
         
         card.innerHTML = `
-            <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-50">
-                <h3 class="text-lg font-bold text-gray-800">- ${dateShort}</h3>
-                <span class="text-sm text-gray-300">${dateFull}</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #f8fafc; padding-bottom: 10px;">
+                <h3 style="margin: 0; font-size: 18px; font-weight: 700; color: #1e293b;">- ${dateShort}</h3>
+                <span style="font-size: 12px; color: #cbd5e1;">${dateObj.toLocaleDateString()}</span>
             </div>
 
-            <div class="mb-6">
-                <p class="text-gray-700 font-medium mb-2">${displayTitle}</p>
-                <p class="text-gray-500 text-sm leading-relaxed">${previewText}</p>
+            <div style="margin-bottom: 20px;">
+                <p style="color: #475569; font-weight: 600; margin-bottom: 8px; font-size: 15px;">${report.title || 'Report Analysis'}</p>
+                <p style="color: #94a3b8; font-size: 13px; line-height: 1.6;">${previewText}</p>
             </div>
 
-            <div class="flex justify-end items-center gap-3 pt-4 border-t border-gray-50">
-                <button onclick="showReportDetailById('${report._id}')" class="p-2 text-blue-500 hover:bg-blue-50 rounded-full transition" title="View Detail">
-                    <i class="fas fa-expand-alt"></i>
-                </button>
+            <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px;">
+                <button onclick="downloadHistoryItem('${report._id}', 'md')" style="background: #f1f5f9; color: #64748b; border: none; width: 34px; height: 34px; border-radius: 6px; cursor: pointer;" title="Markdown"><i class="fab fa-markdown"></i></button>
+                <button onclick="downloadHistoryItem('${report._id}', 'word')" style="background: #eff6ff; color: #2563eb; border: none; width: 34px; height: 34px; border-radius: 6px; cursor: pointer;" title="Word"><i class="fas fa-file-word"></i></button>
+                <button onclick="downloadHistoryItem('${report._id}', 'ppt')" style="background: #fef2f2; color: #ef4444; border: none; width: 34px; height: 34px; border-radius: 6px; cursor: pointer;" title="PPT Draft"><i class="fas fa-file-powerpoint"></i></button>
                 
-                <button onclick="downloadHistoryItem('${report._id}', 'word')" class="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition" title="Download Word">
-                    <i class="fas fa-file-word"></i>
-                </button>
-                
-                <button onclick="downloadHistoryItem('${report._id}', 'ppt')" class="p-2 text-red-500 hover:bg-red-50 rounded-full transition" title="Download PPT Draft">
-                    <i class="fas fa-file-powerpoint"></i>
-                </button>
-                
-                <button onclick="downloadHistoryItem('${report._id}', 'md')" class="p-2 text-gray-600 hover:bg-gray-100 rounded-full transition" title="Download Markdown">
-                    <i class="fab fa-markdown"></i>
-                </button>
+                <div style="width: 1px; height: 18px; background: #e2e8f0; margin: 0 5px;"></div>
 
-                <button onclick="emailReport('${report._id}')" class="p-2 text-gray-400 hover:bg-gray-50 rounded-full transition">
-                    <i class="fas fa-envelope"></i>
-                </button>
-
-                <button onclick="deleteReport('${report._id}')" class="p-2 text-gray-200 hover:text-red-500 transition ml-2">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
+                <button onclick="showReportDetailById('${report._id}')" style="background: none; border: none; color: #2563eb; font-weight: 600; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 4px;">看详情 <i class="fas fa-expand-alt" style="font-size: 12px;"></i></button>
+                <button onclick="deleteReport('${report._id}')" style="background: none; border: none; color: #fca5a5; cursor: pointer; margin-left: 5px;"><i class="fas fa-trash-alt"></i></button>
             </div>
         `;
         listContainer.appendChild(card);
