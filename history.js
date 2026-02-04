@@ -97,14 +97,57 @@ window.showReportDetailById = function(id) {
 }
 
 window.deleteReport = async function(id) {
-    if(!confirm("Are you sure you want to delete this report?")) return;
-    try {
-        const token = localStorage.getItem('token');
-        const baseUrl = (typeof API_BASE_URL !== 'undefined') ? API_BASE_URL : ''; 
-        await fetch(`${baseUrl}/api/history/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
-        fetchHistory();
-        if(window.showToast) window.showToast("Deleted", "success");
-    } catch(e) { if(window.showToast) window.showToast("Error", "error"); }
+    // 1. 创建美化的自定义确认弹窗
+    const confirmOverlay = document.createElement('div');
+    confirmOverlay.style = "position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10001; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); animation: fadeIn 0.2s ease;";
+    
+    confirmOverlay.innerHTML = `
+        <div style="background: white; padding: 30px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); text-align: center; max-width: 350px; width: 90%;">
+            <div style="color: #ef4444; font-size: 40px; margin-bottom: 15px;"><i class="fas fa-exclamation-circle"></i></div>
+            <h3 style="margin: 0 0 10px 0; color: #1e293b; font-size: 18px;">Are you sure?</h3>
+            <p style="color: #64748b; font-size: 14px; margin-bottom: 25px; line-height: 1.5;">This action cannot be undone. This report will be permanently deleted.</p>
+            <div style="display: flex; gap: 12px; justify-content: center;">
+                <button id="cancel-delete" style="padding: 10px 20px; background: #f3f4f6; color: #666; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; flex: 1;">Cancel</button>
+                <button id="confirm-delete" style="padding: 10px 20px; background: #ef4444; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; flex: 1;">Delete</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(confirmOverlay);
+
+    // 2. 绑定按钮逻辑
+    return new Promise((resolve) => {
+        document.getElementById('cancel-delete').onclick = () => {
+            confirmOverlay.remove();
+        };
+
+        document.getElementById('confirm-delete').onclick = async () => {
+            confirmOverlay.innerHTML = '<div style="color: white; font-weight: bold;">Deleting...</div>'; // 加载状态反馈
+            try {
+                const token = localStorage.getItem('token');
+                const baseUrl = window.API_BASE_URL || ''; 
+                const res = await fetch(`${baseUrl}/api/history/${id}`, { 
+                    method: 'DELETE', 
+                    headers: { 'Authorization': `Bearer ${token}` } 
+                });
+                
+                if (res.ok) {
+                    if(window.showToast) window.showToast("Report deleted successfully", "success");
+                    confirmOverlay.remove();
+                    // 如果在详情预览页删除，关闭预览
+                    const modal = document.getElementById('report-view-modal');
+                    if(modal) modal.style.display = 'none';
+                    document.body.style.overflow = '';
+                    fetchHistory(); // 刷新列表
+                } else {
+                    throw new Error();
+                }
+            } catch(e) {
+                if(window.showToast) window.showToast("Failed to delete report", "error");
+                confirmOverlay.remove();
+            }
+        };
+    });
 };
 
 window.downloadHistoryItem = function(id, type) {
