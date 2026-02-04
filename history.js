@@ -189,31 +189,63 @@ function showReportDetail(report) {
     const modal = document.getElementById('report-view-modal');
     const titleEl = document.getElementById('modal-title');
     const bodyEl = document.getElementById('modal-body');
+    const copyBtn = document.getElementById('modal-copy-btn');
     
+    if (!modal || !report) return;
+
     titleEl.innerText = report.title || "Report Detail";
     
-    // 渲染 Markdown
+    // 1. 渲染内容（解析 Markdown）
     if (typeof marked !== 'undefined') {
         bodyEl.innerHTML = marked.parse(report.content || "");
     } else {
         bodyEl.innerText = report.content || "";
     }
 
-    // 2. 注入右下角悬浮按钮组
-    const actionContainer = document.createElement('div');
-    actionContainer.style = "position: absolute; bottom: 30px; right: 30px; display: flex; gap: 10px; z-index: 100;";
-    actionContainer.innerHTML = `
-        <button onclick="downloadHistoryItem('${report._id}', 'word')" style="box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); background: #2563eb; color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-weight: 600;">Word</button>
-        <button onclick="downloadHistoryItem('${report._id}', 'ppt')" style="box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); background: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-weight: 600;">PPT</button>
-        <button onclick="deleteReport('${report._id}')" style="background: #fff; color: #f87171; border: 1px solid #fecaca; padding: 10px 20px; border-radius: 30px; cursor: pointer;">Delete</button>
-    `;
-    
-    // 清除旧的按钮并添加新的
-    const oldActions = bodyEl.parentElement.querySelector('.modal-actions');
-    if (oldActions) oldActions.remove();
-    actionContainer.className = 'modal-actions';
-    bodyEl.parentElement.appendChild(actionContainer);
+    // 2. 修复复制功能
+    if (copyBtn) {
+        // 先移除旧的监听器防止叠加
+        const newCopyBtn = copyBtn.cloneNode(true);
+        copyBtn.parentNode.replaceChild(newCopyBtn, copyBtn);
+        
+        newCopyBtn.onclick = () => {
+            navigator.clipboard.writeText(report.content).then(() => {
+                const originalText = newCopyBtn.innerText;
+                newCopyBtn.innerText = 'Copied!';
+                newCopyBtn.style.background = '#059669'; // 变绿反馈
+                setTimeout(() => {
+                    newCopyBtn.innerText = originalText;
+                    newCopyBtn.style.background = '#2563eb';
+                }, 2000);
+            });
+        };
+    }
+
+    // 3. 重组底部按钮排成一排
+    // 定位到弹窗底部的按钮容器（根据你的HTML结构，它是 modal-body 的下一个兄弟节点）
+    const footer = modal.querySelector('div[style*="text-align: right"]');
+    if (footer) {
+        footer.style = "padding: 15px 20px; border-top: 1px solid #eee; display: flex; justify-content: flex-end; align-items: center; gap: 8px; background: white;";
+        footer.innerHTML = `
+            <button onclick="downloadHistoryItem('${report._id}', 'word')" style="padding: 6px 12px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px;">Word</button>
+            <button onclick="downloadHistoryItem('${report._id}', 'ppt')" style="padding: 6px 12px; background: #ef4444; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px;">PPT</button>
+            <button onclick="downloadHistoryItem('${report._id}', 'md')" style="padding: 6px 12px; background: #374151; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px;">MD</button>
+            <button id="modal-copy-btn-new" style="padding: 6px 12px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px;">Copy Text</button>
+            <button onclick="deleteReport('${report._id}')" style="padding: 6px 12px; background: #fff; color: #f87171; border: 1px solid #fecaca; border-radius: 6px; cursor: pointer; font-size: 13px;">Delete</button>
+            <div style="width: 1px; height: 20px; background: #eee; margin: 0 4px;"></div>
+            <button onclick="closeViewModal()" style="padding: 6px 12px; background: #f3f4f6; color: #666; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; font-size: 13px;">Close</button>
+        `;
+
+        // 重新绑定新复制按钮逻辑
+        const btn = document.getElementById('modal-copy-btn-new');
+        btn.onclick = () => {
+            navigator.clipboard.writeText(report.content).then(() => {
+                btn.innerText = 'Copied!';
+                setTimeout(() => btn.innerText = 'Copy Text', 2000);
+            });
+        };
+    }
 
     modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden'; // 禁止背景滚动
+    document.body.style.overflow = 'hidden';
 }
