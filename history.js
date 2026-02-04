@@ -17,14 +17,15 @@ async function fetchHistory() {
         return;
     }
 
-    const list = document.getElementById('history-list');
+    const list = document.getElementById('history-list') || document.getElementById('history-container');
     if(list) list.innerHTML = '<div style="text-align:center; padding: 40px; color:#666;">Loading Reports...</div>';
 
     try {
         // 智能获取 Base URL
         const baseUrl = (typeof API_BASE_URL !== 'undefined') ? API_BASE_URL : '';
         
-        const response = await fetch(`${baseUrl}/api/reports/history`, {
+        const response = await fetch(`${baseUrl}/api/my-reports`, {
+            method: 'GET',
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
