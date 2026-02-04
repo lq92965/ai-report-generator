@@ -53,12 +53,12 @@ function renderHistoryList(reports) {
 
     reports.forEach((report, index) => {
         const dateStr = new Date(report.createdAt).toLocaleDateString();
-        const typeLabel = report.templateId || 'Report';
+        const rawTitle = report.title || `${report.templateId || 'Report'}_${reports.length - index}`;
+        const displayTitle = rawTitle.charAt(0).toUpperCase() + rawTitle.slice(1);
         
         const card = document.createElement('div');
         // 关键修改：移除 rounded-xl 和过重的边框，改为横向宽屏布局
-        card.className = 'bg-white border-b border-gray-100 p-4 hover:bg-gray-50 transition-all flex flex-col md:flex-row justify-between items-center gap-4 w-full';
-        
+        card.style = "display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid #f1f5f9; gap: 20px; width: 100%;";        
         card.innerHTML = `
             <div class="flex-1 w-full">
                 <div class="flex items-center gap-3">
