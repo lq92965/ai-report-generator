@@ -358,12 +358,7 @@ function exportToPPT(content, filename) {
 function emailReport(reportId) {
     // 从缓存中获取当前报告数据
     const item = window.currentHistoryData.find(r => r._id === reportId);
-    if (!item || !item.content) {
-        if(window.showToast) window.showToast('Report content not found', 'warning');
-        return;
-    }
-
-    if(window.showToast) window.showToast("Downloading Word attachment...", "info");
+    if (!item) return;
     const safeTitle = (item.title || "Report").replace(/[^a-zA-Z0-9\u4e00-\u9fa5]/g, '_');
     const filename = `${safeTitle}_${new Date().toISOString().slice(0,10)}`;
 
@@ -379,15 +374,13 @@ function emailReport(reportId) {
 }
 
 // 🟢 [新增] Markdown 下载功能
-function exportToMD(content, filename) {
-    const content = window.currentReportContent; // 获取全局存储的 Markdown 原文
+function exportToMD(content, filename) { // 🟢 直接使用参数中的 content
     if (!content) {
-        showToast("没有可下载的内容", "warning");
+        if(window.showToast) window.showToast("No content", "warning");
         return;
     }
     
     const filename = `Report_${new Date().toISOString().slice(0,10)}.md`;
-    const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
