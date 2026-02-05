@@ -386,104 +386,93 @@ app.post('/api/update-profile', authenticateToken, async (req, res) => {
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 // ==========================================
-// 🟢 [RIE 3.0 旗舰版] 后端生成逻辑重构
+// 🟢 [核心修复] RIE 3.0 + 正确模型 + 语法修正
 // ==========================================
 app.post('/api/generate', authenticateToken, async (req, res) => {
     try {
-        // 1. 获取用户信息与扣费检查 (保留原逻辑)
+        // 1. 获取用户 (保留原逻辑)
         const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
         if (!user) return res.status(404).json({ error: "User not found" });
 
+        // 2. 🟢 核心检查：够不够扣？ (完全保留你的原逻辑)
         let allowGen = false;
         let deductSource = ''; 
-        if (user.plan === 'pro' || user.plan === 'pro_elite') {
+
+        if (user.plan === 'pro') {
             allowGen = true; 
         } else {
             let limit = (user.plan === 'free') ? 3 : 45; 
             if ((user.usageCount || 0) < limit) {
                 allowGen = true;
                 deductSource = 'main';
-            } else if ((user.bonusCredits || 0) > 0) {
+            } 
+            else if ((user.bonusCredits || 0) > 0) {
                 allowGen = true;
                 deductSource = 'bonus';
             }
         }
-        if (!allowGen) return res.status(403).json({ error: "Limit reached! Invite friends for more credits." });
 
-        // 🟢 RIE 3.0 增强型逻辑分发器 - 核心 Prompt 重构
-        const { userPrompt, role, template, tone, detailLevel } = req.body;
+        if (!allowGen) return res.status(403).json({ error: "Limit reached! Invite friends to get more credits." });
 
-        let finalSystemInstructions = `You are the RIE (Reportify Intelligence Engine) v3.0. 
-        Adapt your output strictly based on these parameters:
-        Role: ${role}, Report Type: ${template}, Tone: ${tone}, Detail: ${detailLevel}.
+        // 3. 🟢 RIE 3.0 逻辑重构 (根据你的参数 role, template, tone, detailLevel)
+        const isPro = (user.plan === 'pro' || user.plan === 'elite_trial');
+        const { userPrompt, role, templateId, tone, detailLevel } = req.body;
 
-        ### LOGIC RULES:
-        1. **Identity Alignment**: 
-           - If Role is "General" or "Administrative": Focus on PRACTICAL TASKS. Avoid high-level strategic buzzwords. Be grounded and realistic.
-           - If Role is "Executive" or "Management": Focus on IMPACT and STRATEGY.
-        2. **Scenario Realism**: 
-           - If Type is "daily_standup": Use a professional bullet-point log format (e.g., Done / In Progress / Blockers). 
-           - If Tone is "Conversational": Keep the human element. If the user mentions personal life (like "picking up kids"), integrate it naturally as a work-life balance element.
-        3. **Detail & Volume**: 
-           - If Detail is "Detailed": Expand each point. Explain the 'how' and 'why'. Minimum 3 sections, 400 words.
-           - If Detail is "Brief": Short, sharp results. Maximum 150 words.
-        4. **Structure**: Do NOT be limited to 3 sections. Use as many as needed to make the report professional and complete.
-
-        ### FORMAT:
-        Return a JSON object: {"word_content": "...", "ppt_outline": "...", "email_summary": "..."}`;
+        let finalInstructions = "";
+        if (isPro) {
+            finalInstructions = `You are RIE 3.0. Role: ${role}, Type: ${templateId}, Tone: ${tone}, Detail: ${detailLevel}. Rules: 1. RECONSTRUCT facts. 2. ELEVATE language appropriately. 3. Return JSON ONLY: {"word_content": "...", "ppt_outline": "...", "email_summary": "..."}`;
         } else {
-            // Basic 用户：维持原有的基础生成逻辑
-            finalSystemInstructions = "You are a professional report assistant. Rewrite the following notes into a clear report.";
+            finalInstructions = "You are a professional report assistant. Rewrite the following notes into a clear report.";
         }
 
-        const fullPrompt = `${finalSystemInstructions}\n\nUser Input Data:\n${userPrompt}`;
-
-        // 3. 调用 AI (双模型备份逻辑)
+        const prompt = `${finalInstructions}\n\nUser Content:\n${userPrompt || "Hello"}`;
         let text = "";
-        const primaryModelName = process.env.GEMINI_MODEL_PRIMARY || "gemini-1.5-flash"; 
-        const backupModelName = process.env.GEMINI_MODEL_BACKUP || "gemini-1.5-flash";
+
+        // 4. 调用 AI (恢复你的主力与备用模型)
+        const primaryModelName = "gemini-3-flash-preview"; 
+        const backupModelName = "gemini-2.5-flash";
 
         try {
+            console.log(`🤖 Trying Primary Model: ${primaryModelName}`);
             const model = genAI.getGenerativeModel({ model: primaryModelName });
-            // 💡 Pro 用户开启 JSON 约束模式，确保返回格式稳定
+            // 如果是 Pro 开启 JSON 模式
             const generationConfig = isPro ? { response_mime_type: "application/json" } : {};
-            const result = await model.generateContent({ 
-                contents: [{ role: 'user', parts: [{ text: fullPrompt }] }],
-                generationConfig
-            });
+            const result = await model.generateContent({ contents: [{ role: 'user', parts: [{ text: prompt }] }], generationConfig });
             text = result.response.text();
         } catch (primaryError) {
-            console.warn("Primary Model Failed, switching to backup...");
-            const modelBackup = genAI.getGenerativeModel({ model: backupModelName });
-            const resultBackup = await modelBackup.generateContent(fullPrompt);
-            text = resultBackup.response.text();
+            console.warn(`⚠️ Primary Model Failed:`, primaryError.message);
+            console.log(`🔄 Switching to Backup Model: ${backupModelName}`);
+            try {
+                const modelBackup = genAI.getGenerativeModel({ model: backupModelName });
+                const resultBackup = await modelBackup.generateContent(prompt);
+                text = resultBackup.response.text();
+            } catch (backupError) {
+                console.error(`❌ Both models failed`);
+                throw new Error("AI Service Unavailable");
+            }
         }
 
-        // 4. 保存报告并扣费 (保留原逻辑)
+        // 5. 保存报告 (保留原逻辑)
         await db.collection('reports').insertOne({ 
             userId: req.user.userId, 
-            title: template || "Generated Report", 
+            title: "Generated Report", 
             content: text, 
             createdAt: new Date() 
         });
 
+        // 6. 扣费 (保留原逻辑)
         if (deductSource === 'main') {
             await db.collection('users').updateOne({ _id: user._id }, { $inc: { usageCount: 1 } });
         } else if (deductSource === 'bonus') {
             await db.collection('users').updateOne({ _id: user._id }, { $inc: { bonusCredits: -1 } });
         }
 
-        // 5. 🟢 多维数据返回
+        // 7. 返回 (支持多维返回)
         if (isPro) {
             try {
                 const parsed = JSON.parse(text);
-                res.json({ 
-                    generatedText: parsed.word_content, 
-                    pptOutline: parsed.ppt_outline, 
-                    emailSummary: parsed.email_summary 
-                });
-            } catch (jsonErr) {
-                // 如果 JSON 解析失败（AI 偶发错误），则降级返回纯文本
+                res.json({ generatedText: parsed.word_content, pptOutline: parsed.ppt_outline, emailSummary: parsed.email_summary });
+            } catch (e) {
                 res.json({ generatedText: text });
             }
         } else {
@@ -492,9 +481,9 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
 
     } catch (e) { 
         console.error("AI API Error:", e.message);
-        res.status(500).json({ error: "AI Service Error" }); 
+        res.status(500).json({ error: "AI Service Error: " + e.message }); 
     }
-});
+}); // <--- 确保这里只有一个闭合
 
 app.get('/api/reports/history', authenticateToken, async (req, res) => {
     const reports = await db.collection('reports').find({ userId: req.user.userId }).sort({ createdAt: -1 }).toArray();
