@@ -41,7 +41,7 @@ connectDB();
 // 3. CORS 配置
 // 🟢 找到 app.use(cors(...))，确保替换为这段最强兼容性代码
 app.use(cors({ 
-    origin: ['https://goreportify.com', 'http://goreportify.com'], // 显式允许你的域名
+    origin: true, // 动态允许来源
     credentials: true, 
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'] 
