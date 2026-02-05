@@ -414,19 +414,29 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
 
         if (!allowGen) return res.status(403).json({ error: "Limit reached! Invite friends to get more credits." });
 
-        // 3. 🟢 RIE 3.0 逻辑重构 (根据你的参数 role, template, tone, detailLevel)
-        const isPro = (user.plan === 'pro' || user.plan === 'elite_trial');
+        // 🟢 RIE 3.0 Logic Dispatcher - Precise English Instructions
         const { userPrompt, role, templateId, tone, detailLevel } = req.body;
 
-        let finalInstructions = "";
-        if (isPro) {
-            finalInstructions = `You are RIE 3.0. Role: ${role}, Type: ${templateId}, Tone: ${tone}, Detail: ${detailLevel}. Rules: 1. RECONSTRUCT facts. 2. ELEVATE language appropriately. 3. Return JSON ONLY: {"word_content": "...", "ppt_outline": "...", "email_summary": "..."}`;
-        } else {
-            finalInstructions = "You are a professional report assistant. Rewrite the following notes into a clear report.";
-        }
+        let finalSystemInstructions = `You are RIE (Reportify Intelligence Engine) v3.0. 
+        Adapt your output strictly based on: Role: ${role}, Type: ${templateId}, Tone: ${tone}, Detail: ${detailLevel}.
 
-        const prompt = `${finalInstructions}\n\nUser Content:\n${userPrompt || "Hello"}`;
-        let text = "";
+        ### CORE DIRECTIVES:
+        1. **Language**: All output content MUST be in **Simplified Chinese**.
+        2. **Identity Alignment**: 
+            - For "General/Staff" roles: Focus on practical task completion. Avoid over-strategizing. Be grounded.
+            - For "Executive/Management" roles: Focus on strategic impact and value.
+        3. **Content Enrichment (Anti-Outline Rule)**: 
+            - DO NOT just list points. For every user input, expand it into: What was done, How it was done, and the Result/Impact.
+            - If Detail is "Detailed": Each task description must be 80-100 words. Total report must be substantial (400+ words).
+        4. **Format**: Use standard Markdown (#, ##, **). Do NOT be limited to a 3-section structure.
+
+        ### OUTPUT JSON FORMAT:
+        Return a JSON object ONLY:
+        {
+            "word_content": "Full detailed Chinese report with Markdown",
+            "ppt_outline": "5-8 slides professional outline",
+            "email_summary": "3-5 lines executive summary"
+        }`;
 
         // 4. 调用 AI (恢复你的主力与备用模型)
         const primaryModelName = "gemini-3-flash-preview"; 
