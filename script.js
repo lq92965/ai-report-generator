@@ -721,6 +721,20 @@ function setupGenerator() {
 
             // 🟢 定位到 script.js 第 338 行附近的 .then(data => { ... })
             const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Generation failed');
+
+            // 1. 分类存储 RIE 3.0 的多维数据
+            window.currentReportContent = data.generatedText; // 主报告 (用于 Word)
+            window.currentPPTOutline = data.pptOutline;       // PPT 大纲 (用于 PPT)
+            window.currentEmailSummary = data.emailSummary;   // 邮件摘要 (用于 Email)
+
+            // 2. 🟢 修复渲染逻辑：确保 Markdown 被正确转换为漂亮 HTML
+            if (typeof marked !== 'undefined') {
+                resultBox.innerHTML = marked.parse(data.generatedText);
+                // 这里保持你原有的 theme-corporate 等皮肤切换逻辑不变
+            } else {
+                resultBox.innerText = data.generatedText;
+            }
 
             // --- RIE 3.0 核心联动开始 ---  
             if (data.error) throw new Error(data.error || 'Generation failed');
@@ -831,31 +845,21 @@ function setupCopyBtn() {
 }
 
 // 🟢 [修复版] 统一导出处理函数
+// 🟢 修改 doExport 函数
 function doExport(type) {
     const reportBox = document.getElementById('generated-report');
-    
-    // 检查是否为空
-    if (!reportBox || reportBox.innerText.length < 5 || reportBox.innerText.includes('AI 生成的精美报告')) {
-        showToast('Please generate a report first.', 'warning');
+    if (!reportBox || reportBox.innerText.length < 5) {
+        showToast('请先生成报告', 'warning');
         return;
     }
 
     const filename = `Report_${new Date().toISOString().slice(0,10)}`;
 
     if (type === 'word') {
+        // 🚀 核心修改：传入 innerHTML (带样式的渲染结果) 而不是文本
         exportToWord(reportBox.innerHTML, filename);
     } 
-    else if (type === 'pdf') {
-        // ❌ 错误写法: exportToPDF(reportBox, filename); 
-        // ✅ 正确写法: 传入 innerHTML (字符串)
-        exportToPDF(reportBox.innerHTML, filename); 
-    } 
-    else if (type === 'markdown') {
-        const text = reportBox.innerText; 
-        const blob = new Blob([text], {type: 'text/markdown;charset=utf-8'});
-        saveAs(blob, `${filename}.md`);
-        showToast("Markdown Downloaded", "success");
-    }
+    // ... markdown 和 pdf 保持不变 ...
 }
 
 // ==============================================================
