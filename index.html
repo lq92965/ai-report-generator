@@ -107,12 +107,15 @@
 
     <main>
         <section id="hero" class="hero-section">
-            <div class="container">
-                <h1>Generate in Seconds, Report with Confidence.</h1>
-                <p class="subtitle">Save time and boost your productivity. Let our AI handle the paperwork while you focus on what matters.</p>
-                <div class="cta-buttons">
-                    <a href="#generator" class="btn btn-primary btn-large">Get Started</a>
-                    <a href="#features" class="btn btn-secondary btn-large">Learn More</a>
+            <div class="hero-content">
+                <h1 style="font-size: 3.5rem; line-height: 1.2; margin-bottom: 20px;">Stop Wasting Time on <br><span style="color: #7c3aed;">Daily & Weekly Reports</span></h1>
+                <p style="font-size: 1.25rem; color: #64748b; max-width: 700px; margin: 0 auto 30px;">
+                    Turn your messy notes and fragments into professional Word reports and PPT presentations in seconds. 
+                    Powered by <strong>RIE 3.0 Engine</strong>.
+                </p>
+                <div class="hero-btns">
+                    <a href="#generator" class="btn btn-primary" style="padding: 15px 40px; font-size: 1.1rem;">Start Automating Now</a>
+                    <a href="#features" class="btn btn-secondary" style="padding: 15px 40px; font-size: 1.1rem;">See How It Works</a>
                 </div>
             </div>
         </section>
@@ -140,59 +143,54 @@
         <section id="pricing" class="pricing-section">
             <div class="container">
                 <h2 class="section-title">Choose Your Plan</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pricing-grid pt-20 pb-10" style="display: grid;">
-                
-                    <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer hover:shadow-lg relative flex flex-col justify-between" data-plan="free">
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Free Trial</h3>
-                            <div class="text-3xl font-extrabold text-gray-900 mb-6">$0<span class="text-sm font-normal text-gray-500">/ 7 days</span></div>
-                            <ul class="space-y-3 mb-8 text-sm text-gray-600">
-                                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> <strong>3 Reports</strong> per day</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Standard AI Model</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Word Export</li>
-                                <li class="flex items-center gap-2 opacity-50"><i class="fas fa-times-circle"></i> Smart AI Engine</li>
-                                <li class="flex items-center gap-2 opacity-50"><i class="fas fa-times-circle"></i> Long Input (100k)</li>
-                            </ul>
-                        </div>
-                        <button class="w-full py-3 rounded-lg font-bold transition-all duration-200 bg-white text-blue-600 border border-gray-200 hover:bg-gray-50 choose-plan-btn" data-plan="free">Start Free</button>
+        
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pricing-grid pt-20 pb-10" style="display: grid; width: 100%;">
+            
+                <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-8 bg-white relative flex flex-col justify-between" data-plan="free">
+                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs px-3 py-1 rounded-bl-lg font-bold">7-Day Elite Pass</div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Elite Trial</h3>
+                        <div class="text-3xl font-extrabold mb-6">$0<span class="text-sm font-normal text-gray-500">/ 7 days</span></div>
+                        <ul class="space-y-4 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0; text-align: left;">
+                            <li class="flex items-start gap-2"><i class="fas fa-bolt text-blue-600 mt-1"></i> <span><strong>RIE 3.0 Flagship Engine</strong><br><small>Full Access Experience</small></span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> <strong>One-Click PPT</strong> Generation</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Word & Email Export</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> <strong>Automate</strong> Daily/Weekly Reports</li>
+                        </ul>
                     </div>
-
-                    <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer hover:shadow-lg relative flex flex-col justify-between" data-plan="basic">
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Basic</h3>
-                            <div class="text-3xl font-extrabold text-gray-900 mb-6">$9.90<span class="text-sm font-normal text-gray-500">/ mo</span></div>
-                            <ul class="space-y-3 mb-8 text-sm text-gray-600">
-                                <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> <strong>45 Reports</strong> / month</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> <strong>Smart AI</strong> Engine</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> Input Limit: <strong>5,000 chars</strong></li>
-                                <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> PDF & Word Export</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-info-circle text-gray-400"></i> Professional Tone Only</li>
-                            </ul>
-                        </div>
-                        <button class="w-full py-3 rounded-lg font-bold transition-all duration-200 bg-white text-blue-600 border border-gray-200 hover:bg-gray-50 choose-plan-btn" data-plan="basic">Choose Basic</button>
-                    </div>
-
-                    <div class="pricing-card overflow-visible border-blue-600 border-2 ring-4 ring-blue-500/20 shadow-xl transform scale-105 rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer relative flex flex-col justify-between z-10" data-plan="pro">
-                        <div class="absolute top-0 right-0 transform translate-x-2 -translate-y-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md uppercase tracking-wider">
-                            Best Value
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Professional</h3>
-                            <div class="text-3xl font-extrabold text-gray-900 mb-6">$19.90<span class="text-sm font-normal text-gray-500">/ mo</span></div>
-                            <ul class="space-y-3 mb-8 text-sm text-gray-600">
-                                <li class="flex items-center gap-2"><i class="fas fa-bolt text-green-500"></i> <strong>Unlimited</strong> Generation</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-brain text-green-500"></i> <strong>Advanced AI</strong> Engine</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-file-alt text-green-500"></i> Long Input: <strong>100k chars</strong></li>
-                                <li class="flex items-center gap-2"><i class="fas fa-star text-green-500"></i> <strong>All Tones</strong> Unlocked</li>
-                                <li class="flex items-center gap-2"><i class="fas fa-crown text-green-500"></i> Priority Support</li>
-                            </ul>
-                        </div>
-                        <button class="w-full py-3 rounded-lg font-bold transition-all duration-200 bg-blue-600 text-white border-transparent hover:bg-blue-700 choose-plan-btn" data-plan="pro">Choose Pro</button>
-                    </div>
-
+                    <a href="subscription.html" class="w-full py-3 rounded-lg font-bold text-center bg-blue-600 text-white hover:bg-blue-700 shadow-md transition-all">Get Free Access</a>
                 </div>
-            </div>
-        </section>
+
+                <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-8 bg-white relative flex flex-col justify-between" data-plan="basic">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Basic</h3>
+                        <div class="text-3xl font-extrabold mb-6">$9.90<span class="text-sm font-normal text-gray-500">/ mo</span></div>
+                        <ul class="space-y-4 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0; text-align: left;">
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> <strong>RIE 2.5 Efficiency Engine</strong></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> <strong>45 Reports</strong> Monthly</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> Word & Email Professional Export</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> Standard Office Logic</li>
+                        </ul>
+                    </div>
+                    <a href="subscription.html" class="w-full py-3 rounded-lg font-bold text-center bg-white text-blue-600 border border-blue-200 hover:bg-gray-50 shadow-sm transition-all">Select Basic</a>
+                </div>
+
+                <div class="pricing-card border-blue-600 border-2 ring-4 ring-blue-500/20 shadow-xl transform scale-105 rounded-2xl p-8 bg-white relative flex flex-col justify-between z-10" data-plan="pro">
+                    <div class="absolute top-0 right-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">Recommended</div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Professional</h3>
+                        <div class="text-3xl font-extrabold mb-6">$19.90<span class="text-sm font-normal text-gray-500">/ mo</span></div>
+                        <ul class="space-y-4 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0; text-align: left;">
+                            <li class="flex items-start gap-2"><i class="fas fa-crown text-blue-600 mt-1"></i> <span><strong>RIE 3.0 Flagship Engine</strong><br><small>Unlimited Generation</small></span></li>
+                            <li class="flex items-center gap-2"><i class="fas fa-magic text-blue-600"></i> <strong>Full-Scene PPT</strong> Generation</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-brain text-blue-600"></i> Strategic Depth Analysis</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-star text-blue-600"></i> Executive Templates & Priority</li>
+                        </ul>
+                    </div>
+                    <a href="subscription.html" class="w-full py-3 rounded-lg font-bold text-center bg-blue-600 text-white hover:bg-blue-700 shadow-lg transition-all">Upgrade Now</a>
+                </div>
+
+        </div> </div> </section>
 
         <section id="generator" class="generator-section">
              <div class="container">
