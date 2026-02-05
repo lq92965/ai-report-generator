@@ -39,7 +39,13 @@ async function connectDB() {
 connectDB();
 
 // 3. CORS 配置
-app.use(cors({ origin: true, credentials: true, methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'] }));
+// 🟢 找到 app.use(cors(...))，确保替换为这段最强兼容性代码
+app.use(cors({ 
+    origin: ['https://goreportify.com', 'http://goreportify.com'], // 显式允许你的域名
+    credentials: true, 
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'] 
+}));
 app.use(express.json());
 // --- 修改开始：让浏览器能访问 uploads 里的图片 ---
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
