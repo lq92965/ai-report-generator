@@ -719,9 +719,26 @@ function setupGenerator() {
                 }),
             });
 
+            // 🟢 定位到 script.js 第 338 行附近的 .then(data => { ... })
             const data = await res.json();
+
+            // --- RIE 3.0 核心联动开始 ---  
+            if (data.error) throw new Error(data.error || 'Generation failed');
+
+            // 1. 存储主报告内容
             window.currentReportContent = data.generatedText;
-            if (!res.ok) throw new Error(data.error || 'Generation failed');
+
+            // 2. 存储 PPT 大纲和邮件摘要 (Pro 用户专属字段)
+            if (data.pptOutline) {
+                window.currentPPTOutline = data.pptOutline;
+                console.log("✅ RIE 3.0: PPT Outline stored.");
+            }
+
+            if (data.emailSummary) {
+                window.currentEmailSummary = data.emailSummary;
+                console.log("✅ RIE 3.0: Email Summary stored.");
+            }
+            // --- RIE 3.0 核心联动结束 ---
 
             // 🟢 [核心优化]：渲染 Markdown + 应用专业皮肤
             if (typeof marked !== 'undefined') {
@@ -930,6 +947,7 @@ function exportToWord(content, filename) {
 // 🟢 [V5.0 修复版] PPT 引擎：智能识别首屏 + 英文提示 + 样式分离
 // ==============================================================
 function exportToPPT(content, filename) {
+    const finalContent = window.currentPPTOutline || content;
     if (typeof PptxGenJS === 'undefined') {
         if(window.showToast) window.showToast('PPT Engine Loading...', 'error');
         return;
