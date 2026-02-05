@@ -67,6 +67,40 @@
         #pdf-export-container, #pdf-export-container * { visibility: visible; }
         #pdf-export-container { position: absolute; left: 0; top: 0; width: 100%; }
     }
+
+    /* 🟢 移动端适配补丁：确保 Hero 和 About 模块在手机上显示完美 */
+    @media (max-width: 768px) {
+        #hero h1 {
+            font-size: 2.25rem !important; /* 手机端标题缩小，防止撑破屏幕 */
+            line-height: 1.2 !important;
+        }
+        
+        #hero .hero-content > div[style*="flex"] {
+            flex-direction: column !important; /* 痛点列表由横向变纵向 */
+            gap: 15px !important;
+            align-items: center !important;
+        }
+
+        .hero-btns {
+            flex-direction: column !important; /* 按钮在手机端上下堆叠 */
+            gap: 15px !important;
+            width: 100%;
+            align-items: center;
+        }
+
+        .hero-btns .btn {
+            width: 85% !important; /* 按钮宽度更适合手指点击 */
+            padding: 14px 0 !important;
+            display: flex;
+            justify-content: center;
+        }
+
+        #about div[style*="display: grid"], 
+        #about .about-grid {
+            grid-template-columns: 1fr !important; /* 关于我们模块恢复单列排版 */
+        }
+    }
+
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
