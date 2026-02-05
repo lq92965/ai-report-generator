@@ -341,23 +341,30 @@
                         <div class="input-wrapper">
                             <label for="role">Your Role</label>
                             <select id="role" name="role" required>
-                                <option value="General" selected>General Consultant</option>
-                                <option value="Management">Senior Executive / Manager</option>
-                                <option value="Marketing">Marketing Director</option>
-                                <option value="Sales">Sales Executive</option>
-                                <option value="Tech">Lead Engineer / CTO</option>
-                                <option value="Operations">Operations Manager</option>
-                                <option value="HR">HR Director</option>
+                                <optgroup label="General / Common">
+                                   <option value="General" selected>Standard Staff / Individual Contributor</option>
+                                   <option value="Administrative">Administrative / Office Assistant</option>
+                                   <option value="Freelancer">Freelancer / Creative</option>
+                                </optgroup>
+                                <optgroup label="Technical & Specialist">
+                                    <option value="Tech">Developer / Engineer</option>
+                                    <option value="Marketing">Marketing / Social Media Specialist</option>
+                                    <option value="Sales">Sales Executive</option>
+                                </optgroup>
+                                <optgroup label="Leadership & Strategy">
+                                    <option value="Management">Project Manager / Team Lead</option>
+                                    <option value="Executive">Executive (CTO/CEO/Director)</option>
+                                </optgroup>
                             </select>
                         </div>
 
                         <div class="input-wrapper">
                             <label for="tone">Tone / Style</label>
                             <select id="tone" name="tone">
-                                <option value="Professional" selected>Professional</option>
-                                <option value="Conversational">Conversational</option>
-                                <option value="Direct">Direct / Blunt</option>
-                                <option value="Persuasive">Persuasive</option>
+                                <option value="Grounded" selected>Grounded / Practical (务实)</option>
+                                <option value="Professional">Formal / Professional (专业)</option>
+                                <option value="Conversational">Conversational / Casual (对话/生活化)</option>
+                                <option value="Persuasive">Persuasive / Bold (有说服力)</option>
                             </select>
                         </div>
 
