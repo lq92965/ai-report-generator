@@ -380,98 +380,113 @@ app.post('/api/update-profile', authenticateToken, async (req, res) => {
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 // ==========================================
-// 🟢 [RIE 3.0 旗舰版] 生成接口 - 本地修改
+// 🟢 [RIE 3.0 旗舰版] 后端生成逻辑重构
 // ==========================================
 app.post('/api/generate', authenticateToken, async (req, res) => {
     try {
+        // 1. 获取用户信息与扣费检查 (保留原逻辑)
         const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
         if (!user) return res.status(404).json({ error: "User not found" });
 
-        // 1. 扣费检查逻辑 (保持你原有的逻辑不变)
         let allowGen = false;
-        let deductSource = '';
-        if (user.plan === 'pro') { allowGen = true; } 
-        else {
-            let limit = (user.plan === 'free') ? 3 : 45; 
-            if ((user.usageCount || 0) < limit) { allowGen = true; deductSource = 'main'; } 
-            else if ((user.bonusCredits || 0) > 0) { allowGen = true; deductSource = 'bonus'; }
-        }
-        if (!allowGen) return res.status(403).json({ error: "Limit reached!" });
-
-        // 2. 🟢 RIE 3.0 逻辑注入：根据用户等级构建不同的 System Prompt
-        const isPro = (user.plan === 'pro' || user.plan === 'elite_trial'); 
-        const { userPrompt, role, template, tone } = req.body;
-
-        let finalSystemInstructions = "";
-        if (isPro) {
-            // Pro 用户使用 RIE 3.0 旗舰指令
-            finalSystemInstructions = `
-            You are the RIE (Reportify Intelligence Engine) 3.0. 
-            Your goal: Transform raw fragments into strategic executive assets.
-            Role Context: ${role || 'General Consultant'}. 
-            Report Type: ${template || 'Professional Report'}.
-            Tone: ${tone || 'Professional'}.
-
-            Instructions:
-            1. RECONSTRUCT: Separates Facts, Issues, and Future Plans.
-            2. ELEVATE: Use manager-level language (e.g., 'fixed bug' -> 'system stability optimization').
-            3. MULTI-FORMAT: You MUST return a JSON structure exactly like this:
-            {
-              "word_content": "Full markdown report here...",
-              "ppt_outline": "Slide 1: Title\\n- Bullet 1\\n- Bullet 2...",
-              "email_summary": "Short 3-line professional email summary..."
-            }`;
+        let deductSource = ''; 
+        if (user.plan === 'pro' || user.plan === 'pro_elite') {
+            allowGen = true; 
         } else {
-            // Basic 用户维持原有逻辑
+            let limit = (user.plan === 'free') ? 3 : 45; 
+            if ((user.usageCount || 0) < limit) {
+                allowGen = true;
+                deductSource = 'main';
+            } else if ((user.bonusCredits || 0) > 0) {
+                allowGen = true;
+                deductSource = 'bonus';
+            }
+        }
+        if (!allowGen) return res.status(403).json({ error: "Limit reached! Invite friends for more credits." });
+
+        // 🟢 RIE 3.0 增强型逻辑分发器 - 核心 Prompt 重构
+        const { userPrompt, role, template, tone, detailLevel } = req.body;
+
+        let finalSystemInstructions = `You are the RIE (Reportify Intelligence Engine) v3.0. 
+        Adapt your output strictly based on these parameters:
+        Role: ${role}, Report Type: ${template}, Tone: ${tone}, Detail: ${detailLevel}.
+
+        ### LOGIC RULES:
+        1. **Identity Alignment**: 
+           - If Role is "General" or "Administrative": Focus on PRACTICAL TASKS. Avoid high-level strategic buzzwords. Be grounded and realistic.
+           - If Role is "Executive" or "Management": Focus on IMPACT and STRATEGY.
+        2. **Scenario Realism**: 
+           - If Type is "daily_standup": Use a professional bullet-point log format (e.g., Done / In Progress / Blockers). 
+           - If Tone is "Conversational": Keep the human element. If the user mentions personal life (like "picking up kids"), integrate it naturally as a work-life balance element.
+        3. **Detail & Volume**: 
+           - If Detail is "Detailed": Expand each point. Explain the 'how' and 'why'. Minimum 3 sections, 400 words.
+           - If Detail is "Brief": Short, sharp results. Maximum 150 words.
+        4. **Structure**: Do NOT be limited to 3 sections. Use as many as needed to make the report professional and complete.
+
+        ### FORMAT:
+        Return a JSON object: {"word_content": "...", "ppt_outline": "...", "email_summary": "..."}`;
+        } else {
+            // Basic 用户：维持原有的基础生成逻辑
             finalSystemInstructions = "You are a professional report assistant. Rewrite the following notes into a clear report.";
         }
 
-        const fullPrompt = `${finalSystemInstructions}\n\nUser Content:\n${userPrompt}`;
+        const fullPrompt = `${finalSystemInstructions}\n\nUser Input Data:\n${userPrompt}`;
 
-        // 3. 调用 AI (保留你原有的双保险切换逻辑)
+        // 3. 调用 AI (双模型备份逻辑)
         let text = "";
-        const primaryModelName = process.env.GEMINI_MODEL_PRIMARY || "gemini-1.5-flash"; // 建议使用稳定版
+        const primaryModelName = process.env.GEMINI_MODEL_PRIMARY || "gemini-1.5-flash"; 
         const backupModelName = process.env.GEMINI_MODEL_BACKUP || "gemini-1.5-flash";
 
         try {
             const model = genAI.getGenerativeModel({ model: primaryModelName });
-            // 如果是 Pro 用户，强制要求返回 JSON 格式
+            // 💡 Pro 用户开启 JSON 约束模式，确保返回格式稳定
             const generationConfig = isPro ? { response_mime_type: "application/json" } : {};
-            const result = await model.generateContent({ contents: [{ role: 'user', parts: [{ text: fullPrompt }] }], generationConfig });
+            const result = await model.generateContent({ 
+                contents: [{ role: 'user', parts: [{ text: fullPrompt }] }],
+                generationConfig
+            });
             text = result.response.text();
         } catch (primaryError) {
-            // 备用模型逻辑 (保持你的原有逻辑)
+            console.warn("Primary Model Failed, switching to backup...");
             const modelBackup = genAI.getGenerativeModel({ model: backupModelName });
             const resultBackup = await modelBackup.generateContent(fullPrompt);
             text = resultBackup.response.text();
         }
 
-        // 4. 保存与扣费 (保持原有逻辑)
+        // 4. 保存报告并扣费 (保留原逻辑)
         await db.collection('reports').insertOne({ 
             userId: req.user.userId, 
             title: template || "Generated Report", 
             content: text, 
-            isPro: isPro,
             createdAt: new Date() 
         });
 
-        if (deductSource === 'main') await db.collection('users').updateOne({ _id: user._id }, { $inc: { usageCount: 1 } });
-        else if (deductSource === 'bonus') await db.collection('users').updateOne({ _id: user._id }, { $inc: { bonusCredits: -1 } });
+        if (deductSource === 'main') {
+            await db.collection('users').updateOne({ _id: user._id }, { $inc: { usageCount: 1 } });
+        } else if (deductSource === 'bonus') {
+            await db.collection('users').updateOne({ _id: user._id }, { $inc: { bonusCredits: -1 } });
+        }
 
-        // 5. 返回结果：如果是 Pro，返回解析后的 JSON，否则返回纯文本
+        // 5. 🟢 多维数据返回
         if (isPro) {
             try {
-                const parsedResult = JSON.parse(text);
-                res.json({ generatedText: parsedResult.word_content, pptOutline: parsedResult.ppt_outline, emailSummary: parsedResult.email_summary });
-            } catch (e) {
-                res.json({ generatedText: text }); // 解析失败降级返回
+                const parsed = JSON.parse(text);
+                res.json({ 
+                    generatedText: parsed.word_content, 
+                    pptOutline: parsed.ppt_outline, 
+                    emailSummary: parsed.email_summary 
+                });
+            } catch (jsonErr) {
+                // 如果 JSON 解析失败（AI 偶发错误），则降级返回纯文本
+                res.json({ generatedText: text });
             }
         } else {
             res.json({ generatedText: text });
         }
 
     } catch (e) { 
-        res.status(500).json({ error: "AI Service Error: " + e.message }); 
+        console.error("AI API Error:", e.message);
+        res.status(500).json({ error: "AI Service Error" }); 
     }
 });
 
