@@ -1710,3 +1710,107 @@ async function loadAccountPageAvatar() {
         this.src = getFullImageUrl(null);
     };
 }
+
+// ========================================================
+// 🟢 账户设置页与登录弹窗的按钮事件绑定修复
+// ========================================================
+document.addEventListener('DOMContentLoaded', () => {
+
+    // 1. 修复：登录弹窗中的“忘记密码”按钮
+    // 寻找可能是忘记密码的链接 (根据常见 Tailwind/HTML 结构猜测)
+    const forgotPwdLinks = document.querySelectorAll('a[href="#forgot"], .forgot-password, #forgot-password');
+    forgotPwdLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault(); // 阻止页面跳转
+            // 目前如果没有做邮件发送系统，先用 Toast 提示用户
+            showToast("密码重置系统接入中。请暂时联系管理员邮箱 support@goreportify.com 找回密码。", "info");
+        });
+    });
+
+    // 2. 修复：修改密码表单提交
+    const changePwdForm = document.getElementById('change-password-form');
+    if (changePwdForm) {
+        changePwdForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // 假设你的 HTML 里有这两个 ID 的输入框
+            const oldPassword = document.getElementById('old-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const submitBtn = changePwdForm.querySelector('button[type="submit"]');
+            
+            if(!oldPassword || !newPassword) return showToast("请填写完整", "warning");
+
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = "更新中...";
+            submitBtn.disabled = true;
+
+            try {
+                const token = localStorage.getItem('token');
+                const res = await fetch(`${API_BASE_URL}/api/change-password`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` 
+                    },
+                    body: JSON.stringify({ oldPassword, newPassword })
+                });
+
+                const data = await res.json();
+                
+                if (res.ok) {
+                    showToast(data.message, "success");
+                    changePwdForm.reset();
+                    // 密码修改成功后，强制退出要求重新登录
+                    setTimeout(() => {
+                        localStorage.removeItem('token');
+                        window.location.href = 'index.html';
+                    }, 2000);
+                } else {
+                    // 这里会精准捕获我们在后端写的 "旧密码不正确" 的报错
+                    showToast(data.message, "error");
+                }
+            } catch (err) {
+                showToast("网络错误", "error");
+            } finally {
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+    }
+
+    // 3. 修复：删除账号按钮
+    const deleteAccountBtn = document.getElementById('delete-account-btn');
+    if (deleteAccountBtn) {
+        // 先克隆替换，防止重复绑定多次点击事件
+        const newDeleteBtn = deleteAccountBtn.cloneNode(true);
+        deleteAccountBtn.parentNode.replaceChild(newDeleteBtn, deleteAccountBtn);
+
+        newDeleteBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            
+            // 二次确认，防止误触
+            if (!confirm("⚠️ 警告：确定要永久删除您的账号和所有生成的报告吗？此操作不可逆！")) {
+                return;
+            }
+
+            try {
+                const token = localStorage.getItem('token');
+                const res = await fetch(`${API_BASE_URL}/api/delete-account`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (res.ok) {
+                    showToast("账号已彻底删除，期待您的再次使用。", "success");
+                    localStorage.removeItem('token');
+                    setTimeout(() => window.location.href = 'index.html', 1500);
+                } else {
+                    const data = await res.json();
+                    showToast(data.message || "删除失败", "error");
+                }
+            } catch (err) {
+                showToast("网络错误，请稍后重试", "error");
+            }
+        });
+    }
+});
