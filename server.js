@@ -310,11 +310,26 @@ app.post('/api/register', async (req, res) => {
 app.post('/api/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await db.collection('users').findOne({ email });
-        if (!user || !(await bcrypt.compare(password, user.password))) return res.status(400).json({ message: "Invalid credentials" });
-        const token = jwt.sign({ userId: user._id, plan: user.plan }, JWT_SECRET, { expiresIn: '7d' });
+        if (!email || !password) return res.status(400).json({ message: "请填写完整信息" });
+
+        const user = await db.collection('users').findOne({ email: email.toLowerCase().trim() });
+        
+        if (!user) return res.status(400).json({ message: "账号不存在" });
+        
+        // 🚨 关键修复：防止因 Google 用户没有密码导致的登录崩溃
+        if (!user.password && user.authProvider === 'google') {
+            return res.status(400).json({ message: "该邮箱已通过 Google 注册，请使用 Google 按钮登录" });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) return res.status(400).json({ message: "密码错误" });
+
+        const token = jwt.sign({ userId: user._id, email: user.email, plan: user.plan }, JWT_SECRET, { expiresIn: '7d' });
         res.json({ token, message: "Login successful" });
-    } catch (e) { res.status(500).json({ message: "Error" }); }
+    } catch (e) { 
+        console.error("Login Error:", e);
+        res.status(500).json({ error: "服务器内部错误" }); 
+    }
 });
 
 // --- 修改：获取用户信息 + 统计用量 ---
