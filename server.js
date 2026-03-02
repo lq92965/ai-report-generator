@@ -735,4 +735,69 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
     }
 });
 
+// ==========================================
+// 🟢 [安全修复] 严格校验的修改密码接口
+// ==========================================
+app.post('/api/change-password', authenticateToken, async (req, res) => {
+    try {
+        const { oldPassword, newPassword } = req.body;
+        
+        if (!oldPassword || !newPassword) {
+            return res.status(400).json({ message: "请提供旧密码和新密码" });
+        }
+
+        // 1. 查找当前用户
+        const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
+        if (!user) return res.status(404).json({ message: "用户不存在" });
+
+        // 2. 拦截 Google 快捷登录的用户 (他们没有传统密码)
+        if (user.authProvider === 'google' && !user.password) {
+            return res.status(400).json({ message: "Google 快捷登录账号无需修改密码" });
+        }
+
+        // 3. 🚨 核心修复：必须比对旧密码！
+        const isMatch = await bcrypt.compare(oldPassword, user.password);
+        if (!isMatch) {
+            // 如果旧密码不对，立刻拒绝，绝对不能执行后续的更新操作
+            return res.status(401).json({ message: "旧密码不正确，请重新输入！" }); 
+        }
+
+        // 4. 旧密码正确，加密新密码并更新
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        await db.collection('users').updateOne(
+            { _id: new ObjectId(req.user.userId) },
+            { $set: { password: hashedNewPassword } }
+        );
+
+        res.json({ message: "密码修改成功！请使用新密码重新登录。" });
+    } catch (error) {
+        console.error("修改密码逻辑错误:", error);
+        res.status(500).json({ message: "服务器内部错误" });
+    }
+});
+
+// ==========================================
+// 🟢 [逻辑修复] 账号彻底注销接口
+// ==========================================
+app.delete('/api/delete-account', authenticateToken, async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        
+        // 1. 先删除该用户生成的所有报告 (防止数据库产生孤儿数据)
+        await db.collection('reports').deleteMany({ userId: userId });
+        
+        // 2. 删除用户本身
+        const result = await db.collection('users').deleteOne({ _id: new ObjectId(userId) });
+        
+        if (result.deletedCount === 1) {
+            res.json({ message: "账号及相关数据已彻底删除" });
+        } else {
+            res.status(404).json({ message: "未找到该账号" });
+        }
+    } catch (error) {
+        console.error("删除账号错误:", error);
+        res.status(500).json({ message: "删除失败，请稍后重试" });
+    }
+});
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
