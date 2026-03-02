@@ -332,6 +332,30 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
+// 找回密码验证接口
+app.post('/api/forgot-password', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await db.collection('users').findOne({ email: email.toLowerCase().trim() });
+        
+        if (!user) {
+            return res.status(404).json({ message: "未找到该邮箱关联的账号" });
+        }
+        
+        // 逻辑：如果用户存在，记录一条重置申请到数据库
+        await db.collection('reset_requests').insertOne({
+            userId: user._id,
+            email: user.email,
+            status: 'pending',
+            requestedAt: new Date()
+        });
+
+        res.json({ message: "Request logged" });
+    } catch (e) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
 // --- 修改：获取用户信息 + 统计用量 ---
 app.get('/api/me', authenticateToken, async (req, res) => {
     try {
