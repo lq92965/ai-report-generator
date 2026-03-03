@@ -1834,9 +1834,22 @@ window.closeForgotModal = function() {
 
 // Listen for "Forgot Password" clicks
 document.addEventListener('click', function(e) {
-    if (e.target.innerText && e.target.innerText.includes("Forgot")) {
+    const target = e.target;
+    const parentAnchor = target.closest('a');
+    
+    const isForgotElement = (parentAnchor && parentAnchor.href.includes('forgot')) || 
+                            (target.id && target.id.toLowerCase().includes('forgot')) ||
+                            (target.className && typeof target.className === 'string' && target.className.toLowerCase().includes('forgot'));
+
+    const textContent = target.innerText ? target.innerText.toLowerCase() : '';
+    const hasForgotText = textContent.includes('forgot') || textContent.includes('忘记');
+
+    if (isForgotElement || hasForgotText) {
         e.preventDefault();
-        openForgotModal();
+        e.stopPropagation(); // 🟢 关键修复：阻止事件冒泡到关闭弹窗的逻辑
+        if (typeof openForgotModal === 'function') {
+            openForgotModal();
+        }
     }
 });
 
