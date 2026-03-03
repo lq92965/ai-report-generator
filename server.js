@@ -11,7 +11,7 @@ import axios from 'axios';
 import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
 // 修复路径定义
 const __filename = fileURLToPath(import.meta.url);
@@ -19,17 +19,8 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-// 🟢 绕过 DigitalOcean 465 端口封锁，尝试使用 587 端口 + TLS 加密协议
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, // 注意：587 端口这里必须是 false
-    requireTLS: true, // 强制要求 TLS 加密连接
-    auth: {
-        user: process.env.SMTP_EMAIL,
-        pass: process.env.SMTP_PASS
-    }
-});
+// 🟢 商业级 HTTP 邮件引擎 (无视云服务器封锁)
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // 1. 核心配置
 const API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
@@ -361,27 +352,29 @@ app.post('/api/auth/send-reset-code', async (req, res) => {
             { upsert: true }
         );
 
-        await transporter.sendMail({
-            from: `"Reportify AI Support" <${process.env.SMTP_EMAIL}>`,
+        // 🚨 使用 Resend 发送邮件
+        const { data, error } = await resend.emails.send({
+            from: 'Reportify AI Security <noreply@goreportify.com>', 
             to: user.email,
             subject: 'Reportify AI - Password Reset Code',
             html: `
-                <div style="font-family: Arial, sans-serif; padding: 20px;">
+                <div style="font-family: Arial, sans-serif; padding: 20px; color: #333; max-w: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 10px;">
                     <h2 style="color: #2563eb;">Reset Your Password</h2>
-                    <p>We received a request to reset your password. Your 6-digit verification code is:</p>
+                    <p>Hello,</p>
+                    <p>We received a request to reset your Reportify AI password. Your 6-digit verification code is:</p>
                     <div style="background: #f3f4f6; padding: 15px; text-align: center; border-radius: 8px; margin: 20px 0;">
                         <h1 style="color: #1f2937; letter-spacing: 8px; margin: 0; font-size: 32px;">${resetCode}</h1>
                     </div>
-                    <p style="font-size: 14px; color: #666;">This code will expire in <strong>10 minutes</strong>.</p>
-                    <p style="font-size: 12px; color: #999;">If you didn't request this, you can safely ignore this email.</p>
+                    <p style="font-size: 14px; color: #666;">⚠️ This code will expire in <strong>10 minutes</strong>.</p>
+                    <p style="font-size: 12px; color: #999; margin-top: 30px; border-top: 1px solid #eee; padding-top: 10px;">If you did not request this, please ignore this email. Your account is safe.</p>
                 </div>
             `
         });
-        res.json({ message: "Verification code sent." });
-    } catch (e) {
-        console.error("Email Error:", e);
-        res.status(500).json({ message: "Failed to send email. Please contact support." });
-    }
+
+        if (error) {
+            console.error("Resend API Error:", error);
+            return res.status(500).json({ message: "Failed to send email via API." });
+        }
 });
 
 // --- Password Reset: Verify & Update ---
@@ -885,4 +878,3 @@ app.delete('/api/delete-account', authenticateToken, async (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
