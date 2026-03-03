@@ -6,7 +6,7 @@
     <title>Security Settings - Reportify AI</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body style="background-color: #f8f9fa;"></body>
+<body style="background-color: #f8f9fa;">
 <header class="main-header account-header">
     <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1200px;">
         <a href="index.html" class="logo">
@@ -44,17 +44,17 @@
             <h2 class="section-title">Security</h2>
 
             <div class="account-container">
-
                 <div class="account-profile-form">
                     <h3>Change Password</h3>
-                    <form id="password-form">
+                    <form id="change-password-form">
                         <div class="input-wrapper">
-                            <label for="current-password">Current Password</label>
-                            <input type="password" id="current-password" required>
+                            <label for="old-password">Current Password</label>
+                            <input type="password" id="old-password" required>
                         </div>
                         <div class="input-wrapper">
                             <label for="new-password">New Password</label>
-                            <input type="password" id="new-password" required>
+                            <input type="password" id="new-password" required minlength="8">
+                            <p style="font-size: 12px; color: #6b7280; margin-top: 6px; line-height: 1.4;">At least 8 characters, including uppercase, lowercase, numbers, and special symbols.</p>
                         </div>
                         <div class="input-wrapper">
                             <label for="confirm-password">Confirm New Password</label>
@@ -63,14 +63,16 @@
                         <button type="submit" class="btn btn-primary">Update Password</button>
                         <p id="password-status" class="status-message"></p>
                     </form>
-                        <hr class="section-divider"> <div class="danger-zone">
-                            <h3>Danger Zone</h3>
-                            <p>Once you delete your account, there is no going back. Please be certain.</p>
-                            <button id="delete-account-btn" class="btn btn-danger">Delete My Account</button>
-                        </div>
+                    
+                    <hr class="section-divider"> 
+                    
+                    <div class="danger-zone">
+                        <h3>Danger Zone</h3>
+                        <p>Once you delete your account, there is no going back. Please be certain.</p>
+                        <button id="delete-account-btn" class="btn btn-danger">Delete My Account</button>
+                    </div>
                 </div>
-
-                </div>
+            </div>
         </div>
     </section>
 
