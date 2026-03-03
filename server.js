@@ -19,10 +19,12 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+// 🟢 绕过 DigitalOcean 465 端口封锁，尝试使用 587 端口 + TLS 加密协议
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 465,
-    secure: true, // 强制使用 SSL 
+    port: 587,
+    secure: false, // 注意：587 端口这里必须是 false
+    requireTLS: true, // 强制要求 TLS 加密连接
     auth: {
         user: process.env.SMTP_EMAIL,
         pass: process.env.SMTP_PASS
@@ -883,3 +885,4 @@ app.delete('/api/delete-account', authenticateToken, async (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
