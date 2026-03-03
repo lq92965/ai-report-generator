@@ -1815,35 +1815,86 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// --- 🚨 核心补丁：强制激活所有失效按钮 ---
-(function() {
-    console.log("Reportify UI Patch Initializing...");
-    
-    // 1. 强力拦截忘记密码 (针对所有包含 "Forgot" 字样的元素)
-    document.addEventListener('click', function(e) {
-        const target = e.target;
-        if (target.innerText.includes("忘记") || target.innerText.includes("Forgot") || target.id === 'forgot-link') {
-            e.preventDefault();
-            e.stopPropagation();
-            alert("【密码找回通知】\n密码自动找回系统维护中。\n请发送邮件至 support@goreportify.com，我们将为您手动重置密码。");
-        }
-    });
-
-    // 2. 强力激活删除账号按钮
-    const deleteBtn = document.getElementById('delete-account-btn');
-    if (deleteBtn) {
-        deleteBtn.onclick = function(e) {
-            e.preventDefault();
-            if(confirm("⚠️ 确定要注销账号吗？此操作将永久删除您的所有报告，且不可恢复！")) {
-                fetch(`${API_BASE_URL}/api/delete-account`, {
-                    method: 'DELETE',
-                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
-                }).then(() => {
-                    alert("账号已成功注销");
-                    localStorage.clear();
-                    window.location.href = 'index.html';
-                });
-            }
-        };
+// --- Password Reset UI Flow ---
+window.openForgotModal = function() {
+    const loginModal = document.getElementById('auth-modal-overlay');
+    if(loginModal) loginModal.classList.add('hidden');
+    const forgotModal = document.getElementById('forgot-password-modal');
+    if(forgotModal) {
+        forgotModal.classList.remove('hidden');
+        document.getElementById('step1-form').classList.remove('hidden');
+        document.getElementById('step2-form').classList.add('hidden');
+        document.getElementById('forgot-subtitle').innerText = "Enter your registered email address.";
     }
-})();
+};
+
+window.closeForgotModal = function() {
+    document.getElementById('forgot-password-modal').classList.add('hidden');
+};
+
+// Listen for "Forgot Password" clicks
+document.addEventListener('click', function(e) {
+    if (e.target.innerText && e.target.innerText.includes("Forgot")) {
+        e.preventDefault();
+        openForgotModal();
+    }
+});
+
+// Step 1: Request Code
+document.addEventListener('submit', async (e) => {
+    if (e.target.id === 'step1-form') {
+        e.preventDefault();
+        const email = document.getElementById('reset-email').value;
+        const btn = document.getElementById('btn-send-code');
+        btn.innerText = "Sending..."; btn.disabled = true;
+
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/auth/send-reset-code`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email })
+            });
+            const data = await res.json();
+            
+            if (res.ok) {
+                showToast("Code sent to your email.", "success");
+                document.getElementById('step1-form').classList.add('hidden');
+                document.getElementById('step2-form').classList.remove('hidden');
+                document.getElementById('forgot-subtitle').innerText = `Code sent to ${email}`;
+            } else {
+                showToast(data.message, "error");
+                btn.innerText = "Send Verification Code"; btn.disabled = false;
+            }
+        } catch (err) { 
+            showToast("Network request failed.", "error"); 
+            btn.innerText = "Send Verification Code"; btn.disabled = false; 
+        }
+    }
+
+    // Step 2: Verify & Reset
+    if (e.target.id === 'step2-form') {
+        e.preventDefault();
+        const email = document.getElementById('reset-email').value; 
+        const code = document.getElementById('reset-code').value;
+        const newPassword = document.getElementById('reset-new-password').value;
+        const btn = document.getElementById('btn-reset-pwd');
+        btn.innerText = "Resetting..."; btn.disabled = true;
+
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/auth/verify-and-reset`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, code, newPassword })
+            });
+            const data = await res.json();
+            
+            if (res.ok) {
+                showToast("Password reset successful! Please log in.", "success");
+                closeForgotModal();
+                openModal('login'); 
+            } else {
+                showToast(data.message, "error");
+                btn.innerText = "Confirm Reset"; btn.disabled = false;
+            }
+        } catch (err) { 
+            showToast("Request failed.", "error"); 
+            btn.innerText = "Confirm Reset"; btn.disabled = false; 
+        }
+    }
+});
