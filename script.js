@@ -58,14 +58,18 @@ window.saveAs = function(blob, filename) {
     setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
 };
 
-// --- 3. 弹窗与 Tab 控制 ---
-const authModalOverlay = document.getElementById('auth-modal-overlay');
-
+// 🟢 智能弹窗控制：如果当前页面没有弹窗组件，自动跳回主页并触发弹窗
 window.openModal = function(tabToShow = 'login') {
     const overlay = document.getElementById('auth-modal-overlay');
-    if (overlay) overlay.classList.remove('hidden');
+    
+    // 如果当前页面找不到弹窗（说明在子页面）
+    if (!overlay) {
+        window.location.href = `index.html?modal=${tabToShow}`;
+        return;
+    }
 
-    // 1. 切换 Tab 按钮样式
+    // 如果在主页，正常执行弹窗逻辑
+    overlay.classList.remove('hidden');
     document.querySelectorAll('.tab-link').forEach(btn => {
         if (btn.dataset.tab === tabToShow) {
             btn.classList.add('text-blue-600', 'border-blue-600', 'bg-white');
@@ -75,13 +79,10 @@ window.openModal = function(tabToShow = 'login') {
             btn.classList.add('text-gray-500', 'border-transparent');
         }
     });
-
-    // 2. 切换表单内容显示
     document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.add('hidden');
         content.style.display = 'none';
     });
-
     const targetContent = document.getElementById(tabToShow);
     if (targetContent) {
         targetContent.classList.remove('hidden');
@@ -172,6 +173,15 @@ async function loadRealUsageData() {
         console.error("加载用量网络错误", e);
     }
 }
+
+// 🟢 监听跨页面传来的开窗指令
+    const urlParams = new URLSearchParams(window.location.search);
+    const modalAction = urlParams.get('modal');
+    if (modalAction && document.getElementById('auth-modal-overlay')) {
+        openModal(modalAction);
+        // 执行完毕后抹除 URL 中的参数，保持地址栏干净
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
 
 }); // <--- 【修复关键点】这里之前少了这个闭合标签，导致整个文件报错！
 
@@ -1738,7 +1748,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const newPassword = document.getElementById('new-password').value;
             const submitBtn = changePwdForm.querySelector('button[type="submit"]');
             
-            if(!oldPassword || !newPassword) return showToast("请填写完整", "warning");
+            if(!oldPassword || !newPassword) return showToast("Please fill in all fields", "warning");
+
+            // 🟢 新增：严格的密码复杂度正则校验
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!passwordRegex.test(newPassword)) {
+                return showToast("Password must contain at least 8 characters, including uppercase, lowercase, numbers, and special symbols.", "warning");
+            }
 
             const originalText = submitBtn.innerText;
             submitBtn.innerText = "更新中...";
