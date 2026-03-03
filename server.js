@@ -352,7 +352,7 @@ app.post('/api/auth/send-reset-code', async (req, res) => {
             { upsert: true }
         );
 
-        // 🚨 使用 Resend 发送邮件
+        // 🚨 Use Resend HTTP API
         const { data, error } = await resend.emails.send({
             from: 'Reportify AI Security <noreply@goreportify.com>', 
             to: user.email,
@@ -375,6 +375,13 @@ app.post('/api/auth/send-reset-code', async (req, res) => {
             console.error("Resend API Error:", error);
             return res.status(500).json({ message: "Failed to send email via API." });
         }
+
+        res.json({ message: "Verification code sent." });
+    } catch (e) {
+        // 🟢 就是这里之前被误删了，导致了 SyntaxError
+        console.error("Send Reset Code Error:", e);
+        res.status(500).json({ message: "Failed to process request." });
+    }
 });
 
 // --- Password Reset: Verify & Update ---
