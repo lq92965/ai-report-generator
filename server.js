@@ -20,7 +20,9 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // 强制使用 SSL 
     auth: {
         user: process.env.SMTP_EMAIL,
         pass: process.env.SMTP_PASS
