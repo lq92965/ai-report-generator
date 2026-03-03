@@ -11,6 +11,7 @@ import axios from 'axios';
 import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import nodemailer from 'nodemailer';
 
 // 修复路径定义
 const __filename = fileURLToPath(import.meta.url);
@@ -18,6 +19,13 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.SMTP_EMAIL,
+        pass: process.env.SMTP_PASS
+    }
+});
 
 // 1. 核心配置
 const API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
@@ -332,28 +340,61 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-// 找回密码验证接口
-app.post('/api/forgot-password', async (req, res) => {
+// --- Password Reset: Send Code ---
+app.post('/api/auth/send-reset-code', async (req, res) => {
     try {
         const { email } = req.body;
         const user = await db.collection('users').findOne({ email: email.toLowerCase().trim() });
-        
-        if (!user) {
-            return res.status(404).json({ message: "未找到该邮箱关联的账号" });
-        }
-        
-        // 逻辑：如果用户存在，记录一条重置申请到数据库
-        await db.collection('reset_requests').insertOne({
-            userId: user._id,
-            email: user.email,
-            status: 'pending',
-            requestedAt: new Date()
-        });
+        if (!user) return res.status(404).json({ message: "Account not found with this email." });
+        if (user.authProvider === 'google' && !user.password) return res.status(400).json({ message: "Google users do not need a password." });
 
-        res.json({ message: "Request logged" });
+        const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
+        const expiresAt = new Date(Date.now() + 10 * 60 * 1000); 
+
+        await db.collection('password_resets').updateOne(
+            { email: user.email },
+            { $set: { code: resetCode, expiresAt, used: false } },
+            { upsert: true }
+        );
+
+        await transporter.sendMail({
+            from: `"Reportify AI Support" <${process.env.SMTP_EMAIL}>`,
+            to: user.email,
+            subject: 'Reportify AI - Password Reset Code',
+            html: `
+                <div style="font-family: Arial, sans-serif; padding: 20px;">
+                    <h2 style="color: #2563eb;">Reset Your Password</h2>
+                    <p>We received a request to reset your password. Your 6-digit verification code is:</p>
+                    <div style="background: #f3f4f6; padding: 15px; text-align: center; border-radius: 8px; margin: 20px 0;">
+                        <h1 style="color: #1f2937; letter-spacing: 8px; margin: 0; font-size: 32px;">${resetCode}</h1>
+                    </div>
+                    <p style="font-size: 14px; color: #666;">This code will expire in <strong>10 minutes</strong>.</p>
+                    <p style="font-size: 12px; color: #999;">If you didn't request this, you can safely ignore this email.</p>
+                </div>
+            `
+        });
+        res.json({ message: "Verification code sent." });
     } catch (e) {
-        res.status(500).json({ error: "Internal Server Error" });
+        console.error("Email Error:", e);
+        res.status(500).json({ message: "Failed to send email. Please contact support." });
     }
+});
+
+// --- Password Reset: Verify & Update ---
+app.post('/api/auth/verify-and-reset', async (req, res) => {
+    try {
+        const { email, code, newPassword } = req.body;
+        const resetRecord = await db.collection('password_resets').findOne({ email: email.toLowerCase().trim(), code: code, used: false });
+
+        if (!resetRecord) return res.status(400).json({ message: "Invalid verification code." });
+        if (new Date() > resetRecord.expiresAt) return res.status(400).json({ message: "Code expired. Please request a new one." });
+
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        await db.collection('users').updateOne({ email: email.toLowerCase().trim() }, { $set: { password: hashedNewPassword } });
+        await db.collection('password_resets').updateOne({ _id: resetRecord._id }, { $set: { used: true } });
+
+        res.json({ message: "Password reset successful." });
+    } catch (e) { res.status(500).json({ message: "Reset failed. Please try again." }); }
 });
 
 // --- 修改：获取用户信息 + 统计用量 ---
