@@ -1927,3 +1927,56 @@ document.addEventListener('submit', async (e) => {
         }
     }
 });
+
+// ========================================================
+// 🟢 计费周期切换逻辑 (Monthly vs Yearly)
+// ========================================================
+// 声明为全局变量，方便你以后在对接 PayPal API 时读取
+window.isYearlyBilling = false; 
+
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('billing-toggle');
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            window.isYearlyBilling = !window.isYearlyBilling;
+            
+            const circle = document.getElementById('toggle-circle');
+            const labelMonthly = document.getElementById('label-monthly');
+            const labelYearly = document.getElementById('label-yearly');
+
+            if (window.isYearlyBilling) {
+                // 切换到年付视觉状态
+                circle.classList.add('translate-x-6');
+                toggleBtn.classList.replace('bg-blue-600', 'bg-purple-600');
+                
+                labelMonthly.classList.replace('text-gray-900', 'text-gray-500');
+                labelMonthly.classList.replace('font-semibold', 'font-medium');
+                
+                labelYearly.classList.replace('text-gray-500', 'text-gray-900');
+                labelYearly.classList.replace('font-medium', 'font-semibold');
+
+                // 更新价格数据
+                document.getElementById('price-basic').innerText = '99.00';
+                document.getElementById('period-basic').innerText = '/ yr';
+                document.getElementById('price-pro').innerText = '199.00';
+                document.getElementById('period-pro').innerText = '/ yr';
+            } else {
+                // 切换回月付视觉状态
+                circle.classList.remove('translate-x-6');
+                toggleBtn.classList.replace('bg-purple-600', 'bg-blue-600');
+                
+                labelYearly.classList.replace('text-gray-900', 'text-gray-500');
+                labelYearly.classList.replace('font-semibold', 'font-medium');
+                
+                labelMonthly.classList.replace('text-gray-500', 'text-gray-900');
+                labelMonthly.classList.replace('font-medium', 'font-semibold');
+
+                // 还原价格数据
+                document.getElementById('price-basic').innerText = '9.90';
+                document.getElementById('period-basic').innerText = '/ mo';
+                document.getElementById('price-pro').innerText = '19.90';
+                document.getElementById('period-pro').innerText = '/ mo';
+            }
+        });
+    }
+});
