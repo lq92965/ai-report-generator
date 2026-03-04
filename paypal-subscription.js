@@ -1,6 +1,5 @@
 // ========================================================
 // 🟢 独立的 PayPal 订阅与支付核心逻辑 (完全物理隔离)
-// 这是一个完整的文件，专门处理计费周期的动态切换与支付
 // ========================================================
 
 const PAYPAL_PLAN_IDS = {
@@ -15,9 +14,9 @@ const PAYPAL_PLAN_IDS = {
 };
 
 window.currentSelectedPlanId = '';
-window.isPayPalButtonRendered = false; 
+// 引入全局实例变量存放旧的 PayPal 按钮，用于彻底销毁
+window.currentPayPalButton = null; 
 
-// 轻量级 Toast 兜底函数，防止跨文件调用失败
 function showSubToast(msg, type='info') {
     if(typeof showToast === 'function') {
         showToast(msg, type);
@@ -27,7 +26,6 @@ function showSubToast(msg, type='info') {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 🚨 核心防御：采用全新的专属 Class 和 ID，彻底切断与 script.js 旧代码的联系
     const planButtons = document.querySelectorAll('.subscribe-btn');
     const subscribeModal = document.getElementById('subscribe-modal-overlay');
     const closeSubscribeBtn = document.getElementById('close-subscribe-btn');
@@ -36,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!subscribeModal || !paypalContainer) return; 
 
-    // 仅隐藏弹窗，不销毁 SDK
+    // 关闭弹窗
     closeSubscribeBtn.addEventListener('click', () => {
         subscribeModal.style.display = 'none'; 
     });
@@ -50,24 +48,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 return showSubToast('Elite Trial activated!', 'success');
             }
 
-            // 1. 精准提取当前按钮对应的 唯一 Plan ID
+            // 获取最新 ID
             window.currentSelectedPlanId = PAYPAL_PLAN_IDS[planType][billingCycle];
             
-            // 2. 动态更新界面上的商品名称和金额，给用户安全感
+            // 更新 UI 文字
             const cycleText = billingCycle === 'yearly' ? 'Annually' : 'Monthly';
             const priceText = billingCycle === 'yearly' ? (planType === 'pro' ? '$199' : '$99') : (planType === 'pro' ? '$19.90' : '$9.90');
             const planNameCapitalized = planType.charAt(0).toUpperCase() + planType.slice(1);
             
             planNameDisplay.innerText = `${planNameCapitalized} Plan (${cycleText}) - ${priceText}`;
 
-            // 3. 唤起支付弹窗
+            // 显示弹窗
             subscribeModal.style.display = 'flex';
 
-            // 4. 全局生命周期内，仅初始化渲染一次 PayPal 按钮
-            if (!window.isPayPalButtonRendered && window.paypal) {
-                paypalContainer.innerHTML = '';
-                
-                window.paypal.Buttons({
+            // 🚨 核心防御机制：如果内存中存活着上一次点击产生的旧按钮，直接无情地摧毁它！
+            if (window.currentPayPalButton) {
+                window.currentPayPalButton.close().catch(err => console.log('Close btn skipped'));
+            }
+
+            // 为当前这笔交易，实时创建一个纯洁无污染的新按钮
+            if (window.paypal) {
+                window.currentPayPalButton = window.paypal.Buttons({
                     style: {
                         shape: 'rect',
                         color: 'blue',
@@ -75,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         label: 'subscribe'
                     },
                     createSubscription: function(data, actions) {
-                        // 🟢 最关键的一步：用户无论怎么切换点击，真正扣款时始终读取最新的 ID
+                        // 发起订阅时，PayPal 将 100% 读取这里最新的 ID
                         return actions.subscription.create({
                             'plan_id': window.currentSelectedPlanId 
                         });
@@ -90,11 +91,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     onError: function(err) {
                         console.error('PayPal Error:', err);
-                        showSubToast('Payment failed or cancelled. Please try again.', 'error');
+                        showSubToast('Payment window closed or error occurred.', 'error');
                     }
-                }).render('#smart-paypal-container');
-                
-                window.isPayPalButtonRendered = true; 
+                });
+
+                // 渲染全新按钮
+                window.currentPayPalButton.render('#smart-paypal-container');
+            } else {
+                showSubToast("PayPal SDK not loaded. Check your Client ID!", "error");
             }
         });
     });
