@@ -1980,3 +1980,99 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// ========================================================
+// 🟢 PayPal 订阅与支付核心逻辑 (Subscription Integration)
+// ========================================================
+
+// 1. 将 PayPal 后台的 4 个 Plan ID 映射到前端
+const PAYPAL_PLAN_IDS = {
+    basic: {
+        monthly: 'P-064730007W177763FNGT24DI',
+        yearly: 'P-485334104D5902934NGT26FA'
+    },
+    pro: {
+        monthly: 'P-75G85632XU6928725NGT34OI', 
+        yearly: 'P-1KU15100C4499954NNGT357I'
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 获取页面上的按钮和弹窗元素
+    const planButtons = document.querySelectorAll('.choose-plan-btn');
+    const paymentModal = document.getElementById('payment-modal-overlay');
+    const closePaymentBtn = document.getElementById('close-payment-btn');
+    const planNameDisplay = document.getElementById('payment-plan-name');
+    const paypalContainer = document.getElementById('paypal-button-container');
+
+    // 如果当前页面不是升级页面，则不执行后续逻辑
+    if (!paymentModal || !paypalContainer) return; 
+
+    // 关闭支付弹窗并清理旧的 PayPal 按钮
+    closePaymentBtn.addEventListener('click', () => {
+        paymentModal.style.display = 'none';
+        paypalContainer.innerHTML = ''; 
+    });
+
+    // 遍历监听所有的 "Select Basic" / "Upgrade to Professional" 按钮
+    planButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const planType = e.target.dataset.plan; // 获取点击的是 'basic' 还是 'pro'
+            
+            if (planType === 'free') {
+                return showToast('Elite Trial activated!', 'success');
+            }
+
+            // 2. 动态判断当前用户选择的计费周期，并提取正确的 Plan ID
+            const billingCycle = window.isYearlyBilling ? 'yearly' : 'monthly';
+            const targetPlanId = PAYPAL_PLAN_IDS[planType][billingCycle];
+            
+            // 3. 动态更新弹窗上的标题 UI
+            const cycleText = window.isYearlyBilling ? 'Annually' : 'Monthly';
+            const planNameCapitalized = planType.charAt(0).toUpperCase() + planType.slice(1);
+            planNameDisplay.innerText = `${planNameCapitalized} Plan - ${cycleText}`;
+
+            // 显示弹窗并清空容器（防止多次点击生成多个按钮）
+            paymentModal.style.display = 'flex';
+            paypalContainer.innerHTML = ''; 
+
+            // 4. 调用 PayPal 官方 SDK 渲染按钮
+            if (window.paypal) {
+                window.paypal.Buttons({
+                    style: {
+                        shape: 'rect',
+                        color: 'blue',
+                        layout: 'vertical',
+                        label: 'subscribe' // 明确告诉用户这是订阅行为
+                    },
+                    // 创建订阅请求，塞入我们匹配好的 Plan ID
+                    createSubscription: function(data, actions) {
+                        return actions.subscription.create({
+                            'plan_id': targetPlanId 
+                        });
+                    },
+                    // 用户付款成功后的回调动作
+                    onApprove: function(data, actions) {
+                        showToast('Payment successful! Processing upgrade...', 'success');
+                        paymentModal.style.display = 'none';
+                        
+                        // 记录成功的订单号，后续用来发给后端
+                        console.log("Success Subscription ID:", data.subscriptionID);
+                        
+                        // 临时模拟升级成功跳转
+                        setTimeout(() => {
+                            window.location.href = 'account.html';
+                        }, 2000);
+                    },
+                    // 付款中途关闭或报错的回调
+                    onError: function(err) {
+                        console.error('PayPal Error:', err);
+                        showToast('Payment failed or cancelled. Please try again.', 'error');
+                    }
+                }).render('#paypal-button-container');
+            } else {
+                showToast('PayPal SDK failed to load. Please refresh the page.', 'error');
+            }
+        });
+    });
+});
