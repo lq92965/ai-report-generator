@@ -1996,11 +1996,12 @@ const PAYPAL_PLAN_IDS = {
     }
 };
 
-// 🌟 核心修复点 1：使用全局变量保存用户当前想买的套餐 ID
 window.currentSelectedPlanId = '';
-window.isPayPalButtonRendered = false; // 标记按钮是否已经渲染过
+window.isPayPalButtonRendered = false; // 标记 PayPal 按钮是否已渲染
 
 document.addEventListener('DOMContentLoaded', () => {
+    // （如果之前有专门监听 billing-toggle 的老代码，由于 HTML 已经删了那个元素，它不会报错，直接无视即可）
+    
     const planButtons = document.querySelectorAll('.choose-plan-btn');
     const paymentModal = document.getElementById('payment-modal-overlay');
     const closePaymentBtn = document.getElementById('close-payment-btn');
@@ -2009,33 +2010,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!paymentModal || !paypalContainer) return; 
 
-    // 🌟 核心修复点 2：关闭弹窗时只隐藏，绝对不要清空 innerHTML 破坏 SDK
     closePaymentBtn.addEventListener('click', () => {
-        paymentModal.style.display = 'none';
+        paymentModal.style.display = 'none'; // 仅隐藏，绝不清空
     });
 
     planButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
-            // 使用 currentTarget 确保获取的是按钮本身，防止点到内部元素导致 undefined
+            // 🟢 直接从被点击的按钮身上读取配置属性 (basic/pro) 和 (monthly/yearly)
             const planType = e.currentTarget.dataset.plan; 
+            const billingCycle = e.currentTarget.dataset.cycle; 
             
             if (planType === 'free') {
                 return showToast('Elite Trial activated!', 'success');
             }
 
-            // 动态计算并更新全局的 Plan ID
-            const billingCycle = window.isYearlyBilling ? 'yearly' : 'monthly';
+            // 直接通过二维对象获取精准的 Plan ID
             window.currentSelectedPlanId = PAYPAL_PLAN_IDS[planType][billingCycle];
             
-            // 更新弹窗文字 UI
-            const cycleText = window.isYearlyBilling ? 'Annually' : 'Monthly';
+            // 动态更新弹窗上的标题 UI
+            const cycleText = billingCycle === 'yearly' ? 'Annually' : 'Monthly';
+            const priceText = billingCycle === 'yearly' ? (planType === 'pro' ? '$199' : '$99') : (planType === 'pro' ? '$19.90' : '$9.90');
             const planNameCapitalized = planType.charAt(0).toUpperCase() + planType.slice(1);
-            planNameDisplay.innerText = `${planNameCapitalized} Plan - ${cycleText}`;
+            
+            planNameDisplay.innerText = `${planNameCapitalized} Plan (${cycleText}) - ${priceText}`;
 
             // 显示弹窗
             paymentModal.style.display = 'flex';
 
-            // 🌟 核心修复点 3：只在第一次打开弹窗时渲染一次 PayPal 按钮
+            // 🟢 保证生命周期内 PayPal SDK 只渲染一次，避免缓存冲突
             if (!window.isPayPalButtonRendered && window.paypal) {
                 window.paypal.Buttons({
                     style: {
@@ -2045,7 +2047,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         label: 'subscribe'
                     },
                     createSubscription: function(data, actions) {
-                        // 🟢 每次用户点击付款时，动态读取最新的全局 ID
+                        // 每次付款发起时，实时读取最新的变量 ID
                         return actions.subscription.create({
                             'plan_id': window.currentSelectedPlanId 
                         });
@@ -2064,7 +2066,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }).render('#paypal-button-container');
                 
-                window.isPayPalButtonRendered = true; // 打上已渲染的标记
+                window.isPayPalButtonRendered = true; 
             }
         });
     });
