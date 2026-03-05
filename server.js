@@ -845,6 +845,11 @@ app.post('/api/change-password', authenticateToken, async (req, res) => {
             // 如果旧密码不对，立刻拒绝，绝对不能执行后续的更新操作
             return res.status(401).json({ message: "旧密码不正确，请重新输入！" }); 
         }
+            // 🟢 定点插入：防御机制 - 新旧密码不能相同
+            const isSameAsOld = await bcrypt.compare(newPassword, user.password);
+            if (isSameAsOld) {
+                return res.status(400).json({ message: "新密码不能与当前使用的密码相同！" });
+        }
 
         // 4. 旧密码正确，加密新密码并更新
         const hashedNewPassword = await bcrypt.hash(newPassword, 10);
