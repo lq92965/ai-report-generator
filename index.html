@@ -68,7 +68,7 @@
         #pdf-export-container { position: absolute; left: 0; top: 0; width: 100%; }
     }
 
-    /* 🟢 Mobile Patch */
+    /* Mobile Patch */
     @media (max-width: 768px) {
         #hero h1 {
             font-size: 2.25rem !important; 
@@ -528,7 +528,12 @@
                             <label class="block text-xs font-bold text-gray-600 uppercase">Password</label>
                             <a href="#" class="text-xs text-blue-600 hover:underline font-medium">Forgot?</a>
                         </div>
-                        <input type="password" id="login-password" placeholder="Enter password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
+                        <div class="relative">
+                            <input type="password" id="login-password" placeholder="Enter password" class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
+                            <button type="button" class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-blue-600 transition-colors toggle-password">
+                                <i class="fas fa-eye text-lg"></i>
+                            </button>
+                        </div>
                     </div>
                     <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition transform active:scale-95">
                         Log In
@@ -550,26 +555,23 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Password</label>
-                        <input type="password" id="signup-password" placeholder="8+ chars" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
-                        <div id="password-strength-box" class="mt-3 bg-gray-50 p-3 rounded border border-gray-200 hidden transition-all">
-                            <p class="text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wide">Security Check:</p>
-                            <ul class="text-xs space-y-1 text-gray-400 font-medium">
-                                <li id="req-length"><i class="far fa-circle mr-1 text-[10px]"></i> 8+ chars</li>
-                                <li id="req-upper"><i class="far fa-circle mr-1 text-[10px]"></i> Uppercase</li>
-                                <li id="req-number"><i class="far fa-circle mr-1 text-[10px]"></i> Number</li>
-                                <li id="req-special"><i class="far fa-circle mr-1 text-[10px]"></i> Symbol</li>
-                            </ul>
+                        <div class="relative">
+                            <input type="password" id="signup-password" placeholder="8+ chars" class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
+                            <button type="button" class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-blue-600 transition-colors toggle-password">
+                                <i class="fas fa-eye text-lg"></i>
+                            </button>
                         </div>
+                        <div id="signup-pwd-feedback" class="mt-2 hidden"></div>
                     </div>
-                        <button type="submit" id="btn-signup-submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
-                            Create Account
-                        </button>
-                    </form>
-                </div>
-
+                    <button type="submit" id="btn-signup-submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Create Account
+                    </button>
+                </form>
             </div>
+
         </div>
     </div>
+</div>
 
 <div id="message-modal" class="hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300 p-4">
     <div class="bg-white w-full max-w-6xl h-[85vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-gray-100 transform transition-all scale-100">
@@ -660,17 +662,13 @@
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
-                <input type="password" id="reset-new-password" required minlength="8" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white">
-                
-                <div id="reset-password-strength-box" class="mt-3 bg-gray-50 p-3 rounded border border-gray-200 hidden transition-all">
-                    <p class="text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wide">Security Check:</p>
-                    <ul class="text-xs space-y-1 text-gray-400 font-medium">
-                        <li id="reset-req-length"><i class="far fa-circle mr-1 text-[10px]"></i> 8+ chars</li>
-                        <li id="reset-req-upper"><i class="far fa-circle mr-1 text-[10px]"></i> Uppercase</li>
-                        <li id="reset-req-number"><i class="far fa-circle mr-1 text-[10px]"></i> Number</li>
-                        <li id="reset-req-special"><i class="far fa-circle mr-1 text-[10px]"></i> Symbol</li>
-                    </ul>
+                <div class="relative">
+                    <input type="password" id="reset-new-password" required minlength="8" class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white">
+                    <button type="button" class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-blue-600 transition-colors toggle-password">
+                        <i class="fas fa-eye text-lg"></i>
+                    </button>
                 </div>
+                <div id="reset-pwd-feedback" class="mt-2 hidden"></div>
             </div>
             <button type="submit" id="btn-reset-pwd" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg">
                 Confirm Reset
