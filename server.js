@@ -3,7 +3,6 @@ import cors from 'cors';
 import requestIp from 'request-ip';
 import 'dotenv/config';
 import { GoogleGenerativeAI } from "@google/generative-ai"; 
-// ⬇️ Critical fix: ObjectId must be imported
 import { MongoClient, ObjectId } from 'mongodb'; 
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -121,7 +120,7 @@ app.get('/api/templates', async (req, res) => {
 
 // Google Auth Redirect
 app.get('/auth/google', (req, res) => {
-    const redirectUri = '[https://api.goreportify.com/api/auth/google/callback](https://api.goreportify.com/api/auth/google/callback)'; 
+    const redirectUri = 'https://api.goreportify.com/api/auth/google/callback'; 
     const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=email profile openid`;
     res.redirect(url);
 });
@@ -180,12 +179,12 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
 app.get('/api/auth/google/callback', async (req, res) => {
     const code = req.query.code;
     try {
-        const tokenRes = await axios.post('[https://oauth2.googleapis.com/token](https://oauth2.googleapis.com/token)', {
+        const tokenRes = await axios.post('https://oauth2.googleapis.com/token', {
             client_id: GOOGLE_CLIENT_ID, client_secret: GOOGLE_CLIENT_SECRET,
             code: code, grant_type: 'authorization_code',
-            redirect_uri: '[https://api.goreportify.com/api/auth/google/callback](https://api.goreportify.com/api/auth/google/callback)'
+            redirect_uri: 'https://api.goreportify.com/api/auth/google/callback'
         });
-        const userRes = await axios.get('[https://www.googleapis.com/oauth2/v2/userinfo](https://www.googleapis.com/oauth2/v2/userinfo)', {
+        const userRes = await axios.get('https://www.googleapis.com/oauth2/v2/userinfo', {
             headers: { Authorization: `Bearer ${tokenRes.data.access_token}` }
         });
         
@@ -206,7 +205,7 @@ app.get('/api/auth/google/callback', async (req, res) => {
         res.redirect(`https://goreportify.com?token=${token}`);
     } catch (error) { 
         console.error("Google Login Error:", error);
-        res.redirect('[https://goreportify.com?error=google_login_failed](https://goreportify.com?error=google_login_failed)'); 
+        res.redirect('https://goreportify.com?error=google_login_failed'); 
     }
 });
 
@@ -432,11 +431,10 @@ app.post('/api/update-profile', authenticateToken, async (req, res) => {
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 // ==========================================
-// 🟢 [FIXED] RIE 3.0 + Prompt Matrix Engine
+// 🟢 [REBUILT] Delimiter-based Engine + Extreme Expansion Prompts
 // ==========================================
 app.post('/api/generate', authenticateToken, async (req, res) => {
     try {
-        // 1. Fetch user & verify limits
         const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
         if (!user) return res.status(404).json({ error: "User not found" });
 
@@ -461,14 +459,13 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
 
         if (!allowGen) return res.status(403).json({ error: "Limit reached! Invite friends to get more credits." });
 
-        // 🟢 2. RIE 3.0 English Prompt Matrix Engine
         const { userPrompt, role, templateId, tone, detailLevel, language } = req.body;
 
         const roleMapping = {
             "General": "Standard corporate professional. Focus on task execution details, collaboration progress, and timely delivery.",
             "Administrative": "Administrative/Operations manager. Focus on process compliance, team support, resource coordination, and daily efficiency.",
             "Freelancer": "Independent creator/Freelancer. Showcase personal delivery value, client feedback, project milestones, and innovations.",
-            "Tech": "Senior Developer/Engineer. MUST include technical details, system architecture evolution, code refactoring, bug fixes, and overcoming technical difficulties.",
+            "Tech": "Senior Developer/Engineer. MUST include deep technical details, system architecture evolution, code refactoring, bug fixes, and overcoming technical difficulties.",
             "Marketing": "Marketing Expert. Focus on brand exposure, channel conversion rates, ROI/CAC data analysis, and market trend insights.",
             "Sales": "Elite Sales/Business Director. Core focus on sales funnel, Key Account (KA) follow-ups, lead conversion, performance achievement rates, and profit growth.",
             "Management": "Team Leader/Project Manager. Stand at a management perspective, focusing on team efficiency, project milestones, cross-departmental collaboration, and risk warnings.",
@@ -491,11 +488,35 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
             "Persuasive": "Highly persuasive and bold. Emphasize outcome value, speak with data, with a strong intent to drive decisions and secure resources."
         };
 
+        // 🟢 突破字数限制的关键指令
         const detailMapping = {
-            "Brief": "Concise and brief. Focus on core conclusions and bullet points. Discard lengthy background descriptions. Total word count: 300-500 words.",
-            "Standard": "Balanced detail. Expand on important matters with background and results, gloss over minor ones. Balanced structure. Total word count: 600-800 words.",
-            "Detailed": "Extremely detailed and deeply expanded. For EVERY fragmented word provided by the user, you MUST conduct logical deduction and deep expansion: [Background & Pain Point] -> [Specific Action/Strategy] -> [Quantified Result & Impact] -> [Deep Reflection]. The content MUST be extremely rich and full. STRICTLY FORBIDDEN to just list outlines. Total word count MUST exceed 1200 words!"
+            "Brief": "Concise and brief. Focus on core conclusions and bullet points. Discard lengthy background descriptions. Total length: 300-500 words.",
+            "Standard": "Balanced detail. Expand on important matters with background and results, gloss over minor ones. Balanced structure. Total length: 600-800 words.",
+            "Detailed": "CRITICAL INSTRUCTION: You MUST perform an EXTREMELY DEEP and exhaustive expansion. For EVERY single point provided by the user, you MUST generate comprehensive paragraphs covering: [1. Strategic Background & Pain Points] -> [2. Detailed Execution Steps & Methodologies] -> [3. Quantitative Outcomes & Data Metrics] -> [4. Deep Reflection & Future Roadmap]. NEVER just list bullet points. Use highly professional vocabulary and fabricate reasonable logical details to make it full. Total length MUST strictly exceed 1500 words!"
         };
+
+        // 🟢 动态生成严格的分隔符输出要求 (彻底放弃 JSON)
+        const formatInstructions = isPro 
+            ? `[OUTPUT FORMAT REQUIREMENTS]
+DO NOT use JSON formatting. You MUST return pure text using EXACTLY these boundaries. Do not add markdown code blocks around them:
+
+===WORD_CONTENT_START===
+[Insert full, deeply expanded markdown report here based on the instructions]
+===WORD_CONTENT_END===
+
+===PPT_OUTLINE_START===
+[Extract a 5-8 slides PPT outline from the report. Use Markdown format with Slide titles and bullet points]
+===PPT_OUTLINE_END===
+
+===EMAIL_SUMMARY_START===
+[Extract a 3-5 lines executive email summary]
+===EMAIL_SUMMARY_END===`
+            : `[OUTPUT FORMAT REQUIREMENTS]
+DO NOT use JSON formatting. You MUST return pure text using EXACTLY these boundaries. Do not add markdown code blocks around them:
+
+===WORD_CONTENT_START===
+[Insert full, deeply expanded markdown report here based on the instructions]
+===WORD_CONTENT_END===`;
 
         let finalSystemInstructions = `You are RIE (Reportify Intelligence Engine) 3.0 Flagship Edition - the world's top workplace report generation brain.
         Your task is to take the user's extremely brief, fragmented prompts and [Deeply Expand] them into a highly professional document through strong logical reasoning and workplace experience.
@@ -510,39 +531,28 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
         [Unbreakable Iron Rules]
         - STRICTLY FORBIDDEN to simply repeat the user's prompts! You MUST actively imagine reasonable details and invent logical data metrics (e.g., increased by 15%, decreased by 20%) based on the set [Persona] and [Context], making the report look like a real, content-rich work summary.
         - The main body MUST use high-quality Markdown formatting (#, ##, **, blockquotes, etc.) to make it visually clear and readable.
-        
-        [Mandatory JSON Output Format]
-        Regardless of how long the content is, your final output MUST be a pure, valid JSON object. ABSOLUTELY DO NOT wrap the JSON in \`\`\`json code blocks! Start directly with { and end with }.
-        {
-            "word_content": "Place the fully expanded Markdown report body here according to all the rules above (handle internal newline \\n and quote escapes properly).",
-            "ppt_outline": "Based on this generated report, extract a 5-8 slide structured PPT outline (use Markdown format, including Slide titles and bullet points).",
-            "email_summary": "Extract the core essence of the report and write a 3-5 line minimalist email body. The tone must match your current persona, suitable for quick CC to leaders or stakeholders."
-        }`;
 
-        // 🟢 Pass the wrapped payload instead of raw user prompt
+        ${formatInstructions}`;
+
         const expandedUserPrompt = `Here are the rough bullet points of my work/thoughts today:\n"${userPrompt}"\n\nPlease immediately deeply reconstruct and significantly expand this into a final professional report based on your system instructions, persona, and style settings.`;
 
-        let text = "";
+        let rawText = "";
 
-        // 3. Call AI API
+        // 3. Call AI API (关闭 JSON Config)
         const primaryModelName = "gemini-3-flash-preview"; 
         const backupModelName = "gemini-2.5-flash";
 
         try {
             console.log(`🤖 Trying Primary Model: ${primaryModelName}`);
-            
             const model = genAI.getGenerativeModel({ 
                 model: primaryModelName,
                 systemInstruction: finalSystemInstructions 
             });
-            
-            const generationConfig = isPro ? { response_mime_type: "application/json" } : {};
-            
+            // 🟢 取消了 response_mime_type: "application/json"
             const result = await model.generateContent({ 
-                contents: [{ role: 'user', parts: [{ text: expandedUserPrompt }] }], 
-                generationConfig 
+                contents: [{ role: 'user', parts: [{ text: expandedUserPrompt }] }]
             });
-            text = result.response.text();
+            rawText = result.response.text();
             
         } catch (primaryError) {
             console.warn(`⚠️ Primary Model Failed:`, primaryError.message);
@@ -552,53 +562,60 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
                     model: backupModelName,
                     systemInstruction: finalSystemInstructions
                 });
-                
-                const generationConfig = isPro ? { response_mime_type: "application/json" } : {};
-                
                 const resultBackup = await modelBackup.generateContent({
-                    contents: [{ role: 'user', parts: [{ text: expandedUserPrompt }] }], 
-                    generationConfig
+                    contents: [{ role: 'user', parts: [{ text: expandedUserPrompt }] }]
                 });
-                text = resultBackup.response.text();
+                rawText = resultBackup.response.text();
             } catch (backupError) {
                 console.error(`❌ Both models failed`);
                 throw new Error("AI Service Unavailable");
             }
         }
 
-        // 4. Save to DB
+        // 🟢 4. 分隔符提取引擎 (安全切分文本)
+        let wordContent = rawText;
+        let pptOutline = "";
+        let emailSummary = "";
+
+        // 如果 AI 听话生成了分隔符，我们就进行精准提取
+        if (rawText.includes("===WORD_CONTENT_START===")) {
+            const extractSection = (text, tag) => {
+                const startMarker = `===${tag}_START===`;
+                const endMarker = `===${tag}_END===`;
+                const sIdx = text.indexOf(startMarker);
+                const eIdx = text.indexOf(endMarker);
+                if (sIdx !== -1 && eIdx !== -1 && eIdx > sIdx) {
+                    return text.substring(sIdx + startMarker.length, eIdx).trim();
+                }
+                return "";
+            };
+
+            const extractedWord = extractSection(rawText, "WORD_CONTENT");
+            if (extractedWord) wordContent = extractedWord;
+            pptOutline = extractSection(rawText, "PPT_OUTLINE");
+            emailSummary = extractSection(rawText, "EMAIL_SUMMARY");
+        }
+
+        // 5. Save to DB
         await db.collection('reports').insertOne({ 
             userId: req.user.userId, 
             title: "Generated Report", 
-            content: text, 
+            content: wordContent, // 只存正文进历史记录
             createdAt: new Date() 
         });
 
-        // 5. Deduct Credits
+        // 6. Deduct Credits
         if (deductSource === 'main') {
             await db.collection('users').updateOne({ _id: user._id }, { $inc: { usageCount: 1 } });
         } else if (deductSource === 'bonus') {
             await db.collection('users').updateOne({ _id: user._id }, { $inc: { bonusCredits: -1 } });
         }
 
-        // 6. 🟢 Return Response & Clean JSON
+        // 7. Return to Frontend
         if (isPro) {
-            try {
-                // Strip markdown code block wrappers if AI decides to include them despite instructions
-                let cleanText = text.replace(/```json/gi, '').replace(/```/g, '').trim();
-                
-                const parsed = JSON.parse(cleanText);
-                res.json({ 
-                    generatedText: parsed.word_content || cleanText, 
-                    pptOutline: parsed.ppt_outline || "", 
-                    emailSummary: parsed.email_summary || "" 
-                });
-            } catch (e) {
-                console.error("JSON parsing failed, falling back to raw text:", e.message);
-                res.json({ generatedText: text }); 
-            }
+            res.json({ generatedText: wordContent, pptOutline: pptOutline, emailSummary: emailSummary });
         } else {
-            res.json({ generatedText: text });
+            res.json({ generatedText: wordContent });
         }
 
     } catch (e) { 
@@ -739,7 +756,7 @@ app.get('/api/history', authenticateToken, async (req, res) => {
         console.log("Fetching history for user ID:", userId);
 
         const reports = await db.collection('reports')
-            .find({ userId: userId }) // 🟢 Reverted back to correct ID-based query
+            .find({ userId: userId }) 
             .sort({ createdAt: -1 }) 
             .toArray();
 
@@ -783,13 +800,13 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
 
         try {
             const auth = Buffer.from(`${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_SECRET}`).toString('base64');
-            const tokenRes = await axios.post(`${process.env.PAYPAL_API_BASE}/v1/oauth2/token`, 
+            const tokenRes = await axios.post(`https://api-m.paypal.com/v1/oauth2/token`, 
                 'grant_type=client_credentials', 
                 { headers: { 'Authorization': `Basic ${auth}`, 'Content-Type': 'application/x-www-form-urlencoded' } }
             );
             const accessToken = tokenRes.data.access_token;
 
-            const orderRes = await axios.get(`${process.env.PAYPAL_API_BASE}/v2/checkout/orders/${paymentId}`, {
+            const orderRes = await axios.get(`https://api-m.paypal.com/v2/checkout/orders/${paymentId}`, {
                 headers: { 'Authorization': `Bearer ${accessToken}` }
             });
 
