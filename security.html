@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Security Settings - Reportify AI</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body style="background-color: #f8f9fa;">
 <header class="main-header account-header">
@@ -54,7 +55,16 @@
                         <div class="input-wrapper">
                             <label for="new-password">New Password</label>
                             <input type="password" id="new-password" required minlength="8">
-                            <p style="font-size: 12px; color: #6b7280; margin-top: 6px; line-height: 1.4;">At least 8 characters, including uppercase, lowercase, numbers, and special symbols.</p>
+                            
+                            <div id="security-password-strength-box" style="display: none; margin-top: 10px; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; transition: all 0.3s;">
+                                <p style="font-size: 11px; font-weight: bold; color: #64748b; margin-top: 0; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">Security Check:</p>
+                                <ul style="list-style: none; padding: 0; margin: 0; font-size: 12px; color: #94a3b8; line-height: 1.8;">
+                                    <li id="sec-req-length"><i class="far fa-circle" style="margin-right: 6px; font-size: 10px;"></i> 8+ chars</li>
+                                    <li id="sec-req-upper"><i class="far fa-circle" style="margin-right: 6px; font-size: 10px;"></i> Uppercase</li>
+                                    <li id="sec-req-number"><i class="far fa-circle" style="margin-right: 6px; font-size: 10px;"></i> Number</li>
+                                    <li id="sec-req-special"><i class="far fa-circle" style="margin-right: 6px; font-size: 10px;"></i> Symbol</li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="input-wrapper">
                             <label for="confirm-password">Confirm New Password</label>
