@@ -50,25 +50,31 @@
                     <form id="change-password-form">
                         <div class="input-wrapper">
                             <label for="old-password">Current Password</label>
-                            <input type="password" id="old-password" required>
-                        </div>
-                        <div class="input-wrapper">
-                            <label for="new-password">New Password</label>
-                            <input type="password" id="new-password" required minlength="8">
-                            
-                            <div id="security-password-strength-box" style="display: none; margin-top: 10px; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; transition: all 0.3s;">
-                                <p style="font-size: 11px; font-weight: bold; color: #64748b; margin-top: 0; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">Security Check:</p>
-                                <ul style="list-style: none; padding: 0; margin: 0; font-size: 12px; color: #94a3b8; line-height: 1.8;">
-                                    <li id="sec-req-length"><i class="far fa-circle" style="margin-right: 6px; font-size: 10px;"></i> 8+ chars</li>
-                                    <li id="sec-req-upper"><i class="far fa-circle" style="margin-right: 6px; font-size: 10px;"></i> Uppercase</li>
-                                    <li id="sec-req-number"><i class="far fa-circle" style="margin-right: 6px; font-size: 10px;"></i> Number</li>
-                                    <li id="sec-req-special"><i class="far fa-circle" style="margin-right: 6px; font-size: 10px;"></i> Symbol</li>
-                                </ul>
+                            <div style="position: relative;">
+                                <input type="password" id="old-password" required style="width: 100%; padding-right: 40px; box-sizing: border-box;">
+                                <button type="button" class="toggle-password" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #9ca3af; cursor: pointer; padding: 0;">
+                                    <i class="fas fa-eye"></i>
+                                </button>
                             </div>
                         </div>
                         <div class="input-wrapper">
+                            <label for="new-password">New Password</label>
+                            <div style="position: relative;">
+                                <input type="password" id="new-password" required minlength="8" style="width: 100%; padding-right: 40px; box-sizing: border-box;">
+                                <button type="button" class="toggle-password" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #9ca3af; cursor: pointer; padding: 0;">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div id="security-pwd-feedback" style="display: none; margin-top: 8px;"></div>
+                        </div>
+                        <div class="input-wrapper">
                             <label for="confirm-password">Confirm New Password</label>
-                            <input type="password" id="confirm-password" required>
+                            <div style="position: relative;">
+                                <input type="password" id="confirm-password" required style="width: 100%; padding-right: 40px; box-sizing: border-box;">
+                                <button type="button" class="toggle-password" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #9ca3af; cursor: pointer; padding: 0;">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Update Password</button>
                         <p id="password-status" class="status-message"></p>
