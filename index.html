@@ -16,7 +16,7 @@
 
     <link rel="stylesheet" href="style.css?v=3.0">
     <style>
-    /* 1. 基础容器设置 */
+    /* 1. Base Container Settings */
     #generated-report {
         font-family: 'Inter', system-ui, -apple-system, sans-serif;
         line-height: 1.75;
@@ -25,7 +25,7 @@
         transition: all 0.3s ease;
     }
 
-    /* 2. 排版细节 (Markdown 渲染后的样式) */
+    /* 2. Typography Details (Markdown Rendered Style) */
     #generated-report h1 { font-size: 2.25rem; font-weight: 800; color: #111827; margin-top: 0; margin-bottom: 1.5rem; letter-spacing: -0.025em; line-height: 1.1; }
     #generated-report h2 { font-size: 1.5rem; font-weight: 700; color: #1f2937; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem; }
     #generated-report h3 { font-size: 1.25rem; font-weight: 600; color: #374151; margin-top: 1.5rem; margin-bottom: 0.75rem; }
@@ -38,58 +38,58 @@
     #generated-report code { background-color: #f3f4f6; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-family: monospace; font-size: 0.9em; color: #ef4444; }
     #generated-report hr { border: 0; border-top: 1px solid #e5e7eb; margin: 2.5rem 0; }
 
-    /* 3. 风格化主题 (Themes) */
+    /* 3. Themes */
     
-    /* 👔 商务/管理风格 (Corporate) - 严肃、权威 */
+    /* 👔 Corporate Theme - Serious, Authoritative */
     .theme-corporate {
-        font-family: 'Merriweather', 'Georgia', serif; /* 衬线体，显得正式 */
+        font-family: 'Merriweather', 'Georgia', serif; /* Serif font for formal look */
     }
     .theme-corporate h1 { color: #1e3a8a; border-bottom: 3px solid #1e3a8a; padding-bottom: 20px; text-align: center; }
     .theme-corporate h2 { color: #1e40af; border-left: 5px solid #1e40af; padding-left: 15px; border-bottom: none !important; }
     
-    /* ⚡ 日报/周报风格 (Modern) - 清晰、高效 */
+    /* ⚡ Modern Theme - Clear, Efficient */
     .theme-modern {
         font-family: 'Inter', sans-serif;
     }
-    .theme-modern h1 { color: #059669; } /* 绿色系，代表进度/健康 */
+    .theme-modern h1 { color: #059669; } /* Green scheme for progress/health */
     .theme-modern ul li::marker { color: #059669; }
 
-    /* 🎨 创意/营销风格 (Creative) - 活泼、鲜明 */
+    /* 🎨 Creative Theme - Lively, Vivid */
     .theme-creative {
         font-family: 'Poppins', sans-serif;
     }
     .theme-creative h1 { background: -webkit-linear-gradient(45deg, #6366f1, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .theme-creative blockquote { border-left-color: #ec4899; background: #fdf2f8; color: #db2777; }
 
-    /* 4. 打印专用样式 (解决 PDF 白屏和格式问题) */
+    /* 4. Print Styles (Fixes PDF blank screen & formatting) */
     @media print {
         body * { visibility: hidden; }
         #pdf-export-container, #pdf-export-container * { visibility: visible; }
         #pdf-export-container { position: absolute; left: 0; top: 0; width: 100%; }
     }
 
-    /* 🟢 移动端适配补丁：确保 Hero 和 About 模块在手机上显示完美 */
+    /* 🟢 Mobile Patch: Ensure Hero and About sections look perfect on mobile */
     @media (max-width: 768px) {
         #hero h1 {
-            font-size: 2.25rem !important; /* 手机端标题缩小，防止撑破屏幕 */
+            font-size: 2.25rem !important; /* Shrink title on mobile to prevent overflow */
             line-height: 1.2 !important;
         }
         
         #hero .hero-content > div[style*="flex"] {
-            flex-direction: column !important; /* 痛点列表由横向变纵向 */
+            flex-direction: column !important; /* Pain points list from horizontal to vertical */
             gap: 15px !important;
             align-items: center !important;
         }
 
         .hero-btns {
-            flex-direction: column !important; /* 按钮在手机端上下堆叠 */
+            flex-direction: column !important; /* Stack buttons vertically on mobile */
             gap: 15px !important;
             width: 100%;
             align-items: center;
         }
 
         .hero-btns .btn {
-            width: 85% !important; /* 按钮宽度更适合手指点击 */
+            width: 85% !important; /* Button width optimized for touch */
             padding: 14px 0 !important;
             display: flex;
             justify-content: center;
@@ -97,7 +97,7 @@
 
         #about div[style*="display: grid"], 
         #about .about-grid {
-            grid-template-columns: 1fr !important; /* 关于我们模块恢复单列排版 */
+            grid-template-columns: 1fr !important; /* About section restores single-column layout */
         }
     }
 
@@ -361,10 +361,10 @@
                         <div class="input-wrapper">
                             <label for="tone">Tone / Style</label>
                             <select id="tone" name="tone">
-                                <option value="Grounded" selected>Grounded / Practical (务实)</option>
-                                <option value="Professional">Formal / Professional (专业)</option>
-                                <option value="Conversational">Conversational / Casual (对话/生活化)</option>
-                                <option value="Persuasive">Persuasive / Bold (有说服力)</option>
+                                <option value="Grounded" selected>Grounded / Practical</option>
+                                <option value="Professional">Formal / Professional</option>
+                                <option value="Conversational">Conversational / Casual</option>
+                                <option value="Persuasive">Persuasive / Bold</option>
                             </select>
                         </div>
 
@@ -372,7 +372,7 @@
                             <label for="language">Language</label>
                             <select id="language" name="language">
                                 <option value="English">English</option>
-                                <option value="Chinese">Chinese (简体中文)</option>
+                                <option value="Chinese">Chinese (Simplified)</option>
                                 <option value="Japanese">Japanese</option>
                                 <option value="Korean">Korean</option>
                                 <option value="Spanish">Spanish</option>
@@ -470,7 +470,7 @@
                                     style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; resize: vertical; font-family: inherit; outline: none;"></textarea>
         
                                <span style="position: absolute; bottom: 8px; right: 10px; font-size: 12px; color: #aaa; pointer-events: none;">
-                                   Max 1000
+                                    Max 1000
                                </span>
                           </div>
                      </div>
@@ -609,7 +609,7 @@
 </button>
 
 <style>
-    /* 铃铛摇晃动画 */
+    /* Bell swing animation */
     @keyframes swing { 
         20% { transform: rotate(15deg); } 
         40% { transform: rotate(-10deg); } 
