@@ -1,20 +1,17 @@
 // ========================================================
-// 🟢 独立的 PayPal 订阅与支付核心逻辑 (完全物理隔离)
+// 🟢 独立的 PayPal 单次支付核心逻辑 (One-Time Checkout)
+// 完美规避中国大陆账号订阅风控限制
 // ========================================================
 
-const PAYPAL_PLAN_IDS = {
-    basic: {
-        monthly: 'P-064730007W177763FNGT24DI',
-        yearly: 'P-485334104D5902934NGT26FA'
-    },
-    pro: {
-        monthly: 'P-75G85632XU6928725NGT34OI', 
-        yearly: 'P-1KU15100C4499954NNGT357I'
-    }
+// 直接定义金额，不再使用受限的 Plan ID
+const PAYPAL_PRICES = {
+    basic: { monthly: '9.90', yearly: '99.00' },
+    pro: { monthly: '19.90', yearly: '199.00' }
 };
 
-window.currentSelectedPlanId = '';
-// 引入全局实例变量存放旧的 PayPal 按钮，用于彻底销毁
+window.currentSelectedPrice = '0.00';
+window.currentSelectedPlanType = '';
+window.currentSelectedCycle = '';
 window.currentPayPalButton = null; 
 
 function showSubToast(msg, type='info') {
@@ -48,12 +45,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 return showSubToast('Elite Trial activated!', 'success');
             }
 
-            // 获取最新 ID
-            window.currentSelectedPlanId = PAYPAL_PLAN_IDS[planType][billingCycle];
+            // 获取要收取的准确金额
+            window.currentSelectedPlanType = planType;
+            window.currentSelectedCycle = billingCycle;
+            window.currentSelectedPrice = PAYPAL_PRICES[planType][billingCycle];
             
             // 更新 UI 文字
             const cycleText = billingCycle === 'yearly' ? 'Annually' : 'Monthly';
-            const priceText = billingCycle === 'yearly' ? (planType === 'pro' ? '$199' : '$99') : (planType === 'pro' ? '$19.90' : '$9.90');
+            const priceText = `$${window.currentSelectedPrice}`;
             const planNameCapitalized = planType.charAt(0).toUpperCase() + planType.slice(1);
             
             planNameDisplay.innerText = `${planNameCapitalized} Plan (${cycleText}) - ${priceText}`;
@@ -61,36 +60,49 @@ document.addEventListener('DOMContentLoaded', () => {
             // 显示弹窗
             subscribeModal.style.display = 'flex';
 
-            // 🚨 核心防御机制：如果内存中存活着上一次点击产生的旧按钮，直接无情地摧毁它！
+            // 销毁旧按钮
             if (window.currentPayPalButton) {
                 window.currentPayPalButton.close().catch(err => console.log('Close btn skipped'));
             }
 
-            // 为当前这笔交易，实时创建一个纯洁无污染的新按钮
+            // 🟢 使用单次收款 (createOrder) 取代之前的 createSubscription
             if (window.paypal) {
                 window.currentPayPalButton = window.paypal.Buttons({
                     style: {
                         shape: 'rect',
                         color: 'blue',
                         layout: 'vertical',
-                        label: 'subscribe'
+                        label: 'pay' // 标签改为 pay
                     },
-                    createSubscription: function(data, actions) {
-                        // 发起订阅时，PayPal 将 100% 读取这里最新的 ID
-                        return actions.subscription.create({
-                            'plan_id': window.currentSelectedPlanId 
+                    // 设置单次收款的金额
+                    createOrder: function(data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                description: `Reportify AI ${planNameCapitalized} - ${cycleText}`,
+                                amount: {
+                                    currency_code: 'USD',
+                                    value: window.currentSelectedPrice
+                                }
+                            }]
                         });
                     },
+                    // 用户付款成功后的动作
                     onApprove: function(data, actions) {
-                        showSubToast('Payment successful! Processing upgrade...', 'success');
-                        subscribeModal.style.display = 'none';
-                        console.log("Success Subscription ID:", data.subscriptionID);
-                        setTimeout(() => {
-                            window.location.href = 'account.html';
-                        }, 2000);
+                        return actions.order.capture().then(function(details) {
+                            showSubToast(`Payment successful! Thank you, ${details.payer.name.given_name}.`, 'success');
+                            subscribeModal.style.display = 'none';
+                            
+                            // 打印订单号
+                            console.log("Success Order ID:", details.id);
+                            
+                            // 跳转到账户中心
+                            setTimeout(() => {
+                                window.location.href = 'account.html';
+                            }, 2000);
+                        });
                     },
                     onError: function(err) {
-                        console.error('PayPal Error:', err);
+                        console.error('PayPal Checkout Error:', err);
                         showSubToast('Payment window closed or error occurred.', 'error');
                     }
                 });
