@@ -3,7 +3,7 @@ import cors from 'cors';
 import requestIp from 'request-ip';
 import 'dotenv/config';
 import { GoogleGenerativeAI } from "@google/generative-ai"; 
-// ⬇️ 关键修改：必须引入 ObjectId，否则下面会报错
+// ⬇️ Critical fix: ObjectId must be imported
 import { MongoClient, ObjectId } from 'mongodb'; 
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -13,23 +13,23 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { Resend } from 'resend';
 
-// 修复路径定义
+// Path definitions
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-// 🟢 商业级 HTTP 邮件引擎 (无视云服务器封锁)
+// Commercial HTTP Email Engine
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// 1. 核心配置
+// 1. Core Config
 const API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 const MONGO_URI = process.env.MONGO_URI;
 const JWT_SECRET = process.env.JWT_SECRET;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID; 
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
-// 2. 数据库连接
+// 2. Database Connection
 const client = new MongoClient(MONGO_URI);
 let db;
 async function connectDB() {
@@ -41,24 +41,21 @@ async function connectDB() {
 }
 connectDB();
 
-// 3. CORS 配置
-// 🟢 找到 app.use(cors(...))，确保替换为这段最强兼容性代码
+// 3. CORS Config
 app.use(cors({ 
-    origin: true, // 动态允许来源
+    origin: true, 
     credentials: true, 
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'] 
 }));
 app.use(express.json());
-// --- 修改开始：让浏览器能访问 uploads 里的图片 ---
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-// --- 修改结束 ---
-// ... 保留上面的 app.use ...
 
-// --- 关键修复：使用绝对路径保存文件 ---
+// Serve static uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Absolute path for multer storage
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        // 使用 path.join 确保一定能找到这个文件夹
         cb(null, path.join(__dirname, 'uploads')); 
     },
     filename: function (req, file, cb) {
@@ -68,7 +65,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// 鉴权中间件
+// Auth Middleware
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
@@ -93,75 +90,64 @@ const verifyAdmin = async (req, res, next) => {
     } catch (err) { res.status(403).json({ message: 'Token Invalid' }); }
 };
 
-
-
-// ======================= 路由 =======================
+// ======================= Routes =======================
 
 app.get('/', (req, res) => res.send('Backend Online'));
 
-// 🟢 [完整版] 模板列表接口 (涵盖日报、周报、年报等)
+// Templates API
 app.get('/api/templates', async (req, res) => {
     const templates = [
-        // === Routine / 常规汇报 ===
+        // === Routine ===
         { _id: 'daily_standup', title: 'Daily Standup ', category: 'Routine', isPro: false },
         { _id: 'weekly_pulse', title: 'Weekly Pulse ', category: 'Routine', isPro: false },
         { _id: 'monthly_review', title: 'Monthly Review ', category: 'Routine', isPro: true },
         
-        // === Strategic / 战略规划 ===
+        // === Strategic ===
         { _id: 'quarterly_report', title: 'Quarterly Analysis ', category: 'Strategic', isPro: true },
         { _id: 'annual_summary', title: 'Annual Report', category: 'Strategic', isPro: true },
         { _id: 'project_proposal', title: 'Project Proposal ', category: 'Strategic', isPro: true },
         
-        // === Professional / 专业文档 ===
+        // === Professional ===
         { _id: 'meeting_minutes', title: 'Meeting Minutes ', category: 'Professional', isPro: false },
         { _id: 'research_summary', title: 'Research Summary ', category: 'Professional', isPro: true },
         { _id: 'incident_report', title: 'Incident Report ', category: 'Professional', isPro: true },
 
-        // === Marketing / 营销 ===
+        // === Marketing ===
         { _id: 'marketing_copy', title: 'Marketing Copy ', category: 'Marketing', isPro: true },
         { _id: 'social_media', title: 'Social Media Post ', category: 'Marketing', isPro: false }
     ];
     res.json(templates);
 });
 
-// 🟢 [核心修复] Google 登录跳转
+// Google Auth Redirect
 app.get('/auth/google', (req, res) => {
-    const redirectUri = 'https://api.goreportify.com/api/auth/google/callback'; 
+    const redirectUri = '[https://api.goreportify.com/api/auth/google/callback](https://api.goreportify.com/api/auth/google/callback)'; 
     const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=email profile openid`;
-    
-    // ❌ 之前是 res.json({url}) 导致你看到乱码
-    // ✅ 现在改成直接跳转
     res.redirect(url);
 });
 
-// ==========================================
-// 🟢 [完美版] 用量统计 (自动补全邀请码)
-// ==========================================
+// Usage Stats API
 app.get('/api/usage', authenticateToken, async (req, res) => {
     try {
         if (!req.user || !req.user.userId) return res.status(401).json({ message: "Invalid Token" });
 
-        // 1. 查找用户
         let user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
         if (!user) return res.status(404).json({ message: "User not found" });
 
-        // 🟢 [核心修复]：如果是老用户(没有邀请码)，立刻生成一个并保存！
+        // Auto-generate referral code for legacy users
         if (!user.referralCode) {
             const rawName = user.name || user.email.split('@')[0];
             const cleanName = rawName.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().substring(0, 3);
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             const newCode = `${cleanName}${randomNum}`;
             
-            // 更新数据库
             await db.collection('users').updateOne(
                 { _id: user._id },
                 { $set: { referralCode: newCode } }
             );
-            // 更新内存里的 user 对象，以便下面返回
             user.referralCode = newCode;
         }
 
-        // 2. 计算限额逻辑 (保持不变)
         const plan = user.plan || 'basic';
         const usageCount = user.usageCount || 0;
         let totalLimit = 0;
@@ -173,7 +159,6 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
         const activeDays = Math.ceil(Math.abs(now - joinDate) / (86400000)) || 1;
         const daysLeft = 30 - now.getDate();
 
-        // 3. 返回数据
         res.json({
             plan: plan.toUpperCase(),
             used: usageCount,
@@ -182,7 +167,7 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
             daysLeft: daysLeft > 0 ? daysLeft : 1,
             activeDays: activeDays,
             bonusCredits: user.bonusCredits || 0,
-            referralCode: user.referralCode // 现在绝对会有值了！
+            referralCode: user.referralCode
         });
 
     } catch (error) {
@@ -191,32 +176,29 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
     }
 });
 
-// 🟢 [修正版] Google 回调 (增加保存头像 picture 逻辑)
+// Google Callback
 app.get('/api/auth/google/callback', async (req, res) => {
     const code = req.query.code;
     try {
-        const tokenRes = await axios.post('https://oauth2.googleapis.com/token', {
+        const tokenRes = await axios.post('[https://oauth2.googleapis.com/token](https://oauth2.googleapis.com/token)', {
             client_id: GOOGLE_CLIENT_ID, client_secret: GOOGLE_CLIENT_SECRET,
             code: code, grant_type: 'authorization_code',
-            redirect_uri: 'https://api.goreportify.com/api/auth/google/callback'
+            redirect_uri: '[https://api.goreportify.com/api/auth/google/callback](https://api.goreportify.com/api/auth/google/callback)'
         });
-        const userRes = await axios.get('https://www.googleapis.com/oauth2/v2/userinfo', {
+        const userRes = await axios.get('[https://www.googleapis.com/oauth2/v2/userinfo](https://www.googleapis.com/oauth2/v2/userinfo)', {
             headers: { Authorization: `Bearer ${tokenRes.data.access_token}` }
         });
         
-        // 🟢 获取 Google 头像
         const { email, name, picture } = userRes.data; 
         
         let user = await db.collection('users').findOne({ email });
         if (!user) {
-            // 注册新用户 (存入 picture)
             const result = await db.collection('users').insertOne({ 
-                name, email, picture, // ✅ 存入头像
+                name, email, picture,
                 password: null, authProvider: 'google', plan: 'basic', createdAt: new Date() 
             });
             user = { _id: result.insertedId, plan: 'basic' };
         } else {
-            // 老用户登录，顺便更新一下头像 (防止头像过期)
             await db.collection('users').updateOne({ email }, { $set: { picture: picture } });
         }
 
@@ -224,22 +206,17 @@ app.get('/api/auth/google/callback', async (req, res) => {
         res.redirect(`https://goreportify.com?token=${token}`);
     } catch (error) { 
         console.error("Google Login Error:", error);
-        res.redirect('https://goreportify.com?error=google_login_failed'); 
+        res.redirect('[https://goreportify.com?error=google_login_failed](https://goreportify.com?error=google_login_failed)'); 
     }
 });
 
-// ==========================================
-// 🟢 [升级版] 注册接口 (IP防刷 + 邀请奖励)
-// ==========================================
+// Registration API
 app.post('/api/register', async (req, res) => {
     try {
-        // 注意：你原代码用的是 displayName，这里保持一致，并增加了 inviteCode
         const { displayName, email, password, inviteCode } = req.body;
         
-        // 1. 获取客户端 IP
         const clientIp = requestIp.getClientIp(req);
 
-        // 2. 检查 1 小时内同 IP 注册频率 (防脚本)
         const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
         const ipCount = await db.collection('users').countDocuments({
             registrationIp: clientIp,
@@ -249,13 +226,11 @@ app.post('/api/register', async (req, res) => {
             return res.status(429).json({ message: "Too many registrations from this IP." });
         }
 
-        // 3. 检查邮箱是否存在
         const existing = await db.collection('users').findOne({ email });
         if (existing) return res.status(400).json({ message: "Email exists" });
 
         const hashedPassword = await bcrypt.hash(password, 10);
         
-        // 4. 生成邀请码 (使用 displayName 或 email 前缀)
         const rawName = displayName || email.split('@')[0];
         const cleanName = rawName.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().substring(0, 3);
         const randomNum = Math.floor(1000 + Math.random() * 9000);
@@ -264,18 +239,15 @@ app.post('/api/register', async (req, res) => {
         let initialBonus = 0;
         let validReferredBy = null;
 
-        // 5. 处理邀请逻辑
         if (inviteCode) {
             const referrer = await db.collection('users').findOne({ referralCode: inviteCode });
             if (referrer) {
-                // 防刷：如果注册IP和邀请人IP相同，不给奖励
                 if (referrer.registrationIp === clientIp) {
                     console.log(`Fraud Risk: Referrer IP matches New IP ${clientIp}`);
                 } else {
                     validReferredBy = referrer._id;
-                    initialBonus = 5; // 新人奖励 5 次
+                    initialBonus = 5; 
 
-                    // 给邀请人 +5 次 (封顶 50)
                     if ((referrer.bonusCredits || 0) < 50) {
                         await db.collection('users').updateOne(
                             { _id: referrer._id },
@@ -286,15 +258,12 @@ app.post('/api/register', async (req, res) => {
             }
         }
 
-        // 6. 写入数据库 (保留原有的 plan: basic 和 role: user)
         await db.collection('users').insertOne({ 
-            name: displayName, // 保持你原有的字段名 name
+            name: displayName, 
             email, 
             password: hashedPassword, 
             plan: 'basic', 
             role: 'user', 
-            
-            // 新增字段
             usageCount: 0,
             bonusCredits: initialBonus, 
             referralCode: myReferralCode,
@@ -310,32 +279,32 @@ app.post('/api/register', async (req, res) => {
     }
 });
 
+// Login API
 app.post('/api/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-        if (!email || !password) return res.status(400).json({ message: "请填写完整信息" });
+        if (!email || !password) return res.status(400).json({ message: "Please fill in all fields" });
 
         const user = await db.collection('users').findOne({ email: email.toLowerCase().trim() });
         
-        if (!user) return res.status(400).json({ message: "账号不存在" });
+        if (!user) return res.status(400).json({ message: "Account does not exist" });
         
-        // 🚨 关键修复：防止因 Google 用户没有密码导致的登录崩溃
         if (!user.password && user.authProvider === 'google') {
-            return res.status(400).json({ message: "该邮箱已通过 Google 注册，请使用 Google 按钮登录" });
+            return res.status(400).json({ message: "Account created via Google. Please use Google Login." });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(400).json({ message: "密码错误" });
+        if (!isMatch) return res.status(400).json({ message: "Incorrect password" });
 
         const token = jwt.sign({ userId: user._id, email: user.email, plan: user.plan }, JWT_SECRET, { expiresIn: '7d' });
         res.json({ token, message: "Login successful" });
     } catch (e) { 
         console.error("Login Error:", e);
-        res.status(500).json({ error: "服务器内部错误" }); 
+        res.status(500).json({ error: "Internal Server Error" }); 
     }
 });
 
-// --- Password Reset: Send Code ---
+// Password Reset: Send Code
 app.post('/api/auth/send-reset-code', async (req, res) => {
     try {
         const { email } = req.body;
@@ -352,7 +321,6 @@ app.post('/api/auth/send-reset-code', async (req, res) => {
             { upsert: true }
         );
 
-        // 🚨 Use Resend HTTP API
         const { data, error } = await resend.emails.send({
             from: 'Reportify AI Security <noreply@goreportify.com>', 
             to: user.email,
@@ -383,7 +351,7 @@ app.post('/api/auth/send-reset-code', async (req, res) => {
     }
 });
 
-// --- Password Reset: Verify & Update ---
+// Password Reset: Verify & Update
 app.post('/api/auth/verify-and-reset', async (req, res) => {
     try {
         const { email, code, newPassword } = req.body;
@@ -400,7 +368,7 @@ app.post('/api/auth/verify-and-reset', async (req, res) => {
     } catch (e) { res.status(500).json({ message: "Reset failed. Please try again." }); }
 });
 
-// --- 修改：获取用户信息 + 统计用量 ---
+// Get Current User Profile
 app.get('/api/me', authenticateToken, async (req, res) => {
     try {
         const user = await db.collection('users').findOne(
@@ -410,10 +378,8 @@ app.get('/api/me', authenticateToken, async (req, res) => {
         
         if (!user) return res.status(404).json({ message: "User not found" });
 
-        // 统计 reports 集合中，该用户的报告数量
         const usageCount = await db.collection('reports').countDocuments({ userId: req.user.userId });
 
-        // 合并数据返回
         res.json({ ...user, usageCount });
     } catch (e) {
         console.error(e);
@@ -421,12 +387,11 @@ app.get('/api/me', authenticateToken, async (req, res) => {
     }
 });
 
-// --- 新增：头像上传接口 ---
+// Avatar Upload
 app.post('/api/upload-avatar', authenticateToken, upload.single('avatar'), async (req, res) => {
     try {
-        if (!req.file) return res.status(400).json({ message: '请上传文件' });
+        if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
         
-        // 注意：这里返回给前端的 URL 依然是相对的，方便浏览器访问
         const avatarUrl = `/uploads/${req.file.filename}`;
         
         await db.collection('users').updateOne(
@@ -434,23 +399,21 @@ app.post('/api/upload-avatar', authenticateToken, upload.single('avatar'), async
             { $set: { picture: avatarUrl } } 
         );
         
-        res.json({ message: '上传成功', avatarUrl });
+        res.json({ message: 'Upload successful', avatarUrl });
     } catch (e) {
-        // --- 关键：在终端打印具体错误，方便排查 ---
-        console.error("上传失败详情:", e); 
-        res.status(500).json({ message: "服务器内部错误" });
+        console.error("Upload failed details:", e); 
+        res.status(500).json({ message: "Internal Server Error" });
     }
 });
 
-// --- 新增：更新个人资料 (名字、职位、简介) ---
+// Update Profile Data
 app.post('/api/update-profile', authenticateToken, async (req, res) => {
     try {
         const { name, job, bio } = req.body;
         
-        // 构建要更新的数据对象
         const updateData = {};
         if (name !== undefined) updateData.name = name;
-        if (job !== undefined) updateData.job = job; // 确保数据库里想存这个字段
+        if (job !== undefined) updateData.job = job; 
         if (bio !== undefined) updateData.bio = bio;
 
         await db.collection('users').updateOne(
@@ -465,23 +428,21 @@ app.post('/api/update-profile', authenticateToken, async (req, res) => {
     }
 });
 
-// --- AI 生成 ---
+// --- AI Generation Engine ---
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 // ==========================================
-// 🟢 [核心修复] RIE 3.0 + 正确模型 + 语法修正
+// 🟢 [FIXED] RIE 3.0 + Prompt Matrix Engine
 // ==========================================
 app.post('/api/generate', authenticateToken, async (req, res) => {
     try {
-        // 1. 获取用户 (保留原逻辑)
+        // 1. Fetch user & verify limits
         const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
         if (!user) return res.status(404).json({ error: "User not found" });
 
-        // 2. 🟢 核心检查：够不够扣？ (完全保留你的原逻辑)
         let allowGen = false;
         let deductSource = ''; 
 
-        // 修复点 1：声明 isPro 变量 (基于用户套餐)
         const isPro = user.plan === 'pro';
 
         if (isPro) {
@@ -500,52 +461,85 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
 
         if (!allowGen) return res.status(403).json({ error: "Limit reached! Invite friends to get more credits." });
 
-        // 🟢 RIE 3.0 Logic Dispatcher - Precise English Instructions
-        const { userPrompt, role, templateId, tone, detailLevel } = req.body;
+        // 🟢 2. RIE 3.0 English Prompt Matrix Engine
+        const { userPrompt, role, templateId, tone, detailLevel, language } = req.body;
 
-        let finalSystemInstructions = `You are RIE (Reportify Intelligence Engine) v3.0. 
-        Adapt your output strictly based on: Role: ${role}, Type: ${templateId}, Tone: ${tone}, Detail: ${detailLevel}.
+        const roleMapping = {
+            "General": "Standard corporate professional. Focus on task execution details, collaboration progress, and timely delivery.",
+            "Administrative": "Administrative/Operations manager. Focus on process compliance, team support, resource coordination, and daily efficiency.",
+            "Freelancer": "Independent creator/Freelancer. Showcase personal delivery value, client feedback, project milestones, and innovations.",
+            "Tech": "Senior Developer/Engineer. MUST include technical details, system architecture evolution, code refactoring, bug fixes, and overcoming technical difficulties.",
+            "Marketing": "Marketing Expert. Focus on brand exposure, channel conversion rates, ROI/CAC data analysis, and market trend insights.",
+            "Sales": "Elite Sales/Business Director. Core focus on sales funnel, Key Account (KA) follow-ups, lead conversion, performance achievement rates, and profit growth.",
+            "Management": "Team Leader/Project Manager. Stand at a management perspective, focusing on team efficiency, project milestones, cross-departmental collaboration, and risk warnings.",
+            "Executive": "Company Executive (CEO/CTO). Possess a macro-strategic height, focusing on business models, industry barriers, Profit & Loss (P&L), and strategic layout."
+        };
 
-        ### CORE DIRECTIVES:
-        1. **Language**: All output content MUST be in **Simplified Chinese**.
-        2. **Identity Alignment**: 
-            - For "General/Staff" roles: Focus on practical task completion. Avoid over-strategizing. Be grounded.
-            - For "Executive/Management" roles: Focus on strategic impact and value.
-        3. **Content Enrichment (Anti-Outline Rule)**: 
-            - DO NOT just list points. For every user input, expand it into: What was done, How it was done, and the Result/Impact.
-            - If Detail is "Detailed": Each task description must be 80-100 words. Total report must be substantial (400+ words).
-        4. **Format**: Use standard Markdown (#, ##, **). Do NOT be limited to a 3-section structure.
+        const typeMapping = {
+            "general": "Comprehensive general report: Summarize core matters with clear structure and priorities.",
+            "daily_standup": "Daily Standup: Compact format, strictly following 'Completed yesterday, Planned today, Blockers'.",
+            "weekly_pulse": "Weekly Pulse: Extract this week's core achievements, data metric changes, deep-seated issues exposed, and next week's plan.",
+            "project_update": "Project Status Update: Clarify project phases, milestone achievements, budget/time consumption, and Next Steps.",
+            "monthly_review": "Monthly Deep Review: Systematic induction, comparing monthly goals with actual achievements (OKRs/KPIs), including deep insights and improvement strategies.",
+            "quarterly_report": "Quarterly/Annual Strategic Report: Extremely deep, including macro market environment analysis, strategic execution results, and core financial/business data inventory."
+        };
 
-        ### OUTPUT JSON FORMAT:
-        Return a JSON object ONLY:
+        const toneMapping = {
+            "Grounded": "Grounded and practical. No nonsense, matter-of-fact, directly addressing pain points and solutions.",
+            "Professional": "Highly professional and rigorous. Use industry-standard terminology, tight structural logic, reflecting high professionalism, suitable for reporting to top management.",
+            "Conversational": "Conversational and casual. Approachable, highly engaging, suitable for internal team syncs and building cohesion.",
+            "Persuasive": "Highly persuasive and bold. Emphasize outcome value, speak with data, with a strong intent to drive decisions and secure resources."
+        };
+
+        const detailMapping = {
+            "Brief": "Concise and brief. Focus on core conclusions and bullet points. Discard lengthy background descriptions. Total word count: 300-500 words.",
+            "Standard": "Balanced detail. Expand on important matters with background and results, gloss over minor ones. Balanced structure. Total word count: 600-800 words.",
+            "Detailed": "Extremely detailed and deeply expanded. For EVERY fragmented word provided by the user, you MUST conduct logical deduction and deep expansion: [Background & Pain Point] -> [Specific Action/Strategy] -> [Quantified Result & Impact] -> [Deep Reflection]. The content MUST be extremely rich and full. STRICTLY FORBIDDEN to just list outlines. Total word count MUST exceed 1200 words!"
+        };
+
+        let finalSystemInstructions = `You are RIE (Reportify Intelligence Engine) 3.0 Flagship Edition - the world's top workplace report generation brain.
+        Your task is to take the user's extremely brief, fragmented prompts and [Deeply Expand] them into a highly professional document through strong logical reasoning and workplace experience.
+
+        [Core Generation Dimensions]
+        1. Your Workplace Persona: ${roleMapping[role] || roleMapping["General"]}
+        2. Current Report Context: ${typeMapping[templateId] || typeMapping["general"]}
+        3. Tone & Style to Maintain: ${toneMapping[tone] || toneMapping["Professional"]}
+        4. Report Length & Expansion Requirement: ${detailMapping[detailLevel] || detailMapping["Standard"]}
+        5. Output Language: Strictly use ${language || "English"} for all output content.
+
+        [Unbreakable Iron Rules]
+        - STRICTLY FORBIDDEN to simply repeat the user's prompts! You MUST actively imagine reasonable details and invent logical data metrics (e.g., increased by 15%, decreased by 20%) based on the set [Persona] and [Context], making the report look like a real, content-rich work summary.
+        - The main body MUST use high-quality Markdown formatting (#, ##, **, blockquotes, etc.) to make it visually clear and readable.
+        
+        [Mandatory JSON Output Format]
+        Regardless of how long the content is, your final output MUST be a pure, valid JSON object. ABSOLUTELY DO NOT wrap the JSON in \`\`\`json code blocks! Start directly with { and end with }.
         {
-            "word_content": "Full detailed Chinese report with Markdown",
-            "ppt_outline": "5-8 slides professional outline",
-            "email_summary": "3-5 lines executive summary"
+            "word_content": "Place the fully expanded Markdown report body here according to all the rules above (handle internal newline \\n and quote escapes properly).",
+            "ppt_outline": "Based on this generated report, extract a 5-8 slide structured PPT outline (use Markdown format, including Slide titles and bullet points).",
+            "email_summary": "Extract the core essence of the report and write a 3-5 line minimalist email body. The tone must match your current persona, suitable for quick CC to leaders or stakeholders."
         }`;
 
-        // 修复点 2：提前声明 text 变量，供后面使用
+        // 🟢 Pass the wrapped payload instead of raw user prompt
+        const expandedUserPrompt = `Here are the rough bullet points of my work/thoughts today:\n"${userPrompt}"\n\nPlease immediately deeply reconstruct and significantly expand this into a final professional report based on your system instructions, persona, and style settings.`;
+
         let text = "";
 
-        // 4. 调用 AI (恢复你的主力与备用模型，绝不修改名称)
+        // 3. Call AI API
         const primaryModelName = "gemini-3-flash-preview"; 
         const backupModelName = "gemini-2.5-flash";
 
         try {
             console.log(`🤖 Trying Primary Model: ${primaryModelName}`);
             
-            // 修复点 3：正确地将系统指令传入模型配置中
             const model = genAI.getGenerativeModel({ 
                 model: primaryModelName,
                 systemInstruction: finalSystemInstructions 
             });
             
-            // 如果是 Pro 开启 JSON 模式
             const generationConfig = isPro ? { response_mime_type: "application/json" } : {};
             
-            // 修复点 4：使用请求体中正确的 userPrompt 变量，而不是未定义的 prompt
             const result = await model.generateContent({ 
-                contents: [{ role: 'user', parts: [{ text: userPrompt }] }], 
+                contents: [{ role: 'user', parts: [{ text: expandedUserPrompt }] }], 
                 generationConfig 
             });
             text = result.response.text();
@@ -554,7 +548,6 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
             console.warn(`⚠️ Primary Model Failed:`, primaryError.message);
             console.log(`🔄 Switching to Backup Model: ${backupModelName}`);
             try {
-                // 修复点 5：备用模型也必须传入相同的配置和正确的变量
                 const modelBackup = genAI.getGenerativeModel({ 
                     model: backupModelName,
                     systemInstruction: finalSystemInstructions
@@ -563,7 +556,7 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
                 const generationConfig = isPro ? { response_mime_type: "application/json" } : {};
                 
                 const resultBackup = await modelBackup.generateContent({
-                    contents: [{ role: 'user', parts: [{ text: userPrompt }] }], 
+                    contents: [{ role: 'user', parts: [{ text: expandedUserPrompt }] }], 
                     generationConfig
                 });
                 text = resultBackup.response.text();
@@ -573,7 +566,7 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
             }
         }
 
-        // 5. 保存报告 (保留原逻辑)
+        // 4. Save to DB
         await db.collection('reports').insertOne({ 
             userId: req.user.userId, 
             title: "Generated Report", 
@@ -581,20 +574,28 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
             createdAt: new Date() 
         });
 
-        // 6. 扣费 (保留原逻辑)
+        // 5. Deduct Credits
         if (deductSource === 'main') {
             await db.collection('users').updateOne({ _id: user._id }, { $inc: { usageCount: 1 } });
         } else if (deductSource === 'bonus') {
             await db.collection('users').updateOne({ _id: user._id }, { $inc: { bonusCredits: -1 } });
         }
 
-        // 7. 返回 (支持多维返回)
+        // 6. 🟢 Return Response & Clean JSON
         if (isPro) {
             try {
-                const parsed = JSON.parse(text);
-                res.json({ generatedText: parsed.word_content, pptOutline: parsed.ppt_outline, emailSummary: parsed.email_summary });
+                // Strip markdown code block wrappers if AI decides to include them despite instructions
+                let cleanText = text.replace(/```json/gi, '').replace(/```/g, '').trim();
+                
+                const parsed = JSON.parse(cleanText);
+                res.json({ 
+                    generatedText: parsed.word_content || cleanText, 
+                    pptOutline: parsed.ppt_outline || "", 
+                    emailSummary: parsed.email_summary || "" 
+                });
             } catch (e) {
-                res.json({ generatedText: text });
+                console.error("JSON parsing failed, falling back to raw text:", e.message);
+                res.json({ generatedText: text }); 
             }
         } else {
             res.json({ generatedText: text });
@@ -604,14 +605,15 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
         console.error("AI API Error:", e.message);
         res.status(500).json({ error: "AI Service Error: " + e.message }); 
     }
-}); // <--- 确保这里只有一个闭合
+}); 
 
+// Legacy history endpoint (kept for compatibility if needed elsewhere)
 app.get('/api/reports/history', authenticateToken, async (req, res) => {
     const reports = await db.collection('reports').find({ userId: req.user.userId }).sort({ createdAt: -1 }).toArray();
     res.json(reports);
 });
 
-// --- 站内信 ---
+// Contact Messages
 app.post('/api/contact', async (req, res) => {
     const { name, email, message, type } = req.body;
     await db.collection('feedbacks').insertOne({
@@ -632,13 +634,9 @@ app.get('/api/my-messages', authenticateToken, async (req, res) => {
     } catch (e) { res.status(500).json({ message: "Error" }); }
 });
 
-// Admin
-// ==========================================
-// 🟢 [智能修复版] 管理员回复接口 (自动查找表名)
-// ==========================================
+// Admin Reply
 app.post('/api/admin/reply', authenticateToken, async (req, res) => {
     try {
-        // 1. 权限检查
         const adminUser = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
         if (!adminUser || adminUser.role !== 'admin') {
             return res.status(403).json({ error: "Access denied" });
@@ -652,7 +650,6 @@ app.post('/api/admin/reply', authenticateToken, async (req, res) => {
 
         console.log(`[Admin Reply] Trying to reply to ID: ${feedbackId}`);
 
-        // 2. 🟢 智能查找：在所有可能的表名中寻找这条消息
         const possibleCollections = ['contact_messages', 'feedbacks', 'messages', 'contacts'];
         let feedback = null;
         let targetCollection = '';
@@ -663,24 +660,21 @@ app.post('/api/admin/reply', authenticateToken, async (req, res) => {
                 feedback = found;
                 targetCollection = colName;
                 console.log(`[Admin Reply] Found message in collection: ${colName}`);
-                break; // 找到了就停止
+                break; 
             }
         }
 
-        // 如果在所有表里都找不到
         if (!feedback) {
             console.log(`[Admin Reply] Error: Message not found in any collection.`);
             return res.status(404).json({ error: "Message not found (Check DB collection name)" });
         }
 
-        // 3. 构建新的对话对象
         const newReply = {
             role: 'admin',
             message: replyContent,
             createdAt: new Date()
         };
 
-        // 4. 更新数据库 (使用找到的正确表名 targetCollection)
         await db.collection(targetCollection).updateOne(
             { _id: new ObjectId(feedbackId) },
             { 
@@ -689,7 +683,6 @@ app.post('/api/admin/reply', authenticateToken, async (req, res) => {
             }
         );
 
-        // 5. 尝试发送邮件通知
         try {
             if (typeof transporter !== 'undefined') {
                 await transporter.sendMail({
@@ -711,6 +704,7 @@ app.post('/api/admin/reply', authenticateToken, async (req, res) => {
     }
 });
 
+// Admin Stats
 app.get('/api/admin/stats', verifyAdmin, async (req, res) => {
     try {
         const [users, basic, pro, feedbacks, unread] = await Promise.all([
@@ -724,52 +718,48 @@ app.get('/api/admin/stats', verifyAdmin, async (req, res) => {
     } catch (e) { res.status(500).json({ message: "Error" }); }
 });
 
+// Admin Feedbacks
 app.get('/api/admin/feedbacks', verifyAdmin, async (req, res) => {
     const msgs = await db.collection('feedbacks').find({}).sort({ submittedAt: -1 }).limit(50).toArray();
     res.json(msgs);
 });
 
+// Admin Users
 app.get('/api/admin/users', verifyAdmin, async (req, res) => {
     const users = await db.collection('users').find({}, { projection: { password: 0 } }).sort({ createdAt: -1 }).limit(20).toArray();
     res.json(users);
 });
 
 // ==========================================
-// 🟢 [新增] 获取用户历史报告接口
+// 🟢 [FIXED] Get User History
 // ==========================================
 app.get('/api/history', authenticateToken, async (req, res) => {
     try {
-        // 1. 获取当前登录用户的邮箱 (从 Token 里解密出来的)
-        const userEmail = req.user.email; 
-        console.log("正在查询历史记录，用户:", userEmail);
+        const userId = req.user.userId; 
+        console.log("Fetching history for user ID:", userId);
 
-        // 2. 去数据库 'reports' 集合里查找该用户的报告
-        // (注意：如果你生成报告时存的集合名不是 'reports'，请修改这里)
         const reports = await db.collection('reports')
-            .find({ userEmail: userEmail }) 
-            .sort({ createdAt: -1 }) // 按时间倒序排列（最新的在前面）
+            .find({ userId: userId }) // 🟢 Reverted back to correct ID-based query
+            .sort({ createdAt: -1 }) 
             .toArray();
 
-        // 3. 返回数据给前端
         res.json(reports);
         
     } catch (error) {
-        console.error("历史记录获取失败:", error);
+        console.error("History fetch failed:", error);
         res.status(500).json({ message: "Failed to fetch history" });
     }
 });
 
-// ==========================================
-// 🟢 [新增] 删除单条报告接口
-// ==========================================
+// Delete History Item
 app.delete('/api/history/:id', authenticateToken, async (req, res) => {
     try {
         const reportId = req.params.id;
-        const userEmail = req.user.email;
+        const userId = req.user.userId;
 
         const result = await db.collection('reports').deleteOne({
             _id: new ObjectId(reportId),
-            userEmail: userEmail // 确保只能删除自己的
+            userId: userId 
         });
 
         if (result.deletedCount === 0) {
@@ -778,24 +768,19 @@ app.delete('/api/history/:id', authenticateToken, async (req, res) => {
 
         res.json({ message: "Report deleted successfully" });
     } catch (error) {
-        console.error("删除失败:", error);
+        console.error("Delete failed:", error);
         res.status(500).json({ message: "Delete failed" });
     }
 });
 
-// ==========================================
-// 🟢 [补全] 支付成功后的升级接口 (验证 + 数据库修改)
-// ==========================================
+// Upgrade Plan
 app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
     try {
-        const { planId, paymentId } = req.body; // 前端传来的套餐类型和订单号
+        const { planId, paymentId } = req.body; 
         const userId = req.user.userId;
 
         console.log(`[Payment] User ${userId} requested upgrade to ${planId}. OrderID: ${paymentId}`);
 
-        // --- 第一步：(可选) 向 PayPal 核实订单真的成功了吗？ ---
-        // 为了安全，建议验证。如果你觉得麻烦，可以先注释掉这一步验证逻辑，直接跳到第二步。
-        // 但正式上线强烈建议保留，防止用户伪造请求白嫖。
         try {
             const auth = Buffer.from(`${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_SECRET}`).toString('base64');
             const tokenRes = await axios.post(`${process.env.PAYPAL_API_BASE}/v1/oauth2/token`, 
@@ -813,26 +798,19 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
             }
         } catch (verifyErr) {
             console.error("PayPal Verify Error (Check .env keys):", verifyErr.message);
-            // 如果是因为密钥没填对导致验证失败，为了不卡住用户，可以暂时放行或者报错。
-            // return res.status(500).json({ success: false, message: "Payment verification failed" });
         }
 
-        // --- 第二步：修改数据库，升级用户 ---
-        let updateFields = { plan: planId }; // 修改套餐为 basic 或 pro
-
-        // 如果是 Pro，给予无限次数 (实际上我们在生成接口里判断 plan==pro 就行了，这里不需要改 usageCount)
-        // 如果是 Basic，重置次数或者设为 45 (看你的业务逻辑，这里假设只改 plan 字段)
+        let updateFields = { plan: planId }; 
         
         await db.collection('users').updateOne(
             { _id: new ObjectId(userId) },
             { $set: updateFields }
         );
 
-        // 记录一下支付流水 (可选)
         await db.collection('payments').insertOne({
             userId: new ObjectId(userId),
             planId,
-            paymentId, // PayPal 订单号
+            paymentId, 
             amount: planId === 'pro' ? 19.90 : 9.90,
             date: new Date(),
             status: 'completed'
@@ -846,74 +824,62 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
     }
 });
 
-// ==========================================
-// 🟢 [安全修复] 严格校验的修改密码接口
-// ==========================================
+// Change Password
 app.post('/api/change-password', authenticateToken, async (req, res) => {
     try {
         const { oldPassword, newPassword } = req.body;
         
         if (!oldPassword || !newPassword) {
-            return res.status(400).json({ message: "请提供旧密码和新密码" });
+            return res.status(400).json({ message: "Please provide old and new password" });
         }
 
-        // 1. 查找当前用户
         const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
-        if (!user) return res.status(404).json({ message: "用户不存在" });
+        if (!user) return res.status(404).json({ message: "User not found" });
 
-        // 2. 拦截 Google 快捷登录的用户 (他们没有传统密码)
         if (user.authProvider === 'google' && !user.password) {
-            return res.status(400).json({ message: "Google 快捷登录账号无需修改密码" });
+            return res.status(400).json({ message: "Google account does not require a password update." });
         }
 
-        // 3. 🚨 核心修复：必须比对旧密码！
         const isMatch = await bcrypt.compare(oldPassword, user.password);
         if (!isMatch) {
-            // 如果旧密码不对，立刻拒绝，绝对不能执行后续的更新操作
-            return res.status(401).json({ message: "旧密码不正确，请重新输入！" }); 
+            return res.status(401).json({ message: "Incorrect old password!" }); 
         }
 
-        // 🟢 定点插入：防御机制 - 新旧密码不能相同
         const isSameAsOld = await bcrypt.compare(newPassword, user.password);
         if (isSameAsOld) {
-            return res.status(400).json({ message: "新密码不能与当前使用的密码相同！" });
+            return res.status(400).json({ message: "New password cannot be the same as the old one!" });
         }
 
-        // 4. 旧密码正确，加密新密码并更新
         const hashedNewPassword = await bcrypt.hash(newPassword, 10);
         await db.collection('users').updateOne(
             { _id: new ObjectId(req.user.userId) },
             { $set: { password: hashedNewPassword } }
         );
 
-        res.json({ message: "密码修改成功！请使用新密码重新登录。" });
+        res.json({ message: "Password updated successfully! Please log in again." });
     } catch (error) {
-        console.error("修改密码逻辑错误:", error);
-        res.status(500).json({ message: "服务器内部错误" });
+        console.error("Change Password Error:", error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 });
 
-// ==========================================
-// 🟢 [逻辑修复] 账号彻底注销接口
-// ==========================================
+// Delete Account
 app.delete('/api/delete-account', authenticateToken, async (req, res) => {
     try {
         const userId = req.user.userId;
         
-        // 1. 先删除该用户生成的所有报告 (防止数据库产生孤儿数据)
         await db.collection('reports').deleteMany({ userId: userId });
         
-        // 2. 删除用户本身
         const result = await db.collection('users').deleteOne({ _id: new ObjectId(userId) });
         
         if (result.deletedCount === 1) {
-            res.json({ message: "账号及相关数据已彻底删除" });
+            res.json({ message: "Account and data deleted successfully." });
         } else {
-            res.status(404).json({ message: "未找到该账号" });
+            res.status(404).json({ message: "Account not found." });
         }
     } catch (error) {
-        console.error("删除账号错误:", error);
-        res.status(500).json({ message: "删除失败，请稍后重试" });
+        console.error("Delete Account Error:", error);
+        res.status(500).json({ message: "Failed to delete account." });
     }
 });
 
