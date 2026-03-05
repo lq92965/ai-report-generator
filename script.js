@@ -1740,6 +1740,39 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. 修复：修改密码表单提交
     const changePwdForm = document.getElementById('change-password-form');
     if (changePwdForm) {
+        // 🟢 定点插入：修改密码的实时强度校验
+        const securityNewPwdInput = document.getElementById('new-password');
+        const securityStrengthBox = document.getElementById('security-password-strength-box');
+        
+        if (securityNewPwdInput && securityStrengthBox) {
+            securityNewPwdInput.addEventListener('focus', () => {
+                securityStrengthBox.style.display = 'block';
+            });
+            
+            securityNewPwdInput.addEventListener('input', (e) => {
+                const val = e.target.value;
+                const reqLength = document.getElementById('sec-req-length');
+                const reqUpper = document.getElementById('sec-req-upper');
+                const reqNumber = document.getElementById('sec-req-number');
+                const reqSpecial = document.getElementById('sec-req-special');
+
+                // 长度检查
+                if(val.length >= 8) { reqLength.classList.add('text-green-500'); reqLength.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> 8+ chars'; }
+                else { reqLength.classList.remove('text-green-500'); reqLength.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> 8+ chars'; }
+
+                // 大写检查
+                if(/[A-Z]/.test(val)) { reqUpper.classList.add('text-green-500'); reqUpper.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> Uppercase'; }
+                else { reqUpper.classList.remove('text-green-500'); reqUpper.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> Uppercase'; }
+
+                // 数字检查
+                if(/[0-9]/.test(val)) { reqNumber.classList.add('text-green-500'); reqNumber.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> Number'; }
+                else { reqNumber.classList.remove('text-green-500'); reqNumber.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> Number'; }
+
+                // 特殊字符检查
+                if(/[\W_]/.test(val)) { reqSpecial.classList.add('text-green-500'); reqSpecial.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> Symbol'; }
+                else { reqSpecial.classList.remove('text-green-500'); reqSpecial.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> Symbol'; }
+            });
+        }
         changePwdForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -1870,6 +1903,35 @@ document.addEventListener('click', function(e) {
 });
 
 // Step 1: Request Code
+// 🟢 定点插入：重置密码弹窗的实时强度校验
+const resetPwdInput = document.getElementById('reset-new-password');
+const resetStrengthBox = document.getElementById('reset-password-strength-box');
+
+if (resetPwdInput && resetStrengthBox) {
+    resetPwdInput.addEventListener('focus', () => {
+        resetStrengthBox.style.display = 'block';
+    });
+    
+    resetPwdInput.addEventListener('input', (e) => {
+        const val = e.target.value;
+        const reqLength = document.getElementById('reset-req-length');
+        const reqUpper = document.getElementById('reset-req-upper');
+        const reqNumber = document.getElementById('reset-req-number');
+        const reqSpecial = document.getElementById('reset-req-special');
+
+        if(val.length >= 8) { reqLength.classList.add('text-green-500'); reqLength.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> 8+ chars'; }
+        else { reqLength.classList.remove('text-green-500'); reqLength.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> 8+ chars'; }
+
+        if(/[A-Z]/.test(val)) { reqUpper.classList.add('text-green-500'); reqUpper.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> Uppercase'; }
+        else { reqUpper.classList.remove('text-green-500'); reqUpper.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> Uppercase'; }
+
+        if(/[0-9]/.test(val)) { reqNumber.classList.add('text-green-500'); reqNumber.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> Number'; }
+        else { reqNumber.classList.remove('text-green-500'); reqNumber.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> Number'; }
+
+        if(/[\W_]/.test(val)) { reqSpecial.classList.add('text-green-500'); reqSpecial.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> Symbol'; }
+        else { reqSpecial.classList.remove('text-green-500'); reqSpecial.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> Symbol'; }
+    });
+}
 document.addEventListener('submit', async (e) => {
     if (e.target.id === 'step1-form') {
         e.preventDefault();
@@ -1980,5 +2042,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
 
