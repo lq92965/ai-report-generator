@@ -378,7 +378,6 @@ app.post('/api/auth/send-reset-code', async (req, res) => {
 
         res.json({ message: "Verification code sent." });
     } catch (e) {
-        // 🟢 就是这里之前被误删了，导致了 SyntaxError
         console.error("Send Reset Code Error:", e);
         res.status(500).json({ message: "Failed to process request." });
     }
@@ -482,7 +481,10 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
         let allowGen = false;
         let deductSource = ''; 
 
-        if (user.plan === 'pro') {
+        // 修复点 1：声明 isPro 变量 (基于用户套餐)
+        const isPro = user.plan === 'pro';
+
+        if (isPro) {
             allowGen = true; 
         } else {
             let limit = (user.plan === 'free') ? 3 : 45; 
@@ -522,23 +524,48 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
             "email_summary": "3-5 lines executive summary"
         }`;
 
-        // 4. 调用 AI (恢复你的主力与备用模型)
+        // 修复点 2：提前声明 text 变量，供后面使用
+        let text = "";
+
+        // 4. 调用 AI (恢复你的主力与备用模型，绝不修改名称)
         const primaryModelName = "gemini-3-flash-preview"; 
         const backupModelName = "gemini-2.5-flash";
 
         try {
             console.log(`🤖 Trying Primary Model: ${primaryModelName}`);
-            const model = genAI.getGenerativeModel({ model: primaryModelName });
+            
+            // 修复点 3：正确地将系统指令传入模型配置中
+            const model = genAI.getGenerativeModel({ 
+                model: primaryModelName,
+                systemInstruction: finalSystemInstructions 
+            });
+            
             // 如果是 Pro 开启 JSON 模式
             const generationConfig = isPro ? { response_mime_type: "application/json" } : {};
-            const result = await model.generateContent({ contents: [{ role: 'user', parts: [{ text: prompt }] }], generationConfig });
+            
+            // 修复点 4：使用请求体中正确的 userPrompt 变量，而不是未定义的 prompt
+            const result = await model.generateContent({ 
+                contents: [{ role: 'user', parts: [{ text: userPrompt }] }], 
+                generationConfig 
+            });
             text = result.response.text();
+            
         } catch (primaryError) {
             console.warn(`⚠️ Primary Model Failed:`, primaryError.message);
             console.log(`🔄 Switching to Backup Model: ${backupModelName}`);
             try {
-                const modelBackup = genAI.getGenerativeModel({ model: backupModelName });
-                const resultBackup = await modelBackup.generateContent(prompt);
+                // 修复点 5：备用模型也必须传入相同的配置和正确的变量
+                const modelBackup = genAI.getGenerativeModel({ 
+                    model: backupModelName,
+                    systemInstruction: finalSystemInstructions
+                });
+                
+                const generationConfig = isPro ? { response_mime_type: "application/json" } : {};
+                
+                const resultBackup = await modelBackup.generateContent({
+                    contents: [{ role: 'user', parts: [{ text: userPrompt }] }], 
+                    generationConfig
+                });
                 text = resultBackup.response.text();
             } catch (backupError) {
                 console.error(`❌ Both models failed`);
@@ -845,10 +872,11 @@ app.post('/api/change-password', authenticateToken, async (req, res) => {
             // 如果旧密码不对，立刻拒绝，绝对不能执行后续的更新操作
             return res.status(401).json({ message: "旧密码不正确，请重新输入！" }); 
         }
-            // 🟢 定点插入：防御机制 - 新旧密码不能相同
-            const isSameAsOld = await bcrypt.compare(newPassword, user.password);
-            if (isSameAsOld) {
-                return res.status(400).json({ message: "新密码不能与当前使用的密码相同！" });
+
+        // 🟢 定点插入：防御机制 - 新旧密码不能相同
+        const isSameAsOld = await bcrypt.compare(newPassword, user.password);
+        if (isSameAsOld) {
+            return res.status(400).json({ message: "新密码不能与当前使用的密码相同！" });
         }
 
         // 4. 旧密码正确，加密新密码并更新
