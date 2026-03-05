@@ -409,31 +409,16 @@ function setupStrictValidation() {
 
     const checkPass = () => {
         const val = passInput.value;
-        const span = getErrorSpan(passInput);
+        const box = document.getElementById('signup-pwd-feedback');
         
-        const hasUpper = /[A-Z]/.test(val);
-        const hasLower = /[a-z]/.test(val);
-        const hasNumber = /[0-9]/.test(val);
-        const hasSpecial = /[\W_]/.test(val); 
-        const isLongEnough = val.length >= 8;
-
-        if (val.length === 0) { span.innerHTML = ''; return false; }
-
-        if (hasUpper && hasLower && hasNumber && hasSpecial && isLongEnough) {
-            span.innerHTML = '<span class="text-green-600">✅ 密码强度合格 (Strong)</span>';
-            return true;
-        } else {
-            span.innerHTML = `
-                <div class="text-red-500 flex flex-col gap-1">
-                    <span>${isLongEnough ? '✅' : '❌'} 至少8位 (Min 8 chars)</span>
-                    <span>${hasUpper ? '✅' : '❌'} 大写字母 (Uppercase)</span>
-                    <span>${hasLower ? '✅' : '❌'} 小写字母 (Lowercase)</span>
-                    <span>${hasNumber ? '✅' : '❌'} 数字 (Number)</span>
-                    <span>${hasSpecial ? '✅' : '❌'} 特殊字符 (Special char)</span>
-                </div>
-            `;
-            return false;
+        // 🟢 清理历史遗留的旧提示框，防止占位影响排版
+        const oldSpan = passInput.nextElementSibling;
+        if (oldSpan && oldSpan.classList.contains('validation-msg')) {
+            oldSpan.remove();
         }
+
+        if (!box) return false;
+        return window.renderPasswordStrength(val, box);
     };
 
     const validateForm = () => {
@@ -1740,39 +1725,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. 修复：修改密码表单提交
     const changePwdForm = document.getElementById('change-password-form');
     if (changePwdForm) {
-        // 🟢 定点插入：修改密码的实时强度校验
-        const securityNewPwdInput = document.getElementById('new-password');
-        const securityStrengthBox = document.getElementById('security-password-strength-box');
-        
-        if (securityNewPwdInput && securityStrengthBox) {
-            securityNewPwdInput.addEventListener('focus', () => {
-                securityStrengthBox.style.display = 'block';
-            });
-            
-            securityNewPwdInput.addEventListener('input', (e) => {
-                const val = e.target.value;
-                const reqLength = document.getElementById('sec-req-length');
-                const reqUpper = document.getElementById('sec-req-upper');
-                const reqNumber = document.getElementById('sec-req-number');
-                const reqSpecial = document.getElementById('sec-req-special');
-
-                // 长度检查
-                if(val.length >= 8) { reqLength.classList.add('text-green-500'); reqLength.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> 8+ chars'; }
-                else { reqLength.classList.remove('text-green-500'); reqLength.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> 8+ chars'; }
-
-                // 大写检查
-                if(/[A-Z]/.test(val)) { reqUpper.classList.add('text-green-500'); reqUpper.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> Uppercase'; }
-                else { reqUpper.classList.remove('text-green-500'); reqUpper.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> Uppercase'; }
-
-                // 数字检查
-                if(/[0-9]/.test(val)) { reqNumber.classList.add('text-green-500'); reqNumber.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> Number'; }
-                else { reqNumber.classList.remove('text-green-500'); reqNumber.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> Number'; }
-
-                // 特殊字符检查
-                if(/[\W_]/.test(val)) { reqSpecial.classList.add('text-green-500'); reqSpecial.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> Symbol'; }
-                else { reqSpecial.classList.remove('text-green-500'); reqSpecial.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> Symbol'; }
-            });
-        }
         changePwdForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -1902,36 +1854,6 @@ document.addEventListener('click', function(e) {
     }
 });
 
-// Step 1: Request Code
-// 🟢 定点插入：重置密码弹窗的实时强度校验
-const resetPwdInput = document.getElementById('reset-new-password');
-const resetStrengthBox = document.getElementById('reset-password-strength-box');
-
-if (resetPwdInput && resetStrengthBox) {
-    resetPwdInput.addEventListener('focus', () => {
-        resetStrengthBox.style.display = 'block';
-    });
-    
-    resetPwdInput.addEventListener('input', (e) => {
-        const val = e.target.value;
-        const reqLength = document.getElementById('reset-req-length');
-        const reqUpper = document.getElementById('reset-req-upper');
-        const reqNumber = document.getElementById('reset-req-number');
-        const reqSpecial = document.getElementById('reset-req-special');
-
-        if(val.length >= 8) { reqLength.classList.add('text-green-500'); reqLength.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> 8+ chars'; }
-        else { reqLength.classList.remove('text-green-500'); reqLength.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> 8+ chars'; }
-
-        if(/[A-Z]/.test(val)) { reqUpper.classList.add('text-green-500'); reqUpper.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> Uppercase'; }
-        else { reqUpper.classList.remove('text-green-500'); reqUpper.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> Uppercase'; }
-
-        if(/[0-9]/.test(val)) { reqNumber.classList.add('text-green-500'); reqNumber.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> Number'; }
-        else { reqNumber.classList.remove('text-green-500'); reqNumber.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> Number'; }
-
-        if(/[\W_]/.test(val)) { reqSpecial.classList.add('text-green-500'); reqSpecial.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> Symbol'; }
-        else { reqSpecial.classList.remove('text-green-500'); reqSpecial.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> Symbol'; }
-    });
-}
 document.addEventListener('submit', async (e) => {
     if (e.target.id === 'step1-form') {
         e.preventDefault();
@@ -2043,3 +1965,86 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// ========================================================
+// 🟢 全局密码交互 UI (小眼睛与红绿验证引擎)
+// ========================================================
+document.addEventListener('click', function(e) {
+    const toggleBtn = e.target.closest('.toggle-password');
+    if (toggleBtn) {
+        e.preventDefault();
+        const container = toggleBtn.parentElement;
+        const input = container.querySelector('input');
+        const icon = toggleBtn.querySelector('i');
+        
+        if (input && input.type === 'password') {
+            input.type = 'text';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else if (input) {
+            input.type = 'password';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
+});
+
+// 核心渲染器：根据密码输出红绿打勾 HTML
+window.renderPasswordStrength = function(val, feedbackBox) {
+    if (!val) {
+        feedbackBox.style.display = 'none';
+        return false;
+    }
+    feedbackBox.style.display = 'block';
+
+    const hasUpper = /[A-Z]/.test(val);
+    const hasLower = /[a-z]/.test(val);
+    const hasNumber = /[0-9]/.test(val);
+    const hasSpecial = /[\W_]/.test(val); 
+    const isLongEnough = val.length >= 8;
+
+    const iconStyle = "margin-right: 8px; width: 14px; text-align: center;";
+    const checkIcon = `<i class="fas fa-check text-green-500" style="${iconStyle}"></i>`;
+    const crossIcon = `<i class="fas fa-times text-red-500" style="${iconStyle}"></i>`;
+
+    const getLine = (condition, text) => `
+        <div style="display: flex; align-items: center; font-size: 12px; margin-bottom: 6px; color: ${condition ? '#10b981' : '#ef4444'}; font-weight: 600;">
+            ${condition ? checkIcon : crossIcon} <span>${text}</span>
+        </div>
+    `;
+
+    if (hasUpper && hasLower && hasNumber && hasSpecial && isLongEnough) {
+        feedbackBox.innerHTML = `
+            <div style="padding: 12px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; margin-top: 8px;">
+                <div style="color: #059669; font-size: 13px; font-weight: bold; display: flex; align-items: center;">
+                    <i class="fas fa-check-circle" style="margin-right: 6px; font-size: 16px;"></i> 密码强度达标 (Strong)
+                </div>
+            </div>
+        `;
+        if (feedbackBox.classList.contains('hidden')) feedbackBox.classList.remove('hidden');
+        return true;
+    } else {
+        feedbackBox.innerHTML = `
+            <div style="padding: 12px; background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; margin-top: 8px;">
+                ${getLine(isLongEnough, '至少 8 个字符 (Min 8 chars)')}
+                ${getLine(hasUpper, '包含大写字母 (Uppercase)')}
+                ${getLine(hasLower, '包含小写字母 (Lowercase)')}
+                ${getLine(hasNumber, '包含数字 (Number)')}
+                ${getLine(hasSpecial, '包含特殊字符 (Special symbol)')}
+            </div>
+        `;
+        if (feedbackBox.classList.contains('hidden')) feedbackBox.classList.remove('hidden');
+        return false;
+    }
+};
+
+// 绑定三大输入框的实时监听
+document.addEventListener('DOMContentLoaded', () => {
+    const bindLiveValidation = (inputId, boxId) => {
+        const input = document.getElementById(inputId);
+        const box = document.getElementById(boxId);
+        if (input && box) {
+            input.addEventListener('input', (e) => renderPasswordStrength(e.target.value, box));
+            input.addEventListener('focus', (e) => renderPasswordStrength(e.target.value, box));
+        }
+    };
+    bindLiveValidation('reset-new-password', 'reset-pwd-feedback');
+    bindLiveValidation('new-password', 'security-pwd-feedback');
+});
