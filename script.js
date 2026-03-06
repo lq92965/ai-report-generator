@@ -907,6 +907,8 @@ function exportToWord(content, filename) {
             /* 页眉页脚 */
             p.MsoHeader, p.MsoFooter { font-size: 9pt; font-family: "Calibri", sans-serif; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
             p.MsoFooter { border-bottom: none; border-top: 1px solid #ddd; padding-top: 5px; text-align: center; }
+            /* 🟢 核心修复：强制扒掉用于生成页眉页脚的隐形表格的边框，消灭末尾的空方块 */
+            #header_footer_ref, #header_footer_ref td { border: none !important; margin: 0; padding: 0; background: transparent; }
         </style>
     `;
 
@@ -1098,10 +1100,21 @@ function exportToPPT(content, filename, passedTemplate = null, passedSummary = n
 
     // --- 5. 渲染封面页 ---
     let cover = pptx.addSlide({ masterName: 'COVER' });
-    // 🟢 核心修复1：剥离文件名中自动附加的日期 (如 _2026-03-06)，保持封面标题的纯粹与大气
-    let cleanFilename = filename.replace(/_\d{4}-\d{2}-\d{2}.*/, '');
-    let docTitle = cleanFilename.replace(/_/g, ' ').replace(/Report/i, 'Strategic Report').trim();
-    cover.addText(docTitle, { 
+    
+    // 🟢 核心修复：彻底抛弃文件名，直接从 AI 报告正文中抓取真正的一级大标题 (# 标题)
+    let docTitle = "Strategic Report"; 
+    const titleMatch = rawData.match(/^#\s+(.+)$/m); // 正则探测第一个带有 # 的行
+    
+    if (titleMatch && titleMatch[1]) {
+        // 如果抓到了，就剔除里面可能带有的 ** 加粗符号
+        docTitle = titleMatch[1].replace(/\*\*/g, '').trim();
+    } else {
+        // 如果极少数情况下没抓到，兜底使用清理过日期的文件名
+        let cleanFilename = filename.replace(/_\d{4}-\d{2}-\d{2}.*/, '');
+        docTitle = cleanFilename.replace(/_/g, ' ').replace(/Report/i, 'Strategic Report').trim();
+    }
+
+    cover.addText(docTitle, {
         x: '8%', y: '20%', w: '84%', h: 2, 
         fontSize: 40, color: 'FFFFFF', bold: true, fontFace: fontTitle 
     });
