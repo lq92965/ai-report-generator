@@ -1826,3 +1826,24 @@ body { overflow-x: hidden; }
     /* 空间不足时隐藏用户名，只留头像 */
     .user-name { display: none !important; }
 }
+
+/* --- 🟢 历史记录页面宽屏修复补丁 --- */
+/* 确保历史页面的主容器能够占满屏幕并在手机端自动缩放 */
+body:has(#history-container) main {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#history-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* 保证里面的卡片在宽屏下横向舒展，在手机端自然堆叠 */
+#history-container > div {
+    width: 100% !important;
+    max-width: 100% !important;
+}
