@@ -1052,8 +1052,8 @@ function exportToPPT(content, filename, passedTemplate = null) {
     const rawLines = cleanText.split('\n');
     let currentBlock = { title: "", content: [] };
     
-    // 强大的探测器：能抓取 #, ##, ###, 或者是 1., 一、 等各种标题
-    const headingRegex = /^(#{1,4}\s+|\d+\.\s+|[一二三四五六七八九十]、)/;
+    // 🟢 核心优化：移除数字 \d+\. 防止把普通列表项当成新幻灯片切分，增加“第X部分”的识别
+    const headingRegex = /^(#{1,4}\s+|[一二三四五六七八九十]、|第[一二三四五六七八九十][部分章])/;
 
     rawLines.forEach(line => {
         let txt = line.trim();
@@ -1145,9 +1145,11 @@ function exportToPPT(content, filename, passedTemplate = null) {
 
         lines.forEach(txt => {
             totalChars += txt.length;
-            if (txt.startsWith('- ') || txt.startsWith('* ')) {
+            // 🟢 核心优化：让数字列表 (1. 2. 3.) 作为同一个页面的项目符号，而不是新开一页
+            if (txt.startsWith('- ') || txt.startsWith('* ') || /^\d+\.\s/.test(txt)) {
+                let cleanTxt = txt.replace(/^[-*]\s*/, '').replace(/^\d+\.\s*/, '').trim();
                 slideBullets.push({ 
-                    text: txt.substring(2).trim(), 
+                    text: cleanTxt, 
                     options: { bullet: true, color: c.textDark, breakLine: true, fontFace: fontBody } 
                 });
             } else {
