@@ -596,12 +596,13 @@ DO NOT use JSON formatting. You MUST return pure text using EXACTLY these bounda
             emailSummary = extractSection(rawText, "EMAIL_SUMMARY");
         }
 
-        // 5. Save to DB (🟢 核心修复：顺手把用户选的模板类型存进去)
+        // 5. Save to DB (🟢 终极数据闭环：把所有维度的内容都存入数据库，供历史记录调用)
         await db.collection('reports').insertOne({ 
             userId: req.user.userId, 
             title: "Generated Report", 
             content: wordContent, 
-            templateId: templateId || 'general', // <--- 关键就在这一行！记录模板类型
+            templateId: templateId || 'general',
+            emailSummary: emailSummary || "", // <--- 把大模型生成的摘要也存进数据库！
             createdAt: new Date() 
         });
 
