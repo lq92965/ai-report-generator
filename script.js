@@ -987,9 +987,29 @@ function exportToPPT(content, filename, overrideTemplateType = null) {
         c = { primary: '1E3A8A', secondary: '2563EB', accent: 'F59E0B', bgLight: 'FFFFFF', textDark: '1E293B', textMuted: '64748B' };
     }
 
-    // 字体配置 (优先使用高级系统字体)
-    const fontTitle = 'Helvetica Neue, Arial, sans-serif';
-    const fontBody = 'Segoe UI, Microsoft YaHei, sans-serif';
+    // 🟢 智能多语言字体引擎：根据内容动态分配最佳系统字体
+    let fontTitle = 'Arial';
+    let fontBody = 'Arial';
+    
+    // 使用正则探测文本内容，判断主要语种
+    if (/[\u4e00-\u9fa5]/.test(rawData)) {
+        // 中文 (简体/繁体)
+        fontTitle = 'Microsoft YaHei';
+        fontBody = 'Microsoft YaHei';
+    } else if (/[\u3040-\u30ff]/.test(rawData)) {
+        // 日文 (平假名/片假名)
+        fontTitle = 'Meiryo';
+        fontBody = 'Meiryo';
+    } else if (/[\uac00-\ud7af]/.test(rawData)) {
+        // 韩文 (谚文)
+        fontTitle = 'Malgun Gothic';
+        fontBody = 'Malgun Gothic';
+    } else {
+        // 其他语种 (英语, 西班牙语, 德语, 法语, 葡萄牙语 等) 默认使用 Arial
+        // Arial 在绝大多数西文环境下表现稳定且专业
+        fontTitle = 'Arial';
+        fontBody = 'Arial';
+    }
 
     // --- 3. 注册多级母版 ---
     pptx.defineSlideMaster({
