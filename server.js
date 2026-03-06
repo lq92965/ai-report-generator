@@ -596,11 +596,12 @@ DO NOT use JSON formatting. You MUST return pure text using EXACTLY these bounda
             emailSummary = extractSection(rawText, "EMAIL_SUMMARY");
         }
 
-        // 5. Save to DB
+        // 5. Save to DB (🟢 核心修复：顺手把用户选的模板类型存进去，这样历史记录就知道用什么颜色了)
         await db.collection('reports').insertOne({ 
             userId: req.user.userId, 
             title: "Generated Report", 
-            content: wordContent, // 只存正文进历史记录
+            content: wordContent, 
+            templateId: templateId || 'general', // <--- 关键就在这一行！
             createdAt: new Date() 
         });
 
