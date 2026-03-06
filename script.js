@@ -941,7 +941,8 @@ function exportToWord(content, filename) {
 // ==============================================================
 // 🟢 [V8.0 旗舰引擎] 动态主题 + 智能解析 + 完整结构 (目录/总结)
 // ==============================================================
-function exportToPPT(content, filename) {
+// 🟢 升级：允许传入第三个参数 templateType，用于决定颜色皮肤
+function exportToPPT(content, filename, overrideTemplateType = null) {
     const rawData = window.currentPPTOutline || content;
     
     if (typeof PptxGenJS === 'undefined') {
@@ -956,7 +957,14 @@ function exportToPPT(content, filename) {
 
     // --- 1. 动态嗅探用户选择的报告场景 ---
     const templateSelect = document.getElementById('template');
-    const reportType = templateSelect ? templateSelect.value : 'general';
+    // 🟢 智能嗅探：如果传入了具体类型就用传入的，否则去页面上找下拉框
+    let reportType = 'general';
+    if (overrideTemplateType) {
+        reportType = overrideTemplateType;
+    } else {
+        const templateSelect = document.getElementById('template');
+        if (templateSelect) reportType = templateSelect.value;
+    }
 
     // --- 2. 动态颜色主题矩阵 (Dynamic Theme Engine) ---
     let theme = { name: "Corporate Standard" };
@@ -1464,14 +1472,14 @@ function setupHistoryLoader() {
                     </div>
                     
                     <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #f0f0f0; padding-top: 10px;">
-                        <button onclick="downloadHistoryItem('${item._id}', 'md')" title="Markdown" style="color: #444; background: #f3f4f6; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">
+                        <button onclick="downloadHistoryItem('${item._id}', 'md', '${item.templateId || 'general'}')" title="Markdown" style="color: #444; background: #f3f4f6; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
                             <i class="fab fa-markdown"></i>
                         </button>
-                        <button onclick="downloadHistoryItem('${item._id}', 'word')" title="Word" style="color: #2b579a; background: #e8f0fe; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">
+                        <button onclick="downloadHistoryItem('${item._id}', 'word', '${item.templateId || 'general'}')" title="Word" style="color: #2b579a; background: #e8f0fe; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
                             <i class="fas fa-file-word"></i>
                         </button>
-                        <button onclick="downloadHistoryItem('${item._id}', 'pdf')" title="PDF" style="color: #b30b00; background: #fee2e2; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">
-                            <i class="fas fa-file-pdf"></i>
+                        <button onclick="downloadHistoryItem('${item._id}', 'ppt', '${item.templateId || 'general'}')" title="PPT Draft" style="color: #ea4335; background: #fce8e6; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                            <i class="fas fa-file-powerpoint"></i>
                         </button>
                         
                         <div style="width: 1px; background: #ddd; margin: 0 5px;"></div>
@@ -1494,7 +1502,8 @@ function setupHistoryLoader() {
     };
 
     // 3. 实现下载功能的具体逻辑
-    window.downloadHistoryItem = function(id, type) {
+    // 🟢 升级：接收第三个参数 passedTemplate
+    window.downloadHistoryItem = function(id, type, passedTemplate = 'general') {
         // 从缓存中找到这条报告
         const item = window.currentHistoryData.find(r => r._id === id);
         if (!item || !item.content) {
@@ -1518,16 +1527,10 @@ function setupHistoryLoader() {
             docx.Packer.toBlob(doc).then(blob => saveAs(blob, `${filename}.docx`));
             showToast("Word downloaded", "success");
         } 
-        else if (type === 'pdf') {
-            if (typeof html2pdf === 'undefined') { showToast("PDF engine loading...", "info"); return; }
-            // 临时创建一个隐藏的 div 用来生成 PDF
-            const element = document.createElement('div');
-            // 如果有 marked 库就转 HTML，没有就直接放文本
-            element.innerHTML = (typeof marked !== 'undefined') ? marked.parse(item.content) : item.content.replace(/\n/g, '<br>');
-            element.style.padding = '20px';
-            
-            html2pdf().from(element).save(`${filename}.pdf`);
-            showToast("PDF downloaded", "success");
+        // 🟢 核心修复：调用你新写的专业 PPT 引擎，并把正确的皮肤颜色传给它！
+        else if (type === 'ppt') {
+            if (typeof PptxGenJS === 'undefined') { showToast("PPT engine loading...", "info"); return; }
+            exportToPPT(item.content, filename, passedTemplate);
         }
     };
 
