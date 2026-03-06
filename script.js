@@ -410,12 +410,8 @@ function setupStrictValidation() {
     const checkPass = () => {
         const val = passInput.value;
         const box = document.getElementById('signup-pwd-feedback');
-        
-        // 🟢 清理历史遗留的旧提示框，防止占位影响排版
-        const oldSpan = passInput.nextElementSibling;
-        if (oldSpan && oldSpan.classList.contains('validation-msg')) {
-            oldSpan.remove();
-        }
+        const span = getErrorSpan(passInput); 
+        span.innerHTML = ''; // 清除旧的纯文本提示
 
         if (!box) return false;
         return window.renderPasswordStrength(val, box);
@@ -943,10 +939,12 @@ function exportToWord(content, filename) {
 }
 
 // ==============================================================
-// 🟢 [V5.0 修复版] PPT 引擎：智能识别首屏 + 英文提示 + 样式分离
+// 🟢 [V6.0 旗舰版] PPT 商业排版引擎：母版注入 + 原生列表 + 智能分页
 // ==============================================================
 function exportToPPT(content, filename) {
-    const finalContent = window.currentPPTOutline || content;
+    // 优先使用 AI 专门生成的 PPT 大纲，如果没有则降级使用正文
+    const rawOutline = window.currentPPTOutline || content;
+    
     if (typeof PptxGenJS === 'undefined') {
         if(window.showToast) window.showToast('PPT Engine Loading...', 'error');
         return;
@@ -957,95 +955,159 @@ function exportToPPT(content, filename) {
     pptx.layout = 'LAYOUT_16x9'; 
     pptx.title = filename;
 
-    // 颜色配置
-    const themeDark = '1E3A8A'; 
-    const themeLight = '3B82F6'; 
-    const textDark = '374151'; 
+    // --- 1. 定义商业级色彩规范 (Corporate Palette) ---
+    const colors = {
+        primary: '1E3A8A',    // 沉稳商务深蓝
+        secondary: '3B82F6',  // 科技亮蓝
+        accent: 'F59E0B',     // 琥珀/亮金点缀色
+        bg: 'F8FAFC',         // 极浅的高级灰白底色
+        textMain: '334155',   // 正文深灰 (比纯黑更护眼)
+        textMuted: '64748B'   // 备注浅灰
+    };
 
-    // --- 1. 封面页 (保持不变) ---
-    let slide = pptx.addSlide();
-    slide.background = { color: 'F8FAFC' };
-    slide.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '35%', h: '100%', fill: { color: themeDark } });
-    slide.addShape(pptx.ShapeType.rect, { x: '35%', y: 0.5, w: '65%', h: 0.15, fill: { color: themeLight } });
-    slide.addText(filename.replace(/_/g, ' '), { 
-        x: 0.2, y: 2.5, w: '31%', h: 3,
-        fontSize: 32, fontFace: 'Arial Black', color: 'FFFFFF', align: 'left', bold: true, valign: 'middle'
+    // --- 2. 注册幻灯片母版 (Slide Masters) ---
+    
+    // 母版 A：高级封面
+    pptx.defineSlideMaster({
+        title: 'COVER_SLIDE',
+        background: { color: colors.primary },
+        objects: [
+            // 左侧装饰细线
+            { rect: { x: '8%', y: 0, w: 0.05, h: '100%', fill: { color: colors.secondary } } },
+            // 中间穿插的亮金分割线
+            { rect: { x: 0, y: '55%', w: '100%', h: 0.05, fill: { color: colors.accent } } },
+            // 底部公司/版权标识
+            { text: { text: "Reportify AI - Enterprise Intelligence", options: { x: '5%', y: '90%', w: '90%', align: 'left', color: '9CA3AF', fontSize: 10 } } }
+        ]
     });
-    slide.addText("PROFESSIONAL REPORT DRAFT", { x: '38%', y: 3.5, fontSize: 14, color: themeLight, bold: true, charSpacing: 3 });
-    slide.addText(`Date: ${new Date().toLocaleDateString()}`, { x: '38%', y: 4.0, fontSize: 12, color: textDark });
 
-    // --- 2. 内容页 (智能逻辑修复) ---
-    // 按 Markdown 标题切分
-    const sections = content.split(/\n(?=#+ )/); 
+    // 母版 B：标准内容页
+    pptx.defineSlideMaster({
+        title: 'CONTENT_SLIDE',
+        background: { color: colors.bg },
+        objects: [
+            // 顶部粗壮的主题色眉边
+            { rect: { x: 0, y: 0, w: '100%', h: 1.0, fill: { color: colors.primary } } },
+            // 眉边下方的亮金细腰线
+            { rect: { x: 0, y: 1.0, w: '100%', h: 0.05, fill: { color: colors.accent } } },
+            // 底部页脚分割线
+            { rect: { x: '5%', y: '92%', w: '90%', h: 0.01, fill: { color: 'CBD5E1' } } },
+            // 页脚机密说明
+            { text: { text: "Reportify AI - Confidential & Proprietary", options: { x: '5%', y: '94%', w: '40%', align: 'left', color: colors.textMuted, fontSize: 9 } } },
+        ],
+        // 自动页码
+        slideNumber: { x: '90%', y: '94%', color: colors.textMuted, fontSize: 9, align: 'right' }
+    });
+
+    // --- 3. 生成封面页 ---
+    let coverSlide = pptx.addSlide({ masterName: 'COVER_SLIDE' });
+    let cleanTitle = filename.replace(/_/g, ' ').replace(/Report/i, 'Report').trim();
+    
+    coverSlide.addText(cleanTitle, { 
+        x: '12%', y: '28%', w: '80%', h: 1.5,
+        fontSize: 40, fontFace: 'Arial Black', color: 'FFFFFF', bold: true, align: 'left', margin: 0
+    });
+    coverSlide.addText("EXECUTIVE SUMMARY DRAFT", { 
+        x: '12%', y: '48%', w: '80%', h: 0.5,
+        fontSize: 16, color: colors.accent, bold: true, charSpacing: 3, align: 'left'
+    });
+    coverSlide.addText(`Generated Date: ${new Date().toLocaleDateString()}`, { 
+        x: '12%', y: '60%', w: '80%', h: 0.5,
+        fontSize: 12, color: 'E2E8F0', align: 'left', italic: true
+    });
+
+    // --- 4. 智能解析 Markdown 并渲染内容页 ---
+    
+    // 预处理：大模型有时会用 **Slide 1: xxx**，有时用 ## xxx，我们统一替换为 ## 便于切分
+    let normalizedText = rawOutline.replace(/\*\*Slide \d+[:\-]?/gi, '##').replace(/Slide \d+[:\-]?/gi, '##');
+    
+    // 按 ## 分割出每一页
+    const sections = normalizedText.split(/\n(?=## )/);
 
     sections.forEach(section => {
-        if (!section.trim()) return;
-
         let lines = section.trim().split('\n');
-        let firstLine = lines[0].trim();
-        let rawTitle = "";
-        let bodyText = "";
+        if (lines.length === 0 || !lines[0].trim()) return;
 
-        // 🟢 [核心修复] 判断第一行是不是标题 (以 # 开头)
-        // 如果不是 # 开头，说明这是引言/摘要，手动给它加个标题
-        if (firstLine.startsWith('#')) {
-            rawTitle = firstLine.replace(/#+\s*/, '').trim();
-            bodyText = lines.slice(1).join('\n').trim();
-        } else {
-            rawTitle = "Executive Summary"; // 默认标题，防止爆版
-            bodyText = section.trim();
-        }
+        // 提取标题并清理多余符号
+        let rawTitle = lines[0].replace(/##/g, '').replace(/\*\*/g, '').trim();
+        if (!rawTitle) rawTitle = "Overview";
 
-        // 清洗 Markdown 符号
-        bodyText = bodyText.replace(/[*_~`]/g, ''); 
-
-        // 🟢 [样式修复] 截断逻辑优化：英文 + 独立样式
-        let isTruncated = false;
-        if (bodyText.length > 700) {
-            bodyText = bodyText.substring(0, 700) + "...";
-            isTruncated = true;
-        }
-
-        // 智能字号
-        let fontSize = 16; 
-        if (bodyText.length > 300) fontSize = 14;
-        if (bodyText.length > 500) fontSize = 12;
-
-        let s = pptx.addSlide();
-        s.background = { color: 'F8FAFC' };
+        // 去掉标题，剩下的全是正文
+        let bodyLines = lines.slice(1);
         
-        // 顶部导航条
-        s.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: '100%', h: 0.8, fill: { color: themeDark } });
-        s.addShape(pptx.ShapeType.rect, { x: 0, y: 0.8, w: '100%', h: 0.05, fill: { color: themeLight } });
+        let slideBullets = [];
 
-        // 页面标题
+        // 逐行分析，构建原生项目符号结构
+        bodyLines.forEach(line => {
+            let trimmed = line.trim();
+            if (!trimmed) return;
+            
+            // 清除加粗/斜体标记，避免 PPT 原生引擎渲染出丑陋的星号
+            trimmed = trimmed.replace(/\*\*/g, '').replace(/__/g, '');
+
+            // 识别符号列表
+            if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+                slideBullets.push({ 
+                    text: trimmed.substring(2).trim(), 
+                    options: { bullet: true, color: colors.textMain, breakLine: true } 
+                });
+            } 
+            // 识别数字列表
+            else if (trimmed.match(/^\d+\.\s/)) {
+                slideBullets.push({ 
+                    text: trimmed.replace(/^\d+\.\s/, '').trim(), 
+                    options: { bullet: { type: 'number' }, color: colors.textMain, breakLine: true } 
+                });
+            } 
+            // 识别普通段落
+            else {
+                slideBullets.push({ 
+                    text: trimmed, 
+                    options: { color: colors.textMuted, breakLine: true, italic: true } 
+                });
+            }
+        });
+
+        // 动态字号计算 (防溢出逻辑)
+        let fontSize = 16;
+        if (slideBullets.length > 5) fontSize = 14;
+        if (slideBullets.length > 8) fontSize = 12;
+
+        slideBullets.forEach(b => {
+            b.options.fontSize = fontSize;
+            b.options.margin = [0, 0, 12, 0]; // 增加段落间距，让排版能“呼吸”
+        });
+
+        // 实例化一张内容母版页
+        let s = pptx.addSlide({ masterName: 'CONTENT_SLIDE' });
+        
+        // 渲染大标题 (放置在蓝色的顶栏中)
         s.addText(rawTitle, { 
-            x: 0.5, y: 0.1, w: '90%', h: 0.6, 
+            x: '5%', y: 0.15, w: '90%', h: 0.7, 
             fontSize: 24, fontFace: 'Arial', color: 'FFFFFF', bold: true, valign: 'middle'
         });
 
-        // 页面正文
-        s.addText(bodyText, { 
-            x: 0.5, y: 1.3, w: '90%', h: 5.0, 
-            fontSize: fontSize, fontFace: 'Arial', color: textDark, 
-            valign: 'top', lineSpacing: fontSize * 1.4
-        });
-
-        // 🟢 [样式修复] 独立的截断提示 (底部、灰色、斜体、英文)
-        if (isTruncated) {
-            s.addText("[ Content truncated. Please refer to the full Word report for details. ]", {
-                x: 0.5, y: 6.3, w: '90%', h: 0.5,
-                fontSize: 10, color: '9CA3AF', italic: true, align: 'center'
+        // 渲染正文 (原生 Bullets 排版)
+        if (slideBullets.length > 0) {
+            s.addText(slideBullets, { 
+                x: '5%', y: 1.3, w: '90%', h: 5.2, 
+                valign: 'top',
+                lineSpacing: fontSize * 1.5 // 优雅的行高
+            });
+        } else {
+            s.addText("Data processing... Please refer to the Word report for full details.", {
+                x: '5%', y: 1.3, w: '90%', color: colors.textMuted, italic: true
             });
         }
-
-        // 页脚
-        s.addShape(pptx.ShapeType.line, { x: 0.5, y: 6.8, w: '90%', h:0, line: {color: 'E5E7EB', width: 1} });
-        s.addText("Reportify AI - Confidential Draft", { x: 0.5, y: 6.9, fontSize: 9, color: '9CA3AF' });
     });
 
+    // --- 5. 触发下载 ---
     pptx.writeFile({ fileName: `Draft_${filename}.pptx` })
-        .then(() => { if(window.showToast) window.showToast("PPT Draft Downloaded!", "success"); });
+        .then(() => { if(window.showToast) window.showToast("PPT Draft Downloaded!", "success"); })
+        .catch(err => {
+            console.error("PPT Generation Error:", err);
+            if(window.showToast) window.showToast("Failed to generate PPT", "error");
+        });
 }
 
 // ==============================================================
@@ -1725,6 +1787,39 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. 修复：修改密码表单提交
     const changePwdForm = document.getElementById('change-password-form');
     if (changePwdForm) {
+        // 🟢 定点插入：修改密码的实时强度校验
+        const securityNewPwdInput = document.getElementById('new-password');
+        const securityStrengthBox = document.getElementById('security-password-strength-box');
+        
+        if (securityNewPwdInput && securityStrengthBox) {
+            securityNewPwdInput.addEventListener('focus', () => {
+                securityStrengthBox.style.display = 'block';
+            });
+            
+            securityNewPwdInput.addEventListener('input', (e) => {
+                const val = e.target.value;
+                const reqLength = document.getElementById('sec-req-length');
+                const reqUpper = document.getElementById('sec-req-upper');
+                const reqNumber = document.getElementById('sec-req-number');
+                const reqSpecial = document.getElementById('sec-req-special');
+
+                // 长度检查
+                if(val.length >= 8) { reqLength.classList.add('text-green-500'); reqLength.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> 8+ chars'; }
+                else { reqLength.classList.remove('text-green-500'); reqLength.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> 8+ chars'; }
+
+                // 大写检查
+                if(/[A-Z]/.test(val)) { reqUpper.classList.add('text-green-500'); reqUpper.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> Uppercase'; }
+                else { reqUpper.classList.remove('text-green-500'); reqUpper.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> Uppercase'; }
+
+                // 数字检查
+                if(/[0-9]/.test(val)) { reqNumber.classList.add('text-green-500'); reqNumber.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> Number'; }
+                else { reqNumber.classList.remove('text-green-500'); reqNumber.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> Number'; }
+
+                // 特殊字符检查
+                if(/[\W_]/.test(val)) { reqSpecial.classList.add('text-green-500'); reqSpecial.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> Symbol'; }
+                else { reqSpecial.classList.remove('text-green-500'); reqSpecial.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> Symbol'; }
+            });
+        }
         changePwdForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -1854,6 +1949,36 @@ document.addEventListener('click', function(e) {
     }
 });
 
+// Step 1: Request Code
+// 🟢 定点插入：重置密码弹窗的实时强度校验
+const resetPwdInput = document.getElementById('reset-new-password');
+const resetStrengthBox = document.getElementById('reset-password-strength-box');
+
+if (resetPwdInput && resetStrengthBox) {
+    resetPwdInput.addEventListener('focus', () => {
+        resetStrengthBox.style.display = 'block';
+    });
+    
+    resetPwdInput.addEventListener('input', (e) => {
+        const val = e.target.value;
+        const reqLength = document.getElementById('reset-req-length');
+        const reqUpper = document.getElementById('reset-req-upper');
+        const reqNumber = document.getElementById('reset-req-number');
+        const reqSpecial = document.getElementById('reset-req-special');
+
+        if(val.length >= 8) { reqLength.classList.add('text-green-500'); reqLength.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> 8+ chars'; }
+        else { reqLength.classList.remove('text-green-500'); reqLength.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> 8+ chars'; }
+
+        if(/[A-Z]/.test(val)) { reqUpper.classList.add('text-green-500'); reqUpper.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> Uppercase'; }
+        else { reqUpper.classList.remove('text-green-500'); reqUpper.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> Uppercase'; }
+
+        if(/[0-9]/.test(val)) { reqNumber.classList.add('text-green-500'); reqNumber.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> Number'; }
+        else { reqNumber.classList.remove('text-green-500'); reqNumber.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> Number'; }
+
+        if(/[\W_]/.test(val)) { reqSpecial.classList.add('text-green-500'); reqSpecial.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i> Symbol'; }
+        else { reqSpecial.classList.remove('text-green-500'); reqSpecial.innerHTML = '<i class="far fa-circle" style="margin-right:6px;"></i> Symbol'; }
+    });
+}
 document.addEventListener('submit', async (e) => {
     if (e.target.id === 'step1-form') {
         e.preventDefault();
