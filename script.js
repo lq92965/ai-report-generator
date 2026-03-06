@@ -938,97 +938,122 @@ function exportToWord(content, filename) {
     showToast("Word 文档下载成功!", "success");
 }
 
+// ==============================================================
+// 🟢 [V8.0 旗舰引擎] 动态主题 + 智能解析 + 完整结构 (目录/总结)
+// ==============================================================
 function exportToPPT(content, filename) {
-    // 优先使用 AI 生成的大纲，如果没有则降级使用正文
     const rawData = window.currentPPTOutline || content;
     
     if (typeof PptxGenJS === 'undefined') {
         if(window.showToast) window.showToast('PPT Engine Loading...', 'error');
         return;
     }
-    if(window.showToast) window.showToast("Generating Full-Structure PPT...", "info");
+    if(window.showToast) window.showToast("Generating Dynamic Theme PPT...", "info");
 
     const pptx = new PptxGenJS();
     pptx.layout = 'LAYOUT_16x9'; 
     pptx.title = filename;
 
-    // --- 1. 定义商业色彩规范 ---
-    const colors = {
-        primary: '0F172A',    // 极黑蓝 (主背景)
-        secondary: '2563EB',  // 科技蓝 (标题栏)
-        accent: 'F59E0B',     // 亮橙色 (强调色)
-        bgLight: 'FFFFFF',    // 纯白底色
-        textDark: '1E293B',   // 正文黑
-        textMuted: '64748B'   // 备注灰
-    };
+    // --- 1. 动态嗅探用户选择的报告场景 ---
+    const templateSelect = document.getElementById('template');
+    const reportType = templateSelect ? templateSelect.value : 'general';
 
-    // --- 2. 注册多级母版体系 ---
-    // 封面母版
+    // --- 2. 动态颜色主题矩阵 (Dynamic Theme Engine) ---
+    let theme = { name: "Corporate Standard" };
+    let c = {}; // Colors object
+
+    if (['monthly_review', 'quarterly_report', 'annual_summary'].includes(reportType)) {
+        // 高管咨询风 (麦肯锡深空黑/曜石金)
+        theme.name = "Executive Consulting";
+        c = { primary: '0F172A', secondary: '1E293B', accent: 'D97706', bgLight: 'FAFAFA', textDark: '000000', textMuted: '475569' };
+    } else if (['daily_standup', 'weekly_pulse', 'project_update'].includes(reportType)) {
+        // 敏捷现代风 (硅谷翡翠绿)
+        theme.name = "Agile Modern";
+        c = { primary: '065F46', secondary: '047857', accent: '34D399', bgLight: 'FFFFFF', textDark: '064E3B', textMuted: '374151' };
+    } else if (['marketing_copy', 'social_media'].includes(reportType)) {
+        // 创意思维风 (霓虹紫)
+        theme.name = "Creative Vibrant";
+        c = { primary: '4C1D95', secondary: '5B21B6', accent: 'EC4899', bgLight: 'FDF2F8', textDark: '2E1065', textMuted: '4C1D95' };
+    } else {
+        // 经典商务蓝 (默认)
+        c = { primary: '1E3A8A', secondary: '2563EB', accent: 'F59E0B', bgLight: 'FFFFFF', textDark: '1E293B', textMuted: '64748B' };
+    }
+
+    // 字体配置 (优先使用高级系统字体)
+    const fontTitle = 'Helvetica Neue, Arial, sans-serif';
+    const fontBody = 'Segoe UI, Microsoft YaHei, sans-serif';
+
+    // --- 3. 注册多级母版 ---
     pptx.defineSlideMaster({
         title: 'COVER',
-        background: { color: colors.primary },
+        background: { color: c.primary },
         objects: [
-            { rect: { x: '5%', y: '45%', w: '90%', h: 0.05, fill: { color: colors.secondary } } },
-            { rect: { x: '5%', y: '46%', w: '20%', h: 0.02, fill: { color: colors.accent } } },
+            { rect: { x: '8%', y: '45%', w: '84%', h: 0.05, fill: { color: c.secondary } } },
+            { rect: { x: '8%', y: '46%', w: '15%', h: 0.02, fill: { color: c.accent } } },
         ]
     });
 
-    // 目录/过渡母版 (深色)
     pptx.defineSlideMaster({
         title: 'TRANSITION',
-        background: { color: colors.secondary },
+        background: { color: c.secondary },
         objects: [
-            { rect: { x: 0, y: 0, w: '2%', h: '100%', fill: { color: colors.primary } } },
-            { rect: { x: '2%', y: '80%', w: '98%', h: '20%', fill: { color: colors.primary } } },
+            { rect: { x: 0, y: 0, w: '3%', h: '100%', fill: { color: c.primary } } },
         ]
     });
 
-    // 内容母版 (亮色)
     pptx.defineSlideMaster({
         title: 'CONTENT',
-        background: { color: colors.bgLight },
+        background: { color: c.bgLight },
         objects: [
-            { rect: { x: 0, y: 0, w: '100%', h: 0.9, fill: { color: colors.primary } } },
-            { rect: { x: 0, y: 0.9, w: '100%', h: 0.05, fill: { color: colors.secondary } } },
-            { rect: { x: '5%', y: '92%', w: '90%', h: 0.02, fill: { color: 'E2E8F0' } } },
-            { text: { text: "Reportify AI Proprietary", options: { x: '5%', y: '94%', w: '30%', color: colors.textMuted, fontSize: 9 } } }
+            // 顶栏背景
+            { rect: { x: 0, y: 0, w: '100%', h: 0.9, fill: { color: c.primary } } },
+            // 顶栏下方的彩色腰线
+            { rect: { x: 0, y: 0.9, w: '100%', h: 0.04, fill: { color: c.accent } } },
+            // 页脚分割线
+            { rect: { x: '5%', y: '92%', w: '90%', h: 0.01, fill: { color: 'CBD5E1' } } },
+            // 页脚文字
+            { text: { text: "Reportify AI Proprietary", options: { x: '5%', y: '94%', w: '30%', color: c.textMuted, fontSize: 9, fontFace: fontBody } } }
         ],
-        slideNumber: { x: '90%', y: '94%', color: colors.textMuted, fontSize: 9, align: 'right' }
+        slideNumber: { x: '90%', y: '94%', color: c.textMuted, fontSize: 9, align: 'right', fontFace: fontBody }
     });
 
-    // --- 3. 智能文本切分引擎 (按段落/数字/标题智能拆页) ---
-    let cleanText = rawData.replace(/\*\*Slide \d+[:\-]?\*\*/gi, '')
-                           .replace(/Slide \d+[:\-]?/gi, '')
-                           .trim();
+    // --- 4. 智能文本切分与解析 (解决内容不全的问题) ---
+    // 清除 Markdown 代码块标记和奇怪的粗体标记
+    let cleanText = rawData.replace(/```json/gi, '').replace(/```/g, '')
+                           .replace(/\*\*Slide \d+[:\-]?\*\*/gi, '')
+                           .replace(/Slide \d+[:\-]?/gi, '').trim();
 
     const blocks = [];
     const rawLines = cleanText.split('\n');
     let currentBlock = { title: "", content: [] };
     
+    // 强大的探测器：能抓取 #, ##, ###, 或者是 1., 一、 等各种标题
+    const headingRegex = /^(#{1,4}\s+|\d+\.\s+|[一二三四五六七八九十]、)/;
+
     rawLines.forEach(line => {
         let txt = line.trim();
         if (!txt) return;
 
-        // 识别新幻灯片切分点 (遇到 # 或 数字1. 开头)
-        const isHeading = txt.startsWith('#') || txt.match(/^\d+\.\s/);
-        
-        if (isHeading) {
+        if (headingRegex.test(txt)) {
+            // 保存旧区块
             if (currentBlock.title || currentBlock.content.length > 0) {
                 blocks.push({...currentBlock});
             }
+            // 清洗标题标记
             currentBlock = { 
-                title: txt.replace(/^#+\s*/, '').replace(/^\d+\.\s/, '').replace(/\*\*/g, '').trim(), 
+                title: txt.replace(headingRegex, '').replace(/\*\*/g, '').trim(), 
                 content: [] 
             };
         } else {
             currentBlock.content.push(txt.replace(/\*\*/g, '').replace(/__/g, ''));
         }
     });
+    // 塞入最后一个区块
     if (currentBlock.title || currentBlock.content.length > 0) {
         blocks.push(currentBlock);
     }
 
-    // 防御溢出机制：如果没有标题，强制按字数强制分页
+    // 极端情况防御：大模型如果不分段，强制按句号切片
     if (blocks.length <= 1) {
         let forcedBlocks = [];
         let allTextArray = cleanText.split(/[\n。；]/); 
@@ -1037,57 +1062,57 @@ function exportToPPT(content, filename) {
             if(!t.trim()) return;
             tempContent.push(t.trim() + "。");
             if (tempContent.length >= 4) { 
-                forcedBlocks.push({ title: "Key Insights", content: [...tempContent] });
+                forcedBlocks.push({ title: "Key Section", content: [...tempContent] });
                 tempContent = [];
             }
         });
-        if (tempContent.length > 0) forcedBlocks.push({ title: "Summary", content: tempContent });
+        if (tempContent.length > 0) forcedBlocks.push({ title: "Final Insights", content: tempContent });
         blocks.splice(0, blocks.length, ...forcedBlocks);
     }
 
-    // --- 4. 渲染封面页 ---
+    // --- 5. 渲染封面页 ---
     let cover = pptx.addSlide({ masterName: 'COVER' });
     let docTitle = filename.replace(/_/g, ' ').replace(/Report/i, 'Strategic Report').trim();
     cover.addText(docTitle, { 
-        x: '5%', y: '20%', w: '90%', h: 2, 
-        fontSize: 44, color: 'FFFFFF', bold: true, fontFace: 'Arial Black' 
+        x: '8%', y: '20%', w: '84%', h: 2, 
+        fontSize: 40, color: 'FFFFFF', bold: true, fontFace: fontTitle 
     });
     cover.addText("CONFIDENTIAL & PROPRIETARY", { 
-        x: '5%', y: '50%', w: '90%', fontSize: 14, color: colors.accent, letterSpacing: 2 
+        x: '8%', y: '50%', w: '84%', fontSize: 13, color: c.accent, letterSpacing: 2, fontFace: fontBody 
     });
     cover.addText(`Prepared: ${new Date().toLocaleDateString()}`, { 
-        x: '5%', y: '55%', w: '90%', fontSize: 12, color: '9CA3AF' 
+        x: '8%', y: '55%', w: '84%', fontSize: 11, color: '9CA3AF', fontFace: fontBody 
     });
 
-    // --- 5. 渲染目录页 (Agenda) ---
+    // --- 6. 自动生成目录页 (Agenda) ---
     let agendaTitleList = blocks.filter(b => b.title).map(b => b.title).slice(0, 8); 
-    if (agendaTitleList.length > 0) {
+    if (agendaTitleList.length > 1) {
         let agenda = pptx.addSlide({ masterName: 'CONTENT' });
-        agenda.addText("Agenda Overview", { x: '5%', y: 0.2, w: '90%', h: 0.6, fontSize: 24, color: 'FFFFFF', bold: true });
+        agenda.addText("Agenda Overview", { 
+            x: '5%', y: 0.15, w: '90%', h: 0.6, 
+            fontSize: 24, color: 'FFFFFF', bold: true, fontFace: fontTitle 
+        });
         
         let agendaBullets = agendaTitleList.map((t, idx) => ({ 
-            text: `0${idx+1}.  ${t}`, 
-            options: { fontSize: 18, color: colors.textDark, breakLine: true, margin: [0,0,15,0] } 
+            text: `0${idx+1}.   ${t}`, 
+            options: { fontSize: 16, color: c.textDark, breakLine: true, margin: [0,0,18,0], fontFace: fontBody, bold: true } 
         }));
-        agenda.addText(agendaBullets, { x: '10%', y: 1.5, w: '80%', h: 5 });
+        // 修正目录文字的绝对坐标
+        agenda.addText(agendaBullets, { x: '10%', y: 1.5, w: '80%', h: 5.0, valign: 'top' });
     }
 
-    // --- 6. 渲染核心内容页 ---
+    // --- 7. 渲染正文内容页 (修复下坠 Bug) ---
     blocks.forEach((block, index) => {
         let slideTitle = block.title || `Section ${index + 1}`;
         let lines = block.content;
 
-        if (lines.length === 0) {
-            let trans = pptx.addSlide({ masterName: 'TRANSITION' });
-            trans.addText(`PART 0${index + 1}`, { x: '5%', y: '35%', fontSize: 16, color: colors.accent, bold: true });
-            trans.addText(slideTitle, { x: '5%', y: '45%', w: '90%', fontSize: 40, color: 'FFFFFF', bold: true });
-            return;
-        }
+        if (lines.length === 0) return; // 忽略空块
 
         let s = pptx.addSlide({ masterName: 'CONTENT' });
+        // 标题固定在蓝条内
         s.addText(slideTitle, { 
-            x: '5%', y: 0.2, w: '90%', h: 0.6, 
-            fontSize: 22, fontFace: 'Arial', color: 'FFFFFF', bold: true, valign: 'middle'
+            x: '5%', y: 0.15, w: '90%', h: 0.6, 
+            fontSize: 22, color: 'FFFFFF', bold: true, fontFace: fontTitle, valign: 'middle'
         });
 
         let slideBullets = [];
@@ -1096,34 +1121,67 @@ function exportToPPT(content, filename) {
         lines.forEach(txt => {
             totalChars += txt.length;
             if (txt.startsWith('- ') || txt.startsWith('* ')) {
-                slideBullets.push({ text: txt.substring(2), options: { bullet: true, color: colors.textDark, breakLine: true } });
+                slideBullets.push({ 
+                    text: txt.substring(2).trim(), 
+                    options: { bullet: true, color: c.textDark, breakLine: true, fontFace: fontBody } 
+                });
             } else {
-                slideBullets.push({ text: txt, options: { color: colors.textMuted, breakLine: true } });
+                slideBullets.push({ 
+                    text: txt.trim(), 
+                    options: { color: c.textMuted, breakLine: true, fontFace: fontBody } 
+                });
             }
         });
 
-        // 动态字号 (防溢出)
-        let fSize = 16;
-        if (totalChars > 400) fSize = 14;
-        if (totalChars > 600) fSize = 12;
+        // 动态字号防溢出
+        let fSize = 15;
+        if (totalChars > 350) fSize = 13;
+        if (totalChars > 500) fSize = 11;
 
         slideBullets.forEach(b => { 
             b.options.fontSize = fSize; 
-            b.options.margin = [0, 0, 10, 0]; 
+            b.options.margin = [0, 0, 12, 0]; 
         });
 
         if (slideBullets.length > 0) {
-            s.addText(slideBullets, { x: '5%', y: 1.3, w: '90%', h: 5.2, valign: 'top', lineSpacing: fSize * 1.5 });
+            // 🚨 核心修复：锁死 y: 1.2 和 valign: 'top'，防止内容下坠
+            s.addText(slideBullets, { 
+                x: '5%', y: 1.2, w: '90%', h: 4.8, 
+                valign: 'top', margin: [0, 0, 0, 0], 
+                lineSpacing: fSize * 1.5 
+            });
         }
     });
 
-    // --- 7. 生成结尾感谢页 ---
-    let endSlide = pptx.addSlide({ masterName: 'TRANSITION' });
-    endSlide.addText("THANK YOU", { x: '0%', y: '40%', w: '100%', align: 'center', fontSize: 50, color: 'FFFFFF', bold: true });
-    endSlide.addText("For your time and attention", { x: '0%', y: '55%', w: '100%', align: 'center', fontSize: 18, color: colors.accent });
+    // --- 8. 生成总结与展望页 (Summary & Outlook) ---
+    // 调取大模型生成的 email_summary 作为执行摘要
+    const summaryText = window.currentEmailSummary || "Detailed structural optimization and implementation strategies have been thoroughly analyzed in the preceding sections. Please refer to the specific action items for the next steps.";
+    
+    let summarySlide = pptx.addSlide({ masterName: 'CONTENT' });
+    summarySlide.addText("Executive Summary & Outlook", { 
+        x: '5%', y: 0.15, w: '90%', h: 0.6, 
+        fontSize: 22, color: 'FFFFFF', bold: true, fontFace: fontTitle 
+    });
+    
+    summarySlide.addShape(pptx.ShapeType.rect, { x: '5%', y: 1.5, w: '90%', h: 4.0, fill: { color: c.bgLight }, line: { color: c.secondary, width: 2 } });
+    summarySlide.addText(summaryText.replace(/```json/gi, '').replace(/```/g, ''), { 
+        x: '8%', y: 1.8, w: '84%', h: 3.4, 
+        valign: 'top', fontSize: 16, color: c.textDark, fontFace: fontBody, italic: true, lineSpacing: 28
+    });
 
-    // --- 8. 触发下载 ---
-    pptx.writeFile({ fileName: `Professional_Deck_${filename}.pptx` })
+    // --- 9. 结尾感谢页 ---
+    let endSlide = pptx.addSlide({ masterName: 'TRANSITION' });
+    endSlide.addText("THANK YOU", { 
+        x: '0%', y: '40%', w: '100%', align: 'center', 
+        fontSize: 48, color: 'FFFFFF', bold: true, fontFace: fontTitle 
+    });
+    endSlide.addText("For your time and attention", { 
+        x: '0%', y: '55%', w: '100%', align: 'center', 
+        fontSize: 16, color: c.accent, fontFace: fontBody 
+    });
+
+    // --- 10. 触发下载 ---
+    pptx.writeFile({ fileName: `${theme.name}_Deck_${filename}.pptx` })
         .then(() => { if(window.showToast) window.showToast("Professional PPT Downloaded!", "success"); })
         .catch(err => {
             console.error("PPT Generation Error:", err);
