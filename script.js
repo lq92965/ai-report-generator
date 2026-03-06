@@ -942,8 +942,9 @@ function exportToWord(content, filename) {
 // 🟢 [V8.0 旗舰引擎] 动态主题 + 智能解析 + 完整结构 (目录/总结)
 // ==============================================================
 // 🟢 升级：允许传入第三个参数 templateType，用于决定颜色皮肤
-function exportToPPT(content, filename, overrideTemplateType = null) {
-    const rawData = window.currentPPTOutline || content;
+// 🟢 核心修复1：增加 passedTemplate 参数；抛弃简略大纲，全场景强制使用最详尽正文 (content)
+function exportToPPT(content, filename, passedTemplate = null) {
+    const rawData = content; 
     
     if (typeof PptxGenJS === 'undefined') {
         if(window.showToast) window.showToast('PPT Engine Loading...', 'error');
@@ -955,15 +956,11 @@ function exportToPPT(content, filename, overrideTemplateType = null) {
     pptx.layout = 'LAYOUT_16x9'; 
     pptx.title = filename;
 
-    // --- 1. 动态嗅探用户选择的报告场景 ---
-    const templateSelect = document.getElementById('template');
-    // 🟢 智能嗅探：如果传入了具体类型就用传入的，否则去页面上找下拉框
-    let reportType = 'general';
-    if (overrideTemplateType) {
-        reportType = overrideTemplateType;
-    } else {
+    // --- 1. 动态嗅探用户选择的报告场景 (优先使用历史记录传来的参数) ---
+    let reportType = passedTemplate;
+    if (!reportType) {
         const templateSelect = document.getElementById('template');
-        if (templateSelect) reportType = templateSelect.value;
+        reportType = templateSelect ? templateSelect.value : 'general';
     }
 
     // --- 2. 动态颜色主题矩阵 (Dynamic Theme Engine) ---
