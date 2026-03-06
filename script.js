@@ -943,8 +943,8 @@ function exportToWord(content, filename) {
 // 🟢 [V8.0 旗舰引擎] 动态主题 + 智能解析 + 完整结构 (目录/总结)
 // ==============================================================
 // 🟢 升级：允许传入第三个参数 templateType，用于决定颜色皮肤
-// 🟢 核心修复1：增加 passedTemplate 参数；抛弃简略大纲，全场景强制使用最详尽正文 (content)
-function exportToPPT(content, filename, passedTemplate = null) {
+// 🟢 统一引擎：接收数据库传来的专属摘要 (passedSummary)
+function exportToPPT(content, filename, passedTemplate = null, passedSummary = null) {
     const rawData = content; 
     
     if (typeof PptxGenJS === 'undefined') {
@@ -1182,8 +1182,8 @@ function exportToPPT(content, filename, passedTemplate = null) {
     });
 
     // --- 8. 生成总结与展望页 (Summary & Outlook) ---
-    // 调取大模型生成的 email_summary 作为执行摘要
-    const summaryText = window.currentEmailSummary || "Detailed structural optimization and implementation strategies have been thoroughly analyzed in the preceding sections. Please refer to the specific action items for the next steps.";
+    // 🟢 优先级：历史记录传入的摘要 > 主页全局缓存的摘要 > 兜底文案
+    const summaryText = passedSummary || window.currentEmailSummary || "Detailed structural optimization and implementation strategies have been thoroughly analyzed in the preceding sections.";
     
     let summarySlide = pptx.addSlide({ masterName: 'CONTENT' });
     summarySlide.addText("Executive Summary & Outlook", { 
@@ -1547,10 +1547,10 @@ function setupHistoryLoader() {
             docx.Packer.toBlob(doc).then(blob => saveAs(blob, `${filename}.docx`));
             showToast("Word downloaded", "success");
         } 
-        // 🟢 核心修复：调用你新写的专业 PPT 引擎，并把正确的皮肤颜色传给它！
+        // 🟢 核心修复3：调用全新引擎，传入颜色参数，并把数据库里的专属摘要也传过去！
         else if (type === 'ppt') {
             if (typeof PptxGenJS === 'undefined') { showToast("PPT engine loading...", "info"); return; }
-            exportToPPT(item.content, filename, passedTemplate);
+            exportToPPT(item.content, filename, passedTemplate, item.emailSummary);
         }
     };
 
