@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupMessageCenter();   
     setupUserDropdown();    
     setupAvatarUpload();
+    setupHistoryLoader(); // 🟢 核心修复：在这里调用历史加载器，让页面一打开就去拉取数据！
     console.log("Reportify AI v22.1 Initialized");
 
     // ... 现有的代码 ...
