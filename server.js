@@ -194,9 +194,9 @@ app.get('/api/auth/google/callback', async (req, res) => {
         if (!user) {
             const result = await db.collection('users').insertOne({ 
                 name, email, picture,
-                password: null, authProvider: 'google', plan: 'basic', createdAt: new Date() 
+                password: null, authProvider: 'google', plan: 'free', createdAt: new Date() 
             });
-            user = { _id: result.insertedId, plan: 'basic' };
+            user = { _id: result.insertedId, plan: 'free' };
         } else {
             await db.collection('users').updateOne({ email }, { $set: { picture: picture } });
         }
@@ -261,7 +261,7 @@ app.post('/api/register', async (req, res) => {
             name: displayName, 
             email, 
             password: hashedPassword, 
-            plan: 'basic', 
+            plan: 'free', 
             role: 'user', 
             usageCount: 0,
             bonusCredits: initialBonus, 
