@@ -157,26 +157,44 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
         const joinDate = new Date(user.createdAt || now);
         const activeDays = Math.ceil(Math.abs(now - joinDate) / (86400000)) || 1;
 
-        // 🟢 核心修复：根据套餐类型，动态计算真正的剩余天数
+        // 🟢 核心修复2：精准计算付费版的真实剩余天数，如果过期则打回免费版
         let daysLeft = 0;
-        if (plan === 'free') {
-            // 免费版：从注册之日起计算 7 天倒计时
+        
+        // 🚨 降级拦截器：如果查到是付费用户，且当前时间已经超过了到期时间，当场降级！
+        if (user.plan !== 'free' && user.planExpiresAt && now > new Date(user.planExpiresAt)) {
+            await db.collection('users').updateOne({ _id: user._id }, { $set: { plan: 'free', planExpiresAt: null } });
+            user.plan = 'free'; // 内存里也同步降级
+        }
+
+        if (user.plan === 'free') {
             const trialDays = 7;
             const daysPassed = Math.floor((now - joinDate) / 86400000);
             daysLeft = Math.max(0, trialDays - daysPassed);
+        } else if (user.planExpiresAt) {
+            // 付费版：根据数据库里记录的真实到期时间计算倒计时
+            daysLeft = Math.ceil((new Date(user.planExpiresAt) - now) / 86400000);
+            daysLeft = Math.max(0, daysLeft);
         } else {
-            // 付费版：计算当前自然月距离月底还剩几天
-            const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
-            daysLeft = Math.ceil((nextMonth - now) / 86400000);
+            // 兜底方案：针对以前没有记录时间的老付费账号，默认显示 30 天
+            daysLeft = 30;
         }
+        // 🟢 核心修复3：向前端输出绝对精准的合并额度
+        // 基础额度定义：新用户21次，Basic45次，Pro无限
+        let baseLimit = plan === 'free' ? 21 : (plan === 'basic' ? 45 : '∞');
+        // 总额度 = 基础额度 + 邀请奖励额度
+        let totalLimit = baseLimit === '∞' ? '∞' : baseLimit + (user.bonusCredits || 0);
+        // 剩余可用 = 总额度 - 已使用
+        let remaining = baseLimit === '∞' ? '∞' : Math.max(0, totalLimit - (user.usageCount || 0));
+
         res.json({
-            plan: plan.toUpperCase(),
-            used: usageCount,
-            limit: plan === 'pro' ? 'Unlimited' : totalLimit,
-            remaining: plan === 'pro' ? 9999 : Math.max(0, totalLimit - usageCount),
-            daysLeft: daysLeft > 0 ? daysLeft : 1,
+            plan: plan === 'expired' ? 'EXPIRED' : plan.toUpperCase(), // 告诉前端是否已过期
+            used: user.usageCount || 0,
+            limit: totalLimit,
+            remaining: remaining,
+            daysLeft: daysLeft > 0 ? daysLeft : 0,
             activeDays: activeDays,
             bonusCredits: user.bonusCredits || 0,
+            invitedCount: user.invitedCount || 0, // 传给前端，显示邀请了几个
             referralCode: user.referralCode
         });
 
@@ -249,19 +267,31 @@ app.post('/api/register', async (req, res) => {
         let initialBonus = 0;
         let validReferredBy = null;
 
+        // 🟢 核心修复2：全新裂变奖励引擎 (封顶5人，Basic发次数，Pro发天数)
         if (inviteCode) {
             const referrer = await db.collection('users').findOne({ referralCode: inviteCode });
-            if (referrer) {
-                if (referrer.registrationIp === clientIp) {
-                    console.log(`Fraud Risk: Referrer IP matches New IP ${clientIp}`);
-                } else {
+            if (referrer && referrer.registrationIp !== clientIp) {
+                const currentInvites = referrer.invitedCount || 0;
+                
+                if (currentInvites < 5) { // 🚨 安全闸：最多奖励 5 人
                     validReferredBy = referrer._id;
-                    initialBonus = 5; 
+                    initialBonus = 5; // 新注册用户获得 5 次额外额度
 
-                    if ((referrer.bonusCredits || 0) < 50) {
+                    if (referrer.plan === 'pro') {
+                        // Pro 老用户：延长 1 天到期时间
+                        if (referrer.planExpiresAt) {
+                            const newExpiry = new Date(referrer.planExpiresAt);
+                            newExpiry.setDate(newExpiry.getDate() + 1);
+                            await db.collection('users').updateOne(
+                                { _id: referrer._id }, 
+                                { $set: { planExpiresAt: newExpiry }, $inc: { invitedCount: 1 } }
+                            );
+                        }
+                    } else {
+                        // Free/Basic 老用户：增加 5 次额外额度
                         await db.collection('users').updateOne(
-                            { _id: referrer._id },
-                            { $inc: { bonusCredits: 5 } } 
+                            { _id: referrer._id }, 
+                            { $inc: { bonusCredits: 5, invitedCount: 1 } }
                         );
                     }
                 }
@@ -448,6 +478,12 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
     try {
         const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
         if (!user) return res.status(404).json({ error: "User not found" });
+
+        // 🟢 核心修复3：生成接口的降级保安。过期一律按 free 处理！
+        if (user.plan !== 'free' && user.planExpiresAt && new Date() > new Date(user.planExpiresAt)) {
+            await db.collection('users').updateOne({ _id: user._id }, { $set: { plan: 'free', planExpiresAt: null } });
+            user.plan = 'free';
+        }
 
         let allowGen = false;
         let deductSource = ''; 
@@ -830,7 +866,23 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
             console.error("PayPal Verify Error (Check .env keys):", verifyErr.message);
         }
 
-        let updateFields = { plan: planId }; 
+        // 🟢 核心修复1：防降级保护与买断重置
+        const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
+        if (!user) return res.status(404).json({ success: false, message: "User not found" });
+
+        // 🚨 拦截器：如果是 Pro 想买 Basic，直接拒绝
+        if (user.plan === 'pro' && planId === 'basic') {
+            return res.status(400).json({ success: false, message: "您当前是 Pro 专业版，享有最高权益。若需更换为 Basic 计划，请在当前 Pro 计划到期后再操作。" });
+        }
+
+        const expiryDate = new Date();
+        // 智能判断买的是月度(30天)还是年度(365天)，这里假设年度计划传过来的 planId 带有 'annual'
+        const addDays = planId.includes('annual') ? 365 : 30; 
+        const realPlanId = planId.replace('_annual', ''); // 去掉后缀存入数据库
+
+        expiryDate.setDate(expiryDate.getDate() + addDays); 
+        // 立刻生效、覆盖天数、清空旧使用次数
+        let updateFields = { plan: realPlanId, planExpiresAt: expiryDate, usageCount: 0 };
         
         await db.collection('users').updateOne(
             { _id: new ObjectId(userId) },
