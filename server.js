@@ -156,8 +156,19 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
         const now = new Date();
         const joinDate = new Date(user.createdAt || now);
         const activeDays = Math.ceil(Math.abs(now - joinDate) / (86400000)) || 1;
-        const daysLeft = 30 - now.getDate();
 
+        // 🟢 核心修复：根据套餐类型，动态计算真正的剩余天数
+        let daysLeft = 0;
+        if (plan === 'free') {
+            // 免费版：从注册之日起计算 7 天倒计时
+            const trialDays = 7;
+            const daysPassed = Math.floor((now - joinDate) / 86400000);
+            daysLeft = Math.max(0, trialDays - daysPassed);
+        } else {
+            // 付费版：计算当前自然月距离月底还剩几天
+            const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+            daysLeft = Math.ceil((nextMonth - now) / 86400000);
+        }
         res.json({
             plan: plan.toUpperCase(),
             used: usageCount,
