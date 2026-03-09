@@ -156,16 +156,60 @@ async function loadRealUsageData() {
         if (res.ok) {
             const data = await res.json();
 
-            // 2. 填充数据
-            if (planEl) planEl.innerText = data.plan;
-            if (usedEl) usedEl.innerText = data.used;
-            if (totalEl) totalEl.innerText = data.limit;
-
-            // 3. 填充底部三个数据
-            if (remainingEl) remainingEl.innerText = data.remaining;
-            if (daysEl) daysEl.innerText = data.daysLeft;
-            if (activeEl) activeEl.innerText = data.activeDays;
+            // 🟢 核心修复5：将后端传来的数据精准塞入新的 UI 结构中 (含进度条变色)
             
+            // 1. 绑定身份状态
+            if (planEl) {
+                if (data.plan === 'EXPIRED') {
+                    planEl.innerText = 'Expired (非会员)';
+                    planEl.style.color = '#ef4444'; // 红色警告
+                } else {
+                    planEl.innerText = data.plan;
+                }
+            }
+
+            // 2. 绑定大字号与底部卡片
+            if (usedEl) usedEl.innerText = data.used;
+            
+            const progressEl = document.getElementById('usage-progress');
+
+            if (data.limit === '∞' || data.limit === 'Unlimited' || data.limit > 9000) {
+                // Pro 无限模式
+                const limitSpan = document.getElementById('usage-limit');
+                if(limitSpan) limitSpan.innerText = "∞";
+                
+                const remainSpan = document.getElementById('stat-remaining');
+                if(remainSpan) { remainSpan.innerText = "Unlimited"; remainSpan.style.fontSize = "1.8rem"; }
+                
+                if (progressEl) {
+                    progressEl.style.width = '100%';
+                    progressEl.style.background = '#10b981'; // Pro是健康绿色
+                }
+            } else {
+                // Basic / Free 限量模式
+                const limitSpan = document.getElementById('usage-limit');
+                if(limitSpan) limitSpan.innerText = data.limit;
+                
+                const remainSpan = document.getElementById('stat-remaining');
+                if(remainSpan) {
+                    remainSpan.innerText = data.remaining !== undefined ? data.remaining : Math.max(0, data.limit - data.used);
+                    remainSpan.style.fontSize = "2.2rem";
+                }
+                
+                if (progressEl) {
+                    const percent = Math.min(100, (data.used / data.limit) * 100);
+                    progressEl.style.width = percent + '%';
+                    progressEl.style.background = percent > 90 ? '#ef4444' : '#2563eb'; // 快超标变红，否则正常蓝
+                }
+            }
+
+            // 3. 填充底部时间卡片
+            const daysSpan = document.getElementById('stat-daysleft');
+            if(daysSpan) daysSpan.innerText = data.daysLeft !== undefined ? data.daysLeft : 0;
+            
+            const activeSpan = document.getElementById('stat-activedays');
+            if(activeSpan) activeSpan.innerText = data.activeDays || 1;
+
             console.log("用量数据加载成功:", data);
         } else {
             console.error("加载用量失败，后端返回:", res.status);
