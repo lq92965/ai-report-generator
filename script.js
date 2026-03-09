@@ -2047,6 +2047,19 @@ window.openForgotModal = function() {
         document.getElementById('step1-form').classList.remove('hidden');
         document.getElementById('step2-form').classList.add('hidden');
         document.getElementById('forgot-subtitle').innerText = "Enter your registered email address.";
+        
+        // 🟢 核心修复：每次打开忘记密码弹窗时，强制“大扫除”，重置所有按钮状态和表单输入框
+        const btn1 = document.getElementById('btn-send-code');
+        if(btn1) { btn1.innerText = "Send Verification Code"; btn1.disabled = false; }
+        
+        const btn2 = document.getElementById('btn-reset-pwd');
+        if(btn2) { btn2.innerText = "Confirm Reset"; btn2.disabled = false; }
+        
+        const form1 = document.getElementById('step1-form');
+        if(form1) form1.reset();
+        
+        const form2 = document.getElementById('step2-form');
+        if(form2) form2.reset();
     }
 };
 
