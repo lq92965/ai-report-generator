@@ -183,24 +183,22 @@
                 </div>
             </div>
 
-            <div style="max-width: 600px; margin: 0 auto 50px; text-align: center;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:5px; font-weight:600; color:#555;">
-                    <span>Used</span>
-                    <span>Total Limit</span>
-                </div>
-                <div style="font-size: 3.5rem; font-weight: 900; color: #333; line-height: 1;">
-                    <span id="usage-used">0</span> <span style="font-size: 1.5rem; color: #ccc; vertical-align: middle;">/</span> <span id="usage-limit" style="font-size: 1.5rem; color: #999; vertical-align: middle;">0</span>
+            <div style="max-width: 600px; margin: 0 auto 40px; text-align: center;">
+                <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 5px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Used / Total Limit</p>
+                <div style="display: flex; align-items: baseline; justify-content: center; gap: 10px;">
+                    <span id="usage-used" style="font-size: 4.5rem; font-weight: 900; color: #111827; line-height: 1;">0</span>
+                    <span style="font-size: 2rem; font-weight: 700; color: #9ca3af;">/ <span id="usage-limit">21</span></span>
                 </div>
                 
-                <div class="progress-container">
-                    <div id="usage-progress" class="progress-bar"></div>
+                <div class="progress-container" style="height: 12px; margin: 25px 0 10px;">
+                    <div id="usage-progress" class="progress-bar" style="background: #2563eb; width: 0%;"></div>
                 </div>
-                <p id="reset-info" style="font-size: 0.85rem; color: #888;">Quotas reset daily/monthly.</p>
+                <p style="font-size: 0.8rem; color: #9ca3af;">Quotas reset upon next billing cycle.</p>
             </div>
 
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 0 20px;">
+            <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 0 0 40px 0;">
 
-            <div class="share-card" id="share-area"></div>
+            <div class="share-card" id="share-area" style="margin-top: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
                 <div class="share-header">
                     <div class="share-title"><i class="fas fa-gift" style="color: #8b5cf6;"></i> Invite & Earn</div>
                     <div class="share-badge">
@@ -209,7 +207,7 @@
                 </div>
 
                 <p style="color: #64748b; margin-bottom: 15px; font-size: 0.95rem;">
-                    For every friend who joins using your link, you both get <strong>+5 Permanent Credits</strong>.
+                    For every friend who joins using your link, you both get <strong>+5 Credits</strong> (Pro users get <strong>+1 Day</strong>). Max 5 invites.
                 </p>
 
                 <div class="link-box">
@@ -218,48 +216,35 @@
                 </div>
 
                 <div class="social-actions">
-                    <a href="#" id="share-x" target="_blank" class="btn-social btn-x">
-                        <i class="fab fa-x-twitter"></i> <span>X</span>
-                    </a>
-                    <a href="#" id="share-wa" target="_blank" class="btn-social btn-wa">
-                        <i class="fab fa-whatsapp"></i> <span>WhatsApp</span>
-                    </a>
-                    <a href="#" id="share-in" target="_blank" class="btn-social btn-in">
-                        <i class="fab fa-linkedin"></i> <span>LinkedIn</span>
-                    </a>
-
-                    <a href="#" id="share-fb" target="_blank" class="btn-social btn-fb">
-                        <i class="fab fa-facebook"></i> <span>Facebook</span>
-                    </a>
-                    <a href="#" id="share-tg" target="_blank" class="btn-social btn-tg">
-                        <i class="fab fa-telegram"></i> <span>Telegram</span>
-                    </a>
-                    <a href="#" id="share-rd" target="_blank" class="btn-social btn-rd">
-                        <i class="fab fa-reddit"></i> <span>Reddit</span>
-                    </a>
+                    <a href="#" id="share-x" target="_blank" class="btn-social btn-x"><i class="fab fa-x-twitter"></i> <span>X</span></a>
+                    <a href="#" id="share-wa" target="_blank" class="btn-social btn-wa"><i class="fab fa-whatsapp"></i> <span>WhatsApp</span></a>
+                    <a href="#" id="share-in" target="_blank" class="btn-social btn-in"><i class="fab fa-linkedin"></i> <span>LinkedIn</span></a>
+                    <a href="#" id="share-fb" target="_blank" class="btn-social btn-fb"><i class="fab fa-facebook"></i> <span>Facebook</span></a>
+                    <a href="#" id="share-tg" target="_blank" class="btn-social btn-tg"><i class="fab fa-telegram"></i> <span>Telegram</span></a>
+                    <a href="#" id="share-rd" target="_blank" class="btn-social btn-rd"><i class="fab fa-reddit"></i> <span>Reddit</span></a>
                 </div>
             </div>
 
             <div class="stats-grid">
-                <div class="stat-box">
-                    <i class="fas fa-bolt" style="color: #ffc107; font-size: 1.8rem;"></i>
-                    <div class="stat-number" id="quota-left">0</div>
-                    <div class="stat-label">Remaining</div>
-                    <div class="stat-desc">Available this cycle</div>
+                <div class="stat-box" style="border-radius: 20px; border: none; background: white; box-shadow: 0 10px 25px rgba(0,0,0,0.03);">
+                    <div style="color: #f59e0b; margin-bottom: 15px;"><i class="fas fa-bolt" style="font-size: 2rem;"></i></div>
+                    <div id="stat-remaining" style="font-size: 2.2rem; font-weight: 900; color: #111827; line-height: 1.2;">0</div>
+                    <div style="font-size: 0.8rem; font-weight: 800; color: #6b7280; margin-top: 8px; text-transform: uppercase;">REMAINING</div>
+                    <div style="font-size: 0.75rem; color: #9ca3af; margin-top: 4px;">Available this cycle</div>
                 </div>
 
-                <div class="stat-box">
-                    <i class="fas fa-hourglass-half" style="color: #28a745; font-size: 1.8rem;"></i>
-                    <div class="stat-number" id="days-remaining">0</div>
-                    <div class="stat-label">Days Left</div>
-                    <div class="stat-desc">Until reset</div>
+                <div class="stat-box" style="border-radius: 20px; border: none; background: white; box-shadow: 0 10px 25px rgba(0,0,0,0.03);">
+                    <div style="color: #10b981; margin-bottom: 15px;"><i class="fas fa-hourglass-half" style="font-size: 2rem;"></i></div>
+                    <div id="stat-daysleft" style="font-size: 2.2rem; font-weight: 900; color: #111827; line-height: 1.2;">0</div>
+                    <div style="font-size: 0.8rem; font-weight: 800; color: #6b7280; margin-top: 8px; text-transform: uppercase;">DAYS LEFT</div>
+                    <div style="font-size: 0.75rem; color: #9ca3af; margin-top: 4px;">Until reset</div>
                 </div>
 
-                <div class="stat-box">
-                    <i class="fas fa-calendar-check" style="color: #17a2b8; font-size: 1.8rem;"></i>
-                    <div class="stat-number" id="days-used">0</div>
-                    <div class="stat-label">Active Days</div>
-                    <div class="stat-desc">Since joined</div>
+                <div class="stat-box" style="border-radius: 20px; border: none; background: white; box-shadow: 0 10px 25px rgba(0,0,0,0.03);">
+                    <div style="color: #3b82f6; margin-bottom: 15px;"><i class="far fa-calendar-check" style="font-size: 2rem;"></i></div>
+                    <div id="stat-activedays" style="font-size: 2.2rem; font-weight: 900; color: #111827; line-height: 1.2;">1</div>
+                    <div style="font-size: 0.8rem; font-weight: 800; color: #6b7280; margin-top: 8px; text-transform: uppercase;">ACTIVE DAYS</div>
+                    <div style="font-size: 0.75rem; color: #9ca3af; margin-top: 4px;">Since joined</div>
                 </div>
             </div>
 
@@ -307,31 +292,41 @@
                     document.getElementById('upgrade-hint').style.display = 'block';
                 }
 
-                // --- 3. 填充用量数字 ---
+                // --- 3. 填充用量数字与卡片 ---
                 const used = data.used || 0;
                 const limit = data.limit;
                 
+                // 绑定大字号区域
                 document.getElementById('usage-used').textContent = used;
 
-                // 无限模式判断
-                if (limit === 'Unlimited' || limit > 9000) {
+                const progressEl = document.getElementById('usage-progress');
+                
+                if (limit === '∞' || limit === 'Unlimited' || limit > 9000) {
+                    // Pro 会员状态
                     document.getElementById('usage-limit').textContent = "∞";
-                    document.getElementById('usage-progress').style.width = '100%';
-                    document.getElementById('usage-progress').style.background = '#28a745';
-                    document.getElementById('quota-left').textContent = "Unlimited";
-                } else {
-                    document.getElementById('usage-limit').textContent = limit;
-                    const remaining = (data.remaining !== undefined) ? data.remaining : (limit - used);
-                    document.getElementById('quota-left').textContent = Math.max(0, remaining);
+                    document.getElementById('stat-remaining').textContent = "Unlimited";
+                    document.getElementById('stat-remaining').style.fontSize = "1.8rem"; // 字太长稍微缩小点
                     
-                    const percent = Math.min(100, (used / limit) * 100);
-                    document.getElementById('usage-progress').style.width = percent + '%';
-                    if(percent > 85) document.getElementById('usage-progress').style.background = '#dc3545';
+                    if (progressEl) {
+                        progressEl.style.width = '100%';
+                        progressEl.style.background = '#10b981'; // 纯绿色
+                    }
+                } else {
+                    // Basic / Free 状态
+                    document.getElementById('usage-limit').textContent = limit;
+                    document.getElementById('stat-remaining').textContent = data.remaining !== undefined ? data.remaining : Math.max(0, limit - used);
+                    document.getElementById('stat-remaining').style.fontSize = "2.2rem";
+                    
+                    if (progressEl) {
+                        const percent = Math.min(100, (used / limit) * 100);
+                        progressEl.style.width = percent + '%';
+                        progressEl.style.background = percent > 90 ? '#ef4444' : '#2563eb'; // 快用完变红，否则蓝
+                    }
                 }
 
-                // --- 4. 填充底部卡片 ---
-                document.getElementById('days-remaining').textContent = data.daysLeft || 30;
-                document.getElementById('days-used').textContent = data.activeDays || 1;
+                // --- 4. 填充底部时间卡片 ---
+                document.getElementById('stat-daysleft').textContent = data.daysLeft !== undefined ? data.daysLeft : 0;
+                document.getElementById('stat-activedays').textContent = data.activeDays || 1;
 
             } catch (err) {
                 console.error("Usage Load Error:", err);
