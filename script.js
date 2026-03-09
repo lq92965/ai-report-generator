@@ -333,21 +333,8 @@ function setupAuthUI() {
                 const originalText = newBtn.innerHTML;
                 newBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
                 
-                try {
-                    const res = await fetch(`${API_BASE_URL}/auth/google`);
-                    if (!res.ok) throw new Error("Auth server unreachable");
-                    
-                    const data = await res.json();
-                    if (data.url) {
-                        window.location.href = data.url; 
-                    } else {
-                        throw new Error("Invalid response from server");
-                    }
-                } catch (err) {
-                    console.error("Google Auth Error:", err);
-                    showToast('Cannot connect to Google Login.', 'error');
-                    newBtn.innerHTML = originalText;
-                }
+                // 🟢 核心修复：Google OAuth 不能用 fetch，必须让整个窗口直接进行真实重定向跳转
+                window.location.href = `${API_BASE_URL}/auth/google`;
             });
         }
     });
