@@ -125,7 +125,7 @@ app.get('/auth/google', (req, res) => {
     res.redirect(url);
 });
 
-// Usage Stats API
+// Usage Stats API (🟢 FIXED: 彻底清理了变量冲突)
 app.get('/api/usage', authenticateToken, async (req, res) => {
     try {
         if (!req.user || !req.user.userId) return res.status(401).json({ message: "Invalid Token" });
@@ -147,26 +147,21 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
             user.referralCode = newCode;
         }
 
-        const plan = user.plan || 'basic';
-        const usageCount = user.usageCount || 0;
-        let totalLimit = 0;
-        if (plan === 'free') totalLimit = 3;
-        if (plan === 'basic') totalLimit = 45;
-
         const now = new Date();
         const joinDate = new Date(user.createdAt || now);
         const activeDays = Math.ceil(Math.abs(now - joinDate) / (86400000)) || 1;
 
-        // 🟢 核心修复2：精准计算付费版的真实剩余天数，如果过期则打回免费版
-        let daysLeft = 0;
-        
         // 🚨 降级拦截器：如果查到是付费用户，且当前时间已经超过了到期时间，当场降级！
         if (user.plan !== 'free' && user.planExpiresAt && now > new Date(user.planExpiresAt)) {
-            await db.collection('users').updateOne({ _id: user._id }, { $set: { plan: 'free', planExpiresAt: null } });
+            await db.collection('users').updateOne({ _id: user._id }, { $set: { plan: 'free', planExpiresAt: null, usageCount: 0 } });
             user.plan = 'free'; // 内存里也同步降级
+            user.usageCount = 0;
         }
 
-        if (user.plan === 'free') {
+        let daysLeft = 0;
+        const currentPlan = user.plan || 'free';
+
+        if (currentPlan === 'free') {
             const trialDays = 7;
             const daysPassed = Math.floor((now - joinDate) / 86400000);
             daysLeft = Math.max(0, trialDays - daysPassed);
@@ -178,23 +173,21 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
             // 兜底方案：针对以前没有记录时间的老付费账号，默认显示 30 天
             daysLeft = 30;
         }
-        // 🟢 核心修复3：向前端输出绝对精准的合并额度
-        // 基础额度定义：新用户21次，Basic45次，Pro无限
-        let baseLimit = plan === 'free' ? 21 : (plan === 'basic' ? 45 : '∞');
-        // 总额度 = 基础额度 + 邀请奖励额度
-        let totalLimit = baseLimit === '∞' ? '∞' : baseLimit + (user.bonusCredits || 0);
-        // 剩余可用 = 总额度 - 已使用
-        let remaining = baseLimit === '∞' ? '∞' : Math.max(0, totalLimit - (user.usageCount || 0));
+
+        // 🟢 精准计算合并额度 (使用 final 变量避免冲突)
+        let baseLimit = currentPlan === 'free' ? 21 : (currentPlan === 'basic' ? 45 : '∞');
+        let finalTotalLimit = baseLimit === '∞' ? '∞' : baseLimit + (user.bonusCredits || 0);
+        let finalRemaining = baseLimit === '∞' ? '∞' : Math.max(0, finalTotalLimit - (user.usageCount || 0));
 
         res.json({
-            plan: plan === 'expired' ? 'EXPIRED' : plan.toUpperCase(), // 告诉前端是否已过期
+            plan: currentPlan === 'expired' ? 'EXPIRED' : currentPlan.toUpperCase(),
             used: user.usageCount || 0,
-            limit: totalLimit,
-            remaining: remaining,
+            limit: finalTotalLimit,
+            remaining: finalRemaining,
             daysLeft: daysLeft > 0 ? daysLeft : 0,
             activeDays: activeDays,
             bonusCredits: user.bonusCredits || 0,
-            invitedCount: user.invitedCount || 0, // 传给前端，显示邀请了几个
+            invitedCount: user.invitedCount || 0, 
             referralCode: user.referralCode
         });
 
@@ -267,18 +260,16 @@ app.post('/api/register', async (req, res) => {
         let initialBonus = 0;
         let validReferredBy = null;
 
-        // 🟢 核心修复2：全新裂变奖励引擎 (封顶5人，Basic发次数，Pro发天数)
         if (inviteCode) {
             const referrer = await db.collection('users').findOne({ referralCode: inviteCode });
             if (referrer && referrer.registrationIp !== clientIp) {
                 const currentInvites = referrer.invitedCount || 0;
                 
-                if (currentInvites < 5) { // 🚨 安全闸：最多奖励 5 人
+                if (currentInvites < 5) { 
                     validReferredBy = referrer._id;
-                    initialBonus = 5; // 新注册用户获得 5 次额外额度
+                    initialBonus = 5; 
 
                     if (referrer.plan === 'pro') {
-                        // Pro 老用户：延长 1 天到期时间
                         if (referrer.planExpiresAt) {
                             const newExpiry = new Date(referrer.planExpiresAt);
                             newExpiry.setDate(newExpiry.getDate() + 1);
@@ -288,7 +279,6 @@ app.post('/api/register', async (req, res) => {
                             );
                         }
                     } else {
-                        // Free/Basic 老用户：增加 5 次额外额度
                         await db.collection('users').updateOne(
                             { _id: referrer._id }, 
                             { $inc: { bonusCredits: 5, invitedCount: 1 } }
@@ -472,39 +462,37 @@ app.post('/api/update-profile', authenticateToken, async (req, res) => {
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 // ==========================================
-// 🟢 [REBUILT] Delimiter-based Engine + Extreme Expansion Prompts
+// 🟢 [REBUILT] Delimiter-based Engine + Extreme Expansion Prompts (FIXED)
 // ==========================================
 app.post('/api/generate', authenticateToken, async (req, res) => {
     try {
         const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
         if (!user) return res.status(404).json({ error: "User not found" });
 
-        // 🟢 核心修复3：生成接口的降级保安。过期一律按 free 处理！
-        if (user.plan !== 'free' && user.planExpiresAt && new Date() > new Date(user.planExpiresAt)) {
-            await db.collection('users').updateOne({ _id: user._id }, { $set: { plan: 'free', planExpiresAt: null } });
+        const now = new Date();
+        // 🟢 降级保安
+        if (user.plan !== 'free' && user.planExpiresAt && now > new Date(user.planExpiresAt)) {
+            await db.collection('users').updateOne({ _id: user._id }, { $set: { plan: 'free', planExpiresAt: null, usageCount: 0 } });
             user.plan = 'free';
+            user.usageCount = 0;
         }
 
         let allowGen = false;
-        let deductSource = ''; 
-
         const isPro = user.plan === 'pro';
+        
+        // 🟢 采用全新的总额度判断机制
+        let baseLimit = user.plan === 'free' ? 21 : (user.plan === 'basic' ? 45 : '∞');
+        let finalTotalLimit = baseLimit === '∞' ? '∞' : baseLimit + (user.bonusCredits || 0);
 
         if (isPro) {
             allowGen = true; 
         } else {
-            let limit = (user.plan === 'free') ? 3 : 45; 
-            if ((user.usageCount || 0) < limit) {
+            if ((user.usageCount || 0) < finalTotalLimit) {
                 allowGen = true;
-                deductSource = 'main';
-            } 
-            else if ((user.bonusCredits || 0) > 0) {
-                allowGen = true;
-                deductSource = 'bonus';
             }
         }
 
-        if (!allowGen) return res.status(403).json({ error: "Limit reached! Invite friends to get more credits." });
+        if (!allowGen) return res.status(403).json({ error: "Limit reached! Invite friends to get more credits or upgrade to Pro." });
 
         const { userPrompt, role, templateId, tone, detailLevel, language } = req.body;
 
@@ -535,14 +523,12 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
             "Persuasive": "Highly persuasive and bold. Emphasize outcome value, speak with data, with a strong intent to drive decisions and secure resources."
         };
 
-        // 🟢 突破字数限制的关键指令
         const detailMapping = {
             "Brief": "Concise and brief. Focus on core conclusions and bullet points. Discard lengthy background descriptions. Total length: 300-500 words.",
             "Standard": "Balanced detail. Expand on important matters with background and results, gloss over minor ones. Balanced structure. Total length: 600-800 words.",
             "Detailed": "CRITICAL INSTRUCTION: You MUST perform an EXTREMELY DEEP and exhaustive expansion. For EVERY single point provided by the user, you MUST generate comprehensive paragraphs covering: [1. Strategic Background & Pain Points] -> [2. Detailed Execution Steps & Methodologies] -> [3. Quantitative Outcomes & Data Metrics] -> [4. Deep Reflection & Future Roadmap]. NEVER just list bullet points. Use highly professional vocabulary and fabricate reasonable logical details to make it full. Total length MUST strictly exceed 1500 words!"
         };
 
-        // 🟢 动态生成严格的分隔符输出要求 (彻底放弃 JSON)
         const formatInstructions = isPro 
             ? `[OUTPUT FORMAT REQUIREMENTS]
 DO NOT use JSON formatting. You MUST return pure text using EXACTLY these boundaries. Do not add markdown code blocks around them:
@@ -585,9 +571,8 @@ DO NOT use JSON formatting. You MUST return pure text using EXACTLY these bounda
 
         let rawText = "";
 
-        // 3. Call AI API (关闭 JSON Config)
         const primaryModelName = "gemini-3-flash-preview"; 
-        const backupModelName = "gemini-2.5-flash";
+        const backupModelName = "gemini-2.5-pro"; // 🟢 根据要求修改为 gemini-2.5-pro
 
         try {
             console.log(`🤖 Trying Primary Model: ${primaryModelName}`);
@@ -595,7 +580,6 @@ DO NOT use JSON formatting. You MUST return pure text using EXACTLY these bounda
                 model: primaryModelName,
                 systemInstruction: finalSystemInstructions 
             });
-            // 🟢 取消了 response_mime_type: "application/json"
             const result = await model.generateContent({ 
                 contents: [{ role: 'user', parts: [{ text: expandedUserPrompt }] }]
             });
@@ -619,12 +603,10 @@ DO NOT use JSON formatting. You MUST return pure text using EXACTLY these bounda
             }
         }
 
-        // 🟢 4. 分隔符提取引擎 (安全切分文本)
         let wordContent = rawText;
         let pptOutline = "";
         let emailSummary = "";
 
-        // 如果 AI 听话生成了分隔符，我们就进行精准提取
         if (rawText.includes("===WORD_CONTENT_START===")) {
             const extractSection = (text, tag) => {
                 const startMarker = `===${tag}_START===`;
@@ -643,21 +625,19 @@ DO NOT use JSON formatting. You MUST return pure text using EXACTLY these bounda
             emailSummary = extractSection(rawText, "EMAIL_SUMMARY");
         }
 
-        // 5. Save to DB (🟢 终极数据闭环：把所有维度的内容都存入数据库，供历史记录调用)
+        // 5. Save to DB
         await db.collection('reports').insertOne({ 
             userId: req.user.userId, 
             title: "Generated Report", 
             content: wordContent, 
             templateId: templateId || 'general',
-            emailSummary: emailSummary || "", // <--- 把大模型生成的摘要也存进数据库！
+            emailSummary: emailSummary || "",
             createdAt: new Date() 
         });
 
-        // 6. Deduct Credits
-        if (deductSource === 'main') {
+        // 6. 🟢 统一扣减总额度 (不再区分 main 和 bonus，非 Pro 统一扣次)
+        if (!isPro) {
             await db.collection('users').updateOne({ _id: user._id }, { $inc: { usageCount: 1 } });
-        } else if (deductSource === 'bonus') {
-            await db.collection('users').updateOne({ _id: user._id }, { $inc: { bonusCredits: -1 } });
         }
 
         // 7. Return to Frontend
@@ -673,7 +653,7 @@ DO NOT use JSON formatting. You MUST return pure text using EXACTLY these bounda
     }
 }); 
 
-// Legacy history endpoint (kept for compatibility if needed elsewhere)
+// Legacy history endpoint
 app.get('/api/reports/history', authenticateToken, async (req, res) => {
     const reports = await db.collection('reports').find({ userId: req.user.userId }).sort({ createdAt: -1 }).toArray();
     res.json(reports);
@@ -796,9 +776,7 @@ app.get('/api/admin/users', verifyAdmin, async (req, res) => {
     res.json(users);
 });
 
-// ==========================================
-// 🟢 [FIXED] Get User History
-// ==========================================
+// Get User History
 app.get('/api/history', authenticateToken, async (req, res) => {
     try {
         const userId = req.user.userId; 
@@ -866,22 +844,19 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
             console.error("PayPal Verify Error (Check .env keys):", verifyErr.message);
         }
 
-        // 🟢 核心修复1：防降级保护与买断重置
         const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
         if (!user) return res.status(404).json({ success: false, message: "User not found" });
 
-        // 🚨 拦截器：如果是 Pro 想买 Basic，直接拒绝
         if (user.plan === 'pro' && planId === 'basic') {
             return res.status(400).json({ success: false, message: "您当前是 Pro 专业版，享有最高权益。若需更换为 Basic 计划，请在当前 Pro 计划到期后再操作。" });
         }
 
         const expiryDate = new Date();
-        // 智能判断买的是月度(30天)还是年度(365天)，这里假设年度计划传过来的 planId 带有 'annual'
         const addDays = planId.includes('annual') ? 365 : 30; 
-        const realPlanId = planId.replace('_annual', ''); // 去掉后缀存入数据库
+        const realPlanId = planId.replace('_annual', ''); 
 
         expiryDate.setDate(expiryDate.getDate() + addDays); 
-        // 立刻生效、覆盖天数、清空旧使用次数
+        
         let updateFields = { plan: realPlanId, planExpiresAt: expiryDate, usageCount: 0 };
         
         await db.collection('users').updateOne(
