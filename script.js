@@ -236,16 +236,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // 🟢 监听跨页面传来的开窗指令
+    // 🟢 监听跨页面传来的开窗指令与邀请链接
     const urlParams = new URLSearchParams(window.location.search);
     const modalAction = urlParams.get('modal');
-    if (modalAction && document.getElementById('auth-modal-overlay')) {
+    const refCode = urlParams.get('ref');
+
+    // 如果发现邀请码，存入本地并提示用户
+    if (refCode) {
+        localStorage.setItem('inviteCode', refCode);
+        showToast("🎁 Welcome! Register now to claim your +5 Free Reports bonus!", "success");
+        setTimeout(() => openModal('signup'), 1500); // 自动打开注册框
+        window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (modalAction && document.getElementById('auth-modal-overlay')) {
         openModal(modalAction);
-        // 执行完毕后抹除 URL 中的参数，保持地址栏干净
         window.history.replaceState({}, document.title, window.location.pathname);
     }
-
-}); // <--- 【修复关键点】这里之前少了这个闭合标签，导致整个文件报错！
+}); // 初始化结束
 
 
 // =================================================
@@ -314,11 +320,16 @@ function setupAuthUI() {
             try {
                 const email = document.getElementById('login-email').value;
                 const password = document.getElementById('login-password').value;
-                const res = await fetch(`${API_BASE_URL}/api/login`, {
+                // 🟢 取出缓存的邀请码发给后端
+                const storedInvite = localStorage.getItem('inviteCode') || '';
+                const res = await fetch(`${API_BASE_URL}/api/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password }),
+                    body: JSON.stringify({ displayName: name, email, password, inviteCode: storedInvite }),
                 });
+                
+                // 注册成功后清理掉邀请码
+                if (res.ok) localStorage.removeItem('inviteCode');
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.message || 'Login failed');
 
