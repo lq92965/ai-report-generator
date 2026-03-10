@@ -312,6 +312,7 @@ function setupAuthUI() {
         loginForm.parentNode.replaceChild(newForm, loginForm);
         newForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            e.stopImmediatePropagation();
             const submitBtn = newForm.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
             submitBtn.disabled = true;
@@ -355,6 +356,7 @@ function setupAuthUI() {
 
         newSignupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            e.stopImmediatePropagation();
             const submitBtn = newSignupForm.querySelector('button[type="submit"]');
             
             if (!validateAllFields()) {
