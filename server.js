@@ -211,16 +211,21 @@ app.get('/api/auth/google/callback', async (req, res) => {
         });
         
         const { email, name, picture } = userRes.data; 
+        const cleanEmail = email.toLowerCase().trim();
         
-        let user = await db.collection('users').findOne({ email });
+        let user = await db.collection('users').findOne({ email: cleanEmail });
         if (!user) {
+            // 🟢 同步检查 Google 用户是否在黑名单中
+            const isBlacklisted = await db.collection('used_trials').findOne({ email: cleanEmail });
+            const startingPlan = isBlacklisted ? 'expired' : 'free';
+
             const result = await db.collection('users').insertOne({ 
-                name, email, picture,
-                password: null, authProvider: 'google', plan: 'free', createdAt: new Date() 
+                name, email: cleanEmail, picture,
+                password: null, authProvider: 'google', plan: startingPlan, createdAt: new Date() 
             });
-            user = { _id: result.insertedId, plan: 'free' };
+            user = { _id: result.insertedId, plan: startingPlan };
         } else {
-            await db.collection('users').updateOne({ email }, { $set: { picture: picture } });
+            await db.collection('users').updateOne({ email: cleanEmail }, { $set: { picture: picture } });
         }
 
         const token = jwt.sign({ userId: user._id, plan: user.plan }, JWT_SECRET, { expiresIn: '7d' });
@@ -235,77 +240,77 @@ app.get('/api/auth/google/callback', async (req, res) => {
 app.post('/api/register', async (req, res) => {
     try {
         const { displayName, email, password, inviteCode } = req.body;
-        
         const clientIp = requestIp.getClientIp(req);
+
+        // 🟢 1. 反羊毛党黑名单检查：注销过的邮箱，不能再当新用户！
+        const isBlacklisted = await db.collection('used_trials').findOne({ email: email.toLowerCase().trim() });
+        const startingPlan = isBlacklisted ? 'expired' : 'free'; // 如果注销过，直接打入过期状态，强制付费
 
         const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
         const ipCount = await db.collection('users').countDocuments({
             registrationIp: clientIp,
             createdAt: { $gt: oneHourAgo }
         });
-        if (ipCount >= 5) {
-            return res.status(429).json({ message: "Too many registrations from this IP." });
-        }
+        if (ipCount >= 5) return res.status(429).json({ message: "Too many registrations from this IP." });
 
-        const existing = await db.collection('users').findOne({ email });
+        const existing = await db.collection('users').findOne({ email: email.toLowerCase().trim() });
         if (existing) return res.status(400).json({ message: "Email exists" });
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        
         const rawName = displayName || email.split('@')[0];
         const cleanName = rawName.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().substring(0, 3);
-        const randomNum = Math.floor(1000 + Math.random() * 9000);
-        const myReferralCode = `${cleanName}${randomNum}`;
+        const myReferralCode = `${cleanName}${Math.floor(1000 + Math.random() * 9000)}`;
 
         let initialBonus = 0;
         let validReferredBy = null;
 
+        // 🟢 2. 邀请发奖与自动站内信
         if (inviteCode) {
             const referrer = await db.collection('users').findOne({ referralCode: inviteCode });
             if (referrer && referrer.registrationIp !== clientIp) {
-                const currentInvites = referrer.invitedCount || 0;
-                
-                if (currentInvites < 5) { 
+                if ((referrer.invitedCount || 0) < 5) { 
                     validReferredBy = referrer._id;
                     initialBonus = 5; 
 
+                    let adminMessage = '';
                     if (referrer.plan === 'pro') {
                         if (referrer.planExpiresAt) {
                             const newExpiry = new Date(referrer.planExpiresAt);
                             newExpiry.setDate(newExpiry.getDate() + 1);
-                            await db.collection('users').updateOne(
-                                { _id: referrer._id }, 
-                                { $set: { planExpiresAt: newExpiry }, $inc: { invitedCount: 1 } }
-                            );
+                            await db.collection('users').updateOne({ _id: referrer._id }, { $set: { planExpiresAt: newExpiry }, $inc: { invitedCount: 1 } });
                         }
+                        adminMessage = `Awesome! Someone joined using your invite link. As a Pro user, we've extended your membership by +1 Day!`;
                     } else {
-                        await db.collection('users').updateOne(
-                            { _id: referrer._id }, 
-                            { $inc: { bonusCredits: 5, invitedCount: 1 } }
-                        );
+                        await db.collection('users').updateOne({ _id: referrer._id }, { $inc: { bonusCredits: 5, invitedCount: 1 } });
+                        adminMessage = `Awesome! Someone joined using your invite link. We've added +5 Free Reports to your account!`;
                     }
+
+                    // 📨 给邀请人发站内信
+                    await db.collection('feedbacks').insertOne({
+                        email: referrer.email,
+                        name: 'System',
+                        type: 'Reward Notification',
+                        message: `Invitation Successful`,
+                        status: 'replied',
+                        reply: adminMessage,
+                        submittedAt: new Date(),
+                        repliedAt: new Date()
+                    });
                 }
             }
         }
 
         await db.collection('users').insertOne({ 
-            name: displayName, 
-            email, 
-            password: hashedPassword, 
-            plan: 'free', 
-            role: 'user', 
-            usageCount: 0,
-            bonusCredits: initialBonus, 
-            referralCode: myReferralCode,
-            referredBy: validReferredBy,
-            registrationIp: clientIp,
-            createdAt: new Date() 
+            name: displayName, email: email.toLowerCase().trim(), password: hashedPassword, 
+            plan: startingPlan, // 应用黑名单判定结果
+            role: 'user', usageCount: 0, bonusCredits: initialBonus, 
+            referralCode: myReferralCode, referredBy: validReferredBy,
+            registrationIp: clientIp, createdAt: new Date() 
         });
 
         res.status(201).json({ message: "Success", referralCode: myReferralCode });
     } catch (e) { 
-        console.error(e);
-        res.status(500).json({ message: "Error" }); 
+        console.error(e); res.status(500).json({ message: "Error" }); 
     }
 });
 
@@ -924,16 +929,19 @@ app.post('/api/change-password', authenticateToken, async (req, res) => {
 app.delete('/api/delete-account', authenticateToken, async (req, res) => {
     try {
         const userId = req.user.userId;
+        const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
         
-        await db.collection('reports').deleteMany({ userId: userId });
-        
-        const result = await db.collection('users').deleteOne({ _id: new ObjectId(userId) });
-        
-        if (result.deletedCount === 1) {
-            res.json({ message: "Account and data deleted successfully." });
-        } else {
-            res.status(404).json({ message: "Account not found." });
+        if (user) {
+            // 🟢 在删除前，把邮箱加入羊毛党黑名单
+            await db.collection('used_trials').insertOne({ email: user.email, deletedAt: new Date() });
+            await db.collection('reports').deleteMany({ userId: userId });
+            const result = await db.collection('users').deleteOne({ _id: new ObjectId(userId) });
+            
+            if (result.deletedCount === 1) {
+                return res.json({ message: "Account and data deleted successfully." });
+            }
         }
+        res.status(404).json({ message: "Account not found." });
     } catch (error) {
         console.error("Delete Account Error:", error);
         res.status(500).json({ message: "Failed to delete account." });
