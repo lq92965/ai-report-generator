@@ -130,96 +130,113 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // --- [重写] 加载用量数据 (修复链接 + 补充底部数据) ---
-async function loadRealUsageData() {
-    // 1. 获取页面上的元素 ID
-    const usedEl = document.getElementById('usage-used');
-    const totalEl = document.getElementById('usage-total');
-    const planEl = document.getElementById('usage-plan');
-    
-    // 获取底部三个卡片的 ID (请确保 usage.html 里有这些 ID)
-    // 建议你把 usage.html 里的数字 span 分别加上 id="usage-remaining", id="usage-days", id="usage-active"
-    // 如果没有 ID，我们尝试用 querySelector 获取
-    const remainingEl = document.getElementById('usage-remaining') || document.querySelector('.card-remaining h3') || document.querySelectorAll('.stat-card h3')[0];
-    const daysEl = document.getElementById('usage-days') || document.querySelector('.card-days h3') || document.querySelectorAll('.stat-card h3')[1];
-    const activeEl = document.getElementById('usage-active') || document.querySelector('.card-active h3') || document.querySelectorAll('.stat-card h3')[2];
+    async function loadRealUsageData() {
+        // 1. 获取页面上的元素 ID
+        const usedEl = document.getElementById('usage-used');
+        const limitEl = document.getElementById('usage-limit');
+        
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) return;
 
-    try {
-        const token = localStorage.getItem('token');
-        if (!token) return;
+            // 🟢 关键修复：必须使用 API_BASE_URL，不能直接写 '/api/...'
+            const res = await fetch(`${API_BASE_URL}/api/usage`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
 
-        // 🟢 关键修复：必须使用 API_BASE_URL，不能直接写 '/api/...'
-        // 并且我们改用刚才新写的 /api/usage 接口，数据更全
-        const res = await fetch(`${API_BASE_URL}/api/usage`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
+            if (res.ok) {
+                const data = await res.json();
 
-        if (res.ok) {
-            const data = await res.json();
+                // 🟢 核心修复5：将后端传来的数据精准塞入新的 UI 结构中 (含进度条变色)
+                
+                // 1. 绑定身份状态
+                const planCode = (data.plan || 'free').toLowerCase();
+                const planNameEl = document.getElementById('plan-name');
+                const upgradeHint = document.getElementById('upgrade-hint');
+                
+                if (planNameEl) {
+                    if (planCode === 'pro') {
+                        planNameEl.textContent = 'PRO';
+                        planNameEl.style.color = '#10b981'; // 绿色
+                        if(upgradeHint) upgradeHint.style.display = 'none';
+                    } else if (planCode === 'basic') {
+                        planNameEl.textContent = 'BASIC';
+                        planNameEl.style.color = '#2563eb'; // 蓝色
+                        if(upgradeHint) upgradeHint.style.display = 'block';
+                    } else if (planCode === 'free') {
+                        planNameEl.textContent = 'FREE';
+                        planNameEl.style.color = '#f59e0b'; // 橙色
+                        if(upgradeHint) upgradeHint.style.display = 'block';
+                    } else {
+                        planNameEl.textContent = 'EXPIRED (已过期)';
+                        planNameEl.style.color = '#ef4444'; // 红色
+                        if(upgradeHint) upgradeHint.style.display = 'block';
+                    }
+                }
 
-            // 🟢 核心修复5：将后端传来的数据精准塞入新的 UI 结构中 (含进度条变色)
-            
-            // 1. 绑定身份状态
-            if (planEl) {
-                if (data.plan === 'EXPIRED') {
-                    planEl.innerText = 'Expired (非会员)';
-                    planEl.style.color = '#ef4444'; // 红色警告
+                // 2. 绑定大字号与底部卡片
+                if (usedEl) usedEl.innerText = data.used;
+                
+                const progressEl = document.getElementById('usage-progress');
+
+                if (data.limit === '∞' || data.limit === 'Unlimited' || data.limit > 9000) {
+                    // Pro 无限模式
+                    const limitSpan = document.getElementById('usage-limit');
+                    if(limitSpan) limitSpan.innerText = "∞";
+                    
+                    const remainSpan = document.getElementById('stat-remaining');
+                    if(remainSpan) { remainSpan.innerText = "Unlimited"; remainSpan.style.fontSize = "1.8rem"; }
+                    
+                    if (progressEl) {
+                        progressEl.style.width = '100%';
+                        progressEl.style.background = '#10b981'; // Pro是健康绿色
+                    }
                 } else {
-                    planEl.innerText = data.plan;
+                    // Basic / Free 限量模式
+                    const limitSpan = document.getElementById('usage-limit');
+                    if(limitSpan) limitSpan.innerText = data.limit;
+                    
+                    const remainSpan = document.getElementById('stat-remaining');
+                    if(remainSpan) {
+                        remainSpan.innerText = data.remaining !== undefined ? data.remaining : Math.max(0, data.limit - data.used);
+                        remainSpan.style.fontSize = "2.2rem";
+                    }
+                    
+                    if (progressEl) {
+                        const percent = Math.min(100, (data.used / data.limit) * 100);
+                        progressEl.style.width = percent + '%';
+                        progressEl.style.background = percent > 90 ? '#ef4444' : '#2563eb'; // 快超标变红，否则正常蓝
+                    }
                 }
-            }
 
-            // 2. 绑定大字号与底部卡片
-            if (usedEl) usedEl.innerText = data.used;
-            
-            const progressEl = document.getElementById('usage-progress');
+                // 3. 填充底部时间卡片
+                const daysSpan = document.getElementById('stat-daysleft');
+                if(daysSpan) daysSpan.innerText = data.daysLeft !== undefined ? data.daysLeft : 0;
+                
+                const activeSpan = document.getElementById('stat-activedays');
+                if(activeSpan) activeSpan.innerText = data.activeDays || 1;
 
-            if (data.limit === '∞' || data.limit === 'Unlimited' || data.limit > 9000) {
-                // Pro 无限模式
-                const limitSpan = document.getElementById('usage-limit');
-                if(limitSpan) limitSpan.innerText = "∞";
-                
-                const remainSpan = document.getElementById('stat-remaining');
-                if(remainSpan) { remainSpan.innerText = "Unlimited"; remainSpan.style.fontSize = "1.8rem"; }
-                
-                if (progressEl) {
-                    progressEl.style.width = '100%';
-                    progressEl.style.background = '#10b981'; // Pro是健康绿色
+                // 绑定邀请奖励的值 (修复Bonus不显示的问题)
+                const bonusVal = document.getElementById('bonus-val');
+                if (bonusVal) {
+                    bonusVal.innerText = data.bonusCredits || 0;
                 }
+                
+                // 更新分享链接
+                if (typeof updateShareLinks === 'function') {
+                    updateShareLinks(data.referralCode || 'ERROR');
+                }
+
+                console.log("用量数据加载成功:", data);
             } else {
-                // Basic / Free 限量模式
-                const limitSpan = document.getElementById('usage-limit');
-                if(limitSpan) limitSpan.innerText = data.limit;
-                
-                const remainSpan = document.getElementById('stat-remaining');
-                if(remainSpan) {
-                    remainSpan.innerText = data.remaining !== undefined ? data.remaining : Math.max(0, data.limit - data.used);
-                    remainSpan.style.fontSize = "2.2rem";
-                }
-                
-                if (progressEl) {
-                    const percent = Math.min(100, (data.used / data.limit) * 100);
-                    progressEl.style.width = percent + '%';
-                    progressEl.style.background = percent > 90 ? '#ef4444' : '#2563eb'; // 快超标变红，否则正常蓝
-                }
+                console.error("加载用量失败，后端返回:", res.status);
             }
-
-            // 3. 填充底部时间卡片
-            const daysSpan = document.getElementById('stat-daysleft');
-            if(daysSpan) daysSpan.innerText = data.daysLeft !== undefined ? data.daysLeft : 0;
-            
-            const activeSpan = document.getElementById('stat-activedays');
-            if(activeSpan) activeSpan.innerText = data.activeDays || 1;
-
-            console.log("用量数据加载成功:", data);
-        } else {
-            console.error("加载用量失败，后端返回:", res.status);
+        } catch (e) {
+            console.error("加载用量网络错误", e);
         }
-    } catch (e) {
-        console.error("加载用量网络错误", e);
     }
-}
 
-// 🟢 监听跨页面传来的开窗指令
+    // 🟢 监听跨页面传来的开窗指令
     const urlParams = new URLSearchParams(window.location.search);
     const modalAction = urlParams.get('modal');
     if (modalAction && document.getElementById('auth-modal-overlay')) {
@@ -948,7 +965,7 @@ function exportToWord(content, filename) {
         <head><meta charset='utf-8'><title>${filename}</title>${docXml}${css}</head>
         <body>
             <div class="Section1">
-               
+                
                 ${htmlBody}
 
                 <table id='header_footer_ref' style='display:none'>
