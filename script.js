@@ -1193,8 +1193,8 @@ function exportToPPT(content, filename, passedTemplate = null, passedSummary = n
     }
 
     cover.addText(docTitle, {
-        x: '8%', y: '20%', w: '84%', h: 2, 
-        fontSize: titleFontSize, color: 'FFFFFF', bold: true, fontFace: fontTitle 
+        x: '8%', y: '18%', w: '84%', h: 2.5, 
+        fontSize: titleFontSize, color: 'FFFFFF', bold: true, fontFace: fontTitle, breakLine: true
     });
     cover.addText("CONFIDENTIAL & PROPRIETARY", { 
         x: '8%', y: '50%', w: '84%', fontSize: 13, color: c.accent, letterSpacing: 2, fontFace: fontBody 
@@ -1276,7 +1276,7 @@ function exportToPPT(content, filename, passedTemplate = null, passedSummary = n
 
     // --- 8. 生成总结与展望页 (Summary & Outlook) ---
     // 🟢 优先级：历史记录传入的摘要 > 主页全局缓存的摘要 > 兜底文案
-    const summaryText = passedSummary || window.currentEmailSummary || "Detailed structural optimization and implementation strategies have been thoroughly analyzed in the preceding sections.";
+    const summaryText = passedSummary || window.currentEmailSummary || t.fallbackSum;
     
     let summarySlide = pptx.addSlide({ masterName: 'CONTENT' });
     summarySlide.addText(t.summary, { 
