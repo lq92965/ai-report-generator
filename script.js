@@ -178,43 +178,49 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (usedEl) usedEl.innerText = data.used;
                 
                 const progressEl = document.getElementById('usage-progress');
+                const limitSpan = document.getElementById('usage-limit');
+                const remainSpan = document.getElementById('stat-remaining');
+                const daysSpan = document.getElementById('stat-daysleft');
+                const activeSpan = document.getElementById('stat-activedays');
 
-                if (data.limit === '∞' || data.limit === 'Unlimited' || data.limit > 9000) {
-                    // Pro 无限模式
-                    const limitSpan = document.getElementById('usage-limit');
-                    if(limitSpan) limitSpan.innerText = "∞";
-                    
-                    const remainSpan = document.getElementById('stat-remaining');
-                    if(remainSpan) { remainSpan.innerText = "Unlimited"; remainSpan.style.fontSize = "1.8rem"; }
-                    
-                    if (progressEl) {
+                // 🚨 终极防线：如果是过期用户，强制所有核心数据清零！
+                if (planCode === 'expired') {
+                    if(limitSpan) limitSpan.innerText = "0";
+                    if(remainSpan) { remainSpan.innerText = "0"; remainSpan.style.fontSize = "2.2rem"; }
+                    if(daysSpan) daysSpan.innerText = "0";
+                    if(activeSpan) activeSpan.innerText = data.activeDays || 1; // 活跃天数可以保留
+                    if(progressEl) {
                         progressEl.style.width = '100%';
-                        progressEl.style.background = '#10b981'; // Pro是健康绿色
+                        progressEl.style.background = '#ef4444'; // 全红警告
                     }
                 } else {
-                    // Basic / Free 限量模式
-                    const limitSpan = document.getElementById('usage-limit');
-                    if(limitSpan) limitSpan.innerText = data.limit;
-                    
-                    const remainSpan = document.getElementById('stat-remaining');
-                    if(remainSpan) {
-                        remainSpan.innerText = data.remaining !== undefined ? data.remaining : Math.max(0, data.limit - data.used);
-                        remainSpan.style.fontSize = "2.2rem";
+                    // 正常用户渲染逻辑
+                    if (data.limit === '∞' || data.limit === 'Unlimited' || data.limit > 9000) {
+                        // Pro 无限模式
+                        if(limitSpan) limitSpan.innerText = "∞";
+                        if(remainSpan) { remainSpan.innerText = "Unlimited"; remainSpan.style.fontSize = "1.8rem"; }
+                        if (progressEl) {
+                            progressEl.style.width = '100%';
+                            progressEl.style.background = '#10b981'; // Pro是健康绿色
+                        }
+                    } else {
+                        // Basic / Free 限量模式
+                        if(limitSpan) limitSpan.innerText = data.limit;
+                        if(remainSpan) {
+                            remainSpan.innerText = data.remaining !== undefined ? data.remaining : Math.max(0, data.limit - data.used);
+                            remainSpan.style.fontSize = "2.2rem";
+                        }
+                        if (progressEl) {
+                            const percent = Math.min(100, (data.used / data.limit) * 100);
+                            progressEl.style.width = percent + '%';
+                            progressEl.style.background = percent > 90 ? '#ef4444' : '#2563eb'; // 快超标变红，否则正常蓝
+                        }
                     }
                     
-                    if (progressEl) {
-                        const percent = Math.min(100, (data.used / data.limit) * 100);
-                        progressEl.style.width = percent + '%';
-                        progressEl.style.background = percent > 90 ? '#ef4444' : '#2563eb'; // 快超标变红，否则正常蓝
-                    }
+                    // 填充底部时间卡片 (仅限正常用户)
+                    if(daysSpan) daysSpan.innerText = data.daysLeft !== undefined ? data.daysLeft : 0;
+                    if(activeSpan) activeSpan.innerText = data.activeDays || 1;
                 }
-
-                // 3. 填充底部时间卡片
-                const daysSpan = document.getElementById('stat-daysleft');
-                if(daysSpan) daysSpan.innerText = data.daysLeft !== undefined ? data.daysLeft : 0;
-                
-                const activeSpan = document.getElementById('stat-activedays');
-                if(activeSpan) activeSpan.innerText = data.activeDays || 1;
 
                 // 绑定邀请奖励的值 (修复Bonus不显示的问题)
                 const bonusVal = document.getElementById('bonus-val');
