@@ -305,92 +305,96 @@ function setupAuthUI() {
         t.addEventListener('click', () => window.openModal(t.dataset.tab));
     });
 
-    // 3. 登录表单处理
-    const loginForm = document.getElementById('login-form');
-    if (loginForm) {
-        const newForm = loginForm.cloneNode(true);
-        loginForm.parentNode.replaceChild(newForm, loginForm);
-        newForm.addEventListener('submit', async (e) => {
+    // 🟢 终极防弹设计：禁用所有表单的默认提交行为，彻底斩断 HTML 嵌套导致的“串台”
+    document.querySelectorAll('form').forEach(f => {
+        f.addEventListener('submit', e => e.preventDefault());
+    });
+
+    // 3. 登录按钮直接绑定 (绝对不会触发注册)
+    const loginBtn = document.querySelector('#login-form button[type="submit"]') || document.querySelector('#login button');
+    if (loginBtn) {
+        loginBtn.onclick = async (e) => {
             e.preventDefault();
             e.stopImmediatePropagation();
-            const submitBtn = newForm.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Verifying...';
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            if(!email || !password) {
+                showToast("请输入邮箱和密码", "warning");
+                return;
+            }
+
+            const originalText = loginBtn.textContent;
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Verifying...';
 
             try {
-                const email = document.getElementById('login-email').value;
-                const password = document.getElementById('login-password').value;
-                // 🟢 取出缓存的邀请码发给后端
+                const res = await fetch(`${API_BASE_URL}/api/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password }),
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || 'Login failed');
+
+                localStorage.setItem('token', data.token);
+                showToast("登录成功！Welcome back!", "success");
+                window.closeModal();
+                setTimeout(() => window.location.reload(), 800);
+            } catch (err) {
+                showToast(err.message, "error");
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.textContent = originalText;
+            }
+        };
+    }
+
+    // 4. 注册按钮直接绑定
+    const signupBtn = document.querySelector('#signup-form button[type="submit"]') || document.querySelector('#btn-signup-submit');
+    if (signupBtn) {
+        setupStrictValidation(); 
+
+        signupBtn.onclick = async (e) => {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            
+            if (!validateAllFields()) {
+                showToast("请检查表单填写是否符合要求", "error");
+                return;
+            }
+
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+
+            const originalText = signupBtn.textContent;
+            signupBtn.disabled = true;
+            signupBtn.textContent = 'Creating...';
+
+            try {
                 const storedInvite = localStorage.getItem('inviteCode') || '';
                 const res = await fetch(`${API_BASE_URL}/api/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ displayName: name, email, password, inviteCode: storedInvite }),
                 });
-                
-                // 注册成功后清理掉邀请码
-                if (res.ok) localStorage.removeItem('inviteCode');
-                const data = await res.json();
-                if (!res.ok) throw new Error(data.message || 'Login failed');
-
-                localStorage.setItem('token', data.token);
-                showToast("Welcome back!", "success");
-                window.closeModal();
-                setTimeout(() => window.location.reload(), 800);
-            } catch (err) {
-                showToast(err.message, "error");
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
-            }
-        });
-    }
-
-    // 4. 注册表单处理
-    const signupForm = document.getElementById('signup-form');
-    if (signupForm) {
-        const newSignupForm = signupForm.cloneNode(true);
-        signupForm.parentNode.replaceChild(newSignupForm, signupForm);
-        
-        setupStrictValidation();
-
-        newSignupForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            const submitBtn = newSignupForm.querySelector('button[type="submit"]');
-            
-            if (!validateAllFields()) {
-                showToast("Please fix the errors in the form.", "error");
-                return;
-            }
-
-            const originalText = submitBtn.textContent;
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Creating...';
-
-            try {
-                const name = document.getElementById('signup-name').value;
-                const email = document.getElementById('signup-email').value;
-                const password = document.getElementById('signup-password').value;
-
-                const res = await fetch(`${API_BASE_URL}/api/register`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ displayName: name, email, password }),
-                });
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.message || 'Registration failed');
 
-                showToast('Account Created! Please Login.', 'success');
+                if (res.ok) localStorage.removeItem('inviteCode');
+                showToast('账号创建成功！请直接登录。', 'success');
                 window.openModal('login');
-                newSignupForm.reset();
+                const signupForm = document.getElementById('signup-form');
+                if(signupForm) signupForm.reset();
             } catch (err) {
                 showToast(err.message, "error");
             } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
+                signupBtn.disabled = false;
+                signupBtn.textContent = originalText;
             }
-        });
+        };
     }
 
     // 5. Google 登录按钮修复
@@ -403,11 +407,8 @@ function setupAuthUI() {
             newBtn.addEventListener('click', async (e) => {
                 e.preventDefault(); 
                 e.stopPropagation();
-                
                 const originalText = newBtn.innerHTML;
                 newBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
-                
-                // 🟢 核心修复：Google OAuth 不能用 fetch，必须让整个窗口直接进行真实重定向跳转
                 window.location.href = `${API_BASE_URL}/auth/google`;
             });
         }
