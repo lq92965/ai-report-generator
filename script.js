@@ -1055,30 +1055,47 @@ function exportToPPT(content, filename, passedTemplate = null, passedSummary = n
         c = { primary: '1E3A8A', secondary: '2563EB', accent: 'F59E0B', bgLight: 'FFFFFF', textDark: '1E293B', textMuted: '64748B' };
     }
 
-    // 🟢 智能多语言字体与词典引擎
+    // 🟢 升级版智能多语言引擎：依靠字符频次判断，杜绝误判
     let lang = 'en';
     let fontTitle = 'Arial';
     let fontBody = 'Arial';
     
-    if (/[\u4e00-\u9fa5]/.test(rawData)) {
-        lang = 'zh'; fontTitle = 'Microsoft YaHei'; fontBody = 'Microsoft YaHei';
-    } else if (/[\u3040-\u30ff]/.test(rawData)) {
+    // 统计各类字符出现的次数
+    const zhMatches = rawData.match(/[\u4e00-\u9fa5]/g) || [];
+    const jaMatches = rawData.match(/[\u3040-\u30ff]/g) || [];
+    const koMatches = rawData.match(/[\uac00-\ud7af]/g) || [];
+
+    // 1. 优先判断日文和韩文 (日文含有专属假名，韩文有谚文)
+    if (jaMatches.length > 15) {
         lang = 'ja'; fontTitle = 'Meiryo'; fontBody = 'Meiryo';
-    } else if (/[\uac00-\ud7af]/.test(rawData)) {
+    } else if (koMatches.length > 15) {
         lang = 'ko'; fontTitle = 'Malgun Gothic'; fontBody = 'Malgun Gothic';
-    } else if (/[áéíóúñü¿¡]/i.test(rawData)) {
-        lang = 'es'; 
+    } 
+    // 2. 然后判断中文 (汉字数量必须超过阈值，防止英文报告里混入几个中文被误判)
+    else if (zhMatches.length > 15) {
+        lang = 'zh'; fontTitle = 'Microsoft YaHei'; fontBody = 'Microsoft YaHei';
+    } 
+    // 3. 判断欧洲语言 (通过各自独有的高频虚词)
+    else {
+        const countWords = (regex) => (rawData.match(regex) || []).length;
+        if (countWords(/\b(der|die|das|und|ist|für)\b/gi) > 3) lang = 'de';
+        else if (countWords(/\b(le|la|les|et|est|dans)\b/gi) > 3) lang = 'fr';
+        else if (countWords(/\b(o|a|os|as|e|é|em|para)\b/gi) > 3) lang = 'pt';
+        else if (countWords(/\b(el|la|los|las|y|es|en)\b/gi) > 3) lang = 'es';
     }
 
-    // 准备各个语言的固定词汇
+    // 准备全语种精准翻译字典
     const i18n = {
-        en: { agenda: "Agenda Overview", summary: "Executive Summary & Outlook", fallbackSum: "Detailed structural optimization and implementation strategies have been thoroughly analyzed in the preceding sections.", thanks: "THANK YOU", thanksSub: "For your time and attention", footer: "Reportify AI Proprietary" },
-        zh: { agenda: "目录概览", summary: "执行摘要 & 战略展望", fallbackSum: "前面的章节已经对结构优化和执行策略进行了详尽的分析与总结。", thanks: "感谢观看", thanksSub: "感谢您的时间与关注", footer: "由 Reportify AI 专属生成" },
-        ja: { agenda: "アジェンダ概要", summary: "エグゼクティブサマリーと展望", fallbackSum: "詳細な構造最適化と実装戦略については、前のセクションで徹底的に分析されています。", thanks: "ご清聴ありがとうございました", thanksSub: "お時間をいただきありがとうございます", footer: "Reportify AI 専有" },
-        ko: { agenda: "아젠다 개요", summary: "요약 및 전망", fallbackSum: "자세한 구조 최적화 및 실행 전략은 이전 섹션에서 철저히 분석되었습니다。", thanks: "감사합니다", thanksSub: "시간을 내주셔서 감사합니다", footer: "Reportify AI 독점" },
-        es: { agenda: "Resumen de la Agenda", summary: "Resumen Ejecutivo y Perspectivas", fallbackSum: "Las estrategias de optimización e implementación estructural se han analizado exhaustivamente en las secciones anteriores.", thanks: "GRACIAS", thanksSub: "Por su tiempo y atención", footer: "Propiedad de Reportify AI" }
+        en: { agenda: "Agenda Overview", summary: "Executive Summary & Outlook", fallbackSum: "Detailed structural optimization and implementation strategies have been thoroughly analyzed in the preceding sections.", thanks: "THANK YOU", thanksSub: "For your time and attention" },
+        zh: { agenda: "目录概览", summary: "执行摘要 & 战略展望", fallbackSum: "前面的章节已经对结构优化和执行策略进行了详尽的分析与总结。", thanks: "感谢观看", thanksSub: "感谢您的时间与关注" },
+        ja: { agenda: "アジェンダ概要", summary: "エグゼクティブサマリー", fallbackSum: "詳細な構造最適化と実装戦略については、前のセクションで徹底的に分析されています。", thanks: "ご清聴ありがとうございました", thanksSub: "お時間をいただきありがとうございます" },
+        ko: { agenda: "아젠다 개요", summary: "요약 및 전망", fallbackSum: "자세한 구조 최적화 및 실행 전략은 이전 섹션에서 철저히 분석되었습니다.", thanks: "감사합니다", thanksSub: "시간을 내주셔서 감사합니다" },
+        es: { agenda: "Resumen de la Agenda", summary: "Resumen Ejecutivo", fallbackSum: "Las estrategias de optimización e implementación estructural se han analizado exhaustivamente en las secciones anteriores.", thanks: "GRACIAS", thanksSub: "Por su tiempo y atención" },
+        fr: { agenda: "Aperçu de l'Ordre du Jour", summary: "Résumé Analytique", fallbackSum: "L'optimisation structurelle détaillée et les stratégies de mise en œuvre ont été analysées dans les sections précédentes.", thanks: "MERCI", thanksSub: "Pour votre temps et votre attention" },
+        de: { agenda: "Agenda Übersicht", summary: "Zusammenfassung", fallbackSum: "Detaillierte strukturelle Optimierungs- und Implementierungsstrategien wurden in den vorherigen Abschnitten gründlich analysiert.", thanks: "VIELEN DANK", thanksSub: "Für Ihre Zeit und Aufmerksamkeit" },
+        pt: { agenda: "Visão Geral da Agenda", summary: "Resumo Executivo", fallbackSum: "Estratégias detalhadas de otimização estrutural e implementação foram analisadas exaustivamente nas seções anteriores.", thanks: "OBRIGADO", thanksSub: "Pelo seu tempo e atenção" }
     };
-    // 根据嗅探到的语言选择词典，找不到就默认英文
+    
     const t = i18n[lang] || i18n['en'];
 
     // --- 3. 注册多级母版 ---
