@@ -1055,29 +1055,31 @@ function exportToPPT(content, filename, passedTemplate = null, passedSummary = n
         c = { primary: '1E3A8A', secondary: '2563EB', accent: 'F59E0B', bgLight: 'FFFFFF', textDark: '1E293B', textMuted: '64748B' };
     }
 
-    // 🟢 智能多语言字体引擎：根据内容动态分配最佳系统字体
+    // 🟢 智能多语言字体与词典引擎
+    let lang = 'en';
     let fontTitle = 'Arial';
     let fontBody = 'Arial';
     
-    // 使用正则探测文本内容，判断主要语种
     if (/[\u4e00-\u9fa5]/.test(rawData)) {
-        // 中文 (简体/繁体)
-        fontTitle = 'Microsoft YaHei';
-        fontBody = 'Microsoft YaHei';
+        lang = 'zh'; fontTitle = 'Microsoft YaHei'; fontBody = 'Microsoft YaHei';
     } else if (/[\u3040-\u30ff]/.test(rawData)) {
-        // 日文 (平假名/片假名)
-        fontTitle = 'Meiryo';
-        fontBody = 'Meiryo';
+        lang = 'ja'; fontTitle = 'Meiryo'; fontBody = 'Meiryo';
     } else if (/[\uac00-\ud7af]/.test(rawData)) {
-        // 韩文 (谚文)
-        fontTitle = 'Malgun Gothic';
-        fontBody = 'Malgun Gothic';
-    } else {
-        // 其他语种 (英语, 西班牙语, 德语, 法语, 葡萄牙语 等) 默认使用 Arial
-        // Arial 在绝大多数西文环境下表现稳定且专业
-        fontTitle = 'Arial';
-        fontBody = 'Arial';
+        lang = 'ko'; fontTitle = 'Malgun Gothic'; fontBody = 'Malgun Gothic';
+    } else if (/[áéíóúñü¿¡]/i.test(rawData)) {
+        lang = 'es'; 
     }
+
+    // 准备各个语言的固定词汇
+    const i18n = {
+        en: { agenda: "Agenda Overview", summary: "Executive Summary & Outlook", fallbackSum: "Detailed structural optimization and implementation strategies have been thoroughly analyzed in the preceding sections.", thanks: "THANK YOU", thanksSub: "For your time and attention", footer: "Reportify AI Proprietary" },
+        zh: { agenda: "目录概览", summary: "执行摘要 & 战略展望", fallbackSum: "前面的章节已经对结构优化和执行策略进行了详尽的分析与总结。", thanks: "感谢观看", thanksSub: "感谢您的时间与关注", footer: "由 Reportify AI 专属生成" },
+        ja: { agenda: "アジェンダ概要", summary: "エグゼクティブサマリーと展望", fallbackSum: "詳細な構造最適化と実装戦略については、前のセクションで徹底的に分析されています。", thanks: "ご清聴ありがとうございました", thanksSub: "お時間をいただきありがとうございます", footer: "Reportify AI 専有" },
+        ko: { agenda: "아젠다 개요", summary: "요약 및 전망", fallbackSum: "자세한 구조 최적화 및 실행 전략은 이전 섹션에서 철저히 분석되었습니다。", thanks: "감사합니다", thanksSub: "시간을 내주셔서 감사합니다", footer: "Reportify AI 독점" },
+        es: { agenda: "Resumen de la Agenda", summary: "Resumen Ejecutivo y Perspectivas", fallbackSum: "Las estrategias de optimización e implementación estructural se han analizado exhaustivamente en las secciones anteriores.", thanks: "GRACIAS", thanksSub: "Por su tiempo y atención", footer: "Propiedad de Reportify AI" }
+    };
+    // 根据嗅探到的语言选择词典，找不到就默认英文
+    const t = i18n[lang] || i18n['en'];
 
     // --- 3. 注册多级母版 ---
     pptx.defineSlideMaster({
@@ -1182,9 +1184,17 @@ function exportToPPT(content, filename, passedTemplate = null, passedSummary = n
         docTitle = cleanFilename.replace(/_/g, ' ').replace(/Report/i, 'Strategic Report').trim();
     }
 
+    // 🟢 智能字号计算：根据标题长度动态缩小字号
+    let titleFontSize = 40;
+    if (docTitle.length > 30) {
+        titleFontSize = 24; // 字数超过30字，缩小为24号
+    } else if (docTitle.length > 15) {
+        titleFontSize = 32; // 字数超过15字，缩小为32号
+    }
+
     cover.addText(docTitle, {
         x: '8%', y: '20%', w: '84%', h: 2, 
-        fontSize: 40, color: 'FFFFFF', bold: true, fontFace: fontTitle 
+        fontSize: titleFontSize, color: 'FFFFFF', bold: true, fontFace: fontTitle 
     });
     cover.addText("CONFIDENTIAL & PROPRIETARY", { 
         x: '8%', y: '50%', w: '84%', fontSize: 13, color: c.accent, letterSpacing: 2, fontFace: fontBody 
@@ -1197,7 +1207,7 @@ function exportToPPT(content, filename, passedTemplate = null, passedSummary = n
     let agendaTitleList = blocks.filter(b => b.title).map(b => b.title).slice(0, 8); 
     if (agendaTitleList.length > 1) {
         let agenda = pptx.addSlide({ masterName: 'CONTENT' });
-        agenda.addText("Agenda Overview", { 
+        agenda.addText(t.agenda, { 
             x: '5%', y: 0.15, w: '90%', h: 0.6, 
             fontSize: 24, color: 'FFFFFF', bold: true, fontFace: fontTitle 
         });
@@ -1269,7 +1279,7 @@ function exportToPPT(content, filename, passedTemplate = null, passedSummary = n
     const summaryText = passedSummary || window.currentEmailSummary || "Detailed structural optimization and implementation strategies have been thoroughly analyzed in the preceding sections.";
     
     let summarySlide = pptx.addSlide({ masterName: 'CONTENT' });
-    summarySlide.addText("Executive Summary & Outlook", { 
+    summarySlide.addText(t.summary, { 
         x: '5%', y: 0.15, w: '90%', h: 0.6, 
         fontSize: 22, color: 'FFFFFF', bold: true, fontFace: fontTitle 
     });
@@ -1282,11 +1292,11 @@ function exportToPPT(content, filename, passedTemplate = null, passedSummary = n
 
     // --- 9. 结尾感谢页 ---
     let endSlide = pptx.addSlide({ masterName: 'TRANSITION' });
-    endSlide.addText("THANK YOU", { 
+    endSlide.addText(t.thanks, { 
         x: '0%', y: '40%', w: '100%', align: 'center', 
         fontSize: 48, color: 'FFFFFF', bold: true, fontFace: fontTitle 
     });
-    endSlide.addText("For your time and attention", { 
+    endSlide.addText(t.thanksSub, { 
         x: '0%', y: '55%', w: '100%', align: 'center', 
         fontSize: 16, color: c.accent, fontFace: fontBody 
     });
