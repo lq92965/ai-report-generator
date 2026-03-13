@@ -475,29 +475,65 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
         if (!user) return res.status(404).json({ error: "User not found" });
 
         const now = new Date();
-        // 🟢 降级保安
-        if (user.plan !== 'free' && user.planExpiresAt && now > new Date(user.planExpiresAt)) {
-            await db.collection('users').updateOne({ _id: user._id }, { $set: { plan: 'free', planExpiresAt: null, usageCount: 0 } });
-            user.plan = 'free';
-            user.usageCount = 0;
+        // 强制转小写并去除空格，防止数据库脏数据
+        let userPlan = (user.plan || 'free').toLowerCase().trim();
+
+        // ==========================================
+        // 🔒 第一道锁：时间限制 (Time Limit Check)
+        // ==========================================
+        let isTimeExpired = false;
+
+        if (userPlan === 'pro' || userPlan === 'basic') {
+            // 付费用户：检查到期时间
+            if (user.planExpiresAt && now > new Date(user.planExpiresAt)) {
+                isTimeExpired = true;
+                // 自动降级为 free
+                await db.collection('users').updateOne({ _id: user._id }, { $set: { plan: 'free', planExpiresAt: null, usageCount: 0 } });
+                userPlan = 'free';
+                user.usageCount = 0;
+            }
         }
 
+        if (userPlan === 'free') {
+            // 免费用户：检查 7 天试用期是否结束
+            const joinDate = new Date(user.createdAt || now);
+            const daysPassed = (now - joinDate) / (1000 * 60 * 60 * 24); // 计算过去的天数
+            if (daysPassed >= 7) {
+                isTimeExpired = true;
+            }
+        }
+
+        // 如果触发了任何时间限制（过期），直接阻断，不看次数！
+        if (isTimeExpired) {
+            return res.status(403).json({ error: "Your plan or trial has expired! Please upgrade to continue." });
+        }
+
+        // ==========================================
+        // 🔒 第二道锁：次数限制 (Count Limit Check)
+        // ==========================================
         let allowGen = false;
-        const isPro = user.plan === 'pro';
+        const isPro = userPlan === 'pro';
         
-        // 🟢 采用全新的总额度判断机制
-        let baseLimit = user.plan === 'free' ? 21 : (user.plan === 'basic' ? 45 : '∞');
-        let finalTotalLimit = baseLimit === '∞' ? '∞' : baseLimit + (user.bonusCredits || 0);
+        // 核心修复：用真实的数字 Infinity 替代容易报错的字符串 '∞'
+        let baseLimit = userPlan === 'free' ? 21 : (userPlan === 'basic' ? 45 : Infinity);
+        let bonus = parseInt(user.bonusCredits) || 0;
+        let finalTotalLimit = baseLimit === Infinity ? Infinity : baseLimit + bonus;
+        let usedCount = parseInt(user.usageCount) || 0;
 
         if (isPro) {
+            // Pro 用户：不限次数，直接放行
             allowGen = true; 
         } else {
-            if ((user.usageCount || 0) < finalTotalLimit) {
+            // Basic/Free 用户：因为时间锁已经通过，这里只检查次数是否用完
+            if (usedCount < finalTotalLimit) {
                 allowGen = true;
             }
         }
 
-        if (!allowGen) return res.status(403).json({ error: "Limit reached! Invite friends to get more credits or upgrade to Pro." });
+        // 如果次数超标，进行阻断
+        if (!allowGen) {
+            return res.status(403).json({ error: "Usage limit reached! Invite friends to get more credits or upgrade to Pro." });
+        }
 
         const { userPrompt, role, templateId, tone, detailLevel, language } = req.body;
 
