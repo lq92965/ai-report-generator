@@ -40,6 +40,25 @@ async function connectDB() {
 }
 connectDB();
 
+// --- 🟢 新增：底层通用站内信发送引擎 ---
+async function sendSystemMessage(email, type, message) {
+    try {
+        await db.collection('feedbacks').insertOne({
+            email: email,
+            name: 'System', // 统一以系统名义发送
+            type: type, // 标题
+            message: 'System Notification', // 用户看到的摘要
+            status: 'replied', // 标记为已回复，这样前端才会显示红色角标
+            reply: message, // 真正的信件正文
+            submittedAt: new Date(),
+            repliedAt: new Date()
+        });
+    } catch (error) {
+        console.error("Failed to send system message:", error);
+    }
+}
+// ----------------------------------------
+
 // 3. CORS Config
 app.use(cors({ 
     origin: true, 
@@ -325,8 +344,17 @@ app.post('/api/register', async (req, res) => {
             registrationIp: clientIp, createdAt: new Date() 
         });
 
+        // 🟢 发送新用户欢迎站内信 (如果是有邀请码来的，追加奖励提示)
+        let welcomeMessage = `Welcome aboard! Your account is successfully created, and your trial access is now active. You can start turning your rough notes into executive-ready Word reports and PPT decks immediately. If you need any help or have suggestions, our support team is just a click away in this Message Center. Let’s boost your productivity!`;
+        
+        if (validReferredBy) {
+            welcomeMessage += `\n\n🎁 Bonus: Because you joined via a referral link, we've instantly credited your account with exclusive bonus credits! Enjoy your upgraded trial!`;
+        }
+        
+        // 调用我们刚写的引擎发信
+        await sendSystemMessage(cleanEmail.toLowerCase(), '🎉 Welcome to Reportify AI!', welcomeMessage);
+
         res.status(201).json({ message: "Success", referralCode: myReferralCode });
-    } catch (e) { 
         console.error(e); res.status(500).json({ message: "Error" }); 
     }
 });
@@ -749,6 +777,13 @@ DO NOT use JSON formatting. You MUST return pure text using EXACTLY these bounda
             await db.collection('users').updateOne({ _id: user._id }, { $inc: { usageCount: 1 } });
         }
 
+        // 🟢 新增：首次生成成功后，发送“防断网/历史记录提示”站内信
+        if (usedCount === 0) {
+            const networkMessage = `Dear user, congratulations on generating your first professional report! \n\nA quick tip: if you ever experience a network fluctuation, accidentally close the page, or feel it's taking too long while a report is generating, don't worry! Our AI engine completes the task safely in the background.\n\nYou can always click on "My Account -> History" to view and securely download your generated Word or PPT files. We never let your credits go to waste!`;
+            
+            await sendSystemMessage(user.email, '📝 Tip: Report Saved & Network Protection', networkMessage);
+        }
+
         // 7. Return to Frontend
         if (isPro) {
             res.json({ generatedText: wordContent, pptOutline: pptOutline, emailSummary: emailSummary });
@@ -982,9 +1017,12 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
             status: 'completed'
         });
 
-        res.json({ success: true, message: "Plan upgraded successfully" });
+        // 🟢 发送升级成功站内信
+        const upgradeMessage = `Thank you for your purchase! Your account has been successfully upgraded. You now have unlocked the full power of the RIE Flagship Engine, including advanced features and priority processing. Dive in and experience the ultimate workflow automation!`;
+        
+        await sendSystemMessage(user.email, '💎 Upgrade Successful: Welcome to Premium!', upgradeMessage);
 
-    } catch (error) {
+        res.json({ success: true, message: "Plan upgraded successfully" });
         console.error("Upgrade Error:", error);
         res.status(500).json({ success: false, message: "Server error during upgrade" });
     }
