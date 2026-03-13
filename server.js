@@ -242,12 +242,25 @@ app.get('/api/auth/google/callback', async (req, res) => {
 // Registration API
 app.post('/api/register', async (req, res) => {
     try {
-        const { displayName, email, password, inviteCode } = req.body;
+        const { displayName, email, password, code, inviteCode } = req.body;
         const clientIp = requestIp.getClientIp(req);
+        const cleanEmail = email.toLowerCase().trim();
 
-        // 🟢 1. 反羊毛党黑名单检查：注销过的邮箱，不能再当新用户！
-        const isBlacklisted = await db.collection('used_trials').findOne({ email: email.toLowerCase().trim() });
-        const startingPlan = isBlacklisted ? 'expired' : 'free'; // 如果注销过，直接打入过期状态，强制付费
+        // 🟢 0. 验证码核对关卡 (The Gatekeeper)
+        if (!code) return res.status(400).json({ message: "Verification code is required." });
+        
+        const codeRecord = await db.collection('signup_codes').findOne({ email: cleanEmail, code: code, used: false });
+        if (!codeRecord) return res.status(400).json({ message: "Invalid or incorrect verification code." });
+        if (new Date() > codeRecord.expiresAt) return res.status(400).json({ message: "Code expired. Please request a new one." });
+
+        // 验证通过，立刻将验证码标记为已使用，防止二次利用
+        await db.collection('signup_codes').updateOne({ _id: codeRecord._id }, { $set: { used: true } });
+
+        // 🟢 1. 反羊毛党黑名单检查 (保留你原有的逻辑)
+        const isBlacklisted = await db.collection('used_trials').findOne({ email: cleanEmail });
+        const startingPlan = isBlacklisted ? 'expired' : 'free'; 
+        
+        // ... (后面原本的 IP检查、密码Hash、存入数据库等逻辑完全保持不变) ...
 
         const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
         const ipCount = await db.collection('users').countDocuments({
@@ -339,6 +352,57 @@ app.post('/api/login', async (req, res) => {
     } catch (e) { 
         console.error("Login Error:", e);
         res.status(500).json({ error: "Internal Server Error" }); 
+    }
+});
+
+// 🟢 NEW: Send Registration Verification Code
+app.post('/api/auth/send-signup-code', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const cleanEmail = email.toLowerCase().trim();
+
+        // 1. 检查邮箱是否已存在
+        const existingUser = await db.collection('users').findOne({ email: cleanEmail });
+        if (existingUser) return res.status(400).json({ message: "Email already registered." });
+
+        // 2. 生成验证码并记录
+        const signupCode = Math.floor(100000 + Math.random() * 900000).toString();
+        const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10分钟有效
+
+        // 存入专门的 signup_codes 集合 (区别于找回密码)
+        await db.collection('signup_codes').updateOne(
+            { email: cleanEmail },
+            { $set: { code: signupCode, expiresAt, used: false } },
+            { upsert: true }
+        );
+
+        // 3. 通过 Resend 发送邮件
+        const { error } = await resend.emails.send({
+            from: 'Reportify AI Welcome <noreply@goreportify.com>', 
+            to: cleanEmail,
+            subject: 'Reportify AI - Your Registration Code',
+            html: `
+                <div style="font-family: Arial, sans-serif; padding: 20px; color: #333; max-w: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 10px;">
+                    <h2 style="color: #2563eb;">Welcome to Reportify AI</h2>
+                    <p>Hello,</p>
+                    <p>Thank you for signing up. Your 6-digit registration verification code is:</p>
+                    <div style="background: #f3f4f6; padding: 15px; text-align: center; border-radius: 8px; margin: 20px 0;">
+                        <h1 style="color: #1f2937; letter-spacing: 8px; margin: 0; font-size: 32px;">${signupCode}</h1>
+                    </div>
+                    <p style="font-size: 14px; color: #666;">⚠️ This code will expire in <strong>10 minutes</strong>.</p>
+                </div>
+            `
+        });
+
+        if (error) {
+            console.error("Resend API Error:", error);
+            return res.status(500).json({ message: "Failed to send email via API." });
+        }
+
+        res.json({ message: "Verification code sent." });
+    } catch (e) {
+        console.error("Send Signup Code Error:", e);
+        res.status(500).json({ message: "Server error." });
     }
 });
 
