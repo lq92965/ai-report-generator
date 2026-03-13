@@ -355,6 +355,7 @@ app.post('/api/register', async (req, res) => {
         await sendSystemMessage(cleanEmail.toLowerCase(), '🎉 Welcome to Reportify AI!', welcomeMessage);
 
         res.status(201).json({ message: "Success", referralCode: myReferralCode });
+    } catch (e) { 
         console.error(e); res.status(500).json({ message: "Error" }); 
     }
 });
@@ -1023,6 +1024,7 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
         await sendSystemMessage(user.email, '💎 Upgrade Successful: Welcome to Premium!', upgradeMessage);
 
         res.json({ success: true, message: "Plan upgraded successfully" });
+    } catch (error) {
         console.error("Upgrade Error:", error);
         res.status(500).json({ success: false, message: "Server error during upgrade" });
     }
