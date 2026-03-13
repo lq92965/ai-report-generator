@@ -971,14 +971,20 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
         console.log(`[Payment] User ${userId} requested upgrade to ${planId}. OrderID: ${paymentId}`);
 
         try {
+            // 🟢 智能沙盒路由：根据环境变量自动决定请求哪个 PayPal 网络
+            const baseUrl = process.env.PAYPAL_MODE === 'sandbox' 
+                ? 'https://api-m.sandbox.paypal.com' 
+                : 'https://api-m.paypal.com';
+
             const auth = Buffer.from(`${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_SECRET}`).toString('base64');
-            const tokenRes = await axios.post(`https://api-m.paypal.com/v1/oauth2/token`, 
+            // 注意下面两行，URL 已经变成了动态变量 ${baseUrl}
+            const tokenRes = await axios.post(`${baseUrl}/v1/oauth2/token`, 
                 'grant_type=client_credentials', 
                 { headers: { 'Authorization': `Basic ${auth}`, 'Content-Type': 'application/x-www-form-urlencoded' } }
             );
             const accessToken = tokenRes.data.access_token;
 
-            const orderRes = await axios.get(`https://api-m.paypal.com/v2/checkout/orders/${paymentId}`, {
+            const orderRes = await axios.get(`${baseUrl}/v2/checkout/orders/${paymentId}`, {
                 headers: { 'Authorization': `Bearer ${accessToken}` }
             });
 
