@@ -161,10 +161,13 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
         let daysLeft = 0;
         const currentPlan = user.plan || 'free';
 
+        let displayPlan = currentPlan; // 新增一个用于前端展示的变量
         if (currentPlan === 'free') {
             const trialDays = 7;
             const daysPassed = Math.floor((now - joinDate) / 86400000);
             daysLeft = Math.max(0, trialDays - daysPassed);
+            // 🟢 视觉优化：如果免费试用超过7天，强制前端显示为红色的 expired
+            if (daysLeft === 0) displayPlan = 'expired';
         } else if (user.planExpiresAt) {
             // 付费版：根据数据库里记录的真实到期时间计算倒计时
             daysLeft = Math.ceil((new Date(user.planExpiresAt) - now) / 86400000);
@@ -180,7 +183,7 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
         let finalRemaining = baseLimit === '∞' ? '∞' : Math.max(0, finalTotalLimit - (user.usageCount || 0));
 
         res.json({
-            plan: currentPlan === 'expired' ? 'EXPIRED' : currentPlan.toUpperCase(),
+            plan: displayPlan === 'expired' ? 'EXPIRED' : displayPlan.toUpperCase(),
             used: user.usageCount || 0,
             limit: finalTotalLimit,
             remaining: finalRemaining,
