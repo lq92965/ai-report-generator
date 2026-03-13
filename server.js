@@ -148,7 +148,8 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
         }
 
         const now = new Date();
-        const joinDate = new Date(user.createdAt || now);
+        // 🟢 核心修复：如果老用户没有 createdAt 字段，直接从 MongoDB 的 ObjectId 底层提取其真实注册时间！
+        const joinDate = user.createdAt ? new Date(user.createdAt) : user._id.getTimestamp();
         const activeDays = Math.ceil(Math.abs(now - joinDate) / (86400000)) || 1;
 
         // 🚨 降级拦截器：如果查到是付费用户，且当前时间已经超过了到期时间，当场降级！
@@ -562,8 +563,8 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
         }
 
         if (userPlan === 'free') {
-            // 免费用户：检查 7 天试用期是否结束
-            const joinDate = new Date(user.createdAt || now);
+            // 免费用户：检查 7 天试用期是否结束 (兼容提取老用户的真实注册时间)
+            const joinDate = user.createdAt ? new Date(user.createdAt) : user._id.getTimestamp();
             const daysPassed = (now - joinDate) / (1000 * 60 * 60 * 24); // 计算过去的天数
             if (daysPassed >= 7) {
                 isTimeExpired = true;
