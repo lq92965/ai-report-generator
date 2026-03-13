@@ -1075,13 +1075,13 @@ function exportToPPT(content, filename, passedTemplate = null, passedSummary = n
     else if (zhMatches.length > 15) {
         lang = 'zh'; fontTitle = 'Microsoft YaHei'; fontBody = 'Microsoft YaHei';
     } 
-    // 3. 判断欧洲语言 (通过各自独有的高频虚词)
+    // 3. 判断欧洲语言 (提高阈值，剔除极易与英文混淆的单字母词如 a, o, e, y)
     else {
         const countWords = (regex) => (rawData.match(regex) || []).length;
-        if (countWords(/\b(der|die|das|und|ist|für)\b/gi) > 3) lang = 'de';
-        else if (countWords(/\b(le|la|les|et|est|dans)\b/gi) > 3) lang = 'fr';
-        else if (countWords(/\b(o|a|os|as|e|é|em|para)\b/gi) > 3) lang = 'pt';
-        else if (countWords(/\b(el|la|los|las|y|es|en)\b/gi) > 3) lang = 'es';
+        if (countWords(/\b(der|die|das|und|ist|für|auf)\b/gi) > 6) lang = 'de';
+        else if (countWords(/\b(les|est|dans|une|pour|avec|sur)\b/gi) > 6) lang = 'fr';
+        else if (countWords(/\b(não|são|uma|com|para|dos|das|sobre)\b/gi) > 6) lang = 'pt';
+        else if (countWords(/\b(los|las|por|con|una|del|para|como)\b/gi) > 6) lang = 'es';
     }
 
     // 准备全语种精准翻译字典
