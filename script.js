@@ -357,23 +357,80 @@ function setupAuthUI() {
         };
     }
 
-    // 4. 注册按钮直接绑定
+    // 4. 注册按钮直接绑定 & 发送验证码逻辑
     const signupBtn = document.querySelector('#signup-form button[type="submit"]') || document.querySelector('#btn-signup-submit');
-    if (signupBtn) {
+    const sendCodeBtn = document.getElementById('btn-send-signup-code');
+
+    if (signupBtn && sendCodeBtn) {
         setupStrictValidation(); 
 
+        // 🟢 A. 发送注册验证码逻辑
+        sendCodeBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const emailInput = document.getElementById('signup-email');
+            const email = emailInput.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailRegex.test(email)) {
+                showToast("Please enter a valid email address first.", "warning");
+                return;
+            }
+
+            // 倒计时逻辑
+            sendCodeBtn.disabled = true;
+            let timeLeft = 60;
+            const originalText = sendCodeBtn.innerText;
+            
+            const timer = setInterval(() => {
+                timeLeft--;
+                sendCodeBtn.innerText = `${timeLeft}s`;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    sendCodeBtn.innerText = "Resend";
+                    sendCodeBtn.disabled = false;
+                }
+            }, 1000);
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/auth/send-signup-code`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email }),
+                });
+                const data = await res.json();
+                
+                if (res.ok) {
+                    showToast("Verification code sent! Please check your inbox.", "success");
+                } else {
+                    throw new Error(data.message || "Failed to send code");
+                }
+            } catch (err) {
+                showToast(err.message, "error");
+                clearInterval(timer);
+                sendCodeBtn.innerText = "Send Code";
+                sendCodeBtn.disabled = false;
+            }
+        });
+
+        // 🟢 B. 最终提交注册逻辑 (携带 Code)
         signupBtn.onclick = async (e) => {
             e.preventDefault();
             e.stopImmediatePropagation();
             
             if (!validateAllFields()) {
-                showToast("请检查表单填写是否符合要求", "error");
+                showToast("Please fix the errors in the form.", "error");
                 return;
             }
 
-            const name = document.getElementById('signup-name').value;
-            const email = document.getElementById('signup-email').value;
+            const name = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
             const password = document.getElementById('signup-password').value;
+            const code = document.getElementById('signup-code').value.trim(); // 获取验证码
+
+            if (!code || code.length !== 6) {
+                showToast("Please enter the 6-digit verification code.", "warning");
+                return;
+            }
 
             const originalText = signupBtn.textContent;
             signupBtn.disabled = true;
@@ -384,16 +441,19 @@ function setupAuthUI() {
                 const res = await fetch(`${API_BASE_URL}/api/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ displayName: name, email, password, inviteCode: storedInvite }),
+                    body: JSON.stringify({ displayName: name, email, password, code, inviteCode: storedInvite }),
                 });
                 const data = await res.json();
+                
                 if (!res.ok) throw new Error(data.message || 'Registration failed');
 
                 if (res.ok) localStorage.removeItem('inviteCode');
-                showToast('账号创建成功！请直接登录。', 'success');
+                showToast('Account created successfully! Please log in.', 'success');
                 window.openModal('login');
                 const signupForm = document.getElementById('signup-form');
                 if(signupForm) signupForm.reset();
+                sendCodeBtn.innerText = "Send Code"; // 重置发送按钮
+                sendCodeBtn.disabled = false;
             } catch (err) {
                 showToast(err.message, "error");
             } finally {
