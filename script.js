@@ -1549,11 +1549,16 @@ function setupPayment() {
                         paymentModal.style.display = 'none';
                         // 调用后端升级接口
                         try {
-                            await fetch(`${API_BASE_URL}/api/upgrade-plan`, {
+                            const res = await fetch(`${API_BASE_URL}/api/upgrade-plan`, {
                                 method: 'POST', 
                                 headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
-                                body: JSON.stringify({ plan: planType })
+                                // 🟢 核心修复：对齐后端的变量名，并把 PayPal 返回的真实订单号传给后端验证
+                                body: JSON.stringify({ planId: planType, paymentId: data.orderID })
                             });
+                            
+                            const resultData = await res.json();
+                            if (!res.ok) throw new Error(resultData.message || "Upgrade failed");
+
                             showToast('Upgraded Successfully!', 'success');
                             setTimeout(() => window.location.reload(), 1500);
                         } catch(err) {
