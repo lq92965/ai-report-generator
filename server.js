@@ -993,6 +993,8 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
             }
         } catch (verifyErr) {
             console.error("PayPal Verify Error (Check .env keys):", verifyErr.message);
+            // 🟢 核心修复：如果 PayPal 验证报错，必须 return 阻断，绝对不能让代码继续往下走去升级数据库！
+            return res.status(400).json({ success: false, message: "Payment verification failed" });
         }
 
         const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
