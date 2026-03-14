@@ -965,10 +965,17 @@ app.delete('/api/history/:id', authenticateToken, async (req, res) => {
 // Upgrade Plan
 app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
     try {
-        const { planId, paymentId } = req.body; 
+        // 🟢 修复1：兼容旧缓存发来的 'plan' 和新代码发来的 'planId'
+        const actualPlanId = req.body.planId || req.body.plan; 
+        const paymentId = req.body.paymentId; 
         const userId = req.user.userId;
 
-        console.log(`[Payment] User ${userId} requested upgrade to ${planId}. OrderID: ${paymentId}`);
+        // 🟢 修复2：如果参数完全丢失，直接拦截并要求用户强制刷新，防止下方代码崩溃
+        if (!actualPlanId || !paymentId) {
+            return res.status(400).json({ success: false, message: "Missing payment info. Please hard refresh (Ctrl+F5) and try again." });
+        }
+
+        console.log(`[Payment] User ${userId} requested upgrade to ${actualPlanId}. OrderID: ${paymentId}`);
 
         try {
             // 🟢 智能沙盒路由：根据环境变量自动决定请求哪个 PayPal 网络
@@ -1000,13 +1007,13 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
         const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
         if (!user) return res.status(404).json({ success: false, message: "User not found" });
 
-        if (user.plan === 'pro' && planId === 'basic') {
+        if (user.plan === 'pro' && actualPlanId === 'basic') {
             return res.status(400).json({ success: false, message: "您当前是 Pro 专业版，享有最高权益。若需更换为 Basic 计划，请在当前 Pro 计划到期后再操作。" });
         }
 
         const expiryDate = new Date();
-        const addDays = planId.includes('annual') ? 365 : 30; 
-        const realPlanId = planId.replace('_annual', ''); 
+        const addDays = actualPlanId.includes('annual') ? 365 : 30; 
+        const realPlanId = actualPlanId.replace('_annual', '');
 
         expiryDate.setDate(expiryDate.getDate() + addDays); 
         
@@ -1019,9 +1026,9 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
 
         await db.collection('payments').insertOne({
             userId: new ObjectId(userId),
-            planId,
-            paymentId, 
-            amount: planId === 'pro' ? 19.90 : 9.90,
+            planId: actualPlanId,
+            paymentId: paymentId, 
+            amount: actualPlanId === 'pro' ? 19.90 : 9.90,
             date: new Date(),
             status: 'completed'
         });
