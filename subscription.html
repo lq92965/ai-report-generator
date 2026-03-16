@@ -73,7 +73,7 @@
                             <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> <strong>Automate</strong> Daily/Weekly Reports</li>
                         </ul>
                     </div>
-                    <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-blue-600 text-white hover:bg-blue-700 shadow-md subscribe-btn text-sm mt-4 flex justify-center items-center" data-plan="free">Start Elite Experience</button>
+                    <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-blue-600 text-white hover:bg-blue-700 shadow-md choose-plan-btn text-sm mt-4 flex justify-center items-center" data-plan="free">Start Elite Experience</button>
                 </div>
 
                 <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer hover:shadow-lg relative flex flex-col justify-between" data-plan="basic">
@@ -88,8 +88,8 @@
                         </ul>
                     </div>
                     <div class="flex flex-col gap-3 mt-4">
-                        <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-blue-600 text-white hover:bg-blue-700 shadow-md subscribe-btn text-sm flex justify-center items-center" data-plan="basic" data-cycle="monthly">Pay Monthly ($9.90)</button>
-                        <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-blue-600 text-white hover:bg-blue-700 shadow-md subscribe-btn text-sm flex justify-center items-center" data-plan="basic" data-cycle="yearly">Pay Annually ($99) <span class="bg-yellow-400 text-yellow-900 px-2 py-0.5 rounded-full ml-2 text-xs font-black">Save 16%</span></button>
+                        <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-white text-blue-600 border border-blue-200 hover:bg-gray-50 shadow-sm choose-plan-btn text-sm flex justify-center items-center" data-plan="basic" onclick="window.isYearlyBilling = false">Pay Monthly ($9.90)</button>
+                        <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-blue-600 text-white hover:bg-blue-700 shadow-md choose-plan-btn text-sm flex justify-center items-center" data-plan="basic" onclick="window.isYearlyBilling = true">Pay Annually ($99) <span class="bg-yellow-400 text-yellow-900 px-2 py-0.5 rounded-full ml-2 text-xs font-black">Save 16%</span></button>
                     </div>
                 </div>
 
@@ -106,8 +106,8 @@
                         </ul>
                     </div>
                     <div class="flex flex-col gap-3 mt-4">
-                        <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-blue-600 text-white hover:bg-blue-700 shadow-md subscribe-btn text-sm flex justify-center items-center" data-plan="pro" data-cycle="monthly">Pay Monthly ($19.90)</button>
-                        <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-blue-600 text-white hover:bg-blue-700 shadow-md subscribe-btn text-sm flex justify-center items-center" data-plan="pro" data-cycle="yearly">Pay Annually ($199) <span class="bg-yellow-400 text-yellow-900 px-2 py-0.5 rounded-full ml-2 text-xs font-black">Save 16%</span></button>
+                        <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-white text-blue-600 border border-blue-200 hover:bg-gray-50 shadow-sm choose-plan-btn text-sm flex justify-center items-center" data-plan="pro" onclick="window.isYearlyBilling = false">Pay Monthly ($19.90)</button>
+                        <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-blue-600 text-white hover:bg-blue-700 shadow-md choose-plan-btn text-sm flex justify-center items-center" data-plan="pro" onclick="window.isYearlyBilling = true">Pay Annually ($199) <span class="bg-yellow-400 text-yellow-900 px-2 py-0.5 rounded-full ml-2 text-xs font-black">Save 16%</span></button>
                     </div>
                 </div>
 
@@ -119,20 +119,19 @@
         <p><i class="fab fa-paypal"></i> Secure one-time payment via PayPal. No automatic renewals.</p>
     </div>
 
-    <div id="subscribe-modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+    <div id="payment-modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
         <div style="background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 450px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
-            <span id="close-subscribe-btn" style="position: absolute; top: 10px; right: 15px; font-size: 28px; cursor: pointer; color: #666;">&times;</span>
+            <span id="close-payment-btn" style="position: absolute; top: 10px; right: 15px; font-size: 28px; cursor: pointer; color: #666;">&times;</span>
             
             <h3 style="text-align: center; margin-bottom: 5px; color: #333;">Complete Your Purchase</h3>
-            <p id="subscribe-plan-name" style="text-align: center; color: #007bff; font-weight: bold; margin-bottom: 25px; font-size: 1.1rem;">Plan Name</p>
+            <p id="payment-plan-name" style="text-align: center; color: #007bff; font-weight: bold; margin-bottom: 25px; font-size: 1.1rem;">Plan Name</p>
             
-            <div id="smart-paypal-container"></div>
+            <div id="paypal-button-container"></div>
         </div>
     </div>
 
     <script src="nav.js"></script>
-    <script src="script.js?v=13.0"></script> 
-    <script src="paypal-subscription.js?v=3.0"></script> 
+    <script src="script.js?v=2026.1"></script> 
 
 </body>
 </html>
