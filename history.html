@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>History - Reportify AI</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2026.2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body style="background-color: #f8fafc;">
@@ -72,15 +72,15 @@
             
             <div style="padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; background: #f9fafb;">
                 <h3 id="modal-title" style="margin: 0; font-size: 1.2rem; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Report Details</h3>
-                <button onclick="closeViewModal()" style="background: none; border: none; font-size: 24px; color: #999; cursor: pointer; padding: 0 10px;">&times;</button>
+                <button type="button" onclick="closeViewModal()" style="background: none; border: none; font-size: 24px; color: #999; cursor: pointer; padding: 0 10px;">&times;</button>
             </div>
 
             <div id="modal-body" style="padding: 30px; overflow-y: auto; line-height: 1.8; color: #374151; font-size: 15px;">
                 </div>
 
             <div style="padding: 15px 20px; border-top: 1px solid #eee; text-align: right; background: white;">
-                <button onclick="closeViewModal()" style="padding: 8px 20px; background: #f3f4f6; color: #555; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; margin-right: 10px;">Close</button>
-                <button id="modal-copy-btn" style="padding: 8px 20px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer;">Copy Text</button>
+                <button type="button" onclick="closeViewModal()" style="padding: 8px 20px; background: #f3f4f6; color: #555; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; margin-right: 10px;">Close</button>
+                <button type="button" id="modal-copy-btn" style="padding: 8px 20px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer;">Copy Text</button>
             </div>
         </div>
     </div>
@@ -93,6 +93,7 @@
         #modal-body p { margin-bottom: 1em; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
-    <script src="script.js?v=20260306_V9"></script>
+    
+    <script src="script.js?v=2026.2"></script>
 </body>
 </html>
