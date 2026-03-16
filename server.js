@@ -625,8 +625,26 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
         };
 
         const formatInstructions = isPro 
-            ? `[OUTPUT FORMAT REQUIREMENTS]\nDO NOT use JSON formatting. You MUST return pure text using EXACTLY these boundaries. Do not add markdown code blocks around them:\n\n===WORD_CONTENT_START===\n[Insert full, deeply expanded markdown report here based on the instructions]\n===WORD_CONTENT_END===\n\n===PPT_OUTLINE_START===\n[Extract a 5-8 slides PPT outline from the report. Use Markdown format with Slide titles and bullet points]\n===PPT_OUTLINE_END===\n\n===EMAIL_SUMMARY_START===\n[Extract a 3-5 lines executive email summary]\n===EMAIL_SUMMARY_END===`
-            : `[OUTPUT FORMAT REQUIREMENTS]\nDO NOT use JSON formatting. You MUST return pure text using EXACTLY these boundaries. Do not add markdown code blocks around them:\n\n===WORD_CONTENT_START===\n[Insert full, deeply expanded markdown report here based on the instructions]\n===WORD_CONTENT_END===`;
+            ? `[OUTPUT FORMAT REQUIREMENTS]
+DO NOT use JSON formatting. You MUST return pure text using EXACTLY these boundaries. Do not add markdown code blocks around them:
+
+===WORD_CONTENT_START===
+[Insert full, deeply expanded markdown report here based on the instructions]
+===WORD_CONTENT_END===
+
+===PPT_OUTLINE_START===
+[Extract a 5-8 slides PPT outline from the report. Use Markdown format with Slide titles and bullet points]
+===PPT_OUTLINE_END===
+
+===EMAIL_SUMMARY_START===
+[Extract a 3-5 lines executive summary. CRITICAL: This must be PURELY OBJECTIVE conclusions and strategic outlook. DO NOT include ANY letter salutations or sign-offs (e.g., NO "Dear Team", NO "尊敬的领导", NO "Best regards"). Just the core insights.]
+===EMAIL_SUMMARY_END===`
+            : `[OUTPUT FORMAT REQUIREMENTS]
+DO NOT use JSON formatting. You MUST return pure text using EXACTLY these boundaries. Do not add markdown code blocks around them:
+
+===WORD_CONTENT_START===
+[Insert full, deeply expanded markdown report here based on the instructions]
+===WORD_CONTENT_END===`;
 
         let finalSystemInstructions = `You are RIE (Reportify Intelligence Engine) 3.0 Flagship Edition - the world's top workplace report generation brain.
         Your task is to take the user's extremely brief, fragmented prompts and [Deeply Expand] them into a highly professional document through strong logical reasoning and workplace experience.
