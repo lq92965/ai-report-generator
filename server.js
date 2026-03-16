@@ -40,16 +40,16 @@ async function connectDB() {
 }
 connectDB();
 
-// --- 🟢 新增：底层通用站内信发送引擎 ---
+// --- 底层通用站内信发送引擎 ---
 async function sendSystemMessage(email, type, message) {
     try {
         await db.collection('feedbacks').insertOne({
             email: email,
-            name: 'System', // 统一以系统名义发送
-            type: type, // 标题
-            message: 'System Notification', // 用户看到的摘要
-            status: 'replied', // 标记为已回复，这样前端才会显示红色角标
-            reply: message, // 真正的信件正文
+            name: 'System', 
+            type: type, 
+            message: 'System Notification', 
+            status: 'replied', 
+            reply: message, 
             submittedAt: new Date(),
             repliedAt: new Date()
         });
@@ -115,22 +115,15 @@ app.get('/', (req, res) => res.send('Backend Online'));
 // Templates API
 app.get('/api/templates', async (req, res) => {
     const templates = [
-        // === Routine ===
         { _id: 'daily_standup', title: 'Daily Standup ', category: 'Routine', isPro: false },
         { _id: 'weekly_pulse', title: 'Weekly Pulse ', category: 'Routine', isPro: false },
         { _id: 'monthly_review', title: 'Monthly Review ', category: 'Routine', isPro: true },
-        
-        // === Strategic ===
         { _id: 'quarterly_report', title: 'Quarterly Analysis ', category: 'Strategic', isPro: true },
         { _id: 'annual_summary', title: 'Annual Report', category: 'Strategic', isPro: true },
         { _id: 'project_proposal', title: 'Project Proposal ', category: 'Strategic', isPro: true },
-        
-        // === Professional ===
         { _id: 'meeting_minutes', title: 'Meeting Minutes ', category: 'Professional', isPro: false },
         { _id: 'research_summary', title: 'Research Summary ', category: 'Professional', isPro: true },
         { _id: 'incident_report', title: 'Incident Report ', category: 'Professional', isPro: true },
-
-        // === Marketing ===
         { _id: 'marketing_copy', title: 'Marketing Copy ', category: 'Marketing', isPro: true },
         { _id: 'social_media', title: 'Social Media Post ', category: 'Marketing', isPro: false }
     ];
@@ -144,7 +137,7 @@ app.get('/auth/google', (req, res) => {
     res.redirect(url);
 });
 
-// Usage Stats API (🟢 FIXED: 彻底清理了变量冲突)
+// Usage Stats API
 app.get('/api/usage', authenticateToken, async (req, res) => {
     try {
         if (!req.user || !req.user.userId) return res.status(401).json({ message: "Invalid Token" });
@@ -167,37 +160,31 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
         }
 
         const now = new Date();
-        // 🟢 核心修复：如果老用户没有 createdAt 字段，直接从 MongoDB 的 ObjectId 底层提取其真实注册时间！
         const joinDate = user.createdAt ? new Date(user.createdAt) : user._id.getTimestamp();
         const activeDays = Math.ceil(Math.abs(now - joinDate) / (86400000)) || 1;
 
-        // 🚨 降级拦截器：如果查到是付费用户，且当前时间已经超过了到期时间，当场降级！
         if (user.plan !== 'free' && user.planExpiresAt && now > new Date(user.planExpiresAt)) {
             await db.collection('users').updateOne({ _id: user._id }, { $set: { plan: 'free', planExpiresAt: null, usageCount: 0 } });
-            user.plan = 'free'; // 内存里也同步降级
+            user.plan = 'free'; 
             user.usageCount = 0;
         }
 
         let daysLeft = 0;
         const currentPlan = user.plan || 'free';
 
-        let displayPlan = currentPlan; // 新增一个用于前端展示的变量
+        let displayPlan = currentPlan; 
         if (currentPlan === 'free') {
             const trialDays = 7;
             const daysPassed = Math.floor((now - joinDate) / 86400000);
             daysLeft = Math.max(0, trialDays - daysPassed);
-            // 🟢 视觉优化：如果免费试用超过7天，强制前端显示为红色的 expired
             if (daysLeft === 0) displayPlan = 'expired';
         } else if (user.planExpiresAt) {
-            // 付费版：根据数据库里记录的真实到期时间计算倒计时
             daysLeft = Math.ceil((new Date(user.planExpiresAt) - now) / 86400000);
             daysLeft = Math.max(0, daysLeft);
         } else {
-            // 兜底方案：针对以前没有记录时间的老付费账号，默认显示 30 天
             daysLeft = 30;
         }
 
-        // 🟢 精准计算合并额度 (使用 final 变量避免冲突)
         let baseLimit = currentPlan === 'free' ? 21 : (currentPlan === 'basic' ? 45 : '∞');
         let finalTotalLimit = baseLimit === '∞' ? '∞' : baseLimit + (user.bonusCredits || 0);
         let finalRemaining = baseLimit === '∞' ? '∞' : Math.max(0, finalTotalLimit - (user.usageCount || 0));
@@ -238,7 +225,6 @@ app.get('/api/auth/google/callback', async (req, res) => {
         
         let user = await db.collection('users').findOne({ email: cleanEmail });
         if (!user) {
-            // 🟢 同步检查 Google 用户是否在黑名单中
             const isBlacklisted = await db.collection('used_trials').findOne({ email: cleanEmail });
             const startingPlan = isBlacklisted ? 'expired' : 'free';
 
@@ -266,22 +252,17 @@ app.post('/api/register', async (req, res) => {
         const clientIp = requestIp.getClientIp(req);
         const cleanEmail = email.toLowerCase().trim();
 
-        // 🟢 0. 验证码核对关卡 (The Gatekeeper)
         if (!code) return res.status(400).json({ message: "Verification code is required." });
         
         const codeRecord = await db.collection('signup_codes').findOne({ email: cleanEmail, code: code, used: false });
         if (!codeRecord) return res.status(400).json({ message: "Invalid or incorrect verification code." });
         if (new Date() > codeRecord.expiresAt) return res.status(400).json({ message: "Code expired. Please request a new one." });
 
-        // 验证通过，立刻将验证码标记为已使用，防止二次利用
         await db.collection('signup_codes').updateOne({ _id: codeRecord._id }, { $set: { used: true } });
 
-        // 🟢 1. 反羊毛党黑名单检查 (保留你原有的逻辑)
         const isBlacklisted = await db.collection('used_trials').findOne({ email: cleanEmail });
         const startingPlan = isBlacklisted ? 'expired' : 'free'; 
         
-        // ... (后面原本的 IP检查、密码Hash、存入数据库等逻辑完全保持不变) ...
-
         const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
         const ipCount = await db.collection('users').countDocuments({
             registrationIp: clientIp,
@@ -300,7 +281,6 @@ app.post('/api/register', async (req, res) => {
         let initialBonus = 0;
         let validReferredBy = null;
 
-        // 🟢 2. 邀请发奖与自动站内信
         if (inviteCode) {
             const referrer = await db.collection('users').findOne({ referralCode: inviteCode });
             if (referrer && referrer.registrationIp !== clientIp) {
@@ -321,7 +301,6 @@ app.post('/api/register', async (req, res) => {
                         adminMessage = `Awesome! Someone joined using your invite link. We've added +5 Free Reports to your account!`;
                     }
 
-                    // 📨 给邀请人发站内信
                     await db.collection('feedbacks').insertOne({
                         email: referrer.email,
                         name: 'System',
@@ -338,20 +317,18 @@ app.post('/api/register', async (req, res) => {
 
         await db.collection('users').insertOne({ 
             name: displayName, email: email.toLowerCase().trim(), password: hashedPassword, 
-            plan: startingPlan, // 应用黑名单判定结果
+            plan: startingPlan, 
             role: 'user', usageCount: 0, bonusCredits: initialBonus, 
             referralCode: myReferralCode, referredBy: validReferredBy,
             registrationIp: clientIp, createdAt: new Date() 
         });
 
-        // 🟢 发送新用户欢迎站内信 (如果是有邀请码来的，追加奖励提示)
         let welcomeMessage = `Welcome aboard! Your account is successfully created, and your trial access is now active. You can start turning your rough notes into executive-ready Word reports and PPT decks immediately. If you need any help or have suggestions, our support team is just a click away in this Message Center. Let’s boost your productivity!`;
         
         if (validReferredBy) {
             welcomeMessage += `\n\n🎁 Bonus: Because you joined via a referral link, we've instantly credited your account with exclusive bonus credits! Enjoy your upgraded trial!`;
         }
         
-        // 调用我们刚写的引擎发信
         await sendSystemMessage(cleanEmail.toLowerCase(), '🎉 Welcome to Reportify AI!', welcomeMessage);
 
         res.status(201).json({ message: "Success", referralCode: myReferralCode });
@@ -385,28 +362,24 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-// 🟢 NEW: Send Registration Verification Code
+// Send Registration Verification Code
 app.post('/api/auth/send-signup-code', async (req, res) => {
     try {
         const { email } = req.body;
         const cleanEmail = email.toLowerCase().trim();
 
-        // 1. 检查邮箱是否已存在
         const existingUser = await db.collection('users').findOne({ email: cleanEmail });
         if (existingUser) return res.status(400).json({ message: "Email already registered." });
 
-        // 2. 生成验证码并记录
         const signupCode = Math.floor(100000 + Math.random() * 900000).toString();
-        const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10分钟有效
+        const expiresAt = new Date(Date.now() + 10 * 60 * 1000); 
 
-        // 存入专门的 signup_codes 集合 (区别于找回密码)
         await db.collection('signup_codes').updateOne(
             { email: cleanEmail },
             { $set: { code: signupCode, expiresAt, used: false } },
             { upsert: true }
         );
 
-        // 3. 通过 Resend 发送邮件
         const { error } = await resend.emails.send({
             from: 'Reportify AI Welcome <noreply@goreportify.com>', 
             to: cleanEmail,
@@ -563,28 +536,20 @@ app.post('/api/update-profile', authenticateToken, async (req, res) => {
 // --- AI Generation Engine ---
 const genAI = new GoogleGenerativeAI(API_KEY);
 
-// ==========================================
-// 🟢 [REBUILT] Delimiter-based Engine + Extreme Expansion Prompts (FIXED)
-// ==========================================
 app.post('/api/generate', authenticateToken, async (req, res) => {
     try {
         const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
         if (!user) return res.status(404).json({ error: "User not found" });
 
         const now = new Date();
-        // 强制转小写并去除空格，防止数据库脏数据
         let userPlan = (user.plan || 'free').toLowerCase().trim();
 
-        // ==========================================
-        // 🔒 第一道锁：时间限制 (Time Limit Check)
-        // ==========================================
+        // Time Limit Check
         let isTimeExpired = false;
 
         if (userPlan === 'pro' || userPlan === 'basic') {
-            // 付费用户：检查到期时间
             if (user.planExpiresAt && now > new Date(user.planExpiresAt)) {
                 isTimeExpired = true;
-                // 自动降级为 free
                 await db.collection('users').updateOne({ _id: user._id }, { $set: { plan: 'free', planExpiresAt: null, usageCount: 0 } });
                 userPlan = 'free';
                 user.usageCount = 0;
@@ -592,42 +557,34 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
         }
 
         if (userPlan === 'free') {
-            // 免费用户：检查 7 天试用期是否结束 (兼容提取老用户的真实注册时间)
             const joinDate = user.createdAt ? new Date(user.createdAt) : user._id.getTimestamp();
-            const daysPassed = (now - joinDate) / (1000 * 60 * 60 * 24); // 计算过去的天数
+            const daysPassed = (now - joinDate) / (1000 * 60 * 60 * 24); 
             if (daysPassed >= 7) {
                 isTimeExpired = true;
             }
         }
 
-        // 如果触发了任何时间限制（过期），直接阻断，不看次数！
         if (isTimeExpired) {
             return res.status(403).json({ error: "Your plan or trial has expired! Please upgrade to continue." });
         }
 
-        // ==========================================
-        // 🔒 第二道锁：次数限制 (Count Limit Check)
-        // ==========================================
+        // Count Limit Check
         let allowGen = false;
         const isPro = userPlan === 'pro';
         
-        // 核心修复：用真实的数字 Infinity 替代容易报错的字符串 '∞'
         let baseLimit = userPlan === 'free' ? 21 : (userPlan === 'basic' ? 45 : Infinity);
         let bonus = parseInt(user.bonusCredits) || 0;
         let finalTotalLimit = baseLimit === Infinity ? Infinity : baseLimit + bonus;
         let usedCount = parseInt(user.usageCount) || 0;
 
         if (isPro) {
-            // Pro 用户：不限次数，直接放行
             allowGen = true; 
         } else {
-            // Basic/Free 用户：因为时间锁已经通过，这里只检查次数是否用完
             if (usedCount < finalTotalLimit) {
                 allowGen = true;
             }
         }
 
-        // 如果次数超标，进行阻断
         if (!allowGen) {
             return res.status(403).json({ error: "Usage limit reached! Invite friends to get more credits or upgrade to Pro." });
         }
@@ -668,26 +625,8 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
         };
 
         const formatInstructions = isPro 
-            ? `[OUTPUT FORMAT REQUIREMENTS]
-DO NOT use JSON formatting. You MUST return pure text using EXACTLY these boundaries. Do not add markdown code blocks around them:
-
-===WORD_CONTENT_START===
-[Insert full, deeply expanded markdown report here based on the instructions]
-===WORD_CONTENT_END===
-
-===PPT_OUTLINE_START===
-[Extract a 5-8 slides PPT outline from the report. Use Markdown format with Slide titles and bullet points]
-===PPT_OUTLINE_END===
-
-===EMAIL_SUMMARY_START===
-[Extract a 3-5 lines executive email summary]
-===EMAIL_SUMMARY_END===`
-            : `[OUTPUT FORMAT REQUIREMENTS]
-DO NOT use JSON formatting. You MUST return pure text using EXACTLY these boundaries. Do not add markdown code blocks around them:
-
-===WORD_CONTENT_START===
-[Insert full, deeply expanded markdown report here based on the instructions]
-===WORD_CONTENT_END===`;
+            ? `[OUTPUT FORMAT REQUIREMENTS]\nDO NOT use JSON formatting. You MUST return pure text using EXACTLY these boundaries. Do not add markdown code blocks around them:\n\n===WORD_CONTENT_START===\n[Insert full, deeply expanded markdown report here based on the instructions]\n===WORD_CONTENT_END===\n\n===PPT_OUTLINE_START===\n[Extract a 5-8 slides PPT outline from the report. Use Markdown format with Slide titles and bullet points]\n===PPT_OUTLINE_END===\n\n===EMAIL_SUMMARY_START===\n[Extract a 3-5 lines executive email summary]\n===EMAIL_SUMMARY_END===`
+            : `[OUTPUT FORMAT REQUIREMENTS]\nDO NOT use JSON formatting. You MUST return pure text using EXACTLY these boundaries. Do not add markdown code blocks around them:\n\n===WORD_CONTENT_START===\n[Insert full, deeply expanded markdown report here based on the instructions]\n===WORD_CONTENT_END===`;
 
         let finalSystemInstructions = `You are RIE (Reportify Intelligence Engine) 3.0 Flagship Edition - the world's top workplace report generation brain.
         Your task is to take the user's extremely brief, fragmented prompts and [Deeply Expand] them into a highly professional document through strong logical reasoning and workplace experience.
@@ -710,7 +649,7 @@ DO NOT use JSON formatting. You MUST return pure text using EXACTLY these bounda
         let rawText = "";
 
         const primaryModelName = "gemini-3-flash-preview"; 
-        const backupModelName = "gemini-2.5-pro"; // 🟢 根据要求修改为 gemini-2.5-pro
+        const backupModelName = "gemini-2.5-pro";
 
         try {
             console.log(`🤖 Trying Primary Model: ${primaryModelName}`);
@@ -763,7 +702,6 @@ DO NOT use JSON formatting. You MUST return pure text using EXACTLY these bounda
             emailSummary = extractSection(rawText, "EMAIL_SUMMARY");
         }
 
-        // 5. Save to DB
         await db.collection('reports').insertOne({ 
             userId: req.user.userId, 
             title: "Generated Report", 
@@ -773,19 +711,16 @@ DO NOT use JSON formatting. You MUST return pure text using EXACTLY these bounda
             createdAt: new Date() 
         });
 
-        // 6. 🟢 统一扣减总额度 (不再区分 main 和 bonus，非 Pro 统一扣次)
         if (!isPro) {
             await db.collection('users').updateOne({ _id: user._id }, { $inc: { usageCount: 1 } });
         }
 
-        // 🟢 新增：首次生成成功后，发送“防断网/历史记录提示”站内信
         if (usedCount === 0) {
             const networkMessage = `Dear user, congratulations on generating your first professional report! \n\nA quick tip: if you ever experience a network fluctuation, accidentally close the page, or feel it's taking too long while a report is generating, don't worry! Our AI engine completes the task safely in the background.\n\nYou can always click on "My Account -> History" to view and securely download your generated Word or PPT files. We never let your credits go to waste!`;
             
             await sendSystemMessage(user.email, '📝 Tip: Report Saved & Network Protection', networkMessage);
         }
 
-        // 7. Return to Frontend
         if (isPro) {
             res.json({ generatedText: wordContent, pptOutline: pptOutline, emailSummary: emailSummary });
         } else {
@@ -874,17 +809,17 @@ app.post('/api/admin/reply', authenticateToken, async (req, res) => {
             }
         );
 
+        // 🟢 [AUDIT FIX] 修复1：使用真实的 Resend 引擎替换不存在的 transporter，确保邮件能发出去！
         try {
-            if (typeof transporter !== 'undefined') {
-                await transporter.sendMail({
-                    from: '"Reportify Support" <no-reply@goreportify.com>',
-                    to: feedback.email,
-                    subject: 'New Reply from Reportify AI',
-                    text: `Hello ${feedback.name},\n\nAdmin has replied:\n\n"${replyContent}"\n\nLogin to view full history.\n\nBest,\nReportify Team`
-                });
-            }
+            await resend.emails.send({
+                from: 'Reportify Support <noreply@goreportify.com>',
+                to: feedback.email,
+                subject: 'New Reply from Reportify AI',
+                text: `Hello ${feedback.name},\n\nAdmin has replied:\n\n"${replyContent}"\n\nLogin to view full history in your Message Center.\n\nBest,\nReportify Team`
+            });
+            console.log(`[Admin Reply] Email sent successfully to ${feedback.email}`);
         } catch (emailErr) {
-            console.error("Email sending skipped:", emailErr.message);
+            console.error("Email sending skipped/failed:", emailErr.message);
         }
 
         res.json({ message: "Reply sent successfully" });
@@ -965,12 +900,10 @@ app.delete('/api/history/:id', authenticateToken, async (req, res) => {
 // Upgrade Plan
 app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
     try {
-        // 🟢 修复1：兼容旧缓存发来的 'plan' 和新代码发来的 'planId'
         const actualPlanId = req.body.planId || req.body.plan; 
         const paymentId = req.body.paymentId; 
         const userId = req.user.userId;
 
-        // 🟢 修复2：如果参数完全丢失，直接拦截并要求用户强制刷新，防止下方代码崩溃
         if (!actualPlanId || !paymentId) {
             return res.status(400).json({ success: false, message: "Missing payment info. Please hard refresh (Ctrl+F5) and try again." });
         }
@@ -978,13 +911,11 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
         console.log(`[Payment] User ${userId} requested upgrade to ${actualPlanId}. OrderID: ${paymentId}`);
 
         try {
-            // 🟢 智能沙盒路由：根据环境变量自动决定请求哪个 PayPal 网络
             const baseUrl = process.env.PAYPAL_MODE === 'sandbox' 
                 ? 'https://api-m.sandbox.paypal.com' 
                 : 'https://api-m.paypal.com';
 
             const auth = Buffer.from(`${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_SECRET}`).toString('base64');
-            // 注意下面两行，URL 已经变成了动态变量 ${baseUrl}
             const tokenRes = await axios.post(`${baseUrl}/v1/oauth2/token`, 
                 'grant_type=client_credentials', 
                 { headers: { 'Authorization': `Basic ${auth}`, 'Content-Type': 'application/x-www-form-urlencoded' } }
@@ -1000,7 +931,6 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
             }
         } catch (verifyErr) {
             console.error("PayPal Verify Error (Check .env keys):", verifyErr.message);
-            // 🟢 核心修复：如果 PayPal 验证报错，必须 return 阻断，绝对不能让代码继续往下走去升级数据库！
             return res.status(400).json({ success: false, message: "Payment verification failed" });
         }
 
@@ -1024,16 +954,21 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
             { $set: updateFields }
         );
 
+        // 🟢 [AUDIT FIX] 修复2：解决年度套餐记账金额错乱的问题，确保财务统计绝对准确！
+        let logAmount = 9.90;
+        if (actualPlanId === 'pro') logAmount = 19.90;
+        else if (actualPlanId === 'basic_annual') logAmount = 99.00; // 如果你有不同定价，可以在这里微调
+        else if (actualPlanId === 'pro_annual') logAmount = 199.00;
+
         await db.collection('payments').insertOne({
             userId: new ObjectId(userId),
             planId: actualPlanId,
             paymentId: paymentId, 
-            amount: actualPlanId === 'pro' ? 19.90 : 9.90,
+            amount: logAmount,
             date: new Date(),
             status: 'completed'
         });
 
-        // 🟢 发送升级成功站内信
         const upgradeMessage = `Thank you for your purchase! Your account has been successfully upgraded. You now have unlocked the full power of the RIE Flagship Engine, including advanced features and priority processing. Dive in and experience the ultimate workflow automation!`;
         
         await sendSystemMessage(user.email, '💎 Upgrade Successful: Welcome to Premium!', upgradeMessage);
@@ -1091,7 +1026,6 @@ app.delete('/api/delete-account', authenticateToken, async (req, res) => {
         const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
         
         if (user) {
-            // 🟢 在删除前，把邮箱加入羊毛党黑名单
             await db.collection('used_trials').insertOne({ email: user.email, deletedAt: new Date() });
             await db.collection('reports').deleteMany({ userId: userId });
             const result = await db.collection('users').deleteOne({ _id: new ObjectId(userId) });
