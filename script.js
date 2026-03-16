@@ -1448,41 +1448,33 @@ function downloadMarkdown() {
     showToast("Markdown 源码已下载", "success");
 }
 
-// --- 模块 G: 支付与卡片交互逻辑 (全能修复版) ---
+// --- 模块 G: 支付与卡片交互逻辑 (财务防弹版) ---
 function setupPayment() {
     const cards = document.querySelectorAll('.pricing-card');
     const paymentModal = document.getElementById('payment-modal-overlay');
     const closePaymentBtn = document.getElementById('close-payment-btn');
     const paypalContainer = document.getElementById('paypal-button-container');
 
-    // 1. 样式定义 (用于切换蓝色框)
+    // 1. 样式定义
     const activeCardClasses = ['border-blue-600', 'ring-2', 'ring-blue-500', 'shadow-xl', 'scale-105', 'z-10'];
     const inactiveCardClasses = ['border-gray-200', 'shadow-sm'];
     const activeBtnClasses = ['bg-blue-600', 'text-white', 'border-transparent', 'hover:bg-blue-700'];
     const inactiveBtnClasses = ['bg-white', 'text-blue-600', 'border-gray-200', 'hover:bg-gray-50'];
 
-    // 2. 激活卡片视觉效果的函数
     const activateCard = (targetCard) => {
-        // 重置所有卡片
         cards.forEach(c => {
             c.classList.remove(...activeCardClasses);
             c.classList.add(...inactiveCardClasses);
-            c.classList.remove('transform'); // 移除放大效果基础类，防止冲突
-
-            // 重置按钮
+            c.classList.remove('transform'); 
             const btn = c.querySelector('.choose-plan-btn');
             if (btn) {
                 btn.classList.remove(...activeBtnClasses);
                 btn.classList.add(...inactiveBtnClasses);
             }
         });
-
-        // 激活当前卡片
         targetCard.classList.remove(...inactiveCardClasses);
         targetCard.classList.add(...activeCardClasses);
-        targetCard.classList.add('transform'); // 加回放大
-
-        // 激活当前按钮
+        targetCard.classList.add('transform'); 
         const targetBtn = targetCard.querySelector('.choose-plan-btn');
         if (targetBtn) {
             targetBtn.classList.remove(...inactiveBtnClasses);
@@ -1490,27 +1482,19 @@ function setupPayment() {
         }
     };
 
-    // 3. 绑定卡片点击事件 (视觉切换)
     cards.forEach(card => {
-        card.addEventListener('click', (e) => {
-            // 只要点的不是按钮本身(按钮有自己的逻辑)，就切换视觉
-            // 但为了体验，点按钮同时也切换视觉，所以直接调用
-            activateCard(card);
-        });
+        card.addEventListener('click', () => activateCard(card));
     });
 
-    // 4. 绑定按钮点击事件 (核心业务逻辑)
     const payButtons = document.querySelectorAll('.choose-plan-btn');
     payButtons.forEach(btn => {
-        // 克隆节点防止重复绑定
         const newBtn = btn.cloneNode(true);
         btn.parentNode.replaceChild(newBtn, btn);
 
         newBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            e.stopPropagation(); // 防止触发卡片点击(虽然上面处理了，保险起见)
+            e.stopPropagation(); 
             
-            // 确保视觉同步
             const card = newBtn.closest('.pricing-card');
             if(card) activateCard(card);
 
@@ -1519,41 +1503,48 @@ function setupPayment() {
 
             // --- 逻辑 A: 免费版 ---
             if (planType === 'free') {
-                if (token) {
-                    // 已登录：跳转到生成器或使用页
-                    window.location.href = 'usage.html'; 
-                } else {
-                    // 未登录：弹窗注册
-                    window.openModal('signup');
-                }
+                if (token) window.location.href = 'usage.html'; 
+                else window.openModal('signup');
                 return;
             }
 
             // --- 逻辑 B: 付费版 (Basic / Pro) ---
             if (!token) {
-                // 未登录：先登录
                 showToast('Please login to upgrade.', 'info');
                 window.openModal('login');
                 return;
             }
 
-            // 已登录：直接弹出支付窗口 (这是你想要的逻辑)
-            const amount = planType === 'basic' ? '9.90' : '19.90';
+            // 🟢 核心修复：根据全局的年费开关 (isYearlyBilling)，动态计算最终传给 PayPal 的金额和传给后端的套餐名！
+            let finalPlanId = planType;
+            let finalAmount = '0.00';
+
+            if (window.isYearlyBilling) {
+                // 如果是年付
+                finalPlanId = planType + '_annual'; // 变成 basic_annual 或 pro_annual
+                finalAmount = planType === 'basic' ? '99.00' : '199.00';
+            } else {
+                // 如果是月付
+                finalAmount = planType === 'basic' ? '9.90' : '19.90';
+            }
             
             if (paymentModal) paymentModal.style.display = 'flex';
             if (window.paypal && paypalContainer) {
                 paypalContainer.innerHTML = ''; // 清空旧按钮
                 window.paypal.Buttons({
-                    createOrder: (data, actions) => actions.order.create({ purchase_units: [{ amount: { value: amount } }] }),
+                    // 🟢 核心修复：将真实的动态金额传给 PayPal
+                    createOrder: (data, actions) => actions.order.create({ purchase_units: [{ amount: { value: finalAmount } }] }),
+                    
                     onApprove: (data, actions) => actions.order.capture().then(async () => {
                         paymentModal.style.display = 'none';
-                        // 调用后端升级接口
+                        showToast('Payment confirmed! Upgrading account...', 'info');
+                        
                         try {
                             const res = await fetch(`${API_BASE_URL}/api/upgrade-plan`, {
                                 method: 'POST', 
                                 headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
-                                // 🟢 核心修复：对齐后端的变量名，并把 PayPal 返回的真实订单号传给后端验证
-                                body: JSON.stringify({ planId: planType, paymentId: data.orderID })
+                                // 🟢 核心修复：把正确的年费/月费套餐名 (finalPlanId) 传给后端！
+                                body: JSON.stringify({ planId: finalPlanId, paymentId: data.orderID })
                             });
                             
                             const resultData = await res.json();
@@ -1562,7 +1553,7 @@ function setupPayment() {
                             showToast('Upgraded Successfully!', 'success');
                             setTimeout(() => window.location.reload(), 1500);
                         } catch(err) {
-                            showToast('Upgrade failed, contact support.', 'error');
+                            showToast(err.message || 'Upgrade failed, contact support.', 'error');
                         }
                     })
                 }).render('#paypal-button-container');
@@ -1570,7 +1561,6 @@ function setupPayment() {
         });
     });
 
-    // 绑定关闭支付弹窗
     if (closePaymentBtn && paymentModal) {
         closePaymentBtn.addEventListener('click', () => paymentModal.style.display = 'none');
         paymentModal.addEventListener('click', (e) => { if (e.target === paymentModal) paymentModal.style.display = 'none'; });
