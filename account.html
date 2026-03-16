@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Account - Reportify AI</title>
-    <link rel="stylesheet" href="style.css?v=8.0">
+    <link rel="stylesheet" href="style.css?v=2026.2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -19,19 +19,17 @@
         /* 2. THE NEW GRID SYSTEM (Flexbox) */
         .final-grid-container {
             display: flex !important;
-            flex-wrap: wrap !important; /* Allow items to wrap */
+            flex-wrap: wrap !important;
             gap: 25px !important;
             margin-top: 40px !important;
             width: 100% !important;
-            justify-content: flex-start !important; /* Align left */
+            justify-content: flex-start !important; 
         }
 
         /* 3. THE NEW CARD STYLE */
         .final-card {
-            /* Flex Logic: Grow=1, Shrink=1, Basis=280px */
-            /* This means each card tries to be at least 280px wide */
             flex: 1 1 280px !important; 
-            max-width: 100% !important; /* Prevent overflow on mobile */
+            max-width: 100% !important; 
             
             background: white !important;
             padding: 30px !important;
@@ -70,12 +68,8 @@
             line-height: 1.5 !important;
         }
 
-        /* Icons Color */
-        .final-card i {
-            font-size: 1.2em;
-        }
+        .final-card i { font-size: 1.2em; }
 
-        /* Avatar Section */
         .avatar-section {
             text-align: center !important;
             margin-bottom: 50px !important;
@@ -84,29 +78,33 @@
 </head>
 <body>
     <header class="main-header account-header">
-        <div class="container">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
             <a href="index.html" class="logo">
                 <span class="logo-icon">🐦</span>
                 <span>Reportify AI</span>
             </a>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html#features">Features</a></li>
-                    <li><a href="index.html#pricing">Pricing</a></li>
-                </ul>
-            </nav>
-            <a href="usage.html#share-area" style="text-decoration: none; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); transition: transform 0.2s; margin-right: 15px;">
-                <i class="fas fa-gift"></i>
+            
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <nav class="main-nav" style="margin-right: 20px;">
+                    <ul style="display: flex; gap: 20px; list-style: none; margin: 0; padding: 0;">
+                        <li><a href="index.html#features" style="text-decoration: none; color: #4b5563; font-weight: 600;">Features</a></li>
+                        <li><a href="index.html#pricing" style="text-decoration: none; color: #4b5563; font-weight: 600;">Pricing</a></li>
+                    </ul>
+                </nav>
+                
+                <a href="usage.html#share-area" style="text-decoration: none; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); transition: transform 0.2s;">
+                    <i class="fas fa-gift"></i>
                     <span class="hide-mobile-text">Invite & Earn</span>
-            </a>
-            <style> @media(max-width:600px){ .hide-mobile-text{display:none!important;} } </style>
-            <div id="auth-container" class="header-actions"></div>
+                </a>
+                <style> @media(max-width:600px){ .hide-mobile-text{display:none!important;} } </style>
+                <div id="auth-container" class="header-actions"></div>
+            </div>
         </div>
     </header>
     
     <section class="generator-section account-hub">
         <div class="container">
-            <a href="index.html" class="btn-back" style="margin-bottom: 20px; display: inline-block; text-decoration: none; color: #666;">&larr; Back to Home</a>
+            <a href="index.html" class="btn-back" style="margin-bottom: 20px; display: inline-block; text-decoration: none; color: #666; font-weight: 600;"><i class="fas fa-arrow-left"></i> Back to Home</a>
             
             <div class="avatar-section">
                 <h2 style="font-size: 2.2rem; margin-bottom: 10px; color: #111; font-weight: 800;">My Account</h2>
@@ -155,6 +153,6 @@
         </div>
     </footer>
     
-    <script src="script.js"></script>
+    <script src="script.js?v=2026.2"></script>
 </body>
 </html>
