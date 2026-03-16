@@ -1847,3 +1847,24 @@ body:has(#history-container) main {
     width: 100% !important;
     max-width: 100% !important;
 }
+
+/* ====================================================================
+   🔥 2026-03 终极修复补丁 (弹窗层级与红绿灯 UI)
+   ==================================================================== */
+
+/* 修复所有 Modal 弹窗的层级，防止被内容遮挡 */
+#auth-modal-overlay, #payment-modal-overlay, #forgot-password-modal, #report-view-modal {
+    z-index: 10000 !important;
+}
+
+/* 修复 Toast 提示层级 */
+#toast-container {
+    z-index: 10005 !important;
+}
+
+/* 新密码强度实时校验UI样式补充 */
+#security-password-strength-box, #reset-password-strength-box {
+    transition: all 0.3s ease;
+}
+.text-green-500 { color: #10b981 !important; }
+.text-red-500 { color: #ef4444 !important; }
