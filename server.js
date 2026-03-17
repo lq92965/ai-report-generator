@@ -23,6 +23,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 // 1. Core Config
 const API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+const DEEPSEEK_KEY = process.env.DEEPSEEK_API_KEY; // 🟢 引入 DeepSeek 秘钥
 const MONGO_URI = process.env.MONGO_URI;
 const JWT_SECRET = process.env.JWT_SECRET;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID; 
@@ -145,7 +146,6 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
         let user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
         if (!user) return res.status(404).json({ message: "User not found" });
 
-        // Auto-generate referral code for legacy users
         if (!user.referralCode) {
             const rawName = user.name || user.email.split('@')[0];
             const cleanName = rawName.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().substring(0, 3);
@@ -544,7 +544,7 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
         const now = new Date();
         let userPlan = (user.plan || 'free').toLowerCase().trim();
 
-        // Time Limit Check
+        // 🔒 Time Limit Check
         let isTimeExpired = false;
 
         if (userPlan === 'pro' || userPlan === 'basic') {
@@ -568,7 +568,7 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
             return res.status(403).json({ error: "Your plan or trial has expired! Please upgrade to continue." });
         }
 
-        // Count Limit Check
+        // 🔒 Count Limit Check
         let allowGen = false;
         const isPro = userPlan === 'pro';
         
@@ -589,7 +589,11 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
             return res.status(403).json({ error: "Usage limit reached! Invite friends to get more credits or upgrade to Pro." });
         }
 
-        const { userPrompt, role, templateId, tone, detailLevel, language } = req.body;
+        // 🔒 字符截断防爆闸门 (防止黑客提交百万字导致破产)
+        const rawUserPrompt = req.body.userPrompt || "";
+        const safeUserPrompt = rawUserPrompt.substring(0, 2000); 
+
+        const { role, templateId, tone, detailLevel, language } = req.body;
 
         const roleMapping = {
             "General": "Standard corporate professional. Focus on task execution details, collaboration progress, and timely delivery.",
@@ -625,28 +629,10 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
         };
 
         const formatInstructions = isPro 
-            ? `[OUTPUT FORMAT REQUIREMENTS]
-DO NOT use JSON formatting. You MUST return pure text using EXACTLY these boundaries. Do not add markdown code blocks around them:
+            ? `[OUTPUT FORMAT REQUIREMENTS]\nDO NOT use JSON formatting. You MUST return pure text using EXACTLY these boundaries. Do not add markdown code blocks around them:\n\n===WORD_CONTENT_START===\n[Insert full, deeply expanded markdown report here based on the instructions]\n===WORD_CONTENT_END===\n\n===PPT_OUTLINE_START===\n[Extract a 5-8 slides PPT outline from the report. Use Markdown format with Slide titles and bullet points]\n===PPT_OUTLINE_END===\n\n===EMAIL_SUMMARY_START===\n[Extract a 3-5 lines executive summary. CRITICAL: This must be PURELY OBJECTIVE conclusions and strategic outlook. DO NOT include ANY letter salutations or sign-offs (e.g., NO "Dear Team", NO "尊敬的领导"). Just the core insights.]\n===EMAIL_SUMMARY_END===`
+            : `[OUTPUT FORMAT REQUIREMENTS]\nDO NOT use JSON formatting. You MUST return pure text using EXACTLY these boundaries. Do not add markdown code blocks around them:\n\n===WORD_CONTENT_START===\n[Insert full, deeply expanded markdown report here based on the instructions]\n===WORD_CONTENT_END===`;
 
-===WORD_CONTENT_START===
-[Insert full, deeply expanded markdown report here based on the instructions]
-===WORD_CONTENT_END===
-
-===PPT_OUTLINE_START===
-[Extract a 5-8 slides PPT outline from the report. Use Markdown format with Slide titles and bullet points]
-===PPT_OUTLINE_END===
-
-===EMAIL_SUMMARY_START===
-[Extract a 3-5 lines executive summary. CRITICAL: This must be PURELY OBJECTIVE conclusions and strategic outlook. DO NOT include ANY letter salutations or sign-offs (e.g., NO "Dear Team", NO "尊敬的领导", NO "Best regards"). Just the core insights.]
-===EMAIL_SUMMARY_END===`
-            : `[OUTPUT FORMAT REQUIREMENTS]
-DO NOT use JSON formatting. You MUST return pure text using EXACTLY these boundaries. Do not add markdown code blocks around them:
-
-===WORD_CONTENT_START===
-[Insert full, deeply expanded markdown report here based on the instructions]
-===WORD_CONTENT_END===`;
-
-        let finalSystemInstructions = `You are RIE (Reportify Intelligence Engine) 3.0 Flagship Edition - the world's top workplace report generation brain.
+        let finalSystemInstructions = `You are RIE (Reportify Intelligence Engine) Flagship Edition - the world's top workplace report generation brain.
         Your task is to take the user's extremely brief, fragmented prompts and [Deeply Expand] them into a highly professional document through strong logical reasoning and workplace experience.
 
         [Core Generation Dimensions]
@@ -662,39 +648,57 @@ DO NOT use JSON formatting. You MUST return pure text using EXACTLY these bounda
 
         ${formatInstructions}`;
 
-        const expandedUserPrompt = `Here are the rough bullet points of my work/thoughts today:\n"${userPrompt}"\n\nPlease immediately deeply reconstruct and significantly expand this into a final professional report based on your system instructions, persona, and style settings.`;
+        const expandedUserPrompt = `Here are the rough bullet points of my work/thoughts today:\n"${safeUserPrompt}"\n\nPlease immediately deeply reconstruct and significantly expand this into a final professional report based on your system instructions, persona, and style settings.`;
 
         let rawText = "";
 
-        const primaryModelName = "gemini-3-flash-preview"; 
-        const backupModelName = "gemini-2.5-pro";
-
-        try {
-            console.log(`🤖 Trying Primary Model: ${primaryModelName}`);
-            const model = genAI.getGenerativeModel({ 
-                model: primaryModelName,
-                systemInstruction: finalSystemInstructions 
-            });
-            const result = await model.generateContent({ 
-                contents: [{ role: 'user', parts: [{ text: expandedUserPrompt }] }]
-            });
-            rawText = result.response.text();
-            
-        } catch (primaryError) {
-            console.warn(`⚠️ Primary Model Failed:`, primaryError.message);
-            console.log(`🔄 Switching to Backup Model: ${backupModelName}`);
+        // ==========================================
+        // 💎 智能算力分层路由 (Tier-Based Routing)
+        // ==========================================
+        if (userPlan === 'basic' && DEEPSEEK_KEY) {
+            // ⚡ 梯队 B：Basic 用户调用 DeepSeek V3 (性价比无敌)
+            console.log("⚡ [Basic] Routing to DeepSeek V3 API...");
             try {
-                const modelBackup = genAI.getGenerativeModel({ 
-                    model: backupModelName,
-                    systemInstruction: finalSystemInstructions
+                const dsResponse = await axios.post(
+                    'https://api.deepseek.com/chat/completions',
+                    {
+                        model: 'deepseek-chat',
+                        messages: [
+                            { role: 'system', content: finalSystemInstructions },
+                            { role: 'user', content: expandedUserPrompt }
+                        ],
+                        max_tokens: 2048,
+                        temperature: 0.7
+                    },
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${DEEPSEEK_KEY}`,
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                );
+                rawText = dsResponse.data.choices[0].message.content;
+            } catch (dsError) {
+                console.error("❌ DeepSeek API Failed:", dsError.response?.data || dsError.message);
+                throw new Error("AI Service Currently Unavailable");
+            }
+
+        } else {
+            // 💎 梯队 A：Pro / 7天试用新用户调用 Gemini 3 Flash Preview (旗舰品质)
+            console.log(`💎 [${userPlan.toUpperCase()}] Routing to Google Gemini 3 Flash Preview...`);
+            try {
+                const model = genAI.getGenerativeModel({ 
+                    model: "gemini-3-flash-preview",
+                    systemInstruction: finalSystemInstructions 
                 });
-                const resultBackup = await modelBackup.generateContent({
-                    contents: [{ role: 'user', parts: [{ text: expandedUserPrompt }] }]
+                const result = await model.generateContent({ 
+                    contents: [{ role: 'user', parts: [{ text: expandedUserPrompt }] }],
+                    generationConfig: { maxOutputTokens: 2048, temperature: 0.7 }
                 });
-                rawText = resultBackup.response.text();
-            } catch (backupError) {
-                console.error(`❌ Both models failed`);
-                throw new Error("AI Service Unavailable");
+                rawText = result.response.text();
+            } catch (geminiError) {
+                console.error("❌ Gemini API Failed:", geminiError.message);
+                throw new Error("AI Service Currently Unavailable");
             }
         }
 
@@ -746,8 +750,8 @@ DO NOT use JSON formatting. You MUST return pure text using EXACTLY these bounda
         }
 
     } catch (e) { 
-        console.error("AI API Error:", e.message);
-        res.status(500).json({ error: "AI Service Error: " + e.message }); 
+        console.error("AI Generation Error:", e.message);
+        res.status(500).json({ error: "System Error: " + e.message }); 
     }
 }); 
 
@@ -792,8 +796,6 @@ app.post('/api/admin/reply', authenticateToken, async (req, res) => {
             return res.status(400).json({ error: "Missing ID or content" });
         }
 
-        console.log(`[Admin Reply] Trying to reply to ID: ${feedbackId}`);
-
         const possibleCollections = ['contact_messages', 'feedbacks', 'messages', 'contacts'];
         let feedback = null;
         let targetCollection = '';
@@ -803,13 +805,11 @@ app.post('/api/admin/reply', authenticateToken, async (req, res) => {
             if (found) {
                 feedback = found;
                 targetCollection = colName;
-                console.log(`[Admin Reply] Found message in collection: ${colName}`);
                 break; 
             }
         }
 
         if (!feedback) {
-            console.log(`[Admin Reply] Error: Message not found in any collection.`);
             return res.status(404).json({ error: "Message not found (Check DB collection name)" });
         }
 
@@ -827,7 +827,6 @@ app.post('/api/admin/reply', authenticateToken, async (req, res) => {
             }
         );
 
-        // 🟢 [AUDIT FIX] 修复1：使用真实的 Resend 引擎替换不存在的 transporter，确保邮件能发出去！
         try {
             await resend.emails.send({
                 from: 'Reportify Support <noreply@goreportify.com>',
@@ -835,7 +834,6 @@ app.post('/api/admin/reply', authenticateToken, async (req, res) => {
                 subject: 'New Reply from Reportify AI',
                 text: `Hello ${feedback.name},\n\nAdmin has replied:\n\n"${replyContent}"\n\nLogin to view full history in your Message Center.\n\nBest,\nReportify Team`
             });
-            console.log(`[Admin Reply] Email sent successfully to ${feedback.email}`);
         } catch (emailErr) {
             console.error("Email sending skipped/failed:", emailErr.message);
         }
@@ -878,8 +876,6 @@ app.get('/api/admin/users', verifyAdmin, async (req, res) => {
 app.get('/api/history', authenticateToken, async (req, res) => {
     try {
         const userId = req.user.userId; 
-        console.log("Fetching history for user ID:", userId);
-
         const reports = await db.collection('reports')
             .find({ userId: userId }) 
             .sort({ createdAt: -1 }) 
@@ -926,8 +922,6 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
             return res.status(400).json({ success: false, message: "Missing payment info. Please hard refresh (Ctrl+F5) and try again." });
         }
 
-        console.log(`[Payment] User ${userId} requested upgrade to ${actualPlanId}. OrderID: ${paymentId}`);
-
         try {
             const baseUrl = process.env.PAYPAL_MODE === 'sandbox' 
                 ? 'https://api-m.sandbox.paypal.com' 
@@ -972,10 +966,9 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
             { $set: updateFields }
         );
 
-        // 🟢 [AUDIT FIX] 修复2：解决年度套餐记账金额错乱的问题，确保财务统计绝对准确！
         let logAmount = 9.90;
         if (actualPlanId === 'pro') logAmount = 19.90;
-        else if (actualPlanId === 'basic_annual') logAmount = 99.00; // 如果你有不同定价，可以在这里微调
+        else if (actualPlanId === 'basic_annual') logAmount = 99.00; 
         else if (actualPlanId === 'pro_annual') logAmount = 199.00;
 
         await db.collection('payments').insertOne({
