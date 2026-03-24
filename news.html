@@ -209,12 +209,14 @@
 
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                const response = await fetch('data/posts.json');
+                // 加上时间戳，强制浏览器每次都获取最新数据，绝不使用缓存！
+                const response = await fetch('data/posts.json?t=' + new Date().getTime());
                 const posts = await response.json();
                 const grid = document.getElementById('posts-grid');
                 grid.innerHTML = ''; 
 
-                posts.filter(p => p.type === 'news').reverse().forEach(post => {
+                // 删除了 .reverse()，因为琥珀写入时最新文章已经在最前面了
+                posts.filter(p => p.type === 'news').forEach(post => {
                     const card = `
                         <a href="article.html?id=${post.id}" class="bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 border-l-4 border-l-purple-500 transition-all duration-300 overflow-hidden group flex flex-col h-full hover:-translate-y-1">
                             <div class="p-8 flex flex-col h-full">
