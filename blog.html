@@ -201,12 +201,12 @@
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                const response = await fetch('data/posts.json');
+                const response = await fetch('data/posts.json?t=' + new Date().getTime());
                 const posts = await response.json();
                 const grid = document.getElementById('posts-grid');
                 grid.innerHTML = ''; 
 
-                posts.filter(p => p.type === 'blog').reverse().forEach(post => {
+                posts.filter(p => p.type === 'blog').forEach(post => {
                     const card = `
                         <a href="article.html?id=${post.id}" class="bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 border-l-4 border-l-blue-500 transition-all duration-300 overflow-hidden group flex flex-col h-full hover:-translate-y-1">
                             <div class="p-8 flex flex-col h-full">
