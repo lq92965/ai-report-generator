@@ -750,13 +750,14 @@
         if (!newsGrid || !blogGrid) return;
         
         try {
-            const response = await fetch('data/posts.json');
+            const response = await fetch('data/posts.json?t=' + new Date().getTime());
             const posts = await response.json();
             newsGrid.innerHTML = ''; 
             blogGrid.innerHTML = ''; 
             
-            const latestNews = posts.filter(p => p.type === 'news').reverse().slice(0, 3);
-            const latestBlogs = posts.filter(p => p.type === 'blog').reverse().slice(0, 3);
+            // 删除 reverse，直接截取最前面的 3 篇最新文章
+            const latestNews = posts.filter(p => p.type === 'news').slice(0, 3);
+            const latestBlogs = posts.filter(p => p.type === 'blog').slice(0, 3);
             
             const renderCard = (post, isNews) => {
                 const badgeStyle = isNews ? 'background: #f3e8ff; color: #6b21a8;' : 'background: #dbeafe; color: #1e40af;';
