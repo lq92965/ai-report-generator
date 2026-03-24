@@ -119,6 +119,8 @@
                     <li><a href="#features">Features</a></li>
                     <li><a href="#pricing">Pricing</a></li>
                     <li><a href="#generator">Generator</a></li>
+                    <li><a href="#news">News</a></li>
+                    <li><a href="#blog">Blog</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
@@ -430,6 +432,36 @@
             </div>
         </section>
 
+        <section id="news" style="padding: 100px 0 50px 0; background: #f8fafc; border-top: 1px solid #f1f5f9;">
+            <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+                <div style="text-align: center; margin-bottom: 50px;">
+                    <h2 class="section-title" style="font-size: 2.5rem; font-weight: 800; color: #0f172a; margin-bottom: 15px;">Global Tech Radar</h2>
+                    <p style="color: #64748b; font-size: 1.1rem;">Real-time, AI-curated intelligence on global tech, finance, startups, and market shifts.</p>
+                </div>
+                <div id="home-news-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 50px;"></div>
+                <div style="text-align: center;">
+                    <a href="news.html" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 36px; border: 2px solid #e2e8f0; border-radius: 12px; color: #475569; font-weight: bold; text-decoration: none; transition: all 0.3s; background: white;" onmouseover="this.style.borderColor='#cbd5e1'; this.style.color='#0f172a';" onmouseout="this.style.borderColor='#e2e8f0'; this.style.color='#475569';">
+                        View All News <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="blog" style="padding: 50px 0 100px 0; background: #f8fafc;">
+            <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+                <div style="text-align: center; margin-bottom: 50px;">
+                    <h2 class="section-title" style="font-size: 2.5rem; font-weight: 800; color: #0f172a; margin-bottom: 15px;">Deep Insights</h2>
+                    <p style="color: #64748b; font-size: 1.1rem;">Elevate your strategic thinking with masterclasses in productivity, PM workflows, and AI-driven growth.</p>
+                </div>
+                <div id="home-blog-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 50px;"></div>
+                <div style="text-align: center;">
+                    <a href="blog.html" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 36px; border: 2px solid #e2e8f0; border-radius: 12px; color: #475569; font-weight: bold; text-decoration: none; transition: all 0.3s; background: white;" onmouseover="this.style.borderColor='#cbd5e1'; this.style.color='#0f172a';" onmouseout="this.style.borderColor='#e2e8f0'; this.style.color='#475569';">
+                        View All Insights <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <section id="contact" class="contact-section">
             <div class="container">
                 <h2 class="section-title">Contact Us</h2>
@@ -709,6 +741,48 @@
         </div>
     </div>
 </div>
+
+<script>
+    // 独立渲染引擎：分别加载 News 和 Blog 最新3篇
+    document.addEventListener('DOMContentLoaded', async () => {
+        const newsGrid = document.getElementById('home-news-grid');
+        const blogGrid = document.getElementById('home-blog-grid');
+        if (!newsGrid || !blogGrid) return;
+        
+        try {
+            const response = await fetch('data/posts.json');
+            const posts = await response.json();
+            newsGrid.innerHTML = ''; 
+            blogGrid.innerHTML = ''; 
+            
+            const latestNews = posts.filter(p => p.type === 'news').reverse().slice(0, 3);
+            const latestBlogs = posts.filter(p => p.type === 'blog').reverse().slice(0, 3);
+            
+            const renderCard = (post, isNews) => {
+                const badgeStyle = isNews ? 'background: #f3e8ff; color: #6b21a8;' : 'background: #dbeafe; color: #1e40af;';
+                const iconColor = isNews ? 'text-purple-600' : 'text-blue-600';
+                return `
+                    <a href="article.html?id=${post.id}" style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); text-decoration: none; display: flex; flex-direction: column; transition: transform 0.3s, box-shadow 0.3s; border: 1px solid #e2e8f0; height: 100%;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 6px -1px rgba(0,0,0,0.05)';">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <span style="${badgeStyle} padding: 4px 12px; border-radius: 999px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em;">${post.category}</span>
+                            <span style="color: #94a3b8; font-size: 0.85rem; font-weight: 500;">${post.date}</span>
+                        </div>
+                        <h3 style="color: #0f172a; font-size: 1.25rem; font-weight: 800; margin-bottom: 12px; line-height: 1.4;">${post.title}</h3>
+                        <p style="color: #64748b; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">${post.excerpt}</p>
+                        <div style="color: #2563eb; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; margin-top: auto;" class="${iconColor}">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                `;
+            };
+
+            latestNews.forEach(post => newsGrid.innerHTML += renderCard(post, true));
+            latestBlogs.forEach(post => blogGrid.innerHTML += renderCard(post, false));
+        } catch (error) {
+            console.error("Error loading home posts:", error);
+        }
+    });
+</script>
 
 </body>
 </html>
