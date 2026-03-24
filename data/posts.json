@@ -1,5 +1,14 @@
 [
     {
+        "id": "1774334944184",
+        "type": "news",
+        "title": "Anthropic Secures $2.8 Billion Series D, Signaling Shift in AI Arms Race",
+        "category": "Tech Radar",
+        "date": "2026-03-24",
+        "excerpt": "In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...",
+        "contentFile": "news-1774334944184.md"
+    },
+    {
         "id": "1",
         "type": "blog",
         "title": "How to Write a Weekly Report in 30 Seconds",
