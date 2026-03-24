@@ -1,0 +1,29 @@
+[
+    {
+        "id": "1",
+        "type": "blog",
+        "title": "How to Write a Weekly Report in 30 Seconds",
+        "category": "PM Guide",
+        "date": "2026-03-23",
+        "excerpt": "Tired of spending your Friday afternoons writing status updates? Here is the ultimate guide to automating your PM workflow with Reportify AI.",
+        "contentFile": "test-post-1.md"
+    },
+    {
+        "id": "2",
+        "type": "news",
+        "title": "OpenAI Releases New Model: What It Means for SaaS",
+        "category": "Tech News",
+        "date": "2026-03-23",
+        "excerpt": "A quick breakdown of the latest AI trends and how they impact productivity tools in the workplace.",
+        "contentFile": "test-post-2.md"
+    },
+    {
+        "id": "3",
+        "type": "news",
+        "title": "Global Tech Layoffs Spark Demand for AI Automation",
+        "category": "Industry",
+        "date": "2026-03-24",
+        "excerpt": "As companies restructure, employees are turning to AI tools like Reportify to maintain output quality.",
+        "contentFile": "test-post-1.md"
+    }
+]
