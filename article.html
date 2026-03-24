@@ -6,22 +6,21 @@
     <title>Reportify AI - Article</title>
     <meta name="description" content="Read the latest insights from Reportify AI.">
     
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <style>
+        /* 针对自动生成的图片的圆角和自适应美化 */
+        #article-content img {
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            margin-bottom: 2rem;
+            width: 100%;
+            height: auto;
+        }
+    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     
-    <style>
-        .markdown-body h1 { font-size: 2.25rem; font-weight: 800; margin-bottom: 1.5rem; color: #111827; }
-        .markdown-body h2 { font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; color: #1f2937; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem; }
-        .markdown-body h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #374151; }
-        .markdown-body p { margin-bottom: 1.25rem; line-height: 1.8; color: #4b5563; }
-        .markdown-body ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #4b5563; }
-        .markdown-body ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #4b5563; }
-        .markdown-body strong { color: #111827; font-weight: 700; }
-        .markdown-body blockquote { border-left: 4px solid #3b82f6; background-color: #eff6ff; padding: 1rem 1.5rem; font-style: italic; color: #1e40af; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
-        .markdown-body a { color: #2563eb; text-decoration: underline; }
-    </style>
 </head>
 <body class="font-sans antialiased bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
@@ -60,22 +59,17 @@
     </div>
 
     <main class="flex-grow py-4">
-        <article class="max-w-3xl mx-auto px-6">
-            <div id="article-header" class="mb-10 text-center hidden">
-                <div class="flex justify-center items-center gap-4 mb-6">
-                    <span id="article-category" class="text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider bg-blue-100 text-blue-800"></span>
-                    <span id="article-date" class="text-sm text-gray-500 font-medium"></span>
-                </div>
-                <h1 id="article-title" class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-6"></h1>
+        <article class="max-w-4xl mx-auto px-6">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12">
+            
+            <div id="article-header" class="mb-10 pb-8 border-b border-gray-100">
+                <div class="text-center text-gray-400 py-10"><i class="fas fa-spinner fa-spin text-2xl"></i></div>
             </div>
 
-            <div id="article-content" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12 markdown-body">
-                <div class="text-center text-gray-400 py-10">
-                    <i class="fas fa-spinner fa-spin text-3xl mb-3 text-blue-500"></i>
-                    <p>Loading article content...</p>
+            <div id="article-content" class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
                 </div>
-            </div>
 
+        </div>
             <div class="mt-12 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-10 text-center text-white shadow-xl">
                 <h3 class="text-2xl font-bold mb-3">Stop Drowning in Reports</h3>
                 <p class="text-blue-100 mb-6">Turn your scattered meeting notes into executive-ready PPTs and Word docs in 30 seconds.</p>
@@ -248,40 +242,40 @@
             }
 
             try {
-                const listResponse = await fetch('data/posts.json');
-                const posts = await listResponse.json();
-                const postInfo = posts.find(p => p.id === articleId);
+                // 带时间戳破除缓存
+                const response = await fetch('data/posts.json?t=' + new Date().getTime());
+                const posts = await response.json();
+                const post = posts.find(p => p.id === articleId);
 
-                if (!postInfo) throw new Error("Article not found in catalog");
-
-                document.getElementById('article-title').textContent = postInfo.title;
-                document.getElementById('article-category').textContent = postInfo.category;
-                document.getElementById('article-date').textContent = postInfo.date;
-                document.title = postInfo.title + " - Reportify AI"; 
-                // 动态判断是新闻还是博客，改变返回按钮指向
-                const backBtn = document.getElementById('dynamic-back-btn');
-                const badge = document.getElementById('article-category');
-                
-                if(postInfo.type === 'news') {
-                    badge.className = "text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider bg-purple-100 text-purple-800";
-                    backBtn.href = "news.html";
-                    backBtn.innerHTML = '<i class="fas fa-arrow-left"></i> Back to Tech Radar';
-                } else {
-                    badge.className = "text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider bg-blue-100 text-blue-800";
-                    backBtn.href = "blog.html";
-                    backBtn.innerHTML = '<i class="fas fa-arrow-left"></i> Back to Insights';
+                if (!post) {
+                    throw new Error('Post not found in database');
                 }
 
-                if(postInfo.category === 'Tech Radar') {
-                    document.getElementById('article-category').className = "text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider bg-purple-100 text-purple-800";
-                }
+                // 渲染精美的分类、时间、大标题和作者头部
+                document.getElementById('article-header').innerHTML = `
+                    <div class="flex items-center gap-3 text-sm font-bold text-blue-600 uppercase tracking-wider mb-4">
+                        <span>${post.category}</span>
+                        <span class="text-gray-300">|</span>
+                        <span class="text-gray-500"><i class="far fa-calendar-alt"></i> ${post.date}</span>
+                    </div>
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">${post.title}</h1>
+                    <div class="flex items-center gap-4 text-gray-600 font-medium">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-lg">
+                            <i class="fas fa-user-edit"></i>
+                        </div>
+                        <div>
+                            <div class="text-gray-900 font-bold">${post.author || 'Reportify Editorial Team'}</div>
+                            <div class="text-xs text-gray-400">Staff Writer</div>
+                        </div>
+                    </div>
+                `;
+
+                // 抓取并渲染带有 AI 配图的 Markdown 正文
+                const mdResponse = await fetch(`content/${post.contentFile}?t=` + new Date().getTime());
+                if (!mdResponse.ok) throw new Error('Markdown file not found');
+                const mdText = await mdResponse.text();
                 
-                const contentResponse = await fetch(`content/${postInfo.contentFile}`);
-                if (!contentResponse.ok) throw new Error("Markdown file missing");
-                const markdownText = await contentResponse.text();
-
-                document.getElementById('article-content').innerHTML = marked.parse(markdownText);
-
+                document.getElementById('article-content').innerHTML = marked.parse(mdText);
             } catch (error) {
                 console.error(error);
                 document.getElementById('article-content').innerHTML = '<p class="text-center text-gray-500 py-10">Oops! The article you are looking for could not be loaded.</p>';
