@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774411225644",
+        "type": "blog",
+        "title": "Kill the Status Report: How Structured Thinking Ends Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-25",
+        "author": "Michael Chen",
+        "excerpt": "We’ve all been there. It’s 4 PM on a Friday, and that automated calendar reminder pops up: \"Update Weekly Project Status Report.\" A collective groan echoes th...",
+        "contentFile": "blog-1774411225644.md"
+    },
+    {
         "id": "1774409428646",
         "type": "news",
         "title": "Enterprise AI Shifts from Experimentation to Core Infrastructure, Fueling Record Funding Rounds",
