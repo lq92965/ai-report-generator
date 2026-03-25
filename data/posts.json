@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774420236307",
+        "type": "news",
+        "title": "Enterprises Accelerate AI Integration Amidst Shifting Economic Landscape",
+        "category": "Tech Radar",
+        "date": "2026-03-25",
+        "author": "Marcus Webb",
+        "excerpt": "Silicon Valley, CA – A new wave of enterprise artificial intelligence adoption is sweeping through corporate boardrooms, moving beyond pilot project...",
+        "contentFile": "news-1774420236307.md"
+    },
+    {
         "id": "1774418442041",
         "type": "blog",
         "title": "Slaying the Reporting Dragon: How AI Is Curing Project Management Fatigue",
