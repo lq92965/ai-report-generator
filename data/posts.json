@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774416636503",
+        "type": "news",
+        "title": "The Great Reckoning: Enterprise AI Shifts from Pilot Purgatory to Profit-Driven Platforms",
+        "category": "Tech Radar",
+        "date": "2026-03-25",
+        "author": "Sarah Jenkins",
+        "excerpt": "A seismic shift is underway in the corporate world. After a year of frenetic experimentation, enterprise adoption of artificial intelligence is moving decisiv...",
+        "contentFile": "news-1774416636503.md"
+    },
+    {
         "id": "1774414824050",
         "type": "blog",
         "title": "From Burnout to Buy-In: Curing Reporting Fatigue with Structured Thinking",
