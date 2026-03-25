@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774429243953",
+        "type": "blog",
+        "title": "Slay the Status Report Dragon: How AI Can Cure Your Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-25",
+        "author": "Olivia Thorne",
+        "excerpt": "As a project manager, you live by a simple truth: if it isn't documented, it didn't happen. But this truth has a dark side—a relentless beast known...",
+        "contentFile": "blog-1774429243953.md"
+    },
+    {
         "id": "1774427444362",
         "type": "news",
         "title": "Enterprise AI Adoption Accelerates Amid Economic Uncertainty",
