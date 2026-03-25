@@ -70,7 +70,7 @@ async function generateArticle(type) {
 
 // --- 阶段 2：社媒大脑 (生成多平台定制文案) ---
 async function generateSocialCopies(title, excerpt) {
-    console.log(`[Amber] 🎭 正在为多平台(Reddit/X/LinkedIn)定制不同人设的专属文案...`);
+    console.log(`[Amber] 🎭 正在为多平台定制专属文案...`);
     const apiUrl = process.env.GEMINI_API_URL; 
     const apiKey = process.env.GEMINI_API_KEY;
     
@@ -152,13 +152,9 @@ async function triggerMakeWebhook(postData, socialCopies) {
     if (!MAKE_WEBHOOK_URL) return;
     try {
         const articleUrl = `https://www.goreportify.com/article.html?id=${postData.timestamp}`;
-        
-        // 🌟 核心物理防爆闸门：推特强制截断逻辑 🌟
         let safeTwitterText = socialCopies.twitterCopy;
-        // 如果生成的文本超过 200 字 (留出 80 个字符给 URL 和系统裕量)
         if (safeTwitterText.length > 200) {
             safeTwitterText = safeTwitterText.substring(0, 197) + "...";
-            console.log("[Amber] ⚠️ 触发推特防超长保护，已物理截断文案。");
         }
 
         await axios.post(MAKE_WEBHOOK_URL, {
@@ -167,7 +163,7 @@ async function triggerMakeWebhook(postData, socialCopies) {
             text: `${socialCopies.redditCopy}\n\n👉 Read more: ${articleUrl}`,
             redditText: `${socialCopies.redditCopy}\n\nAnyway, found this detailed breakdown here if anyone is in the same boat: ${articleUrl}`,
             linkedinText: `${socialCopies.linkedinCopy}\n\nRead the full insight here: ${articleUrl}`,
-            twitterText: `${safeTwitterText} ${articleUrl}` // 发送绝对安全的截断文本
+            twitterText: `${safeTwitterText} ${articleUrl}`
         });
         console.log("[Amber] ✅ 多重人格社媒包已发射至 Make.com！");
     } catch (error) {
@@ -186,6 +182,9 @@ async function runEngine(type) {
     }
 }
 
-console.log("🚀 Reportify AI - V4 物理防爆引擎已挂载！");
-cron.schedule('0 * * * *', () => runEngine('blog'));
-cron.schedule('30 * * * *', () => runEngine('news'));
+console.log("🚀 Reportify AI - 6小时交替护航印钞机已挂载！");
+// 🌟 核心修改区：每 6 小时触发一次，博客与新闻交替 🌟
+// 每天的 00:00 和 12:00 发送深度博客
+cron.schedule('0 0,12 * * *', () => runEngine('blog')); 
+// 每天的 06:00 和 18:00 发送科技新闻
+cron.schedule('0 6,18 * * *', () => runEngine('news'));
