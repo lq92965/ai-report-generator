@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774461642206",
+        "type": "news",
+        "title": "Enterprise AI Adoption Accelerates Amid Economic Uncertainty",
+        "category": "Tech Radar",
+        "date": "2026-03-25",
+        "author": "Marcus Webb",
+        "excerpt": "Silicon Valley's boardrooms are buzzing with a new consensus: artificial intelligence is no longer a discretionary innovation project, but a core co...",
+        "contentFile": "news-1774461642206.md"
+    },
+    {
         "id": "1774440043195",
         "type": "blog",
         "title": "The Silent Killer of Productivity: Curing Reporting Fatigue with AI",
