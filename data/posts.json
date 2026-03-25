@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774413024259",
+        "type": "news",
+        "title": "Enterprise AI Shifts from Experimentation to Core Infrastructure in 2024",
+        "category": "Tech Radar",
+        "date": "2026-03-25",
+        "author": "Julian Vance",
+        "excerpt": "A seismic shift is underway in the corporate world. After a year of explosive hype and pilot projects, enterprise adoption of artificial intelligence is movin...",
+        "contentFile": "news-1774413024259.md"
+    },
+    {
         "id": "1774411225644",
         "type": "blog",
         "title": "Kill the Status Report: How Structured Thinking Ends Reporting Fatigue",
