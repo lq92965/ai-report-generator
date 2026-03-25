@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774422041563",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: How AI Can Cure Your Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-25",
+        "author": "Emily Rostova",
+        "excerpt": "It’s 4:00 PM on a Friday. Your project is humming along, but a familiar dread creeps in. It's time for the weekly status report. An hour of pulling...",
+        "contentFile": "blog-1774422041563.md"
+    },
+    {
         "id": "1774420236307",
         "type": "news",
         "title": "Enterprises Accelerate AI Integration Amidst Shifting Economic Landscape",
