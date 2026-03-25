@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774407625304",
+        "type": "blog",
+        "title": "The Structured Thinking Cure: How to Kill Reporting Fatigue and Make Your Updates Matter",
+        "category": "Deep Insights",
+        "date": "2026-03-25",
+        "author": "Sarah Jenkins",
+        "excerpt": "We’ve all been there. It’s 4 PM on a Friday, and that nagging calendar reminder pops up: \"Prepare Weekly Status Report.\" A wave of exhaustion hits you. You pu...",
+        "contentFile": "blog-1774407625304.md"
+    },
+    {
         "id": "1774405831801",
         "type": "news",
         "title": "The Great Unbundling: How Vertical AI Startups Are Redefining Enterprise Adoption",
