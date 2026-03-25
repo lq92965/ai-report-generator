@@ -52,7 +52,6 @@ async function generateArticle(type) {
         let title = titleMatch ? titleMatch[1].trim() : `Reportify ${type.toUpperCase()} Insights`;
         let contentMarkdown = rawMarkdown.replace(/^#\s+(.+)$/m, '').trim();
 
-        // 修复图片不显示的 Bug：严格过滤特殊字符，并改用 HTML 强行植入
         const safePrompt = title.replace(/[^a-zA-Z0-9 ]/g, "").substring(0, 40);
         const imagePrompt = encodeURIComponent(`Professional abstract tech business concept, high quality, ${safePrompt}`);
         const aiImageUrl = `https://image.pollinations.ai/prompt/${imagePrompt}?width=1200&height=600&nologo=true`;
@@ -78,7 +77,7 @@ async function generateSocialCopies(title, excerpt) {
     const prompt = `Based on this article title: "${title}" and excerpt: "${excerpt}", generate 3 social media posts tailored to different platforms.
     1. Reddit: Casual, frustrating personal story about work/meetings, complaining tone, no corporate buzzwords.
     2. LinkedIn: Highly professional, thought-provoking, uses bullet points, targeting PMs and executives.
-    3. Twitter: Short, punchy, engaging hook, max 280 characters, with 2 hashtags.
+    3. Twitter: Short, punchy, engaging hook, STRICTLY UNDER 200 characters, with 2 hashtags.
     
     Respond ONLY with a valid JSON object strictly matching this format:
     {
@@ -105,7 +104,6 @@ async function generateSocialCopies(title, excerpt) {
         console.error(`[Amber] ⚠️ 社媒文案定制失败，将降级使用默认摘要。`);
     }
     
-    // 如果生成失败的降级方案
     return {
         redditCopy: `Man, dealing with this exact issue today. Thought this was an interesting read on how to fix it: ${title}`,
         linkedinCopy: `New insights on enterprise workflow: ${title}. We dive deep into the mechanics of productivity. Thoughts?`,
@@ -154,19 +152,26 @@ async function triggerMakeWebhook(postData, socialCopies) {
     if (!MAKE_WEBHOOK_URL) return;
     try {
         const articleUrl = `https://www.goreportify.com/article.html?id=${postData.timestamp}`;
+        
+        // 🌟 核心物理防爆闸门：推特强制截断逻辑 🌟
+        let safeTwitterText = socialCopies.twitterCopy;
+        // 如果生成的文本超过 200 字 (留出 80 个字符给 URL 和系统裕量)
+        if (safeTwitterText.length > 200) {
+            safeTwitterText = safeTwitterText.substring(0, 197) + "...";
+            console.log("[Amber] ⚠️ 触发推特防超长保护，已物理截断文案。");
+        }
+
         await axios.post(MAKE_WEBHOOK_URL, {
             title: postData.title,
             url: articleUrl,
-            // 默认通用文本防错
             text: `${socialCopies.redditCopy}\n\n👉 Read more: ${articleUrl}`,
-            // 极其强大的细分平台专属文案
             redditText: `${socialCopies.redditCopy}\n\nAnyway, found this detailed breakdown here if anyone is in the same boat: ${articleUrl}`,
             linkedinText: `${socialCopies.linkedinCopy}\n\nRead the full insight here: ${articleUrl}`,
-            twitterText: `${socialCopies.twitterCopy} ${articleUrl}`
+            twitterText: `${safeTwitterText} ${articleUrl}` // 发送绝对安全的截断文本
         });
         console.log("[Amber] ✅ 多重人格社媒包已发射至 Make.com！");
     } catch (error) {
-        console.error("[Amber] ❌ 触发 Make.com 失败");
+        console.error("[Amber] ❌ 触发 Make.com 失败:", error.message);
     }
 }
 
@@ -181,6 +186,6 @@ async function runEngine(type) {
     }
 }
 
-console.log("🚀 Reportify AI - V3 多重人格增长引擎已挂载！");
+console.log("🚀 Reportify AI - V4 物理防爆引擎已挂载！");
 cron.schedule('0 * * * *', () => runEngine('blog'));
 cron.schedule('30 * * * *', () => runEngine('news'));

@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774423840401",
+        "type": "news",
+        "title": "Enterprises Accelerate AI Integration Amid Shifting ROI Focus",
+        "category": "Tech Radar",
+        "date": "2026-03-25",
+        "author": "Sarah Jenkins",
+        "excerpt": "Silicon Valley, CA – A new wave of enterprise artificial intelligence adoption is sweeping across corporate America, moving decisively beyond pilot...",
+        "contentFile": "news-1774423840401.md"
+    },
+    {
         "id": "1774422041563",
         "type": "blog",
         "title": "The Silent Killer of Productivity: How AI Can Cure Your Reporting Fatigue",
