@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774418442041",
+        "type": "blog",
+        "title": "Slaying the Reporting Dragon: How AI Is Curing Project Management Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-25",
+        "author": "Sarah Jenkins",
+        "excerpt": "We've all been there. It's 4 PM on a Friday, and the familiar dread sets in. The weekly status report is due. You brace yourself for an hour-long sc...",
+        "contentFile": "blog-1774418442041.md"
+    },
+    {
         "id": "1774416636503",
         "type": "news",
         "title": "The Great Reckoning: Enterprise AI Shifts from Pilot Purgatory to Profit-Driven Platforms",
