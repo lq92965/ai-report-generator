@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774427444362",
+        "type": "news",
+        "title": "Enterprise AI Adoption Accelerates Amid Economic Uncertainty",
+        "category": "Tech Radar",
+        "date": "2026-03-25",
+        "author": "Sarah Jenkins",
+        "excerpt": "Silicon Valley's boardrooms are buzzing with a new consensus: artificial intelligence is no longer a speculative investment but a defensive necessit...",
+        "contentFile": "news-1774427444362.md"
+    },
+    {
         "id": "1774425639307",
         "type": "blog",
         "title": "The Silent Killer of Productivity: How AI Can Cure Your Project Reporting Fatigue",
