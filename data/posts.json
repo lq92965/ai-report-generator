@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774404025711",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: How to Beat Reporting Fatigue with Structured Thinking",
+        "category": "Deep Insights",
+        "date": "2026-03-25",
+        "author": "Chloe Bennett",
+        "excerpt": "We've all been there. It's 4:00 PM on a Friday, and the \"Weekly Status Report\" looms over you. You open a spreadsheet with 50 tabs, copy-paste some charts int...",
+        "contentFile": "blog-1774404025711.md"
+    },
+    {
         "id": "1774402808294",
         "type": "news",
         "title": "Anthropic Secures $2.8 Billion Series D, Signaling Shift in AI Capital Strategy",
