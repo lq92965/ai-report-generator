@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774409428646",
+        "type": "news",
+        "title": "Enterprise AI Shifts from Experimentation to Core Infrastructure, Fueling Record Funding Rounds",
+        "category": "Tech Radar",
+        "date": "2026-03-25",
+        "author": "Olivia Thorne",
+        "excerpt": "The enterprise technology landscape is undergoing a seismic shift as artificial intelligence transitions from a collection of pilot projects to the foundation...",
+        "contentFile": "news-1774409428646.md"
+    },
+    {
         "id": "1774407625304",
         "type": "blog",
         "title": "The Structured Thinking Cure: How to Kill Reporting Fatigue and Make Your Updates Matter",

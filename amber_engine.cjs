@@ -9,6 +9,7 @@ const REPO_DIR = __dirname;
 const DATA_DIR = path.join(REPO_DIR, 'data');
 const CONTENT_DIR = path.join(REPO_DIR, 'content');
 const POSTS_JSON_PATH = path.join(DATA_DIR, 'posts.json');
+const MAKE_WEBHOOK_URL = process.env.MAKE_WEBHOOK_URL;
 
 // --- 虚拟编辑部：逼真的英文记者/PM名字 ---
 const FAKE_AUTHORS = [
@@ -53,23 +54,15 @@ async function generateArticle(type) {
 
         let rawMarkdown = response.data.choices[0].message.content.trim();
         
-        // 提取标题
         let titleMatch = rawMarkdown.match(/^#\s+(.+)$/m);
         let title = titleMatch ? titleMatch[1].trim() : `Reportify ${type.toUpperCase()} Insights`;
-        
-        // 移除原有的 H1 标题
         let contentMarkdown = rawMarkdown.replace(/^#\s+(.+)$/m, '').trim();
 
-        // 🌟 黑科技：自动生成 AI 配图 (无版权，根据标题动态生成)
         const imagePrompt = encodeURIComponent(`Professional abstract tech business concept, high quality, modern, ${title.substring(0, 50)}`);
         const aiImageUrl = `https://image.pollinations.ai/prompt/${imagePrompt}?width=1200&height=600&nologo=true`;
         
-        // 将配图强行插入到文章正文的最开头
         contentMarkdown = `![Article Cover](${aiImageUrl})\n\n` + contentMarkdown;
-
         let excerpt = contentMarkdown.replace(/!\[.*?\]\(.*?\)/g, '').replace(/[#*`>]/g, '').substring(0, 160).trim() + "...";
-
-        // 随机分配一个作者
         let author = FAKE_AUTHORS[Math.floor(Math.random() * FAKE_AUTHORS.length)];
 
         return { title, contentMarkdown, excerpt, author };
@@ -116,37 +109,64 @@ function publishPost(type, title, contentMarkdown, excerpt, author) {
     posts.unshift(newPost);
     fs.writeFileSync(POSTS_JSON_PATH, JSON.stringify(posts, null, 4), 'utf8');
     console.log(`[Amber] ✅ 保存成功: ${fileName} (作者: ${author})`);
+    
+    return { timestamp, title, excerpt };
 }
 
-// --- 步骤 3：推送 GitHub (已修复完美顺序) ---
+// --- 步骤 3：推送 GitHub ---
 function pushToGitHub() {
     try {
         console.log("[Amber] 🚀 正在推送 GitHub...");
-        // 核心修复：先提交当前更改，再拉取合并，最后推送！
         execSync('git add .', { cwd: REPO_DIR });
         execSync(`git commit -m "feat(content): Auto-publish ${new Date().toISOString()}"`, { cwd: REPO_DIR });
         execSync('git pull origin main --rebase', { cwd: REPO_DIR });
         execSync('git push origin main', { cwd: REPO_DIR });
         console.log("[Amber] 🎉 推送成功！");
+        return true;
     } catch (error) {
         console.error("[Amber] ❌ 推送失败，系统底层报错信息如下:");
         console.error(error.message);
+        return false;
+    }
+}
+
+// --- 步骤 4：触发 Make.com 自动发 Reddit (完美修复参数) ---
+async function triggerMakeWebhook(postData) {
+    if (!MAKE_WEBHOOK_URL) {
+        console.log("[Amber] ⚠️ 未检测到 MAKE_WEBHOOK_URL，跳过 Reddit 同步。");
+        return;
+    }
+    try {
+        console.log("[Amber] 📡 正在触发 Make.com 推送 Reddit...");
+        const articleUrl = `https://www.goreportify.com/article.html?id=${postData.timestamp}`;
+        await axios.post(MAKE_WEBHOOK_URL, {
+            title: postData.title,
+            // 完美解决 "缺少 text 参数" 的报错，同时附加上官网链接实现引流
+            text: `${postData.excerpt}\n\n👉 Read the full insight at: ${articleUrl}`,
+            excerpt: postData.excerpt, 
+            url: articleUrl
+        });
+        console.log("[Amber] ✅ Make.com Webhook 触发成功！");
+    } catch (error) {
+        console.error("[Amber] ❌ 触发 Make.com 失败:", error.message);
     }
 }
 
 async function runEngine(type) {
     const data = await generateArticle(type);
     if (data) {
-        publishPost(type, data.title, data.contentMarkdown, data.excerpt, data.author);
-        pushToGitHub();
+        const postMeta = publishPost(type, data.title, data.contentMarkdown, data.excerpt, data.author);
+        const pushed = pushToGitHub();
+        if (pushed) {
+            await triggerMakeWebhook(postMeta);
+        }
     }
 }
 
-console.log("🚀 Reportify AI - 琥珀双核发稿引擎已挂载！");
+console.log("🚀 Reportify AI - 琥珀双核发稿引擎 (含 Make.com 联动) 已挂载！");
 console.log("🧠 策略: News -> DeepSeek | Blog -> Gemini 2.5 Pro");
 console.log("⏳ 调度: Blog (每小时 0 分) | News (每小时 30 分)");
 console.log("==================================================");
 
-// 定时任务
 cron.schedule('0 * * * *', () => runEngine('blog'));
 cron.schedule('30 * * * *', () => runEngine('news'));
