@@ -28,13 +28,12 @@
                 </ul>
             </nav>
             <div style="display: flex; align-items: center; gap: 15px;">
-                <a href="usage.html#share-area" style="text-decoration: none; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); transition: transform 0.2s;">
-                    <i class="fas fa-gift"></i>
-                    <span class="hide-mobile-text">Invite & Earn</span>
-                </a>
-                <button onclick="window.openModal('login')" style="font-weight: bold; color: #4b5563; font-size: 1rem; background: transparent; border: none; cursor: pointer; padding: 0; transition: color 0.2s;" onmouseover="this.style.color='#2563eb'" onmouseout="this.style.color='#4b5563'">Login</button>
-                <button onclick="window.openModal('signup')" class="btn btn-primary bg-blue-600 text-white px-5 py-2 rounded-lg font-bold shadow-md hover:bg-blue-700 transition" style="border: none; cursor: pointer; font-size: 1rem;">Get Started</button>
-            </div>
+    <a href="usage.html#share-area" style="text-decoration: none; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); transition: transform 0.2s;">
+        <i class="fas fa-gift"></i>
+        <span class="hide-mobile-text">Invite & Earn</span>
+    </a>
+    <div id="auth-container" class="flex items-center gap-4"></div>
+</div>
         </div>
     </header>
 
@@ -53,6 +52,7 @@
             <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="col-span-full text-center text-gray-400 py-10"><i class="fas fa-spinner fa-spin text-3xl mb-3 text-blue-500"></i><p>Loading insights...</p></div>
             </div>
+            <div id="pagination-controls" class="flex justify-center items-center mt-16 gap-2"></div>
         </div>
     </main>
 
@@ -202,32 +202,71 @@
         document.addEventListener('DOMContentLoaded', async () => {
             try {
                 const response = await fetch('data/posts.json?t=' + new Date().getTime());
-                const posts = await response.json();
-                const grid = document.getElementById('posts-grid');
-                grid.innerHTML = ''; 
-
-                posts.filter(p => p.type === 'blog').forEach(post => {
-                    const card = `
-                        <a href="article.html?id=${post.id}" class="bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 border-l-4 border-l-blue-500 transition-all duration-300 overflow-hidden group flex flex-col h-full hover:-translate-y-1">
-                            <div class="p-8 flex flex-col h-full">
-                                <div class="flex justify-between items-center mb-4">
-                                    <span class="text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider bg-blue-100 text-blue-800">${post.category}</span>
-                                    <span class="text-sm text-gray-400 font-medium">${post.date}</span>
-                                </div>
-                                <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2 leading-tight">${post.title}</h3>
-                                <p class="text-gray-500 mb-6 line-clamp-3 leading-relaxed flex-grow">${post.excerpt}</p>
-                                <div class="text-blue-600 font-bold text-sm flex items-center gap-2 mt-auto">
-                                    Read Article <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
-                                </div>
-                            </div>
-                        </a>
-                    `;
-                    grid.innerHTML += card;
-                });
+                const allPosts = await response.json();
+                const blogPosts = allPosts.filter(p => p.type === 'blog');
                 
-                if(grid.innerHTML === '') {
-                    grid.innerHTML = '<p class="col-span-full text-center text-gray-500">No blog posts available yet.</p>';
+                const grid = document.getElementById('posts-grid');
+                const pagination = document.getElementById('pagination-controls');
+                
+                // 🌟 分页核心：每页显示 9 篇
+                const itemsPerPage = 9;
+                let currentPage = 1;
+
+                function renderPage(page) {
+                    grid.innerHTML = ''; 
+                    const start = (page - 1) * itemsPerPage;
+                    const end = start + itemsPerPage;
+                    const paginatedPosts = blogPosts.slice(start, end);
+
+                    if (paginatedPosts.length === 0) {
+                        grid.innerHTML = '<p class="col-span-full text-center text-gray-500">No blog posts available yet.</p>';
+                        return;
+                    }
+
+                    paginatedPosts.forEach(post => {
+                        // 🌟 静态链接修复：把 href 改成了真正的 html 网页
+                        const card = `
+                            <a href="${post.type}-${post.id}.html" class="bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 border-l-4 border-l-blue-500 transition-all duration-300 overflow-hidden group flex flex-col h-full hover:-translate-y-1">
+                                <div class="p-8 flex flex-col h-full">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider bg-blue-100 text-blue-800">${post.category}</span>
+                                        <span class="text-sm text-gray-400 font-medium">${post.date}</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2 leading-tight">${post.title}</h3>
+                                    <p class="text-gray-500 mb-6 line-clamp-3 leading-relaxed flex-grow">${post.excerpt}</p>
+                                    <div class="text-blue-600 font-bold text-sm flex items-center gap-2 mt-auto">
+                                        Read Article <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        `;
+                        grid.innerHTML += card;
+                    });
+                    
+                    window.scrollTo({ top: 0, behavior: 'smooth' }); // 翻页后自动滑到顶部
                 }
+
+                function renderPagination() {
+                    pagination.innerHTML = '';
+                    const totalPages = Math.ceil(blogPosts.length / itemsPerPage);
+                    if (totalPages <= 1) return; // 只有一页不显示分页
+
+                    for (let i = 1; i <= totalPages; i++) {
+                        const btn = document.createElement('button');
+                        btn.innerText = i;
+                        btn.className = `w-10 h-10 rounded-lg font-bold transition-all duration-200 ${i === currentPage ? 'bg-blue-600 text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-blue-600'}`;
+                        btn.onclick = () => {
+                            currentPage = i;
+                            renderPage(currentPage);
+                            renderPagination();
+                        };
+                        pagination.appendChild(btn);
+                    }
+                }
+
+                renderPage(currentPage);
+                renderPagination();
+
             } catch (error) {
                 document.getElementById('posts-grid').innerHTML = '<p class="col-span-full text-center text-red-500">Failed to load insights.</p>';
             }
