@@ -2475,3 +2475,20 @@ document.addEventListener('DOMContentLoaded', () => {
     bindLiveValidation('reset-new-password', 'reset-pwd-feedback');
     bindLiveValidation('new-password', 'security-pwd-feedback');
 });
+
+// 🟢 极其优雅的返回逻辑接管：保护分页记忆 (防弹版)
+document.addEventListener('DOMContentLoaded', () => {
+    const articleBackBtn = document.getElementById('dynamic-back-btn');
+    
+    // 识别是否是在具体的文章页面（通过 URL 里的长数字时间戳判断）
+    if (articleBackBtn && /\d{10,}/.test(window.location.pathname)) {
+        articleBackBtn.addEventListener('click', (e) => {
+            // 如果用户是从我们的列表页点进来的，就原路返回（保留他当时是第几页的记忆）
+            if (document.referrer.includes(window.location.hostname)) {
+                e.preventDefault();
+                window.history.back();
+            }
+            // 如果是从外部（比如谷歌搜索、朋友分享）直接进来的，就不干预，让它按原来默认的回到第一页
+        });
+    }
+});

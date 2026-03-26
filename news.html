@@ -38,8 +38,8 @@
     </header>
 
     <div class="container mx-auto px-6 mt-8 mb-2 w-full">
-        <a href="javascript:history.back()" style="color: #4b5563; text-decoration: none; font-size: 0.95rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: color 0.2s;" onmouseover="this.style.color='#2563eb'" onmouseout="this.style.color='#4b5563'">
-            <i class="fas fa-arrow-left"></i> Back
+        <a id="section-back-btn" href="index.html" style="color: #4b5563; text-decoration: none; font-size: 0.95rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: color 0.2s;" onmouseover="this.style.color='#2563eb'" onmouseout="this.style.color='#4b5563'">
+            <i class="fas fa-arrow-left"></i> <span id="section-back-text">Back to Home</span>
         </a>
     </div>
 
@@ -84,9 +84,20 @@
                 
                 const grid = document.getElementById('posts-grid');
                 const pagination = document.getElementById('pagination-controls');
+                const backBtn = document.getElementById('section-back-btn');
+                const backText = document.getElementById('section-back-text');
                 
                 const itemsPerPage = 9;
-                let currentPage = 1;
+                const urlParams = new URLSearchParams(window.location.search);
+                let currentPage = parseInt(urlParams.get('p')) || 1;
+
+                if (currentPage === 1) {
+                    backBtn.href = "index.html";
+                    backText.innerText = "Back to Home";
+                } else {
+                    backBtn.href = "?p=" + (currentPage - 1);
+                    backText.innerText = "Previous Page";
+                }
 
                 function renderPage(page) {
                     grid.innerHTML = ''; 
@@ -117,8 +128,6 @@
                         `;
                         grid.innerHTML += card;
                     });
-                    
-                    window.scrollTo({ top: 0, behavior: 'smooth' }); 
                 }
 
                 function renderPagination() {
@@ -131,9 +140,7 @@
                         btn.innerText = i;
                         btn.className = `w-10 h-10 rounded-lg font-bold transition-all duration-200 ${i === currentPage ? 'bg-purple-600 text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-purple-600'}`;
                         btn.onclick = () => {
-                            currentPage = i;
-                            renderPage(currentPage);
-                            renderPagination();
+                            window.location.href = "?p=" + i;
                         };
                         pagination.appendChild(btn);
                     }
