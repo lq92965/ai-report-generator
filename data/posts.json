@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774548021803",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
+        "category": "Tech Radar",
+        "date": "2026-03-26",
+        "author": "Sarah Jenkins",
+        "excerpt": "In a move that signals a profound, yet quiet, transformation, major tech firms and startups alike are reporting a fundamental shift in how software is...",
+        "contentFile": "news-1774548021803.md"
+    },
+    {
         "id": "1774526429346",
         "type": "blog",
         "title": "Are Your Reports Working, or Just Work? A PM's Guide to Overcoming Reporting Fatigue",
