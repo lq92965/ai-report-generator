@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Allow: /images/
+Allow: /content/
+
+Sitemap: https://www.goreportify.com/sitemap.xml
