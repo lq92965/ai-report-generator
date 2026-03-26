@@ -2476,19 +2476,16 @@ document.addEventListener('DOMContentLoaded', () => {
     bindLiveValidation('new-password', 'security-pwd-feedback');
 });
 
-// 🟢 极其优雅的返回逻辑接管：保护分页记忆 (防弹版)
+// 🟢 极其优雅的返回逻辑接管：保护文章详情页的分页记忆 (终极防弹版)
 document.addEventListener('DOMContentLoaded', () => {
     const articleBackBtn = document.getElementById('dynamic-back-btn');
-    
-    // 识别是否是在具体的文章页面（通过 URL 里的长数字时间戳判断）
-    if (articleBackBtn && /\d{10,}/.test(window.location.pathname)) {
-        articleBackBtn.addEventListener('click', (e) => {
-            // 如果用户是从我们的列表页点进来的，就原路返回（保留他当时是第几页的记忆）
-            if (document.referrer.includes(window.location.hostname)) {
-                e.preventDefault();
-                window.history.back();
+    if (articleBackBtn) {
+        articleBackBtn.addEventListener('click', function(e) {
+            // 只要是从我们自己的网站（包含主页、blog、news页）跳进文章的，一律原路退回！
+            if (document.referrer && document.referrer.includes(window.location.hostname)) {
+                e.preventDefault(); // 强行拦截原本写死的跳回第一页
+                window.history.back(); // 完美退回上一个页面（无论是第2页还是第10页，保留绝对记忆）
             }
-            // 如果是从外部（比如谷歌搜索、朋友分享）直接进来的，就不干预，让它按原来默认的回到第一页
         });
     }
 });
