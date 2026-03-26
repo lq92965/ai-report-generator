@@ -763,7 +763,7 @@
                 const badgeStyle = isNews ? 'background: #f3e8ff; color: #6b21a8;' : 'background: #dbeafe; color: #1e40af;';
                 const iconColor = isNews ? 'text-purple-600' : 'text-blue-600';
                 return `
-                    <a href="article.html?id=${post.id}" style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); text-decoration: none; display: flex; flex-direction: column; transition: transform 0.3s, box-shadow 0.3s; border: 1px solid #e2e8f0; height: 100%;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 6px -1px rgba(0,0,0,0.05)';">
+                    <a href="${post.type}-${post.id}.html" class="bg-white rounded-2xl ...
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                             <span style="${badgeStyle} padding: 4px 12px; border-radius: 999px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em;">${post.category}</span>
                             <span style="color: #94a3b8; font-size: 0.85rem; font-weight: 500;">${post.date}</span>
