@@ -37,7 +37,7 @@ async function generateArticle(type) {
     if (type === 'news') {
         try {
             console.log("[Amber V8] 📡 正在启动爬虫抓取全球最新科技热点...");
-            execSync('node tech_radar_crawler.js', { cwd: REPO_DIR, stdio: 'pipe' });
+            execSync('node tech_radar_crawler.cjs', { cwd: REPO_DIR, stdio: 'pipe' });
             
             const trendingPath = path.join(REPO_DIR, 'trending_news_raw.json');
             if (fs.existsSync(trendingPath)) {

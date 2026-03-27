@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774600254802",
+        "type": "news",
+        "title": "Title: From CLI to Cosmos: The Unseen Threads of Modern Tech Power",
+        "category": "Tech Radar",
+        "date": "2026-03-27",
+        "author": "Michael Chen",
+        "excerpt": "In the swirling vortex of today’s tech landscape, a single day’s headlines can map the entire terrain—from the granular tools on a developer’s command...",
+        "contentFile": "news-1774600254802.md"
+    },
+    {
         "id": "1774599932701",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
