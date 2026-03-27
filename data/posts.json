@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774612826512",
+        "type": "blog",
+        "title": "From Drudgery to Dialogue: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-27",
+        "author": "Marcus Webb",
+        "excerpt": "We've all been there. It's Tuesday afternoon, and the calendar reminder pops up: \"Prepare Weekly Project Status Report.\" A collective groan echoes thr...",
+        "contentFile": "blog-1774612826512.md"
+    },
+    {
         "id": "1774609222496",
         "type": "news",
         "title": "AI Regulation Debate Intensifies as New Models Challenge Existing Frameworks",
