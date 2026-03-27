@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774602025364",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-03-27",
+        "author": "Olivia Thorne",
+        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, United States, and China finalizing starkly different...",
+        "contentFile": "news-1774602025364.md"
+    },
+    {
         "id": "1774600254802",
         "type": "news",
         "title": "Title: From CLI to Cosmos: The Unseen Threads of Modern Tech Power",
