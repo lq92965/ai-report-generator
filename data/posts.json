@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774630830171",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "category": "Tech Radar",
+        "date": "2026-03-27",
+        "author": "David Sterling",
+        "excerpt": "The narrative around artificial intelligence has long been dominated by a binary debate: job creation versus job destruction. Headlines warn of mass u...",
+        "contentFile": "news-1774630830171.md"
+    },
+    {
         "id": "1774627227098",
         "type": "blog",
         "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
