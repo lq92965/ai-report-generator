@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774645222737",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
+        "category": "Tech Radar",
+        "date": "2026-03-27",
+        "author": "Alex Mercer",
+        "excerpt": "In the hushed server farms and on the glowing screens of developers worldwide, a profound and largely silent revolution is underway. Artificial intell...",
+        "contentFile": "news-1774645222737.md"
+    },
+    {
         "id": "1774641623397",
         "type": "blog",
         "title": "Beyond the Update: A PM's Guide to Conquering Reporting Fatigue",
