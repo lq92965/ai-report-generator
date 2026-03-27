@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774623625657",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "category": "Tech Radar",
+        "date": "2026-03-27",
+        "author": "David Sterling",
+        "excerpt": "While flashy chatbots and image generators capture headlines, a more profound—and often invisible—transformation is underway. Across the foundational...",
+        "contentFile": "news-1774623625657.md"
+    },
+    {
         "id": "1774620028083",
         "type": "blog",
         "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
