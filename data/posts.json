@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774569625909",
+        "type": "blog",
+        "title": "Is Anyone Even Reading This? A Deep-Dive into Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-27",
+        "author": "Michael Chen",
+        "excerpt": "You’ve been there. It’s 4 PM on a Thursday. You've spent the last three hours pulling data from five different sources, wrestling with a spreadsheet t...",
+        "contentFile": "blog-1774569625909.md"
+    },
+    {
         "id": "1774548021803",
         "type": "news",
         "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
