@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774609222496",
+        "type": "news",
+        "title": "AI Regulation Debate Intensifies as New Models Challenge Existing Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-03-27",
+        "author": "Emily Rostova",
+        "excerpt": "The global conversation surrounding artificial intelligence regulation has reached a critical juncture, as the release of increasingly sophisticated m...",
+        "contentFile": "news-1774609222496.md"
+    },
+    {
         "id": "1774605624534",
         "type": "blog",
         "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
