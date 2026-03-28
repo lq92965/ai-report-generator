@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774656025536",
+        "type": "blog",
+        "title": "Beyond the Dashboard: Curing Reporting Fatigue and Reclaiming Your Team's Focus",
+        "category": "Deep Insights",
+        "date": "2026-03-28",
+        "author": "David Sterling",
+        "excerpt": "The Sunday Scaries hit, but it's not the upcoming meetings you're dreading. It's the report. The weekly status report. The executive summary. The KPI...",
+        "contentFile": "blog-1774656025536.md"
+    },
+    {
         "id": "1774652421197",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
