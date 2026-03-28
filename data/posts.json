@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774670426205",
+        "type": "blog",
+        "title": "Curing Reporting Fatigue: How to Make Your Reports Matter Again",
+        "category": "Deep Insights",
+        "date": "2026-03-28",
+        "author": "Alex Mercer",
+        "excerpt": "As a Product Manager, you live and breathe data. It's the lifeblood of your decisions. Yet, you've probably felt that sinking feeling: you spend hours...",
+        "contentFile": "blog-1774670426205.md"
+    },
+    {
         "id": "1774666819463",
         "type": "news",
         "title": "The Unseen Cost of AI's Thirst: Data Centers Strain Global Resources",
