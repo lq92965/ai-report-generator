@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774735223664",
+        "type": "blog",
+        "title": "Beyond the Status Update: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-28",
+        "author": "Alex Mercer",
+        "excerpt": "As a Product Manager, you live and breathe data. You track velocity, burn-down charts, user engagement, and a dozen other KPIs. But there's a dark sid...",
+        "contentFile": "blog-1774735223664.md"
+    },
+    {
         "id": "1774731621414",
         "type": "news",
         "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
