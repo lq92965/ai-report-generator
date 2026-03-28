@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774663225165",
+        "type": "blog",
+        "title": "The Silent Project Killer: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-28",
+        "author": "Sarah Jenkins",
+        "excerpt": "As a Product Manager, you live and breathe data. You track sprints, monitor KPIs, and manage stakeholder expectations. A huge part of that is reportin...",
+        "contentFile": "blog-1774663225165.md"
+    },
+    {
         "id": "1774659626159",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
