@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774692024568",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: How to Conquer Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-28",
+        "author": "Marcus Webb",
+        "excerpt": "It’s Monday morning. Your calendar is blocked for two hours with a recurring task: \"Compile Weekly Status Report.\" You open a dozen tabs—Jira, your CR...",
+        "contentFile": "blog-1774692024568.md"
+    },
+    {
         "id": "1774688425552",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
