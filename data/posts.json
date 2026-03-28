@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774699223312",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Playbook for Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-28",
+        "author": "Sarah Jenkins",
+        "excerpt": "We’ve all been there. It’s Tuesday afternoon, and the calendar alert pops up: \"Compile Weekly Status Report.\" A collective groan echoes through the pr...",
+        "contentFile": "blog-1774699223312.md"
+    },
+    {
         "id": "1774695617519",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
