@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774731621414",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
+        "category": "Tech Radar",
+        "date": "2026-03-28",
+        "author": "Marcus Webb",
+        "excerpt": "In the hushed server rooms and on the glowing screens of developers worldwide, a profound transformation is underway, not through lines of code writte...",
+        "contentFile": "news-1774731621414.md"
+    },
+    {
         "id": "1774728021699",
         "type": "blog",
         "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
