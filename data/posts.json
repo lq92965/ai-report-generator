@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774688425552",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "category": "Tech Radar",
+        "date": "2026-03-28",
+        "author": "Michael Chen",
+        "excerpt": "The world's leading technology powers are gathering in Brussels this week for an unprecedented summit on artificial intelligence regulation, signaling...",
+        "contentFile": "news-1774688425552.md"
+    },
+    {
         "id": "1774684825650",
         "type": "blog",
         "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
