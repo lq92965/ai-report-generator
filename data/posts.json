@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774720827786",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-28",
+        "author": "Olivia Thorne",
+        "excerpt": "We've all been there. It's 4:30 PM on a Friday, and the recurring calendar notification pops up: \"Compile Weekly Status Report.\" A collective groan ec...",
+        "contentFile": "blog-1774720827786.md"
+    },
+    {
         "id": "1774717222300",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
