@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774677627121",
+        "type": "blog",
+        "title": "Beyond the Status Update: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-28",
+        "author": "Sarah Jenkins",
+        "excerpt": "We’ve all been there. It’s 4 PM on a Friday, and that automated calendar reminder pops up: \"Prepare Weekly Status Report.\" A collective groan echoes t...",
+        "contentFile": "blog-1774677627121.md"
+    },
+    {
         "id": "1774674022085",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
