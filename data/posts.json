@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774728021699",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-28",
+        "author": "David Sterling",
+        "excerpt": "The scene is familiar to any product or project manager. It's 4 PM on a Friday. Your team is trying to wrap up the sprint, but you're stuck in a sprea...",
+        "contentFile": "blog-1774728021699.md"
+    },
+    {
         "id": "1774724419427",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
