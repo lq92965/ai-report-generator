@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774666819463",
+        "type": "news",
+        "title": "The Unseen Cost of AI's Thirst: Data Centers Strain Global Resources",
+        "category": "Tech Radar",
+        "date": "2026-03-28",
+        "author": "Marcus Webb",
+        "excerpt": "The relentless expansion of artificial intelligence is colliding with a physical reality: the world's infrastructure is struggling to keep up. While h...",
+        "contentFile": "news-1774666819463.md"
+    },
+    {
         "id": "1774663225165",
         "type": "blog",
         "title": "The Silent Project Killer: A PM's Guide to Curing Reporting Fatigue",
