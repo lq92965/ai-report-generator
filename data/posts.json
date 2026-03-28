@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774713624792",
+        "type": "blog",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-28",
+        "author": "Sarah Jenkins",
+        "excerpt": "As a Project Manager, you live and breathe data. Status updates, burn-down charts, risk logs, stakeholder summaries—these are the lifeblood of a well-...",
+        "contentFile": "blog-1774713624792.md"
+    },
+    {
         "id": "1774710017396",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
