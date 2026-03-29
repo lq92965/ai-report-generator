@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774764026428",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-29",
+        "author": "Olivia Thorne",
+        "excerpt": "We've all been there. It's the end of the week, and the dreaded \"Weekly Status Report\" looms. You spend hours pulling data from five different sources...",
+        "contentFile": "blog-1774764026428.md"
+    },
+    {
         "id": "1774760420016",
         "type": "news",
         "title": "AI Regulation Debate Intensifies as New Model Capabilities Outpace Legislation",
