@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774785628745",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-29",
+        "author": "Emily Rostova",
+        "excerpt": "We’ve all been there. It’s Monday morning, and you’re compiling the weekly status report. You pull data from three different systems, format it into a...",
+        "contentFile": "blog-1774785628745.md"
+    },
+    {
         "id": "1774782022273",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
