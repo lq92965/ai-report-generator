@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774807226813",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-29",
+        "author": "Marcus Webb",
+        "excerpt": "We’ve all been there. The weekly business review meeting where eyes glaze over as the 27th slide of a deck flashes on screen. The automated dashboard...",
+        "contentFile": "blog-1774807226813.md"
+    },
+    {
         "id": "1774803620351",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
