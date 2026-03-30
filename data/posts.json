@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774850425551",
+        "type": "blog",
+        "title": "Beyond the Status Update: A PM's Guide to Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-30",
+        "author": "Alex Mercer",
+        "excerpt": "It’s Sunday evening. You’re not thinking about the exciting product launch or the complex problem your team is about to crack. You’re dreading the ted...",
+        "contentFile": "blog-1774850425551.md"
+    },
+    {
         "id": "1774846818968",
         "type": "news",
         "title": "The Unseen Labor Behind AI's Public Face",
