@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774836023728",
+        "type": "blog",
+        "title": "Drowning in Data? How to Overcome Reporting Fatigue and Make Reports Matter Again",
+        "category": "Deep Insights",
+        "date": "2026-03-30",
+        "author": "Marcus Webb",
+        "excerpt": "You know the feeling. It’s Monday morning, and your inbox is already flooded with automated reports. The weekly project status deck is due by EOD. A s...",
+        "contentFile": "blog-1774836023728.md"
+    },
+    {
         "id": "1774832428868",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
