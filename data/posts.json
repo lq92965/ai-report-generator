@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774879227706",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-30",
+        "author": "Alex Mercer",
+        "excerpt": "It’s 4:00 PM on a Friday. Your focus should be on wrapping up the week and planning the next sprint, but instead, you're wrestling with a spreadsheet....",
+        "contentFile": "blog-1774879227706.md"
+    },
+    {
         "id": "1774875624827",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet From the Inside Out",
