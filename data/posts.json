@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774864824832",
+        "type": "blog",
+        "title": "Overcoming Reporting Fatigue: A PM's Guide to Meaningful Metrics",
+        "category": "Deep Insights",
+        "date": "2026-03-30",
+        "author": "David Sterling",
+        "excerpt": "You know the feeling. It's Tuesday afternoon, and instead of strategizing your next big feature, you're wrestling with a spreadsheet. You're pulling d...",
+        "contentFile": "blog-1774864824832.md"
+    },
+    {
         "id": "1774861219695",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
