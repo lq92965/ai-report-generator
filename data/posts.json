@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774843230207",
+        "type": "blog",
+        "title": "From Noise to Signal: A PM's Deep-Dive into Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-30",
+        "author": "Olivia Thorne",
+        "excerpt": "We’ve all been there. It’s 4:45 PM on a Friday, and the recurring calendar notification pops up: \"Compile Weekly Status Report.\" A collective groan ec...",
+        "contentFile": "blog-1774843230207.md"
+    },
+    {
         "id": "1774839615280",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
