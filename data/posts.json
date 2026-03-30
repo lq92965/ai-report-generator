@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774857626448",
+        "type": "blog",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-30",
+        "author": "David Sterling",
+        "excerpt": "We've all been there. It’s Tuesday morning, and your calendar is a sea of reminders: \"Generate QBR deck,\" \"Update weekly progress report,\" \"Pull month...",
+        "contentFile": "blog-1774857626448.md"
+    },
+    {
         "id": "1774854025486",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
