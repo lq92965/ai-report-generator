@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774890021340",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-03-30",
+        "author": "Sarah Jenkins",
+        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, United States, and China advancing starkly different...",
+        "contentFile": "news-1774890021340.md"
+    },
+    {
         "id": "1774882825331",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
