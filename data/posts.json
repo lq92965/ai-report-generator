@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774947617613",
+        "type": "news",
+        "title": "The Unseen Labor Behind AI's Public Face",
+        "category": "Tech Radar",
+        "date": "2026-03-31",
+        "author": "Marcus Webb",
+        "excerpt": "While headlines tout AI's potential to revolutionize industries, a quieter story is unfolding behind the scenes: the mounting human and environmental...",
+        "contentFile": "news-1774947617613.md"
+    },
+    {
         "id": "1774940425575",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet From the Inside Out",
