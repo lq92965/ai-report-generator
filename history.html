@@ -3,49 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
     <title>History - Reportify AI</title>
-    <link rel="stylesheet" href="style.css?v=2026.2">
+    <link rel="stylesheet" href="style.css?v=2026.3">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body style="background-color: #f8fafc;">
-    <header class="main-header account-header" style="background: white; border-bottom: 1px solid #e2e8f0;">
-        <div class="container">
+<body class="has-app-nav" style="background-color: #f8fafc;">
+    <header class="main-header account-header pwa-app-header" style="background: white; border-bottom: 1px solid #e2e8f0;">
+        <div class="container pwa-header-inner">
            <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
                 <img src="https://raw.githubusercontent.com/lq92965/ai-report-generator/main/logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
                 <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
             </a>
-            <nav class="main-nav">
+            <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
                 <ul>
                     <li><a href="index.html#features">Features</a></li>
                     <li><a href="index.html#pricing">Pricing</a></li>
+                    <li><a href="generate.html">Generator</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="blog.html">Blog</a></li>
                 </ul>
             </nav>
-            <a href="usage.html#share-area" class="btn-credits" style="
-                background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
-                color: white;
-                padding: 8px 18px;
-                border-radius: 20px;
-                text-decoration: none;
-                font-size: 14px;
-                font-weight: 600;
-                margin-right: 15px;
-                display: inline-flex;
-                align-items: center;
-                transition: transform 0.2s, box-shadow 0.2s;
-                box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
-            " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                Invite & Earn
-            </a>
-            <div id="auth-container" class="header-actions"></div>
+            <div class="pwa-header-actions">
+                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite">
+                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
+                </a>
+                <div id="auth-container" class="header-actions"></div>
+            </div>
         </div>
     </header>
 
 <section class="generator-section" style="min-height: 80vh; padding: 40px 0;">
         <div class="container" style="width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 20px;">
+            <a href="account.html" class="pwa-page-back-link mb-4"><i data-lucide="arrow-left" class="pwa-page-back-icon" aria-hidden="true"></i><span>Back to Account Hub</span></a>
             <div style="margin-bottom: 30px; text-align: left;">
-                <a href="account.html" class="btn-back" style="text-decoration: none; color: #94a3b8; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px;">
-                    <i class="fas fa-arrow-left"></i> Back to Account Hub
-                </a>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h2 class="section-title" style="margin: 0; font-weight: 600; color: #1e293b;">History & Reports</h2>
                     <button onclick="loadHistoryData()" style="padding: 8px 15px; background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; color: #64748b;">
@@ -57,9 +51,17 @@
         </div>
     </section>
 
-    <footer class="main-footer">
+    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
+        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
+        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
+        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
+        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
+        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
+    </nav>
+
+    <footer class="main-footer" style="padding: 24px 0; background: #f8fafc; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 0.85rem; text-align: center;">
         <div class="container">
-            <p>&copy; 2026 Reportify AI. All Rights Reserved.</p>
+            <p style="margin: 0;">&copy; 2026 Beijing Cricket Information Technology Co., Ltd. All Rights Reserved.</p>
         </div>
     </footer>
 
@@ -94,6 +96,8 @@
     </style>
     <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
     
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="pwa-nav.js"></script>
     <script src="script.js?v=2026.2"></script>
 </body>
 </html>

@@ -2,6 +2,8 @@
 // 如果你在本地开发，请用 http://localhost:3000
 // 如果上线，请改为 https://goreportify.com
 const API_BASE_URL = 'https://api.goreportify.com';
+/** Always relative — never assign window.location to an absolute production URL (preserves PWA shell). */
+const HOME_REL = './index.html';
 
 
 // 全局状态
@@ -47,6 +49,51 @@ window.showToast = function(message, type = 'info') {
     }, 3000);
 };
 
+/** 确保底部 Tab 栏与 PWA 壳层在登录/刷新后仍显示（修复被旧缓存或样式覆盖的情况） */
+/** 确保底部 Tab 栏与 PWA 壳层在登录/刷新后仍显示 */
+function ensurePwaShell() {
+    document.body.classList.add('has-app-nav');
+    // 强制给 body 底部留出空间，防止内容被遮挡
+    document.body.style.setProperty('padding-bottom', '75px', 'important');
+
+    let nav = document.getElementById('app-bottom-nav') || document.querySelector('.app-bottom-nav');
+    
+    // 核心修复：如果登录后由于 DOM 刷新导致导航栏不见了，强行用 JS 再画一个出来！
+    if (!nav) {
+        nav = document.createElement('nav');
+        nav.id = 'app-bottom-nav';
+        nav.className = 'app-bottom-nav flex justify-around items-center bg-white border-t border-gray-200 fixed bottom-0 left-0 right-0 z-[100000] h-[65px]';
+        nav.innerHTML = `
+            <a href="index.html" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-blue-600" style="text-decoration:none;">
+                <i data-lucide="home" class="w-6 h-6 mb-1"></i><span style="font-size:10px;">Home</span>
+            </a>
+            <a href="generate.html" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-blue-600" style="text-decoration:none;">
+                <i data-lucide="sparkles" class="w-6 h-6 mb-1"></i><span style="font-size:10px;">Generate</span>
+            </a>
+            <a href="news.html" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-blue-600" style="text-decoration:none;">
+                <i data-lucide="newspaper" class="w-6 h-6 mb-1"></i><span style="font-size:10px;">News</span>
+            </a>
+            <a href="blog.html" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-blue-600" style="text-decoration:none;">
+                <i data-lucide="book-open" class="w-6 h-6 mb-1"></i><span style="font-size:10px;">Blog</span>
+            </a>
+            <a href="account.html" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-blue-600" style="text-decoration:none;">
+                <i data-lucide="user" class="w-6 h-6 mb-1"></i><span style="font-size:10px;">Mine</span>
+            </a>
+        `;
+        document.body.appendChild(nav);
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    // 强行锁死导航栏的 CSS 优先级
+    nav.removeAttribute('hidden');
+    nav.style.setProperty('display', 'flex', 'important');
+    nav.style.setProperty('visibility', 'visible', 'important');
+    nav.style.setProperty('position', 'fixed', 'important');
+    nav.style.setProperty('bottom', '0', 'important');
+    nav.style.setProperty('z-index', '100000', 'important');
+    nav.style.setProperty('background-color', '#ffffff', 'important');
+}
+
 window.saveAs = function(blob, filename) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -64,7 +111,7 @@ window.openModal = function(tabToShow = 'login') {
     
     // 如果当前页面找不到弹窗（说明在子页面）
     if (!overlay) {
-        window.location.href = `index.html?modal=${tabToShow}`;
+        window.location.href = `${HOME_REL}?modal=${tabToShow}`;
         return;
     }
 
@@ -108,7 +155,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupContactForm();     
     //setupHistoryLoader();   
     setupMessageCenter();   
-    setupUserDropdown();    
+    setupUserDropdown();
+    ensurePwaShell();
+    setupAccountHubGuards();
     setupAvatarUpload();
     setupHistoryLoader(); // 🟢 核心修复：在这里调用历史加载器，让页面一打开就去拉取数据！
     console.log("Reportify AI v22.1 Initialized");
@@ -168,7 +217,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         planNameEl.style.color = '#f59e0b'; // 橙色
                         if(upgradeHint) upgradeHint.style.display = 'block';
                     } else {
-                        planNameEl.textContent = 'EXPIRED (已过期)';
+                        planNameEl.textContent = 'EXPIRED';
                         planNameEl.style.color = '#ef4444'; // 红色
                         if(upgradeHint) upgradeHint.style.display = 'block';
                     }
@@ -273,8 +322,9 @@ function handleGoogleCallback() {
     if (tokenFromUrl) {
         localStorage.setItem('token', tokenFromUrl);
         window.history.replaceState({}, document.title, window.location.pathname);
-        showToast('Login Successful!', 'success');
-        setTimeout(() => window.location.href = 'index.html', 500);
+        showToast('Login successful!', 'success');
+        ensurePwaShell();
+        // Stay on current page; DOMContentLoaded will fetch profile and refresh header.
     }
     if (errorFromUrl) {
         showToast('Google Login Failed', 'error');
@@ -327,7 +377,7 @@ function setupAuthUI() {
             const password = document.getElementById('login-password').value;
             
             if(!email || !password) {
-                showToast("请输入邮箱和密码", "warning");
+                showToast("Please enter your email and password.", "warning");
                 return;
             }
 
@@ -345,9 +395,15 @@ function setupAuthUI() {
                 if (!res.ok) throw new Error(data.message || 'Login failed');
 
                 localStorage.setItem('token', data.token);
-                showToast("登录成功！Welcome back!", "success");
+                showToast("Welcome back!", "success");
                 window.closeModal();
-                setTimeout(() => window.location.reload(), 800);
+                await fetchUserProfile();
+                setupUserDropdown();
+                ensurePwaShell();
+                await loadAccountPageAvatar();
+                if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+                    lucide.createIcons();
+                }
             } catch (err) {
                 showToast(err.message, "error");
             } finally {
@@ -487,7 +543,7 @@ function setupAuthUI() {
             btn.parentNode.replaceChild(newBtn, btn);
             newBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                if (window.location.href.includes('subscription')) window.location.href = 'index.html';
+                if (window.location.href.includes('subscription')) window.location.href = HOME_REL;
                 else window.openModal('signup');
             });
         }
@@ -516,10 +572,10 @@ function setupStrictValidation() {
         const span = getErrorSpan(nameInput);
         if (val.length === 0) { span.innerHTML = ''; return false; }
         if (val.length > 10) {
-            span.innerHTML = '<span class="text-red-500">❌ 最多10个字符 (Max 10 chars)</span>';
+            span.innerHTML = '<span class="text-red-500">Max 10 characters.</span>';
             return false;
         }
-        span.innerHTML = '<span class="text-green-600">✅ OK</span>';
+        span.innerHTML = '<span class="text-green-600">OK</span>';
         return true;
     };
 
@@ -529,10 +585,10 @@ function setupStrictValidation() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (val.length === 0) { span.innerHTML = ''; return false; }
         if (!emailRegex.test(val)) {
-            span.innerHTML = '<span class="text-red-500">❌ 格式错误 (Invalid Email)</span>';
+            span.innerHTML = '<span class="text-red-500">Invalid email.</span>';
             return false;
         }
-        span.innerHTML = '<span class="text-green-600">✅ OK</span>';
+        span.innerHTML = '<span class="text-green-600">OK</span>';
         return true;
     };
 
@@ -944,7 +1000,7 @@ function setupCopyBtn() {
                 
                 // 按钮反馈动画
                 const originalText = newCopyBtn.innerHTML;
-                newCopyBtn.innerHTML = '<i class="fas fa-check"></i> 已复制格式';
+                newCopyBtn.innerHTML = '<i class="fas fa-check"></i> Copied';
                 newCopyBtn.classList.add('bg-green-600', 'text-white');
                 
                 setTimeout(() => {
@@ -1393,7 +1449,7 @@ function exportToPPT(content, filename, passedTemplate = null, passedSummary = n
 function shareReportLink() {
     // 因为目前没有后端存储分享页，我们模拟一个
     // 在真实生产环境，这里会请求 API 生成短链
-    const mockLink = `https://goreportify.com/share/${Math.random().toString(36).substr(2, 9)}`;
+    const mockLink = `${window.location.origin}/share/${Math.random().toString(36).substr(2, 9)}`;
     
     // 复制到剪贴板
     navigator.clipboard.writeText(mockLink).then(() => {
@@ -1918,7 +1974,22 @@ async function loadMessages(markAsRead = false) {
     }
 }
 
+/** Account hub: block navigation to protected cards when logged out */
+function setupAccountHubGuards() {
+    if (!window.location.pathname.includes('account')) return;
+    document.querySelectorAll('a.account-protected-link').forEach((a) => {
+        a.addEventListener('click', (e) => {
+            if (!localStorage.getItem('token')) {
+                e.preventDefault();
+                alert('Please log in to continue.');
+                if (typeof window.openModal === 'function') window.openModal('login');
+            }
+        });
+    });
+}
+
 // --- 模块 K: 用户菜单 (修复版：已加入管理员入口) ---
+// Only mutate #auth-container — never replace .pwa-header-inner or .app-bottom-nav.
 function setupUserDropdown() {
     const headerRight = document.getElementById('auth-container');
     if (!headerRight) return;
@@ -1926,9 +1997,8 @@ function setupUserDropdown() {
     // 1. 如果没有登录
     if (!currentUser) {
         headerRight.innerHTML = `
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <button onclick="openModal('login')" style="background:none; border:none; cursor:pointer; font-weight:500; color:#555;">Login</button>
-                <button onclick="openModal('signup')" style="background:#2563eb; color:white; border:none; padding:8px 20px; border-radius:20px; cursor:pointer; font-weight:bold;">Get Started</button>
+            <div class="auth-guest-actions" style="display: flex; gap: 8px; align-items: center;">
+                <button type="button" class="btn-auth-pill" onclick="openModal('login')">Login / Register</button>
             </div>
         `;
     } else {
@@ -1941,11 +2011,11 @@ function setupUserDropdown() {
 
         // 4. 生成头像 HTML
         const avatarHtml = picUrl
-            ? `<img src="${picUrl}" alt="Avatar" 
-                   style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer;" 
+            ? `<img src="${picUrl}" alt="Avatar" class="pwa-user-avatar"
+                   style="border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer;" 
                    onclick="toggleUserMenu()">`
-            : `<div onclick="toggleUserMenu()" 
-                   style="width: 40px; height: 40px; border-radius: 50%; background-color: #2563eb; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            : `<div onclick="toggleUserMenu()" class="pwa-user-avatar pwa-user-avatar--initial"
+                   style="border-radius: 50%; background-color: #2563eb; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
                    ${initial}
                </div>`;
 
@@ -1958,8 +2028,8 @@ function setupUserDropdown() {
 
         // 6. 渲染菜单
         headerRight.innerHTML = `
-            <div style="position: relative; display: flex; align-items: center; gap: 12px;">
-                <span style="font-size: 14px; font-weight: 500; color: #333;">${displayName}</span>
+            <div class="pwa-header-user-wrap" style="position: relative; display: flex; align-items: center; gap: 8px;">
+                <span class="pwa-header-user-name" style="font-size: 13px; font-weight: 600; color: #333; max-width: 42vw;">${displayName}</span>
                 ${avatarHtml}
                 
                 <div id="user-dropdown" class="hidden" 
@@ -2148,7 +2218,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // 密码修改成功后，强制退出要求重新登录
                     setTimeout(() => {
                         localStorage.removeItem('token');
-                        window.location.href = 'index.html';
+                        window.location.href = HOME_REL;
                     }, 2000);
                 } else {
                     // 这里会精准捕获我们在后端写的 "旧密码不正确" 的报错
@@ -2188,7 +2258,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (res.ok) {
                     showToast("账号已彻底删除，期待您的再次使用。", "success");
                     localStorage.removeItem('token');
-                    setTimeout(() => window.location.href = 'index.html', 1500);
+                    setTimeout(() => { window.location.href = HOME_REL; }, 1500);
                 } else {
                     const data = await res.json();
                     showToast(data.message || "删除失败", "error");
@@ -2474,18 +2544,4 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     bindLiveValidation('reset-new-password', 'reset-pwd-feedback');
     bindLiveValidation('new-password', 'security-pwd-feedback');
-});
-
-// 🟢 极其优雅的返回逻辑接管：保护文章详情页的分页记忆 (终极防弹版)
-document.addEventListener('DOMContentLoaded', () => {
-    const articleBackBtn = document.getElementById('dynamic-back-btn');
-    if (articleBackBtn) {
-        articleBackBtn.addEventListener('click', function(e) {
-            // 只要是从我们自己的网站（包含主页、blog、news页）跳进文章的，一律原路退回！
-            if (document.referrer && document.referrer.includes(window.location.hostname)) {
-                e.preventDefault(); // 强行拦截原本写死的跳回第一页
-                window.history.back(); // 完美退回上一个页面（无论是第2页还是第10页，保留绝对记忆）
-            }
-        });
-    }
 });

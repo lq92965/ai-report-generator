@@ -210,7 +210,7 @@
         document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
         if (!token) {
-            window.location.href = 'index.html?error=admin_required';
+            window.location.href = './index.html?error=admin_required';
         } else {
             setTimeout(() => document.getElementById('auth-check').style.display = 'none', 500);
             initData();
@@ -228,7 +228,7 @@
 
                 if (statsRes.status === 403) {
                     alert("Access Denied: You are not an Admin.");
-                    window.location.href = 'index.html';
+                    window.location.href = './index.html';
                     return;
                 }
 
@@ -471,7 +471,7 @@
 
         window.logout = function() {
             localStorage.removeItem('token');
-            window.location.href = 'index.html';
+            window.location.href = './index.html';
         }
     </script>
     <div id="toast-container"></div>

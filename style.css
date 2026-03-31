@@ -1852,14 +1852,18 @@ body:has(#history-container) main {
    🔥 2026-03 终极修复补丁 (弹窗层级与红绿灯 UI)
    ==================================================================== */
 
-/* 修复所有 Modal 弹窗的层级，防止被内容遮挡 */
-#auth-modal-overlay, #payment-modal-overlay, #forgot-password-modal, #report-view-modal {
-    z-index: 10000 !important;
+/* 修复所有 Modal 弹窗的层级（高于底部导航 z-index: 99999） */
+#auth-modal-overlay,
+#payment-modal-overlay,
+#forgot-password-modal,
+#report-view-modal,
+#message-modal {
+    z-index: 100000 !important;
 }
 
 /* 修复 Toast 提示层级 */
 #toast-container {
-    z-index: 10005 !important;
+    z-index: 100005 !important;
 }
 
 /* 新密码强度实时校验UI样式补充 */
@@ -1868,3 +1872,514 @@ body:has(#history-container) main {
 }
 .text-green-500 { color: #10b981 !important; }
 .text-red-500 { color: #ef4444 !important; }
+
+/* ====================================================================
+   PWA — app shell: fixed bottom nav (Lucide), header, body padding
+   ==================================================================== */
+
+/* iOS：避免系统放大文字导致「像网页放大」 */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body.has-app-nav {
+    padding-bottom: 80px !important;
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)) !important;
+    min-height: 100dvh;
+}
+
+body.has-app-nav .main-footer {
+    margin-bottom: 0.25rem;
+}
+
+/* Unified back link — News / Blog lists, article detail, Account hub sub-pages */
+.pwa-page-back-row {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: left;
+}
+a.pwa-page-back-link {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 0.35em;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: #111111 !important;
+    text-decoration: none !important;
+    line-height: 1.2;
+    margin: 0 0 0.75rem 0;
+    -webkit-tap-highlight-color: transparent;
+}
+a.pwa-page-back-link:hover,
+a.pwa-page-back-link:focus-visible {
+    color: #000000 !important;
+    opacity: 0.9;
+}
+a.pwa-page-back-link .pwa-page-back-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+    flex-shrink: 0;
+}
+a.pwa-page-back-link .pwa-page-back-icon svg {
+    width: 1em !important;
+    height: 1em !important;
+    stroke: currentColor;
+    stroke-width: 2.5px;
+}
+
+/* Hub sub-pages: extra space below back link (works without Tailwind .mb-4) */
+a.pwa-page-back-link.mb-4 {
+    margin-bottom: 1rem !important;
+}
+
+/* --- Fixed bottom navigation (5 tabs) — Lucide icons --- */
+/* 登录后也必须始终可见（与 #app-bottom-nav 同选） */
+#app-bottom-nav.app-bottom-nav,
+.app-bottom-nav {
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    z-index: 100000 !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    align-items: center !important;
+    justify-content: space-around !important;
+    box-sizing: border-box !important;
+    height: 60px !important;
+    min-height: 60px !important;
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    margin: 0 !important;
+    background: #ffffff !important;
+    border-top: 1px solid #e8e8ed !important;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04);
+}
+
+.app-bottom-nav .app-nav-item {
+    flex: 1 1 0;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px;
+    min-width: 0;
+    max-width: 100%;
+    height: 100%;
+    padding: 4px 2px 2px;
+    text-decoration: none !important;
+    color: #64748b !important;
+    transition: color 0.15s ease, background 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.app-bottom-nav .app-nav-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 0;
+}
+
+.app-bottom-nav .app-nav-icon svg {
+    width: 24px !important;
+    height: 24px !important;
+    stroke-width: 2px;
+}
+
+.app-bottom-nav .app-nav-item:not(.app-nav-item--active) .app-nav-icon svg {
+    stroke: #64748b !important;
+    color: #64748b !important;
+}
+
+.app-bottom-nav .app-nav-item--active {
+    color: #2563eb !important;
+}
+
+.app-bottom-nav .app-nav-item--active .app-nav-icon svg {
+    stroke: #2563eb !important;
+}
+
+.app-bottom-nav .app-nav-label {
+    font-size: 0.65rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.01em;
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.app-bottom-nav .app-nav-item--active .app-nav-label {
+    color: #2563eb !important;
+}
+
+/* --- App header: logo | desktop nav | invite icon + Login/Register (no hamburger) --- */
+.pwa-app-header {
+    z-index: 9999;
+}
+
+.pwa-header-inner {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.pwa-header-inner .logo {
+    flex-shrink: 0;
+    min-width: 0;
+}
+
+.pwa-desktop-nav,
+.pwa-header-inner .main-nav.pwa-desktop-nav {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+@media (max-width: 767px) {
+    .pwa-desktop-nav,
+    .pwa-header-inner .main-nav.pwa-desktop-nav {
+        display: none !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .pwa-desktop-nav,
+    .pwa-header-inner .main-nav.pwa-desktop-nav {
+        display: block !important;
+    }
+}
+
+.main-header.pwa-app-header.account-header .container.pwa-header-inner {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    height: auto !important;
+    min-height: auto !important;
+}
+
+.pwa-header-actions {
+    display: flex !important;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+/* Compact invite: Lucide gift icon */
+.pwa-header-inner .logo img {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+.pwa-header-inner .logo span {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+}
+
+@media (min-width: 768px) {
+    .pwa-header-inner .logo img {
+        width: 40px !important;
+        height: 40px !important;
+    }
+    .pwa-header-inner .logo span {
+        font-size: 1.25rem !important;
+    }
+}
+
+.pwa-invite-icon-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background: #fafafa;
+    color: #7c3aed;
+    text-decoration: none !important;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.pwa-invite-icon-btn:hover {
+    background: #f3e8ff;
+    border-color: #c4b5fd;
+}
+
+.pwa-invite-icon-btn .pwa-invite-lucide svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2px;
+}
+
+@media (min-width: 768px) {
+    .pwa-invite-icon-btn {
+        width: 40px;
+        height: 40px;
+    }
+    .pwa-invite-icon-btn .pwa-invite-lucide svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* 登录后头像：移动端略小，接近 iOS 导航栏比例 */
+.pwa-user-avatar {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px;
+    min-height: 32px;
+    font-size: 0.8rem !important;
+}
+
+@media (min-width: 768px) {
+    .pwa-user-avatar {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px;
+        min-height: 38px;
+        font-size: 0.95rem !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .pwa-header-user-name {
+        font-size: 12px !important;
+        max-width: 36vw !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.pwa-invite-btn {
+    text-decoration: none;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white !important;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.25);
+    white-space: nowrap;
+}
+
+.btn-auth-pill {
+    background: #2563eb !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 8px 14px !important;
+    border-radius: 999px !important;
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+    .btn-auth-pill {
+        padding: 8px 12px !important;
+        font-size: 0.72rem !important;
+    }
+}
+
+/* Allow stacked account-style headers on narrow screens */
+@media (max-width: 900px) {
+    .main-header.pwa-app-header.account-header {
+        height: auto !important;
+        min-height: auto !important;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+
+    .main-header.pwa-app-header.account-header .container {
+        flex-wrap: wrap !important;
+        height: auto !important;
+        min-height: auto !important;
+    }
+}
+
+/* Generator export grid — no horizontal scroll on 390–430px */
+.export-options-responsive {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+@media (min-width: 420px) {
+    .export-options-responsive {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 768px) {
+    .export-options-responsive {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+/* Report output + tables — fit narrow viewports */
+#generated-report,
+#modal-body {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+#generated-report table,
+#modal-body table,
+#history-container table,
+#article-content table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Profile form grid on small screens */
+@media (max-width: 640px) {
+    .profile-form-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .profile-page-title-wrap {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+
+    .profile-page-title-wrap h1 {
+        position: static !important;
+        transform: none !important;
+        margin-top: 12px !important;
+    }
+}
+
+/* Message bell — sit above 60px bottom bar */
+body.has-app-nav .fixed.bottom-8 {
+    bottom: calc(60px + 1rem + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+/* --- PWA mobile typography & density (Tailwind-friendly overrides) --- */
+@media (max-width: 767px) {
+    body.has-app-nav {
+        font-size: 0.9375rem;
+        line-height: 1.5;
+    }
+
+    .pwa-invite-lucide svg,
+    .pwa-invite-icon-btn .pwa-invite-lucide svg {
+        width: 24px !important;
+        height: 24px !important;
+    }
+
+    .text-5xl { font-size: 1.25rem !important; line-height: 1.25 !important; }
+    .text-4xl { font-size: 1.25rem !important; line-height: 1.25 !important; }
+    .text-3xl { font-size: 1.25rem !important; line-height: 1.25 !important; }
+    .text-2xl { font-size: 1.125rem !important; line-height: 1.3 !important; }
+
+    .p-8 { padding: 1rem !important; }
+    .p-10 { padding: 1.25rem !important; }
+    .px-8 { padding-left: 1rem !important; padding-right: 1rem !important; }
+    .py-8 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+    .pt-20 { padding-top: 2rem !important; }
+    .pb-10 { padding-bottom: 1.25rem !important; }
+    .py-20 { padding-top: 2rem !important; padding-bottom: 2rem !important; }
+    .py-12 { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
+    .gap-8 { gap: 1rem !important; }
+    .mb-16 { margin-bottom: 2rem !important; }
+    .mt-16 { margin-top: 2rem !important; }
+
+    .features-section .section-title,
+    .pricing-section .section-title {
+        font-size: 1.5rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .account-hub .container {
+        padding: 24px 12px !important;
+    }
+
+    .generator-section .container {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+
+    #article-content.prose-lg,
+    .prose.prose-lg {
+        font-size: 0.9375rem !important;
+        line-height: 1.6 !important;
+    }
+}
+
+/* 移动端强制 UI 缩小 (覆盖所有冗余设置) */
+@media screen and (max-width: 768px) {
+    /* 强制缩小所有基础字体 */
+    html, body {
+      font-size: 14px !important;
+    }
+    /* 强制缩小各级标题 */
+    h1 { font-size: 1.5rem !important; line-height: 1.2 !important; margin-bottom: 0.5rem !important; }
+    h2 { font-size: 1.25rem !important; margin-bottom: 0.5rem !important; }
+    h3 { font-size: 1.1rem !important; }
+    
+    /* 强制压缩卡片和区块的内边距 */
+    .p-10, .p-12, .py-20 {
+      padding: 1rem !important;
+    }
+    .container {
+      padding-left: 1rem !important;
+      padding-right: 1rem !important;
+    }
+    
+    /* 强制缩小 Logo 和图标 */
+    img.logo, .main-logo {
+      height: 30px !important;
+      width: auto !important;
+    }
+    .lucide {
+      width: 20px !important;
+      height: 20px !important;
+    }
+    
+    /* 强制缩小所有按钮 */
+    button, .btn {
+      padding: 0.5rem 1rem !important;
+      font-size: 0.9rem !important;
+      height: auto !important;
+    }
+  }
+
+/* Back link: keep icon size tied to label (above global mobile .lucide rules) */
+@media screen and (max-width: 768px) {
+    a.pwa-page-back-link .pwa-page-back-icon svg,
+    a.pwa-page-back-link svg {
+        width: 1em !important;
+        height: 1em !important;
+    }
+}

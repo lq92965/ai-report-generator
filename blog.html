@@ -3,63 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
     <title>Deep Insights - Reportify AI</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=3.0">
+    <link rel="stylesheet" href="style.css?v=3.4-ios">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
 </head>
-<body class="font-sans antialiased bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+<body class="has-app-nav font-sans antialiased bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
-    <header class="main-header bg-white shadow-sm border-b border-gray-200 py-4">
-        <div class="container mx-auto px-6 flex justify-between items-center">
+    <header class="main-header pwa-app-header bg-white shadow-sm border-b border-gray-200 py-4">
+        <div class="container mx-auto px-6 pwa-header-inner">
             <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
                 <img src="https://raw.githubusercontent.com/lq92965/ai-report-generator/main/logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain;">
                 <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
             </a>
-            <nav class="main-nav hidden md:block">
+            <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
                 <ul class="flex gap-6 font-medium text-gray-600">
                     <li><a href="index.html#features" class="hover:text-blue-600 transition">Features</a></li>
                     <li><a href="index.html#pricing" class="hover:text-blue-600 transition">Pricing</a></li>
+                    <li><a href="generate.html" class="hover:text-blue-600 transition">Generator</a></li>
                     <li><a href="news.html" class="hover:text-blue-600 transition">News</a></li>
                     <li><a href="blog.html" class="text-blue-600 font-bold">Blog</a></li>
-                    <li><a href="index.html#contact" class="hover:text-blue-600 transition">Contact</a></li>
                 </ul>
             </nav>
-            <div style="display: flex; align-items: center; gap: 15px;">
-    <a href="usage.html#share-area" style="text-decoration: none; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); transition: transform 0.2s;">
-        <i class="fas fa-gift"></i>
-        <span class="hide-mobile-text">Invite & Earn</span>
-    </a>
-    <div id="auth-container" class="flex items-center gap-4"></div>
-</div>
+            <div class="pwa-header-actions">
+                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite">
+                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
+                </a>
+                <div id="auth-container" class="flex items-center gap-4 header-actions"></div>
+            </div>
         </div>
     </header>
 
-    <div class="container mx-auto px-6 mt-8 mb-2 w-full">
-        <a id="section-back-btn" href="index.html" style="color: #4b5563; text-decoration: none; font-size: 0.95rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: color 0.2s;" onmouseover="this.style.color='#2563eb'" onmouseout="this.style.color='#4b5563'">
-            <i class="fas fa-arrow-left"></i> <span id="section-back-text">Back to Home</span>
+    <div class="pwa-page-back-row max-w-6xl mx-auto px-6 mt-4">
+        <a href="javascript:history.back()" class="pwa-page-back-link">
+            <i data-lucide="arrow-left" class="pwa-page-back-icon" aria-hidden="true"></i>
+            <span>Back to Blog</span>
         </a>
     </div>
 
     <main class="flex-grow pt-4 pb-20">
         <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">Deep Insights</h1>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Elevate your strategic thinking with masterclasses in productivity, PM workflows, and AI-driven growth.</p>
+            <div class="text-center mb-8 md:mb-16">
+                <h1 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-2 tracking-tight">Deep Insights</h1>
+                <p class="text-xs sm:text-sm text-gray-600 max-w-2xl mx-auto leading-relaxed">Elevate your strategic thinking with masterclasses in productivity, PM workflows, and AI-driven growth.</p>
             </div>
             <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="col-span-full text-center text-gray-400 py-10"><i class="fas fa-spinner fa-spin text-3xl mb-3 text-blue-500"></i><p>Loading insights...</p></div>
             </div>
-            <div id="pagination-controls" class="flex justify-center items-center mt-16 gap-2"></div>
+            <div id="pagination-controls" class="flex flex-nowrap justify-start sm:justify-center items-center gap-2 mt-16 w-full max-w-full overflow-x-auto pb-2 [-webkit-overflow-scrolling:touch]"></div>
         </div>
     </main>
+
+    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
+        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
+        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
+        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
+        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
+        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
+    </nav>
 
     <footer class="main-footer mt-auto" style="padding: 30px 0; background: #f8fafc; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 0.85rem; text-align: center;">
         <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
             <div class="flex gap-6 mb-2 mt-2">
-                <a href="https://discord.gg/您的真实链接" target="_blank" class="text-[#64748b] hover:text-[#5865F2] hover:-translate-y-1 transition-all duration-300 text-xl" title="Join our Discord"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://discord.gg/UtNfS8kH" target="_blank" class="text-[#64748b] hover:text-[#5865F2] hover:-translate-y-1 transition-all duration-300 text-xl" title="Join our Discord"><i class="fa-brands fa-discord"></i></a>
                 <a href="https://www.reddit.com/user/Automatic_Pitch5117" target="_blank" class="text-[#64748b] hover:text-[#FF4500] hover:-translate-y-1 transition-all duration-300 text-xl" title="Follow on Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
                 <a href="https://twitter.com" target="_blank" class="text-[#64748b] hover:text-[#1DA1F2] hover:-translate-y-1 transition-all duration-300 text-xl" title="Follow on Twitter"><i class="fa-brands fa-twitter"></i></a>
                 <a href="https://linkedin.com" target="_blank" class="text-[#64748b] hover:text-[#0077b5] hover:-translate-y-1 transition-all duration-300 text-xl" title="Follow on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
@@ -207,22 +219,10 @@
                 
                 const grid = document.getElementById('posts-grid');
                 const pagination = document.getElementById('pagination-controls');
-                const backBtn = document.getElementById('section-back-btn');
-                const backText = document.getElementById('section-back-text');
                 
                 const itemsPerPage = 9;
-                // 🌟 核心引擎：从网址上读取当前页码，没有就默认是 1
                 const urlParams = new URLSearchParams(window.location.search);
                 let currentPage = parseInt(urlParams.get('p')) || 1;
-
-                // 🌟 极其智能的左上角按钮判断逻辑
-                if (currentPage === 1) {
-                    backBtn.href = "index.html";
-                    backText.innerText = "Back to Home";
-                } else {
-                    backBtn.href = "?p=" + (currentPage - 1);
-                    backText.innerText = "Previous Page";
-                }
 
                 function renderPage(page) {
                     grid.innerHTML = ''; 
@@ -238,13 +238,13 @@
                     paginatedPosts.forEach(post => {
                         const card = `
                             <a href="${post.type}-${post.id}.html" class="bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 border-l-4 border-l-blue-500 transition-all duration-300 overflow-hidden group flex flex-col h-full hover:-translate-y-1">
-                                <div class="p-8 flex flex-col h-full">
+                                <div class="p-4 sm:p-6 md:p-8 flex flex-col h-full">
                                     <div class="flex justify-between items-center mb-4">
                                         <span class="text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider bg-blue-100 text-blue-800">${post.category}</span>
                                         <span class="text-sm text-gray-400 font-medium">${post.date}</span>
                                     </div>
-                                    <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2 leading-tight">${post.title}</h3>
-                                    <p class="text-gray-500 mb-6 line-clamp-3 leading-relaxed flex-grow">${post.excerpt}</p>
+                                    <h3 class="text-base sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 group-hover:text-blue-600 transition-colors line-clamp-2 leading-tight">${post.title}</h3>
+                                    <p class="text-sm text-gray-500 mb-4 sm:mb-6 line-clamp-3 leading-relaxed flex-grow">${post.excerpt}</p>
                                     <div class="text-blue-600 font-bold text-sm flex items-center gap-2 mt-auto">
                                         Read Article <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
                                     </div>
@@ -258,18 +258,32 @@
                 function renderPagination() {
                     pagination.innerHTML = '';
                     const totalPages = Math.ceil(blogPosts.length / itemsPerPage);
-                    if (totalPages <= 1) return; 
+                    if (totalPages <= 1) return;
 
-                    for (let i = 1; i <= totalPages; i++) {
-                        const btn = document.createElement('button');
-                        btn.innerText = i;
-                        btn.className = `w-10 h-10 rounded-lg font-bold transition-all duration-200 ${i === currentPage ? 'bg-blue-600 text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-blue-600'}`;
-                        btn.onclick = () => {
-                            // 🌟 点击分页时，强行改变网址并附带页码，这样浏览器就有记忆了！
-                            window.location.href = "?p=" + i;
-                        };
-                        pagination.appendChild(btn);
-                    }
+                    const mkNav = (label, page, disabled) => {
+                        const b = document.createElement('button');
+                        b.type = 'button';
+                        b.textContent = label;
+                        b.disabled = disabled;
+                        b.className = 'flex-shrink-0 min-w-[2.5rem] h-10 px-2 rounded-lg font-bold transition-all duration-200 bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-blue-600 disabled:opacity-40 disabled:cursor-not-allowed';
+                        if (!disabled) b.onclick = () => { window.location.href = '?p=' + page; };
+                        return b;
+                    };
+                    const mkPage = (i) => {
+                        const b = document.createElement('button');
+                        b.type = 'button';
+                        b.textContent = String(i);
+                        const on = i === currentPage;
+                        b.className = 'flex-shrink-0 w-10 h-10 rounded-lg font-bold transition-all duration-200 ' + (on
+                            ? 'bg-blue-600 text-white shadow-md'
+                            : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-blue-600');
+                        b.onclick = () => { window.location.href = '?p=' + i; };
+                        return b;
+                    };
+
+                    pagination.appendChild(mkNav('Prev', currentPage - 1, currentPage <= 1));
+                    for (let i = 1; i <= totalPages; i++) pagination.appendChild(mkPage(i));
+                    pagination.appendChild(mkNav('Next', currentPage + 1, currentPage >= totalPages));
                 }
 
                 renderPage(currentPage);
@@ -280,6 +294,8 @@
             }
         });
     </script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="pwa-nav.js"></script>
     <script src="script.js?v=2026.1"></script>
 </body>
 </html>

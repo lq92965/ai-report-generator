@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://www.paypal.com/sdk/js?client-id=AVnSKKHaiFxJKn4HMqGyKeXBhxZ1W-Qs3w7PSP8maz3c2O8jGg_o_nLHt7IUJQjwKHQBZyIVKaJuUPBc&currency=USD"></script>
 </head>
-<body style="background-color: #f8f9fa;">
+<body class="has-app-nav" style="background-color: #f8f9fa;">
 
     <header class="main-header account-header">
         <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1200px;">
@@ -18,38 +18,19 @@
                 <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
             </a>
             <div style="display: flex; align-items: center;">
-                <a href="usage.html#share-area" class="btn-credits" style="
-                    background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
-                    color: white !important;
-                    padding: 8px 18px;
-                    border-radius: 20px;
-                    text-decoration: none;
-                    font-size: 14px;
-                    font-weight: 600;
-                    margin-right: 15px;
-                    display: inline-flex;
-                    align-items: center;
-                    transition: transform 0.2s, box-shadow 0.2s;
-                    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
-                    z-index: 10;
-                " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                    Invite & Earn
+                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite" style="margin-right: 12px;">
+                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
                 </a>
                 <div id="auth-container" class="header-actions"></div>
             </div>
         </div>
     </header>
 
-    <div style="width: 100%; background: #f8f9fa; padding: 20px 0;">
-        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; text-align: left;">
-            <a href="account.html" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #666; font-size: 0.9rem; font-weight: 600;">
-                <i class="fas fa-arrow-left"></i> Back to Account Hub
-            </a>
-        </div>
-    </div>
-
     <section id="pricing" class="pricing-section" style="padding: 2rem 0;">
         <div class="container" style="max-width: 1200px; margin: 0 auto 40px; text-align: center; padding: 0 20px;">
+            <div style="text-align: left;">
+                <a href="account.html" class="pwa-page-back-link mb-4"><i data-lucide="arrow-left" class="pwa-page-back-icon" aria-hidden="true"></i><span>Back to Account Hub</span></a>
+            </div>
             <h1 style="font-size: 2.5rem; color: #333; margin-bottom: 10px;">Choose Your Plan</h1>
             <p style="color: #666; font-size: 1rem; margin-bottom: 2rem;">
                 Unlock the full potential of AI reporting.
@@ -131,8 +112,18 @@
         </div>
     </div>
 
+    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
+        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
+        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
+        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
+        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
+        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
+    </nav>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="pwa-nav.js"></script>
     <script src="nav.js"></script>
-    <script src="script.js?v=2026.1"></script> 
+    <script src="script.js"></script>
 
 </body>
 </html>

@@ -1,6 +1,11 @@
 <!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="stylesheet" href="style.css?v=3.2">
     <title>The Silent Killer of Productivity: How AI Can Cure Your Reporting Fatigue - Reportify AI</title>
     <meta name="description" content="It’s 4:00 PM on a Friday. Your project is humming along, but a familiar dread creeps in. It's time for the weekly status report. An hour of pulling...">
     
@@ -20,45 +25,42 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
     
 </head>
-<body class="font-sans antialiased bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+<body class="has-app-nav font-sans antialiased bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
-    <header class="main-header bg-white shadow-sm border-b border-gray-200 py-4">
-        <div class="container mx-auto px-6 flex justify-between items-center">
+    <header class="main-header pwa-app-header bg-white shadow-sm border-b border-gray-200 py-4">
+        <div class="container mx-auto px-6 pwa-header-inner">
             <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
                 <img src="https://raw.githubusercontent.com/lq92965/ai-report-generator/main/logo-3d.png.png" alt="Reportify AI Logo" style="width: 32px; height: 32px; object-fit: contain;">
                 <span style="font-size: 1.1rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
             </a>
             
-            <nav class="main-nav hidden md:block">
+            <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
                 <ul class="flex gap-6 font-medium text-gray-600">
                     <li><a href="index.html#features" class="hover:text-blue-600 transition">Features</a></li>
                     <li><a href="index.html#pricing" class="hover:text-blue-600 transition">Pricing</a></li>
+                    <li><a href="generate.html" class="hover:text-blue-600 transition">Generator</a></li>
                     <li><a href="news.html" class="hover:text-blue-600 transition">News</a></li>
                     <li><a href="blog.html" class="text-blue-600 font-bold">Blog</a></li>
-                    <li><a href="index.html#contact" class="hover:text-blue-600 transition">Contact</a></li>
                 </ul>
             </nav>
 
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <a href="usage.html#share-area" style="text-decoration: none; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); transition: transform 0.2s;">
-                    <i class="fas fa-gift"></i>
-                    <span class="hide-mobile-text">Invite &amp; Earn</span>
-                </a>
-                <div id="auth-container" class="flex items-center gap-4"></div>
-                </div>
+            <div class="pwa-header-actions" style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite"><span class="pwa-invite-lucide"><i data-lucide="gift"></i></span></a>
+                <div id="auth-container" class="flex items-center gap-4 header-actions"></div>
             </div>
-        
+        </div>
     </header>
-
-    <div class="container mx-auto px-6 mb-2 mt-8 w-full">
-        <a id="dynamic-back-btn" href="blog.html" style="color: #4b5563; text-decoration: none; font-size: 0.95rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: color 0.2s;" onmouseover="this.style.color='#2563eb'" onmouseout="this.style.color='#4b5563'"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+    <div class="pwa-page-back-row max-w-4xl mx-auto px-6 mt-4">
+        <a href="javascript:history.back()" class="pwa-page-back-link">
+            <i data-lucide="arrow-left" class="pwa-page-back-icon" aria-hidden="true"></i>
+            <span>Previous Page</span>
+        </a>
     </div>
-
-    <main class="flex-grow py-4">
+<main class="flex-grow py-4">
         <article class="max-w-4xl mx-auto px-6">
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-8">
             
-            <div id="article-header" class="mb-10 pb-8 border-b border-gray-100"><div class="flex items-center gap-3 text-sm font-bold text-blue-600 uppercase tracking-wider mb-4"><span>Deep Insights</span><span class="text-gray-300">|</span><span class="text-gray-500"><i class="far fa-calendar-alt"></i> 2026-03-25</span></div><h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">The Silent Killer of Productivity: How AI Can Cure Your Reporting Fatigue</h1><div class="flex items-center gap-4 text-gray-600 font-medium"><div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-lg"><i class="fas fa-user-edit"></i></div><div><div class="text-gray-900 font-bold">Emily Rostova</div><div class="text-xs text-gray-400">Staff Writer</div></div></div></div>
+            <div id="article-header" class="mb-10 pb-8 border-b border-gray-100"><div class="flex items-center gap-3 text-sm font-bold text-blue-600 uppercase tracking-wider mb-4"><span>Deep Insights</span><span class="text-gray-300">|</span><span class="text-gray-500"><i class="far fa-calendar-alt"></i> 2026-03-25</span></div><h1 class="text-xl md:text-2xl font-extrabold text-gray-900 mb-6 leading-tight">The Silent Killer of Productivity: How AI Can Cure Your Reporting Fatigue</h1><div class="flex items-center gap-4 text-gray-600 font-medium"><div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-lg"><i class="fas fa-user-edit"></i></div><div><div class="text-gray-900 font-bold">Emily Rostova</div><div class="text-xs text-gray-400">Staff Writer</div></div></div></div>
 
             <div id="article-content" class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed"><img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&amp;w=1200&amp;auto=format&amp;fit=crop" alt="The Silent Killer of Productivity How AI" style="width:100%; border-radius:8px; margin-bottom:20px;">
 
@@ -100,13 +102,22 @@
 </div>
 
         </div>
-            <div class="mt-12 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-10 text-center text-white shadow-xl">
+            <div class="mt-8 md:mt-12 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-5 md:p-8 text-center text-white shadow-xl">
                 <h3 class="text-2xl font-bold mb-3">Stop Drowning in Reports</h3>
                 <p class="text-blue-100 mb-6">Turn your scattered meeting notes into executive-ready PPTs and Word docs in 30 seconds.</p>
                 <button onclick="window.openModal('signup')" class="inline-block bg-white text-blue-600 px-8 py-3 rounded-xl font-bold shadow-md hover:bg-gray-50 transition transform hover:-translate-y-1" style="border: none; cursor: pointer; font-size: 1rem;">Try Reportify AI for Free</button>
             </div>
         </article>
     </main>
+
+    
+            <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
+        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
+        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
+        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
+        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
+        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
+    </nav>
 
     <footer class="main-footer mt-auto" style="padding: 30px 0; background: #f8fafc; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 0.85rem; text-align: center;">
         <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
@@ -262,7 +273,10 @@
         };
 
         </script>
-    <script src="script.js?v=2026.1"></script>
+            <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+        <script src="pwa-nav.js"></script>
+<script src="script.js?v=2026.1"></script>
 
 
 </body></html>

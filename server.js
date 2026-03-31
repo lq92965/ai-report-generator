@@ -28,6 +28,8 @@ const MONGO_URI = process.env.MONGO_URI;
 const JWT_SECRET = process.env.JWT_SECRET;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID; 
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+/** PWA shell: never hardcode production domain — set FRONTEND_URL for local/dev (e.g. http://localhost:8080) */
+const FRONTEND_BASE = (process.env.FRONTEND_URL || 'https://goreportify.com').replace(/\/$/, '');
 
 // 2. Database Connection
 const client = new MongoClient(MONGO_URI);
@@ -238,10 +240,10 @@ app.get('/api/auth/google/callback', async (req, res) => {
         }
 
         const token = jwt.sign({ userId: user._id, plan: user.plan }, JWT_SECRET, { expiresIn: '7d' });
-        res.redirect(`https://goreportify.com?token=${token}`);
+        res.redirect(`${FRONTEND_BASE}/?token=${encodeURIComponent(token)}`);
     } catch (error) { 
         console.error("Google Login Error:", error);
-        res.redirect('https://goreportify.com?error=google_login_failed'); 
+        res.redirect(`${FRONTEND_BASE}/?error=google_login_failed`); 
     }
 });
 

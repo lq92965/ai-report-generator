@@ -7,41 +7,33 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
-    <title>My Account - Reportify AI</title>
+    <title>Contact Support - Reportify AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css?v=3.2">
     <style>
-        .account-hub .container { max-width: 1200px !important; width: 95% !important; margin: 0 auto !important; padding: 24px 12px !important; }
-        @media (min-width: 768px) {
-            .account-hub .container { padding: 40px 15px !important; }
-        }
-        .final-grid-container { display: flex !important; flex-wrap: wrap !important; gap: 16px !important; margin-top: 24px !important; width: 100% !important; justify-content: flex-start !important; }
-        @media (min-width: 768px) {
-            .final-grid-container { gap: 25px !important; margin-top: 40px !important; }
-        }
+        .account-hub .container { max-width: 1200px !important; width: 95% !important; margin: 0 auto !important; padding: 40px 15px !important; }
+        .final-grid-container { display: flex !important; flex-wrap: wrap !important; gap: 25px !important; margin-top: 40px !important; width: 100% !important; justify-content: flex-start !important; }
         .final-card {
             flex: 1 1 280px !important; max-width: 100% !important;
-            background: white !important; padding: 18px !important; border-radius: 12px !important;
+            background: white !important; padding: 30px !important; border-radius: 16px !important;
             border: 1px solid #e5e7eb !important; box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important;
             text-decoration: none !important; color: inherit !important; transition: all 0.2s ease !important;
             display: flex !important; flex-direction: column !important; justify-content: center !important; min-height: 140px !important;
         }
         .final-card:hover { transform: translateY(-5px) !important; border-color: #2563eb !important; box-shadow: 0 12px 24px rgba(37, 99, 235, 0.1) !important; }
-        .final-card h3 { margin: 0 0 8px 0 !important; font-size: 1.05rem !important; font-weight: 700 !important; color: #111827 !important; display: flex !important; align-items: center !important; gap: 10px !important; }
-        @media (min-width: 768px) {
-            .final-card { padding: 30px !important; border-radius: 16px !important; }
-            .final-card h3 { font-size: 1.25rem !important; }
-        }
-        .final-card p { margin: 0 !important; color: #6b7280 !important; font-size: 0.875rem !important; line-height: 1.5 !important; }
+        .final-card h3 { margin: 0 0 10px 0 !important; font-size: 1.25rem !important; font-weight: 700 !important; color: #111827 !important; display: flex !important; align-items: center !important; gap: 12px !important; }
+        .final-card p { margin: 0 !important; color: #6b7280 !important; font-size: 0.95rem !important; line-height: 1.5 !important; }
         .final-card i { font-size: 1.2em; }
-        .avatar-section { text-align: center !important; margin-bottom: 28px !important; }
-        @media (min-width: 768px) {
-            .avatar-section { margin-bottom: 50px !important; }
-        }
+        .avatar-section { text-align: center !important; margin-bottom: 50px !important; }
     </style>
 </head>
 <body class="font-sans antialiased has-app-nav bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+    <script>
+        if (!localStorage.getItem('token')) {
+            window.location.replace('account.html');
+        }
+    </script>
 
     <header class="main-header pwa-app-header bg-white shadow-sm border-b border-gray-200 py-4">
         <div class="container pwa-header-inner">
@@ -68,45 +60,34 @@
     </header>
 
     <main class="flex-grow">
-        <section class="generator-section account-hub">
-            <div class="container">
-                <div class="avatar-section">
-                    <h1 class="text-xl sm:text-2xl md:text-3xl" style="margin-bottom: 8px; color: #111; font-weight: 800;">My Account</h1>
-                    <p class="text-sm sm:text-base" style="color: #666;">Manage your profile, security, subscription, and history.</p>
-                    <div style="margin-top: 30px; display: flex; justify-content: center;">
-                        <img id="account-hub-avatar"
-                             src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4="
-                             alt="Profile"
-                             style="width: 120px !important; height: 120px !important; border-radius: 50% !important; object-fit: cover !important; border: 4px solid #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+        <section id="contact-us" class="py-12 bg-white border-t border-gray-200">
+            <div class="container" style="max-width: 560px; margin: 0 auto; padding: 0 20px;">
+                <a href="account.html" class="pwa-page-back-link mb-4"><i data-lucide="arrow-left" class="pwa-page-back-icon" aria-hidden="true"></i><span>Back to Account Hub</span></a>
+                <h1 class="section-title" style="text-align: center; font-size: 1.75rem; font-weight: 800; color: #0f172a;">Contact Support</h1>
+                <p style="text-align: center; color: #64748b; margin-top: 8px; font-size: 0.95rem;">We typically reply within 1–2 business days.</p>
+                <form id="contact-form" class="mt-10 space-y-4">
+                    <div>
+                        <label for="name" class="block text-sm font-semibold text-gray-700 mb-1">Name</label>
+                        <input type="text" id="name" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white">
                     </div>
-                </div>
-
-                <div class="final-grid-container">
-                    <a href="profile.html" class="final-card account-protected-link">
-                        <h3><i class="fas fa-user-edit" style="color:#3b82f6;"></i> Profile</h3>
-                        <p>Update your display name and avatar.</p>
-                    </a>
-                    <a href="security.html" class="final-card account-protected-link">
-                        <h3><i class="fas fa-shield-alt" style="color:#10b981;"></i> Security</h3>
-                        <p>Change your login password.</p>
-                    </a>
-                    <a href="subscription.html" class="final-card account-protected-link">
-                        <h3><i class="fas fa-credit-card" style="color:#8b5cf6;"></i> Subscription</h3>
-                        <p>Manage your membership plan.</p>
-                    </a>
-                    <a href="usage.html" class="final-card account-protected-link">
-                        <h3><i class="fas fa-chart-line" style="color:#f59e0b;"></i> Usage</h3>
-                        <p>Check your monthly limits.</p>
-                    </a>
-                    <a href="history.html" class="final-card account-protected-link">
-                        <h3><i class="fas fa-history" style="color:#ef4444;"></i> History</h3>
-                        <p>View and export your generated reports.</p>
-                    </a>
-                    <a href="contact.html" class="final-card account-protected-link">
-                        <h3><i class="fas fa-envelope" style="color:#0ea5e9;"></i> Contact Support</h3>
-                        <p>Send us a message or feedback.</p>
-                    </a>
-                </div>
+                    <div>
+                        <label for="email" class="block text-sm font-semibold text-gray-700 mb-1">Email</label>
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+                    </div>
+                    <div>
+                        <label for="contact-type" class="block text-sm font-semibold text-gray-700 mb-1">Topic</label>
+                        <select id="contact-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+                            <option value="General">General</option>
+                            <option value="Billing">Billing</option>
+                            <option value="Technical">Technical</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-semibold text-gray-700 mb-1">Message</label>
+                        <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white resize-y"></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-3 rounded-xl font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-md transition">Send message</button>
+                </form>
             </div>
         </section>
     </main>
@@ -247,7 +228,7 @@
                 </div>
             </div>
             <div class="p-4 border-t border-gray-100 bg-white text-center text-xs text-gray-400 flex-shrink-0">
-                For new inquiries, use Contact Support on the Account page.
+                For new inquiries, use Contact Support (Mine).
             </div>
         </div>
     </div>
