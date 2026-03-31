@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774922436138",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-31",
+        "author": "Emily Rostova",
+        "excerpt": "We've all been there. It’s Tuesday morning, and the automated email arrives: \"Weekly Project Status Update.\" You open it, scan a few green and red box...",
+        "contentFile": "blog-1774922436138.md"
+    },
+    {
         "id": "1774918829200",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
