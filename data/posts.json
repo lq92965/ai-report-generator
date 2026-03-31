@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774969217642",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-03-31",
+        "author": "Emily Rostova",
+        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory race among world governments, leading to a fragmented landscape of proposed...",
+        "contentFile": "news-1774969217642.md"
+    },
+    {
         "id": "1774965624568",
         "type": "blog",
         "title": "Beyond the Dashboard: Curing Your Team's Reporting Fatigue",
