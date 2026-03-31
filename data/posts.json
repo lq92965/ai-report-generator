@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774958425862",
+        "type": "blog",
+        "title": "From Data Dumps to Actionable Insights: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-31",
+        "author": "Marcus Webb",
+        "excerpt": "We've all been there. It’s 4 PM on a Friday, and the recurring calendar notification pops up: \"Submit Weekly Project Status Report.\" A collective groa...",
+        "contentFile": "blog-1774958425862.md"
+    },
+    {
         "id": "1774954827730",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
