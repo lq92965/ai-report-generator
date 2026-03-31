@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774951226358",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-31",
+        "author": "Sarah Jenkins",
+        "excerpt": "We’ve all been there. It’s 4:00 PM on a Tuesday, and the email lands in your inbox: \"Can you pull a quick report on X metric for the EOD review?\" Your...",
+        "contentFile": "blog-1774951226358.md"
+    },
+    {
         "id": "1774947617613",
         "type": "news",
         "title": "The Unseen Labor Behind AI's Public Face",
