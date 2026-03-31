@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774933220124",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "category": "Tech Radar",
+        "date": "2026-03-31",
+        "author": "Alex Mercer",
+        "excerpt": "The narrative around artificial intelligence has long been dominated by a binary, dystopian debate: will AI create new frontiers of productivity or wi...",
+        "contentFile": "news-1774933220124.md"
+    },
+    {
         "id": "1774929626010",
         "type": "blog",
         "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
