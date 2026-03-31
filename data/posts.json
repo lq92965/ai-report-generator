@@ -1,5 +1,15 @@
 [
     {
+        "id": "1774994423255",
+        "type": "blog",
+        "title": "From Data Dumps to Actionable Insights: Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-03-31",
+        "author": "Emily Rostova",
+        "excerpt": "As a Product Manager, you live and die by data. Reports are the lifeblood of decision-making, stakeholder communication, and progress tracking. Yet, t...",
+        "contentFile": "blog-1774994423255.md"
+    },
+    {
         "id": "1774990820054",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
