@@ -15,7 +15,7 @@ const token = localStorage.getItem('token');
 (function() {
     if (!token) {
         alert('Please log in to view subscription settings.');
-        window.location.href = 'index.html'; 
+        window.location.href = './index.html'; 
     }
 })();
 

@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. 加载用户资料
     async function loadProfile() {
         if (!token) {
-            window.location.href = 'index.html'; 
+            window.location.href = './index.html'; 
             return;
         }
         try {

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css?v=2026.2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body style="background-color: #f8f9fa;">
+<body class="has-app-nav" style="background-color: #f8f9fa;">
 <header class="main-header account-header">
     <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1200px;">
         <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
@@ -16,22 +16,8 @@
             </a>
 
         <div style="display: flex; align-items: center;">
-            <a href="usage.html#share-area" class="btn-credits" style="
-                background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
-                color: white !important;
-                padding: 8px 18px;
-                border-radius: 20px;
-                text-decoration: none;
-                font-size: 14px;
-                font-weight: 600;
-                margin-right: 15px;
-                display: inline-flex;
-                align-items: center;
-                transition: transform 0.2s, box-shadow 0.2s;
-                box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
-                z-index: 100;
-            " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                Invite & Earn
+            <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite" style="margin-right: 12px;">
+                <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
             </a>
             <div id="auth-container" class="header-actions"></div>
         </div>
@@ -40,8 +26,7 @@
 
     <section class="generator-section">
         <div class="container">
-            <a href="account.html" class="btn-back">&larr; Back to Account Hub</a>
-
+            <a href="account.html" class="pwa-page-back-link mb-4"><i data-lucide="arrow-left" class="pwa-page-back-icon" aria-hidden="true"></i><span>Back to Account Hub</span></a>
             <h2 class="section-title">Security</h2>
 
             <div class="account-container">
@@ -105,6 +90,16 @@
         </div>
     </footer>
 
-    <script src="script.js?v=2026.2"></script>
+    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
+        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
+        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
+        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
+        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
+        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
+    </nav>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="pwa-nav.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

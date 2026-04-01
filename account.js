@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
-    if (!token) { window.location.href = 'index.html'; return; }
+    if (!token) { window.location.href = './index.html'; return; }
 
     const API_BASE_URL = 'https://api.goreportify.com';
     

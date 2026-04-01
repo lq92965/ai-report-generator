@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
-    <title>Reportify AI - AI Report Generator</title>
+    <title>Generate Report - Reportify AI</title>
     <meta name="google-site-verification" content="KSTE2D8-yocEVjQC3Xw-gn_11QuJAsL6znZkgTOdcRM" />
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -20,7 +20,7 @@
     <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
     <script src="https://www.paypal.com/sdk/js?client-id=AVnSKKHaiFxJKn4HMqGyKeXBhxZ1W-Qs3w7PSP8maz3c2O8jGg_o_nLHt7IUJQjwKHQBZyIVKaJuUPBc&currency=USD"></script>
 
-    <link rel="stylesheet" href="style.css?v=3.5-desktop">
+    <link rel="stylesheet" href="style.css?v=3.2">
     <style>
     /* 1. Base Container Settings */
     #generated-report {
@@ -74,86 +74,46 @@
         #pdf-export-container { position: absolute; left: 0; top: 0; width: 100%; }
     }
 
-    /* Mobile Patch — iOS 风格紧凑排版 */
+    /* Mobile Patch */
     @media (max-width: 768px) {
-        #hero.hero-section { padding: 28px 16px 32px !important; }
-        #hero h1.hero-main-title {
-            font-size: 1.375rem !important;
-            line-height: 1.3 !important;
-            margin-bottom: 14px !important;
-            font-weight: 700 !important;
+        #hero h1 {
+            font-size: 2.25rem !important; 
+            line-height: 1.2 !important;
         }
-        #hero .hero-content p { font-size: 0.9375rem !important; margin-bottom: 18px !important; line-height: 1.5 !important; }
-        #hero .hero-content p br { display: none; }
         
         #hero .hero-content > div[style*="flex"] {
             flex-direction: column !important; 
-            gap: 10px !important;
+            gap: 15px !important;
             align-items: center !important;
-            margin-bottom: 22px !important;
-            font-size: 0.8125rem !important;
         }
-        #hero .hero-content > div[style*="flex"] i { font-size: 0.875rem !important; }
 
         .hero-btns {
             flex-direction: column !important; 
-            gap: 10px !important;
+            gap: 15px !important;
             width: 100%;
             align-items: center;
         }
 
         .hero-btns .btn {
-            width: 100% !important; 
-            max-width: 280px;
-            padding: 12px 20px !important;
-            font-size: 0.9375rem !important;
-            border-radius: 10px !important;
+            width: 85% !important; 
+            padding: 14px 0 !important;
             display: flex;
             justify-content: center;
         }
 
-    }
-
-    @media (min-width: 768px) {
-        .about-concept-grid {
-            grid-template-columns: 1fr 1fr !important;
+        #about div[style*="display: grid"], 
+        #about .about-grid {
+            grid-template-columns: 1fr !important; 
         }
-    }
 
-    .features-title-mobile {
-        font-size: 2.5rem;
-        margin-bottom: 50px;
-        text-align: center;
-        font-weight: 800;
-        color: #0f172a;
-    }
-    @media (max-width: 768px) {
-        .features-title-mobile {
+        #generator.generator-section .section-title {
             font-size: 1.25rem !important;
-            margin-bottom: 1.25rem !important;
-            line-height: 1.3 !important;
+            margin-bottom: 1rem !important;
         }
-        #features.features-section { padding: 2rem 0 !important; }
-        #features .features-grid { gap: 1rem !important; }
-        #features .feature-card {
-            padding: 1rem 1.25rem !important;
-            border-radius: 0.75rem !important;
-        }
-        #features .feature-card-h3 { font-size: 1.125rem !important; margin-bottom: 0.5rem !important; }
-        #features .feature-card > div:first-of-type { font-size: 1.75rem !important; margin-bottom: 0.75rem !important; }
-    }
-
-    /*
-     * Desktop-only blocks (generator, news, blog, contact on homepage).
-     * Do NOT use Tailwind "hidden md:block" here: style.css defines .hidden { display:none !important }
-     * which wins over Tailwind's md:block, so those sections stayed invisible on desktop.
-     */
-    .index-desktop-only {
-        display: none !important;
-    }
-    @media (min-width: 768px) {
-        .index-desktop-only {
-            display: block !important;
+        #generator.generator-section {
+            padding-top: 1rem !important;
+            padding-left: 0.75rem !important;
+            padding-right: 0.75rem !important;
         }
     }
 
@@ -164,13 +124,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body class="font-sans antialiased has-app-nav"> <header class="main-header pwa-app-header">
-        <div class="container pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
-            <a href="index.html" class="logo shrink-0" style="display: flex; align-items: center; gap: 8px; text-decoration: none;">
-                <img src="https://raw.githubusercontent.com/lq92965/ai-report-generator/main/logo-3d.png.png" alt="Reportify AI Logo" class="pwa-logo-img" style="object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
-                <span class="pwa-logo-text" style="font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
+        <div class="container pwa-header-inner">
+            <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                <img src="https://raw.githubusercontent.com/lq92965/ai-report-generator/main/logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
             </a>
-            <nav class="main-nav pwa-desktop-nav hidden md:flex md:flex-1 md:justify-center md:min-w-0" id="pwa-collapse-nav">
-                <ul class="flex flex-wrap items-center justify-center gap-4 md:gap-8">
+            <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
+                <ul>
                     <li><a href="index.html#features">Features</a></li>
                     <li><a href="index.html#pricing">Pricing</a></li>
                     <li><a href="generate.html">Generator</a></li>
@@ -178,7 +138,7 @@
                     <li><a href="blog.html">Blog</a></li>
                 </ul>
             </nav>
-            <div class="pwa-header-actions shrink-0">
+            <div class="pwa-header-actions">
                 <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite">
                     <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
                 </a>
@@ -188,174 +148,7 @@
     </header>
 
     <main>
-        <section id="hero" class="hero-section" style="padding: 80px 0; background: linear-gradient(to bottom, #ffffff, #f9fafb);">
-            <div class="hero-content" style="max-width: 900px; margin: 0 auto; text-align: center;">
-        
-                <h1 class="hero-main-title" style="font-size: clamp(1.375rem, 4vw, 3rem); font-weight: 800; line-height: 1.15; color: #111827; margin-bottom: 24px;">
-                    Stop Drowning in <br class="hidden sm:inline">
-                    <span style="background: linear-gradient(135deg, #7c3aed, #4f46e5); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Daily & Weekly Reports</span>
-                </h1>
-
-                <p style="font-size: clamp(0.9375rem, 2.5vw, 1.25rem); color: #4b5563; margin-bottom: 40px; line-height: 1.55;">
-                    Spent hours summarizing fragments? Reportify AI takes your messy meeting notes, <br class="hidden sm:inline">
-                    chat logs, and quick thoughts, transforming them into executive-level assets.
-                </p>
-
-                <div style="display: flex; justify-content: center; gap: 40px; margin-bottom: 50px; flex-wrap: wrap;">
-                    <div style="display: flex; align-items: center; gap: 8px; color: #059669; font-weight: 600;">
-                        <i class="fas fa-bolt"></i> <span>30s Generation</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px; color: #059669; font-weight: 600;">
-                        <i class="fas fa-file-powerpoint"></i> <span>Auto-PPT Drafts</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px; color: #059669; font-weight: 600;">
-                        <i class="fas fa-briefcase"></i> <span>Manager-Ready Logic</span>
-                    </div>
-                </div>
-
-                <div class="hero-btns" style="display: flex; justify-content: center; gap: 20px;">
-                    <a href="generate.html" class="btn btn-primary" style="background: #2563eb; padding: 16px 44px; font-size: 1.1rem; border-radius: 12px; font-weight: 700; box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);">
-                        Start My Elite Trial
-                    </a>
-                    <a href="#pricing" class="btn btn-secondary" style="padding: 16px 44px; font-size: 1.1rem; border-radius: 12px; font-weight: 600;">
-                        View Plans
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <section id="features" class="features-section" style="padding: 60px 0; background-color: #ffffff;">
-            <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 16px;">
-                <h2 class="section-title features-title-mobile">One Input, Three Professional Assets</h2>
-                <div class="features-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-            
-                    <div class="feature-card" style="padding: 40px; border-radius: 20px; background: #f8fafc; border: 1px solid #e2e8f0; transition: transform 0.3s;">
-                         <div style="font-size: 2.5rem; margin-bottom: 20px;">📄</div>
-                        <h3 class="feature-card-h3" style="font-size: 1.5rem; font-weight: 700; margin-bottom: 15px; color: #1e293b;">Structured Word Reports</h3>
-                        <p class="text-sm sm:text-base" style="color: #64748b; line-height: 1.6;">
-                            Stop fighting with formatting. RIE Engine automatically organizes your fragments into logical sections with professional headings, bullet points, and executive summaries.
-                        </p>
-                    </div>
-
-                    <div class="feature-card" style="padding: 40px; border-radius: 20px; background: #f8fafc; border: 1px solid #e2e8f0; transition: transform 0.3s;">
-                        <div style="font-size: 2.5rem; margin-bottom: 20px;">📊</div>
-                        <h3 class="feature-card-h3" style="font-size: 1.5rem; font-weight: 700; margin-bottom: 15px; color: #1e293b;">Instant PPT Decks</h3>
-                        <p class="text-sm sm:text-base" style="color: #64748b; line-height: 1.6;">
-                            Turn your report into a presentation-ready slide deck in one click. Perfect for meeting recaps and project updates without the manual copy-pasting.
-                        </p>
-                    </div>
-
-                    <div class="feature-card" style="padding: 40px; border-radius: 20px; background: #f8fafc; border: 1px solid #e2e8f0; transition: transform 0.3s;">
-                        <div style="font-size: 2.5rem; margin-bottom: 20px;">📧</div>
-                        <h3 class="feature-card-h3" style="font-size: 1.5rem; font-weight: 700; margin-bottom: 15px; color: #1e293b;">Professional Email Drafts</h3>
-                        <p class="text-sm sm:text-base" style="color: #64748b; line-height: 1.6;">
-                            Generate a concise summary optimized for email. Share your progress with stakeholders immediately in a tone that commands respect and clarity.
-                        </p>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <section id="about" style="padding: 60px 0 80px; background: #ffffff; border-top: 1px solid #f1f5f9;">
-            <div class="container" style="max-width: 1000px; margin: 0 auto; padding: 0 20px;">
-                <div style="text-align: center; margin-bottom: 40px;">
-                    <h2 style="font-size: clamp(1.75rem, 5vw, 2.5rem); font-weight: 800; color: #0f172a; letter-spacing: -0.025em;">The Philosophy Behind Reportify AI</h2>
-                    <div style="width: 60px; height: 4px; background: #6366f1; margin: 20px auto;"></div>
-                </div>
-                <div class="about-grid" style="display: grid; grid-template-columns: 1fr; gap: 32px; text-align: left;">
-                    <div style="background: #f8fafc; padding: clamp(24px, 4vw, 40px); border-radius: 24px; border: 1px solid #e2e8f0;">
-                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #4f46e5; margin-bottom: 16px;">The Invisible Tax on Talent</h3>
-                        <p style="font-size: 1.05rem; line-height: 1.8; color: #334155; margin-bottom: 12px;">
-                            We built Reportify because we were tired of seeing brilliant minds trapped in the &quot;Reporting Trap.&quot; Every Friday, millions of talented professionals spend their most valuable hours wrestling with bullet points and font sizes instead of solving real problems.
-                        </p>
-                        <p style="font-size: 1.05rem; line-height: 1.8; color: #334155;">
-                            It is an invisible tax on your ambition. We believe your impact should be measured by your decisions and execution, not by how many hours you spent manually summarizing your day.
-                        </p>
-                    </div>
-                    <div style="padding: 0 4px;">
-                        <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e293b; margin-bottom: 16px;">Why We Don&apos;t Just &quot;Write Text&quot;</h3>
-                        <p style="font-size: 1.05rem; line-height: 1.8; color: #475569; margin-bottom: 20px;">
-                            Generic AI tools guess the next word; <strong>RIE (Reportify Intelligence Engine)</strong> understands the objective. Our engine is engineered with a deep understanding of corporate hierarchy, operational logic, and the subtle art of professional communication.
-                        </p>
-                        <div class="about-concept-grid" style="display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 24px;">
-                            <div style="padding: 18px; border-left: 3px solid #6366f1; background: #fdf2f8; border-radius: 0 12px 12px 0;">
-                                <span style="font-weight: 700; color: #1e293b;">Logic Reconstruction:</span><br>
-                                <span style="font-size: 0.95rem; color: #64748b;">It is not about making notes &quot;longer&quot;—it is about distilling raw data into a narrative that stakeholders can act upon.</span>
-                            </div>
-                            <div style="padding: 18px; border-left: 3px solid #6366f1; background: #eff6ff; border-radius: 0 12px 12px 0;">
-                                <span style="font-weight: 700; color: #1e293b;">Strategic Formatting:</span><br>
-                                <span style="font-size: 0.95rem; color: #64748b;">A report is a tool for influence. We ensure every Word doc or PPT deck follows the cognitive flow of an executive summary.</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="text-align: center; margin-top: 24px; border-top: 1px dashed #cbd5e1; padding-top: 48px;">
-                        <h3 style="font-size: clamp(1.35rem, 4vw, 1.75rem); font-weight: 800; color: #1e293b; margin-bottom: 16px;">Own Your Career, We&apos;ll Handle the Artifacts</h3>
-                        <p style="font-size: 1.1rem; line-height: 1.6; color: #64748b; max-width: 800px; margin: 0 auto 24px;">
-                            Our mission is to be the silent architect of your professional reputation. Let your work speak through quality, and let Reportify handle the heavy lifting of documentation.
-                        </p>
-                        <a href="generate.html" style="color: #6366f1; font-weight: 700; text-decoration: none; font-size: 1.05rem; display: inline-flex; align-items: center; gap: 8px;">
-                            Join the future of professional reporting <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="pricing" class="pricing-section">
-            <div class="container">
-                <h2 class="section-title">Choose Your Plan</h2>
-        
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 pricing-grid pt-10 md:pt-20 pb-6 md:pb-10 px-2 md:px-0" style="display: grid; width: 100%;">
-            
-                <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-4 md:p-8 bg-white relative flex flex-col justify-between" data-plan="free">
-                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs px-3 py-1 rounded-bl-lg font-bold">7-Day Elite Pass</div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-2">Elite Trial</h3>
-                        <div class="text-2xl md:text-3xl font-extrabold mb-4 md:mb-6">$0<span class="text-sm font-normal text-gray-500">/ 7 days</span></div>
-                        <ul class="space-y-4 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0; text-align: left;">
-                            <li class="flex items-start gap-2"><i class="fas fa-bolt text-blue-600 mt-1"></i> <span><strong>RIE 3.0 Flagship Engine</strong><br><small>Full Access Experience</small></span></li>
-                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> <strong>One-Click PPT</strong> Generation</li>
-                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Word & Email Export</li>
-                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> <strong>Automate</strong> Daily/Weekly Reports</li>
-                        </ul>
-                    </div>
-                    <a href="subscription.html" class="w-full py-3 rounded-lg font-bold text-center bg-blue-600 text-white hover:bg-blue-700 shadow-md transition-all">Get Free Access</a>
-                </div>
-
-                <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-4 md:p-8 bg-white relative flex flex-col justify-between" data-plan="basic">
-                    <div>
-                        <h3 class="text-xl font-bold mb-2">Basic</h3>
-                        <div class="text-2xl md:text-3xl font-extrabold mb-4 md:mb-6">$9.90<span class="text-sm font-normal text-gray-500">/ mo</span></div>
-                        <ul class="space-y-4 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0; text-align: left;">
-                            <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> <strong>RIE 2.5 Efficiency Engine</strong></li>
-                            <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> <strong>45 Reports</strong> Monthly</li>
-                            <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> Word & Email Professional Export</li>
-                            <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> Standard Office Logic</li>
-                        </ul>
-                    </div>
-                    <a href="subscription.html" class="w-full py-3 rounded-lg font-bold text-center bg-white text-blue-600 border border-blue-200 hover:bg-gray-50 shadow-sm transition-all">Select Basic</a>
-                </div>
-
-                <div class="pricing-card border-blue-600 border-2 ring-4 ring-blue-500/20 shadow-xl md:transform md:scale-105 rounded-2xl p-4 md:p-8 bg-white relative flex flex-col justify-between z-10" data-plan="pro">
-                    <div class="absolute top-0 right-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">Recommended</div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-2">Professional</h3>
-                        <div class="text-2xl md:text-3xl font-extrabold mb-4 md:mb-6">$19.90<span class="text-sm font-normal text-gray-500">/ mo</span></div>
-                        <ul class="space-y-4 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0; text-align: left;">
-                            <li class="flex items-start gap-2"><i class="fas fa-crown text-blue-600 mt-1"></i> <span><strong>RIE 3.0 Flagship Engine</strong><br><small>Unlimited Generation</small></span></li>
-                            <li class="flex items-center gap-2"><i class="fas fa-magic text-blue-600"></i> <strong>Full-Scene PPT</strong> Generation</li>
-                            <li class="flex items-center gap-2"><i class="fas fa-brain text-blue-600"></i> Strategic Depth Analysis</li>
-                            <li class="flex items-center gap-2"><i class="fas fa-star text-blue-600"></i> Executive Templates & Priority</li>
-                        </ul>
-                    </div>
-                    <a href="subscription.html" class="w-full py-3 rounded-lg font-bold text-center bg-blue-600 text-white hover:bg-blue-700 shadow-lg transition-all">Upgrade Now</a>
-                </div>
-
-        </div> </div> </section>
-
-        <div class="index-desktop-only">
-        <section id="generator" class="generator-section">
+        <section id="generator" class="generator-section" style="padding-top: 2rem;">
              <div class="container">
                 <h2 class="section-title">Create Your Report</h2>
                 <div class="generator-container">
@@ -426,8 +219,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="key-points">Key points for the report</label>
-                        <textarea id="key-points" name="prompt" rows="8" placeholder="Example: &#10;- Weekly summary of project progress.&#10;- Key achievements and next steps."></textarea>
+                        <label for="prompt">Key points for the report</label>
+                        <textarea id="key-points" name="prompt" rows="8" placeholder="Example: \n- Weekly summary of project progress.\n- Key achievements and next steps."></textarea>
                     </div>
                     <div class="form-group action-buttons">
                         <button id="generate-btn" class="btn btn-primary">Generate Report</button>
@@ -446,23 +239,23 @@
                     </div>
                     <div class="form-group">
                         <label>Export As</label>
-                        <div class="export-options" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px;">
-                            <button class="export-btn" onclick="exportToWord(currentReportContent, 'Report')" style="background: #2563eb; color: white; border: none; height: 44px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
+                        <div class="export-options export-options-responsive">
+                            <button class="export-btn flex items-center justify-center gap-2" onclick="exportToWord(currentReportContent, 'Report')" style="background: #2563eb; color: white; border: none; height: 44px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
                                 <i class="fas fa-file-word"></i> 
                                 <span>Word</span>
                             </button>
 
-                            <button class="export-btn" onclick="exportToPPT(currentReportContent, 'Report')" style="background: #e05242; color: white; border: none; height: 44px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
+                            <button class="export-btn flex items-center justify-center gap-2" onclick="exportToPPT(currentReportContent, 'Report')" style="background: #e05242; color: white; border: none; height: 44px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
                                 <i class="fas fa-file-powerpoint"></i> 
                                 <span>PPT Draft</span>
                             </button>
 
-                            <button onclick="downloadMarkdown()" class="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors shadow-sm">
+                            <button onclick="downloadMarkdown()" class="flex items-center justify-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors shadow-sm">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                                 Markdown
                             </button>
 
-                            <button class="export-btn" onclick="emailReport()" style="background: #f3f4f6; color: #4b5563; border: 1px solid #e5e7eb; height: 44px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
+                            <button class="export-btn flex items-center justify-center gap-2" onclick="emailReport()" style="background: #f3f4f6; color: #4b5563; border: 1px solid #e5e7eb; height: 44px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
                                 <i class="fas fa-envelope"></i> 
                                 <span>Email</span>
                             </button>
@@ -471,95 +264,6 @@
                 </div>
             </div>
         </section>
-        </div>
-
-        <div class="index-desktop-only">
-        <section id="news" style="padding: 100px 0 50px 0; background: #f8fafc; border-top: 1px solid #f1f5f9;">
-            <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
-                <div style="text-align: center; margin-bottom: 50px;">
-                    <h2 class="section-title" style="font-size: 2.5rem; font-weight: 800; color: #0f172a; margin-bottom: 15px;">Global Tech Radar</h2>
-                    <p style="color: #64748b; font-size: 1.1rem;">Real-time, AI-curated intelligence on global tech, finance, startups, and market shifts.</p>
-                </div>
-                <div id="home-news-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 50px;"></div>
-                <div style="text-align: center;">
-                    <a href="news.html" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 36px; border: 2px solid #e2e8f0; border-radius: 12px; color: #475569; font-weight: bold; text-decoration: none; transition: all 0.3s; background: white;" onmouseover="this.style.borderColor='#cbd5e1'; this.style.color='#0f172a';" onmouseout="this.style.borderColor='#e2e8f0'; this.style.color='#475569';">
-                        View All News <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
-        </div>
-
-        <div class="index-desktop-only">
-        <section id="blog" style="padding: 50px 0 100px 0; background: #f8fafc;">
-            <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
-                <div style="text-align: center; margin-bottom: 50px;">
-                    <h2 class="section-title" style="font-size: 2.5rem; font-weight: 800; color: #0f172a; margin-bottom: 15px;">Deep Insights</h2>
-                    <p style="color: #64748b; font-size: 1.1rem;">Elevate your strategic thinking with masterclasses in productivity, PM workflows, and AI-driven growth.</p>
-                </div>
-                <div id="home-blog-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 50px;"></div>
-                <div style="text-align: center;">
-                    <a href="blog.html" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 36px; border: 2px solid #e2e8f0; border-radius: 12px; color: #475569; font-weight: bold; text-decoration: none; transition: all 0.3s; background: white;" onmouseover="this.style.borderColor='#cbd5e1'; this.style.color='#0f172a';" onmouseout="this.style.borderColor='#e2e8f0'; this.style.color='#475569';">
-                        View All Insights <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
-        </div>
-
-        <div class="index-desktop-only">
-        <section id="contact" class="contact-section">
-            <div class="container">
-                <h2 class="section-title">Contact Us</h2>
-                <p class="subtitle">
-                    Have a suggestion or found a bug? We&apos;d love to hear from you.<br>
-                    <span style="font-size: 0.9em; color: #2563EB; font-weight: 500;">
-                        <i class="fas fa-crown"></i> Pro users receive priority support.
-                    </span>
-                </p>
-        
-                <form id="contact-form" class="contact-form">
-                     <div class="input-wrapper">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required placeholder="Your Name">
-                     </div>
-            
-                     <div class="input-wrapper">
-                         <label for="email">Email</label>
-                         <input type="email" id="email" name="email" required placeholder="your@email.com">
-                         <p id="email-error" class="error-message"></p>
-                     </div>
-
-                     <div class="input-wrapper">
-                         <label for="contact-type">Subject / Inquiry Type</label>
-                         <select id="contact-type" name="type" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; background: white;">
-                             <option value="General">General Inquiry </option>
-                             <option value="Suggestion">Feature Suggestion </option>
-                             <option value="Bug">Report a Bug </option>
-                             <option value="Billing">Billing &amp; Account </option>
-                             <option value="Priority" style="font-weight:bold; color:#2563EB;">⭐⭐ Priority Support (Pro Users)</option>
-                         </select>
-                     </div>
-
-                     <div class="input-wrapper full-width">
-                          <label for="message" style="display:block; margin-bottom:5px; font-weight:500;">Message</label>
-                          <div style="position: relative;">
-                               <textarea id="message" name="message" rows="5" maxlength="1000" required 
-                                    placeholder="Please describe your question or feedback here (max 1000 chars)..."
-                                    style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; resize: vertical; font-family: inherit; outline: none;"></textarea>
-        
-                               <span style="position: absolute; bottom: 8px; right: 10px; font-size: 12px; color: #aaa; pointer-events: none;">
-                                   Max 1000
-                               </span>
-                          </div>
-                     </div>
-            
-                     <button type="submit" class="btn btn-primary">Submit Feedback</button>
-                     <div id="form-status"></div>
-                 </form>
-             </div>
-         </section>
-        </div>
 
     </main>
 
@@ -751,8 +455,8 @@
 </style>
 
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-<script src="pwa-nav.js?v=3.5"></script>
-<script src="script.js?v=2026.4"></script>
+<script src="pwa-nav.js"></script>
+<script src="script.js?v=2026.1"></script>
 
 <div id="forgot-password-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 z-[9999] flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden relative p-8">
@@ -799,52 +503,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', async () => {
-        const newsGrid = document.getElementById('home-news-grid');
-        const blogGrid = document.getElementById('home-blog-grid');
-        if (!newsGrid || !blogGrid) return;
-
-        try {
-            const response = await fetch('data/posts.json?t=' + new Date().getTime());
-            const posts = await response.json();
-            newsGrid.innerHTML = '';
-            blogGrid.innerHTML = '';
-
-            const latestNews = posts.filter(p => p.type === 'news').slice(0, 3);
-            const latestBlogs = posts.filter(p => p.type === 'blog').slice(0, 3);
-
-            const renderCard = (post, isNews) => {
-                const borderLeft = isNews ? 'border-l-purple-500' : 'border-l-blue-500';
-                const badgeClass = isNews ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800';
-                const readColor = isNews ? 'text-purple-600' : 'text-blue-600';
-                const titleHover = isNews ? 'group-hover:text-purple-600' : 'group-hover:text-blue-600';
-                const readLabel = isNews ? 'Read Analysis' : 'Read Article';
-                return `
-                    <a href="${post.type}-${post.id}.html" class="bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 border-l-4 ${borderLeft} transition-all duration-300 overflow-hidden group flex flex-col h-full hover:-translate-y-1">
-                        <div class="p-4 sm:p-6 md:p-8 flex flex-col h-full">
-                            <div class="flex justify-between items-center mb-4">
-                                <span class="text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider ${badgeClass}">${post.category}</span>
-                                <span class="text-sm text-gray-400 font-medium">${post.date}</span>
-                            </div>
-                            <h3 class="text-base sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 ${titleHover} transition-colors line-clamp-2 leading-tight">${post.title}</h3>
-                            <p class="text-sm text-gray-500 mb-4 sm:mb-6 line-clamp-3 leading-relaxed flex-grow">${post.excerpt}</p>
-                            <div class="${readColor} font-bold text-sm flex items-center gap-2 mt-auto">
-                                ${readLabel} <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
-                            </div>
-                        </div>
-                    </a>
-                `;
-            };
-
-            latestNews.forEach(post => { newsGrid.innerHTML += renderCard(post, true); });
-            latestBlogs.forEach(post => { blogGrid.innerHTML += renderCard(post, false); });
-        } catch (error) {
-            console.error('Error loading home posts:', error);
-        }
-    });
-</script>
 
 </body>
 </html>

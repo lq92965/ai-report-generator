@@ -5,7 +5,7 @@ const token = localStorage.getItem('token');
 document.addEventListener('DOMContentLoaded', () => {
     if (!token) {
         alert('Please log in to access your security settings.');
-        window.location.href = 'index.html';
+        window.location.href = './index.html';
         return;
     }
 
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // 4. 成功！
             alert('Your account has been successfully deleted.');
             localStorage.removeItem('token'); // 退出登录
-            window.location.href = 'index.html'; // 返回主页
+            window.location.href = './index.html'; // 返回主页
 
         } catch (error) {
             console.error('Error deleting account:', error);

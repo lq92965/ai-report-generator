@@ -9,7 +9,7 @@ const token = localStorage.getItem('token');
 (function() {
     if (!token) {
         alert('Please log in to access templates.');
-        window.location.href = 'index.html'; 
+        window.location.href = './index.html'; 
     }
 })();
 
@@ -109,7 +109,7 @@ function renderTemplates(filter) {
         card.querySelector('.use-btn').addEventListener('click', () => {
             // 简单存个ID，跳转主页
             localStorage.setItem('autoSelectTemplate', t._id);
-            window.location.href = 'index.html';
+            window.location.href = './index.html';
         });
 
         // 绑定删除
