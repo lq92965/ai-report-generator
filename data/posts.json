@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775052026683",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-01",
+        "author": "Emily Rostova",
+        "excerpt": "As a Product Manager, you live and breathe data. It’s the lifeblood of your decisions, the justification for your roadmap, and the proof of your impac...",
+        "contentFile": "blog-1775052026683.md"
+    },
+    {
         "id": "1775048424073",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
