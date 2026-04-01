@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775080827108",
+        "type": "blog",
+        "title": "Beyond the Status Update: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-01",
+        "author": "Emily Rostova",
+        "excerpt": "We’ve all been there. It’s 4 PM on a Friday, and that recurring calendar notification pops up: \"Submit Weekly Project Status Report.\" A collective gro...",
+        "contentFile": "blog-1775080827108.md"
+    },
+    {
         "id": "1775077224722",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
