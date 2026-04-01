@@ -2061,7 +2061,15 @@ a.pwa-page-back-link.mb-4 {
 @media (min-width: 768px) {
     .pwa-desktop-nav,
     .pwa-header-inner .main-nav.pwa-desktop-nav {
-        display: block !important;
+        display: flex !important;
+        flex: 1 1 0;
+        min-width: 0;
+        justify-content: center;
+    }
+    .pwa-header-inner .main-nav.pwa-desktop-nav ul {
+        justify-content: center;
+        gap: 2rem !important;
+        flex-wrap: nowrap;
     }
 }
 
@@ -2381,5 +2389,25 @@ body.has-app-nav .fixed.bottom-8 {
     a.pwa-page-back-link svg {
         width: 1em !important;
         height: 1em !important;
+    }
+}
+
+/* Desktop (≥768px): hide fixed bottom tab bar; drop mobile body padding
+   Must match #app-bottom-nav.app-bottom-nav specificity (otherwise global flex !important wins) */
+@media (min-width: 768px) {
+    #app-bottom-nav.app-bottom-nav,
+    nav#app-bottom-nav.app-bottom-nav {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        overflow: hidden !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+    body,
+    body.has-app-nav {
+        padding-bottom: 0 !important;
     }
 }

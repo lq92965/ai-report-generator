@@ -49,9 +49,24 @@ window.showToast = function(message, type = 'info') {
     }, 3000);
 };
 
+/** 清除底部栏上由移动端逻辑写入的 !important 内联样式（否则桌面 CSS 无法覆盖） */
+function clearPwaShellInlineStyles() {
+    const nav = document.getElementById('app-bottom-nav') || document.querySelector('.app-bottom-nav');
+    if (nav) {
+        ['display', 'visibility', 'position', 'bottom', 'z-index', 'background-color'].forEach((p) => {
+            nav.style.removeProperty(p);
+        });
+    }
+    document.body.style.removeProperty('padding-bottom');
+}
+
 /** 确保底部 Tab 栏与 PWA 壳层在登录/刷新后仍显示（修复被旧缓存或样式覆盖的情况） */
 /** 确保底部 Tab 栏与 PWA 壳层在登录/刷新后仍显示 */
 function ensurePwaShell() {
+    if (window.innerWidth >= 768) {
+        clearPwaShellInlineStyles();
+        return;
+    }
     document.body.classList.add('has-app-nav');
     // 强制给 body 底部留出空间，防止内容被遮挡
     document.body.style.setProperty('padding-bottom', '75px', 'important');
@@ -93,6 +108,18 @@ function ensurePwaShell() {
     nav.style.setProperty('z-index', '100000', 'important');
     nav.style.setProperty('background-color', '#ffffff', 'important');
 }
+
+let pwaShellResizeTimer;
+window.addEventListener('resize', () => {
+    clearTimeout(pwaShellResizeTimer);
+    pwaShellResizeTimer = setTimeout(() => {
+        if (window.innerWidth >= 768) clearPwaShellInlineStyles();
+        else ensurePwaShell();
+    }, 120);
+});
+
+window.ensurePwaShell = ensurePwaShell;
+window.clearPwaShellInlineStyles = clearPwaShellInlineStyles;
 
 window.saveAs = function(blob, filename) {
     const url = URL.createObjectURL(blob);

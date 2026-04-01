@@ -7,15 +7,79 @@
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
     <title>Usage & Limits - Reportify AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css?v=2026.2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .stats-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 40px; }
-        .stat-box { width: 100%; box-sizing: border-box; text-align: left; transition: transform 0.2s; }
-        .stat-box:hover { transform: translateY(-3px); border-color: #007bff; }
-        .stat-number { font-size: 2.5rem; font-weight: 800; color: #333; margin: 15px 0 5px; }
-        .stat-label { font-size: 0.95rem; color: #666; font-weight: 600; text-transform: uppercase; }
-        .stat-desc { font-size: 0.8rem; color: #999; margin-top: 5px; }
+        /* Usage stat row cards — match index.html feature-card look (#f8fafc / #e2e8f0 / #1e293b / #64748b) */
+        .usage-stats-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .usage-stat-card {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 20px 24px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .usage-stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+        .usage-stat-icon-wrap {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 9999px;
+            background: #ffffff;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+        }
+        .usage-stat-icon-wrap i {
+            font-size: 1.375rem;
+            line-height: 1;
+        }
+        .usage-stat-icon-wrap .usage-icon-remaining { color: #f59e0b; }
+        .usage-stat-icon-wrap .usage-icon-days { color: #10b981; }
+        .usage-stat-icon-wrap .usage-icon-active { color: #2563eb; }
+        .usage-stat-body {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            text-align: right;
+            min-width: 0;
+            padding-left: 16px;
+        }
+        .usage-stat-value {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #1e293b;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+        }
+        .usage-stat-label {
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: #64748b;
+            line-height: 1.5;
+            margin-top: 4px;
+        }
         .progress-container { background: #e9ecef; border-radius: 20px; height: 24px; width: 100%; margin: 20px 0 10px; overflow: hidden; position: relative; }
         .progress-bar { background: linear-gradient(90deg, #007bff, #00c6ff); height: 100%; border-radius: 20px; width: 0%; transition: width 0.8s ease-in-out; }
         
@@ -198,28 +262,34 @@
                 </div>
             </div>
 
-            <div class="stats-grid flex flex-col gap-3">
-                <div class="stat-box flex flex-row items-center p-4 bg-white rounded-xl shadow-sm border border-gray-100 w-full mb-3 box-border">
-                    <div style="color: #f59e0b;"><i class="fas fa-bolt text-2xl"></i></div>
-                    <div class="ml-4 flex flex-col items-start">
-                        <div id="stat-remaining" class="text-2xl font-bold text-gray-800 leading-tight">0</div>
-                        <div class="text-sm text-gray-500">Remaining</div>
+            <div class="usage-stats-grid">
+                <div class="usage-stat-card">
+                    <div class="usage-stat-icon-wrap" aria-hidden="true">
+                        <i class="fas fa-bolt usage-icon-remaining" aria-hidden="true"></i>
+                    </div>
+                    <div class="usage-stat-body">
+                        <div id="stat-remaining" class="usage-stat-value">0</div>
+                        <div class="usage-stat-label">Remaining</div>
                     </div>
                 </div>
 
-                <div class="stat-box flex flex-row items-center p-4 bg-white rounded-xl shadow-sm border border-gray-100 w-full mb-3 box-border">
-                    <div style="color: #10b981;"><i class="fas fa-hourglass-half text-2xl"></i></div>
-                    <div class="ml-4 flex flex-col items-start">
-                        <div id="stat-daysleft" class="text-2xl font-bold text-gray-800 leading-tight">0</div>
-                        <div class="text-sm text-gray-500">Days Left</div>
+                <div class="usage-stat-card">
+                    <div class="usage-stat-icon-wrap" aria-hidden="true">
+                        <i class="fas fa-hourglass-half usage-icon-days" aria-hidden="true"></i>
+                    </div>
+                    <div class="usage-stat-body">
+                        <div id="stat-daysleft" class="usage-stat-value">0</div>
+                        <div class="usage-stat-label">Days Left</div>
                     </div>
                 </div>
 
-                <div class="stat-box flex flex-row items-center p-4 bg-white rounded-xl shadow-sm border border-gray-100 w-full mb-3 box-border">
-                    <div style="color: #3b82f6;"><i class="far fa-calendar-check text-2xl"></i></div>
-                    <div class="ml-4 flex flex-col items-start">
-                        <div id="stat-activedays" class="text-2xl font-bold text-gray-800 leading-tight">1</div>
-                        <div class="text-sm text-gray-500">Active Days</div>
+                <div class="usage-stat-card">
+                    <div class="usage-stat-icon-wrap" aria-hidden="true">
+                        <i class="far fa-calendar-check usage-icon-active" aria-hidden="true"></i>
+                    </div>
+                    <div class="usage-stat-body">
+                        <div id="stat-activedays" class="usage-stat-value">1</div>
+                        <div class="usage-stat-label">Active Days</div>
                     </div>
                 </div>
             </div>
