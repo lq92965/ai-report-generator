@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775008825139",
+        "type": "blog",
+        "title": "Stop Drowning in Data: A Strategic Approach to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-01",
+        "author": "Emily Rostova",
+        "excerpt": "It’s a familiar scene in any modern workplace: the Monday morning inbox, flooded with automated status reports. The weekly performance dashboard that...",
+        "contentFile": "blog-1775008825139.md"
+    },
+    {
         "id": "1775005229778",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
