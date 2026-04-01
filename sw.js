@@ -2,7 +2,6 @@
 const CACHE_NAME = 'reportify-pwa-v3-ios-nav';
 const PRECACHE_URLS = [
   './',
-  './sw.js',
   './index.html',
   './generate.html',
   './account.html',
