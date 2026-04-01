@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775012424538",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "category": "Tech Radar",
+        "date": "2026-04-01",
+        "author": "Marcus Webb",
+        "excerpt": "The narrative around artificial intelligence has long been dominated by a binary debate: job creation versus job destruction. Headlines warn of mass u...",
+        "contentFile": "news-1775012424538.md"
+    },
+    {
         "id": "1775008825139",
         "type": "blog",
         "title": "Stop Drowning in Data: A Strategic Approach to Overcoming Reporting Fatigue",
