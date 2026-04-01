@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775073625376",
+        "type": "blog",
+        "title": "Beyond the Status Update: Curing Reporting Fatigue for Good",
+        "category": "Deep Insights",
+        "date": "2026-04-01",
+        "author": "Jessica Tran",
+        "excerpt": "It's 4 PM on a Friday. You're not wrapping up strategic planning or mentoring your team. You're wrestling with a spreadsheet, exporting Jira data, and...",
+        "contentFile": "blog-1775073625376.md"
+    },
+    {
         "id": "1775070017293",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
