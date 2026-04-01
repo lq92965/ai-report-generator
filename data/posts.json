@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775044825469",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-01",
+        "author": "Alex Mercer",
+        "excerpt": "As a Product Manager, you live and breathe data. You track KPIs, monitor dashboards, and communicate progress. But there’s a dark side to this data-dr...",
+        "contentFile": "blog-1775044825469.md"
+    },
+    {
         "id": "1775041223524",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
