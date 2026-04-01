@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775037623426",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-01",
+        "author": "Marcus Webb",
+        "excerpt": "We've all been there. It's 4:00 PM on a Friday. The last thing standing between you and the weekend is \"The Report.\" That weekly status update, that m...",
+        "contentFile": "blog-1775037623426.md"
+    },
+    {
         "id": "1775034026131",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
