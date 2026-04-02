@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775131226023",
+        "type": "blog",
+        "title": "The Silent Killer of Progress: How to Conquer Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-02",
+        "author": "Michael Chen",
+        "excerpt": "We've all been there. It’s the end of the week, your brain is fried from solving complex problems, and that final task looms: the status report. You p...",
+        "contentFile": "blog-1775131226023.md"
+    },
+    {
         "id": "1775127619409",
         "type": "news",
         "title": "The Unseen Labor Behind AI's Public Face",
