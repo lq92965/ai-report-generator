@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775163619710",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
+        "category": "Tech Radar",
+        "date": "2026-04-02",
+        "author": "Emily Rostova",
+        "excerpt": "In the hushed server rooms and on the glowing screens of developers worldwide, a profound transformation is underway, not through lines of code writte...",
+        "contentFile": "news-1775163619710.md"
+    },
+    {
         "id": "1775160024806",
         "type": "blog",
         "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
