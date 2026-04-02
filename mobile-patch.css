@@ -1,0 +1,63 @@
+/* 文件名：mobile-patch.css */
+/* 作用：修复真实移动端设备的 UI 适配问题 */
+
+/* --- 修复问题 2：底部菜单栏被物理屏幕边缘或手势条阻挡 --- */
+body {
+    /* 为整个页面底部增加安全区余量 */
+    padding-bottom: env(safe-area-inset-bottom, 20px) !important;
+}
+
+/* 针对底部导航栏提升高度并增加内部底边距 */
+#app-bottom-nav, .app-bottom-nav, nav[class*="fixed bottom-0"] {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 15px) !important;
+    height: auto !important;
+}
+
+
+/* --- 修复问题 4：分享按钮显示不全且整体偏右 --- */
+/* 强制包含分享图标的容器换行并居中对齐 */
+div:has(> a[href*="whatsapp"]), 
+div:has(> button:contains("Copy")) ~ div,
+.share-buttons-container {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 10px !important;
+    box-sizing: border-box !important;
+    margin: 0 auto !important;
+}
+
+
+/* --- 修复问题 3：为自动注入的返回按钮提供基础样式 --- */
+.mobile-back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 99999;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #111;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    text-decoration: none;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: bold;
+    backdrop-filter: blur(4px);
+    display: none; /* 默认隐藏 */
+}
+
+/* 仅在手机屏幕下显示返回按钮 */
+@media (max-width: 768px) {
+    .mobile-back-btn {
+        display: flex !important;
+    }
+}
