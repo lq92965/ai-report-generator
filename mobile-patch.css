@@ -1,34 +1,128 @@
 /* 文件名：mobile-patch.css */
-/* 作用：修复真实移动端设备的 UI 适配问题 */
+/* 作用：修复移动端UI，并通过媒体查询彻底隔离对电脑端网站的影响 */
 
-/* --- 修复问题 2：底部菜单栏被物理屏幕边缘或手势条阻挡 --- */
-body {
-    /* 为整个页面底部增加安全区余量 */
-    padding-bottom: env(safe-area-inset-bottom, 20px) !important;
-}
+/* ==================================================================== */
+/* 核心防火墙：以下所有代码【仅在手机屏幕】生效，绝对不影响桌面端！ */
+/* ==================================================================== */
+@media (max-width: 768px) {
+    
+    /* 1. 基础安全区设定 */
+    body {
+        padding-bottom: env(safe-area-inset-bottom, 20px) !important;
+    }
 
-/* Bottom nav: safe-area only — avoid oversized bar that pushes icons upward */
-#app-bottom-nav, .app-bottom-nav, nav[class*="fixed bottom-0"] {
-    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px) !important;
-    padding-top: 2px !important;
-    height: auto !important;
-    min-height: 56px !important;
-}
+    /* 2. 底部菜单栏居中与安全区 */
+    #app-bottom-nav, .app-bottom-nav, nav[class*="fixed bottom-0"] {
+        padding-bottom: env(safe-area-inset-bottom, 8px) !important;
+        padding-top: 8px !important;
+        height: auto !important;
+        display: flex !important;
+        align-items: center !important; 
+    }
 
+    nav[class*="fixed bottom-0"] a {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 2px !important;
+        padding-top: 4px !important;
+        padding-bottom: 4px !important;
+    }
 
-/* --- 修复问题 4：分享按钮显示不全且整体偏右 --- */
-/* 强制包含分享图标的容器换行并居中对齐 */
-div:has(> a[href*="whatsapp"]), 
-div:has(> button:contains("Copy")) ~ div,
-.share-buttons-container {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 12px !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    padding: 0 10px !important;
-    box-sizing: border-box !important;
-    margin: 0 auto !important;
+    /* 3. 返回按钮样式 */
+    .mobile-back-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 99999;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(255, 255, 255, 0.95);
+        color: #111;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        text-decoration: none;
+        font-size: 24px;
+        line-height: 1;
+        font-weight: bold;
+        backdrop-filter: blur(4px);
+    }
+
+    /* ========================================= */
+    /* 解决问题 1 & 3：用量卡片排版优化 */
+    /* ========================================= */
+
+    /* 让三个卡片的外部容器撑宽，贴近左右屏幕边缘 */
+    div:has(> div > i.fa-bolt),
+    div:has(> div > i.fa-hourglass-half),
+    div:has(> div > i.fa-calendar-check) {
+        width: 100% !important;
+        max-width: 100% !important;
+        position: relative !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important; /* 保证内部文字整体居中 */
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+    }
+
+    /* 图标容器：强行绝对定位，牢牢钉在左侧，不跟随文字居中 */
+    div:has(> i.fa-bolt),
+    div:has(> i.fa-hourglass-half),
+    div:has(> i.fa-calendar-check) {
+        position: absolute !important;
+        left: 20px !important; 
+        margin: 0 !important;
+    }
+
+    /* 数字和文字容器：去除原有的左边距，强行居中显示 */
+    div:has(> i.fa-bolt) ~ div,
+    div:has(> i.fa-hourglass-half) ~ div,
+    div:has(> i.fa-calendar-check) ~ div {
+        margin-left: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
+
+    /* ========================================= */
+    /* 解决问题 2 & 3：Invite & Earn 及链接显示 */
+    /* ========================================= */
+
+    /* 修复 Invite & Earn 卡片太窄的问题，将其完全撑宽 */
+    div:has(> div > input[readonly]),
+    div:has(> h3:contains("Invite")),
+    div:has(> h2:contains("Invite")) {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    /* 修复分享链接框显示不全：字体缩小，输入框撑满宽，减少左右内边距 */
+    input[readonly], input[value*="http"] {
+        font-size: 13px !important;
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+        width: 100% !important;
+        letter-spacing: -0.5px !important;
+    }
+
+    /* 修复六个分享按钮排版：允许换行，整体居中 */
+    div:has(> a[href*="whatsapp"]), 
+    div:has(> button:contains("Copy")) ~ div,
+    div:has(> button:contains("复制")) ~ div,
+    .share-buttons-container {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 10px !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin-top: 15px !important;
+    }
 }
