@@ -1,23 +1,34 @@
 /* 文件名：mobile-patch.css */
-/* 作用：修复真实移动端设备的 UI 适配问题 */
+/* 作用：修复真实移动端设备的 UI 适配问题 (终极完美版) */
 
-/* --- 修复问题 2：底部菜单栏被物理屏幕边缘或手势条阻挡 --- */
+/* --- 基础安全区设定 --- */
 body {
-    /* 为整个页面底部增加安全区余量 */
     padding-bottom: env(safe-area-inset-bottom, 20px) !important;
 }
 
-/* Bottom nav: safe-area only — avoid oversized bar that pushes icons upward */
+/* --- 修复问题 2：底部菜单栏高度过高及内容不居中的问题 --- */
 #app-bottom-nav, .app-bottom-nav, nav[class*="fixed bottom-0"] {
-    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px) !important;
-    padding-top: 2px !important;
+    /* 精确控制底部安全区高度，不再盲目加高 */
+    padding-bottom: env(safe-area-inset-bottom, 8px) !important;
+    padding-top: 8px !important;
     height: auto !important;
-    min-height: 56px !important;
+    /* 强行接管 Flex 布局，确保垂直居中 */
+    display: flex !important;
+    align-items: center !important; 
 }
 
+/* 确保底部导航里的每个按钮内部（图标和文字）紧凑且居中 */
+nav[class*="fixed bottom-0"] a {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 2px !important; /* 图标和文字的微小间距 */
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
 
 /* --- 修复问题 4：分享按钮显示不全且整体偏右 --- */
-/* 强制包含分享图标的容器换行并居中对齐 */
 div:has(> a[href*="whatsapp"]), 
 div:has(> button:contains("Copy")) ~ div,
 .share-buttons-container {
@@ -31,4 +42,78 @@ div:has(> button:contains("Copy")) ~ div,
     padding: 0 10px !important;
     box-sizing: border-box !important;
     margin: 0 auto !important;
+}
+
+/* --- 修复问题 3：为自动注入的返回按钮提供基础样式 --- */
+.mobile-back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 99999;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #111;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    text-decoration: none;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: bold;
+    backdrop-filter: blur(4px);
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-back-btn {
+        display: flex !important;
+    }
+
+    /* --- 修复问题 3：用量卡片变宽及内部优雅排版 --- */
+    /* 1. 强行解除外层容器的宽度限制，让卡片贴近屏幕边缘 */
+    div:has(> div > div > i.fa-bolt),
+    div:has(> div > div > i.fa-hourglass-half),
+    div:has(> div > div > i.fa-calendar-check),
+    .usage-cards-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    /* 2. 重塑卡片内部结构：相对定位，方便内部元素绝对对齐 */
+    div:has(> i.fa-bolt),
+    div:has(> i.fa-hourglass-half),
+    div:has(> i.fa-calendar-check) {
+        width: 100% !important;
+        display: flex !important;
+        position: relative !important;
+        justify-content: center !important; /* 整体内容居中 */
+        align-items: center !important;
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+    }
+
+    /* 3. 让左侧图标绝对定位于左侧，不干扰文字居中 */
+    div:has(> i.fa-bolt) > div:first-child,
+    div:has(> i.fa-hourglass-half) > div:first-child,
+    div:has(> i.fa-calendar-check) > div:first-child {
+        position: absolute !important;
+        left: 20px !important;
+        margin: 0 !important;
+    }
+
+    /* 4. 强制右侧的数字和文字垂直居中堆叠 */
+    div:has(> i.fa-bolt) > div:last-child,
+    div:has(> i.fa-hourglass-half) > div:last-child,
+    div:has(> i.fa-calendar-check) > div:last-child {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        width: 100% !important;
+    }
 }
