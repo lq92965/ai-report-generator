@@ -143,14 +143,14 @@
         .btn-copy:active { transform: scale(0.95); }
 
         .social-actions { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px; 
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            box-sizing: border-box;
             margin-top: 20px; 
-        }
-
-        @media (max-width: 600px) {
-            .social-actions { grid-template-columns: repeat(2, 1fr); }
         }
 
         .btn-social {
@@ -177,11 +177,12 @@
         @media (max-width: 768px) {
             .container { padding: 0 15px; }
             h1 { font-size: 1.8rem; }
-            .social-actions { flex-direction: column; }
             .hide-mobile { display: none; }
         }
 
     </style>
+    <link rel="stylesheet" href="mobile-patch.css">
+    <script src="mobile-patch.js"></script>
 </head>
 <body class="has-app-nav font-sans antialiased" style="background-color: #f8f9fa;">
 
@@ -252,7 +253,7 @@
                     <button class="btn-copy" onclick="copyLink()">Copy</button>
                 </div>
 
-                <div class="social-actions">
+                <div class="social-actions flex flex-wrap justify-center gap-2 w-full">
                     <a href="#" id="share-x" target="_blank" class="btn-social btn-x"><i class="fab fa-x-twitter"></i> <span>X</span></a>
                     <a href="#" id="share-wa" target="_blank" class="btn-social btn-wa"><i class="fab fa-whatsapp"></i> <span>WhatsApp</span></a>
                     <a href="#" id="share-in" target="_blank" class="btn-social btn-in"><i class="fab fa-linkedin"></i> <span>LinkedIn</span></a>
