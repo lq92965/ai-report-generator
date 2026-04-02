@@ -27,6 +27,7 @@
     
     <link rel="stylesheet" href="mobile-patch.css">
     <script src="mobile-patch.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body class="has-app-nav font-sans antialiased bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
@@ -53,6 +54,14 @@
             </div>
         </div>
     </header>
+
+    <div class="pwa-page-back-row max-w-4xl mx-auto px-6 mt-4">
+        <a href="blog.html" id="dynamic-back-btn" class="pwa-page-back-link">
+            <i data-lucide="arrow-left" class="pwa-page-back-icon" aria-hidden="true"></i>
+            <span>Previous Page</span>
+        </a>
+    </div>
+
 <main class="flex-grow py-4">
         <article class="max-w-4xl mx-auto px-6">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-8">
@@ -254,6 +263,16 @@
                     throw new Error('Post not found in database');
                 }
 
+                const backBtn = document.getElementById('dynamic-back-btn');
+                if (backBtn) {
+                    const listPage = post.type === 'news' ? 'news.html' : 'blog.html';
+                    backBtn.setAttribute('href', listPage);
+                    backBtn.innerHTML = '<i data-lucide="arrow-left" class="pwa-page-back-icon" aria-hidden="true"></i><span>Previous Page</span>';
+                    if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+                        lucide.createIcons();
+                    }
+                }
+
                 // 渲染精美的分类、时间、大标题和作者头部
                 document.getElementById('article-header').innerHTML = `
                     <div class="flex items-center gap-3 text-sm font-bold text-blue-600 uppercase tracking-wider mb-4">
@@ -285,7 +304,6 @@
             }
         });
     </script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script src="pwa-nav.js"></script>
     <script src="script.js?v=2026.1"></script>
 </body>

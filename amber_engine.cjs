@@ -100,8 +100,8 @@ function buildStaticPage(postData) {
     $('meta[name="description"]').attr('content', postData.excerpt);
 
     const backLink = postData.type === 'news' ? 'news.html' : 'blog.html';
-    const backText = postData.type === 'news' ? '<i class="fas fa-arrow-left"></i> Back to News' : '<i class="fas fa-arrow-left"></i> Back to Blog';
-    $('#dynamic-back-btn').attr('href', backLink).html(backText);
+    const backInner = '<i data-lucide="arrow-left" class="pwa-page-back-icon" aria-hidden="true"></i><span>Previous Page</span>';
+    $('#dynamic-back-btn').attr('href', backLink).html(backInner);
 
     const categoryName = postData.type === 'news' ? 'Tech Radar' : 'Deep Insights';
     const headerHtml = `<div class="flex items-center gap-3 text-sm font-bold text-blue-600 uppercase tracking-wider mb-4"><span>${categoryName}</span><span class="text-gray-300">|</span><span class="text-gray-500"><i class="far fa-calendar-alt"></i> ${postData.dateStr}</span></div><h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">${postData.title}</h1><div class="flex items-center gap-4 text-gray-600 font-medium"><div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-lg"><i class="fas fa-user-edit"></i></div><div class="text-gray-900 font-bold">${postData.author}<div class="text-xs text-gray-400">Staff Writer</div></div></div>`;
