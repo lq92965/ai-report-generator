@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775138425571",
+        "type": "blog",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-02",
+        "author": "David Sterling",
+        "excerpt": "We've all been there. It's 4:00 PM on a Friday, and instead of wrapping up strategic work, you're wrestling with a spreadsheet. You're pulling data fr...",
+        "contentFile": "blog-1775138425571.md"
+    },
+    {
         "id": "1775134830108",
         "type": "news",
         "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
