@@ -1532,6 +1532,23 @@ function downloadMarkdown() {
 }
 
 // --- 模块 G: 支付与卡片交互逻辑 (财务防弹版) ---
+function waitForPayPal(onReady, onTimeout) {
+    let tries = 0;
+    const max = 160;
+    function tick() {
+        if (typeof window.paypal !== 'undefined' && window.paypal && typeof window.paypal.Buttons === 'function') {
+            onReady();
+            return;
+        }
+        if (++tries >= max) {
+            if (typeof onTimeout === 'function') onTimeout();
+            return;
+        }
+        setTimeout(tick, 100);
+    }
+    tick();
+}
+
 function setupPayment() {
     const cards = document.querySelectorAll('.pricing-card');
     const paymentModal = document.getElementById('payment-modal-overlay');
@@ -1610,37 +1627,70 @@ function setupPayment() {
                 // 如果是月付
                 finalAmount = planType === 'basic' ? '9.90' : '19.90';
             }
-            
-            if (paymentModal) paymentModal.style.display = 'flex';
-            if (window.paypal && paypalContainer) {
-                paypalContainer.innerHTML = ''; // 清空旧按钮
-                window.paypal.Buttons({
-                    // 🟢 核心修复：将真实的动态金额传给 PayPal
-                    createOrder: (data, actions) => actions.order.create({ purchase_units: [{ amount: { value: finalAmount } }] }),
-                    
-                    onApprove: (data, actions) => actions.order.capture().then(async () => {
-                        paymentModal.style.display = 'none';
-                        showToast('Payment confirmed! Upgrading account...', 'info');
-                        
-                        try {
-                            const res = await fetch(`${API_BASE_URL}/api/upgrade-plan`, {
-                                method: 'POST', 
-                                headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
-                                // 🟢 核心修复：把正确的年费/月费套餐名 (finalPlanId) 传给后端！
-                                body: JSON.stringify({ planId: finalPlanId, paymentId: data.orderID })
-                            });
-                            
-                            const resultData = await res.json();
-                            if (!res.ok) throw new Error(resultData.message || "Upgrade failed");
 
-                            showToast('Upgraded Successfully!', 'success');
-                            setTimeout(() => window.location.reload(), 1500);
-                        } catch(err) {
-                            showToast(err.message || 'Upgrade failed, contact support.', 'error');
-                        }
-                    })
-                }).render('#paypal-button-container');
+            const planNameEl = document.getElementById('payment-plan-name');
+            if (planNameEl) {
+                if (planType === 'basic') {
+                    planNameEl.textContent = window.isYearlyBilling ? 'Basic — Annual ($99)' : 'Basic — Monthly ($9.90)';
+                } else if (planType === 'pro') {
+                    planNameEl.textContent = window.isYearlyBilling ? 'Professional — Annual ($199)' : 'Professional — Monthly ($19.90)';
+                } else {
+                    planNameEl.textContent = 'Reportify AI';
+                }
             }
+
+            if (!paypalContainer) {
+                showToast('Payment UI missing on this page.', 'error');
+                return;
+            }
+
+            if (paymentModal) paymentModal.style.display = 'flex';
+            paypalContainer.innerHTML = '<p style="text-align:center;color:#64748b;font-size:13px;padding:12px;">Loading PayPal…</p>';
+
+            waitForPayPal(() => {
+                paypalContainer.innerHTML = '';
+                try {
+                    window.paypal.Buttons({
+                        style: { layout: 'vertical', shape: 'rect', label: 'paypal' },
+                        createOrder: (data, actions) => actions.order.create({
+                            purchase_units: [{
+                                description: `Reportify AI ${finalPlanId}`,
+                                amount: { value: finalAmount }
+                            }]
+                        }),
+                        onApprove: (data, actions) => actions.order.capture().then(async () => {
+                            if (paymentModal) paymentModal.style.display = 'none';
+                            showToast('Payment confirmed! Upgrading account...', 'info');
+                            try {
+                                const res = await fetch(`${API_BASE_URL}/api/upgrade-plan`, {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                                    body: JSON.stringify({ planId: finalPlanId, paymentId: data.orderID })
+                                });
+                                const resultData = await res.json();
+                                if (!res.ok) throw new Error(resultData.message || 'Upgrade failed');
+                                showToast('Upgraded Successfully!', 'success');
+                                setTimeout(() => window.location.reload(), 1500);
+                            } catch (err) {
+                                showToast(err.message || 'Upgrade failed, contact support.', 'error');
+                            }
+                        }),
+                        onError: (err) => {
+                            console.error('PayPal onError', err);
+                            showToast('PayPal error. Try again or check your network.', 'error');
+                        },
+                        onCancel: () => {
+                            if (paymentModal) paymentModal.style.display = 'none';
+                        }
+                    }).render('#paypal-button-container');
+                } catch (e) {
+                    console.error(e);
+                    paypalContainer.innerHTML = '<p style="color:#b91c1c;font-size:13px;text-align:center;">PayPal failed to start.</p>';
+                }
+            }, () => {
+                showToast('PayPal SDK did not load. Check network / VPN.', 'error');
+                paypalContainer.innerHTML = '<p style="color:#b91c1c;font-size:13px;text-align:center;padding:12px;">PayPal could not load (blocked or offline). Open this page in a normal browser tab or allow paypal.com.</p>';
+            });
         });
     });
 

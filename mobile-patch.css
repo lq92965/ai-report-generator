@@ -7,10 +7,12 @@ body {
     padding-bottom: env(safe-area-inset-bottom, 20px) !important;
 }
 
-/* 针对底部导航栏提升高度并增加内部底边距 */
+/* Bottom nav: safe-area only — avoid oversized bar that pushes icons upward */
 #app-bottom-nav, .app-bottom-nav, nav[class*="fixed bottom-0"] {
-    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 15px) !important;
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px) !important;
+    padding-top: 2px !important;
     height: auto !important;
+    min-height: 56px !important;
 }
 
 
