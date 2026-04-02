@@ -30,34 +30,3 @@ div:has(> button:contains("Copy")) ~ div,
     box-sizing: border-box !important;
     margin: 0 auto !important;
 }
-
-
-/* --- 修复问题 3：为自动注入的返回按钮提供基础样式 --- */
-.mobile-back-btn {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 99999;
-    width: 40px;
-    height: 40px;
-    background-color: rgba(255, 255, 255, 0.95);
-    color: #111;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    text-decoration: none;
-    font-size: 24px;
-    line-height: 1;
-    font-weight: bold;
-    backdrop-filter: blur(4px);
-    display: none; /* 默认隐藏 */
-}
-
-/* 仅在手机屏幕下显示返回按钮 */
-@media (max-width: 768px) {
-    .mobile-back-btn {
-        display: flex !important;
-    }
-}

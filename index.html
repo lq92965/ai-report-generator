@@ -157,6 +157,12 @@
         }
     }
 
+    /* Homepage desktop nav: scroll-spy active state (matches Features/Pricing behavior for all sections) */
+    #pwa-collapse-nav a[data-nav-section].nav-section-active {
+        color: #2563eb !important;
+        font-weight: 700;
+    }
+
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -173,11 +179,11 @@
             </a>
             <nav class="main-nav pwa-desktop-nav hidden md:flex md:flex-1 md:justify-center md:min-w-0" id="pwa-collapse-nav">
                 <ul class="flex flex-wrap items-center justify-center gap-4 md:gap-8">
-                    <li><a href="index.html#features">Features</a></li>
-                    <li><a href="index.html#pricing">Pricing</a></li>
-                    <li><a href="generate.html">Generator</a></li>
-                    <li><a href="news.html">News</a></li>
-                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="index.html#features" data-nav-section="features">Features</a></li>
+                    <li><a href="index.html#pricing" data-nav-section="pricing">Pricing</a></li>
+                    <li><a href="index.html#generator" class="js-index-inpage-nav" data-mobile-href="generate.html" data-nav-section="generator">Generator</a></li>
+                    <li><a href="index.html#news" class="js-index-inpage-nav" data-mobile-href="news.html" data-nav-section="news">News</a></li>
+                    <li><a href="index.html#blog" class="js-index-inpage-nav" data-mobile-href="blog.html" data-nav-section="blog">Blog</a></li>
                 </ul>
             </nav>
             <div class="pwa-header-actions shrink-0">
@@ -846,6 +852,58 @@
             console.error('Error loading home posts:', error);
         }
     });
+</script>
+
+<script>
+(function () {
+    var mqMobile = window.matchMedia('(max-width: 767px)');
+    if (mqMobile.matches) {
+        var h = (location.hash || '').replace(/^#/, '');
+        if (h === 'generator') { location.replace('generate.html'); return; }
+        if (h === 'news') { location.replace('news.html'); return; }
+        if (h === 'blog') { location.replace('blog.html'); return; }
+    }
+
+    function applyIndexNavHrefs() {
+        var mobile = mqMobile.matches;
+        document.querySelectorAll('.js-index-inpage-nav').forEach(function (a) {
+            var sec = a.getAttribute('data-nav-section');
+            a.href = mobile ? a.getAttribute('data-mobile-href') : ('index.html#' + sec);
+        });
+    }
+    applyIndexNavHrefs();
+    mqMobile.addEventListener('change', applyIndexNavHrefs);
+
+    var mqDesktop = window.matchMedia('(min-width: 768px)');
+    var sectionIds = ['features', 'pricing', 'generator', 'news', 'blog'];
+
+    function updateIndexNavScrollSpy() {
+        var nav = document.getElementById('pwa-collapse-nav');
+        if (!nav) return;
+        var links = nav.querySelectorAll('a[data-nav-section]');
+        if (!mqDesktop.matches) {
+            links.forEach(function (a) {
+                a.classList.remove('nav-section-active');
+            });
+            return;
+        }
+        var scrollPos = window.scrollY + 120;
+        var current = '';
+        sectionIds.forEach(function (id) {
+            var el = document.getElementById(id);
+            if (el && el.offsetTop <= scrollPos) current = id;
+        });
+        links.forEach(function (a) {
+            a.classList.toggle('nav-section-active', a.getAttribute('data-nav-section') === current);
+        });
+    }
+
+    window.addEventListener('scroll', function () {
+        window.requestAnimationFrame(updateIndexNavScrollSpy);
+    }, { passive: true });
+    window.addEventListener('resize', updateIndexNavScrollSpy);
+    document.addEventListener('DOMContentLoaded', updateIndexNavScrollSpy);
+})();
 </script>
 
 <script>if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js'); }); }</script>
