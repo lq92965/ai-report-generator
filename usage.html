@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#2563eb">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#ffffff">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
     <title>Usage & Limits - Reportify AI</title>
@@ -87,11 +88,14 @@
             background: white;
             border: 1px solid #e2e8f0;
             border-radius: 20px;
-            padding: 30px;
+            padding: 24px 18px;
             margin-top: 40px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             position: relative;
             overflow: hidden;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
         .share-header {
             display: flex;
@@ -111,31 +115,39 @@
 
         .link-box {
             display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
             background: #f8fafc;
             border: 2px solid #e2e8f0;
             border-radius: 12px;
-            padding: 5px;
-            margin-bottom: 20px;
-            align-items: center;
+            padding: 10px 12px;
+            margin-bottom: 16px;
+            width: 100%;
+            box-sizing: border-box;
         }
         .link-input {
-            flex: 1;
+            width: 100%;
             border: none;
             background: transparent;
-            padding: 10px 15px;
-            color: #475569;
-            font-family: 'Courier New', monospace;
-            font-size: 1rem;
+            padding: 6px 4px;
+            color: #334155;
+            font-family: ui-monospace, 'Cascadia Code', 'Courier New', monospace;
+            font-size: 0.7rem;
             outline: none;
-            font-weight: 600;
+            font-weight: 500;
+            line-height: 1.4;
+            word-break: break-all;
         }
         .btn-copy {
+            align-self: center;
             background: #2563eb;
             color: white;
             border: none;
-            padding: 10px 25px;
+            padding: 8px 28px;
             border-radius: 8px;
             font-weight: 600;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.2s;
         }
@@ -143,29 +155,30 @@
         .btn-copy:active { transform: scale(0.95); }
 
         .social-actions { 
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 0.5rem;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px 10px;
             width: 100%;
+            max-width: 300px;
+            margin: 16px auto 0;
             box-sizing: border-box;
-            margin-top: 20px; 
+            justify-items: stretch;
         }
 
         .btn-social {
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            padding: 12px;
-            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            padding: 8px 10px;
+            border-radius: 10px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.72rem;
             transition: all 0.2s;
             color: white !important;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+            min-width: 0;
         }
-        .btn-social:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
-        .btn-social i { font-size: 1.1rem; }
+        .btn-social:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .btn-social i { font-size: 0.95rem; flex-shrink: 0; }
 
         .btn-x { background: #000; }
         .btn-wa { background: #25D366; }
@@ -250,10 +263,10 @@
 
                 <div class="link-box">
                     <input type="text" class="link-input" id="share-link-input" readonly value="Loading your link...">
-                    <button class="btn-copy" onclick="copyLink()">Copy</button>
+                    <button type="button" class="btn-copy" onclick="copyLink()">Copy</button>
                 </div>
 
-                <div class="social-actions flex flex-wrap justify-center gap-2 w-full">
+                <div class="social-actions">
                     <a href="#" id="share-x" target="_blank" class="btn-social btn-x"><i class="fab fa-x-twitter"></i> <span>X</span></a>
                     <a href="#" id="share-wa" target="_blank" class="btn-social btn-wa"><i class="fab fa-whatsapp"></i> <span>WhatsApp</span></a>
                     <a href="#" id="share-in" target="_blank" class="btn-social btn-in"><i class="fab fa-linkedin"></i> <span>LinkedIn</span></a>

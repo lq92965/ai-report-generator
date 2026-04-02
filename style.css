@@ -1,3 +1,7 @@
+html {
+    color-scheme: light;
+}
+
 /* --- Global Variables --- */
 :root {
     --primary-blue: #007AFF;
@@ -2026,6 +2030,34 @@ a.pwa-page-back-link.mb-4 {
     color: #2563eb !important;
 }
 
+/* Mobile: keep icon + label vertically centered; labels must stay visible (some WebViews clip tall bars) */
+@media (max-width: 767px) {
+    #app-bottom-nav.app-bottom-nav,
+    .app-bottom-nav {
+        align-items: stretch !important;
+        justify-content: space-around !important;
+        min-height: 56px !important;
+        padding-top: 4px !important;
+        box-sizing: border-box !important;
+    }
+    .app-bottom-nav .app-nav-item {
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 4px 2px 8px !important;
+        gap: 3px !important;
+    }
+    .app-bottom-nav .app-nav-label {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        font-size: 0.62rem !important;
+        line-height: 1.15 !important;
+        max-height: none !important;
+        overflow: visible !important;
+        white-space: nowrap !important;
+    }
+}
+
 /* --- App header: logo | desktop nav | invite icon + Login/Register (no hamburger) --- */
 .pwa-app-header {
     z-index: 9999;
@@ -2389,6 +2421,12 @@ body.has-app-nav .fixed.bottom-8 {
     a.pwa-page-back-link svg {
         width: 1em !important;
         height: 1em !important;
+    }
+    /* Keep bottom-tab icons at 24px (global .lucide rule would shrink them to 20px) */
+    #app-bottom-nav .app-nav-icon svg,
+    #app-bottom-nav svg.lucide {
+        width: 24px !important;
+        height: 24px !important;
     }
 }
 
