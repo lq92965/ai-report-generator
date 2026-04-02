@@ -1,17 +1,62 @@
 /* 文件名：mobile-patch.css */
-/* 作用：修复移动端UI，并通过媒体查询彻底隔离对电脑端网站的影响 */
+/* 作用：修复移动端UI，保护顶部导航栏，并统一全站样式 */
 
-/* ==================================================================== */
-/* 核心防火墙：以下所有代码【仅在手机屏幕】生效，绝对不影响桌面端！ */
-/* ==================================================================== */
 @media (max-width: 768px) {
+    /* ========================================= */
+    /* 要求 1：绝对保护顶部导航栏 (Header) 不变形 */
+    /* ========================================= */
+    header {
+        display: flex !important;
+        flex-wrap: nowrap !important; /* 绝对禁止换行 */
+        align-items: center !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
     
-    /* 1. 基础安全区设定 */
+    /* 强制恢复顶部头像尺寸，防止变成巨型椭圆 */
+    header img, header img.rounded-full {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
+        border-radius: 50% !important;
+        object-fit: cover !important;
+        flex-shrink: 0 !important; /* 禁止被挤压或放大 */
+    }
+
+    /* 防止顶部按钮模块被暴力撑开 */
+    header div {
+        max-width: fit-content !important;
+    }
+
+    /* ========================================= */
+    /* 要求 4：全站统一的新版返回按钮样式 */
+    /* ========================================= */
+    .unified-back-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        font-size: 16px !important;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+        color: #374151 !important; /* 统一的深灰色文字和箭头 */
+        font-weight: 600 !important;
+        text-decoration: none !important;
+        padding: 15px 20px 5px 20px !important;
+        margin-bottom: 5px !important;
+        transition: opacity 0.2s ease !important;
+    }
+    
+    .unified-back-btn:active {
+        opacity: 0.6 !important;
+    }
+
+    /* ========================================= */
+    /* 基础安全区设定 & 底部菜单居中 */
+    /* ========================================= */
     body {
         padding-bottom: env(safe-area-inset-bottom, 20px) !important;
     }
 
-    /* 2. 底部菜单栏居中与安全区 */
     #app-bottom-nav, .app-bottom-nav, nav[class*="fixed bottom-0"] {
         padding-bottom: env(safe-area-inset-bottom, 8px) !important;
         padding-top: 8px !important;
@@ -30,59 +75,33 @@
         padding-bottom: 4px !important;
     }
 
-    /* 3. 返回按钮样式 */
-    .mobile-back-btn {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        z-index: 99999;
-        width: 40px;
-        height: 40px;
-        background-color: rgba(255, 255, 255, 0.95);
-        color: #111;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        text-decoration: none;
-        font-size: 24px;
-        line-height: 1;
-        font-weight: bold;
-        backdrop-filter: blur(4px);
-    }
-
     /* ========================================= */
-    /* 解决问题 1 & 3：用量卡片排版优化 */
+    /* 用量卡片排版优化 (安全作用于主内容区) */
     /* ========================================= */
-
-    /* 让三个卡片的外部容器撑宽，贴近左右屏幕边缘 */
-    div:has(> div > i.fa-bolt),
-    div:has(> div > i.fa-hourglass-half),
-    div:has(> div > i.fa-calendar-check) {
+    main div:has(> div > i.fa-bolt),
+    main div:has(> div > i.fa-hourglass-half),
+    main div:has(> div > i.fa-calendar-check) {
         width: 100% !important;
         max-width: 100% !important;
         position: relative !important;
         display: flex !important;
         align-items: center !important;
-        justify-content: center !important; /* 保证内部文字整体居中 */
+        justify-content: center !important;
         padding-top: 1.5rem !important;
         padding-bottom: 1.5rem !important;
     }
 
-    /* 图标容器：强行绝对定位，牢牢钉在左侧，不跟随文字居中 */
-    div:has(> i.fa-bolt),
-    div:has(> i.fa-hourglass-half),
-    div:has(> i.fa-calendar-check) {
+    main div:has(> i.fa-bolt),
+    main div:has(> i.fa-hourglass-half),
+    main div:has(> i.fa-calendar-check) {
         position: absolute !important;
         left: 20px !important; 
         margin: 0 !important;
     }
 
-    /* 数字和文字容器：去除原有的左边距，强行居中显示 */
-    div:has(> i.fa-bolt) ~ div,
-    div:has(> i.fa-hourglass-half) ~ div,
-    div:has(> i.fa-calendar-check) ~ div {
+    main div:has(> i.fa-bolt) ~ div,
+    main div:has(> i.fa-hourglass-half) ~ div,
+    main div:has(> i.fa-calendar-check) ~ div {
         margin-left: 0 !important;
         display: flex !important;
         flex-direction: column !important;
@@ -91,19 +110,16 @@
     }
 
     /* ========================================= */
-    /* 解决问题 2 & 3：Invite & Earn 及链接显示 */
+    /* Invite & Earn 及分享链接优化 (安全作用于主内容区) */
     /* ========================================= */
-
-    /* 修复 Invite & Earn 卡片太窄的问题，将其完全撑宽 */
-    div:has(> div > input[readonly]),
-    div:has(> h3:contains("Invite")),
-    div:has(> h2:contains("Invite")) {
+    main div:has(> div > input[readonly]),
+    main div:has(> h3:contains("Invite")),
+    main div:has(> h2:contains("Invite")) {
         max-width: 100% !important;
         width: 100% !important;
     }
 
-    /* 修复分享链接框显示不全：字体缩小，输入框撑满宽，减少左右内边距 */
-    input[readonly], input[value*="http"] {
+    main input[readonly], main input[value*="http"] {
         font-size: 13px !important;
         padding-left: 8px !important;
         padding-right: 8px !important;
@@ -111,11 +127,10 @@
         letter-spacing: -0.5px !important;
     }
 
-    /* 修复六个分享按钮排版：允许换行，整体居中 */
-    div:has(> a[href*="whatsapp"]), 
-    div:has(> button:contains("Copy")) ~ div,
-    div:has(> button:contains("复制")) ~ div,
-    .share-buttons-container {
+    main div:has(> a[href*="whatsapp"]), 
+    main div:has(> button:contains("Copy")) ~ div,
+    main div:has(> button:contains("复制")) ~ div,
+    main .share-buttons-container {
         display: flex !important;
         flex-wrap: wrap !important;
         justify-content: center !important;
