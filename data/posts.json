@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775149223853",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "category": "Tech Radar",
+        "date": "2026-04-02",
+        "author": "Olivia Thorne",
+        "excerpt": "The narrative around artificial intelligence has long been dominated by a binary, dystopian debate: will AI create new frontiers of productivity or wi...",
+        "contentFile": "news-1775149223853.md"
+    },
+    {
         "id": "1775145626820",
         "type": "blog",
         "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
