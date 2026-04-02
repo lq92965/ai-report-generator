@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775160024806",
+        "type": "blog",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-02",
+        "author": "Jessica Tran",
+        "excerpt": "As a Product Manager, you live and breathe data. Status updates, progress reports, metric dashboards—they are the lifeblood of informed decision-makin...",
+        "contentFile": "blog-1775160024806.md"
+    },
+    {
         "id": "1775156416436",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
