@@ -1199,8 +1199,8 @@ hr.section-divider {
     display: none !important;
 }
 
-/* 2. 确保 Logo 和 头像 分布在两端 */
-.account-header .container {
+/* 2. 确保 Logo 和 头像 分布在两端（旧版子页；不含 pwa-app-header 顶栏） */
+.account-header:not(.pwa-app-header) .container {
     display: flex !important;
     justify-content: space-between !important; /* Logo在左，头像在右 */
     align-items: center !important;
@@ -1211,8 +1211,8 @@ hr.section-divider {
    2025-11-17 布局终极修正 (Fix Alignment & Width)
    ========================================= */
 
-/* 1. 强制页眉占满屏幕宽度，打破 body 的居中限制 */
-.account-header {
+/* 1. 强制页眉占满屏幕宽度（旧版 account 子页；不含 pwa-app-header，避免与顶栏 safe-area 冲突） */
+.account-header:not(.pwa-app-header) {
     width: 100% !important;  /* (!!!) 关键：强制占满整行 */
     max-width: 100% !important;
     height: 60px !important; 
@@ -1231,8 +1231,8 @@ hr.section-divider {
     justify-content: center !important;
 }
 
-/* 2. 内部容器：Logo 靠左，头像靠右 */
-.account-header .container {
+/* 2. 内部容器：Logo 靠左，头像靠右（旧版；pwa-app-header 使用 pwa-header-inner 自有布局） */
+.account-header:not(.pwa-app-header) .container {
     width: 100% !important;
     max-width: 1200px !important; /* 保持内容最大宽度 */
     height: 100% !important;
@@ -2094,6 +2094,17 @@ a.pwa-page-back-link.mb-4 {
     align-self: center;
 }
 
+/* News/Blog list page 1: no back control (hidden class must always apply) */
+#news-list-back.hidden,
+#blog-list-back.hidden {
+    display: none !important;
+}
+
+/* List page ≥2: logo hidden; back visible */
+#pwa-header-logo.hidden {
+    display: none !important;
+}
+
 .pwa-desktop-nav,
 .pwa-header-inner .main-nav.pwa-desktop-nav {
     flex: 1 1 auto;
@@ -2260,12 +2271,12 @@ a.pwa-page-back-link.mb-4 {
     }
 }
 
-/* Allow stacked account-style headers on narrow screens */
+/* Allow stacked account-style headers on narrow screens (must not override safe-area top) */
 @media (max-width: 900px) {
     .main-header.pwa-app-header.account-header {
         height: auto !important;
         min-height: auto !important;
-        padding-top: 10px !important;
+        padding-top: max(env(safe-area-inset-top, 0px), 28px) !important;
         padding-bottom: 10px !important;
     }
 

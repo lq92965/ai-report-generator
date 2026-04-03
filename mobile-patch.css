@@ -14,7 +14,8 @@
         align-items: center !important;
         width: 100% !important;
         box-sizing: border-box !important;
-        padding-top: max(env(safe-area-inset-top), 8px) !important;
+        /* env() may be 0 in Android WebView; keep clear of status bar */
+        padding-top: max(env(safe-area-inset-top, 0px), 28px) !important;
         padding-bottom: 8px !important;
         min-height: 0 !important;
     }
@@ -79,5 +80,12 @@
 
     .unified-back-btn .back-text {
         font-size: inherit !important;
+    }
+
+    /* Must come after .unified-back-btn: list p=1 hides back (Tailwind .hidden) */
+    #news-list-back.hidden,
+    #blog-list-back.hidden,
+    a.unified-back-btn.hidden {
+        display: none !important;
     }
 }

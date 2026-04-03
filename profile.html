@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#2563eb">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="manifest" href="manifest.json">
@@ -15,12 +15,11 @@
 </head>
 <body class="has-app-nav" style="background-color: #f8f9fa;">
 
-    <header class="main-header account-header pwa-app-header">
+    <header class="main-header account-header pwa-app-header" style="background: #fff; border-bottom: 1px solid #e2e8f0;">
         <div class="container pwa-header-inner">
-            <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-                <img src="https://raw.githubusercontent.com/lq92965/ai-report-generator/main/logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
-                <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
-            </a>
+            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
+                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
+            </div>
             <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
                 <ul>
                     <li><a href="index.html#features">Features</a></li>
@@ -40,8 +39,6 @@
     </header>
 
     <div class="container" style="max-width: 1000px; margin: 40px auto; padding: 0 20px;">
-        <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
-        
         <div class="profile-page-title-wrap" style="margin-bottom: 24px; text-align: center;">
             <h1 style="margin: 0; font-size: 1.5rem; color: #333; font-weight: 700;">My Profile</h1>
         </div>

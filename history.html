@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#2563eb">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="manifest" href="manifest.json">
@@ -16,10 +16,9 @@
 <body class="has-app-nav" style="background-color: #f8fafc;">
     <header class="main-header account-header pwa-app-header" style="background: white; border-bottom: 1px solid #e2e8f0;">
         <div class="container pwa-header-inner">
-           <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-                <img src="https://raw.githubusercontent.com/lq92965/ai-report-generator/main/logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
-                <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
-            </a>
+            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
+                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
+            </div>
             <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
                 <ul>
                     <li><a href="index.html#features">Features</a></li>
@@ -40,7 +39,6 @@
 
 <section class="generator-section" style="min-height: 80vh; padding: 40px 0;">
         <div class="container" style="width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 20px;">
-            <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
             <div style="margin-bottom: 30px; text-align: left;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h2 class="section-title" style="margin: 0; font-weight: 600; color: #1e293b;">History & Reports</h2>

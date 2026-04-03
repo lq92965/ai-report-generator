@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#2563eb">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="manifest" href="manifest.json">
@@ -37,12 +37,11 @@
         }
     </script>
 
-    <header class="main-header pwa-app-header bg-white shadow-sm border-b border-gray-200 py-4">
+    <header class="main-header account-header pwa-app-header bg-white shadow-sm border-b border-gray-200 py-4">
         <div class="container pwa-header-inner">
-            <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-                <img src="https://raw.githubusercontent.com/lq92965/ai-report-generator/main/logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
-                <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
-            </a>
+            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
+                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
+            </div>
             <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
                 <ul>
                     <li><a href="index.html#features">Features</a></li>
@@ -64,7 +63,6 @@
     <main class="flex-grow">
         <section id="contact-us" class="py-12 bg-white border-t border-gray-200">
             <div class="container" style="max-width: 560px; margin: 0 auto; padding: 0 20px;">
-                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
                 <h1 class="section-title" style="text-align: center; font-size: 1.75rem; font-weight: 800; color: #0f172a;">Contact Support</h1>
                 <p style="text-align: center; color: #64748b; margin-top: 8px; font-size: 0.95rem;">We typically reply within 1–2 business days.</p>
                 <form id="contact-form" class="mt-10 space-y-4">
