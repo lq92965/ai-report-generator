@@ -93,7 +93,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const params = new URLSearchParams(window.location.search);
         const lp = parseInt(params.get('lp'), 10) || 1;
 
-        const a = document.querySelector('.pwa-page-back-row a');
+        const a =
+            document.querySelector('.pwa-header-leading .unified-back-btn') ||
+            document.querySelector('.pwa-page-back-row a');
         if (!a) return;
 
         a.classList.add('unified-back-btn');

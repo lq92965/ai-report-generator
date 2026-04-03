@@ -2075,9 +2075,23 @@ a.pwa-page-back-link.mb-4 {
     width: 100%;
 }
 
+/* 顶栏左侧：原生式返回 或 Logo+品牌（列表第 1 页），互斥显示 */
+.pwa-header-leading {
+    display: flex;
+    align-items: center;
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: min(60%, 280px);
+}
+
 .pwa-header-inner .logo {
     flex-shrink: 0;
     min-width: 0;
+}
+
+.pwa-app-header .pwa-header-leading .unified-back-btn {
+    margin-bottom: 0 !important;
+    align-self: center;
 }
 
 .pwa-desktop-nav,

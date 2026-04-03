@@ -20,10 +20,13 @@
 
     <header class="main-header pwa-app-header bg-white shadow-sm border-b border-gray-200 py-4">
         <div class="container mx-auto px-6 pwa-header-inner">
-            <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-                <img src="https://raw.githubusercontent.com/lq92965/ai-report-generator/main/logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain;">
-                <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
-            </a>
+            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
+                <a id="pwa-header-logo" href="index.html" class="logo flex items-center gap-2 no-underline" style="text-decoration: none;">
+                    <img src="https://raw.githubusercontent.com/lq92965/ai-report-generator/main/logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain;">
+                    <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
+                </a>
+                <a id="news-list-back" href="news.html" class="unified-back-btn hidden" aria-hidden="true"><span class="back-arrow">←</span><span class="back-text">Previous Page</span></a>
+            </div>
             <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
                 <ul class="flex gap-6 font-medium text-gray-600">
                     <li><a href="index.html#features" class="hover:text-blue-600 transition">Features</a></li>
@@ -41,10 +44,6 @@
             </div>
         </div>
     </header>
-
-    <div id="news-list-back-row" class="pwa-page-back-row max-w-6xl mx-auto px-6 mt-4 hidden" aria-hidden="true">
-        <a href="news.html" id="news-list-back" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Previous Page</span></a>
-    </div>
 
     <main class="flex-grow pt-4 pb-20">
         <div class="max-w-6xl mx-auto px-6">
@@ -101,17 +100,21 @@
                 let currentPage = parseInt(urlParams.get('p')) || 1;
 
                 function syncNewsListBack() {
-                    const row = document.getElementById('news-list-back-row');
+                    const logo = document.getElementById('pwa-header-logo');
                     const a = document.getElementById('news-list-back');
-                    if (!row || !a) return;
+                    if (!logo || !a) return;
                     const p = parseInt(urlParams.get('p'), 10) || 1;
                     if (p <= 1) {
-                        row.classList.add('hidden');
-                        row.setAttribute('aria-hidden', 'true');
+                        logo.classList.remove('hidden');
+                        logo.setAttribute('aria-hidden', 'false');
+                        a.classList.add('hidden');
+                        a.setAttribute('aria-hidden', 'true');
                         return;
                     }
-                    row.classList.remove('hidden');
-                    row.setAttribute('aria-hidden', 'false');
+                    logo.classList.add('hidden');
+                    logo.setAttribute('aria-hidden', 'true');
+                    a.classList.remove('hidden');
+                    a.setAttribute('aria-hidden', 'false');
                     const prev = p - 1;
                     a.setAttribute('href', prev === 1 ? 'news.html' : 'news.html?p=' + encodeURIComponent(String(prev)));
                     a.innerHTML = '<span class="back-arrow">←</span><span class="back-text">Previous Page</span>';
