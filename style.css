@@ -2066,6 +2066,14 @@ a.pwa-page-back-link.mb-4 {
     z-index: 9999;
 }
 
+/* Match index.html header row: same max width & horizontal padding as .container */
+.main-header.pwa-app-header > .container.pwa-header-inner {
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+
 .pwa-header-inner {
     display: flex;
     flex-wrap: nowrap;
