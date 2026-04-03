@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775224825242",
+        "type": "blog",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-03",
+        "author": "Olivia Thorne",
+        "excerpt": "It’s 4 PM on a Friday. Your team has crushed it this week, but instead of focusing on the next sprint, you're stuck in spreadsheet hell. You're manual...",
+        "contentFile": "blog-1775224825242.md"
+    },
+    {
         "id": "1775221213513",
         "type": "news",
         "title": "The Unseen Labor Behind AI's Public Face",
