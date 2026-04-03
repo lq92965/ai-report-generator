@@ -42,8 +42,8 @@
         </div>
     </header>
 
-    <div class="pwa-page-back-row max-w-6xl mx-auto px-6 mt-4">
-        <a href="index.html" id="blog-list-back" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Blog</span></a>
+    <div id="blog-list-back-row" class="pwa-page-back-row max-w-6xl mx-auto px-6 mt-4 hidden" aria-hidden="true">
+        <a href="blog.html" id="blog-list-back" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Previous Page</span></a>
     </div>
 
     <main class="flex-grow pt-4 pb-20">
@@ -224,16 +224,20 @@
                 let currentPage = parseInt(urlParams.get('p')) || 1;
 
                 function syncBlogListBack() {
+                    const row = document.getElementById('blog-list-back-row');
                     const a = document.getElementById('blog-list-back');
-                    if (!a) return;
+                    if (!row || !a) return;
                     const p = parseInt(urlParams.get('p'), 10) || 1;
                     if (p <= 1) {
-                        a.setAttribute('href', 'index.html');
-                        a.innerHTML = '<span class="back-arrow">←</span><span class="back-text">Back to Blog</span>';
-                    } else {
-                        a.setAttribute('href', 'blog.html');
-                        a.innerHTML = '<span class="back-arrow">←</span><span class="back-text">Previous Page</span>';
+                        row.classList.add('hidden');
+                        row.setAttribute('aria-hidden', 'true');
+                        return;
                     }
+                    row.classList.remove('hidden');
+                    row.setAttribute('aria-hidden', 'false');
+                    const prev = p - 1;
+                    a.setAttribute('href', prev === 1 ? 'blog.html' : 'blog.html?p=' + encodeURIComponent(String(prev)));
+                    a.innerHTML = '<span class="back-arrow">←</span><span class="back-text">Previous Page</span>';
                 }
                 syncBlogListBack();
 
