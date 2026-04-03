@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775196026614",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-03",
+        "author": "Olivia Thorne",
+        "excerpt": "As a Product Manager, you live and die by data. But there's a dark side to our data-driven world: the soul-crushing, time-devouring beast known as Rep...",
+        "contentFile": "blog-1775196026614.md"
+    },
+    {
         "id": "1775192416283",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
