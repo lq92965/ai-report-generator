@@ -76,4 +76,39 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // -----------------------------------------
+    // News/Blog 静态详情页：列表链接带 ?lp=当前页
+    // lp≤1：← Back to News / Back to Blog → news.html / blog.html
+    // lp≥2：← Previous Page → news.html?p=lp / blog.html?p=lp（回到进入详情前的那一页）
+    // （样式沿用页面上的 .unified-back-btn，不在此改字体颜色）
+    // -----------------------------------------
+    (function applyNewsBlogDetailBackFromLp() {
+        const file = (location.pathname.split('/').pop() || '').toLowerCase();
+        const m = file.match(/^(news|blog)-(\d+)\.html$/);
+        if (!m) return;
+
+        const kind = m[1];
+        const listFile = kind === 'news' ? 'news.html' : 'blog.html';
+        const params = new URLSearchParams(window.location.search);
+        const lp = parseInt(params.get('lp'), 10) || 1;
+
+        const a = document.querySelector('.pwa-page-back-row a');
+        if (!a) return;
+
+        a.classList.add('unified-back-btn');
+        a.removeAttribute('id');
+
+        if (lp <= 1) {
+            a.setAttribute('href', listFile);
+            a.innerHTML =
+                '<span class="back-arrow">←</span><span class="back-text">Back to ' +
+                (kind === 'news' ? 'News' : 'Blog') +
+                '</span>';
+        } else {
+            a.setAttribute('href', listFile + '?p=' + encodeURIComponent(String(lp)));
+            a.innerHTML =
+                '<span class="back-arrow">←</span><span class="back-text">Previous Page</span>';
+        }
+    })();
 });
