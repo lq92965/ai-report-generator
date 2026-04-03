@@ -1,68 +1,32 @@
 /* 文件名：mobile-patch.css */
-/* 作用：纯净版移动端UI补丁，仅包含底层安全设定和统一按钮类 */
-
-/* 3. 全站统一返回按钮：与「← Previous Page」参考一致 — 小号、灰字、细箭头 */
-.unified-back-btn {
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 4px !important;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
-    font-size: 0.8125rem !important; /* 13px，接近截图小标签 */
-    line-height: 1.25 !important;
-    color: #6b7280 !important; /* gray-500 */
-    font-weight: 400 !important;
-    text-decoration: none !important;
-    padding: 0 !important;
-    margin: 0 0 10px 0 !important;
-    -webkit-tap-highlight-color: transparent;
-    transition: opacity 0.15s ease, color 0.15s ease !important;
-}
-.unified-back-btn:hover,
-.unified-back-btn:focus-visible {
-    color: #4b5563 !important;
-    opacity: 0.92;
-}
-.unified-back-btn .back-arrow {
-    font-size: 0.8125rem !important;
-    font-weight: 400 !important;
-    line-height: 1 !important;
-    position: relative;
-    top: 0;
-}
-.unified-back-btn .back-text {
-    font-size: inherit !important;
-    font-weight: inherit !important;
-    color: inherit !important;
-}
-
-/* 详情页顶栏：即使未加载 style.js，也限制头像尺寸，避免撑破 header */
-.pwa-app-header #auth-container img,
-#auth-container img.pwa-user-avatar,
-#auth-container .pwa-user-avatar {
-    width: 32px !important;
-    height: 32px !important;
-    max-width: 32px !important;
-    max-height: 32px !important;
-    min-width: 32px !important;
-    min-height: 32px !important;
-    object-fit: cover !important;
-    border-radius: 9999px !important;
-    box-sizing: border-box !important;
-}
-
-/* 返回行始终左上对齐（与 max-w 居中容器无关） */
-.pwa-page-back-row {
-    display: flex !important;
-    justify-content: flex-start !important;
-    align-items: center !important;
-    text-align: left !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-}
+/* 作用：纯净版移动端UI补丁，包含顶部安全区避让、底部安全区及按钮样式 */
 
 @media (max-width: 768px) {
-    /* 1. 基础安全区设定 */
+    /* 1. 基础安全区设定（底部） */
     body { padding-bottom: env(safe-area-inset-bottom, 20px) !important; }
+
+    /* --- 修复问题 1：强制顶部导航栏避开手机状态栏 (刘海屏/打孔屏) --- */
+    header {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        /* 使用 env 变量自动获取手机状态栏高度，获取不到则默认下移 35px */
+        padding-top: max(env(safe-area-inset-top), 35px) !important;
+        padding-bottom: 10px !important;
+        min-height: 80px !important;
+    }
+
+    header img, header img.rounded-full {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
+        border-radius: 50% !important;
+        object-fit: cover !important;
+        flex-shrink: 0 !important;
+    }
 
     /* 2. 底部菜单栏居中与安全区 */
     #app-bottom-nav, .app-bottom-nav, nav[class*="fixed bottom-0"] {
@@ -80,5 +44,24 @@
         gap: 2px !important;
         padding-top: 4px !important;
         padding-bottom: 4px !important;
+    }
+
+    /* 3. 统一返回按钮样式 */
+    .unified-back-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        font-size: 14px !important; 
+        color: #4b5563 !important; 
+        font-weight: 500 !important;
+        text-decoration: none !important;
+        padding: 10px 15px !important;
+        margin-bottom: 10px !important;
+    }
+    .unified-back-btn .back-arrow {
+        font-size: 18px !important;
+        font-weight: bold !important;
+        position: relative;
+        top: -1px;
     }
 }

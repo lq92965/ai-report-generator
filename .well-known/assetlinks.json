@@ -1,0 +1,10 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.crickettechnology.reportifyai",
+      "sha256_cert_fingerprints": [
+        "A3:13:97:EC:D1:32:E2:F3:F8:7E:A7:94:7C:5C:8B:DB:BC:65:7D:6C:AA:C3:54:3C:06"
+      ]
+    }
+  }]
