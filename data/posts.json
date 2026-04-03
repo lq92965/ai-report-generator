@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775257212640",
+        "type": "news",
+        "title": "The Unseen Labor Behind AI's Public Face",
+        "category": "Tech Radar",
+        "date": "2026-04-03",
+        "author": "Sarah Jenkins",
+        "excerpt": "While headlines tout AI's revolutionary potential, a growing chorus of experts is shifting focus to the hidden human infrastructure powering the boom....",
+        "contentFile": "news-1775257212640.md"
+    },
+    {
         "id": "1775253624075",
         "type": "blog",
         "title": "Beyond the Dashboard: A PM's Deep-Dive into Curing Reporting Fatigue",
