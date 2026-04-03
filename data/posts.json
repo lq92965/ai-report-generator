@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775253624075",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Deep-Dive into Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-03",
+        "author": "Emily Rostova",
+        "excerpt": "We've all been there. It’s the end of the week, the sprint, or the month, and a familiar dread sets in. It’s not about the work ahead; it’s about the...",
+        "contentFile": "blog-1775253624075.md"
+    },
+    {
         "id": "1775250017308",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
