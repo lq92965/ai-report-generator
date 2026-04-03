@@ -1,6 +1,9 @@
 <!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
     <title>AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths - Reportify AI</title>
     <meta name="description" content="The rapid evolution of artificial intelligence has triggered a regulatory scramble, with the United States, European Union, and China charting starkly...">
     
@@ -16,53 +19,44 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=3.2">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
     
+    <link rel="stylesheet" href="mobile-patch.css">
+    <script src="mobile-patch.js"></script>
+    
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
-<body class="font-sans antialiased bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+<body class="has-app-nav font-sans antialiased bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
-    <header class="main-header bg-white shadow-sm border-b border-gray-200 py-4">
-        <div class="container mx-auto px-6 flex justify-between items-center">
+        <header class="main-header pwa-app-header bg-white shadow-sm border-b border-gray-200 py-4">
+        <div class="container mx-auto px-6 pwa-header-inner">
             <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
                 <img src="https://raw.githubusercontent.com/lq92965/ai-report-generator/main/logo-3d.png.png" alt="Reportify AI Logo" style="width: 32px; height: 32px; object-fit: contain;">
                 <span style="font-size: 1.1rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
             </a>
-            
-            <nav class="main-nav hidden md:block">
+            <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
                 <ul class="flex gap-6 font-medium text-gray-600">
                     <li><a href="index.html#features" class="hover:text-blue-600 transition">Features</a></li>
                     <li><a href="index.html#pricing" class="hover:text-blue-600 transition">Pricing</a></li>
-                    <li><a href="news.html" class="hover:text-blue-600 transition">News</a></li>
-                    <li><a href="blog.html" class="text-blue-600 font-bold">Blog</a></li>
-                    <li><a href="index.html#contact" class="hover:text-blue-600 transition">Contact</a></li>
+                    <li><a href="generate.html" class="hover:text-blue-600 transition">Generator</a></li>
+                    <li><a href="news.html" class="text-blue-600 font-bold">News</a></li>
+                    <li><a href="blog.html" class="hover:text-blue-600 transition">Blog</a></li>
                 </ul>
             </nav>
-
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <a href="usage.html#share-area" style="text-decoration: none; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); transition: transform 0.2s;">
-                    <i class="fas fa-gift"></i>
-                    <span class="hide-mobile-text">Invite &amp; Earn</span>
+            <div class="pwa-header-actions" style="display: flex; align-items: center; gap: 12px;">
+                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite">
+                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
                 </a>
-                <div id="auth-container" class="flex items-center gap-4"></div>
-                </div>
+                <div id="auth-container" class="flex items-center gap-4 header-actions"></div>
             </div>
-        
+        </div>
     </header>
-    <div class="pwa-page-back-row max-w-4xl mx-auto px-6 mt-4">
-        <a href="news.html" id="dynamic-back-btn" class="pwa-page-back-link">
-            <i data-lucide="arrow-left" class="pwa-page-back-icon" aria-hidden="true"></i>
-            <span>Previous Page</span>
-        </a>
+        <div class="pwa-page-back-row max-w-4xl mx-auto px-6 mt-4 w-full text-left">
+        <a href="news.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to News</span></a>
     </div>
-
-
-    <div class="container mx-auto px-6 mb-2 mt-8 w-full">
-        <a id="dynamic-back-btn" href="news.html" style="color: #4b5563; text-decoration: none; font-size: 0.95rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: color 0.2s;" onmouseover="this.style.color='#2563eb'" onmouseout="this.style.color='#4b5563'"><i class="fas fa-arrow-left"></i> Back to News</a>
-    </div>
-
-    <main class="flex-grow py-4">
+<main class="flex-grow py-4">
         <article class="max-w-4xl mx-auto px-6">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12">
             
@@ -85,6 +79,15 @@
             </div>
         </article>
     </main>
+    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
+        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
+        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
+        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
+        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
+        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
+    </nav>
+
+
 
     <footer class="main-footer mt-auto" style="padding: 30px 0; background: #f8fafc; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 0.85rem; text-align: center;">
         <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
@@ -240,6 +243,7 @@
         };
 
         </script>
+    <script src="pwa-nav.js"></script>
     <script src="script.js?v=2026.1"></script>
 
 

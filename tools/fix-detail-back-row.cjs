@@ -1,6 +1,6 @@
 /**
- * Ensures every news-*.html / blog-*.html detail page has the unified
- * .pwa-page-back-row + "Previous Page" link (matches article.html / style.css).
+ * Ensures every news-*.html / blog-*.html detail page has exactly
+ * one unified back button (matches article.html).
  * Run: node tools/fix-detail-back-row.cjs
  */
 const fs = require('fs');
@@ -10,17 +10,11 @@ const ROOT = path.join(__dirname, '..');
 
 const BLOCK = {
   news: `    <div class="pwa-page-back-row max-w-4xl mx-auto px-6 mt-4">
-        <a href="news.html" id="dynamic-back-btn" class="pwa-page-back-link">
-            <i data-lucide="arrow-left" class="pwa-page-back-icon" aria-hidden="true"></i>
-            <span>Previous Page</span>
-        </a>
+        <a href="news.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to News</span></a>
     </div>
 `,
   blog: `    <div class="pwa-page-back-row max-w-4xl mx-auto px-6 mt-4">
-        <a href="blog.html" id="dynamic-back-btn" class="pwa-page-back-link">
-            <i data-lucide="arrow-left" class="pwa-page-back-icon" aria-hidden="true"></i>
-            <span>Previous Page</span>
-        </a>
+        <a href="blog.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Blog</span></a>
     </div>
 `,
 };

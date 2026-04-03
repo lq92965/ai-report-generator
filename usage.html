@@ -12,75 +12,7 @@
     <link rel="stylesheet" href="style.css?v=2026.2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Usage stat row cards — match index.html feature-card look (#f8fafc / #e2e8f0 / #1e293b / #64748b) */
-        .usage-stats-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-top: 40px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .usage-stat-card {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            box-sizing: border-box;
-            padding: 20px 24px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .usage-stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-        }
-        .usage-stat-icon-wrap {
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 48px;
-            height: 48px;
-            border-radius: 9999px;
-            background: #ffffff;
-            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
-        }
-        .usage-stat-icon-wrap i {
-            font-size: 1.375rem;
-            line-height: 1;
-        }
-        .usage-stat-icon-wrap .usage-icon-remaining { color: #f59e0b; }
-        .usage-stat-icon-wrap .usage-icon-days { color: #10b981; }
-        .usage-stat-icon-wrap .usage-icon-active { color: #2563eb; }
-        .usage-stat-body {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            justify-content: center;
-            text-align: right;
-            min-width: 0;
-            padding-left: 16px;
-        }
-        .usage-stat-value {
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: #1e293b;
-            line-height: 1.15;
-            letter-spacing: -0.02em;
-        }
-        .usage-stat-label {
-            font-size: 0.9375rem;
-            font-weight: 500;
-            color: #64748b;
-            line-height: 1.5;
-            margin-top: 4px;
-        }
+        /* Usage stat cards: layout handled via Tailwind classes only (no custom CSS). */
         .progress-container { background: #e9ecef; border-radius: 20px; height: 24px; width: 100%; margin: 20px 0 10px; overflow: hidden; position: relative; }
         .progress-bar { background: linear-gradient(90deg, #007bff, #00c6ff); height: 100%; border-radius: 20px; width: 0%; transition: width 0.8s ease-in-out; }
         
@@ -224,7 +156,7 @@
     </header>
 
     <div class="container" style="max-width: 900px; margin: 20px auto 60px; padding: 0 20px;">
-        <a href="account.html" class="pwa-page-back-link mb-4"><i data-lucide="arrow-left" class="pwa-page-back-icon" aria-hidden="true"></i><span>Back to Account Hub</span></a>
+        <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
         <div style="background: white; border-radius: 24px; padding: 50px; box-shadow: 0 10px 40px rgba(0,0,0,0.06);">
             
             <div style="text-align: center; margin-bottom: 40px;">
@@ -249,7 +181,7 @@
 
             <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 0 0 40px 0;">
 
-            <div class="share-card" id="share-area" style="margin-top: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+            <div class="share-card w-full" id="share-area" style="margin-top: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
                 <div class="share-header">
                     <div class="share-title"><i class="fas fa-gift" style="color: #8b5cf6;"></i> Invite & Earn</div>
                     <div class="share-badge">
@@ -262,11 +194,11 @@
                 </p>
 
                 <div class="link-box">
-                    <input type="text" class="link-input" id="share-link-input" readonly value="Loading your link...">
+                    <input type="text" class="link-input text-xs px-2 tracking-tighter" id="share-link-input" readonly value="Loading your link...">
                     <button type="button" class="btn-copy" onclick="copyLink()">Copy</button>
                 </div>
 
-                <div class="social-actions">
+                <div class="flex flex-wrap justify-center gap-2 w-full mt-4">
                     <a href="#" id="share-x" target="_blank" class="btn-social btn-x"><i class="fab fa-x-twitter"></i> <span>X</span></a>
                     <a href="#" id="share-wa" target="_blank" class="btn-social btn-wa"><i class="fab fa-whatsapp"></i> <span>WhatsApp</span></a>
                     <a href="#" id="share-in" target="_blank" class="btn-social btn-in"><i class="fab fa-linkedin"></i> <span>LinkedIn</span></a>
@@ -276,34 +208,34 @@
                 </div>
             </div>
 
-            <div class="usage-stats-grid">
-                <div class="usage-stat-card">
-                    <div class="usage-stat-icon-wrap" aria-hidden="true">
-                        <i class="fas fa-bolt usage-icon-remaining" aria-hidden="true"></i>
+            <div class="w-full max-w-[600px] mx-auto mt-10 space-y-4">
+                <div class="w-full relative bg-[#f8fafc] border border-[#e2e8f0] rounded-2xl shadow-sm p-6 min-h-[110px]">
+                    <div class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center" aria-hidden="true">
+                        <i class="fas fa-bolt text-yellow-500 text-lg" aria-hidden="true"></i>
                     </div>
-                    <div class="usage-stat-body">
-                        <div id="stat-remaining" class="usage-stat-value">0</div>
-                        <div class="usage-stat-label">Remaining</div>
-                    </div>
-                </div>
-
-                <div class="usage-stat-card">
-                    <div class="usage-stat-icon-wrap" aria-hidden="true">
-                        <i class="fas fa-hourglass-half usage-icon-days" aria-hidden="true"></i>
-                    </div>
-                    <div class="usage-stat-body">
-                        <div id="stat-daysleft" class="usage-stat-value">0</div>
-                        <div class="usage-stat-label">Days Left</div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                        <div id="stat-remaining" class="text-3xl md:text-4xl font-extrabold text-[#1e293b] leading-none">0</div>
+                        <div class="mt-1 text-sm md:text-base font-semibold text-[#64748b]">Remaining</div>
                     </div>
                 </div>
 
-                <div class="usage-stat-card">
-                    <div class="usage-stat-icon-wrap" aria-hidden="true">
-                        <i class="far fa-calendar-check usage-icon-active" aria-hidden="true"></i>
+                <div class="w-full relative bg-[#f8fafc] border border-[#e2e8f0] rounded-2xl shadow-sm p-6 min-h-[110px]">
+                    <div class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center" aria-hidden="true">
+                        <i class="fas fa-hourglass-half text-emerald-500 text-lg" aria-hidden="true"></i>
                     </div>
-                    <div class="usage-stat-body">
-                        <div id="stat-activedays" class="usage-stat-value">1</div>
-                        <div class="usage-stat-label">Active Days</div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                        <div id="stat-daysleft" class="text-3xl md:text-4xl font-extrabold text-[#1e293b] leading-none">0</div>
+                        <div class="mt-1 text-sm md:text-base font-semibold text-[#64748b]">Days Left</div>
+                    </div>
+                </div>
+
+                <div class="w-full relative bg-[#f8fafc] border border-[#e2e8f0] rounded-2xl shadow-sm p-6 min-h-[110px]">
+                    <div class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center" aria-hidden="true">
+                        <i class="far fa-calendar-check text-[#2563eb] text-lg" aria-hidden="true"></i>
+                    </div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                        <div id="stat-activedays" class="text-3xl md:text-4xl font-extrabold text-[#1e293b] leading-none">1</div>
+                        <div class="mt-1 text-sm md:text-base font-semibold text-[#64748b]">Active Days</div>
                     </div>
                 </div>
             </div>

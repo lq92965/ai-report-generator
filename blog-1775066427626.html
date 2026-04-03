@@ -23,6 +23,9 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet">
     
+    <link rel="stylesheet" href="mobile-patch.css">
+    <script src="mobile-patch.js"></script>
+    
 </head>
 <body class="has-app-nav font-sans antialiased bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
@@ -49,11 +52,8 @@
             </div>
         </div>
     </header>
-    <div class="pwa-page-back-row max-w-4xl mx-auto px-6 mt-4">
-        <a href="blog.html" id="dynamic-back-btn" class="pwa-page-back-link">
-            <i data-lucide="arrow-left" class="pwa-page-back-icon" aria-hidden="true"></i>
-            <span>Previous Page</span>
-        </a>
+        <div class="pwa-page-back-row max-w-4xl mx-auto px-6 mt-4 w-full text-left">
+        <a href="blog.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Blog</span></a>
     </div>
 
 <main class="flex-grow py-4">

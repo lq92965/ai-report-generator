@@ -56,10 +56,7 @@
     </header>
 
     <div class="pwa-page-back-row max-w-4xl mx-auto px-6 mt-4">
-        <a href="blog.html" id="dynamic-back-btn" class="pwa-page-back-link">
-            <i data-lucide="arrow-left" class="pwa-page-back-icon" aria-hidden="true"></i>
-            <span>Previous Page</span>
-        </a>
+        <a href="blog.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Blog</span></a>
     </div>
 
 <main class="flex-grow py-4">
@@ -263,13 +260,17 @@
                     throw new Error('Post not found in database');
                 }
 
-                const backBtn = document.getElementById('dynamic-back-btn');
+                const backBtn = document.querySelector('.unified-back-btn');
                 if (backBtn) {
                     const listPage = post.type === 'news' ? 'news.html' : 'blog.html';
-                    backBtn.setAttribute('href', listPage);
-                    backBtn.innerHTML = '<i data-lucide="arrow-left" class="pwa-page-back-icon" aria-hidden="true"></i><span>Previous Page</span>';
-                    if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
-                        lucide.createIcons();
+                    const sectionName = post.type === 'news' ? 'News' : 'Blog';
+                    const lp = parseInt(urlParams.get('lp'), 10) || 1;
+                    if (lp <= 1) {
+                        backBtn.setAttribute('href', listPage);
+                        backBtn.innerHTML = `<span class="back-arrow">←</span><span class="back-text">Back to ${sectionName}</span>`;
+                    } else {
+                        backBtn.setAttribute('href', `${listPage}?p=${encodeURIComponent(String(lp))}`);
+                        backBtn.innerHTML = `<span class="back-arrow">←</span><span class="back-text">Previous Page</span>`;
                     }
                 }
 

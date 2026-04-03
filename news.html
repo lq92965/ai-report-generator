@@ -43,10 +43,7 @@
     </header>
 
     <div class="pwa-page-back-row max-w-6xl mx-auto px-6 mt-4">
-        <a href="javascript:history.back()" class="pwa-page-back-link">
-            <i data-lucide="arrow-left" class="pwa-page-back-icon" aria-hidden="true"></i>
-            <span>Back to News</span>
-        </a>
+        <a href="index.html" id="news-list-back" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to News</span></a>
     </div>
 
     <main class="flex-grow pt-4 pb-20">
@@ -103,6 +100,20 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 let currentPage = parseInt(urlParams.get('p')) || 1;
 
+                function syncNewsListBack() {
+                    const a = document.getElementById('news-list-back');
+                    if (!a) return;
+                    const p = parseInt(urlParams.get('p'), 10) || 1;
+                    if (p <= 1) {
+                        a.setAttribute('href', 'index.html');
+                        a.innerHTML = '<span class="back-arrow">←</span><span class="back-text">Back to News</span>';
+                    } else {
+                        a.setAttribute('href', 'news.html');
+                        a.innerHTML = '<span class="back-arrow">←</span><span class="back-text">Previous Page</span>';
+                    }
+                }
+                syncNewsListBack();
+
                 function renderPage(page) {
                     grid.innerHTML = ''; 
                     const start = (page - 1) * itemsPerPage;
@@ -116,7 +127,7 @@
 
                     paginatedPosts.forEach(post => {
                         const card = `
-                            <a href="${post.type}-${post.id}.html" class="bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 border-l-4 border-l-purple-500 transition-all duration-300 overflow-hidden group flex flex-col h-full hover:-translate-y-1">
+                            <a href="${post.type}-${post.id}.html?lp=${currentPage}" class="bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 border-l-4 border-l-purple-500 transition-all duration-300 overflow-hidden group flex flex-col h-full hover:-translate-y-1">
                                 <div class="p-4 sm:p-6 md:p-8 flex flex-col h-full">
                                     <div class="flex justify-between items-center mb-4">
                                         <span class="text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider bg-purple-100 text-purple-800">${post.category}</span>
