@@ -1,66 +1,77 @@
 /* 文件名：mobile-patch.css */
-/* 作用：纯净版移动端UI补丁，包含顶部安全区避让、底部安全区及按钮样式 */
+/* 作用：纯净版移动端UI补丁，包含顶部安全区避让、底部居中及极简返回按钮 */
 
 @media (max-width: 768px) {
     /* 1. 基础安全区设定（底部） */
-    body { padding-bottom: env(safe-area-inset-bottom, 20px) !important; }
+    body { 
+        padding-bottom: env(safe-area-inset-bottom, 20px) !important; 
+    }
 
-    /* --- 修复问题 1：强制顶部导航栏避开手机状态栏 (刘海屏/打孔屏) --- */
+    /* --- 修复问题 2 (上)：顶部栏过宽的问题 --- */
+    /* 去除写死的高度，仅依靠 padding 撑开，让不同页面的头部保持一致 */
     header {
         display: flex !important;
         flex-wrap: nowrap !important;
         align-items: center !important;
         width: 100% !important;
         box-sizing: border-box !important;
-        /* 使用 env 变量自动获取手机状态栏高度，获取不到则默认下移 35px */
-        padding-top: max(env(safe-area-inset-top), 35px) !important;
-        padding-bottom: 10px !important;
-        min-height: 80px !important;
+        /* 减小基础高度，适配刘海屏 */
+        padding-top: max(env(safe-area-inset-top), 25px) !important;
+        padding-bottom: 8px !important; 
+        min-height: auto !important; /* 废弃之前过高的设定 */
     }
 
+    /* 保护顶部头像和Logo不被挤压变形 */
     header img, header img.rounded-full {
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        min-height: 36px !important;
+        width: 32px !important;  /* 稍微缩小一点更精致 */
+        height: 32px !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
         border-radius: 50% !important;
         object-fit: cover !important;
         flex-shrink: 0 !important;
     }
 
-    /* 2. 底部菜单栏居中与安全区 */
+    /* --- 修复问题 2 (下)：底部菜单栏不居中的问题 --- */
     #app-bottom-nav, .app-bottom-nav, nav[class*="fixed bottom-0"] {
-        padding-bottom: env(safe-area-inset-bottom, 8px) !important;
-        padding-top: 8px !important;
+        /* 平衡上下内边距，确保视觉垂直居中 */
+        padding-top: 12px !important;
+        padding-bottom: max(env(safe-area-inset-bottom), 12px) !important;
         height: auto !important;
         display: flex !important;
         align-items: center !important; 
+        justify-content: space-around !important; /* 确保图标均匀分布 */
     }
+    
     nav[class*="fixed bottom-0"] a {
         display: flex !important;
         flex-direction: column !important;
         justify-content: center !important;
         align-items: center !important;
-        gap: 2px !important;
-        padding-top: 4px !important;
-        padding-bottom: 4px !important;
+        gap: 3px !important; /* 图标和文字的微小间距 */
+        margin: 0 !important;
     }
 
-    /* 3. 统一返回按钮样式 */
+    /* --- 修复问题 3：返回按钮太大、不好看的问题（原生极简风） --- */
     .unified-back-btn {
         display: inline-flex !important;
         align-items: center !important;
-        gap: 6px !important;
-        font-size: 14px !important; 
-        color: #4b5563 !important; 
+        gap: 4px !important;
+        font-size: 14px !important; /* 文字变小 */
+        color: #374151 !important; /* 颜色加深一点更像系统按钮 */
         font-weight: 500 !important;
         text-decoration: none !important;
-        padding: 10px 15px !important;
-        margin-bottom: 10px !important;
+        padding: 4px 8px !important; /* 大幅减小内边距，去掉“大块头”感觉 */
+        margin-top: 0 !important;
+        margin-bottom: 8px !important;
+        background: transparent !important; /* 背景透明 */
+        border: none !important;
+        box-shadow: none !important; /* 去除阴影 */
     }
+    
     .unified-back-btn .back-arrow {
         font-size: 18px !important;
-        font-weight: bold !important;
+        font-weight: normal !important;
         position: relative;
         top: -1px;
     }
