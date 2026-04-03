@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775235612887",
+        "type": "news",
+        "title": "The Unseen Cost of AI's Thirst: Data Centers Strain Global Resources",
+        "category": "Tech Radar",
+        "date": "2026-04-03",
+        "author": "Marcus Webb",
+        "excerpt": "As artificial intelligence models grow more sophisticated, a hidden crisis is brewing in the sprawling, power-hungry data centers that fuel them. The...",
+        "contentFile": "news-1775235612887.md"
+    },
+    {
         "id": "1775232025036",
         "type": "blog",
         "title": "Reporting on Empty: How to Fight Reporting Fatigue and Make Your Data Matter",
