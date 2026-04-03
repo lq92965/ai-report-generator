@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775181623285",
+        "type": "blog",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-03",
+        "author": "Emily Rostova",
+        "excerpt": "We've all been there. It's the end of the week, the sprint, or the month, and that familiar dread sets in. It's time to \"pull the numbers.\" You spend...",
+        "contentFile": "blog-1775181623285.md"
+    },
+    {
         "id": "1775178019014",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
