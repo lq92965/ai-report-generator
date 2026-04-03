@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775239223854",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-03",
+        "author": "Michael Chen",
+        "excerpt": "We’ve all been there. It’s 4 PM on a Friday, and that recurring calendar notification pops up: \"Compile Weekly Project Status Report.\" A collective gr...",
+        "contentFile": "blog-1775239223854.md"
+    },
+    {
         "id": "1775235612887",
         "type": "news",
         "title": "The Unseen Cost of AI's Thirst: Data Centers Strain Global Resources",
