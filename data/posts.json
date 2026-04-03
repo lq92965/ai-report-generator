@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775232025036",
+        "type": "blog",
+        "title": "Reporting on Empty: How to Fight Reporting Fatigue and Make Your Data Matter",
+        "category": "Deep Insights",
+        "date": "2026-04-03",
+        "author": "Alex Mercer",
+        "excerpt": "We've all been there. It's Tuesday afternoon, and your calendar reminder pops up: \"Update Weekly Project Status Report.\" A wave of exhaustion washes o...",
+        "contentFile": "blog-1775232025036.md"
+    },
+    {
         "id": "1775228416623",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
