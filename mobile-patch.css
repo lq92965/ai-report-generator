@@ -2,27 +2,25 @@
 /* 作用：纯净版移动端UI补丁，包含顶部安全区避让、底部居中及极简返回按钮 */
 
 @media (max-width: 768px) {
-    /* 1. 基础安全区设定（底部） */
-    body { 
-        padding-bottom: env(safe-area-inset-bottom, 20px) !important; 
+    /* 1. 基础安全区：与首页顶栏高度对齐，避免其它页「顶栏过厚」 */
+    body.has-app-nav {
+        padding-bottom: max(env(safe-area-inset-bottom, 0px), 12px) !important;
     }
 
-    /* --- 修复问题 2 (上)：顶部栏过宽的问题 --- */
-    /* 去除写死的高度，仅依靠 padding 撑开，让不同页面的头部保持一致 */
-    header {
+    /* 仅 PWA 顶栏：与首页一致，不用过大 safe-area 下内边距 */
+    header.main-header.pwa-app-header {
         display: flex !important;
         flex-wrap: nowrap !important;
         align-items: center !important;
         width: 100% !important;
         box-sizing: border-box !important;
-        /* 减小基础高度，适配刘海屏 */
-        padding-top: max(env(safe-area-inset-top), 25px) !important;
-        padding-bottom: 8px !important; 
-        min-height: auto !important; /* 废弃之前过高的设定 */
+        padding-top: max(env(safe-area-inset-top), 8px) !important;
+        padding-bottom: 8px !important;
+        min-height: 0 !important;
     }
 
     /* 保护顶部头像和Logo不被挤压变形 */
-    header img, header img.rounded-full {
+    header.main-header.pwa-app-header img, header.main-header.pwa-app-header img.rounded-full {
         width: 32px !important;  /* 稍微缩小一点更精致 */
         height: 32px !important;
         min-width: 32px !important;
@@ -32,15 +30,17 @@
         flex-shrink: 0 !important;
     }
 
-    /* --- 修复问题 2 (下)：底部菜单栏不居中的问题 --- */
-    #app-bottom-nav, .app-bottom-nav, nav[class*="fixed bottom-0"] {
-        /* 平衡上下内边距，确保视觉垂直居中 */
-        padding-top: 12px !important;
-        padding-bottom: max(env(safe-area-inset-bottom), 12px) !important;
+    /* 底部 Tab：与 style.css 一致，整体垂直居中 */
+    #app-bottom-nav.app-bottom-nav,
+    .app-bottom-nav,
+    nav.app-bottom-nav {
+        padding-top: 6px !important;
+        padding-bottom: max(env(safe-area-inset-bottom), 10px) !important;
+        min-height: 56px !important;
         height: auto !important;
         display: flex !important;
-        align-items: center !important; 
-        justify-content: space-around !important; /* 确保图标均匀分布 */
+        align-items: center !important;
+        justify-content: space-around !important;
     }
     
     nav[class*="fixed bottom-0"] a {
@@ -52,27 +52,32 @@
         margin: 0 !important;
     }
 
-    /* --- 修复问题 3：返回按钮太大、不好看的问题（原生极简风） --- */
+    /* 返回：更小、更轻，避免抢正文标题视觉 */
     .unified-back-btn {
         display: inline-flex !important;
         align-items: center !important;
-        gap: 4px !important;
-        font-size: 14px !important; /* 文字变小 */
-        color: #374151 !important; /* 颜色加深一点更像系统按钮 */
-        font-weight: 500 !important;
+        gap: 3px !important;
+        font-size: 0.75rem !important; /* 12px */
+        color: #6b7280 !important;
+        font-weight: 400 !important;
         text-decoration: none !important;
-        padding: 4px 8px !important; /* 大幅减小内边距，去掉“大块头”感觉 */
+        padding: 2px 0 !important;
         margin-top: 0 !important;
-        margin-bottom: 8px !important;
-        background: transparent !important; /* 背景透明 */
+        margin-bottom: 6px !important;
+        background: transparent !important;
         border: none !important;
-        box-shadow: none !important; /* 去除阴影 */
+        box-shadow: none !important;
     }
-    
+
     .unified-back-btn .back-arrow {
-        font-size: 18px !important;
-        font-weight: normal !important;
+        font-size: 0.75rem !important;
+        font-weight: 400 !important;
+        line-height: 1 !important;
         position: relative;
-        top: -1px;
+        top: 0;
+    }
+
+    .unified-back-btn .back-text {
+        font-size: inherit !important;
     }
 }

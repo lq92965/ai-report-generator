@@ -2030,21 +2030,24 @@ a.pwa-page-back-link.mb-4 {
     color: #2563eb !important;
 }
 
-/* Mobile: keep icon + label vertically centered; labels must stay visible (some WebViews clip tall bars) */
+/* Mobile: icon + label vertically centered in bar (avoid content stuck to top) */
 @media (max-width: 767px) {
     #app-bottom-nav.app-bottom-nav,
     .app-bottom-nav {
-        align-items: stretch !important;
+        align-items: center !important;
         justify-content: space-around !important;
         min-height: 56px !important;
-        padding-top: 4px !important;
+        height: auto !important;
+        padding-top: 6px !important;
+        padding-bottom: max(env(safe-area-inset-bottom, 0px), 10px) !important;
         box-sizing: border-box !important;
     }
     .app-bottom-nav .app-nav-item {
         justify-content: center !important;
         align-items: center !important;
-        padding: 4px 2px 8px !important;
+        padding: 6px 2px !important;
         gap: 3px !important;
+        height: auto !important;
     }
     .app-bottom-nav .app-nav-label {
         display: block !important;
