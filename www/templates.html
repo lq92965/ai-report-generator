@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Library - Reportify AI</title>
+    <link rel="stylesheet" href="style.css?v=7.0">
+    <link rel="stylesheet" href="mobile-patch.css">
+    <script src="mobile-patch.js"></script>
+</head>
+<body>
+    <header class="main-header account-header">
+        <div class="container">
+            <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                <img src="https://raw.githubusercontent.com/lq92965/ai-report-generator/main/logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
+            </a>
+            <div class="header-actions"></div> </div>
+    </header>
+
+    <main>
+        <div class="template-hero-section">
+            <h1>Template Library</h1>
+            <p>Select a workflow to jumpstart your report.</p>
+        </div>
+
+        <div class="template-layout-container">
+            
+            <aside class="template-sidebar">
+                <div class="filter-group">
+                    <h3>Categories</h3>
+                    <ul class="filter-list" id="category-filter">
+                        <li class="active" data-filter="all">All Templates</li>
+                        <li data-filter="Sales">Sales & Growth</li>
+                        <li data-filter="Product">Product & IT</li>
+                        <li data-filter="General">General & HR</li>
+                        <li data-filter="Custom" style="color: #007bff; font-weight: bold; margin-top: 10px;">My Templates</li>
+                    </ul>
+                </div>
+                
+                <button id="create-new-template-btn" class="btn btn-primary full-width" style="margin-top: 20px;">
+                    + Create New
+                </button>
+            </aside>
+
+            <section class="template-main">
+                <h3 id="list-title" style="margin-bottom: 20px;">All Templates</h3>
+                
+                <div id="template-list" class="template-grid">
+                    <p>Loading templates...</p>
+                </div>
+            </section>
+        </div>
+        
+        <div id="template-modal-overlay" class="modal-overlay hidden">
+            <div id="template-modal" class="modal-content">
+                <button id="close-template-modal-btn" class="modal-close-btn" style="position:absolute; right:15px; top:15px; border:none; background:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+                <h3 id="template-modal-title">Create Custom Template</h3>
+                
+                <form id="template-form" style="margin-top: 20px;">
+                    <input type="hidden" id="template-id-input">
+                    
+                    <div class="input-wrapper">
+                        <label>Template Name</label>
+                        <input type="text" id="template-name" placeholder="e.g. Client Meeting Note" required>
+                    </div>
+                    
+                    <div class="input-wrapper">
+                        <label>Structure (Prompt)</label>
+                        <p style="font-size: 12px; color: #666; margin-bottom: 5px;">
+                            Tip: Use <b>[brackets]</b> to create fill-in-the-blank variables.<br>
+                            Example: <code>Report for [Client Name] regarding [Topic]</code>
+                        </p>
+                        <textarea id="template-content" rows="6" required placeholder="Type your template structure here..."></textarea>
+                    </div>
+                    
+                    <button type="submit" id="save-template-btn" class="btn btn-primary full-width">Save Template</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -9,6 +9,11 @@
     "build": "echo 'Build step not required, skipping...'"
   },
   "dependencies": {
+    "@capacitor/android": "^8.3.0",
+    "@capacitor/cli": "^8.3.0",
+    "@capacitor/core": "^8.3.0",
+    "@capacitor/filesystem": "^8.1.2",
+    "@capacitor/share": "^8.0.1",
     "@flydotio/dockerfile": "^0.5.8",
     "@google/generative-ai": "^0.1.0",
     "axios": "^1.13.6",
@@ -27,5 +32,16 @@
   },
   "author": "Your Name",
   "license": "ISC",
-  "keywords": []
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lq92965/ai-report-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lq92965/ai-report-generator/issues"
+  },
+  "homepage": "https://github.com/lq92965/ai-report-generator#readme",
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5"
+  }
 }
