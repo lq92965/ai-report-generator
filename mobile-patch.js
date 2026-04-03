@@ -65,17 +65,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // -----------------------------------------
-    // 强刷头像缓存
+    // 头像缓存：仅在当前页 DOM 就绪时 bust 一次（pageshow 每次返回都改 src 会闪动、顶栏跳动）
     // -----------------------------------------
-    window.addEventListener('pageshow', function() {
+    (function bustAvatarCacheOnce() {
         const avatarImages = document.querySelectorAll('img.rounded-full, img[src*="avatar"]');
         avatarImages.forEach(img => {
             if (!img.src.includes('logo') && !img.src.includes('icon')) {
-                let originalSrc = img.src.split('?')[0]; 
-                img.src = originalSrc + '?v=' + new Date().getTime();
+                const originalSrc = img.src.split('?')[0];
+                img.src = originalSrc + '?v=' + Date.now();
             }
         });
-    });
+    })();
 
     // -----------------------------------------
     // News/Blog 静态详情页：列表链接带 ?lp=当前页

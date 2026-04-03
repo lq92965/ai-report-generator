@@ -26,6 +26,9 @@ html {
     --spacing-lg: clamp(1.5rem, 3vw + 0.5rem, 2rem); /* ~24px to 32px */
     --spacing-xl: clamp(2.5rem, 5vw + 1rem, 4rem); /* ~40px to 64px */
     --spacing-xxl: clamp(4rem, 8vw + 1rem, 6.25rem); /* ~64px to 100px */
+
+    /* 顶栏内容区宽度（与首页 index.html 的 .container 一致；横向 padding 仍由 .container 及媒体查询控制） */
+    --app-header-content-max-width: 1100px;
 }
 
 /* --- Global Styles --- */
@@ -36,7 +39,8 @@ html {
 }
 
 html {
-    scroll-behavior: smooth;
+    /* smooth 在 WebView/换页时易产生“跳动”感；锚点滚动用脚本或保留 auto */
+    scroll-behavior: auto;
 }
 
 body {
@@ -61,7 +65,7 @@ main {
 }
 
 .container {
-    max-width: 1100px;
+    max-width: var(--app-header-content-max-width);
     margin: 0 auto;
     padding-left: var(--spacing-md); /* Use responsive padding */
     padding-right: var(--spacing-md); /* Use responsive padding */
@@ -2062,13 +2066,19 @@ a.pwa-page-back-link.mb-4 {
 }
 
 /* --- App header: logo | desktop nav | invite icon + Login/Register (no hamburger) --- */
-.pwa-app-header {
+/* 与首页顶栏视觉一致：白底、底边、全宽；勿在 HTML 再叠 py-4/bg-white（避免高度与首页不一致） */
+.main-header.pwa-app-header {
     z-index: 9999;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
 }
 
-/* Match index.html header row: same max width & horizontal padding as .container */
+/* 内层行：宽度与 .container 相同（继承 class="container" 的 padding 与 max-width） */
 .main-header.pwa-app-header > .container.pwa-header-inner {
-    max-width: 1100px;
+    max-width: var(--app-header-content-max-width);
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     box-sizing: border-box;

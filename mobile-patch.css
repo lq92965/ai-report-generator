@@ -5,6 +5,7 @@
     /* 1. 基础安全区：与首页顶栏高度对齐，避免其它页「顶栏过厚」 */
     body.has-app-nav {
         padding-bottom: max(env(safe-area-inset-bottom, 0px), 12px) !important;
+        touch-action: manipulation;
     }
 
     /* 仅 PWA 顶栏：与首页一致，不用过大 safe-area 下内边距 */
@@ -20,9 +21,10 @@
         min-height: 0 !important;
     }
 
-    /* 保护顶部头像和Logo不被挤压变形 */
-    header.main-header.pwa-app-header img, header.main-header.pwa-app-header img.rounded-full {
-        width: 32px !important;  /* 稍微缩小一点更精致 */
+    /* 仅右上角头像区：勿对 .logo / 品牌图做圆形裁切（会导致 Logo 变形、换页视觉跳变） */
+    header.main-header.pwa-app-header #auth-container img,
+    header.main-header.pwa-app-header .header-actions img.rounded-full {
+        width: 32px !important;
         height: 32px !important;
         min-width: 32px !important;
         min-height: 32px !important;
