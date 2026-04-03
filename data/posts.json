@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775185218647",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "category": "Tech Radar",
+        "date": "2026-04-03",
+        "author": "Marcus Webb",
+        "excerpt": "The rapid advancement of artificial intelligence has triggered an unprecedented political response, with world leaders gathering in Seoul this week fo...",
+        "contentFile": "news-1775185218647.md"
+    },
+    {
         "id": "1775181623285",
         "type": "blog",
         "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
