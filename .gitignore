@@ -23,3 +23,6 @@ Thumbs.db
 # Environment files (for API keys, secrets, etc.)
 .env
 .env.local
+
+android/
+www/
