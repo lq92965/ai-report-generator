@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775271616641",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "category": "Tech Radar",
+        "date": "2026-04-04",
+        "author": "Jessica Tran",
+        "excerpt": "The rapid advancement of artificial intelligence has triggered an unprecedented diplomatic scramble, as world leaders, tech executives, and academics...",
+        "contentFile": "news-1775271616641.md"
+    },
+    {
         "id": "1775268022285",
         "type": "blog",
         "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
