@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775343621223",
+        "type": "news",
+        "title": "The Unseen Cost: AI's Growing Energy Appetite Sparks Industry Debate",
+        "category": "Tech Radar",
+        "date": "2026-04-04",
+        "author": "Sarah Jenkins",
+        "excerpt": "While headlines tout AI's potential to revolutionize industries, a quieter crisis is unfolding in data centers worldwide. The artificial intelligence...",
+        "contentFile": "news-1775343621223.md"
+    },
+    {
         "id": "1775340028042",
         "type": "blog",
         "title": "The Silent Killer of Productivity: A PM's Guide to Overcoming Reporting Fatigue",
