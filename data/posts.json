@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775296825095",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-04",
+        "author": "Sarah Jenkins",
+        "excerpt": "You know the feeling. It’s Sunday night, and a familiar dread creeps in. It’s not the upcoming user interviews or the strategic planning session you’r...",
+        "contentFile": "blog-1775296825095.md"
+    },
+    {
         "id": "1775293218605",
         "type": "news",
         "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
