@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775275223951",
+        "type": "blog",
+        "title": "The PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-04",
+        "author": "Olivia Thorne",
+        "excerpt": "We've all been there. It's 4:30 PM on a Friday, and a calendar alert reminds you: \"Update the Weekly Project Status Deck.\" A wave of exhaustion washes...",
+        "contentFile": "blog-1775275223951.md"
+    },
+    {
         "id": "1775271616641",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
