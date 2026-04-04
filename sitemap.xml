@@ -6,6 +6,11 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://www.goreportify.com/blog-1775311221153.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.goreportify.com/news-1775307616490.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
