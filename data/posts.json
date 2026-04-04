@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775264422916",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "category": "Tech Radar",
+        "date": "2026-04-04",
+        "author": "Olivia Thorne",
+        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory scramble, with the European Union, United States, and China charting starkly...",
+        "contentFile": "news-1775264422916.md"
+    },
+    {
         "id": "1775260823663",
         "type": "blog",
         "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
