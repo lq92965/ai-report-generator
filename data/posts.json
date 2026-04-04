@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775340028042",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-04",
+        "author": "Alex Mercer",
+        "excerpt": "You know the feeling. It's 4 PM on a Tuesday, and that recurring calendar reminder pops up: \"Prepare Weekly Stakeholder Update.\" A wave of exhaustion...",
+        "contentFile": "blog-1775340028042.md"
+    },
+    {
         "id": "1775336410829",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
