@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775278811368",
+        "type": "news",
+        "title": "The Unseen Labor Behind AI's Public Face",
+        "category": "Tech Radar",
+        "date": "2026-04-04",
+        "author": "Emily Rostova",
+        "excerpt": "While headlines tout AI's potential to revolutionize industries, a quieter, more complex story is unfolding behind the scenes. The focus is shifting f...",
+        "contentFile": "news-1775278811368.md"
+    },
+    {
         "id": "1775275223951",
         "type": "blog",
         "title": "The PM's Guide to Curing Reporting Fatigue",
