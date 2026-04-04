@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775260823663",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-04",
+        "author": "Alex Mercer",
+        "excerpt": "We've all been there. It's 4:00 PM on a Friday, and the only thing standing between you and the weekend is the dreaded weekly status report. You open...",
+        "contentFile": "blog-1775260823663.md"
+    },
+    {
         "id": "1775257212640",
         "type": "news",
         "title": "The Unseen Labor Behind AI's Public Face",
