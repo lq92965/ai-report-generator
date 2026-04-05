@@ -117,22 +117,3 @@ html.pwa-nb-detail-layout body.has-app-nav main.flex-grow > article.max-w-4xl.mx
     padding-right: calc(1.5rem + env(safe-area-inset-right, 0px)) !important;
     box-sizing: border-box !important;
 }
-
-/* 不依赖 JS；Android System WebView 105+ 支持 :has */
-@supports selector(:has(.pwa-nb-detail-layout-check)) {
-    body.has-app-nav:has(main.flex-grow > article.max-w-4xl.mx-auto) header.main-header.pwa-app-header > .app-header-shell.pwa-header-inner {
-        max-width: min(100%, 56rem) !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        padding-left: calc(1.5rem + env(safe-area-inset-left, 0px)) !important;
-        padding-right: calc(1.5rem + env(safe-area-inset-right, 0px)) !important;
-        box-sizing: border-box !important;
-        min-width: 0 !important;
-    }
-
-    body.has-app-nav:has(main.flex-grow > article.max-w-4xl.mx-auto) main.flex-grow > article.max-w-4xl.mx-auto {
-        padding-left: calc(1.5rem + env(safe-area-inset-left, 0px)) !important;
-        padding-right: calc(1.5rem + env(safe-area-inset-right, 0px)) !important;
-        box-sizing: border-box !important;
-    }
-}
