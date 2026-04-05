@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775430016103",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-05",
+        "author": "Jessica Tran",
+        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory scramble, with the United States, the European Union, and China charting sta...",
+        "contentFile": "news-1775430016103.md"
+    },
+    {
         "id": "1775426421393",
         "type": "blog",
         "title": "Beyond the Dashboard: A PM's Deep-Dive into Conquering Reporting Fatigue",
