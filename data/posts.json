@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775404826922",
+        "type": "blog",
+        "title": "Beyond the Status Update: A PM's Deep-Dive into Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-05",
+        "author": "Sarah Jenkins",
+        "excerpt": "We've all been there. It's the end of the week, the end of the sprint, or the end of the month. The work is done, the features are shipped, but one fi...",
+        "contentFile": "blog-1775404826922.md"
+    },
+    {
         "id": "1775401214356",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
