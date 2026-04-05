@@ -1,15 +1,30 @@
 /* 文件名：mobile-patch.js */
 /* 作用：原生 App 文件下载拦截与分享、强刷头像缓存 */
 
-/* News/Blog 静态详情 + article.html：在解析 body 前打上标记，顶栏与 max-w-4xl 正文列对齐（见 mobile-patch.css） */
-(function () {
-    var f = (location.pathname.split('/').pop() || '').toLowerCase();
-    if (!/^(news|blog)-.+\.html$/i.test(f) && f !== 'article.html') return;
-    document.documentElement.classList.add('pwa-nb-detail-layout');
+/* News/Blog 静态详情 + article.html：html 根类用于顶栏对齐（见 mobile-patch.css）；Capacitor / 缓存场景下 pathname 可能异常，DOM 就绪后再兜底一次 */
+(function markNewsBlogDetailLayout() {
+    function byUrl() {
+        var raw = (location.pathname || '').replace(/^\/+/, '');
+        try {
+            raw = decodeURIComponent(raw);
+        } catch (e) {}
+        var f = (raw.split('/').pop() || '').split('?')[0].split('#')[0].toLowerCase();
+        var href = (location.href || '').toLowerCase();
+        if (/^(news|blog)-.+\.html$/i.test(f) || f === 'article.html') return true;
+        if (/[\\/](news|blog)-[^/?#\\]+\.html/i.test(href)) return true;
+        return false;
+    }
+    if (byUrl()) document.documentElement.classList.add('pwa-nb-detail-layout');
 })();
 
 document.addEventListener('DOMContentLoaded', function() {
-    
+    if (
+        !document.documentElement.classList.contains('pwa-nb-detail-layout') &&
+        document.querySelector('body.has-app-nav main.flex-grow > article.max-w-4xl.mx-auto')
+    ) {
+        document.documentElement.classList.add('pwa-nb-detail-layout');
+    }
+
     // 检查是否在 Capacitor 原生 App 环境中
     const isNative = window.Capacitor && window.Capacitor.isNative;
 

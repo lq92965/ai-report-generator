@@ -116,10 +116,10 @@ function fixFile(filePath) {
     if (!text.includes('mobile-patch.css')) {
         text = text.replace(
             /(<link href="https:\/\/fonts\.googleapis\.com[^>]*>)/i,
-            '$1\n    \n    <link rel="stylesheet" href="mobile-patch.css">\n    <script src="mobile-patch.js"><\/script>'
+            '$1\n    \n    <link rel="stylesheet" href="mobile-patch.css?v=10">\n    <script src="mobile-patch.js?v=10"><\/script>'
         );
         if (!text.includes('mobile-patch.css')) {
-            text = text.replace(/<\/head>/i, '    <link rel="stylesheet" href="mobile-patch.css">\n    <script src="mobile-patch.js"><\/script>\n</head>');
+            text = text.replace(/<\/head>/i, '    <link rel="stylesheet" href="mobile-patch.css?v=10">\n    <script src="mobile-patch.js?v=10"><\/script>\n</head>');
         }
         changed = true;
     }
