@@ -1,5 +1,5 @@
 /* Service Worker — Reportify PWA (cache shell + offline fallback) */
-const CACHE_NAME = 'reportify-pwa-v3-ios-nav';
+const CACHE_NAME = 'reportify-pwa-v4-www-pipeline';
 const PRECACHE_URLS = [
   './',
   './index.html',
