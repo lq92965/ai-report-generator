@@ -41,6 +41,8 @@ html {
 html {
     /* smooth 在 WebView/换页时易产生“跳动”感；锚点滚动用脚本或保留 auto */
     scroll-behavior: auto;
+    /* 与 has-app-nav 页面底色一致，橡皮筋/过滚动时少露白 */
+    background-color: #f9fafb;
 }
 
 body {
@@ -53,6 +55,12 @@ body {
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
+}
+
+/* 带底栏的应用壳：统一页面底色，减轻整页跳转时白屏/渐变切换造成的闪烁 */
+body.has-app-nav {
+    background: #f9fafb;
+    background-image: none;
 }
 
 main {
@@ -2075,13 +2083,39 @@ a.pwa-page-back-link.mb-4 {
     border-bottom: 1px solid #e2e8f0;
 }
 
-/* 内层行：宽度与 .container 相同（继承 class="container" 的 padding 与 max-width） */
-.main-header.pwa-app-header > .container.pwa-header-inner {
-    max-width: var(--app-header-content-max-width);
+/*
+ * 顶栏内容行：必须用 .app-header-shell，勿用 Tailwind 的 .container。
+ * CDN Tailwind 的 .container 会按断点改写 max-width/padding，导致详情页/账户子页与首页顶栏宽度不一致。
+ */
+header.main-header.pwa-app-header > .app-header-shell.pwa-header-inner {
     width: 100%;
+    max-width: var(--app-header-content-max-width);
     margin-left: auto;
     margin-right: auto;
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
     box-sizing: border-box;
+}
+
+@media screen and (max-width: 1366px) {
+    header.main-header.pwa-app-header > .app-header-shell.pwa-header-inner {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    header.main-header.pwa-app-header > .app-header-shell.pwa-header-inner {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    header.main-header.pwa-app-header > .app-header-shell.pwa-header-inner {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
 }
 
 .pwa-header-inner {
@@ -2093,13 +2127,13 @@ a.pwa-page-back-link.mb-4 {
     width: 100%;
 }
 
-/* 顶栏左侧：原生式返回 或 Logo+品牌（列表第 1 页），互斥显示 */
+/* 顶栏左侧：返回 / Logo；勿过窄以免与首页 Logo 区视觉不一致 */
 .pwa-header-leading {
     display: flex;
     align-items: center;
     flex: 0 1 auto;
     min-width: 0;
-    max-width: min(60%, 280px);
+    max-width: min(78%, 360px);
 }
 
 .pwa-header-inner .logo {
@@ -2151,7 +2185,7 @@ a.pwa-page-back-link.mb-4 {
     }
 }
 
-.main-header.pwa-app-header.account-header .container.pwa-header-inner {
+.main-header.pwa-app-header.account-header .app-header-shell.pwa-header-inner {
     display: flex !important;
     flex-wrap: nowrap !important;
     align-items: center !important;
@@ -2298,7 +2332,7 @@ a.pwa-page-back-link.mb-4 {
         padding-bottom: 10px !important;
     }
 
-    .main-header.pwa-app-header.account-header .container {
+    .main-header.pwa-app-header.account-header .app-header-shell {
         flex-wrap: wrap !important;
         height: auto !important;
         min-height: auto !important;
@@ -2493,5 +2527,13 @@ body.has-app-nav .fixed.bottom-8 {
     body,
     body.has-app-nav {
         padding-bottom: 0 !important;
+    }
+}
+
+/* 多页静态站点：Chrome / 部分 Android WebView 支持时，整页切换略柔和（需 mobile-patch.js 里 startViewTransition） */
+@supports (view-transition-name: none) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation-duration: 0.18s;
     }
 }

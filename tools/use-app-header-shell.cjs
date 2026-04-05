@@ -1,29 +1,15 @@
 /**
- * Unify app header inner row with index.html:
- * app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6
- * Run: node tools/sync-header-inner-classes.cjs
+ * 顶栏内层改用 .app-header-shell，避免与 Tailwind .container 冲突。
+ * Run: node tools/use-app-header-shell.cjs
  */
 const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const CANON =
+const FROM =
+  'container pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6';
+const TO =
   'app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6';
-
-function processHtml(filePath) {
-  let s = fs.readFileSync(filePath, 'utf8');
-  const orig = s;
-
-  s = s.replace(/container mx-auto px-6 pwa-header-inner/g, CANON);
-  s = s.replace(/container pwa-header-inner" style="max-width: 1200px;"/g, `${CANON}"`);
-  s = s.replace(/<div class="container pwa-header-inner">/g, `<div class="${CANON}">`);
-
-  if (s !== orig) {
-    fs.writeFileSync(filePath, s, 'utf8');
-    return true;
-  }
-  return false;
-}
 
 function walk(dir, list = []) {
   for (const name of fs.readdirSync(dir)) {
@@ -39,7 +25,11 @@ function walk(dir, list = []) {
 
 let n = 0;
 for (const f of walk(ROOT)) {
-  if (processHtml(f)) {
+  let s = fs.readFileSync(f, 'utf8');
+  const orig = s;
+  s = s.split(FROM).join(TO);
+  if (s !== orig) {
+    fs.writeFileSync(f, s, 'utf8');
     console.log('OK', path.relative(ROOT, f));
     n++;
   }

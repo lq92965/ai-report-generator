@@ -114,3 +114,31 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     })();
 });
+
+// 同站多页 HTML 跳转：支持时用 View Transition，减轻白屏闪一下（Chrome / 部分 WebView）
+(function setupAppViewTransitions() {
+    if (typeof document.startViewTransition !== 'function') return;
+    document.addEventListener(
+        'click',
+        function (e) {
+            if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+            var a = e.target.closest && e.target.closest('a[href]');
+            if (!a || a.target === '_blank' || a.getAttribute('download')) return;
+            var href = a.getAttribute('href');
+            if (!href || href.charAt(0) === '#' || href.indexOf('javascript:') === 0) return;
+            var url;
+            try {
+                url = new URL(a.href, window.location.href);
+            } catch (err) {
+                return;
+            }
+            if (url.origin !== window.location.origin) return;
+            if (url.pathname === window.location.pathname && url.search === window.location.search) return;
+            e.preventDefault();
+            document.startViewTransition(function () {
+                window.location.href = url.href;
+            });
+        },
+        true
+    );
+})();

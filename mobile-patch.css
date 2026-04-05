@@ -17,8 +17,14 @@
         box-sizing: border-box !important;
         /* env() may be 0 in Android WebView; keep clear of status bar */
         padding-top: max(env(safe-area-inset-top, 0px), 28px) !important;
-        padding-bottom: 8px !important;
+        padding-bottom: 10px !important;
         min-height: 0 !important;
+    }
+
+    /* 与首页顶栏内容行垂直占位对齐 */
+    header.main-header.pwa-app-header > .app-header-shell.pwa-header-inner {
+        min-height: 40px;
+        align-items: center;
     }
 
     /* 仅右上角头像区：勿对 .logo / 品牌图做圆形裁切（会导致 Logo 变形、换页视觉跳变） */
