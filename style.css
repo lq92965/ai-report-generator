@@ -29,6 +29,8 @@ html {
 
     /* 顶栏内容区宽度（与首页 index.html 的 .container 一致；横向 padding 仍由 .container 及媒体查询控制） */
     --app-header-content-max-width: 1100px;
+    /* 移动端顶栏与 Generate / Mine / 详情正文同一左右留白，避免「顶栏比主页看起来更宽」 */
+    --app-header-pad-x-mobile: 20px;
 }
 
 /* --- Global Styles --- */
@@ -2089,7 +2091,8 @@ a.pwa-page-back-link.mb-4 {
  */
 header.main-header.pwa-app-header > .app-header-shell.pwa-header-inner {
     width: 100%;
-    max-width: var(--app-header-content-max-width);
+    min-width: 0; /* flex 子项默认可收缩，避免顶栏行被内容撑出横向滚动 */
+    max-width: min(100%, var(--app-header-content-max-width)) !important;
     margin-left: auto;
     margin-right: auto;
     padding-left: var(--spacing-md);
@@ -2113,8 +2116,8 @@ header.main-header.pwa-app-header > .app-header-shell.pwa-header-inner {
 
 @media screen and (max-width: 768px) {
     header.main-header.pwa-app-header > .app-header-shell.pwa-header-inner {
-        padding-left: 20px !important;
-        padding-right: 20px !important;
+        padding-left: calc(var(--app-header-pad-x-mobile) + env(safe-area-inset-left, 0px)) !important;
+        padding-right: calc(var(--app-header-pad-x-mobile) + env(safe-area-inset-right, 0px)) !important;
     }
 }
 
@@ -2134,6 +2137,19 @@ header.main-header.pwa-app-header > .app-header-shell.pwa-header-inner {
     flex: 0 1 auto;
     min-width: 0;
     max-width: min(78%, 360px);
+}
+
+/* 详情页 HTML 上常有 Tailwind max-w-[60%]，会盖过上面规则，导致与首页顶栏视觉不一致 */
+header.main-header.pwa-app-header .pwa-header-leading {
+    max-width: min(78%, 360px) !important;
+}
+
+/* News/Blog 详情：正文常用 px-6(24px)，与顶栏 20px 不一致时显得顶栏「更宽」— 与首页顶栏 gutter 对齐 */
+@media screen and (max-width: 768px) {
+    body.has-app-nav main article.max-w-4xl.mx-auto {
+        padding-left: calc(var(--app-header-pad-x-mobile) + env(safe-area-inset-left, 0px)) !important;
+        padding-right: calc(var(--app-header-pad-x-mobile) + env(safe-area-inset-right, 0px)) !important;
+    }
 }
 
 .pwa-header-inner .logo {
@@ -2442,12 +2458,12 @@ body.has-app-nav .fixed.bottom-8 {
     }
 
     .account-hub .container {
-        padding: 24px 12px !important;
+        padding: 24px var(--app-header-pad-x-mobile) !important;
     }
 
     .generator-section .container {
-        padding-left: 12px !important;
-        padding-right: 12px !important;
+        padding-left: var(--app-header-pad-x-mobile) !important;
+        padding-right: var(--app-header-pad-x-mobile) !important;
     }
 
     #article-content.prose-lg,
@@ -2473,8 +2489,8 @@ body.has-app-nav .fixed.bottom-8 {
       padding: 1rem !important;
     }
     .container {
-      padding-left: 1rem !important;
-      padding-right: 1rem !important;
+      padding-left: var(--app-header-pad-x-mobile) !important;
+      padding-right: var(--app-header-pad-x-mobile) !important;
     }
     
     /* 强制缩小 Logo 和图标 */
