@@ -1,5 +1,665 @@
 [
     {
+        "id": "1775354426474",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-05",
+        "author": "Michael Chen",
+        "excerpt": "As a Product Manager, you live and breathe data. It's the lifeblood of your decisions, the proof of your progress, and the language you use to communi...",
+        "contentFile": "blog-1775354426474.md"
+    },
+    {
+        "id": "1775350818375",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-05",
+        "author": "Marcus Webb",
+        "excerpt": "The rapid evolution of artificial intelligence has propelled global governments into a frenetic race not just for technological supremacy, but for reg...",
+        "contentFile": "news-1775350818375.md"
+    },
+    {
+        "id": "1775347224973",
+        "type": "blog",
+        "title": "From Drudgery to Data-Driven: Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-05",
+        "author": "David Sterling",
+        "excerpt": "As a Product Manager, you live and die by data. But let's be honest: the process of reporting that data can be one of the most soul-crushing parts of...",
+        "contentFile": "blog-1775347224973.md"
+    },
+    {
+        "id": "1775343621223",
+        "type": "news",
+        "title": "The Unseen Cost: AI's Growing Energy Appetite Sparks Industry Debate",
+        "category": "Tech Radar",
+        "date": "2026-04-04",
+        "author": "Sarah Jenkins",
+        "excerpt": "While headlines tout AI's potential to revolutionize industries, a quieter crisis is unfolding in data centers worldwide. The artificial intelligence...",
+        "contentFile": "news-1775343621223.md"
+    },
+    {
+        "id": "1775340028042",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-04",
+        "author": "Alex Mercer",
+        "excerpt": "You know the feeling. It's 4 PM on a Tuesday, and that recurring calendar reminder pops up: \"Prepare Weekly Stakeholder Update.\" A wave of exhaustion...",
+        "contentFile": "blog-1775340028042.md"
+    },
+    {
+        "id": "1775336410829",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-04",
+        "author": "Marcus Webb",
+        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory scramble, with the United States, European Union, and China charting starkly...",
+        "contentFile": "news-1775336410829.md"
+    },
+    {
+        "id": "1775332825972",
+        "type": "blog",
+        "title": "Beyond the Dashboard: How to Overcome Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-04",
+        "author": "Michael Chen",
+        "excerpt": "We've all been there. It's 4:00 PM on a Friday. You're staring at a spreadsheet with a thousand rows, trying to wrestle it into a slide deck that six...",
+        "contentFile": "blog-1775332825972.md"
+    },
+    {
+        "id": "1775329217146",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "category": "Tech Radar",
+        "date": "2026-04-04",
+        "author": "Olivia Thorne",
+        "excerpt": "The narrative around artificial intelligence has long been dominated by a binary, dystopian fear: the wholesale replacement of human workers by machin...",
+        "contentFile": "news-1775329217146.md"
+    },
+    {
+        "id": "1775325624982",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-04",
+        "author": "Jessica Tran",
+        "excerpt": "As a Product Manager, you live and breathe data. It’s the lifeblood of your decisions, the proof of your progress, and the language you use to communi...",
+        "contentFile": "blog-1775325624982.md"
+    },
+    {
+        "id": "1775322018441",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "category": "Tech Radar",
+        "date": "2026-04-04",
+        "author": "Emily Rostova",
+        "excerpt": "The narrative around artificial intelligence has long been dominated by a single, fearsome question: \"Will AI take my job?\" Headlines prophesy mass un...",
+        "contentFile": "news-1775322018441.md"
+    },
+    {
+        "id": "1775318426173",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-04",
+        "author": "Sarah Jenkins",
+        "excerpt": "We’ve all been there. It’s 5 PM on a Friday, and you’re scrambling to pull metrics from three different systems to update a status deck that you’re pr...",
+        "contentFile": "blog-1775318426173.md"
+    },
+    {
+        "id": "1775314815469",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-04",
+        "author": "Jessica Tran",
+        "excerpt": "The rapid evolution of artificial intelligence has propelled global regulatory efforts into a high-stakes race, with the European Union, United States...",
+        "contentFile": "news-1775314815469.md"
+    },
+    {
+        "id": "1775311221153",
+        "type": "blog",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-04",
+        "author": "Sarah Jenkins",
+        "excerpt": "As a Product Manager, your calendar is a battlefield. Every minute is precious, fought for by stakeholder meetings, user interviews, backlog grooming,...",
+        "contentFile": "blog-1775311221153.md"
+    },
+    {
+        "id": "1775307616490",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "category": "Tech Radar",
+        "date": "2026-04-04",
+        "author": "Olivia Thorne",
+        "excerpt": "While headlines chase the latest chatbot drama or doomsday scenarios, a quiet revolution is unfolding in the background. Across industries, artificial...",
+        "contentFile": "news-1775307616490.md"
+    },
+    {
+        "id": "1775304025818",
+        "type": "blog",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-04",
+        "author": "Jessica Tran",
+        "excerpt": "We've all been there. It's the end of the sprint, or the end of the month, and the familiar dread sets in. The beast known as \"The Status Report\" need...",
+        "contentFile": "blog-1775304025818.md"
+    },
+    {
+        "id": "1775300415666",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-04",
+        "author": "Marcus Webb",
+        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, United States, and China finalizing starkly different...",
+        "contentFile": "news-1775300415666.md"
+    },
+    {
+        "id": "1775296825095",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-04",
+        "author": "Sarah Jenkins",
+        "excerpt": "You know the feeling. It’s Sunday night, and a familiar dread creeps in. It’s not the upcoming user interviews or the strategic planning session you’r...",
+        "contentFile": "blog-1775296825095.md"
+    },
+    {
+        "id": "1775293218605",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
+        "category": "Tech Radar",
+        "date": "2026-04-04",
+        "author": "Marcus Webb",
+        "excerpt": "In a quiet revolution with seismic implications, artificial intelligence is no longer just a tool for software developers—it is becoming their most pr...",
+        "contentFile": "news-1775293218605.md"
+    },
+    {
+        "id": "1775289624961",
+        "type": "blog",
+        "title": "From Drudgery to Data-Driven: Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-04",
+        "author": "Sarah Jenkins",
+        "excerpt": "It's 4:30 PM on a Friday. You have one last task before the weekend: the weekly status report. You open a spreadsheet, copy-paste some metrics from th...",
+        "contentFile": "blog-1775289624961.md"
+    },
+    {
+        "id": "1775286017517",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "category": "Tech Radar",
+        "date": "2026-04-04",
+        "author": "Emily Rostova",
+        "excerpt": "While headlines chase the latest chatbot drama or doomsday scenarios, a quieter revolution is unfolding in the background. Across industries, artifici...",
+        "contentFile": "news-1775286017517.md"
+    },
+    {
+        "id": "1775282425868",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-04",
+        "author": "Emily Rostova",
+        "excerpt": "We’ve all been there. It’s 4 PM on a Friday, and you’re scrambling to pull numbers from five different systems to assemble the \"Weekly Status Report\"—...",
+        "contentFile": "blog-1775282425868.md"
+    },
+    {
+        "id": "1775278811368",
+        "type": "news",
+        "title": "The Unseen Labor Behind AI's Public Face",
+        "category": "Tech Radar",
+        "date": "2026-04-04",
+        "author": "Emily Rostova",
+        "excerpt": "While headlines tout AI's potential to revolutionize industries, a quieter, more complex story is unfolding behind the scenes. The focus is shifting f...",
+        "contentFile": "news-1775278811368.md"
+    },
+    {
+        "id": "1775275223951",
+        "type": "blog",
+        "title": "The PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-04",
+        "author": "Olivia Thorne",
+        "excerpt": "We've all been there. It's 4:30 PM on a Friday, and a calendar alert reminds you: \"Update the Weekly Project Status Deck.\" A wave of exhaustion washes...",
+        "contentFile": "blog-1775275223951.md"
+    },
+    {
+        "id": "1775271616641",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "category": "Tech Radar",
+        "date": "2026-04-04",
+        "author": "Jessica Tran",
+        "excerpt": "The rapid advancement of artificial intelligence has triggered an unprecedented diplomatic scramble, as world leaders, tech executives, and academics...",
+        "contentFile": "news-1775271616641.md"
+    },
+    {
+        "id": "1775268022285",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-04",
+        "author": "Alex Mercer",
+        "excerpt": "It’s 4:00 PM on a Friday. The last thing your high-performing engineering team wants to do is stop coding to fill out a spreadsheet detailing every mi...",
+        "contentFile": "blog-1775268022285.md"
+    },
+    {
+        "id": "1775264422916",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "category": "Tech Radar",
+        "date": "2026-04-04",
+        "author": "Olivia Thorne",
+        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory scramble, with the European Union, United States, and China charting starkly...",
+        "contentFile": "news-1775264422916.md"
+    },
+    {
+        "id": "1775260823663",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-04",
+        "author": "Alex Mercer",
+        "excerpt": "We've all been there. It's 4:00 PM on a Friday, and the only thing standing between you and the weekend is the dreaded weekly status report. You open...",
+        "contentFile": "blog-1775260823663.md"
+    },
+    {
+        "id": "1775257212640",
+        "type": "news",
+        "title": "The Unseen Labor Behind AI's Public Face",
+        "category": "Tech Radar",
+        "date": "2026-04-03",
+        "author": "Sarah Jenkins",
+        "excerpt": "While headlines tout AI's revolutionary potential, a growing chorus of experts is shifting focus to the hidden human infrastructure powering the boom....",
+        "contentFile": "news-1775257212640.md"
+    },
+    {
+        "id": "1775253624075",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Deep-Dive into Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-03",
+        "author": "Emily Rostova",
+        "excerpt": "We've all been there. It’s the end of the week, the sprint, or the month, and a familiar dread sets in. It’s not about the work ahead; it’s about the...",
+        "contentFile": "blog-1775253624075.md"
+    },
+    {
+        "id": "1775250017308",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-03",
+        "author": "Jessica Tran",
+        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, United States, and China finalizing starkly different...",
+        "contentFile": "news-1775250017308.md"
+    },
+    {
+        "id": "1775246423495",
+        "type": "blog",
+        "title": "From Drudgery to Data-Driven: A PM's Playbook for Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-03",
+        "author": "Olivia Thorne",
+        "excerpt": "We’ve all been there. It’s 4 PM on a Friday, and that recurring calendar notification pops up: \"Prepare Weekly Stakeholder Report.\" A wave of exhausti...",
+        "contentFile": "blog-1775246423495.md"
+    },
+    {
+        "id": "1775242816293",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-03",
+        "author": "David Sterling",
+        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, United States, and China advancing starkly different...",
+        "contentFile": "news-1775242816293.md"
+    },
+    {
+        "id": "1775239223854",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-03",
+        "author": "Michael Chen",
+        "excerpt": "We’ve all been there. It’s 4 PM on a Friday, and that recurring calendar notification pops up: \"Compile Weekly Project Status Report.\" A collective gr...",
+        "contentFile": "blog-1775239223854.md"
+    },
+    {
+        "id": "1775235612887",
+        "type": "news",
+        "title": "The Unseen Cost of AI's Thirst: Data Centers Strain Global Resources",
+        "category": "Tech Radar",
+        "date": "2026-04-03",
+        "author": "Marcus Webb",
+        "excerpt": "As artificial intelligence models grow more sophisticated, a hidden crisis is brewing in the sprawling, power-hungry data centers that fuel them. The...",
+        "contentFile": "news-1775235612887.md"
+    },
+    {
+        "id": "1775232025036",
+        "type": "blog",
+        "title": "Reporting on Empty: How to Fight Reporting Fatigue and Make Your Data Matter",
+        "category": "Deep Insights",
+        "date": "2026-04-03",
+        "author": "Alex Mercer",
+        "excerpt": "We've all been there. It's Tuesday afternoon, and your calendar reminder pops up: \"Update Weekly Project Status Report.\" A wave of exhaustion washes o...",
+        "contentFile": "blog-1775232025036.md"
+    },
+    {
+        "id": "1775228416623",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "category": "Tech Radar",
+        "date": "2026-04-03",
+        "author": "Marcus Webb",
+        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the backbone of...",
+        "contentFile": "news-1775228416623.md"
+    },
+    {
+        "id": "1775224825242",
+        "type": "blog",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-03",
+        "author": "Olivia Thorne",
+        "excerpt": "It’s 4 PM on a Friday. Your team has crushed it this week, but instead of focusing on the next sprint, you're stuck in spreadsheet hell. You're manual...",
+        "contentFile": "blog-1775224825242.md"
+    },
+    {
+        "id": "1775221213513",
+        "type": "news",
+        "title": "The Unseen Labor Behind AI's Public Face",
+        "category": "Tech Radar",
+        "date": "2026-04-03",
+        "author": "Alex Mercer",
+        "excerpt": "While headlines tout AI's potential to revolutionize industries, a quieter, more complex story is unfolding behind the scenes. The focus is shifting f...",
+        "contentFile": "news-1775221213513.md"
+    },
+    {
+        "id": "1775217624473",
+        "type": "blog",
+        "title": "Beyond the Status Update: Curing Reporting Fatigue for Good",
+        "category": "Deep Insights",
+        "date": "2026-04-03",
+        "author": "Jessica Tran",
+        "excerpt": "We’ve all been there. It’s 4:00 PM on a Friday. The blinking cursor on a blank document mocks you. You have to compile the \"Weekly Status Report\"—a do...",
+        "contentFile": "blog-1775217624473.md"
+    },
+    {
+        "id": "1775214015211",
+        "type": "news",
+        "title": "AI Regulation Debate Intensifies as New Model Capabilities Outpace Legislation",
+        "category": "Tech Radar",
+        "date": "2026-04-03",
+        "author": "Olivia Thorne",
+        "excerpt": "The global conversation surrounding artificial intelligence regulation reached a fever pitch this week, as the release of a new open-source multimodal...",
+        "contentFile": "news-1775214015211.md"
+    },
+    {
+        "id": "1775210425921",
+        "type": "blog",
+        "title": "From Data Dumps to Actionable Insights: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-03",
+        "author": "Olivia Thorne",
+        "excerpt": "We've all been there. It's Monday morning, and your inbox is already flooded with automated reports. The weekly status update. The sprint velocity cha...",
+        "contentFile": "blog-1775210425921.md"
+    },
+    {
+        "id": "1775206817189",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "category": "Tech Radar",
+        "date": "2026-04-03",
+        "author": "Marcus Webb",
+        "excerpt": "The narrative around artificial intelligence has long been dominated by a binary debate: job creation versus job elimination. However, a quiet but pro...",
+        "contentFile": "news-1775206817189.md"
+    },
+    {
+        "id": "1775203227010",
+        "type": "blog",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-03",
+        "author": "Sarah Jenkins",
+        "excerpt": "We've all been there. It’s 4 PM on a Friday, and the only thing standing between you and the weekend is the dreaded weekly status report. You pull up...",
+        "contentFile": "blog-1775203227010.md"
+    },
+    {
+        "id": "1775199622156",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-03",
+        "author": "Olivia Thorne",
+        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory race among world governments, leading to a fragmented landscape of proposed...",
+        "contentFile": "news-1775199622156.md"
+    },
+    {
+        "id": "1775196026614",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-03",
+        "author": "Olivia Thorne",
+        "excerpt": "As a Product Manager, you live and die by data. But there's a dark side to our data-driven world: the soul-crushing, time-devouring beast known as Rep...",
+        "contentFile": "blog-1775196026614.md"
+    },
+    {
+        "id": "1775192416283",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-03",
+        "author": "Olivia Thorne",
+        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, United States, and China finalizing starkly different...",
+        "contentFile": "news-1775192416283.md"
+    },
+    {
+        "id": "1775188822817",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-03",
+        "author": "David Sterling",
+        "excerpt": "You know the feeling. It’s Tuesday morning, and the calendar alert pops up: \"Generate Weekly Progress Report.\" You pull the same data from the same so...",
+        "contentFile": "blog-1775188822817.md"
+    },
+    {
+        "id": "1775185218647",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "category": "Tech Radar",
+        "date": "2026-04-03",
+        "author": "Marcus Webb",
+        "excerpt": "The rapid advancement of artificial intelligence has triggered an unprecedented political response, with world leaders gathering in Seoul this week fo...",
+        "contentFile": "news-1775185218647.md"
+    },
+    {
+        "id": "1775181623285",
+        "type": "blog",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-03",
+        "author": "Emily Rostova",
+        "excerpt": "We've all been there. It's the end of the week, the sprint, or the month, and that familiar dread sets in. It's time to \"pull the numbers.\" You spend...",
+        "contentFile": "blog-1775181623285.md"
+    },
+    {
+        "id": "1775178019014",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-03",
+        "author": "Marcus Webb",
+        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, United States, and China finalizing starkly different...",
+        "contentFile": "news-1775178019014.md"
+    },
+    {
+        "id": "1775174424768",
+        "type": "blog",
+        "title": "Title: The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-03",
+        "author": "Marcus Webb",
+        "excerpt": "We’ve all been there. It’s 4:45 PM on a Friday, and the only thing standing between you and the weekend is the weekly status report. You cobble togeth...",
+        "contentFile": "blog-1775174424768.md"
+    },
+    {
+        "id": "1775170815164",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-02",
+        "author": "David Sterling",
+        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, United States, and China finalizing starkly different...",
+        "contentFile": "news-1775170815164.md"
+    },
+    {
+        "id": "1775167225406",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-02",
+        "author": "Marcus Webb",
+        "excerpt": "We’ve all been there. It’s 4 PM on a Friday, and instead of focusing on strategic work, you’re wrestling with a spreadsheet. You're pulling data from...",
+        "contentFile": "blog-1775167225406.md"
+    },
+    {
+        "id": "1775163619710",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
+        "category": "Tech Radar",
+        "date": "2026-04-02",
+        "author": "Emily Rostova",
+        "excerpt": "In the hushed server rooms and on the glowing screens of developers worldwide, a profound transformation is underway, not through lines of code writte...",
+        "contentFile": "news-1775163619710.md"
+    },
+    {
+        "id": "1775160024806",
+        "type": "blog",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-02",
+        "author": "Jessica Tran",
+        "excerpt": "As a Product Manager, you live and breathe data. Status updates, progress reports, metric dashboards—they are the lifeblood of informed decision-makin...",
+        "contentFile": "blog-1775160024806.md"
+    },
+    {
+        "id": "1775156416436",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "category": "Tech Radar",
+        "date": "2026-04-02",
+        "author": "David Sterling",
+        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
+        "contentFile": "news-1775156416436.md"
+    },
+    {
+        "id": "1775152827457",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-02",
+        "author": "Jessica Tran",
+        "excerpt": "We've all been there. It's Tuesday morning, and you're staring at the weekly status report you need to pull together. You know that by the time you co...",
+        "contentFile": "blog-1775152827457.md"
+    },
+    {
+        "id": "1775149223853",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "category": "Tech Radar",
+        "date": "2026-04-02",
+        "author": "Olivia Thorne",
+        "excerpt": "The narrative around artificial intelligence has long been dominated by a binary, dystopian debate: will AI create new frontiers of productivity or wi...",
+        "contentFile": "news-1775149223853.md"
+    },
+    {
+        "id": "1775145626820",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-02",
+        "author": "Marcus Webb",
+        "excerpt": "As a Product Manager, you live and breathe data. It’s your compass, your justification, and your reality check. But there’s a dark side to our data-dr...",
+        "contentFile": "blog-1775145626820.md"
+    },
+    {
+        "id": "1775142024850",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "category": "Tech Radar",
+        "date": "2026-04-02",
+        "author": "Sarah Jenkins",
+        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
+        "contentFile": "news-1775142024850.md"
+    },
+    {
+        "id": "1775138425571",
+        "type": "blog",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-02",
+        "author": "David Sterling",
+        "excerpt": "We've all been there. It's 4:00 PM on a Friday, and instead of wrapping up strategic work, you're wrestling with a spreadsheet. You're pulling data fr...",
+        "contentFile": "blog-1775138425571.md"
+    },
+    {
+        "id": "1775134830108",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
+        "category": "Tech Radar",
+        "date": "2026-04-02",
+        "author": "David Sterling",
+        "excerpt": "In a move that signals a profound, yet quiet, transformation, major technology firms are increasingly deploying advanced AI not just as products, but...",
+        "contentFile": "news-1775134830108.md"
+    },
+    {
+        "id": "1775131226023",
+        "type": "blog",
+        "title": "The Silent Killer of Progress: How to Conquer Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-02",
+        "author": "Michael Chen",
+        "excerpt": "We've all been there. It’s the end of the week, your brain is fried from solving complex problems, and that final task looms: the status report. You p...",
+        "contentFile": "blog-1775131226023.md"
+    },
+    {
+        "id": "1775127619409",
+        "type": "news",
+        "title": "The Unseen Labor Behind AI's Public Face",
+        "category": "Tech Radar",
+        "date": "2026-04-02",
+        "author": "David Sterling",
+        "excerpt": "While headlines tout AI's potential to revolutionize industries, a quieter, more complex story is unfolding behind the scenes. The focus is shifting f...",
+        "contentFile": "news-1775127619409.md"
+    },
+    {
+        "id": "1775124027708",
+        "type": "blog",
+        "title": "From Data Dumps to Actionable Insights: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-02",
+        "author": "Emily Rostova",
+        "excerpt": "We've all been there. It's the end of the week, the end of the sprint, or the end of the quarter. That recurring calendar notification pops up: \"Prepa...",
+        "contentFile": "blog-1775124027708.md"
+    },
+    {
+        "id": "1775120429561",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "category": "Tech Radar",
+        "date": "2026-04-02",
+        "author": "Olivia Thorne",
+        "excerpt": "While headlines chase the latest chatbot drama or doomsday scenarios, a quiet revolution is unfolding in the background. Across industries, artificial...",
+        "contentFile": "news-1775120429561.md"
+    },
+    {
         "id": "1775116826682",
         "type": "blog",
         "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
