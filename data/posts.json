@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775390424777",
+        "type": "blog",
+        "title": "Beyond the Dashboard: Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-05",
+        "author": "Jessica Tran",
+        "excerpt": "As a Product Manager, you live and breathe data. It's the lifeblood of your decisions, the proof of your progress, and the language you use to communi...",
+        "contentFile": "blog-1775390424777.md"
+    },
+    {
         "id": "1775386816099",
         "type": "news",
         "title": "The Unseen Cost: AI's Growing Energy Appetite Sparks Industry Debate",
