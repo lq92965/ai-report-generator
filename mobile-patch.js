@@ -117,6 +117,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const a =
             document.querySelector('.pwa-header-leading .unified-back-btn') ||
+            document.querySelector('.pwa-header-leading a#dynamic-back-btn') ||
+            document.querySelector('.pwa-header-leading a.pwa-page-back-link') ||
             document.querySelector('.pwa-page-back-row a');
         if (!a) return;
 

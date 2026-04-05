@@ -9,13 +9,13 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 
-const HEADER_NEWS = `    <header class="main-header pwa-app-header bg-white shadow-sm border-b border-gray-200 py-4">
-        <div class="container mx-auto px-6 pwa-header-inner">
-            <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-                <img src="https://raw.githubusercontent.com/lq92965/ai-report-generator/main/logo-3d.png.png" alt="Reportify AI Logo" style="width: 32px; height: 32px; object-fit: contain;">
-                <span style="font-size: 1.1rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
-            </a>
-            <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
+/* 与全站一致：勿用 Tailwind container + 顶栏 logo；返回在 .pwa-header-leading（style.css / mobile-patch） */
+const HEADER_NEWS = `    <header class="main-header pwa-app-header">
+        <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
+                <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
+            <a href="news.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to News</span></a>
+        </div>
+<nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
                 <ul class="flex gap-6 font-medium text-gray-600">
                     <li><a href="index.html#features" class="hover:text-blue-600 transition">Features</a></li>
                     <li><a href="index.html#pricing" class="hover:text-blue-600 transition">Pricing</a></li>
@@ -33,13 +33,12 @@ const HEADER_NEWS = `    <header class="main-header pwa-app-header bg-white shad
         </div>
     </header>`;
 
-const HEADER_BLOG = `    <header class="main-header pwa-app-header bg-white shadow-sm border-b border-gray-200 py-4">
-        <div class="container mx-auto px-6 pwa-header-inner">
-            <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-                <img src="https://raw.githubusercontent.com/lq92965/ai-report-generator/main/logo-3d.png.png" alt="Reportify AI Logo" style="width: 32px; height: 32px; object-fit: contain;">
-                <span style="font-size: 1.1rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
-            </a>
-            <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
+const HEADER_BLOG = `    <header class="main-header pwa-app-header">
+        <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
+                <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
+            <a href="blog.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Blog</span></a>
+        </div>
+<nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
                 <ul class="flex gap-6 font-medium text-gray-600">
                     <li><a href="index.html#features" class="hover:text-blue-600 transition">Features</a></li>
                     <li><a href="index.html#pricing" class="hover:text-blue-600 transition">Pricing</a></li>
@@ -66,14 +65,6 @@ const BOTTOM_NAV = `
         <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
     </nav>
 `;
-
-const BACK_ROW_NEWS = `    <div class="pwa-page-back-row max-w-4xl mx-auto px-6 mt-4 w-full text-left">
-        <a href="news.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to News</span></a>
-    </div>`;
-
-const BACK_ROW_BLOG = `    <div class="pwa-page-back-row max-w-4xl mx-auto px-6 mt-4 w-full text-left">
-        <a href="blog.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Blog</span></a>
-    </div>`;
 
 function isDetail(name) {
     return /^news-\d+\.html$/.test(name) || /^blog-\d+\.html$/.test(name);
@@ -142,9 +133,10 @@ function fixFile(filePath) {
         changed = true;
     }
 
-    // 4) Replace header when old broken layout (no pwa-header-inner) or fat Invite button
+    // 4) Replace header：合并错误模板（container+logo）、或缺少 app-header-shell
     const needsHeader =
-        !text.includes('pwa-header-inner') ||
+        !text.includes('app-header-shell') ||
+        text.includes('container mx-auto px-6 pwa-header-inner') ||
         text.includes('hide-mobile-text') ||
         text.includes('Invite &amp; Earn');
     if (needsHeader) {
@@ -152,20 +144,11 @@ function fixFile(filePath) {
         changed = true;
     }
 
-    // 5) Single back row — replace any .pwa-page-back-row block
-    const backRow = kind === 'news' ? BACK_ROW_NEWS : BACK_ROW_BLOG;
+    // 5) 去掉独立第二行返回区（返回应在顶栏 .pwa-header-leading）；勿再插入 pwa-page-back-row
     if (text.includes('pwa-page-back-row')) {
-        const newT = text.replace(/<div class="pwa-page-back-row[^"]*"[^>]*>[\s\S]*?<\/div>/i, backRow);
+        const newT = text.replace(/\s*<div class="pwa-page-back-row[^"]*"[^>]*>[\s\S]*?<\/div>\s*/i, '\n');
         if (newT !== text) {
             text = newT;
-            changed = true;
-        }
-    } else {
-        const marker = '</header>';
-        const idx = text.indexOf(marker);
-        if (idx !== -1) {
-            const insertAt = idx + marker.length;
-            text = text.slice(0, insertAt) + '\n' + backRow + text.slice(insertAt);
             changed = true;
         }
     }
