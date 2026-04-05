@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775350818375",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-05",
+        "author": "Marcus Webb",
+        "excerpt": "The rapid evolution of artificial intelligence has propelled global governments into a frenetic race not just for technological supremacy, but for reg...",
+        "contentFile": "news-1775350818375.md"
+    },
+    {
         "id": "1775347224973",
         "type": "blog",
         "title": "From Drudgery to Data-Driven: Curing Reporting Fatigue",
