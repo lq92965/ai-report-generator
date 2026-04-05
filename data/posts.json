@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775372417963",
+        "type": "news",
+        "title": "The Unseen Cost of AI's Thirst: Data Centers Strain Global Resources",
+        "category": "Tech Radar",
+        "date": "2026-04-05",
+        "author": "Sarah Jenkins",
+        "excerpt": "The artificial intelligence revolution, once hailed as a purely digital frontier, is now confronting a stark physical reality: an insatiable demand fo...",
+        "contentFile": "news-1775372417963.md"
+    },
+    {
         "id": "1775368824766",
         "type": "blog",
         "title": "Reporting Fatigue is Killing Your Productivity. Here's How to Fix It.",
