@@ -65,15 +65,80 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // -----------------------------------------
-    // 强刷头像缓存
+    // 头像缓存：仅在当前页 DOM 就绪时 bust 一次（pageshow 每次返回都改 src 会闪动、顶栏跳动）
     // -----------------------------------------
-    window.addEventListener('pageshow', function() {
+    (function bustAvatarCacheOnce() {
         const avatarImages = document.querySelectorAll('img.rounded-full, img[src*="avatar"]');
         avatarImages.forEach(img => {
             if (!img.src.includes('logo') && !img.src.includes('icon')) {
-                let originalSrc = img.src.split('?')[0]; 
-                img.src = originalSrc + '?v=' + new Date().getTime();
+                const originalSrc = img.src.split('?')[0];
+                img.src = originalSrc + '?v=' + Date.now();
             }
         });
-    });
+    })();
+
+    // -----------------------------------------
+    // News/Blog 静态详情页：列表链接带 ?lp=当前页
+    // lp≤1：← Back to News / Back to Blog → news.html / blog.html
+    // lp≥2：← Previous Page → news.html?p=lp / blog.html?p=lp（回到进入详情前的那一页）
+    // （样式沿用页面上的 .unified-back-btn，不在此改字体颜色）
+    // -----------------------------------------
+    (function applyNewsBlogDetailBackFromLp() {
+        const file = (location.pathname.split('/').pop() || '').toLowerCase();
+        const m = file.match(/^(news|blog)-(\d+)\.html$/);
+        if (!m) return;
+
+        const kind = m[1];
+        const listFile = kind === 'news' ? 'news.html' : 'blog.html';
+        const params = new URLSearchParams(window.location.search);
+        const lp = parseInt(params.get('lp'), 10) || 1;
+
+        const a =
+            document.querySelector('.pwa-header-leading .unified-back-btn') ||
+            document.querySelector('.pwa-page-back-row a');
+        if (!a) return;
+
+        a.classList.add('unified-back-btn');
+        a.removeAttribute('id');
+
+        if (lp <= 1) {
+            a.setAttribute('href', listFile);
+            a.innerHTML =
+                '<span class="back-arrow">←</span><span class="back-text">Back to ' +
+                (kind === 'news' ? 'News' : 'Blog') +
+                '</span>';
+        } else {
+            a.setAttribute('href', listFile + '?p=' + encodeURIComponent(String(lp)));
+            a.innerHTML =
+                '<span class="back-arrow">←</span><span class="back-text">Previous Page</span>';
+        }
+    })();
 });
+
+// 同站多页 HTML 跳转：支持时用 View Transition，减轻白屏闪一下（Chrome / 部分 WebView）
+(function setupAppViewTransitions() {
+    if (typeof document.startViewTransition !== 'function') return;
+    document.addEventListener(
+        'click',
+        function (e) {
+            if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+            var a = e.target.closest && e.target.closest('a[href]');
+            if (!a || a.target === '_blank' || a.getAttribute('download')) return;
+            var href = a.getAttribute('href');
+            if (!href || href.charAt(0) === '#' || href.indexOf('javascript:') === 0) return;
+            var url;
+            try {
+                url = new URL(a.href, window.location.href);
+            } catch (err) {
+                return;
+            }
+            if (url.origin !== window.location.origin) return;
+            if (url.pathname === window.location.pathname && url.search === window.location.search) return;
+            e.preventDefault();
+            document.startViewTransition(function () {
+                window.location.href = url.href;
+            });
+        },
+        true
+    );
+})();

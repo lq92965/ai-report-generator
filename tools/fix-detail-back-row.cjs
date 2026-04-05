@@ -1,6 +1,6 @@
 /**
  * Ensures every news-*.html / blog-*.html detail page has exactly
- * one unified back button (matches article.html).
+ * one unified back button in the header .pwa-header-leading (matches article.html).
  * Run: node tools/fix-detail-back-row.cjs
  */
 const fs = require('fs');
@@ -9,13 +9,13 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 
 const BLOCK = {
-  news: `    <div class="pwa-page-back-row max-w-4xl mx-auto px-6 mt-4">
-        <a href="news.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to News</span></a>
-    </div>
+  news: `            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
+                <a href="news.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to News</span></a>
+            </div>
 `,
-  blog: `    <div class="pwa-page-back-row max-w-4xl mx-auto px-6 mt-4">
-        <a href="blog.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Blog</span></a>
-    </div>
+  blog: `            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
+                <a href="blog.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Blog</span></a>
+            </div>
 `,
 };
 
@@ -39,22 +39,37 @@ function fixFile(filePath) {
     changed = true;
   }
 
-  if (!text.includes('pwa-page-back-row')) {
-    const marker = '</header>';
-    const idx = text.indexOf(marker);
-    if (idx === -1) {
-      console.warn('[skip] no </header>:', base);
-      return false;
-    }
-    const insertAt = idx + marker.length;
-    text = text.slice(0, insertAt) + '\n' + BLOCK[kind] + text.slice(insertAt);
+  // Legacy: back row under header
+  if (text.includes('pwa-page-back-row')) {
+    text = text.replace(/<div class="pwa-page-back-row[^"]*"[^>]*>[\s\S]*?<\/div>\s*/g, '');
     changed = true;
+  }
 
-    if (!text.includes('lucide@latest') && !text.includes('lucide.min.js')) {
-      const headEnd = text.indexOf('</head>');
-      if (headEnd !== -1) {
-        text = text.slice(0, headEnd) + LUCIDE_TAG + text.slice(headEnd);
+  const headerMatch = text.match(/<header[\s\S]*?<\/header>/);
+  const hasBackInHeader = headerMatch && headerMatch[0].includes('unified-back-btn');
+
+  if (!hasBackInHeader) {
+    const block = BLOCK[kind];
+    const logoAnchor = /<a[^>]*id="pwa-header-logo"[^>]*>[\s\S]*?<\/a>/;
+    if (logoAnchor.test(text)) {
+      text = text.replace(logoAnchor, block.trimEnd());
+      changed = true;
+    } else {
+      const innerOpen = /<div class="container mx-auto px-6 pwa-header-inner">/;
+      if (innerOpen.test(text)) {
+        text = text.replace(innerOpen, (m) => `${m}\n${block}`);
+        changed = true;
+      } else {
+        console.warn('[skip] no pwa-header-inner / logo to replace:', base);
       }
+    }
+  }
+
+  if (!text.includes('lucide@latest') && !text.includes('lucide.min.js')) {
+    const headEnd = text.indexOf('</head>');
+    if (headEnd !== -1) {
+      text = text.slice(0, headEnd) + LUCIDE_TAG + text.slice(headEnd);
+      changed = true;
     }
   }
 
