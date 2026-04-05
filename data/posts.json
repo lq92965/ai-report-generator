@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775376034934",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-05",
+        "author": "Sarah Jenkins",
+        "excerpt": "We've all been there. It's 4:45 PM on a Friday, and the recurring calendar alert pops up: \"Submit Weekly Status Report.\" A collective groan echoes thr...",
+        "contentFile": "blog-1775376034934.md"
+    },
+    {
         "id": "1775372417963",
         "type": "news",
         "title": "The Unseen Cost of AI's Thirst: Data Centers Strain Global Resources",
