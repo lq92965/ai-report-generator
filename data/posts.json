@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775422814238",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
+        "category": "Tech Radar",
+        "date": "2026-04-05",
+        "author": "Olivia Thorne",
+        "excerpt": "In a move that signals a profound, quiet transformation, major tech firms are now reporting that over 40% of all newly committed code is being authore...",
+        "contentFile": "news-1775422814238.md"
+    },
+    {
         "id": "1775419227011",
         "type": "blog",
         "title": "Drowning in Data? A PM's Guide to Curing Reporting Fatigue",
