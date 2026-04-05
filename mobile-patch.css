@@ -97,3 +97,25 @@
         display: none !important;
     }
 }
+
+/*
+ * News/Blog 详情 / article.html：正文为 main > article.max-w-4xl.mx-auto.px-6，顶栏若仍为 1100px 会显得「贴边」。
+ * Tailwind CDN 常在 style.css 之后注入，会冲掉顶栏 padding；此处用 html 根类 + 最后加载保证压过 Tailwind。
+ * 顶栏与正文列同 max-width（56rem = max-w-4xl）、左右留白与 px-6（1.5rem）一致。
+ */
+html.pwa-nb-detail-layout body.has-app-nav header.main-header.pwa-app-header > .app-header-shell.pwa-header-inner {
+    max-width: min(100%, 56rem) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: calc(1.5rem + env(safe-area-inset-left, 0px)) !important;
+    padding-right: calc(1.5rem + env(safe-area-inset-right, 0px)) !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+}
+
+/* 与顶栏同一套水平留白，避免 style.css 里 20px 与 px-6(1.5rem) 混用差 1～2px */
+html.pwa-nb-detail-layout body.has-app-nav main.flex-grow > article.max-w-4xl.mx-auto {
+    padding-left: calc(1.5rem + env(safe-area-inset-left, 0px)) !important;
+    padding-right: calc(1.5rem + env(safe-area-inset-right, 0px)) !important;
+    box-sizing: border-box !important;
+}

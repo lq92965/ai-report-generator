@@ -1,6 +1,13 @@
 /* 文件名：mobile-patch.js */
 /* 作用：原生 App 文件下载拦截与分享、强刷头像缓存 */
 
+/* News/Blog 静态详情 + article.html：在解析 body 前打上标记，顶栏与 max-w-4xl 正文列对齐（见 mobile-patch.css） */
+(function () {
+    var f = (location.pathname.split('/').pop() || '').toLowerCase();
+    if (!/^(news|blog)-.+\.html$/i.test(f) && f !== 'article.html') return;
+    document.documentElement.classList.add('pwa-nb-detail-layout');
+})();
+
 document.addEventListener('DOMContentLoaded', function() {
     
     // 检查是否在 Capacitor 原生 App 环境中
