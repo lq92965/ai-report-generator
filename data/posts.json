@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775354426474",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-05",
+        "author": "Michael Chen",
+        "excerpt": "As a Product Manager, you live and breathe data. It's the lifeblood of your decisions, the proof of your progress, and the language you use to communi...",
+        "contentFile": "blog-1775354426474.md"
+    },
+    {
         "id": "1775350818375",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
