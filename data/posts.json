@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775365217199",
+        "type": "news",
+        "title": "The Unseen Architects: How AI is Quietly Redesigning the Internet Beneath Our Feet",
+        "category": "Tech Radar",
+        "date": "2026-04-05",
+        "author": "Alex Mercer",
+        "excerpt": "While flashy chatbots and image generators capture headlines, a more profound—and largely invisible—AI transformation is reshaping the very infrastruc...",
+        "contentFile": "news-1775365217199.md"
+    },
+    {
         "id": "1775361625415",
         "type": "blog",
         "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Fatigue",
