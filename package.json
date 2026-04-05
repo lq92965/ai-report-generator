@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "build": "echo 'Build step not required, skipping...'"
+    "build": "echo 'Build step not required, skipping...'",
+    "build:www": "node build_www.cjs",
+    "cap:sync:android": "npx cap sync android",
+    "android:web": "node build_www.cjs && npx cap sync android"
   },
   "dependencies": {
     "@capacitor/android": "^8.3.0",
