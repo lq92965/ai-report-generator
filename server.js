@@ -133,10 +133,23 @@ app.get('/api/templates', async (req, res) => {
     res.json(templates);
 });
 
+/** OAuth state: native Capacitor app must finish on custom URL scheme (see oauth-native-bridge.html + App.addListener('appUrlOpen')). */
+const GOOGLE_OAUTH_STATE_WEB = 'web';
+const GOOGLE_OAUTH_STATE_CAPACITOR = 'capacitor_native_v1';
+
 // Google Auth Redirect
 app.get('/auth/google', (req, res) => {
-    const redirectUri = 'https://api.goreportify.com/api/auth/google/callback'; 
-    const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=email profile openid`;
+    const redirectUri = 'https://api.goreportify.com/api/auth/google/callback';
+    const nativeApp =
+        req.query.native_app === '1' ||
+        req.query.app === '1' ||
+        req.query.capacitor === '1';
+    const state = nativeApp ? GOOGLE_OAUTH_STATE_CAPACITOR : GOOGLE_OAUTH_STATE_WEB;
+    const url =
+        `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}` +
+        `&redirect_uri=${encodeURIComponent(redirectUri)}` +
+        `&response_type=code&scope=${encodeURIComponent('email profile openid')}` +
+        `&state=${encodeURIComponent(state)}`;
     res.redirect(url);
 });
 
@@ -211,7 +224,29 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
 
 // Google Callback
 app.get('/api/auth/google/callback', async (req, res) => {
+    const state = req.query.state || '';
+    const useNativeReturn = state === GOOGLE_OAUTH_STATE_CAPACITOR;
+
+    if (req.query.error) {
+        const msg = req.query.error_description || req.query.error || 'access_denied';
+        if (useNativeReturn) {
+            return res.redirect(
+                `${FRONTEND_BASE}/oauth-native-bridge.html?error=${encodeURIComponent(msg)}`
+            );
+        }
+        return res.redirect(`${FRONTEND_BASE}/?error=google_login_failed`);
+    }
+
     const code = req.query.code;
+    if (!code) {
+        if (useNativeReturn) {
+            return res.redirect(
+                `${FRONTEND_BASE}/oauth-native-bridge.html?error=${encodeURIComponent('missing_code')}`
+            );
+        }
+        return res.redirect(`${FRONTEND_BASE}/?error=google_login_failed`);
+    }
+
     try {
         const tokenRes = await axios.post('https://oauth2.googleapis.com/token', {
             client_id: GOOGLE_CLIENT_ID, client_secret: GOOGLE_CLIENT_SECRET,
@@ -240,9 +275,19 @@ app.get('/api/auth/google/callback', async (req, res) => {
         }
 
         const token = jwt.sign({ userId: user._id, plan: user.plan }, JWT_SECRET, { expiresIn: '7d' });
+        if (useNativeReturn) {
+            return res.redirect(
+                `${FRONTEND_BASE}/oauth-native-bridge.html?token=${encodeURIComponent(token)}`
+            );
+        }
         res.redirect(`${FRONTEND_BASE}/?token=${encodeURIComponent(token)}`);
     } catch (error) { 
         console.error("Google Login Error:", error);
+        if (useNativeReturn) {
+            return res.redirect(
+                `${FRONTEND_BASE}/oauth-native-bridge.html?error=${encodeURIComponent('google_login_failed')}`
+            );
+        }
         res.redirect(`${FRONTEND_BASE}/?error=google_login_failed`); 
     }
 });
