@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775455225953",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-06",
+        "author": "Alex Mercer",
+        "excerpt": "We've all been there. It's Sunday night, and a familiar dread creeps in. It's not about the meetings or the deadlines, but about the soul-crushing tas...",
+        "contentFile": "blog-1775455225953.md"
+    },
+    {
         "id": "1775451617420",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
