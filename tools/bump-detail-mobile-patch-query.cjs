@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const MPATCH_VER = '10';
+const MPATCH_VER = '11';
 
 function shouldPatch(name) {
     return /^(news|blog)-.+\.html$/i.test(name) || name.toLowerCase() === 'article.html';

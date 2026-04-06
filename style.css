@@ -2144,13 +2144,7 @@ header.main-header.pwa-app-header .pwa-header-leading {
     max-width: min(78%, 360px) !important;
 }
 
-/* News/Blog 详情：正文常用 px-6(24px)，与顶栏 20px 不一致时显得顶栏「更宽」— 与首页顶栏 gutter 对齐 */
-@media screen and (max-width: 768px) {
-    body.has-app-nav main article.max-w-4xl.mx-auto {
-        padding-left: calc(var(--app-header-pad-x-mobile) + env(safe-area-inset-left, 0px)) !important;
-        padding-right: calc(var(--app-header-pad-x-mobile) + env(safe-area-inset-right, 0px)) !important;
-    }
-}
+/* News/Blog 详情正文左右留白：见 mobile-patch.css（与 --app-header-pad-x-mobile 一致） */
 
 .pwa-header-inner .logo {
     flex-shrink: 0;

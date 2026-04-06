@@ -1,5 +1,5 @@
 /* Service Worker — Reportify PWA (cache shell + offline fallback) */
-const CACHE_NAME = 'reportify-pwa-v4-www-pipeline';
+const CACHE_NAME = 'reportify-pwa-v6-generate-native-select';
 const PRECACHE_URLS = [
   './',
   './index.html',
@@ -8,6 +8,8 @@ const PRECACHE_URLS = [
   './contact.html',
   './usage.html',
   './style.css',
+  './mobile-patch.css',
+  './mobile-patch.js',
   './pwa-nav.js',
   './manifest.json',
   './icons/icon-192.png',

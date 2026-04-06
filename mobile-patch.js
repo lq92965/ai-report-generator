@@ -166,3 +166,255 @@ document.addEventListener('DOMContentLoaded', function() {
         true
     );
 })();
+
+/**
+ * Generate 页（移动端）：原生 <select> 在 WebView 中会弹出系统大字号列表，无法用 CSS 美化。
+ * 在 generate.html + 窄屏下用自定义底部弹层替代点击，仍同步真实 select 的值与 change 事件。
+ */
+(function setupPwaGenerateCustomSelects() {
+    var SELECT_IDS = ['template', 'detail-level', 'role', 'tone', 'language'];
+
+    function isGeneratePage() {
+        var f = (location.pathname || '').replace(/^.*[\\/]/, '').split('?')[0].toLowerCase();
+        return f === 'generate.html';
+    }
+
+    function isNarrow() {
+        return window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+    }
+
+    function getLabelForSelect(selectEl) {
+        var id = selectEl.id;
+        var lab = document.querySelector('label[for="' + id + '"]');
+        return lab ? lab.textContent.replace(/\s+/g, ' ').trim() : 'Choose';
+    }
+
+    function refreshTrigger(btn, selectEl) {
+        var opt = selectEl.options[selectEl.selectedIndex];
+        var t = opt ? opt.textContent.trim() : '';
+        btn.textContent = t || '—';
+    }
+
+    function flattenOptions(selectEl) {
+        var out = [];
+        var i;
+        var node;
+        var j;
+        var o;
+        for (i = 0; i < selectEl.children.length; i++) {
+            node = selectEl.children[i];
+            if (node.tagName === 'OPTGROUP') {
+                out.push({ kind: 'group', label: node.label || '' });
+                for (j = 0; j < node.children.length; j++) {
+                    o = node.children[j];
+                    if (o.tagName === 'OPTION') {
+                        out.push({
+                            kind: 'option',
+                            value: o.value,
+                            text: o.textContent,
+                            disabled: o.disabled
+                        });
+                    }
+                }
+            } else if (node.tagName === 'OPTION') {
+                out.push({
+                    kind: 'option',
+                    value: node.value,
+                    text: node.textContent,
+                    disabled: node.disabled
+                });
+            }
+        }
+        return out;
+    }
+
+    function ensureModal() {
+        var el = document.getElementById('pwa-gen-select-overlay');
+        if (el) return el;
+        el = document.createElement('div');
+        el.id = 'pwa-gen-select-overlay';
+        el.className = 'pwa-gen-select-overlay';
+        el.setAttribute('hidden', '');
+        el.innerHTML =
+            '<div class="pwa-gen-select-backdrop" data-close="1"></div>' +
+            '<div class="pwa-gen-select-sheet" role="dialog" aria-modal="true">' +
+            '<div class="pwa-gen-select-sheet-head">' +
+            '<button type="button" class="pwa-gen-select-cancel" data-close="1" aria-label="Close">Cancel</button>' +
+            '<span class="pwa-gen-select-title"></span>' +
+            '<span class="pwa-gen-select-head-spacer"></span>' +
+            '</div>' +
+            '<div class="pwa-gen-select-list"></div>' +
+            '</div>';
+        document.body.appendChild(el);
+        el.addEventListener('click', function (e) {
+            var t = e.target;
+            if (t && (t.dataset && t.dataset.close)) closeModal();
+        });
+        return el;
+    }
+
+    var activeSelect = null;
+
+    function closeModal() {
+        var el = document.getElementById('pwa-gen-select-overlay');
+        if (activeSelect) {
+            var w0 = activeSelect.closest('.pwa-gen-select');
+            var b0 = w0 && w0.querySelector('.pwa-gen-select-fake');
+            if (b0) b0.setAttribute('aria-expanded', 'false');
+        }
+        if (el) {
+            el.classList.remove('is-open');
+            el.setAttribute('hidden', '');
+        }
+        activeSelect = null;
+        document.body.classList.remove('pwa-gen-select-open');
+    }
+
+    function openModal(selectEl) {
+        var overlay = ensureModal();
+        var title = overlay.querySelector('.pwa-gen-select-title');
+        var list = overlay.querySelector('.pwa-gen-select-list');
+        title.textContent = getLabelForSelect(selectEl);
+        list.innerHTML = '';
+        activeSelect = selectEl;
+
+        var flat = flattenOptions(selectEl);
+        var currentVal = selectEl.value;
+        var k;
+        var row;
+        var radio;
+        var label;
+        var item;
+
+        for (k = 0; k < flat.length; k++) {
+            item = flat[k];
+            if (item.kind === 'group') {
+                row = document.createElement('div');
+                row.className = 'pwa-gen-select-group';
+                row.textContent = item.label;
+                list.appendChild(row);
+            } else {
+                row = document.createElement('button');
+                row.type = 'button';
+                row.className = 'pwa-gen-select-row';
+                if (item.disabled) row.classList.add('is-disabled');
+                if (String(item.value) === String(currentVal) && !item.disabled) {
+                    row.classList.add('is-selected');
+                }
+                label = document.createElement('span');
+                label.className = 'pwa-gen-select-row-text';
+                label.textContent = item.text.trim();
+                radio = document.createElement('span');
+                radio.className = 'pwa-gen-select-radio';
+                radio.setAttribute('aria-hidden', 'true');
+                row.appendChild(label);
+                row.appendChild(radio);
+
+                if (!item.disabled) {
+                    (function (val) {
+                        row.addEventListener('click', function () {
+                            if (!activeSelect) return;
+                            activeSelect.value = val;
+                            activeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                            var wrap = activeSelect.closest('.pwa-gen-select');
+                            if (wrap) {
+                                var b = wrap.querySelector('.pwa-gen-select-fake');
+                                if (b) refreshTrigger(b, activeSelect);
+                            }
+                            closeModal();
+                        });
+                    })(item.value);
+                } else {
+                    row.disabled = true;
+                }
+                list.appendChild(row);
+            }
+        }
+
+        overlay.removeAttribute('hidden');
+        void overlay.offsetWidth;
+        overlay.classList.add('is-open');
+        document.body.classList.add('pwa-gen-select-open');
+
+        var wOpen = selectEl.closest('.pwa-gen-select');
+        var bOpen = wOpen && wOpen.querySelector('.pwa-gen-select-fake');
+        if (bOpen) bOpen.setAttribute('aria-expanded', 'true');
+
+        requestAnimationFrame(function () {
+            var selRow = list.querySelector('.pwa-gen-select-row.is-selected');
+            if (selRow && selRow.scrollIntoView) selRow.scrollIntoView({ block: 'nearest' });
+        });
+    }
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && document.body.classList.contains('pwa-gen-select-open')) {
+            e.preventDefault();
+            closeModal();
+        }
+    });
+
+    function wireSelect(selectEl) {
+        if (selectEl.closest('.pwa-gen-select')) return;
+        var wrap = document.createElement('div');
+        wrap.className = 'pwa-gen-select';
+        var parent = selectEl.parentNode;
+        parent.insertBefore(wrap, selectEl);
+        wrap.appendChild(selectEl);
+
+        selectEl.classList.add('pwa-gen-select-native');
+
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'pwa-gen-select-fake';
+        btn.setAttribute('aria-haspopup', 'listbox');
+        btn.setAttribute('aria-expanded', 'false');
+        var tid = selectEl.id + '-pwa-trigger';
+        btn.id = tid;
+
+        var lab = document.querySelector('label[for="' + selectEl.id + '"]');
+        if (lab) lab.setAttribute('for', tid);
+
+        selectEl.setAttribute('tabindex', '-1');
+        selectEl.setAttribute('aria-hidden', 'true');
+
+        refreshTrigger(btn, selectEl);
+        wrap.appendChild(btn);
+
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openModal(selectEl);
+        });
+
+        selectEl.addEventListener('change', function () {
+            refreshTrigger(btn, selectEl);
+        });
+    }
+
+    function init() {
+        if (!isGeneratePage() || !isNarrow()) return;
+        var section = document.getElementById('generator');
+        if (!section) return;
+
+        var i;
+        var sel;
+        for (i = 0; i < SELECT_IDS.length; i++) {
+            sel = document.getElementById(SELECT_IDS[i]);
+            if (sel && sel.tagName === 'SELECT' && section.contains(sel)) wireSelect(sel);
+        }
+
+        var templateEl = document.getElementById('template');
+        if (templateEl && window.MutationObserver) {
+            var obs = new MutationObserver(function () {
+                var w = templateEl.closest('.pwa-gen-select');
+                var b = w && w.querySelector('.pwa-gen-select-fake');
+                if (b) refreshTrigger(b, templateEl);
+            });
+            obs.observe(templateEl, { childList: true, subtree: true });
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(init, 0);
+    });
+})();
