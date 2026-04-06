@@ -404,6 +404,13 @@ function setupCapacitorOAuthBridge() {
             if (res && res.url) applyGoogleTokenFromDeepLink(res.url);
         })
         .catch(() => {});
+    App.addListener('resume', () => {
+        App.getLaunchUrl()
+            .then((res) => {
+                if (res && res.url) applyGoogleTokenFromDeepLink(res.url);
+            })
+            .catch(() => {});
+    });
 }
 
 function handleGoogleCallback() {

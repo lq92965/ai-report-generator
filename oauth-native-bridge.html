@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!-- After Google OAuth for the native app, API redirects here; JS opens com.crickettechnology.reportifyai://oauth?token=… -->
-<!-- Android: add intent-filter (scheme + host oauth) on MainActivity — see Capacitor deep linking docs. -->
+<!-- OAuth 完成后打开 App：Android Chrome 常拦截自定义 scheme 的自动跳转，需 intent:// + 用户点击按钮。 -->
+<!-- 原生工程 MainActivity 需注册 scheme=com.crickettechnology.reportifyai host=oauth -->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -8,35 +8,82 @@
   <meta name="robots" content="noindex,nofollow" />
   <title>Signing in…</title>
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding: 24px; color: #374151; text-align: center; }
-    p { margin: 0; font-size: 15px; line-height: 1.5; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      padding: 24px 20px 40px;
+      color: #374151;
+      text-align: center;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+    #msg { font-size: 15px; line-height: 1.55; margin: 0 0 20px; }
+    #open-app {
+      display: inline-block;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px 20px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      background: #2563eb;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      text-decoration: none;
+      line-height: 1.3;
+    }
+    #open-app:active { background: #1d4ed8; }
+    .hint { font-size: 13px; color: #6b7280; margin-top: 18px; line-height: 1.5; }
   </style>
 </head>
 <body>
   <p id="msg">Opening Reportify AI…</p>
+  <a id="open-app" href="#" role="button">Open Reportify AI</a>
+  <p class="hint">If the app did not open automatically, tap the button above — then you can close this tab.</p>
   <script>
 (function () {
-  var scheme = 'com.crickettechnology.reportifyai://oauth';
+  var PACKAGE = 'com.crickettechnology.reportifyai';
+  var SCHEME = 'com.crickettechnology.reportifyai';
   var p = new URLSearchParams(window.location.search);
   var token = p.get('token');
   var err = p.get('error');
-  var q = [];
-  if (token) q.push('token=' + encodeURIComponent(token));
-  else if (err) q.push('error=' + encodeURIComponent(err));
-  else {
-    document.getElementById('msg').textContent = 'Invalid sign-in callback.';
+  var msgEl = document.getElementById('msg');
+  var btn = document.getElementById('open-app');
+
+  if (!token && !err) {
+    msgEl.textContent = 'Invalid sign-in callback.';
+    btn.style.display = 'none';
     return;
   }
-  var target = scheme + '?' + q.join('&');
-  try {
-    window.location.replace(target);
-  } catch (e) {
-    document.getElementById('msg').textContent = 'Could not return to the app. Please open Reportify AI from your home screen.';
+
+  var qs = token ? ('token=' + encodeURIComponent(token)) : ('error=' + encodeURIComponent(err));
+  var customUrl = SCHEME + '://oauth?' + qs;
+  var isAndroid = /Android/i.test(navigator.userAgent);
+
+  function androidIntentUrl() {
+    return 'intent://oauth?' + qs + '#Intent;scheme=' + SCHEME + ';package=' + PACKAGE + ';end';
   }
+
+  function openIntoApp() {
+    if (isAndroid) {
+      window.location.href = androidIntentUrl();
+    } else {
+      window.location.href = customUrl;
+    }
+  }
+
+  btn.href = isAndroid ? androidIntentUrl() : customUrl;
+  btn.addEventListener('click', function (e) {
+    e.preventDefault();
+    openIntoApp();
+  });
+
+  /* 自动尝试一次（可能被 Chrome 拦截；按钮为主） */
+  setTimeout(openIntoApp, 100);
   setTimeout(function () {
-    var el = document.getElementById('msg');
-    if (el) el.textContent = 'You can close this tab and return to the Reportify AI app.';
-  }, 1200);
+    msgEl.textContent = 'Tap “Open Reportify AI” to finish signing in.';
+  }, 600);
 })();
   </script>
 </body>
