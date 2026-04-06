@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775484027295",
+        "type": "blog",
+        "title": "Reporting on Empty: How to Beat Reporting Fatigue and Make Your Data Matter",
+        "category": "Deep Insights",
+        "date": "2026-04-06",
+        "author": "Sarah Jenkins",
+        "excerpt": "We’ve all been there. It’s 4 PM on a Friday, and instead of wrapping up strategic work, you’re stuck wrangling spreadsheets. You're pulling the same d...",
+        "contentFile": "blog-1775484027295.md"
+    },
+    {
         "id": "1775480412937",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
