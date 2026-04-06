@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775433627366",
+        "type": "blog",
+        "title": "Taming the Reporting Beast: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-06",
+        "author": "Alex Mercer",
+        "excerpt": "Let's be honest. You've felt it. That sinking feeling when a stakeholder asks, \"Can you just pull a quick report on...\" You know it's never quick, and...",
+        "contentFile": "blog-1775433627366.md"
+    },
+    {
         "id": "1775430016103",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
