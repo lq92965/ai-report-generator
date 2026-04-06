@@ -167,6 +167,38 @@ document.addEventListener('DOMContentLoaded', function() {
     );
 })();
 
+/** 拦截内联 onclick 的 Google 登录按钮，在 Capacitor 中附加 ?native_app=1（script.js 的 getGoogleAuthStartUrl 优先） */
+(function interceptGoogleAuthInlineClicks() {
+    function urlForGoogleAuth() {
+        if (typeof window.getGoogleAuthStartUrl === 'function') return window.getGoogleAuthStartUrl();
+        var base = 'https://api.goreportify.com/auth/google';
+        try {
+            if (window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()) {
+                return base + '?native_app=1';
+            }
+        } catch (err) {}
+        return base;
+    }
+    document.addEventListener(
+        'click',
+        function (e) {
+            if (e.button !== 0 || e.defaultPrevented) return;
+            var el = e.target && e.target.closest && e.target.closest('button, a');
+            if (!el) return;
+            var oc = el.getAttribute && el.getAttribute('onclick');
+            var href = el.getAttribute && el.getAttribute('href');
+            var hitsGoogle =
+                (oc && oc.indexOf('auth/google') !== -1) ||
+                (href && href.indexOf('auth/google') !== -1 && href.indexOf('api.goreportify.com') !== -1);
+            if (!hitsGoogle) return;
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            window.location.href = urlForGoogleAuth();
+        },
+        true
+    );
+})();
+
 /**
  * Generate 页（移动端）：原生 <select> 在 WebView 中会弹出系统大字号列表，无法用 CSS 美化。
  * 在 generate.html + 窄屏下用自定义底部弹层替代点击，仍同步真实 select 的值与 change 事件。

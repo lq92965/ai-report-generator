@@ -5,6 +5,21 @@ const API_BASE_URL = 'https://api.goreportify.com';
 /** Always relative — never assign window.location to an absolute production URL (preserves PWA shell). */
 const HOME_REL = './index.html';
 
+/** Google OAuth: native app uses ?native_app=1 + oauth-native-bridge.html → custom scheme (see server.js). */
+window.getGoogleAuthStartUrl = function () {
+    const base = `${API_BASE_URL}/auth/google`;
+    try {
+        if (
+            window.Capacitor &&
+            typeof window.Capacitor.isNativePlatform === 'function' &&
+            window.Capacitor.isNativePlatform()
+        ) {
+            return `${base}?native_app=1`;
+        }
+    } catch (e) { /* noop */ }
+    return base;
+};
+
 
 // 全局状态
 let allTemplates = [];
@@ -171,6 +186,7 @@ window.closeModal = function() {
 
 // --- 4. 初始化流程 (Main Logic) ---
 document.addEventListener('DOMContentLoaded', async () => {
+    setupCapacitorOAuthBridge();
     handleGoogleCallback();
     await fetchUserProfile();
     
@@ -341,6 +357,55 @@ document.addEventListener('DOMContentLoaded', async () => {
 // =================================================
 
 // --- 模块 A: Google 回调 ---
+/** Capacitor: server redirects to oauth-native-bridge.html → com.crickettechnology.reportifyai://oauth?token=… */
+function applyGoogleTokenFromDeepLink(urlStr) {
+    if (!urlStr || typeof urlStr !== 'string') return false;
+    if (urlStr.indexOf('com.crickettechnology.reportifyai://') !== 0) return false;
+    let u;
+    try {
+        u = new URL(urlStr);
+    } catch (e) {
+        return false;
+    }
+    if (u.hostname !== 'oauth') return false;
+    const err = u.searchParams.get('error');
+    const token = u.searchParams.get('token');
+    if (err) {
+        showToast('Google Login Failed', 'error');
+        return true;
+    }
+    if (token) {
+        localStorage.setItem('token', token);
+        window.history.replaceState({}, document.title, window.location.pathname);
+        showToast('Login successful!', 'success');
+        ensurePwaShell();
+        fetchUserProfile();
+        if (typeof closeModal === 'function') closeModal();
+        return true;
+    }
+    return false;
+}
+
+function setupCapacitorOAuthBridge() {
+    if (typeof window.Capacitor === 'undefined' || !window.Capacitor.isNativePlatform()) return;
+    let App = window.Capacitor.Plugins && window.Capacitor.Plugins.App;
+    if (!App && typeof window.CapacitorPlugins !== 'undefined') {
+        App = window.CapacitorPlugins.App;
+    }
+    if (!App || typeof App.addListener !== 'function') {
+        console.warn('[Reportify] Capacitor App plugin missing. Run: npx cap sync android');
+        return;
+    }
+    App.addListener('appUrlOpen', (data) => {
+        if (data && data.url) applyGoogleTokenFromDeepLink(data.url);
+    });
+    App.getLaunchUrl()
+        .then((res) => {
+            if (res && res.url) applyGoogleTokenFromDeepLink(res.url);
+        })
+        .catch(() => {});
+}
+
 function handleGoogleCallback() {
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = urlParams.get('token');
@@ -558,7 +623,10 @@ function setupAuthUI() {
                 e.stopPropagation();
                 const originalText = newBtn.innerHTML;
                 newBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
-                window.location.href = `${API_BASE_URL}/auth/google`;
+                window.location.href =
+                    typeof window.getGoogleAuthStartUrl === 'function'
+                        ? window.getGoogleAuthStartUrl()
+                        : `${API_BASE_URL}/auth/google`;
             });
         }
     });

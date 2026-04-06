@@ -1,9 +1,10 @@
 /* Service Worker — Reportify PWA (cache shell + offline fallback) */
-const CACHE_NAME = 'reportify-pwa-v6-generate-native-select';
+const CACHE_NAME = 'reportify-pwa-v7-oauth-native-bridge';
 const PRECACHE_URLS = [
   './',
   './index.html',
   './generate.html',
+  './oauth-native-bridge.html',
   './account.html',
   './contact.html',
   './usage.html',

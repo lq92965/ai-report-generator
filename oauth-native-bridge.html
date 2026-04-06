@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!-- After Google OAuth for the native app, API redirects here; JS opens com.crickettechnology.reportifyai://oauth?token=… -->
+<!-- Android: add intent-filter (scheme + host oauth) on MainActivity — see Capacitor deep linking docs. -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Signing in…</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding: 24px; color: #374151; text-align: center; }
+    p { margin: 0; font-size: 15px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <p id="msg">Opening Reportify AI…</p>
+  <script>
+(function () {
+  var scheme = 'com.crickettechnology.reportifyai://oauth';
+  var p = new URLSearchParams(window.location.search);
+  var token = p.get('token');
+  var err = p.get('error');
+  var q = [];
+  if (token) q.push('token=' + encodeURIComponent(token));
+  else if (err) q.push('error=' + encodeURIComponent(err));
+  else {
+    document.getElementById('msg').textContent = 'Invalid sign-in callback.';
+    return;
+  }
+  var target = scheme + '?' + q.join('&');
+  try {
+    window.location.replace(target);
+  } catch (e) {
+    document.getElementById('msg').textContent = 'Could not return to the app. Please open Reportify AI from your home screen.';
+  }
+  setTimeout(function () {
+    var el = document.getElementById('msg');
+    if (el) el.textContent = 'You can close this tab and return to the Reportify AI app.';
+  }, 1200);
+})();
+  </script>
+</body>
+</html>
