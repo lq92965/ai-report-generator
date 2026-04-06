@@ -78,6 +78,11 @@
         box-shadow: none !important;
     }
 
+    /* 顶栏内返回：禁止下边距把整行顶栏撑高（全局 .unified-back-btn 的 6px 仅用于非顶栏场景） */
+    header.main-header.pwa-app-header .pwa-header-leading .unified-back-btn {
+        margin-bottom: 0 !important;
+    }
+
     .unified-back-btn .back-arrow {
         font-size: 0.75rem !important;
         font-weight: 400 !important;
@@ -102,18 +107,38 @@
  * News/Blog 详情 / article.html：顶栏与 max-w-4xl 正文列对齐。
  * JS 打的 html.pwa-nb-detail-layout 单独一条规则，避免与 :has() 写在同一逗号选择器里导致旧内核整段丢弃。
  */
+/* 与首页 style.css --app-header-pad-x-mobile（20px）一致，并与正文 max-w-4xl 列对齐 */
 html.pwa-nb-detail-layout body.has-app-nav header.main-header.pwa-app-header > .app-header-shell.pwa-header-inner {
     max-width: min(100%, 56rem) !important;
     margin-left: auto !important;
     margin-right: auto !important;
-    padding-left: calc(1.5rem + env(safe-area-inset-left, 0px)) !important;
-    padding-right: calc(1.5rem + env(safe-area-inset-right, 0px)) !important;
+    padding-left: calc(var(--app-header-pad-x-mobile, 20px) + env(safe-area-inset-left, 0px)) !important;
+    padding-right: calc(var(--app-header-pad-x-mobile, 20px) + env(safe-area-inset-right, 0px)) !important;
     box-sizing: border-box !important;
     min-width: 0 !important;
 }
 
 html.pwa-nb-detail-layout body.has-app-nav main.flex-grow > article.max-w-4xl.mx-auto {
-    padding-left: calc(1.5rem + env(safe-area-inset-left, 0px)) !important;
-    padding-right: calc(1.5rem + env(safe-area-inset-right, 0px)) !important;
+    padding-left: calc(var(--app-header-pad-x-mobile, 20px) + env(safe-area-inset-left, 0px)) !important;
+    padding-right: calc(var(--app-header-pad-x-mobile, 20px) + env(safe-area-inset-right, 0px)) !important;
     box-sizing: border-box !important;
+}
+
+/* JS 未打上 html 类时兜底（Chrome/WebView 105+） */
+@supports selector(:has(.pwa-nb-detail-layout-check)) {
+    body.has-app-nav:has(main.flex-grow > article.max-w-4xl.mx-auto) header.main-header.pwa-app-header > .app-header-shell.pwa-header-inner {
+        max-width: min(100%, 56rem) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: calc(var(--app-header-pad-x-mobile, 20px) + env(safe-area-inset-left, 0px)) !important;
+        padding-right: calc(var(--app-header-pad-x-mobile, 20px) + env(safe-area-inset-right, 0px)) !important;
+        box-sizing: border-box !important;
+        min-width: 0 !important;
+    }
+
+    body.has-app-nav:has(main.flex-grow > article.max-w-4xl.mx-auto) main.flex-grow > article.max-w-4xl.mx-auto {
+        padding-left: calc(var(--app-header-pad-x-mobile, 20px) + env(safe-area-inset-left, 0px)) !important;
+        padding-right: calc(var(--app-header-pad-x-mobile, 20px) + env(safe-area-inset-right, 0px)) !important;
+        box-sizing: border-box !important;
+    }
 }
