@@ -357,8 +357,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 // =================================================
 
 // --- 模块 A: Google 回调 ---
-/** Capacitor: server redirects to oauth-native-bridge.html → com.crickettechnology.reportifyai://oauth?token=… */
-function applyGoogleTokenFromDeepLink(urlStr) {
+/** Capacitor: bridge page → com.crickettechnology.reportifyai://oauth?bridge=… → exchange JWT via /api/oauth/bridge-token */
+async function applyGoogleTokenFromDeepLink(urlStr) {
     if (!urlStr || typeof urlStr !== 'string') return false;
     if (urlStr.indexOf('com.crickettechnology.reportifyai://') !== 0) return false;
     let u;
@@ -370,7 +370,29 @@ function applyGoogleTokenFromDeepLink(urlStr) {
     if (u.hostname !== 'oauth') return false;
     const err = u.searchParams.get('error');
     const token = u.searchParams.get('token');
+    const bridge = u.searchParams.get('bridge');
     if (err) {
+        showToast('Google Login Failed', 'error');
+        return true;
+    }
+    if (bridge) {
+        try {
+            const res = await fetch(
+                `${API_BASE_URL}/api/oauth/bridge-token?bridge=${encodeURIComponent(bridge)}`
+            );
+            const data = await res.json();
+            if (data && data.token) {
+                localStorage.setItem('token', data.token);
+                window.history.replaceState({}, document.title, window.location.pathname);
+                showToast('Login successful!', 'success');
+                ensurePwaShell();
+                await fetchUserProfile();
+                if (typeof closeModal === 'function') closeModal();
+                return true;
+            }
+        } catch (e) {
+            console.error('OAuth bridge exchange failed', e);
+        }
         showToast('Google Login Failed', 'error');
         return true;
     }
@@ -379,7 +401,7 @@ function applyGoogleTokenFromDeepLink(urlStr) {
         window.history.replaceState({}, document.title, window.location.pathname);
         showToast('Login successful!', 'success');
         ensurePwaShell();
-        fetchUserProfile();
+        await fetchUserProfile();
         if (typeof closeModal === 'function') closeModal();
         return true;
     }
@@ -397,17 +419,17 @@ function setupCapacitorOAuthBridge() {
         return;
     }
     App.addListener('appUrlOpen', (data) => {
-        if (data && data.url) applyGoogleTokenFromDeepLink(data.url);
+        if (data && data.url) void applyGoogleTokenFromDeepLink(data.url);
     });
     App.getLaunchUrl()
         .then((res) => {
-            if (res && res.url) applyGoogleTokenFromDeepLink(res.url);
+            if (res && res.url) void applyGoogleTokenFromDeepLink(res.url);
         })
         .catch(() => {});
     App.addListener('resume', () => {
         App.getLaunchUrl()
             .then((res) => {
-                if (res && res.url) applyGoogleTokenFromDeepLink(res.url);
+                if (res && res.url) void applyGoogleTokenFromDeepLink(res.url);
             })
             .catch(() => {});
     });

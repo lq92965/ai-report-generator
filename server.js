@@ -11,6 +11,7 @@ import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { Resend } from 'resend';
+import crypto from 'crypto';
 
 // Path definitions
 const __filename = fileURLToPath(import.meta.url);
@@ -137,6 +138,16 @@ app.get('/api/templates', async (req, res) => {
 const GOOGLE_OAUTH_STATE_WEB = 'web';
 const GOOGLE_OAUTH_STATE_CAPACITOR = 'capacitor_native_v1';
 
+/** Short-lived bridge id → JWT so intent:// URLs stay small (Chrome often fails on very long custom-scheme links). */
+const oauthBridgeStore = new Map();
+function createOAuthBridgeEntry(jwt) {
+    const id = crypto.randomBytes(16).toString('base64url');
+    const exp = Date.now() + 5 * 60 * 1000;
+    oauthBridgeStore.set(id, { token: jwt, exp });
+    setTimeout(() => oauthBridgeStore.delete(id), 5 * 60 * 1000);
+    return id;
+}
+
 // Google Auth Redirect
 app.get('/auth/google', (req, res) => {
     const redirectUri = 'https://api.goreportify.com/api/auth/google/callback';
@@ -151,6 +162,20 @@ app.get('/auth/google', (req, res) => {
         `&response_type=code&scope=${encodeURIComponent('email profile openid')}` +
         `&state=${encodeURIComponent(state)}`;
     res.redirect(url);
+});
+
+/** App exchanges bridge id (from deep link) for JWT once; id is removed after use. */
+app.get('/api/oauth/bridge-token', (req, res) => {
+    const id = req.query.bridge;
+    if (!id || typeof id !== 'string' || id.length > 128) {
+        return res.status(400).json({ message: 'invalid' });
+    }
+    const rec = oauthBridgeStore.get(id);
+    if (!rec || rec.exp < Date.now()) {
+        return res.status(400).json({ message: 'expired' });
+    }
+    oauthBridgeStore.delete(id);
+    res.json({ token: rec.token });
 });
 
 // Usage Stats API
@@ -276,8 +301,9 @@ app.get('/api/auth/google/callback', async (req, res) => {
 
         const token = jwt.sign({ userId: user._id, plan: user.plan }, JWT_SECRET, { expiresIn: '7d' });
         if (useNativeReturn) {
+            const bridgeId = createOAuthBridgeEntry(token);
             return res.redirect(
-                `${FRONTEND_BASE}/oauth-native-bridge.html?token=${encodeURIComponent(token)}`
+                `${FRONTEND_BASE}/oauth-native-bridge.html?bridge=${encodeURIComponent(bridgeId)}`
             );
         }
         res.redirect(`${FRONTEND_BASE}/?token=${encodeURIComponent(token)}`);
