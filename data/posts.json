@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775494821812",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
+        "category": "Tech Radar",
+        "date": "2026-04-06",
+        "author": "David Sterling",
+        "excerpt": "In a move that signals a profound, yet often unseen, transformation, major tech firms are quietly integrating artificial intelligence not just into th...",
+        "contentFile": "news-1775494821812.md"
+    },
+    {
         "id": "1775491227048",
         "type": "blog",
         "title": "Beyond the Bar Chart: A PM's Guide to Conquering Reporting Fatigue",
