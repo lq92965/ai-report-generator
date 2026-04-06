@@ -1,5 +1,5 @@
 /* Service Worker — Reportify PWA (cache shell + offline fallback) */
-const CACHE_NAME = 'reportify-pwa-v7-oauth-native-bridge';
+const CACHE_NAME = 'reportify-pwa-v8-oauth-bridge-intent-button';
 const PRECACHE_URLS = [
   './',
   './index.html',
