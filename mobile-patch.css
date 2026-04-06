@@ -142,3 +142,242 @@ html.pwa-nb-detail-layout body.has-app-nav main.flex-grow > article.max-w-4xl.mx
         box-sizing: border-box !important;
     }
 }
+
+/* --- Generate 页：移动端自定义选择弹层（替代系统 select 大字号列表）--- */
+@media (max-width: 768px) {
+    .pwa-gen-select {
+        position: relative;
+        width: 100%;
+    }
+
+    .pwa-gen-select-native {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+
+    .pwa-gen-select-fake {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        width: 100%;
+        min-height: 44px;
+        padding: 10px 12px;
+        margin: 0;
+        text-align: left;
+        font-family: inherit;
+        font-size: 0.9375rem; /* 15px — 与表单标签/正文层级一致 */
+        font-weight: 400;
+        line-height: 1.35;
+        color: #1f2937;
+        background: #fff;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        box-shadow: none;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .pwa-gen-select-fake::after {
+        content: '';
+        width: 0.45rem;
+        height: 0.45rem;
+        border-right: 2px solid #9ca3af;
+        border-bottom: 2px solid #9ca3af;
+        transform: rotate(45deg);
+        margin-top: -2px;
+        flex-shrink: 0;
+        opacity: 0.85;
+    }
+
+    .pwa-gen-select-fake:active {
+        background: #f9fafb;
+    }
+
+    body.pwa-gen-select-open {
+        overflow: hidden;
+    }
+
+    .pwa-gen-select-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 10050;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        pointer-events: none;
+    }
+
+    .pwa-gen-select-overlay[hidden] {
+        display: none !important;
+    }
+
+    .pwa-gen-select-overlay.is-open {
+        pointer-events: auto;
+    }
+
+    .pwa-gen-select-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.45);
+        backdrop-filter: blur(2px);
+    }
+
+    .pwa-gen-select-sheet {
+        position: relative;
+        max-height: min(72vh, 560px);
+        display: flex;
+        flex-direction: column;
+        background: #f9fafb;
+        border-radius: 16px 16px 0 0;
+        box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.12);
+        padding-bottom: max(env(safe-area-inset-bottom, 0px), 10px);
+        transform: translateY(100%);
+        transition: transform 0.22s ease-out;
+    }
+
+    .pwa-gen-select-overlay.is-open .pwa-gen-select-sheet {
+        transform: translateY(0);
+    }
+
+    .pwa-gen-select-sheet-head {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 10px 12px 8px;
+        border-bottom: 1px solid #e5e7eb;
+        background: #fff;
+        border-radius: 16px 16px 0 0;
+        flex-shrink: 0;
+        min-height: 44px;
+    }
+
+    .pwa-gen-select-title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: min(70%, 240px);
+        text-align: center;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: #374151;
+        letter-spacing: 0.01em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        pointer-events: none;
+    }
+
+    .pwa-gen-select-head-spacer {
+        min-width: 56px;
+        flex-shrink: 0;
+    }
+
+    .pwa-gen-select-cancel {
+        position: relative;
+        z-index: 1;
+        border: none;
+        background: transparent;
+        color: #2563eb;
+        font-size: 0.9375rem;
+        font-weight: 500;
+        padding: 6px 4px;
+        min-width: 56px;
+        text-align: left;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .pwa-gen-select-list {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 6px 0 4px;
+        background: #fff;
+    }
+
+    .pwa-gen-select-group {
+        padding: 8px 16px 4px;
+        font-size: 0.6875rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #6b7280;
+        background: #f9fafb;
+    }
+
+    .pwa-gen-select-group + .pwa-gen-select-row {
+        border-top: none;
+    }
+
+    .pwa-gen-select-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        width: 100%;
+        min-height: 44px;
+        padding: 8px 16px;
+        margin: 0;
+        border: none;
+        border-bottom: 1px solid #f3f4f6;
+        background: #fff;
+        font-family: inherit;
+        font-size: 0.875rem;
+        line-height: 1.35;
+        font-weight: 400;
+        color: #1f2937;
+        text-align: left;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .pwa-gen-select-row:last-child {
+        border-bottom: none;
+    }
+
+    .pwa-gen-select-row:active:not(.is-disabled) {
+        background: #f3f4f6;
+    }
+
+    .pwa-gen-select-row.is-disabled {
+        color: #9ca3af;
+        cursor: default;
+        background: #fafafa;
+    }
+
+    .pwa-gen-select-row-text {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .pwa-gen-select-radio {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 2px solid #d1d5db;
+        flex-shrink: 0;
+        box-sizing: border-box;
+        background: #fff;
+    }
+
+    .pwa-gen-select-row.is-selected .pwa-gen-select-radio {
+        border-color: #2563eb;
+        background: #2563eb;
+        box-shadow: inset 0 0 0 3px #fff;
+    }
+
+    .pwa-gen-select-row.is-disabled .pwa-gen-select-radio {
+        opacity: 0.35;
+    }
+}
