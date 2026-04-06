@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775505628183",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-06",
+        "author": "Michael Chen",
+        "excerpt": "It’s a familiar scene for any project manager: the end of the sprint, the end of the week, the end of the month. A calendar reminder pops up, and a co...",
+        "contentFile": "blog-1775505628183.md"
+    },
+    {
         "id": "1775502016141",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
