@@ -1,5 +1,5 @@
 /* Service Worker — Reportify PWA (cache shell + offline fallback) */
-const CACHE_NAME = 'reportify-pwa-v20-word-marked-breaks';
+const CACHE_NAME = 'reportify-pwa-v22-word-typography-bold';
 const PRECACHE_URLS = [
   './',
   './index.html',
