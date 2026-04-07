@@ -382,19 +382,30 @@ html.pwa-nb-detail-layout body.has-app-nav main.flex-grow > article.max-w-4xl.mx
     }
 }
 
-/* History：报告卡片上四个圆形导出按钮 — Font Awesome 在默认行高下易偏右，用 flex 居中 */
-#history-container .history-export-icon-btn {
+/* History：圆形导出钮 — 与 style.css 移动端全局 button !important 对抗，固定尺寸 + 图标几何居中 */
+#history-container button.history-export-icon-btn {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     padding: 0 !important;
-    line-height: 1 !important;
-    box-sizing: border-box !important;
-}
-#history-container .history-export-icon-btn i {
     margin: 0 !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
     line-height: 1 !important;
-    display: block;
-    width: 1em;
-    text-align: center;
+    font-size: 14px !important;
+    box-sizing: border-box !important;
+    flex-shrink: 0 !important;
+}
+#history-container button.history-export-icon-btn i {
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 1.15em !important;
+    height: 1.15em !important;
+    text-align: center !important;
 }
