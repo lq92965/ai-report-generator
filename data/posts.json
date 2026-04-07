@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775530816049",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-07",
+        "author": "Emily Rostova",
+        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, United States, and China finalizing starkly different...",
+        "contentFile": "news-1775530816049.md"
+    },
+    {
         "id": "1775527227101",
         "type": "blog",
         "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
