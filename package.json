@@ -9,7 +9,8 @@
     "build": "echo 'Build step not required, skipping...'",
     "build:www": "node build_www.cjs",
     "cap:sync:android": "npx cap sync android",
-    "android:web": "node build_www.cjs && npx cap sync android"
+    "android:web": "node build_www.cjs && npx cap sync android",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@capacitor/android": "^8.3.0",
@@ -46,6 +47,7 @@
   },
   "homepage": "https://github.com/lq92965/ai-report-generator#readme",
   "devDependencies": {
-    "@capacitor/assets": "^3.0.5"
+    "@capacitor/assets": "^3.0.5",
+    "patch-package": "^8.0.1"
   }
 }

@@ -166,22 +166,34 @@ async function reportifySaveDownloadInNative(blob, filename, successToastMsg) {
             });
         }
         const saved = await Filesystem.writeFile(writeOpts);
+        let shareUri = saved && saved.uri;
+        if (!shareUri && typeof Filesystem.getUri === 'function') {
+            const gu = await Filesystem.getUri({ path: pathSafe, directory: 'DATA' });
+            shareUri = gu && gu.uri;
+        }
+        if (!shareUri) {
+            throw new Error('Filesystem write returned no uri');
+        }
+        /* Android：Filesystem 常返回 content://；@capacitor/share 原版只认 file/http，会 reject。
+           勿传 text，否则系统会走「分享文本」而不是附件。见 patches/@capacitor+share+8.0.1.patch */
         await Share.share({
             title: pathSafe,
-            text: 'Reportify export',
-            url: saved.uri,
+            url: shareUri,
             dialogTitle: 'Save or share file'
         });
         if (successToastMsg) showToast(successToastMsg, 'success');
+        return true;
     } catch (e) {
         console.error('Native save/share failed', e);
         showToast('Could not save file. Check storage permission.', 'error');
+        return false;
     }
 }
 
-window.saveAs = function(blob, filename) {
+window.saveAs = async function(blob, filename) {
     if (window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform()) {
-        void reportifySaveDownloadInNative(blob, filename, null);
+        const ok = await reportifySaveDownloadInNative(blob, filename, null);
+        if (!ok) throw new Error('native save failed');
         return;
     }
     const url = URL.createObjectURL(blob);
@@ -1303,7 +1315,8 @@ async function exportToWord(content, filename) {
     const blob = new Blob([utf8Bom, wordHTML], { type: 'application/msword;charset=utf-8' });
     const docName = `${filename}.doc`;
     if (isNativeWord) {
-        await reportifySaveDownloadInNative(blob, docName, 'Word 文档下载成功!');
+        const ok = await reportifySaveDownloadInNative(blob, docName, 'Word 文档下载成功!');
+        if (!ok) return;
         return;
     }
     const url = URL.createObjectURL(blob);
@@ -1638,7 +1651,9 @@ function exportToPPT(content, filename, passedTemplate = null, passedSummary = n
     if (window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform() && typeof pptx.write === 'function') {
         pptx
             .write('blob')
-            .then((blob) => reportifySaveDownloadInNative(blob, pptName, 'Professional PPT Downloaded!'))
+            .then(async (blob) => {
+                await reportifySaveDownloadInNative(blob, pptName, 'Professional PPT Downloaded!');
+            })
             .catch(pptErr);
     } else {
         pptx.writeFile({ fileName: pptName }).then(pptDone).catch(pptErr);
@@ -1686,7 +1701,7 @@ function emailReport() {
 }
 
 // 🟢 [新增] Markdown 下载功能
-function downloadMarkdown() {
+async function downloadMarkdown() {
     const content = window.currentReportContent; // 获取全局存储的 Markdown 原文
     if (!content) {
         showToast("没有可下载的内容", "warning");
@@ -1696,7 +1711,8 @@ function downloadMarkdown() {
     const filename = `Report_${new Date().toISOString().slice(0,10)}.md`;
     const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
     if (window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform()) {
-        void reportifySaveDownloadInNative(blob, filename, 'Markdown 已下载');
+        const ok = await reportifySaveDownloadInNative(blob, filename, 'Markdown 已下载');
+        if (!ok) return;
         return;
     }
     const url = URL.createObjectURL(blob);
@@ -2002,7 +2018,7 @@ function setupHistoryLoader() {
 
     // 3. 实现下载功能的具体逻辑
     // 🟢 升级：接收第三个参数 passedTemplate
-    window.downloadHistoryItem = function(id, type, passedTemplate = 'general') {
+    window.downloadHistoryItem = async function(id, type, passedTemplate = 'general') {
         // 从缓存中找到这条报告
         const item = window.currentHistoryData.find(r => r._id === id);
         if (!item || !item.content) {
@@ -2014,8 +2030,12 @@ function setupHistoryLoader() {
 
         if (type === 'md') {
             const blob = new Blob([item.content], { type: 'text/markdown;charset=utf-8' });
-            saveAs(blob, `${filename}.md`);
-            showToast("Markdown downloaded", "success");
+            try {
+                await saveAs(blob, `${filename}.md`);
+                showToast("Markdown downloaded", "success");
+            } catch (e) {
+                /* native 失败时 reportifySaveDownloadInNative 已 toast */
+            }
         } 
         // 🟢 核心修复3：废弃简陋的 docx 库，强制调用主页统一的高级 Word 排版引擎
         else if (type === 'word') {
