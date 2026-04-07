@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775541628186",
+        "type": "blog",
+        "title": "Beyond the Status Update: Conquering Reporting Fatigue for Good",
+        "category": "Deep Insights",
+        "date": "2026-04-07",
+        "author": "Alex Mercer",
+        "excerpt": "We've all been there. It's 4:00 PM on a Friday, and the automated calendar reminder pops up: \"Submit Weekly Status Report.\" A collective groan echoes...",
+        "contentFile": "blog-1775541628186.md"
+    },
+    {
         "id": "1775538020388",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
