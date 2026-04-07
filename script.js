@@ -1799,9 +1799,14 @@ async function exportToWord(content, filename) {
     const themeClass = reportBox ? (reportBox.className || '') : '';
     const renderedHtml = reportBox ? String(reportBox.innerHTML || '').trim() : '';
     const hasStructuredRenderedHtml = /<(h[1-6]|p|ul|ol|li|table|blockquote)\b/i.test(renderedHtml);
+    const rawContent = String(content || '').trim();
 
-    // App 端优先使用已渲染 HTML：这与用户看到的生成框版式最一致。
-    if (isNativeWord && hasStructuredRenderedHtml) {
+    /* App 端不要用「预览区 innerHTML」替代 Markdown：预览依赖外部 CSS，.doc 里拿不到，版式会塌成纯文本。
+       仅在「内容本身就是 HTML」时用预览 DOM（与网站 Word 规则一致：走 marked + 行内样式）。 */
+    const useRenderedHtmlForWord =
+        isNativeWord && hasStructuredRenderedHtml && rawContent.startsWith('<');
+
+    if (useRenderedHtmlForWord) {
         htmlBody = stripTrailingBrandingHtml(renderedHtml);
     } else {
         let raw = String(content).trim();
