@@ -1,5 +1,5 @@
 /* Service Worker — Reportify PWA (cache shell + offline fallback) */
-const CACHE_NAME = 'reportify-pwa-v17-history-btn-not-global-button-css';
+const CACHE_NAME = 'reportify-pwa-v18-word-inline-mshtml';
 const PRECACHE_URLS = [
   './',
   './index.html',
