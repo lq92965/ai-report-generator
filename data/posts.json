@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775584829615",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-07",
+        "author": "Jessica Tran",
+        "excerpt": "We’ve all been there. It’s Tuesday afternoon, and instead of talking to customers or strategizing with your design lead, you’re wrestling with a sprea...",
+        "contentFile": "blog-1775584829615.md"
+    },
+    {
         "id": "1775581216091",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
