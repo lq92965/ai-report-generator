@@ -112,7 +112,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // -----------------------------------------
     (function bustAvatarCacheOnce() {
         const avatarImages = document.querySelectorAll('img.rounded-full, img[src*="avatar"]');
-        avatarImages.forEach(img => {
+        avatarImages.forEach((img) => {
+            if (img.id === 'profile-avatar' || img.id === 'account-hub-avatar') return;
+            if (img.closest && img.closest('.profile-layout-wrap')) return;
             if (!img.src.includes('logo') && !img.src.includes('icon')) {
                 const originalSrc = img.src.split('?')[0];
                 img.src = originalSrc + '?v=' + Date.now();
