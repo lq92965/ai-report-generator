@@ -140,6 +140,115 @@ function sanitizeDownloadFilename(name) {
     return String(name || 'download').replace(/[/\\?%*:|"<>]/g, '_').substring(0, 120);
 }
 
+function escapeHtmlForWordAttr(s) {
+    return String(s ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/"/g, '&quot;');
+}
+
+/**
+ * WPS / 移动版 Word 常忽略 <head><style>；将版式写成行内 style，保留与 Word 引擎 2.0 一致的设计。
+ */
+function applyWordCompatibleInlineStyles(html) {
+    if (!html || typeof DOMParser === 'undefined') return html;
+    try {
+        const d = new DOMParser().parseFromString('<div id="__word_export_root">' + html + '</div>', 'text/html');
+        const root = d.getElementById('__word_export_root');
+        if (!root) return html;
+
+        const merge = (el, extra) => {
+            const prev = (el.getAttribute('style') || '').trim();
+            el.setAttribute('style', extra + (prev ? (prev.endsWith(';') ? ' ' : '; ') + prev : ''));
+        };
+
+        root.querySelectorAll('h1').forEach((el) =>
+            merge(
+                el,
+                'font-family:"SimHei","黑体",Arial,sans-serif;color:#000000;font-weight:bold;font-size:22.0pt;text-align:center;border-bottom:2.25pt solid #2563EB;padding-bottom:12.0pt;margin-bottom:24.0pt;mso-line-height-rule:exactly;line-height:1.2;'
+            )
+        );
+        root.querySelectorAll('h2').forEach((el) =>
+            merge(
+                el,
+                'font-family:"SimHei","黑体",Arial,sans-serif;color:#000000;font-weight:bold;font-size:16.0pt;border-left:5.0pt solid #2563EB;background:#F3F4F6;padding:6.0pt 12.0pt;margin-top:24.0pt;margin-bottom:12.0pt;mso-line-height-rule:exactly;line-height:1.25;'
+            )
+        );
+        root.querySelectorAll('h3').forEach((el) =>
+            merge(
+                el,
+                'font-family:"SimHei","黑体",Arial,sans-serif;color:#333333;font-weight:bold;font-size:14.0pt;margin-top:18.0pt;margin-bottom:10.0pt;mso-line-height-rule:exactly;'
+            )
+        );
+        root.querySelectorAll('h4').forEach((el) =>
+            merge(
+                el,
+                'font-family:"SimHei","黑体",Arial,sans-serif;color:#000000;font-weight:bold;font-size:12.0pt;margin-top:12.0pt;margin-bottom:8.0pt;'
+            )
+        );
+
+        root.querySelectorAll('p').forEach((el) =>
+            merge(
+                el,
+                'font-family:"SimSun","宋体","Times New Roman",serif;font-size:12.0pt;line-height:1.6;margin-bottom:10.0pt;text-align:justify;mso-line-height-rule:exactly;'
+            )
+        );
+
+        root.querySelectorAll('li').forEach((el) =>
+            merge(
+                el,
+                'font-family:"SimSun","宋体",serif;font-size:12.0pt;line-height:1.6;margin-bottom:6.0pt;mso-line-height-rule:exactly;'
+            )
+        );
+
+        root.querySelectorAll('blockquote').forEach((el) =>
+            merge(
+                el,
+                'border-left:4.0pt solid #666666;background:#F9F9F9;padding:10.0pt 15.0pt;font-family:"KaiTi","楷体",serif;color:#444444;margin:15.0pt 0;'
+            )
+        );
+
+        root.querySelectorAll('table').forEach((el) =>
+            merge(
+                el,
+                'border-collapse:collapse;width:100.0%;margin:15.0pt 0;mso-table-layout:fixed;border:1.0pt solid #000000;'
+            )
+        );
+        root.querySelectorAll('td').forEach((el) =>
+            merge(el, 'border:1.0pt solid #000000;padding:8.0pt;vertical-align:top;font-family:"SimSun","宋体",serif;font-size:12.0pt;')
+        );
+        root.querySelectorAll('th').forEach((el) =>
+            merge(
+                el,
+                'border:1.0pt solid #000000;padding:8.0pt;vertical-align:top;background:#F0F0F0;font-weight:bold;font-family:"SimHei","黑体",Arial,sans-serif;font-size:12.0pt;'
+            )
+        );
+
+        root.querySelectorAll('pre').forEach((el) =>
+            merge(
+                el,
+                'font-family:Consolas,"Courier New",monospace;font-size:10.5pt;background:#F5F5F5;padding:10.0pt;white-space:pre-wrap;margin:10.0pt 0;'
+            )
+        );
+        root.querySelectorAll('code').forEach((el) => {
+            let p = el.parentElement;
+            while (p) {
+                if (p.tagName === 'PRE') return;
+                p = p.parentElement;
+            }
+            merge(el, 'font-family:Consolas,"Courier New",monospace;font-size:10.5pt;background:#F5F5F5;padding:2.0pt 4.0pt;');
+        });
+
+        root.querySelectorAll('strong, b').forEach((el) => merge(el, 'font-weight:bold;'));
+        root.querySelectorAll('em, i').forEach((el) => merge(el, 'font-style:italic;'));
+
+        return root.innerHTML;
+    } catch (err) {
+        console.warn('applyWordCompatibleInlineStyles', err);
+        return html;
+    }
+}
+
 /** Capacitor 原生：仅用 Filesystem + Share（Android WebView 的 navigator.share(files) 不可靠）。调用方已保证仅在 isNativePlatform 下使用。 */
 async function reportifySaveDownloadInNative(blob, filename, successToastMsg) {
     const pathSafe = sanitizeDownloadFilename(filename);
@@ -1330,69 +1439,56 @@ async function exportToWord(content, filename) {
     if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
         htmlBody = marked.parse(content);
     }
+    htmlBody = applyWordCompatibleInlineStyles(htmlBody);
 
-    // Word 专用 XML 头部
-    const docXml = `
-        <xml>
-            <w:WordDocument>
-                <w:View>Print</w:View>
-                <w:Zoom>100</w:Zoom>
-                <w:DoNotOptimizeForBrowser/>
-            </w:WordDocument>
-        </xml>
-    `;
+    const safeTitle = escapeHtmlForWordAttr(filename);
 
-    // 优化后的 CSS：增加宋体优先，优化表格边框
+    // Word 97–2003 HTML：完整头 + MSO 条件块，桌面 Word / WPS 识别为 Word 文档；版式主要靠上行行内样式。
+    const docXml = `<!--[if gte mso 9]><xml>
+<w:WordDocument xmlns:w="urn:schemas-microsoft-com:office:word">
+<w:View>Print</w:View>
+<w:Zoom>100</w:Zoom>
+<w:DoNotOptimizeForBrowser/>
+<w:ValidateAgainstSchemas/>
+<w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+</w:WordDocument>
+</xml><![endif]-->`;
+
     const css = `
         <style>
-            @page {
-                size: 21cm 29.7cm; margin: 2.54cm;
-                mso-page-orientation: portrait;
-                mso-header: url("header_footer_ref") h1;
-                mso-footer: url("header_footer_ref") f1;
-            }
+            @page { size: 21cm 29.7cm; margin: 2.54cm; mso-page-orientation: portrait; mso-header: url("header_footer_ref") h1; mso-footer: url("header_footer_ref") f1; }
             @page Section1 { }
             div.Section1 { page: Section1; }
-            
             body { font-family: "SimSun", "宋体", "Times New Roman", serif; font-size: 12pt; line-height: 1.6; text-align: justify; }
-            h1, h2, h3, h4 { font-family: "SimHei", "黑体", "Arial", sans-serif; color: #000; font-weight: bold; }
-            h1 { font-size: 22pt; text-align: center; border-bottom: 2px solid #2563EB; padding-bottom: 12px; margin-bottom: 24px; }
-            h2 { font-size: 16pt; border-left: 5px solid #2563EB; background: #F3F4F6; padding: 6px 12px; margin-top: 24px; margin-bottom: 12px; }
-            h3 { font-size: 14pt; margin-top: 18px; margin-bottom: 10px; color: #333; }
-            p { margin-bottom: 10px; }
-            
-            /* 表格优化 */
-            table { border-collapse: collapse; width: 100%; margin: 15px 0; border: 1px solid #000; }
-            td, th { border: 1px solid #000; padding: 8px; vertical-align: top; }
-            th { background: #f0f0f0; font-weight: bold; }
-            
-            /* 引用块 */
-            blockquote { border-left: 4px solid #666; background: #f9f9f9; padding: 10px 15px; font-family: "KaiTi", "楷体"; color: #444; margin: 15px 0; }
-
-            /* 页眉页脚 */
-            p.MsoHeader, p.MsoFooter { font-size: 9pt; font-family: "Calibri", sans-serif; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
-            p.MsoFooter { border-bottom: none; border-top: 1px solid #ddd; padding-top: 5px; text-align: center; }
-            /* 🟢 核心修复：强制扒掉用于生成页眉页脚的隐形表格的边框，消灭末尾的空方块 */
+            p.MsoHeader, p.MsoFooter { font-size: 9pt; font-family: Calibri, sans-serif; }
+            p.MsoFooter { text-align: center; }
             #header_footer_ref, #header_footer_ref td { border: none !important; margin: 0; padding: 0; background: transparent; }
         </style>
     `;
 
-    const wordHTML = `
-        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'>
-        <head><meta charset='utf-8'><title>${filename}</title>${docXml}${css}</head>
-        <body>
-            <div class="Section1">
-                
-                ${htmlBody}
-
-                <table id='header_footer_ref' style='display:none'>
-                    <tr><td><div style='mso-element:header' id=h1><p class=MsoHeader><span style='float:left'>${filename}</span><span style='float:right'>Reportify AI</span><span style='clear:both'></span></p></div></td></tr>
-                    <tr><td><div style='mso-element:footer' id=f1><p class=MsoFooter><span style='mso-field-code:" PAGE "'></span> / <span style='mso-field-code:" NUMPAGES "'></span></p></div></td></tr>
-                </table>
-            </div>
-        </body>
-        </html>
-    `;
+    const wordHTML = `<!DOCTYPE html>
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:w="urn:schemas-microsoft-com:office:word"
+ xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="ProgId" content="Word.Document">
+<meta name="Generator" content="Reportify AI">
+<meta charset="utf-8">
+<title>${safeTitle}</title>
+${docXml}
+${css}
+</head>
+<body lang="ZH-CN" style="font-family:'SimSun','宋体','Times New Roman',serif;font-size:12.0pt;">
+<div class="Section1" style="mso-page: Section1;">
+${htmlBody}
+<table id="header_footer_ref" style="display:none;border:none;mso-cellspacing:0;">
+<tr><td><div style="mso-element:header" id="h1exp"><p class="MsoHeader"><span style="float:left">${safeTitle}</span><span style="float:right">Reportify AI</span><span style="clear:both"></span></p></div></td></tr>
+<tr><td><div style="mso-element:footer" id="f1exp"><p class="MsoFooter"><span style='mso-field-code:" PAGE "'></span> / <span style='mso-field-code:" NUMPAGES "'></span></p></div></td></tr>
+</table>
+</div>
+</body>
+</html>`;
 
     const isNativeWord = window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform();
     const utf8Bom = new Uint8Array([0xef, 0xbb, 0xbf]);
