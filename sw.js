@@ -1,5 +1,5 @@
 /* Service Worker — Reportify PWA (cache shell + offline fallback) */
-const CACHE_NAME = 'reportify-pwa-v23-word-native-html-priority';
+const CACHE_NAME = 'reportify-pwa-v24-word-export-themeclass-fix';
 const PRECACHE_URLS = [
   './',
   './index.html',
