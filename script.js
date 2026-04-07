@@ -140,15 +140,44 @@ function sanitizeDownloadFilename(name) {
     return String(name || 'download').replace(/[/\\?%*:|"<>]/g, '_').substring(0, 120);
 }
 
-/** Capacitor：写入应用私有目录（DATA）再分享。勿用 DOCUMENTS：Android 10+ 上公共 Documents 常需 legacy 存储权限，易失败。 */
+/** Capacitor：原生导出优先 Web Share API（直接传 File，绕过插件）；否则写入 DATA 后用 Share.files 传 content://（勿用 url 参数，见 @capacitor/share 分支差异）。 */
 async function reportifySaveDownloadInNative(blob, filename, successToastMsg) {
+    const pathSafe = sanitizeDownloadFilename(filename);
+    const mime = blob.type || 'application/octet-stream';
+
+    try {
+        if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
+            const file = new File([blob], pathSafe, { type: mime });
+            const payload = { files: [file], title: pathSafe };
+            let ok = false;
+            if (typeof navigator.canShare === 'function') {
+                try {
+                    ok = navigator.canShare(payload);
+                } catch (_) {
+                    ok = true;
+                }
+            } else {
+                ok = true;
+            }
+            if (ok) {
+                await navigator.share(payload);
+                if (successToastMsg) showToast(successToastMsg, 'success');
+                return true;
+            }
+        }
+    } catch (e) {
+        if (e && e.name === 'AbortError') {
+            return true;
+        }
+        console.warn('Web Share (files) failed, trying Capacitor Filesystem + Share', e);
+    }
+
     try {
         const Filesystem = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Filesystem;
         const Share = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Share;
         if (!Filesystem || !Share || typeof Filesystem.writeFile !== 'function') {
             throw new Error('Filesystem/Share unavailable');
         }
-        const pathSafe = sanitizeDownloadFilename(filename);
         const writeOpts = { path: pathSafe, directory: 'DATA' };
         const type = blob.type || '';
         const useUtf8 =
@@ -174,11 +203,11 @@ async function reportifySaveDownloadInNative(blob, filename, successToastMsg) {
         if (!shareUri) {
             throw new Error('Filesystem write returned no uri');
         }
-        /* Android：Filesystem 常返回 content://；@capacitor/share 原版只认 file/http，会 reject。
-           勿传 text，否则系统会走「分享文本」而不是附件。见 patches/@capacitor+share+8.0.1.patch */
+        /* 必须用 files 数组：走 SharePlugin.shareFiles()；传 url 会走 shareContentUris，部分机型异常。
+           勿传 text。补丁为 shareFiles 增加 content:// 支持：patches/@capacitor+share+8.0.1.patch */
         await Share.share({
             title: pathSafe,
-            url: shareUri,
+            files: [shareUri],
             dialogTitle: 'Save or share file'
         });
         if (successToastMsg) showToast(successToastMsg, 'success');

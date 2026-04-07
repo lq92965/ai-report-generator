@@ -1,5 +1,5 @@
 /* Service Worker — Reportify PWA (cache shell + offline fallback) */
-const CACHE_NAME = 'reportify-pwa-v14-share-content-uri-patch';
+const CACHE_NAME = 'reportify-pwa-v15-web-share-and-share-files-array';
 const PRECACHE_URLS = [
   './',
   './index.html',

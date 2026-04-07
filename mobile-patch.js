@@ -38,47 +38,64 @@ document.addEventListener('DOMContentLoaded', function() {
                 e.preventDefault(); 
 
                 const url = target.href;
-                const filename = target.getAttribute('download') || 'Reportify_Document';
+                const rawName = target.getAttribute('download') || 'Reportify_Document';
+                var pathSafe = String(rawName).replace(/[/\\?%*:|"<>]/g, '_').substring(0, 120);
 
                 try {
-                    const Filesystem = window.Capacitor.Plugins.Filesystem;
-                    const { Share } = window.Capacitor.Plugins.Share;
-                    let base64Data;
-
+                    var blob;
                     if (url.startsWith('blob:')) {
-                        const response = await fetch(url);
-                        const blob = await response.blob();
-                        base64Data = await new Promise((resolve, reject) => {
-                            const reader = new FileReader();
-                            reader.onloadend = () => {
-                                resolve(reader.result.split(',')[1]);
-                            };
-                            reader.onerror = reject;
-                            reader.readAsDataURL(blob);
-                        });
+                        var response = await fetch(url);
+                        blob = await response.blob();
                     } else if (url.startsWith('data:')) {
-                        base64Data = url.split(',')[1];
+                        var r0 = await fetch(url);
+                        blob = await r0.blob();
                     } else {
                         window.open(url, '_system');
                         return;
                     }
 
+                    try {
+                        if (typeof navigator.share === 'function') {
+                            var f = new File([blob], pathSafe, { type: blob.type || 'application/octet-stream' });
+                            var pl = { files: [f], title: pathSafe };
+                            var can = true;
+                            if (typeof navigator.canShare === 'function') {
+                                try { can = navigator.canShare(pl); } catch (e2) { can = true; }
+                            }
+                            if (can) {
+                                await navigator.share(pl);
+                                return;
+                            }
+                        }
+                    } catch (e1) {
+                        if (e1 && e1.name === 'AbortError') return;
+                    }
+
+                    const Filesystem = window.Capacitor.Plugins.Filesystem;
+                    const { Share } = window.Capacitor.Plugins.Share;
+                    var base64Data = await new Promise(function(resolve, reject) {
+                        var reader = new FileReader();
+                        reader.onloadend = function() { resolve(reader.result.split(',')[1]); };
+                        reader.onerror = reject;
+                        reader.readAsDataURL(blob);
+                    });
+
                     const savedFile = await Filesystem.writeFile({
-                        path: filename,
+                        path: pathSafe,
                         data: base64Data,
                         directory: 'DATA'
                     });
 
                     var shareUri = savedFile && savedFile.uri;
                     if (!shareUri && Filesystem.getUri) {
-                        var gu = await Filesystem.getUri({ path: filename, directory: 'DATA' });
+                        var gu = await Filesystem.getUri({ path: pathSafe, directory: 'DATA' });
                         shareUri = gu && gu.uri;
                     }
                     if (!shareUri) throw new Error('No file uri for share');
 
                     await Share.share({
-                        title: filename,
-                        url: shareUri,
+                        title: pathSafe,
+                        files: [shareUri],
                         dialogTitle: 'Save or Share Document'
                     });
 
