@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupAccountHubGuards();
     setupAvatarUpload();
     setupHistoryLoader(); // 🟢 核心修复：在这里调用历史加载器，让页面一打开就去拉取数据！
-    console.log("Reportify AI v22.1 Initialized");
+    console.log("Reportify AI v22.2 Initialized");
 
     // ... 现有的代码 ...
     if (window.location.pathname.includes('profile')) {
@@ -2014,16 +2014,16 @@ function setupHistoryLoader() {
                     </div>
                     
                     <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #f0f0f0; padding-top: 10px;">
-                        <button onclick="downloadHistoryItem('${item._id}', 'md', '${item.templateId || 'general'}')" title="Markdown" style="color: #444; background: #f3f4f6; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                        <button type="button" class="history-export-icon-btn" onclick="downloadHistoryItem('${item._id}', 'md', '${item.templateId || 'general'}')" title="Markdown" style="color: #444; background: #f3f4f6; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
                             <i class="fab fa-markdown"></i>
                         </button>
-                        <button onclick="downloadHistoryItem('${item._id}', 'word', '${item.templateId || 'general'}')" title="Word" style="color: #2b579a; background: #e8f0fe; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                        <button type="button" class="history-export-icon-btn" onclick="downloadHistoryItem('${item._id}', 'word', '${item.templateId || 'general'}')" title="Word" style="color: #2b579a; background: #e8f0fe; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
                             <i class="fas fa-file-word"></i>
                         </button>
-                        <button onclick="downloadHistoryItem('${item._id}', 'ppt', '${item.templateId || 'general'}')" title="PPT Draft" style="color: #ea4335; background: #fce8e6; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                        <button type="button" class="history-export-icon-btn" onclick="downloadHistoryItem('${item._id}', 'ppt', '${item.templateId || 'general'}')" title="PPT Draft" style="color: #ea4335; background: #fce8e6; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
                             <i class="fas fa-file-powerpoint"></i>
                         </button>
-                        <button onclick="emailHistoryItem('${item._id}')" title="Email Report" style="color: #4b5563; background: #f3f4f6; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                        <button type="button" class="history-export-icon-btn" onclick="emailHistoryItem('${item._id}')" title="Email Report" style="color: #4b5563; background: #f3f4f6; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
                             <i class="fas fa-envelope"></i>
                         </button>
                         <div style="width: 1px; background: #ddd; margin: 0 5px;"></div>
@@ -2166,16 +2166,15 @@ window.closeViewModal = function() {
     }
 };
 
-// 点击遮罩层也能关闭
-window.onclick = function(event) {
+// 全局点击：历史报告弹窗遮罩 + 关闭用户菜单（仅保留这一处，避免后面的赋值覆盖导致行为丢失）
+window.onclick = function (event) {
     const modal = document.getElementById('report-view-modal');
-    if (event.target == modal) {
+    if (modal && event.target === modal) {
         closeViewModal();
     }
-    // (保留原本的用户菜单关闭逻辑)
-    if(!event.target.closest('#auth-container')) { 
-        const m = document.getElementById('user-dropdown'); 
-        if(m) m.classList.add('hidden'); 
+    if (event.target && !event.target.closest('#auth-container')) {
+        const m = document.getElementById('user-dropdown');
+        if (m) m.classList.add('hidden');
     }
 };
 
@@ -2366,12 +2365,6 @@ function setupUserDropdown() {
 
 window.toggleUserMenu = function() { const m = document.getElementById('user-dropdown'); if(m) m.classList.toggle('hidden'); };
 window.logout = function() { localStorage.removeItem('token'); window.location.reload(); };
-window.onclick = function(e) { 
-    if(!e.target.closest('#auth-container')) { 
-        const m = document.getElementById('user-dropdown'); 
-        if(m) m.classList.add('hidden'); 
-    }
-};
 
 // --- 修改点 A：加载个人资料页数据 ---
 async function loadProfilePageData() {
