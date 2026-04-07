@@ -1,5 +1,5 @@
 /* Service Worker — Reportify PWA (cache shell + offline fallback) */
-const CACHE_NAME = 'reportify-pwa-v18-word-inline-mshtml';
+const CACHE_NAME = 'reportify-pwa-v19-word-md-headings';
 const PRECACHE_URLS = [
   './',
   './index.html',

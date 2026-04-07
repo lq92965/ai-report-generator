@@ -249,6 +249,83 @@ function applyWordCompatibleInlineStyles(html) {
     }
 }
 
+function stripHtmlToPlainText(html) {
+    if (!html || typeof document === 'undefined') return String(html || '').trim();
+    try {
+        const div = document.createElement('div');
+        div.innerHTML = html;
+        return (div.innerText || div.textContent || '').trim();
+    } catch (_) {
+        return String(html).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+}
+
+/**
+ * AI 报告常为「一、二、」「1.1」等中文结构但未写 # 标题，marked 会全部变成 <p>，Word 无层级。
+ * 在解析前插入 Markdown 标题，使 marked 输出 h1/h2/h3，再配合行内样式。
+ */
+function preprocessMarkdownForWordExport(md) {
+    if (!md || typeof md !== 'string') return md;
+    const lines = md.split(/\r?\n/);
+    const out = [];
+    let titleAssigned = false;
+
+    const isMetaLine = (t) =>
+        /^(报告生成日期|报告人|生成日期|日期[:：]|Date[:：]|Reporter|Author)/i.test(t) ||
+        (/[:：]/.test(t) && t.length < 40 && /日期|姓名|报告人/.test(t));
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const t = line.trim();
+        if (!t) {
+            out.push(line);
+            continue;
+        }
+        if (t.startsWith('#')) {
+            titleAssigned = true;
+            out.push(line);
+            continue;
+        }
+        if (t.startsWith('|') || /^[-:|\s]+$/.test(t)) {
+            titleAssigned = true;
+            out.push(line);
+            continue;
+        }
+        if (!titleAssigned) {
+            if (isMetaLine(t)) {
+                out.push(line);
+                continue;
+            }
+            titleAssigned = true;
+            if (t.length <= 200 && !/^#{1,6}\s/.test(t)) {
+                out.push('# ' + t);
+                continue;
+            }
+        }
+        if (/^[一二三四五六七八九十百千万]+、/.test(t)) {
+            out.push('## ' + t);
+            continue;
+        }
+        if (/^（[一二三四五六七八九十]+）/.test(t)) {
+            out.push('## ' + t);
+            continue;
+        }
+        if (/^\d+\.\d+/.test(t)) {
+            out.push('### ' + t);
+            continue;
+        }
+        out.push(line);
+    }
+    return out.join('\n');
+}
+
+function escapeHtmlBodyText(s) {
+    return String(s ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+}
+
 /** Capacitor 原生：仅用 Filesystem + Share（Android WebView 的 navigator.share(files) 不可靠）。调用方已保证仅在 isNativePlatform 下使用。 */
 async function reportifySaveDownloadInNative(blob, filename, successToastMsg) {
     const pathSafe = sanitizeDownloadFilename(filename);
@@ -1422,8 +1499,11 @@ function doExport(type) {
     const filename = `Report_${new Date().toISOString().slice(0,10)}`;
 
     if (type === 'word') {
-        // 🚀 核心修改：传入 innerHTML (带样式的渲染结果) 而不是文本
-        exportToWord(reportBox.innerHTML, filename);
+        const md =
+            window.currentReportContent && String(window.currentReportContent).trim().length > 5
+                ? window.currentReportContent
+                : reportBox.innerText;
+        exportToWord(md, filename);
     } 
     // ... markdown 和 pdf 保持不变 ...
 }
@@ -1432,12 +1512,27 @@ function doExport(type) {
 // 🟢 1. [Word 引擎 2.0]：精益求精版 (优化字体回退、行距、封面)
 // ==============================================================
 async function exportToWord(content, filename) {
-    if (!content) { showToast("暂无内容可导出", "error"); return; }
-    showToast("正在生成专业 Word 文档...", "info");
+    if (content == null || String(content).trim() === '') {
+        showToast("暂无内容可导出", 'error');
+        return;
+    }
+    showToast('正在生成专业 Word 文档...', 'info');
 
-    let htmlBody = content;
-    if (typeof marked !== 'undefined' && !content.trim().startsWith('<')) {
-        htmlBody = marked.parse(content);
+    let raw = String(content).trim();
+    if (raw.startsWith('<')) {
+        raw = stripHtmlToPlainText(raw);
+    }
+    if (!raw) {
+        showToast('暂无内容可导出', 'error');
+        return;
+    }
+
+    const pre = preprocessMarkdownForWordExport(raw);
+    let htmlBody;
+    if (typeof marked !== 'undefined') {
+        htmlBody = marked.parse(pre);
+    } else {
+        htmlBody = '<p>' + escapeHtmlBodyText(pre).replace(/\n/g, '<br>') + '</p>';
     }
     htmlBody = applyWordCompatibleInlineStyles(htmlBody);
 
@@ -1868,7 +1963,11 @@ function emailReport() {
     // 2. 自动触发 Word 下载
     showToast("正在为您下载 Word 附件...", "info");
     const filename = `Report_${new Date().toISOString().slice(0,10)}`;
-    exportToWord(resultBox.innerHTML, filename);
+    const md =
+        window.currentReportContent && String(window.currentReportContent).trim().length > 5
+            ? window.currentReportContent
+            : resultBox.innerText;
+    exportToWord(md, filename);
 
     // 3. 延时打开邮件客户端 (给下载留点时间)
     setTimeout(() => {
@@ -2219,8 +2318,7 @@ function setupHistoryLoader() {
         } 
         // 🟢 核心修复3：废弃简陋的 docx 库，强制调用主页统一的高级 Word 排版引擎
         else if (type === 'word') {
-            const htmlContent = (typeof marked !== 'undefined') ? marked.parse(item.content) : item.content.replace(/\n/g, '<br>');
-            exportToWord(htmlContent, filename);
+            exportToWord(item.content, filename);
         }
         // 🟢 核心修复3：调用全新引擎，传入颜色参数，并把数据库里的专属摘要也传过去！
         else if (type === 'ppt') {
@@ -2243,10 +2341,7 @@ function setupHistoryLoader() {
         
         showToast("正在为您下载 Word 附件...", "info");
         const filename = (item.title || "Report").replace(/[^a-z0-9]/gi, '_') + `_${new Date().toISOString().slice(0,10)}`;
-        const htmlContent = (typeof marked !== 'undefined') ? marked.parse(item.content) : item.content.replace(/\n/g, '<br>');
-        
-        // 自动下载高颜值 Word 附件
-        exportToWord(htmlContent, filename);
+        exportToWord(item.content, filename);
 
         setTimeout(() => {
             const subject = encodeURIComponent("Sharing an AI-generated report");
