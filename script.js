@@ -194,10 +194,22 @@ function applyWordCompatibleInlineStyles(html) {
             )
         );
 
+        root.querySelectorAll('ul').forEach((el) =>
+            merge(
+                el,
+                'margin:12.0pt 0 12.0pt 18.0pt;padding-left:8.0pt;list-style-type:disc;list-style-position:outside;font-family:"SimSun","宋体",serif;font-size:12.0pt;'
+            )
+        );
+        root.querySelectorAll('ol').forEach((el) =>
+            merge(
+                el,
+                'margin:12.0pt 0 12.0pt 18.0pt;padding-left:8.0pt;list-style-type:decimal;list-style-position:outside;font-family:"SimSun","宋体",serif;font-size:12.0pt;'
+            )
+        );
         root.querySelectorAll('li').forEach((el) =>
             merge(
                 el,
-                'font-family:"SimSun","宋体",serif;font-size:12.0pt;line-height:1.6;margin-bottom:6.0pt;mso-line-height-rule:exactly;'
+                'font-family:"SimSun","宋体",serif;font-size:12.0pt;line-height:1.65;margin-bottom:6.0pt;margin-left:6.0pt;mso-line-height-rule:exactly;'
             )
         );
 
@@ -258,6 +270,38 @@ function stripHtmlToPlainText(html) {
     } catch (_) {
         return String(html).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
     }
+}
+
+/** 去掉末尾「Reportify AI」等推广行，避免出现在 Word 文末。 */
+function stripTrailingBrandingMarkdown(md) {
+    if (!md || typeof md !== 'string') return md;
+    const lines = md.replace(/\r\n/g, '\n').split('\n');
+    while (lines.length > 0) {
+        const t = lines[lines.length - 1].trim();
+        if (!t) {
+            lines.pop();
+            continue;
+        }
+        if (
+            t.length < 180 &&
+            (/reportify\s*ai|generated\s*by|generated_report|^\/\s*$/i.test(t) ||
+                (/reportify/i.test(t) && t.length < 60))
+        ) {
+            lines.pop();
+            continue;
+        }
+        break;
+    }
+    return lines.join('\n');
+}
+
+/** marked 偶发未解析的 **粗体**（尤其中英文混排），补成 <strong>（跳过 <pre> 块）。 */
+function repairStrayMarkdownBold(html) {
+    if (!html || typeof html !== 'string') return html;
+    return html
+        .split(/(<pre[\s\S]*?<\/pre>)/gi)
+        .map((part) => (part.toLowerCase().startsWith('<pre') ? part : part.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')))
+        .join('');
 }
 
 /** 单换行在标准 Markdown 中不会分段；补空行使「1. xxx」列表、英文小节成为独立块。 */
@@ -1551,11 +1595,13 @@ async function exportToWord(content, filename) {
         return;
     }
 
+    raw = stripTrailingBrandingMarkdown(raw);
     raw = expandMarkdownBlockSpacing(raw);
     const pre = preprocessMarkdownForWordExport(raw);
     let htmlBody;
     if (typeof marked !== 'undefined') {
         htmlBody = marked.parse(pre, MARKED_OPTIONS_WORD);
+        htmlBody = repairStrayMarkdownBold(htmlBody);
     } else {
         htmlBody = '<p>' + escapeHtmlBodyText(pre).replace(/\n/g, '<br>') + '</p>';
     }
@@ -1576,13 +1622,10 @@ async function exportToWord(content, filename) {
 
     const css = `
         <style>
-            @page { size: 21cm 29.7cm; margin: 2.54cm; mso-page-orientation: portrait; mso-header: url("header_footer_ref") h1; mso-footer: url("header_footer_ref") f1; }
+            @page { size: 21cm 29.7cm; margin: 2.54cm; mso-page-orientation: portrait; }
             @page Section1 { }
             div.Section1 { page: Section1; }
-            body { font-family: "SimSun", "宋体", "Times New Roman", serif; font-size: 12pt; line-height: 1.6; text-align: justify; }
-            p.MsoHeader, p.MsoFooter { font-size: 9pt; font-family: Calibri, sans-serif; }
-            p.MsoFooter { text-align: center; }
-            #header_footer_ref, #header_footer_ref td { border: none !important; margin: 0; padding: 0; background: transparent; }
+            body { font-family: "SimSun", "宋体", "Times New Roman", serif; font-size: 12pt; line-height: 1.65; text-align: justify; mso-ascii-font-family: "Times New Roman"; mso-fareast-font-family: SimSun; }
         </style>
     `;
 
@@ -1593,19 +1636,14 @@ async function exportToWord(content, filename) {
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="ProgId" content="Word.Document">
-<meta name="Generator" content="Reportify AI">
 <meta charset="utf-8">
 <title>${safeTitle}</title>
 ${docXml}
 ${css}
 </head>
-<body lang="ZH-CN" style="font-family:'SimSun','宋体','Times New Roman',serif;font-size:12.0pt;">
+<body lang="ZH-CN" style="font-family:'SimSun','宋体','Times New Roman',serif;font-size:12.0pt;-webkit-text-size-adjust:100%;">
 <div class="Section1" style="mso-page: Section1;">
 ${htmlBody}
-<table id="header_footer_ref" style="display:none;border:none;mso-cellspacing:0;">
-<tr><td><div style="mso-element:header" id="h1exp"><p class="MsoHeader"><span style="float:left">${safeTitle}</span><span style="float:right">Reportify AI</span><span style="clear:both"></span></p></div></td></tr>
-<tr><td><div style="mso-element:footer" id="f1exp"><p class="MsoFooter"><span style='mso-field-code:" PAGE "'></span> / <span style='mso-field-code:" NUMPAGES "'></span></p></div></td></tr>
-</table>
 </div>
 </body>
 </html>`;
