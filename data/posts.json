@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775548828127",
+        "type": "blog",
+        "title": "Beyond the Status Update: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-07",
+        "author": "Michael Chen",
+        "excerpt": "We've all been there. It's 4 PM on a Friday, and instead of focusing on strategic work for the week ahead, you're wrestling with spreadsheets and slid...",
+        "contentFile": "blog-1775548828127.md"
+    },
+    {
         "id": "1775545216683",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
