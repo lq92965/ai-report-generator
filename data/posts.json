@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775592028441",
+        "type": "blog",
+        "title": "From Data Dumps to Actionable Insights: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-07",
+        "author": "Jessica Tran",
+        "excerpt": "We've all been there. It's Sunday night, and a familiar dread creeps in. You're not thinking about the strategic product decisions ahead, but about th...",
+        "contentFile": "blog-1775592028441.md"
+    },
+    {
         "id": "1775588422954",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
