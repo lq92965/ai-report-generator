@@ -162,55 +162,80 @@ function applyWordCompatibleInlineStyles(html) {
             el.setAttribute('style', extra + (prev ? (prev.endsWith(';') ? ' ' : '; ') + prev : ''));
         };
 
+        const fontBody =
+            'font-family:Calibri,"Microsoft YaHei","Microsoft YaHei UI","SimSun",sans-serif;mso-ascii-font-family:Calibri;mso-fareast-font-family:"Microsoft YaHei";';
+        const fontHead =
+            'font-family:"Microsoft YaHei","Microsoft YaHei UI",Calibri,"Segoe UI",sans-serif;mso-ascii-font-family:Calibri;mso-fareast-font-family:"Microsoft YaHei";';
+
         root.querySelectorAll('h1').forEach((el) =>
             merge(
                 el,
-                'font-family:"SimHei","黑体",Arial,sans-serif;color:#000000;font-weight:bold;font-size:22.0pt;text-align:center;border-bottom:2.25pt solid #2563EB;padding-bottom:12.0pt;margin-bottom:24.0pt;mso-line-height-rule:exactly;line-height:1.2;'
+                fontHead +
+                    'color:#111827;font-weight:bold;font-size:22.0pt;text-align:center;border-bottom:2.25pt solid #2563EB;padding-bottom:12.0pt;margin-top:6.0pt;margin-bottom:22.0pt;mso-line-height-rule:exactly;line-height:1.25;'
             )
         );
         root.querySelectorAll('h2').forEach((el) =>
             merge(
                 el,
-                'font-family:"SimHei","黑体",Arial,sans-serif;color:#000000;font-weight:bold;font-size:16.0pt;border-left:5.0pt solid #2563EB;background:#F3F4F6;padding:6.0pt 12.0pt;margin-top:24.0pt;margin-bottom:12.0pt;mso-line-height-rule:exactly;line-height:1.25;'
+                fontHead +
+                    'color:#111827;font-weight:bold;font-size:16.0pt;border-left:5.0pt solid #2563EB;background:#F3F4F6;padding:6.0pt 12.0pt;margin-top:26.0pt;margin-bottom:14.0pt;mso-line-height-rule:exactly;line-height:1.3;'
             )
         );
         root.querySelectorAll('h3').forEach((el) =>
             merge(
                 el,
-                'font-family:"SimHei","黑体",Arial,sans-serif;color:#333333;font-weight:bold;font-size:14.0pt;margin-top:18.0pt;margin-bottom:10.0pt;mso-line-height-rule:exactly;'
+                fontHead +
+                    'color:#1F2937;font-weight:bold;font-size:14.0pt;margin-top:20.0pt;margin-bottom:10.0pt;mso-line-height-rule:exactly;line-height:1.35;'
             )
         );
         root.querySelectorAll('h4').forEach((el) =>
             merge(
                 el,
-                'font-family:"SimHei","黑体",Arial,sans-serif;color:#000000;font-weight:bold;font-size:12.0pt;margin-top:12.0pt;margin-bottom:8.0pt;'
+                fontHead +
+                    'color:#111827;font-weight:bold;font-size:12.5pt;margin-top:14.0pt;margin-bottom:8.0pt;mso-line-height-rule:exactly;line-height:1.35;'
             )
         );
 
         root.querySelectorAll('p').forEach((el) =>
             merge(
                 el,
-                'font-family:"SimSun","宋体","Times New Roman",serif;font-size:12.0pt;line-height:1.6;margin-bottom:10.0pt;text-align:justify;mso-line-height-rule:exactly;'
+                fontBody +
+                    'font-size:12.0pt;line-height:1.75;margin-top:0;margin-bottom:12.0pt;text-align:justify;mso-line-height-rule:exactly;'
             )
         );
 
         root.querySelectorAll('ul').forEach((el) =>
             merge(
                 el,
-                'margin:12.0pt 0 12.0pt 18.0pt;padding-left:8.0pt;list-style-type:disc;list-style-position:outside;font-family:"SimSun","宋体",serif;font-size:12.0pt;'
+                fontBody +
+                    'margin:14.0pt 0 14.0pt 22.0pt;padding-left:10.0pt;list-style-type:disc;list-style-position:outside;font-size:12.0pt;'
             )
         );
         root.querySelectorAll('ol').forEach((el) =>
             merge(
                 el,
-                'margin:12.0pt 0 12.0pt 18.0pt;padding-left:8.0pt;list-style-type:decimal;list-style-position:outside;font-family:"SimSun","宋体",serif;font-size:12.0pt;'
+                fontBody +
+                    'margin:14.0pt 0 14.0pt 22.0pt;padding-left:10.0pt;list-style-type:decimal;list-style-position:outside;font-size:12.0pt;'
             )
         );
         root.querySelectorAll('li').forEach((el) =>
             merge(
                 el,
-                'font-family:"SimSun","宋体",serif;font-size:12.0pt;line-height:1.65;margin-bottom:6.0pt;margin-left:6.0pt;mso-line-height-rule:exactly;'
+                fontBody +
+                    'font-size:12.0pt;line-height:1.72;margin-bottom:8.0pt;margin-left:4.0pt;mso-line-height-rule:exactly;'
             )
+        );
+        root.querySelectorAll('li p').forEach((el) =>
+            merge(el, 'margin:0 0 6.0pt 0;line-height:1.72;mso-line-height-rule:exactly;')
+        );
+        root.querySelectorAll('ul ul').forEach((el) =>
+            merge(el, 'list-style-type:circle;margin-top:6.0pt;margin-bottom:6.0pt;')
+        );
+        root.querySelectorAll('ol ol').forEach((el) =>
+            merge(el, 'list-style-type:lower-alpha;margin-top:6.0pt;margin-bottom:6.0pt;')
+        );
+        root.querySelectorAll('hr').forEach((el) =>
+            merge(el, 'border:none;border-top:1.0pt solid #D1D5DB;margin:18.0pt 0 18.0pt 0;height:0;')
         );
 
         root.querySelectorAll('blockquote').forEach((el) =>
@@ -227,12 +252,14 @@ function applyWordCompatibleInlineStyles(html) {
             )
         );
         root.querySelectorAll('td').forEach((el) =>
-            merge(el, 'border:1.0pt solid #000000;padding:8.0pt;vertical-align:top;font-family:"SimSun","宋体",serif;font-size:12.0pt;')
+            merge(el, 'border:1.0pt solid #000000;padding:8.0pt;vertical-align:top;' + fontBody + 'font-size:12.0pt;')
         );
         root.querySelectorAll('th').forEach((el) =>
             merge(
                 el,
-                'border:1.0pt solid #000000;padding:8.0pt;vertical-align:top;background:#F0F0F0;font-weight:bold;font-family:"SimHei","黑体",Arial,sans-serif;font-size:12.0pt;'
+                'border:1.0pt solid #000000;padding:8.0pt;vertical-align:top;background:#F0F0F0;font-weight:bold;' +
+                    fontHead +
+                    'font-size:12.0pt;'
             )
         );
 
@@ -251,7 +278,9 @@ function applyWordCompatibleInlineStyles(html) {
             merge(el, 'font-family:Consolas,"Courier New",monospace;font-size:10.5pt;background:#F5F5F5;padding:2.0pt 4.0pt;');
         });
 
-        root.querySelectorAll('strong, b').forEach((el) => merge(el, 'font-weight:bold;'));
+        root.querySelectorAll('strong, b').forEach((el) =>
+            merge(el, 'font-weight:bold;color:#111827;mso-bidi-font-weight:bold;')
+        );
         root.querySelectorAll('em, i').forEach((el) => merge(el, 'font-style:italic;'));
 
         return root.innerHTML;
@@ -304,12 +333,101 @@ function repairStrayMarkdownBold(html) {
         .join('');
 }
 
+/**
+ * 在已解析的 HTML 文本节点中把残留的 **…** 转为 <strong>（WPS/Word 对混排解析不稳时仍可见裸 **）。
+ * 跳过 pre/code/script/style 及已有 strong 内的节点。
+ */
+function repairMarkdownBoldInTextNodes(html) {
+    if (!html || typeof DOMParser === 'undefined') return html;
+    try {
+        const d = new DOMParser().parseFromString('<div id="__word_bold_root">' + html + '</div>', 'text/html');
+        const root = d.getElementById('__word_bold_root');
+        if (!root) return html;
+
+        const skipAncestor = (el) => {
+            let p = el;
+            while (p && p !== root) {
+                const tag = p.tagName;
+                if (tag === 'PRE' || tag === 'SCRIPT' || tag === 'STYLE' || tag === 'CODE' || tag === 'STRONG' || tag === 'B') return true;
+                p = p.parentElement;
+            }
+            return false;
+        };
+
+        const processTextNode = (textNode) => {
+            const t = textNode.textContent;
+            if (!t || !t.includes('**')) return;
+            const frag = d.createDocumentFragment();
+            let i = 0;
+            while (i < t.length) {
+                const start = t.indexOf('**', i);
+                if (start === -1) {
+                    frag.appendChild(d.createTextNode(t.slice(i)));
+                    break;
+                }
+                if (start > i) frag.appendChild(d.createTextNode(t.slice(i, start)));
+                const end = t.indexOf('**', start + 2);
+                if (end === -1) {
+                    frag.appendChild(d.createTextNode(t.slice(start)));
+                    break;
+                }
+                const inner = t.slice(start + 2, end);
+                const strong = d.createElement('strong');
+                strong.textContent = inner;
+                frag.appendChild(strong);
+                i = end + 2;
+            }
+            textNode.parentNode.replaceChild(frag, textNode);
+        };
+
+        const walker = d.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+            acceptNode(node) {
+                if (skipAncestor(node.parentElement)) return NodeFilter.FILTER_REJECT;
+                return NodeFilter.FILTER_ACCEPT;
+            },
+        });
+        const batch = [];
+        let n;
+        while ((n = walker.nextNode())) batch.push(n);
+        for (const tn of batch) processTextNode(tn);
+
+        return root.innerHTML;
+    } catch (err) {
+        console.warn('repairMarkdownBoldInTextNodes', err);
+        return html;
+    }
+}
+
+/** Date:October、Report &QA 等粘连，轻量插入空格（避免破坏 URL）。 */
+function fixMetadataSpacingMarkdown(md) {
+    if (!md || typeof md !== 'string') return md;
+    let s = md.replace(/\r\n/g, '\n');
+    s = s.replace(/([A-Za-z])\s*&\s*([A-Za-z])/g, (m, a, b, offset) => {
+        const before = s.slice(Math.max(0, offset - 8), offset);
+        if (/&[a-z]+;$/i.test(before)) return m;
+        return `${a} & ${b}`;
+    });
+    s = s.replace(/([A-Za-z])&([A-Za-z])/g, '$1 & $2');
+    s = s.replace(/([A-Za-z])([:：])([A-Za-z0-9])/g, '$1$2 $3');
+    return s;
+}
+
+/** 避免 # 标题紧跟上一段末尾时解析块边界不清。 */
+function ensureBlankLinesAroundBlocks(md) {
+    if (!md || typeof md !== 'string') return md;
+    let s = md.replace(/\r\n/g, '\n');
+    s = s.replace(/([^\n#])\n(#{1,6}\s+[^\n]+)/g, '$1\n\n$2');
+    return s;
+}
+
 /** 单换行在标准 Markdown 中不会分段；补空行使「1. xxx」列表、英文小节成为独立块。 */
 function expandMarkdownBlockSpacing(md) {
     if (!md || typeof md !== 'string') return md;
     let s = md.replace(/\r\n/g, '\n');
     s = s.replace(/([^\n])\n(\d{1,2}\.\s+\S)/g, '$1\n\n$2');
     s = s.replace(/([^\n])\n([•\-*]\s+\S)/g, '$1\n\n$2');
+    s = s.replace(/([^\n])\n(\d{1,2}\.\s+[A-Z][^\n]{12,})/g, '$1\n\n$2');
+    s = s.replace(/([a-z])(\d{1,2}\.\s+[A-Z])/g, '$1\n\n$2');
     return s;
 }
 
@@ -330,7 +448,16 @@ function preprocessMarkdownForWordExport(md) {
     const isEnglishSectionHeading = (t) => {
         const u = t.replace(/\*+/g, '').trim();
         if (u.length > 160) return false;
-        return /^(Executive Summary|Detailed Activity Breakdown|Key Metrics(?:\s*&\s*Progress)?|Conclusions|Immediate Priorities(?: for Tomorrow)?|Next Steps|Findings|Blockers|Test Scenario|Integration Validation|Process|Outcome|Resolution|Functional Regression|Performance\s*&\s*Load Testing)/i.test(
+        return /^(Executive Summary|Detailed Activity Breakdown|Results\s*&\s*Metrics|Key Metrics(?:\s*&\s*Progress)?|Key Finding|Key Findings|Conclusions?|Conclusion\s*&\s*Forward Plan|Collaborative Actions\s*&\s*Blockers?|Immediate Priorities(?: for Tomorrow)?|Immediate Plan for Next Period|Next Steps|Findings|Blockers|Test Scenario|Integration Validation|Process|Outcome|Resolution|Functional Regression|Performance\s*&\s*Load Testing(?:\s+Analysis)?|New Feature Validation|Risk Assessment|Summary\s*&\s*Outlook|Recommendations|Appendix)/i.test(
+            u
+        );
+    };
+
+    const looksLikeNumberedSectionHeading = (t) => {
+        const u = t.replace(/\*+/g, '').trim();
+        if (u.length < 28 || u.length > 200) return false;
+        if (!/^\d+\.\s+[A-Z]/.test(u) || /^\d+\.\d/.test(u)) return false;
+        return /\b(?:Testing|Analysis|Module|Suite|Regression|Validation|Performance|Breakdown|Metrics|Summary|Planning|Assessment|Integration|Functional|Insights|Report|Activities|Core|Load|Phase|Scenario)\b/i.test(
             u
         );
     };
@@ -365,6 +492,10 @@ function preprocessMarkdownForWordExport(md) {
         }
         if (isEnglishSectionHeading(t)) {
             out.push('## ' + t);
+            continue;
+        }
+        if (looksLikeNumberedSectionHeading(t)) {
+            out.push('### ' + t);
             continue;
         }
         if (/^[一二三四五六七八九十百千万]+、/.test(t)) {
@@ -1596,12 +1727,15 @@ async function exportToWord(content, filename) {
     }
 
     raw = stripTrailingBrandingMarkdown(raw);
+    raw = fixMetadataSpacingMarkdown(raw);
     raw = expandMarkdownBlockSpacing(raw);
+    raw = ensureBlankLinesAroundBlocks(raw);
     const pre = preprocessMarkdownForWordExport(raw);
     let htmlBody;
     if (typeof marked !== 'undefined') {
         htmlBody = marked.parse(pre, MARKED_OPTIONS_WORD);
         htmlBody = repairStrayMarkdownBold(htmlBody);
+        htmlBody = repairMarkdownBoldInTextNodes(htmlBody);
     } else {
         htmlBody = '<p>' + escapeHtmlBodyText(pre).replace(/\n/g, '<br>') + '</p>';
     }
@@ -1625,7 +1759,7 @@ async function exportToWord(content, filename) {
             @page { size: 21cm 29.7cm; margin: 2.54cm; mso-page-orientation: portrait; }
             @page Section1 { }
             div.Section1 { page: Section1; }
-            body { font-family: "SimSun", "宋体", "Times New Roman", serif; font-size: 12pt; line-height: 1.65; text-align: justify; mso-ascii-font-family: "Times New Roman"; mso-fareast-font-family: SimSun; }
+            body { font-family: Calibri, "Microsoft YaHei", "SimSun", serif; font-size: 12pt; line-height: 1.75; text-align: justify; mso-ascii-font-family: Calibri; mso-fareast-font-family: "Microsoft YaHei"; }
         </style>
     `;
 
@@ -1641,7 +1775,7 @@ async function exportToWord(content, filename) {
 ${docXml}
 ${css}
 </head>
-<body lang="ZH-CN" style="font-family:'SimSun','宋体','Times New Roman',serif;font-size:12.0pt;-webkit-text-size-adjust:100%;">
+<body lang="ZH-CN" style="font-family:Calibri,'Microsoft YaHei','SimSun',serif;font-size:12.0pt;mso-ascii-font-family:Calibri;mso-fareast-font-family:'Microsoft YaHei';-webkit-text-size-adjust:100%;">
 <div class="Section1" style="mso-page: Section1;">
 ${htmlBody}
 </div>
