@@ -140,37 +140,9 @@ function sanitizeDownloadFilename(name) {
     return String(name || 'download').replace(/[/\\?%*:|"<>]/g, '_').substring(0, 120);
 }
 
-/** Capacitor：原生导出优先 Web Share API（直接传 File，绕过插件）；否则写入 DATA 后用 Share.files 传 content://（勿用 url 参数，见 @capacitor/share 分支差异）。 */
+/** Capacitor 原生：仅用 Filesystem + Share（Android WebView 的 navigator.share(files) 不可靠）。调用方已保证仅在 isNativePlatform 下使用。 */
 async function reportifySaveDownloadInNative(blob, filename, successToastMsg) {
     const pathSafe = sanitizeDownloadFilename(filename);
-    const mime = blob.type || 'application/octet-stream';
-
-    try {
-        if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
-            const file = new File([blob], pathSafe, { type: mime });
-            const payload = { files: [file], title: pathSafe };
-            let ok = false;
-            if (typeof navigator.canShare === 'function') {
-                try {
-                    ok = navigator.canShare(payload);
-                } catch (_) {
-                    ok = true;
-                }
-            } else {
-                ok = true;
-            }
-            if (ok) {
-                await navigator.share(payload);
-                if (successToastMsg) showToast(successToastMsg, 'success');
-                return true;
-            }
-        }
-    } catch (e) {
-        if (e && e.name === 'AbortError') {
-            return true;
-        }
-        console.warn('Web Share (files) failed, trying Capacitor Filesystem + Share', e);
-    }
 
     try {
         const Filesystem = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Filesystem;
@@ -214,7 +186,13 @@ async function reportifySaveDownloadInNative(blob, filename, successToastMsg) {
         return true;
     } catch (e) {
         console.error('Native save/share failed', e);
-        showToast('Could not save file. Check storage permission.', 'error');
+        const detail = e && (e.message || String(e));
+        showToast(
+            detail
+                ? `Could not save file: ${detail.length > 140 ? detail.slice(0, 140) + '…' : detail}`
+                : 'Could not save file. Check storage permission.',
+            'error'
+        );
         return false;
     }
 }
