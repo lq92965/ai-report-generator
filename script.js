@@ -1792,9 +1792,11 @@ async function exportToWord(content, filename) {
     }
     showToast('正在生成专业 Word 文档...', 'info');
 
+    try {
     let htmlBody;
     const isNativeWord = window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform();
     const reportBox = document.getElementById('generated-report');
+    const themeClass = reportBox ? (reportBox.className || '') : '';
     const renderedHtml = reportBox ? String(reportBox.innerHTML || '').trim() : '';
     const hasStructuredRenderedHtml = /<(h[1-6]|p|ul|ol|li|table|blockquote)\b/i.test(renderedHtml);
 
@@ -1871,7 +1873,7 @@ ${htmlBody}
     const blob = new Blob([utf8Bom, wordHTML], { type: 'application/msword;charset=utf-8' });
     const docName = `${filename}.doc`;
     if (isNativeWord) {
-        const ok = await reportifySaveDownloadInNative(blob, docName, 'Word 文档下载成功!');
+        const ok = await reportifySaveDownloadInNative(blob, docName, 'Word 已生成，请在分享面板选择「保存」或「用 WPS 打开」');
         if (!ok) return;
         return;
     }
@@ -1884,6 +1886,11 @@ ${htmlBody}
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
     showToast("Word 文档下载成功!", "success");
+    } catch (err) {
+        console.error('exportToWord', err);
+        const msg = err && (err.message || String(err));
+        showToast(msg ? `Word 导出失败：${msg.length > 120 ? msg.slice(0, 120) + '…' : msg}` : 'Word 导出失败', 'error');
+    }
 }
 
 // ==============================================================
