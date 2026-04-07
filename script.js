@@ -324,6 +324,37 @@ function stripTrailingBrandingMarkdown(md) {
     return lines.join('\n');
 }
 
+/** 去掉 HTML 末尾推广行（按文本匹配），用于 App 端优先导出渲染后 HTML。 */
+function stripTrailingBrandingHtml(html) {
+    if (!html || typeof DOMParser === 'undefined') return html;
+    try {
+        const d = new DOMParser().parseFromString('<div id="__word_html_root">' + html + '</div>', 'text/html');
+        const root = d.getElementById('__word_html_root');
+        if (!root) return html;
+        const children = Array.from(root.children || []);
+        for (let i = children.length - 1; i >= 0; i--) {
+            const el = children[i];
+            const t = (el.innerText || el.textContent || '').trim();
+            if (!t) {
+                el.remove();
+                continue;
+            }
+            if (
+                t.length < 180 &&
+                (/reportify\s*ai|generated\s*by|generated_report|^\/\s*$/i.test(t) ||
+                    (/reportify/i.test(t) && t.length < 60))
+            ) {
+                el.remove();
+                continue;
+            }
+            break;
+        }
+        return root.innerHTML;
+    } catch (_) {
+        return html;
+    }
+}
+
 /** marked 偶发未解析的 **粗体**（尤其中英文混排），补成 <strong>（跳过 <pre> 块）。 */
 function repairStrayMarkdownBold(html) {
     if (!html || typeof html !== 'string') return html;
@@ -1717,27 +1748,37 @@ async function exportToWord(content, filename) {
     }
     showToast('正在生成专业 Word 文档...', 'info');
 
-    let raw = String(content).trim();
-    if (raw.startsWith('<')) {
-        raw = stripHtmlToPlainText(raw);
-    }
-    if (!raw) {
-        showToast('暂无内容可导出', 'error');
-        return;
-    }
-
-    raw = stripTrailingBrandingMarkdown(raw);
-    raw = fixMetadataSpacingMarkdown(raw);
-    raw = expandMarkdownBlockSpacing(raw);
-    raw = ensureBlankLinesAroundBlocks(raw);
-    const pre = preprocessMarkdownForWordExport(raw);
     let htmlBody;
-    if (typeof marked !== 'undefined') {
-        htmlBody = marked.parse(pre, MARKED_OPTIONS_WORD);
-        htmlBody = repairStrayMarkdownBold(htmlBody);
-        htmlBody = repairMarkdownBoldInTextNodes(htmlBody);
+    const isNativeWord = window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform();
+    const reportBox = document.getElementById('generated-report');
+    const renderedHtml = reportBox ? String(reportBox.innerHTML || '').trim() : '';
+    const hasStructuredRenderedHtml = /<(h[1-6]|p|ul|ol|li|table|blockquote)\b/i.test(renderedHtml);
+
+    // App 端优先使用已渲染 HTML：这与用户看到的生成框版式最一致。
+    if (isNativeWord && hasStructuredRenderedHtml) {
+        htmlBody = stripTrailingBrandingHtml(renderedHtml);
     } else {
-        htmlBody = '<p>' + escapeHtmlBodyText(pre).replace(/\n/g, '<br>') + '</p>';
+        let raw = String(content).trim();
+        if (raw.startsWith('<')) {
+            raw = stripHtmlToPlainText(raw);
+        }
+        if (!raw) {
+            showToast('暂无内容可导出', 'error');
+            return;
+        }
+
+        raw = stripTrailingBrandingMarkdown(raw);
+        raw = fixMetadataSpacingMarkdown(raw);
+        raw = expandMarkdownBlockSpacing(raw);
+        raw = ensureBlankLinesAroundBlocks(raw);
+        const pre = preprocessMarkdownForWordExport(raw);
+        if (typeof marked !== 'undefined') {
+            htmlBody = marked.parse(pre, MARKED_OPTIONS_WORD);
+            htmlBody = repairStrayMarkdownBold(htmlBody);
+            htmlBody = repairMarkdownBoldInTextNodes(htmlBody);
+        } else {
+            htmlBody = '<p>' + escapeHtmlBodyText(pre).replace(/\n/g, '<br>') + '</p>';
+        }
     }
     htmlBody = applyWordCompatibleInlineStyles(htmlBody);
 
@@ -1782,7 +1823,6 @@ ${htmlBody}
 </body>
 </html>`;
 
-    const isNativeWord = window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform();
     const utf8Bom = new Uint8Array([0xef, 0xbb, 0xbf]);
     const blob = new Blob([utf8Bom, wordHTML], { type: 'application/msword;charset=utf-8' });
     const docName = `${filename}.doc`;
