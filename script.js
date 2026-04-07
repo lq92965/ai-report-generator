@@ -136,7 +136,48 @@ window.addEventListener('resize', () => {
 window.ensurePwaShell = ensurePwaShell;
 window.clearPwaShellInlineStyles = clearPwaShellInlineStyles;
 
+function sanitizeDownloadFilename(name) {
+    return String(name || 'download').replace(/[/\\?%*:|"<>]/g, '_').substring(0, 120);
+}
+
+/** Capacitor：blob 下载无系统下载栏，写入 Documents 并调起分享（与 mobile-patch 中 <a download> 逻辑一致） */
+async function reportifySaveDownloadInNative(blob, filename, successToastMsg) {
+    try {
+        const Filesystem = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Filesystem;
+        const Share = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Share;
+        if (!Filesystem || !Share || typeof Filesystem.writeFile !== 'function') {
+            throw new Error('Filesystem/Share unavailable');
+        }
+        const pathSafe = sanitizeDownloadFilename(filename);
+        const base64 = await new Promise((resolve, reject) => {
+            const r = new FileReader();
+            r.onloadend = () => resolve(r.result.split(',')[1]);
+            r.onerror = reject;
+            r.readAsDataURL(blob);
+        });
+        const saved = await Filesystem.writeFile({
+            path: pathSafe,
+            data: base64,
+            directory: 'DOCUMENTS'
+        });
+        await Share.share({
+            title: pathSafe,
+            text: 'Reportify export',
+            url: saved.uri,
+            dialogTitle: 'Save or share file'
+        });
+        if (successToastMsg) showToast(successToastMsg, 'success');
+    } catch (e) {
+        console.error('Native save/share failed', e);
+        showToast('Could not save file. Check storage permission.', 'error');
+    }
+}
+
 window.saveAs = function(blob, filename) {
+    if (window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform()) {
+        void reportifySaveDownloadInNative(blob, filename, null);
+        return;
+    }
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -357,6 +398,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 // =================================================
 
 // --- 模块 A: Google 回调 ---
+/** 登录成功后刷新顶栏头像/菜单（与密码登录里 setupUserDropdown 一致；深链接回 App 时不会自动跑 DOMContentLoaded） */
+function finalizeLoginUiAfterToken() {
+    setupUserDropdown();
+    ensurePwaShell();
+    if (typeof loadAccountPageAvatar === 'function') {
+        void loadAccountPageAvatar();
+    }
+    if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+        lucide.createIcons();
+    }
+}
+
 /** Capacitor: bridge page → com.crickettechnology.reportifyai://oauth?bridge=… → exchange JWT via /api/oauth/bridge-token */
 async function applyGoogleTokenFromDeepLink(urlStr) {
     if (!urlStr || typeof urlStr !== 'string') return false;
@@ -388,6 +441,7 @@ async function applyGoogleTokenFromDeepLink(urlStr) {
                 ensurePwaShell();
                 await fetchUserProfile();
                 if (typeof closeModal === 'function') closeModal();
+                finalizeLoginUiAfterToken();
                 return true;
             }
         } catch (e) {
@@ -403,6 +457,7 @@ async function applyGoogleTokenFromDeepLink(urlStr) {
         ensurePwaShell();
         await fetchUserProfile();
         if (typeof closeModal === 'function') closeModal();
+        finalizeLoginUiAfterToken();
         return true;
     }
     return false;
@@ -1238,10 +1293,15 @@ function exportToWord(content, filename) {
     `;
 
     const blob = new Blob([wordHTML], { type: 'application/msword' });
+    const docName = `${filename}.doc`;
+    if (window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform()) {
+        void reportifySaveDownloadInNative(blob, docName, 'Word 文档下载成功!');
+        return;
+    }
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${filename}.doc`;
+    link.download = docName;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -1559,12 +1619,22 @@ function exportToPPT(content, filename, passedTemplate = null, passedSummary = n
     });
 
     // --- 10. 触发下载 ---
-    pptx.writeFile({ fileName: `${theme.name}_Deck_${filename}.pptx` })
-        .then(() => { if(window.showToast) window.showToast("Professional PPT Downloaded!", "success"); })
-        .catch(err => {
-            console.error("PPT Generation Error:", err);
-            if(window.showToast) window.showToast("Failed to generate PPT", "error");
-        });
+    const pptName = `${theme.name}_Deck_${filename}.pptx`;
+    const pptDone = () => {
+        if (window.showToast) window.showToast('Professional PPT Downloaded!', 'success');
+    };
+    const pptErr = (err) => {
+        console.error('PPT Generation Error:', err);
+        if (window.showToast) window.showToast('Failed to generate PPT', 'error');
+    };
+    if (window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform() && typeof pptx.write === 'function') {
+        pptx
+            .write('blob')
+            .then((blob) => reportifySaveDownloadInNative(blob, pptName, 'Professional PPT Downloaded!'))
+            .catch(pptErr);
+    } else {
+        pptx.writeFile({ fileName: pptName }).then(pptDone).catch(pptErr);
+    }
 }
 
 // ==============================================================
@@ -1617,6 +1687,10 @@ function downloadMarkdown() {
     
     const filename = `Report_${new Date().toISOString().slice(0,10)}.md`;
     const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
+    if (window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform()) {
+        void reportifySaveDownloadInNative(blob, filename, 'Markdown 已下载');
+        return;
+    }
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;

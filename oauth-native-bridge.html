@@ -44,8 +44,9 @@
 <body>
   <p id="msg">Opening Reportify AI…</p>
   <a id="open-app" class="btn" href="#">Open Reportify AI</a>
-  <a id="open-fallback" class="btn btn-secondary" href="#" style="display:none">Open app (alternate link)</a>
-  <p class="hint">Tap the blue button. If nothing happens, ensure Reportify AI is installed and Android “Open supported links” is allowed for this app.</p>
+  <a id="open-fallback" class="btn btn-secondary" href="#" style="display:none">Alternate: open app link</a>
+  <button type="button" id="copy-link" class="btn btn-secondary" style="display:none">Copy app link (paste in address bar)</button>
+  <p class="hint">If buttons do nothing: your app must be rebuilt with Android “deep link” settings (see project docs). Try “Copy app link” and paste into Chrome’s address bar, then tap Go.</p>
   <script>
 (function () {
   var PACKAGE = 'com.crickettechnology.reportifyai';
@@ -57,6 +58,7 @@
   var msgEl = document.getElementById('msg');
   var primary = document.getElementById('open-app');
   var fallback = document.getElementById('open-fallback');
+  var copyBtn = document.getElementById('copy-link');
 
   if (!token && !bridge && !err) {
     msgEl.textContent = 'Invalid sign-in callback.';
@@ -86,6 +88,18 @@
     fallback.href = customUrl;
     fallback.style.display = 'inline-block';
     fallback.textContent = 'Alternate: open app link';
+    copyBtn.style.display = 'inline-block';
+    copyBtn.addEventListener('click', function () {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(customUrl).then(function () {
+          msgEl.textContent = 'Link copied. Paste it into Chrome’s address bar and Go.';
+        }).catch(function () {
+          prompt('Copy this URL:', customUrl);
+        });
+      } else {
+        prompt('Copy this URL:', customUrl);
+      }
+    });
   } else {
     primary.href = customUrl;
   }
