@@ -146,6 +146,13 @@ function main() {
     ', logo images ×',
     counts.logo
   );
+  const wwwScript = path.join(WWW, 'script.js');
+  if (fs.existsSync(wwwScript)) {
+    const st = fs.statSync(wwwScript);
+    console.log('[ok] www/script.js (from repo script.js, ' + st.size + ' bytes)');
+  } else {
+    console.warn('[warn] www/script.js missing — check FRONTEND_JS in build_www.cjs');
+  }
   console.log('\n[build_www] Success. Total files under www/:', total);
   console.log('[build_www] Output:', WWW);
 }

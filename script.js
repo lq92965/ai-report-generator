@@ -150,7 +150,10 @@ async function reportifySaveDownloadInNative(blob, filename, successToastMsg) {
         if (!Filesystem || !Share || typeof Filesystem.writeFile !== 'function') {
             throw new Error('Filesystem/Share unavailable');
         }
-        const writeOpts = { path: pathSafe, directory: 'DATA' };
+        /* CACHE 而非 DATA：Android FileProvider 默认常包含 cache-path；files 目录易触发
+           “Failed to find configured root that contains …/files/…” */
+        const exportDir = 'CACHE';
+        const writeOpts = { path: pathSafe, directory: exportDir };
         const type = blob.type || '';
         const useUtf8 =
             typeof blob.text === 'function' &&
@@ -169,7 +172,7 @@ async function reportifySaveDownloadInNative(blob, filename, successToastMsg) {
         const saved = await Filesystem.writeFile(writeOpts);
         let shareUri = saved && saved.uri;
         if (!shareUri && typeof Filesystem.getUri === 'function') {
-            const gu = await Filesystem.getUri({ path: pathSafe, directory: 'DATA' });
+            const gu = await Filesystem.getUri({ path: pathSafe, directory: exportDir });
             shareUri = gu && gu.uri;
         }
         if (!shareUri) {
@@ -832,6 +835,63 @@ function setupStrictValidation() {
     }
 }
 
+/** 缩小头像体积，减轻 Nginx/网关 413（手机相册原图常 > 服务端 body 限制） */
+function compressImageFileForAvatar(file) {
+    return new Promise((resolve) => {
+        if (!file || !file.type || !file.type.startsWith('image/')) {
+            resolve(file);
+            return;
+        }
+        if (file.size <= 512 * 1024) {
+            resolve(file);
+            return;
+        }
+        const url = URL.createObjectURL(file);
+        const img = new Image();
+        img.onload = () => {
+            URL.revokeObjectURL(url);
+            let w = img.naturalWidth || img.width;
+            let h = img.naturalHeight || img.height;
+            const maxSide = 1280;
+            if (w > maxSide || h > maxSide) {
+                if (w >= h) {
+                    h = Math.round((h * maxSide) / w);
+                    w = maxSide;
+                } else {
+                    w = Math.round((w * maxSide) / h);
+                    h = maxSide;
+                }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) {
+                resolve(file);
+                return;
+            }
+            ctx.drawImage(img, 0, 0, w, h);
+            canvas.toBlob(
+                (blob) => {
+                    if (!blob) {
+                        resolve(file);
+                        return;
+                    }
+                    const name = (file.name && file.name.replace(/\.[^.]+$/, '')) || 'avatar';
+                    resolve(new File([blob], `${name}.jpg`, { type: 'image/jpeg' }));
+                },
+                'image/jpeg',
+                0.82
+            );
+        };
+        img.onerror = () => {
+            URL.revokeObjectURL(url);
+            resolve(file);
+        };
+        img.src = url;
+    });
+}
+
 function validateAllFields() {
     const nameInput = document.getElementById('signup-name');
     const emailInput = document.getElementById('signup-email');
@@ -867,13 +927,14 @@ function setupAvatarUpload() {
         const file = e.target.files[0];
         if (!file) return;
 
-        const formData = new FormData();
-        formData.append('avatar', file);
-
         // 使用 showToast 显示 "正在上传..."
-        showToast('Uploading...', 'info'); 
+        showToast('Uploading...', 'info');
 
         try {
+            const toUpload = await compressImageFileForAvatar(file);
+            const formData = new FormData();
+            formData.append('avatar', toUpload);
+
             const token = localStorage.getItem('token');
             const res = await fetch(`${API_BASE_URL}/api/upload-avatar`, {
                 method: 'POST',
@@ -887,7 +948,11 @@ function setupAvatarUpload() {
                 data = raw ? JSON.parse(raw) : {};
             } catch (_) {
                 if (!res.ok) {
-                    showToast(raw.slice(0, 120) || 'Upload failed', 'error');
+                    if (raw.includes('413') || /entity too large/i.test(raw)) {
+                        showToast('图片仍过大，请选更小图片或稍后重试', 'error');
+                    } else {
+                        showToast(raw.slice(0, 120) || 'Upload failed', 'error');
+                    }
                     return;
                 }
             }
@@ -901,7 +966,11 @@ function setupAvatarUpload() {
                     setupUserDropdown();
                 }
             } else {
-                showToast(data.message || raw.slice(0, 120) || 'Upload failed', 'error');
+                if (res.status === 413) {
+                    showToast('图片过大（413）。请选较小图片；若仍失败需服务端提高上传上限。', 'error');
+                } else {
+                    showToast(data.message || raw.slice(0, 120) || 'Upload failed', 'error');
+                }
             }
         } catch (err) {
             console.error(err);
