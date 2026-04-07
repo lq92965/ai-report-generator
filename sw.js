@@ -1,5 +1,5 @@
 /* Service Worker — Reportify PWA (cache shell + offline fallback) */
-const CACHE_NAME = 'reportify-pwa-v25-word-markdown-pipeline-native';
+const CACHE_NAME = 'reportify-pwa-v26-word-rules-engine';
 const PRECACHE_URLS = [
   './',
   './index.html',
