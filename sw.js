@@ -1,5 +1,5 @@
 /* Service Worker — Reportify PWA (cache shell + offline fallback) */
-const CACHE_NAME = 'reportify-pwa-v11-auth-header-native-export';
+const CACHE_NAME = 'reportify-pwa-v12-native-word-docx-vendor';
 const PRECACHE_URLS = [
   './',
   './index.html',
@@ -19,7 +19,8 @@ const PRECACHE_URLS = [
   './blog.html',
   './history.html',
   './profile.html',
-  './script.js'
+  './script.js',
+  './vendor/html-docx.js'
 ];
 
 self.addEventListener('install', (event) => {
