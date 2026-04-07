@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775520027553",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-07",
+        "author": "Alex Mercer",
+        "excerpt": "We've all been there. It’s Thursday afternoon, and the calendar notification pops up: \"Prepare Weekly Stakeholder Status Report.\" A collective groan e...",
+        "contentFile": "blog-1775520027553.md"
+    },
+    {
         "id": "1775516414197",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
