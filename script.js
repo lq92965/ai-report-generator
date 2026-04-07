@@ -260,9 +260,18 @@ function stripHtmlToPlainText(html) {
     }
 }
 
+/** 单换行在标准 Markdown 中不会分段；补空行使「1. xxx」列表、英文小节成为独立块。 */
+function expandMarkdownBlockSpacing(md) {
+    if (!md || typeof md !== 'string') return md;
+    let s = md.replace(/\r\n/g, '\n');
+    s = s.replace(/([^\n])\n(\d{1,2}\.\s+\S)/g, '$1\n\n$2');
+    s = s.replace(/([^\n])\n([•\-*]\s+\S)/g, '$1\n\n$2');
+    return s;
+}
+
 /**
  * AI 报告常为「一、二、」「1.1」等中文结构但未写 # 标题，marked 会全部变成 <p>，Word 无层级。
- * 在解析前插入 Markdown 标题，使 marked 输出 h1/h2/h3，再配合行内样式。
+ * 英文报告常见 Executive Summary 等单独成行，需补 ##。再配合 marked breaks:true 单换行变 <br>。
  */
 function preprocessMarkdownForWordExport(md) {
     if (!md || typeof md !== 'string') return md;
@@ -271,8 +280,16 @@ function preprocessMarkdownForWordExport(md) {
     let titleAssigned = false;
 
     const isMetaLine = (t) =>
-        /^(报告生成日期|报告人|生成日期|日期[:：]|Date[:：]|Reporter|Author)/i.test(t) ||
+        /^(报告生成日期|报告人|生成日期|日期[:：]|Date\s*[:：]|Reporter|Author|Report Prepared By|Prepared By)/i.test(t) ||
         (/[:：]/.test(t) && t.length < 40 && /日期|姓名|报告人/.test(t));
+
+    const isEnglishSectionHeading = (t) => {
+        const u = t.replace(/\*+/g, '').trim();
+        if (u.length > 160) return false;
+        return /^(Executive Summary|Detailed Activity Breakdown|Key Metrics(?:\s*&\s*Progress)?|Conclusions|Immediate Priorities(?: for Tomorrow)?|Next Steps|Findings|Blockers|Test Scenario|Integration Validation|Process|Outcome|Resolution|Functional Regression|Performance\s*&\s*Load Testing)/i.test(
+            u
+        );
+    };
 
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
@@ -302,6 +319,10 @@ function preprocessMarkdownForWordExport(md) {
                 continue;
             }
         }
+        if (isEnglishSectionHeading(t)) {
+            out.push('## ' + t);
+            continue;
+        }
         if (/^[一二三四五六七八九十百千万]+、/.test(t)) {
             out.push('## ' + t);
             continue;
@@ -318,6 +339,9 @@ function preprocessMarkdownForWordExport(md) {
     }
     return out.join('\n');
 }
+
+/** Word 导出专用：单换行 → <br>，避免整篇被合成一个 <p>。 */
+const MARKED_OPTIONS_WORD = { breaks: true, gfm: true };
 
 function escapeHtmlBodyText(s) {
     return String(s ?? '')
@@ -1527,10 +1551,11 @@ async function exportToWord(content, filename) {
         return;
     }
 
+    raw = expandMarkdownBlockSpacing(raw);
     const pre = preprocessMarkdownForWordExport(raw);
     let htmlBody;
     if (typeof marked !== 'undefined') {
-        htmlBody = marked.parse(pre);
+        htmlBody = marked.parse(pre, MARKED_OPTIONS_WORD);
     } else {
         htmlBody = '<p>' + escapeHtmlBodyText(pre).replace(/\n/g, '<br>') + '</p>';
     }
