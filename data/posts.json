@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775556029704",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-07",
+        "author": "Sarah Jenkins",
+        "excerpt": "It’s 4 PM on a Friday. You’re not wrapping up your strategic tasks or planning next week's sprint. Instead, you're wrestling with a spreadsheet, pulli...",
+        "contentFile": "blog-1775556029704.md"
+    },
+    {
         "id": "1775552422385",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
