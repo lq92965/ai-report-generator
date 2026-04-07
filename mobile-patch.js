@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const filename = target.getAttribute('download') || 'Reportify_Document';
 
                 try {
-                    const { Filesystem, Directory } = window.Capacitor.Plugins.Filesystem;
+                    const Filesystem = window.Capacitor.Plugins.Filesystem;
                     const { Share } = window.Capacitor.Plugins.Share;
                     let base64Data;
 
@@ -63,11 +63,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         return;
                     }
 
-                    // 写入手机系统文件
                     const savedFile = await Filesystem.writeFile({
                         path: filename,
                         data: base64Data,
-                        directory: Directory.Documents
+                        directory: 'DATA'
                     });
 
                     // 唤起手机底层的保存/分享弹窗
