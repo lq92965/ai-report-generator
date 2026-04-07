@@ -140,6 +140,26 @@ function sanitizeDownloadFilename(name) {
     return String(name || 'download').replace(/[/\\?%*:|"<>]/g, '_').substring(0, 120);
 }
 
+/** 原生端：HTML 伪装成 .doc 在 Word Mobile 中常丢版式；加载 html-docx-js 生成标准 .docx（OOXML）。 */
+function loadHtmlDocxOnce() {
+    if (window.htmlDocx && typeof window.htmlDocx.asBlob === 'function') {
+        return Promise.resolve();
+    }
+    if (loadHtmlDocxOnce._p) return loadHtmlDocxOnce._p;
+    loadHtmlDocxOnce._p = new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = new URL('vendor/html-docx.js', window.location.href).href;
+        s.async = true;
+        s.onload = () => {
+            if (window.htmlDocx && typeof window.htmlDocx.asBlob === 'function') resolve();
+            else reject(new Error('htmlDocx.asBlob missing'));
+        };
+        s.onerror = () => reject(new Error('vendor/html-docx.js load failed'));
+        document.head.appendChild(s);
+    });
+    return loadHtmlDocxOnce._p;
+}
+
 /** Capacitor：blob 下载无系统下载栏，写入 Documents 并调起分享（与 mobile-patch 中 <a download> 逻辑一致） */
 async function reportifySaveDownloadInNative(blob, filename, successToastMsg) {
     try {
@@ -1220,7 +1240,7 @@ function doExport(type) {
 // ==============================================================
 // 🟢 1. [Word 引擎 2.0]：精益求精版 (优化字体回退、行距、封面)
 // ==============================================================
-function exportToWord(content, filename) {
+async function exportToWord(content, filename) {
     if (!content) { showToast("暂无内容可导出", "error"); return; }
     showToast("正在生成专业 Word 文档...", "info");
 
@@ -1292,9 +1312,22 @@ function exportToWord(content, filename) {
         </html>
     `;
 
+    const isNativeWord = window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform();
+    if (isNativeWord) {
+        try {
+            await loadHtmlDocxOnce();
+            const docxHtml = '<!DOCTYPE html>\n' + wordHTML.trim();
+            const docxBlob = window.htmlDocx.asBlob(docxHtml, { orientation: 'portrait' });
+            await reportifySaveDownloadInNative(docxBlob, `${filename}.docx`, 'Word 文档下载成功!');
+            return;
+        } catch (e) {
+            console.warn('native Word .docx export failed, falling back to HTML .doc', e);
+        }
+    }
+
     const blob = new Blob([wordHTML], { type: 'application/msword' });
     const docName = `${filename}.doc`;
-    if (window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform()) {
+    if (isNativeWord) {
         void reportifySaveDownloadInNative(blob, docName, 'Word 文档下载成功!');
         return;
     }

@@ -46,6 +46,7 @@
   },
   "homepage": "https://github.com/lq92965/ai-report-generator#readme",
   "devDependencies": {
-    "@capacitor/assets": "^3.0.5"
+    "@capacitor/assets": "^3.0.5",
+    "html-docx-js": "^0.3.1"
   }
 }
