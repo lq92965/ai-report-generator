@@ -903,24 +903,32 @@ function setupAvatarUpload() {
                 body: formData
             });
 
-            const data = await res.json();
+            let data = {};
+            const raw = await res.text();
+            try {
+                data = raw ? JSON.parse(raw) : {};
+            } catch (_) {
+                if (!res.ok) {
+                    showToast(raw.slice(0, 120) || 'Upload failed', 'error');
+                    return;
+                }
+            }
 
             if (res.ok) {
-                // 成功：只显示轻提示，不弹窗
                 showToast('Success!', 'success');
-                
-                if (avatarImg) avatarImg.src = getFullImageUrl(data.avatarUrl);
-                if (currentUser) {
+                if (data.avatarUrl && avatarImg) avatarImg.src = getFullImageUrl(data.avatarUrl);
+                if (data.avatarUrl && currentUser) {
                     currentUser.picture = data.avatarUrl;
                     localStorage.setItem('user', JSON.stringify(currentUser));
-                    setupUserDropdown(); // 立即更新右上角
+                    setupUserDropdown();
                 }
             } else {
-                showToast(data.message || 'Upload failed', 'error');
+                showToast(data.message || raw.slice(0, 120) || 'Upload failed', 'error');
             }
         } catch (err) {
             console.error(err);
-            showToast('Network error', 'error');
+            const msg = (err && err.message) ? err.message : 'Network error';
+            showToast(msg.length > 100 ? msg.slice(0, 100) + '…' : msg, 'error');
         } finally {
             fileInput.value = '';
         }

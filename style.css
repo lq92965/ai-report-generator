@@ -2497,8 +2497,8 @@ body.has-app-nav .fixed.bottom-8 {
       height: 20px !important;
     }
     
-    /* 强制缩小所有按钮 */
-    button, .btn {
+    /* 强制缩小所有按钮（勿作用于 History 圆形导出钮：否则 !important 会压过内联 height，图标会挤偏） */
+    button:not(.history-export-icon-btn), .btn {
       padding: 0.5rem 1rem !important;
       font-size: 0.9rem !important;
       height: auto !important;
