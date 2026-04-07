@@ -587,6 +587,75 @@ function escapeHtmlBodyText(s) {
         .replace(/>/g, '&gt;');
 }
 
+/** 独立 Word 规则引擎：不依赖预览区 CSS，不依赖 marked。 */
+function buildWordHtmlByRules(rawInput) {
+    let raw = String(rawInput || '').trim();
+    if (!raw) return '';
+    if (raw.startsWith('<')) raw = stripHtmlToPlainText(raw);
+    raw = stripTrailingBrandingMarkdown(raw);
+    raw = fixMetadataSpacingMarkdown(raw);
+    raw = expandMarkdownBlockSpacing(raw);
+    raw = ensureBlankLinesAroundBlocks(raw);
+    raw = preprocessMarkdownForWordExport(raw);
+
+    const lines = raw.split(/\r?\n/);
+    const out = [];
+    let listType = '';
+
+    const closeList = () => {
+        if (!listType) return;
+        out.push(listType === 'ol' ? '</ol>' : '</ul>');
+        listType = '';
+    };
+    const esc = (s) => escapeHtmlBodyText(s).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+
+    for (let i = 0; i < lines.length; i++) {
+        const t = (lines[i] || '').trim();
+        if (!t) {
+            closeList();
+            continue;
+        }
+        let m;
+        if ((m = t.match(/^#{1}\s+(.+)$/))) {
+            closeList();
+            out.push('<h1>' + esc(m[1]) + '</h1>');
+            continue;
+        }
+        if ((m = t.match(/^#{2}\s+(.+)$/))) {
+            closeList();
+            out.push('<h2>' + esc(m[1]) + '</h2>');
+            continue;
+        }
+        if ((m = t.match(/^#{3,6}\s+(.+)$/))) {
+            closeList();
+            out.push('<h3>' + esc(m[1]) + '</h3>');
+            continue;
+        }
+        if ((m = t.match(/^[-*•]\s+(.+)$/))) {
+            if (listType !== 'ul') {
+                closeList();
+                out.push('<ul>');
+                listType = 'ul';
+            }
+            out.push('<li>' + esc(m[1]) + '</li>');
+            continue;
+        }
+        if ((m = t.match(/^\d+\.\s+(.+)$/))) {
+            if (listType !== 'ol') {
+                closeList();
+                out.push('<ol>');
+                listType = 'ol';
+            }
+            out.push('<li>' + esc(m[1]) + '</li>');
+            continue;
+        }
+        closeList();
+        out.push('<p>' + esc(t) + '</p>');
+    }
+    closeList();
+    return out.join('\n');
+}
+
 /** Capacitor 原生：仅用 Filesystem + Share（Android WebView 的 navigator.share(files) 不可靠）。调用方已保证仅在 isNativePlatform 下使用。 */
 async function reportifySaveDownloadInNative(blob, filename, successToastMsg) {
     const pathSafe = sanitizeDownloadFilename(filename);
@@ -1797,40 +1866,12 @@ async function exportToWord(content, filename) {
     const isNativeWord = window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform();
     const reportBox = document.getElementById('generated-report');
     const themeClass = reportBox ? (reportBox.className || '') : '';
-    const renderedHtml = reportBox ? String(reportBox.innerHTML || '').trim() : '';
-    const hasStructuredRenderedHtml = /<(h[1-6]|p|ul|ol|li|table|blockquote)\b/i.test(renderedHtml);
-    const rawContent = String(content || '').trim();
-
-    /* App 端不要用「预览区 innerHTML」替代 Markdown：预览依赖外部 CSS，.doc 里拿不到，版式会塌成纯文本。
-       仅在「内容本身就是 HTML」时用预览 DOM（与网站 Word 规则一致：走 marked + 行内样式）。 */
-    const useRenderedHtmlForWord =
-        isNativeWord && hasStructuredRenderedHtml && rawContent.startsWith('<');
-
-    if (useRenderedHtmlForWord) {
-        htmlBody = stripTrailingBrandingHtml(renderedHtml);
-    } else {
-        let raw = String(content).trim();
-        if (raw.startsWith('<')) {
-            raw = stripHtmlToPlainText(raw);
-        }
-        if (!raw) {
-            showToast('暂无内容可导出', 'error');
-            return;
-        }
-
-        raw = stripTrailingBrandingMarkdown(raw);
-        raw = fixMetadataSpacingMarkdown(raw);
-        raw = expandMarkdownBlockSpacing(raw);
-        raw = ensureBlankLinesAroundBlocks(raw);
-        const pre = preprocessMarkdownForWordExport(raw);
-        if (typeof marked !== 'undefined') {
-            htmlBody = marked.parse(pre, MARKED_OPTIONS_WORD);
-            htmlBody = repairStrayMarkdownBold(htmlBody);
-            htmlBody = repairMarkdownBoldInTextNodes(htmlBody);
-        } else {
-            htmlBody = '<p>' + escapeHtmlBodyText(pre).replace(/\n/g, '<br>') + '</p>';
-        }
+    htmlBody = buildWordHtmlByRules(content);
+    if (!htmlBody) {
+        showToast('暂无内容可导出', 'error');
+        return;
     }
+    htmlBody = repairMarkdownBoldInTextNodes(repairStrayMarkdownBold(htmlBody));
     htmlBody = applyWordCompatibleInlineStyles(htmlBody, { themeClass });
 
     const safeTitle = escapeHtmlForWordAttr(filename);
