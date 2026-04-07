@@ -150,9 +150,40 @@ function escapeHtmlForWordAttr(s) {
 /**
  * WPS / 移动版 Word 常忽略 <head><style>；将版式写成行内 style，保留与 Word 引擎 2.0 一致的设计。
  */
-function applyWordCompatibleInlineStyles(html) {
+function resolveWordThemePalette(themeClass) {
+    const t = String(themeClass || '').toLowerCase();
+    if (t.includes('theme-modern')) {
+        return {
+            h1Color: '#059669',
+            h2Accent: '#059669',
+            blockquoteBorder: '#059669',
+            blockquoteBg: '#ECFDF5',
+            blockquoteText: '#065F46',
+        };
+    }
+    if (t.includes('theme-creative')) {
+        return {
+            h1Color: '#6366F1',
+            h2Accent: '#7C3AED',
+            blockquoteBorder: '#EC4899',
+            blockquoteBg: '#FDF2F8',
+            blockquoteText: '#BE185D',
+        };
+    }
+    // corporate / default
+    return {
+        h1Color: '#1E3A8A',
+        h2Accent: '#1E40AF',
+        blockquoteBorder: '#3B82F6',
+        blockquoteBg: '#EFF6FF',
+        blockquoteText: '#1E40AF',
+    };
+}
+
+function applyWordCompatibleInlineStyles(html, options = {}) {
     if (!html || typeof DOMParser === 'undefined') return html;
     try {
+        const palette = resolveWordThemePalette(options.themeClass || '');
         const d = new DOMParser().parseFromString('<div id="__word_export_root">' + html + '</div>', 'text/html');
         const root = d.getElementById('__word_export_root');
         if (!root) return html;
@@ -171,14 +202,14 @@ function applyWordCompatibleInlineStyles(html) {
             merge(
                 el,
                 fontHead +
-                    'color:#111827;font-weight:bold;font-size:22.0pt;text-align:center;border-bottom:2.25pt solid #2563EB;padding-bottom:12.0pt;margin-top:6.0pt;margin-bottom:22.0pt;mso-line-height-rule:exactly;line-height:1.25;'
+                    `color:${palette.h1Color};font-weight:bold;font-size:22.0pt;text-align:center;border-bottom:2.25pt solid ${palette.h2Accent};padding-bottom:12.0pt;margin-top:6.0pt;margin-bottom:22.0pt;mso-line-height-rule:exactly;line-height:1.25;`
             )
         );
         root.querySelectorAll('h2').forEach((el) =>
             merge(
                 el,
                 fontHead +
-                    'color:#111827;font-weight:bold;font-size:16.0pt;border-left:5.0pt solid #2563EB;background:#F3F4F6;padding:6.0pt 12.0pt;margin-top:26.0pt;margin-bottom:14.0pt;mso-line-height-rule:exactly;line-height:1.3;'
+                    `color:#1F2937;font-weight:bold;font-size:16.0pt;border-left:5.0pt solid ${palette.h2Accent};background:#F3F4F6;padding:6.0pt 12.0pt;margin-top:26.0pt;margin-bottom:14.0pt;mso-line-height-rule:exactly;line-height:1.3;`
             )
         );
         root.querySelectorAll('h3').forEach((el) =>
@@ -241,7 +272,7 @@ function applyWordCompatibleInlineStyles(html) {
         root.querySelectorAll('blockquote').forEach((el) =>
             merge(
                 el,
-                'border-left:4.0pt solid #666666;background:#F9F9F9;padding:10.0pt 15.0pt;font-family:"KaiTi","楷体",serif;color:#444444;margin:15.0pt 0;'
+                `border-left:4.0pt solid ${palette.blockquoteBorder};background:${palette.blockquoteBg};padding:10.0pt 15.0pt;font-family:"KaiTi","楷体",serif;color:${palette.blockquoteText};margin:15.0pt 0;`
             )
         );
 
@@ -1721,6 +1752,7 @@ function setupCopyBtn() {
 // 🟢 修改 doExport 函数
 function doExport(type) {
     const reportBox = document.getElementById('generated-report');
+    const themeClass = reportBox ? (reportBox.className || '') : '';
     if (!reportBox || reportBox.innerText.length < 5) {
         showToast('请先生成报告', 'warning');
         return;
@@ -1780,7 +1812,7 @@ async function exportToWord(content, filename) {
             htmlBody = '<p>' + escapeHtmlBodyText(pre).replace(/\n/g, '<br>') + '</p>';
         }
     }
-    htmlBody = applyWordCompatibleInlineStyles(htmlBody);
+    htmlBody = applyWordCompatibleInlineStyles(htmlBody, { themeClass });
 
     const safeTitle = escapeHtmlForWordAttr(filename);
 
