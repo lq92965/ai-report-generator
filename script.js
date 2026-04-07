@@ -140,27 +140,7 @@ function sanitizeDownloadFilename(name) {
     return String(name || 'download').replace(/[/\\?%*:|"<>]/g, '_').substring(0, 120);
 }
 
-/** 原生端：HTML 伪装成 .doc 在 Word Mobile 中常丢版式；加载 html-docx-js 生成标准 .docx（OOXML）。 */
-function loadHtmlDocxOnce() {
-    if (window.htmlDocx && typeof window.htmlDocx.asBlob === 'function') {
-        return Promise.resolve();
-    }
-    if (loadHtmlDocxOnce._p) return loadHtmlDocxOnce._p;
-    loadHtmlDocxOnce._p = new Promise((resolve, reject) => {
-        const s = document.createElement('script');
-        s.src = new URL('vendor/html-docx.js', window.location.href).href;
-        s.async = true;
-        s.onload = () => {
-            if (window.htmlDocx && typeof window.htmlDocx.asBlob === 'function') resolve();
-            else reject(new Error('htmlDocx.asBlob missing'));
-        };
-        s.onerror = () => reject(new Error('vendor/html-docx.js load failed'));
-        document.head.appendChild(s);
-    });
-    return loadHtmlDocxOnce._p;
-}
-
-/** Capacitor：blob 下载无系统下载栏，写入 Documents 并调起分享（与 mobile-patch 中 <a download> 逻辑一致） */
+/** Capacitor：写入应用私有目录（DATA）再分享。勿用 DOCUMENTS：Android 10+ 上公共 Documents 常需 legacy 存储权限，易失败。 */
 async function reportifySaveDownloadInNative(blob, filename, successToastMsg) {
     try {
         const Filesystem = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Filesystem;
@@ -169,17 +149,23 @@ async function reportifySaveDownloadInNative(blob, filename, successToastMsg) {
             throw new Error('Filesystem/Share unavailable');
         }
         const pathSafe = sanitizeDownloadFilename(filename);
-        const base64 = await new Promise((resolve, reject) => {
-            const r = new FileReader();
-            r.onloadend = () => resolve(r.result.split(',')[1]);
-            r.onerror = reject;
-            r.readAsDataURL(blob);
-        });
-        const saved = await Filesystem.writeFile({
-            path: pathSafe,
-            data: base64,
-            directory: 'DOCUMENTS'
-        });
+        const writeOpts = { path: pathSafe, directory: 'DATA' };
+        const type = blob.type || '';
+        const useUtf8 =
+            typeof blob.text === 'function' &&
+            (type.startsWith('text/') || type.includes('markdown') || type === 'application/json');
+        if (useUtf8) {
+            writeOpts.data = await blob.text();
+            writeOpts.encoding = 'utf8';
+        } else {
+            writeOpts.data = await new Promise((resolve, reject) => {
+                const r = new FileReader();
+                r.onloadend = () => resolve(r.result.split(',')[1]);
+                r.onerror = reject;
+                r.readAsDataURL(blob);
+            });
+        }
+        const saved = await Filesystem.writeFile(writeOpts);
         await Share.share({
             title: pathSafe,
             text: 'Reportify export',
@@ -1313,22 +1299,11 @@ async function exportToWord(content, filename) {
     `;
 
     const isNativeWord = window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform();
-    if (isNativeWord) {
-        try {
-            await loadHtmlDocxOnce();
-            const docxHtml = '<!DOCTYPE html>\n' + wordHTML.trim();
-            const docxBlob = window.htmlDocx.asBlob(docxHtml, { orientation: 'portrait' });
-            await reportifySaveDownloadInNative(docxBlob, `${filename}.docx`, 'Word 文档下载成功!');
-            return;
-        } catch (e) {
-            console.warn('native Word .docx export failed, falling back to HTML .doc', e);
-        }
-    }
-
-    const blob = new Blob([wordHTML], { type: 'application/msword' });
+    const utf8Bom = new Uint8Array([0xef, 0xbb, 0xbf]);
+    const blob = new Blob([utf8Bom, wordHTML], { type: 'application/msword;charset=utf-8' });
     const docName = `${filename}.doc`;
     if (isNativeWord) {
-        void reportifySaveDownloadInNative(blob, docName, 'Word 文档下载成功!');
+        await reportifySaveDownloadInNative(blob, docName, 'Word 文档下载成功!');
         return;
     }
     const url = URL.createObjectURL(blob);
