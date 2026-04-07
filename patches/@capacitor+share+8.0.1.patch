@@ -1,0 +1,101 @@
+diff --git a/node_modules/@capacitor/share/android/src/main/java/com/capacitorjs/plugins/share/SharePlugin.java b/node_modules/@capacitor/share/android/src/main/java/com/capacitorjs/plugins/share/SharePlugin.java
+index dcfa338..938e9ba 100644
+--- a/node_modules/@capacitor/share/android/src/main/java/com/capacitorjs/plugins/share/SharePlugin.java
++++ b/node_modules/@capacitor/share/android/src/main/java/com/capacitorjs/plugins/share/SharePlugin.java
+@@ -87,7 +87,7 @@ public class SharePlugin extends Plugin {
+                 return;
+             }
+ 
+-            if (url != null && !isFileUrl(url) && !isHttpUrl(url)) {
++            if (url != null && !isFileUrl(url) && !isHttpUrl(url) && !isContentUrl(url)) {
+                 call.reject("Unsupported url");
+                 return;
+             }
+@@ -108,6 +108,10 @@ public class SharePlugin extends Plugin {
+                 JSArray filesArray = new JSArray();
+                 filesArray.put(url);
+                 shareFiles(filesArray, intent, call);
++            } else if (url != null && isContentUrl(url)) {
++                JSArray filesArray = new JSArray();
++                filesArray.put(url);
++                shareContentUris(filesArray, intent, call);
+             }
+ 
+             if (title != null) {
+@@ -138,6 +142,40 @@ public class SharePlugin extends Plugin {
+         }
+     }
+ 
++    private void shareContentUris(JSArray files, Intent intent, PluginCall call) {
++        try {
++            List<Object> filesList = files.toList();
++            ArrayList<Uri> uris = new ArrayList<>();
++            for (int i = 0; i < filesList.size(); i++) {
++                String file = (String) filesList.get(i);
++                if (!isContentUrl(file)) {
++                    call.reject("only content:// urls are supported");
++                    return;
++                }
++                Uri uri = Uri.parse(file);
++                String type = getContext().getContentResolver().getType(uri);
++                if (type == null || filesList.size() > 1) {
++                    type = "*/*";
++                }
++                intent.setType(type);
++                uris.add(uri);
++            }
++            if (uris.size() == 1) {
++                intent.removeExtra(Intent.EXTRA_TEXT);
++                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
++                    intent.setClipData(ClipData.newRawUri("", uris.get(0)));
++                }
++                intent.putExtra(Intent.EXTRA_STREAM, uris.get(0));
++            } else if (uris.size() > 1) {
++                intent.removeExtra(Intent.EXTRA_TEXT);
++                intent.putExtra(Intent.EXTRA_STREAM, uris);
++            }
++            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
++        } catch (Exception ex) {
++            call.reject(ex.getLocalizedMessage());
++        }
++    }
++
+     private void shareFiles(JSArray files, Intent intent, PluginCall call) {
+         List<Object> filesList;
+         ArrayList<Uri> fileUris = new ArrayList<>();
+@@ -158,14 +196,24 @@ public class SharePlugin extends Plugin {
+                         new File(Uri.parse(file).getPath())
+                     );
+                     fileUris.add(fileUrl);
++                } else if (isContentUrl(file)) {
++                    Uri uri = Uri.parse(file);
++                    String type = getContext().getContentResolver().getType(uri);
++                    if (type == null || filesList.size() > 1) {
++                        type = "*/*";
++                    }
++                    intent.setType(type);
++                    fileUris.add(uri);
+                 } else {
+                     call.reject("only file urls are supported");
+                     return;
+                 }
+             }
+             if (fileUris.size() > 1) {
++                intent.removeExtra(Intent.EXTRA_TEXT);
+                 intent.putExtra(Intent.EXTRA_STREAM, fileUris);
+             } else if (fileUris.size() == 1) {
++                intent.removeExtra(Intent.EXTRA_TEXT);
+                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                     intent.setClipData(ClipData.newRawUri("", fileUris.get(0)));
+                 }
+@@ -204,6 +252,10 @@ public class SharePlugin extends Plugin {
+         return url.startsWith("file:");
+     }
+ 
++    private boolean isContentUrl(String url) {
++        return url != null && url.startsWith("content:");
++    }
++
+     private boolean isHttpUrl(String url) {
+         return url.startsWith("http");
+     }

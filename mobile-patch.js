@@ -69,11 +69,16 @@ document.addEventListener('DOMContentLoaded', function() {
                         directory: 'DATA'
                     });
 
-                    // 唤起手机底层的保存/分享弹窗
+                    var shareUri = savedFile && savedFile.uri;
+                    if (!shareUri && Filesystem.getUri) {
+                        var gu = await Filesystem.getUri({ path: filename, directory: 'DATA' });
+                        shareUri = gu && gu.uri;
+                    }
+                    if (!shareUri) throw new Error('No file uri for share');
+
                     await Share.share({
                         title: filename,
-                        text: 'Here is your Reportify document',
-                        url: savedFile.uri,
+                        url: shareUri,
                         dialogTitle: 'Save or Share Document'
                     });
 
