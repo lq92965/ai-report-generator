@@ -625,14 +625,26 @@ async function reportifySaveDownloadInNative(blob, filename, successToastMsg) {
         if (!shareUri) {
             throw new Error('Filesystem write returned no uri');
         }
-        /* 必须用 files 数组：走 SharePlugin.shareFiles()；传 url 会走 shareContentUris，部分机型异常。
-           勿传 text。补丁为 shareFiles 增加 content:// 支持：patches/@capacitor+share+8.0.1.patch */
-        await Share.share({
+        // 文件已成功写入本地（这是“下载完成”的关键节点）。
+        if (successToastMsg) showToast(successToastMsg, 'success');
+
+        /* 部分安卓机型上 Share.share(files) 可能长时间不返回，导致“一直下载中”的体感。
+           这里改为“尝试分享但不阻塞成功路径”：超时/失败仅提示，不影响已保存结果。 */
+        const shareTask = Share.share({
             title: pathSafe,
             files: [shareUri],
             dialogTitle: 'Save or share file'
         });
-        if (successToastMsg) showToast(successToastMsg, 'success');
+        const shareTimeoutMs = 8000;
+        const timeoutTask = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('share timeout')), shareTimeoutMs)
+        );
+        try {
+            await Promise.race([shareTask, timeoutTask]);
+        } catch (shareErr) {
+            console.warn('Native share skipped', shareErr);
+            showToast('文件已保存，可在系统文件/下载中查看', 'info');
+        }
         return true;
     } catch (e) {
         console.error('Native save/share failed', e);
