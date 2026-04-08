@@ -276,6 +276,13 @@ const WORD_LAYOUT_PRESETS = {
     },
 };
 
+/** Word/WPS 导出：勿与 mso-line-height-rule:exactly 搭配无单位 line-height（易被解析成 1.75pt 导致整页文字压成一条线）。 */
+function wordExportLineHeightPercent(lhStr) {
+    const n = parseFloat(String(lhStr || '1.65'), 10);
+    if (isNaN(n) || n <= 0) return '165%';
+    return Math.min(250, Math.round(n * 100)) + '%';
+}
+
 function resolveWordLayoutProfile(templateId, contentSnippet) {
     const base = { ...WORD_LAYOUT_PRESETS.general };
     let preset = 'general';
@@ -316,28 +323,28 @@ function applyWordCompatibleInlineStyles(html, options = {}) {
             merge(
                 el,
                 fontHead +
-                    `mso-outline-level:1;color:${palette.h1Color};font-weight:bold;font-size:${L.h1Size};text-align:center;border-bottom:${L.h1Border} solid ${palette.h2Accent};padding-bottom:${L.h1Pb};margin-top:${L.h1Mt};margin-bottom:${L.h1Mb};mso-line-height-rule:exactly;line-height:1.25;`
+                    `mso-outline-level:1;color:${palette.h1Color};font-weight:bold;font-size:${L.h1Size};text-align:center;border-bottom:1pt solid ${palette.h2Accent};padding-bottom:${L.h1Pb};margin-top:${L.h1Mt};margin-bottom:${L.h1Mb};line-height:125%;`
             )
         );
         root.querySelectorAll('h2').forEach((el) =>
             merge(
                 el,
                 fontHead +
-                    `mso-outline-level:2;color:#1F2937;font-weight:bold;font-size:${L.h2Size};border-left:5.0pt solid ${palette.h2Accent};background:#F3F4F6;padding:${L.h2Pad};margin-top:${L.h2Mt};margin-bottom:${L.h2Mb};mso-line-height-rule:exactly;line-height:1.3;`
+                    `mso-outline-level:2;color:#1F2937;font-weight:bold;font-size:${L.h2Size};margin-top:${L.h2Mt};margin-bottom:${L.h2Mb};line-height:130%;padding-bottom:6pt;border-bottom:1pt solid #E5E7EB;`
             )
         );
         root.querySelectorAll('h3').forEach((el) =>
             merge(
                 el,
                 fontHead +
-                    `mso-outline-level:3;color:#1F2937;font-weight:bold;font-size:${L.h3Size};margin-top:${L.h3Mt};margin-bottom:${L.h3Mb};mso-line-height-rule:exactly;line-height:1.35;`
+                    `mso-outline-level:3;color:#1F2937;font-weight:bold;font-size:${L.h3Size};margin-top:${L.h3Mt};margin-bottom:${L.h3Mb};line-height:135%;`
             )
         );
         root.querySelectorAll('h4').forEach((el) =>
             merge(
                 el,
                 fontHead +
-                    `mso-outline-level:4;color:#111827;font-weight:bold;font-size:${L.h4Size};margin-top:${L.h4Mt};margin-bottom:${L.h4Mb};mso-line-height-rule:exactly;line-height:1.35;`
+                    `mso-outline-level:4;color:#111827;font-weight:bold;font-size:${L.h4Size};margin-top:${L.h4Mt};margin-bottom:${L.h4Mb};line-height:135%;`
             )
         );
 
@@ -345,7 +352,7 @@ function applyWordCompatibleInlineStyles(html, options = {}) {
             merge(
                 el,
                 fontBody +
-                    `font-size:${L.pSize};line-height:${L.pLh};margin-top:0;margin-bottom:${L.pMb};text-align:justify;mso-line-height-rule:exactly;`
+                    `font-size:${L.pSize};line-height:${wordExportLineHeightPercent(L.pLh)};margin-top:0;margin-bottom:${L.pMb};text-align:justify;`
             )
         );
 
@@ -367,11 +374,11 @@ function applyWordCompatibleInlineStyles(html, options = {}) {
             merge(
                 el,
                 fontBody +
-                    `font-size:${L.pSize};line-height:${L.liLh};margin-bottom:${L.liMb};margin-left:4.0pt;mso-line-height-rule:exactly;`
+                    `font-size:${L.pSize};line-height:${wordExportLineHeightPercent(L.liLh)};margin-bottom:${L.liMb};margin-left:4.0pt;`
             )
         );
         root.querySelectorAll('li p').forEach((el) =>
-            merge(el, `margin:0 0 6.0pt 0;line-height:${L.liLh};mso-line-height-rule:exactly;`)
+            merge(el, `margin:0 0 6.0pt 0;line-height:${wordExportLineHeightPercent(L.liLh)};`)
         );
         root.querySelectorAll('ul ul').forEach((el) =>
             merge(el, `list-style-type:${L.ulNestedType || 'circle'};margin-top:6.0pt;margin-bottom:6.0pt;`)
@@ -728,6 +735,19 @@ function preprocessMarkdownForWordExport(md) {
 /** Word 导出专用：单换行 → <br>，避免整篇被合成一个 <p>。 */
 const MARKED_OPTIONS_WORD = { breaks: true, gfm: true };
 
+/** 与 buildWordHtmlByRules 相同的 Markdown 结构化预处理，使「一、二、」等进入预览/复制 HTML。 */
+function normalizeMarkdownForPreviewDisplay(rawInput) {
+    let raw = String(rawInput || '').trim();
+    if (!raw) return '';
+    raw = raw.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+    if (raw.startsWith('<')) raw = stripHtmlToPlainText(raw);
+    raw = stripTrailingBrandingMarkdown(raw);
+    raw = fixMetadataSpacingMarkdown(raw);
+    raw = expandMarkdownBlockSpacing(raw);
+    raw = ensureBlankLinesAroundBlocks(raw);
+    return preprocessMarkdownForWordExport(raw);
+}
+
 function escapeHtmlBodyText(s) {
     return String(s ?? '')
         .replace(/&/g, '&amp;')
@@ -828,9 +848,14 @@ async function reportifySaveDownloadInNative(blob, filename, successToastMsg) {
         const exportDir = 'CACHE';
         const writeOpts = { path: pathSafe, directory: exportDir };
         const type = blob.type || '';
+        /* Word/HTML 本质是文本；application/msword 若走 base64 链路，部分机型上 WPS 打开会丢样式或乱码，改为 utf8 直写。 */
         const useUtf8 =
             typeof blob.text === 'function' &&
-            (type.startsWith('text/') || type.includes('markdown') || type === 'application/json');
+            (type.startsWith('text/') ||
+                type.includes('markdown') ||
+                type === 'application/json' ||
+                type.includes('msword') ||
+                type.includes('wordprocessingml'));
         if (useUtf8) {
             writeOpts.data = await blob.text();
             writeOpts.encoding = 'utf8';
@@ -1879,14 +1904,6 @@ function setupGenerator() {
             window.currentPPTOutline = data.pptOutline;       // PPT 大纲 (用于 PPT)
             window.currentEmailSummary = data.emailSummary;   // 邮件摘要 (用于 Email)
 
-            // 2. 🟢 修复渲染逻辑：确保 Markdown 被正确转换为漂亮 HTML
-            if (typeof marked !== 'undefined') {
-                resultBox.innerHTML = marked.parse(data.generatedText);
-                // 这里保持你原有的 theme-corporate 等皮肤切换逻辑不变
-            } else {
-                resultBox.innerText = data.generatedText;
-            }
-
             // --- RIE 3.0 核心联动开始 ---  
             if (data.error) throw new Error(data.error || 'Generation failed');
 
@@ -1905,9 +1922,10 @@ function setupGenerator() {
             }
             // --- RIE 3.0 核心联动结束 ---
 
-            // 🟢 [核心优化]：渲染 Markdown + 应用专业皮肤
+            // 🟢 [核心优化]：渲染 Markdown + 应用专业皮肤（与 Word 导出同一套标题/分段规则）
             if (typeof marked !== 'undefined') {
-                const htmlContent = marked.parse(data.generatedText);
+                const mdPreview = normalizeMarkdownForPreviewDisplay(data.generatedText);
+                const htmlContent = marked.parse(mdPreview, MARKED_OPTIONS_WORD);
                 resultBox.innerHTML = htmlContent;
                 
                 // 根据角色/模板应用 CSS 皮肤
@@ -2047,6 +2065,7 @@ async function exportToWord(content, filename, passedTemplateId = null) {
     htmlBody = applyWordCompatibleInlineStyles(htmlBody, { themeClass, layoutProfile });
 
     const safeTitle = escapeHtmlForWordAttr(filename);
+    const bodyLineHeightPct = wordExportLineHeightPercent(layoutProfile.pLh);
 
     // Word 97–2003 HTML：完整头 + MSO 条件块，桌面 Word / WPS 识别为 Word 文档；版式主要靠上行行内样式。
     const docXml = `<!--[if gte mso 9]><xml>
@@ -2064,7 +2083,7 @@ async function exportToWord(content, filename, passedTemplateId = null) {
             @page { size: 21cm 29.7cm; margin: 2.54cm; mso-page-orientation: portrait; }
             @page Section1 { }
             div.Section1 { page: Section1; }
-            body { font-family: Calibri, "Microsoft YaHei", "SimSun", serif; font-size: ${layoutProfile.pSize}; line-height: ${layoutProfile.pLh}; text-align: justify; mso-ascii-font-family: Calibri; mso-fareast-font-family: "Microsoft YaHei"; }
+            body { font-family: Calibri, "Microsoft YaHei", "SimSun", serif; font-size: ${layoutProfile.pSize}; line-height: ${bodyLineHeightPct}; text-align: justify; mso-ascii-font-family: Calibri; mso-fareast-font-family: "Microsoft YaHei"; }
         </style>
     `;
 
@@ -2080,7 +2099,7 @@ async function exportToWord(content, filename, passedTemplateId = null) {
 ${docXml}
 ${css}
 </head>
-<body lang="ZH-CN" style="font-family:Calibri,'Microsoft YaHei','SimSun',serif;font-size:${layoutProfile.pSize};line-height:${layoutProfile.pLh};mso-ascii-font-family:Calibri;mso-fareast-font-family:'Microsoft YaHei';-webkit-text-size-adjust:100%;">
+<body lang="ZH-CN" style="font-family:Calibri,'Microsoft YaHei','SimSun',serif;font-size:${layoutProfile.pSize};line-height:${bodyLineHeightPct};mso-ascii-font-family:Calibri;mso-fareast-font-family:'Microsoft YaHei';-webkit-text-size-adjust:100%;">
 <div class="Section1" style="mso-page: Section1;">
 ${htmlBody}
 </div>
@@ -2890,7 +2909,8 @@ window.viewReport = function(id) {
     // 关键：使用 marked 库把 Markdown 变成漂亮的 HTML
     // 如果没有 marked 库，就退化成普通文本
     if (typeof marked !== 'undefined') {
-        bodyEl.innerHTML = marked.parse(item.content);
+        const mdPreview = normalizeMarkdownForPreviewDisplay(item.content);
+        bodyEl.innerHTML = marked.parse(mdPreview, MARKED_OPTIONS_WORD);
     } else {
         bodyEl.innerHTML = item.content.replace(/\n/g, '<br>');
     }
