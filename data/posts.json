@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775642429128",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-08",
+        "author": "David Sterling",
+        "excerpt": "It's 9 AM on Monday. Your calendar is a sea of status meetings. Your inbox is flooded with requests for \"a quick update.\" Your team, meanwhile, is spe...",
+        "contentFile": "blog-1775642429128.md"
+    },
+    {
         "id": "1775638821782",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
