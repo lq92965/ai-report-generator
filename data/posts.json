@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775660418849",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-08",
+        "author": "Sarah Jenkins",
+        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory race among world governments, leading to a fragmented landscape of proposed...",
+        "contentFile": "news-1775660418849.md"
+    },
+    {
         "id": "1775656825375",
         "type": "blog",
         "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
