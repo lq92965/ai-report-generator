@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775682019370",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "category": "Tech Radar",
+        "date": "2026-04-08",
+        "author": "Olivia Thorne",
+        "excerpt": "The world's leading AI developers and policymakers are gathering in Seoul this week for a high-stakes summit, marking a pivotal moment in the race to...",
+        "contentFile": "news-1775682019370.md"
+    },
+    {
         "id": "1775678427318",
         "type": "blog",
         "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
