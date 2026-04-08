@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775617220326",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "category": "Tech Radar",
+        "date": "2026-04-08",
+        "author": "Michael Chen",
+        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
+        "contentFile": "news-1775617220326.md"
+    },
+    {
         "id": "1775613624856",
         "type": "blog",
         "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
