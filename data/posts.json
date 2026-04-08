@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775664027044",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-08",
+        "author": "Emily Rostova",
+        "excerpt": "It's the project manager's Groundhog Day. Monday morning, you open the same spreadsheet. You pull the same data from Jira, Salesforce, and a half-doze...",
+        "contentFile": "blog-1775664027044.md"
+    },
+    {
         "id": "1775660418849",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
