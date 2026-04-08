@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775649627799",
+        "type": "blog",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-08",
+        "author": "Alex Mercer",
+        "excerpt": "We've all been there. It's Sunday night, and a familiar dread creeps in. It's not about the meetings or the project challenges. It's about \"The Report...",
+        "contentFile": "blog-1775649627799.md"
+    },
+    {
         "id": "1775646025222",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
