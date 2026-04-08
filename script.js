@@ -587,10 +587,15 @@ function escapeHtmlBodyText(s) {
         .replace(/>/g, '&gt;');
 }
 
-/** 独立 Word 规则引擎：不依赖预览区 CSS，不依赖 marked。 */
+/**
+ * 网站 Word 规则层：先做预处理（标题识别、间距、去品牌），再用 marked 生成结构化 HTML。
+ * 不读取预览区 DOM；marked 仅作「文本→语义标签」引擎，版式由 applyWordCompatibleInlineStyles 行内化。
+ * 若 marked 不可用，降级为极简逐行解析。
+ */
 function buildWordHtmlByRules(rawInput) {
     let raw = String(rawInput || '').trim();
     if (!raw) return '';
+    raw = raw.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
     if (raw.startsWith('<')) raw = stripHtmlToPlainText(raw);
     raw = stripTrailingBrandingMarkdown(raw);
     raw = fixMetadataSpacingMarkdown(raw);
@@ -598,7 +603,11 @@ function buildWordHtmlByRules(rawInput) {
     raw = ensureBlankLinesAroundBlocks(raw);
     raw = preprocessMarkdownForWordExport(raw);
 
-    const lines = raw.split(/\r?\n/);
+    if (typeof marked !== 'undefined') {
+        return marked.parse(raw, MARKED_OPTIONS_WORD);
+    }
+
+    const lines = raw.split(/\n/);
     const out = [];
     let listType = '';
 
