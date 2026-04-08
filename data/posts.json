@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775620827909",
+        "type": "blog",
+        "title": "The Report Nobody Reads: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-08",
+        "author": "Jessica Tran",
+        "excerpt": "We’ve all been there. It’s 4:00 PM on a Friday, and you're frantically pulling data from three different systems to compile the weekly status report....",
+        "contentFile": "blog-1775620827909.md"
+    },
+    {
         "id": "1775617220326",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
