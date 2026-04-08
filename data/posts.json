@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775635225706",
+        "type": "blog",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-08",
+        "author": "Jessica Tran",
+        "excerpt": "It’s 4:00 PM on a Friday. Your team is trying to ship a critical feature, but instead, they're scrambling to pull numbers for three different status r...",
+        "contentFile": "blog-1775635225706.md"
+    },
+    {
         "id": "1775631621060",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
