@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775606428957",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-08",
+        "author": "Olivia Thorne",
+        "excerpt": "We've all been there. It's the end of the week, the sprint, or the month, and a familiar dread sets in. The task isn't shipping a feature or closing a...",
+        "contentFile": "blog-1775606428957.md"
+    },
+    {
         "id": "1775602817385",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
