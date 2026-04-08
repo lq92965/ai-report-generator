@@ -180,10 +180,124 @@ function resolveWordThemePalette(themeClass) {
     };
 }
 
+/** 文档类型版式：日报偏紧凑清单感，周报偏节奏分段，长报告/分析偏版面呼吸感（新闻/公文混排思路）。 */
+const WORD_LAYOUT_PRESETS = {
+    general: {
+        h1Size: '22.0pt',
+        h1Mt: '6.0pt',
+        h1Mb: '22.0pt',
+        h1Pb: '12.0pt',
+        h1Border: '2.25pt',
+        h2Size: '16.0pt',
+        h2Mt: '26.0pt',
+        h2Mb: '14.0pt',
+        h2Pad: '6.0pt 12.0pt',
+        h3Size: '14.0pt',
+        h3Mt: '20.0pt',
+        h3Mb: '10.0pt',
+        h4Size: '12.5pt',
+        h4Mt: '14.0pt',
+        h4Mb: '8.0pt',
+        pSize: '12.0pt',
+        pLh: '1.75',
+        pMb: '12.0pt',
+        ulMt: '14.0pt',
+        ulMb: '14.0pt',
+        ulMl: '22.0pt',
+        ulPl: '10.0pt',
+        ulType: 'disc',
+        olType: 'decimal',
+        liLh: '1.72',
+        liMb: '8.0pt',
+        liStrongSize: '12.0pt',
+        liStrongColor: '#1F2937',
+        pStrongColor: '#111827',
+        blockPad: '10.0pt 15.0pt',
+        ulNestedType: 'circle',
+    },
+    daily: {
+        h1Size: '20.0pt',
+        h1Mb: '16.0pt',
+        h1Pb: '10.0pt',
+        h2Size: '15.0pt',
+        h2Mt: '18.0pt',
+        h2Mb: '10.0pt',
+        h2Pad: '5.0pt 10.0pt',
+        h3Size: '13.5pt',
+        h3Mt: '14.0pt',
+        h3Mb: '8.0pt',
+        pLh: '1.62',
+        pMb: '9.0pt',
+        ulMt: '10.0pt',
+        ulMb: '10.0pt',
+        ulMl: '20.0pt',
+        ulType: 'square',
+        liLh: '1.65',
+        liMb: '7.0pt',
+        liStrongSize: '12.0pt',
+        liStrongColor: '#1E3A8A',
+    },
+    weekly: {
+        h1Size: '21.0pt',
+        h1Mb: '20.0pt',
+        h2Size: '15.5pt',
+        h2Mt: '22.0pt',
+        h2Mb: '12.0pt',
+        h3Size: '13.8pt',
+        pLh: '1.7',
+        pMb: '11.0pt',
+        ulMt: '12.0pt',
+        ulMb: '12.0pt',
+        liLh: '1.68',
+        liMb: '7.5pt',
+        liStrongColor: '#1E40AF',
+    },
+    executive: {
+        h1Size: '24.0pt',
+        h1Mb: '26.0pt',
+        h1Pb: '14.0pt',
+        h1Border: '3.0pt',
+        h2Size: '17.0pt',
+        h2Mt: '28.0pt',
+        h2Mb: '16.0pt',
+        h2Pad: '7.0pt 14.0pt',
+        h3Size: '14.5pt',
+        h3Mt: '22.0pt',
+        h3Mb: '11.0pt',
+        pLh: '1.8',
+        pMb: '12.0pt',
+        ulMt: '16.0pt',
+        ulMb: '16.0pt',
+        ulPl: '12.0pt',
+        liLh: '1.75',
+        liMb: '9.0pt',
+        liStrongSize: '12.5pt',
+        liStrongColor: '#111827',
+    },
+};
+
+function resolveWordLayoutProfile(templateId, contentSnippet) {
+    const base = { ...WORD_LAYOUT_PRESETS.general };
+    let preset = 'general';
+    const tid = String(templateId || '');
+    const sn = String(contentSnippet || '').slice(0, 1800);
+    if (/日报|晨报|今日工作|Daily\s+Work|Daily\s+Summary|stand\s*-?\s*up|晨间|当日/i.test(sn)) preset = 'daily';
+    else if (/周报|本周|Weekly\s+(Report|Summary|Review)|Week\s+in\s+Review|周工作/i.test(sn)) preset = 'weekly';
+    else if (/月报|季报|年报|Executive\s+Summary|Comprehensive|Analysis\s+Report|战略|深度分析|研判|白皮书/i.test(sn)) preset = 'executive';
+    else if (!/^[a-f0-9]{24}$/i.test(tid)) {
+        const L = tid.toLowerCase();
+        if (/(daily|standup)/.test(L)) preset = 'daily';
+        else if (/(weekly|pulse)/.test(L)) preset = 'weekly';
+        else if (/(monthly|quarter|annual|executive|review)/.test(L)) preset = 'executive';
+    }
+    return { ...base, ...WORD_LAYOUT_PRESETS[preset], layoutPreset: preset };
+}
+
 function applyWordCompatibleInlineStyles(html, options = {}) {
     if (!html || typeof DOMParser === 'undefined') return html;
     try {
         const palette = resolveWordThemePalette(options.themeClass || '');
+        const L = options.layoutProfile || resolveWordLayoutProfile(null, '');
         const d = new DOMParser().parseFromString('<div id="__word_export_root">' + html + '</div>', 'text/html');
         const root = d.getElementById('__word_export_root');
         if (!root) return html;
@@ -202,28 +316,28 @@ function applyWordCompatibleInlineStyles(html, options = {}) {
             merge(
                 el,
                 fontHead +
-                    `color:${palette.h1Color};font-weight:bold;font-size:22.0pt;text-align:center;border-bottom:2.25pt solid ${palette.h2Accent};padding-bottom:12.0pt;margin-top:6.0pt;margin-bottom:22.0pt;mso-line-height-rule:exactly;line-height:1.25;`
+                    `color:${palette.h1Color};font-weight:bold;font-size:${L.h1Size};text-align:center;border-bottom:${L.h1Border} solid ${palette.h2Accent};padding-bottom:${L.h1Pb};margin-top:${L.h1Mt};margin-bottom:${L.h1Mb};mso-line-height-rule:exactly;line-height:1.25;`
             )
         );
         root.querySelectorAll('h2').forEach((el) =>
             merge(
                 el,
                 fontHead +
-                    `color:#1F2937;font-weight:bold;font-size:16.0pt;border-left:5.0pt solid ${palette.h2Accent};background:#F3F4F6;padding:6.0pt 12.0pt;margin-top:26.0pt;margin-bottom:14.0pt;mso-line-height-rule:exactly;line-height:1.3;`
+                    `color:#1F2937;font-weight:bold;font-size:${L.h2Size};border-left:5.0pt solid ${palette.h2Accent};background:#F3F4F6;padding:${L.h2Pad};margin-top:${L.h2Mt};margin-bottom:${L.h2Mb};mso-line-height-rule:exactly;line-height:1.3;`
             )
         );
         root.querySelectorAll('h3').forEach((el) =>
             merge(
                 el,
                 fontHead +
-                    'color:#1F2937;font-weight:bold;font-size:14.0pt;margin-top:20.0pt;margin-bottom:10.0pt;mso-line-height-rule:exactly;line-height:1.35;'
+                    `color:#1F2937;font-weight:bold;font-size:${L.h3Size};margin-top:${L.h3Mt};margin-bottom:${L.h3Mb};mso-line-height-rule:exactly;line-height:1.35;`
             )
         );
         root.querySelectorAll('h4').forEach((el) =>
             merge(
                 el,
                 fontHead +
-                    'color:#111827;font-weight:bold;font-size:12.5pt;margin-top:14.0pt;margin-bottom:8.0pt;mso-line-height-rule:exactly;line-height:1.35;'
+                    `color:#111827;font-weight:bold;font-size:${L.h4Size};margin-top:${L.h4Mt};margin-bottom:${L.h4Mb};mso-line-height-rule:exactly;line-height:1.35;`
             )
         );
 
@@ -231,7 +345,7 @@ function applyWordCompatibleInlineStyles(html, options = {}) {
             merge(
                 el,
                 fontBody +
-                    'font-size:12.0pt;line-height:1.75;margin-top:0;margin-bottom:12.0pt;text-align:justify;mso-line-height-rule:exactly;'
+                    `font-size:${L.pSize};line-height:${L.pLh};margin-top:0;margin-bottom:${L.pMb};text-align:justify;mso-line-height-rule:exactly;`
             )
         );
 
@@ -239,28 +353,28 @@ function applyWordCompatibleInlineStyles(html, options = {}) {
             merge(
                 el,
                 fontBody +
-                    'margin:14.0pt 0 14.0pt 22.0pt;padding-left:10.0pt;list-style-type:disc;list-style-position:outside;font-size:12.0pt;'
+                    `margin:${L.ulMt} 0 ${L.ulMb} ${L.ulMl};padding-left:${L.ulPl};list-style-type:${L.ulType};list-style-position:outside;font-size:${L.pSize};`
             )
         );
         root.querySelectorAll('ol').forEach((el) =>
             merge(
                 el,
                 fontBody +
-                    'margin:14.0pt 0 14.0pt 22.0pt;padding-left:10.0pt;list-style-type:decimal;list-style-position:outside;font-size:12.0pt;'
+                    `margin:${L.ulMt} 0 ${L.ulMb} ${L.ulMl};padding-left:${L.ulPl};list-style-type:${L.olType};list-style-position:outside;font-size:${L.pSize};`
             )
         );
         root.querySelectorAll('li').forEach((el) =>
             merge(
                 el,
                 fontBody +
-                    'font-size:12.0pt;line-height:1.72;margin-bottom:8.0pt;margin-left:4.0pt;mso-line-height-rule:exactly;'
+                    `font-size:${L.pSize};line-height:${L.liLh};margin-bottom:${L.liMb};margin-left:4.0pt;mso-line-height-rule:exactly;`
             )
         );
         root.querySelectorAll('li p').forEach((el) =>
-            merge(el, 'margin:0 0 6.0pt 0;line-height:1.72;mso-line-height-rule:exactly;')
+            merge(el, `margin:0 0 6.0pt 0;line-height:${L.liLh};mso-line-height-rule:exactly;`)
         );
         root.querySelectorAll('ul ul').forEach((el) =>
-            merge(el, 'list-style-type:circle;margin-top:6.0pt;margin-bottom:6.0pt;')
+            merge(el, `list-style-type:${L.ulNestedType || 'circle'};margin-top:6.0pt;margin-bottom:6.0pt;`)
         );
         root.querySelectorAll('ol ol').forEach((el) =>
             merge(el, 'list-style-type:lower-alpha;margin-top:6.0pt;margin-bottom:6.0pt;')
@@ -272,7 +386,7 @@ function applyWordCompatibleInlineStyles(html, options = {}) {
         root.querySelectorAll('blockquote').forEach((el) =>
             merge(
                 el,
-                `border-left:4.0pt solid ${palette.blockquoteBorder};background:${palette.blockquoteBg};padding:10.0pt 15.0pt;font-family:"KaiTi","楷体",serif;color:${palette.blockquoteText};margin:15.0pt 0;`
+                `border-left:4.0pt solid ${palette.blockquoteBorder};background:${palette.blockquoteBg};padding:${L.blockPad};font-family:"KaiTi","楷体",serif;color:${palette.blockquoteText};margin:15.0pt 0;`
             )
         );
 
@@ -283,14 +397,14 @@ function applyWordCompatibleInlineStyles(html, options = {}) {
             )
         );
         root.querySelectorAll('td').forEach((el) =>
-            merge(el, 'border:1.0pt solid #000000;padding:8.0pt;vertical-align:top;' + fontBody + 'font-size:12.0pt;')
+            merge(el, 'border:1.0pt solid #000000;padding:8.0pt;vertical-align:top;' + fontBody + `font-size:${L.pSize};`)
         );
         root.querySelectorAll('th').forEach((el) =>
             merge(
                 el,
                 'border:1.0pt solid #000000;padding:8.0pt;vertical-align:top;background:#F0F0F0;font-weight:bold;' +
                     fontHead +
-                    'font-size:12.0pt;'
+                    `font-size:${L.pSize};`
             )
         );
 
@@ -310,7 +424,13 @@ function applyWordCompatibleInlineStyles(html, options = {}) {
         });
 
         root.querySelectorAll('strong, b').forEach((el) =>
-            merge(el, 'font-weight:bold;color:#111827;mso-bidi-font-weight:bold;')
+            merge(el, `font-weight:bold;color:${L.pStrongColor};mso-bidi-font-weight:bold;`)
+        );
+        root.querySelectorAll('li strong, li b').forEach((el) =>
+            merge(
+                el,
+                `font-weight:bold;font-size:${L.liStrongSize};color:${L.liStrongColor};mso-bidi-font-weight:bold;`
+            )
         );
         root.querySelectorAll('em, i').forEach((el) => merge(el, 'font-style:italic;'));
 
@@ -1855,7 +1975,8 @@ function doExport(type) {
             window.currentReportContent && String(window.currentReportContent).trim().length > 5
                 ? window.currentReportContent
                 : reportBox.innerText;
-        exportToWord(md, filename);
+        const tpl = document.getElementById('template');
+        exportToWord(md, filename, tpl ? tpl.value : null);
     } 
     // ... markdown 和 pdf 保持不变 ...
 }
@@ -1863,7 +1984,7 @@ function doExport(type) {
 // ==============================================================
 // 🟢 1. [Word 引擎 2.0]：精益求精版 (优化字体回退、行距、封面)
 // ==============================================================
-async function exportToWord(content, filename) {
+async function exportToWord(content, filename, passedTemplateId = null) {
     if (content == null || String(content).trim() === '') {
         showToast("暂无内容可导出", 'error');
         return;
@@ -1875,13 +1996,14 @@ async function exportToWord(content, filename) {
     const isNativeWord = window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform();
     const reportBox = document.getElementById('generated-report');
     const themeClass = reportBox ? (reportBox.className || '') : '';
+    const layoutProfile = resolveWordLayoutProfile(passedTemplateId, content);
     htmlBody = buildWordHtmlByRules(content);
     if (!htmlBody) {
         showToast('暂无内容可导出', 'error');
         return;
     }
     htmlBody = repairMarkdownBoldInTextNodes(repairStrayMarkdownBold(htmlBody));
-    htmlBody = applyWordCompatibleInlineStyles(htmlBody, { themeClass });
+    htmlBody = applyWordCompatibleInlineStyles(htmlBody, { themeClass, layoutProfile });
 
     const safeTitle = escapeHtmlForWordAttr(filename);
 
@@ -1901,7 +2023,7 @@ async function exportToWord(content, filename) {
             @page { size: 21cm 29.7cm; margin: 2.54cm; mso-page-orientation: portrait; }
             @page Section1 { }
             div.Section1 { page: Section1; }
-            body { font-family: Calibri, "Microsoft YaHei", "SimSun", serif; font-size: 12pt; line-height: 1.75; text-align: justify; mso-ascii-font-family: Calibri; mso-fareast-font-family: "Microsoft YaHei"; }
+            body { font-family: Calibri, "Microsoft YaHei", "SimSun", serif; font-size: ${layoutProfile.pSize}; line-height: ${layoutProfile.pLh}; text-align: justify; mso-ascii-font-family: Calibri; mso-fareast-font-family: "Microsoft YaHei"; }
         </style>
     `;
 
@@ -1917,7 +2039,7 @@ async function exportToWord(content, filename) {
 ${docXml}
 ${css}
 </head>
-<body lang="ZH-CN" style="font-family:Calibri,'Microsoft YaHei','SimSun',serif;font-size:12.0pt;mso-ascii-font-family:Calibri;mso-fareast-font-family:'Microsoft YaHei';-webkit-text-size-adjust:100%;">
+<body lang="ZH-CN" style="font-family:Calibri,'Microsoft YaHei','SimSun',serif;font-size:${layoutProfile.pSize};line-height:${layoutProfile.pLh};mso-ascii-font-family:Calibri;mso-fareast-font-family:'Microsoft YaHei';-webkit-text-size-adjust:100%;">
 <div class="Section1" style="mso-page: Section1;">
 ${htmlBody}
 </div>
@@ -2310,7 +2432,8 @@ function emailReport() {
         window.currentReportContent && String(window.currentReportContent).trim().length > 5
             ? window.currentReportContent
             : resultBox.innerText;
-    exportToWord(md, filename);
+    const tpl = document.getElementById('template');
+    exportToWord(md, filename, tpl ? tpl.value : null);
 
     // 3. 延时打开邮件客户端 (给下载留点时间)
     setTimeout(() => {
@@ -2661,7 +2784,7 @@ function setupHistoryLoader() {
         } 
         // 🟢 核心修复3：废弃简陋的 docx 库，强制调用主页统一的高级 Word 排版引擎
         else if (type === 'word') {
-            exportToWord(item.content, filename);
+            exportToWord(item.content, filename, item.templateId || passedTemplate);
         }
         // 🟢 核心修复3：调用全新引擎，传入颜色参数，并把数据库里的专属摘要也传过去！
         else if (type === 'ppt') {
@@ -2684,7 +2807,7 @@ function setupHistoryLoader() {
         
         showToast("正在为您下载 Word 附件...", "info");
         const filename = (item.title || "Report").replace(/[^a-z0-9]/gi, '_') + `_${new Date().toISOString().slice(0,10)}`;
-        exportToWord(item.content, filename);
+        exportToWord(item.content, filename, item.templateId);
 
         setTimeout(() => {
             const subject = encodeURIComponent("Sharing an AI-generated report");
