@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775628026095",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-08",
+        "author": "Marcus Webb",
+        "excerpt": "We've all been there. It's 4:45 PM on a Friday, and you're scrambling to pull together the weekly status report. You copy-paste charts, update spreads...",
+        "contentFile": "blog-1775628026095.md"
+    },
+    {
         "id": "1775624425135",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
