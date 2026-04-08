@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775671227831",
+        "type": "blog",
+        "title": "Drowning in Dashboards? How to Overcome Reporting Fatigue and Make Reports Matter Again",
+        "category": "Deep Insights",
+        "date": "2026-04-08",
+        "author": "David Sterling",
+        "excerpt": "You know the feeling. It’s 4 PM on a Friday, and that calendar alert pops up: \"Submit Weekly Performance Report.\" You open the dashboard, pull the sam...",
+        "contentFile": "blog-1775671227831.md"
+    },
+    {
         "id": "1775667618885",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
