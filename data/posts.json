@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775678427318",
+        "type": "blog",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-08",
+        "author": "Emily Rostova",
+        "excerpt": "As a Project Manager, you live and breathe data. You track progress, manage risks, and communicate status. The primary vehicle for this communication?...",
+        "contentFile": "blog-1775678427318.md"
+    },
+    {
         "id": "1775674821739",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
