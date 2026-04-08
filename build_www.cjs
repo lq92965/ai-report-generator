@@ -10,7 +10,7 @@ const path = require('path');
 const ROOT = __dirname;
 const WWW = path.join(ROOT, 'www');
 
-const FOLDERS_TO_COPY = ['images', 'icons', 'data'];
+const FOLDERS_TO_COPY = ['images', 'icons', 'data', 'vendor'];
 
 const FRONTEND_JS = new Set([
   'account.js',
