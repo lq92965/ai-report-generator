@@ -848,14 +848,14 @@ async function reportifySaveDownloadInNative(blob, filename, successToastMsg) {
         const exportDir = 'CACHE';
         const writeOpts = { path: pathSafe, directory: exportDir };
         const type = blob.type || '';
-        /* Word/HTML 本质是文本；application/msword 若走 base64 链路，部分机型上 WPS 打开会丢样式或乱码，改为 utf8 直写。 */
+        /* 仅「HTML 伪装 .doc」为文本；真 .docx（OOXML）为二进制 ZIP，必须走 base64 写入。 */
+        const isLegacyHtmlWord = type.includes('application/msword') && !type.includes('openxmlformats');
         const useUtf8 =
             typeof blob.text === 'function' &&
             (type.startsWith('text/') ||
                 type.includes('markdown') ||
                 type === 'application/json' ||
-                type.includes('msword') ||
-                type.includes('wordprocessingml'));
+                isLegacyHtmlWord);
         if (useUtf8) {
             writeOpts.data = await blob.text();
             writeOpts.encoding = 'utf8';
@@ -2036,93 +2036,414 @@ function doExport(type) {
     // ... markdown 和 pdf 保持不变 ...
 }
 
+/** OOXML .docx：Unicode 全语言；西文 Calibri + 东亚 Microsoft YaHei（中日韩等）。网站与 App 共用同一逻辑。 */
+const DOCX_FONT = { ascii: 'Calibri', eastAsia: 'Microsoft YaHei', cs: 'Calibri', hAnsi: 'Calibri' };
+const DOCX_FONT_CODE = { ascii: 'Consolas', eastAsia: 'Microsoft YaHei', cs: 'Consolas', hAnsi: 'Consolas' };
+
+async function loadDocxModule() {
+    if (window.__reportifyDocx) return window.__reportifyDocx;
+    if (typeof window.docx !== 'undefined' && window.docx.Document && window.docx.Packer) {
+        window.__reportifyDocx = window.docx;
+        return window.__reportifyDocx;
+    }
+    try {
+        const mod = await import('https://cdn.jsdelivr.net/npm/docx@8.5.0/+esm');
+        window.__reportifyDocx = mod;
+        return mod;
+    } catch (e) {
+        console.error('docx ESM import failed', e);
+        throw new Error('docx library failed to load');
+    }
+}
+
+function buildDocxNumberingConfig(docx) {
+    const { LevelFormat, AlignmentType, convertInchesToTwip } = docx;
+    return {
+        config: [
+            {
+                reference: 'reportify-bullet',
+                levels: [
+                    {
+                        level: 0,
+                        format: LevelFormat.BULLET,
+                        text: '\u2022',
+                        alignment: AlignmentType.LEFT,
+                        style: {
+                            paragraph: {
+                                indent: { left: convertInchesToTwip(0.5), hanging: convertInchesToTwip(0.25) },
+                            },
+                        },
+                    },
+                    {
+                        level: 1,
+                        format: LevelFormat.BULLET,
+                        text: '\u2022',
+                        alignment: AlignmentType.LEFT,
+                        style: {
+                            paragraph: {
+                                indent: { left: convertInchesToTwip(1), hanging: convertInchesToTwip(0.25) },
+                            },
+                        },
+                    },
+                    {
+                        level: 2,
+                        format: LevelFormat.BULLET,
+                        text: '\u2022',
+                        alignment: AlignmentType.LEFT,
+                        style: {
+                            paragraph: {
+                                indent: { left: convertInchesToTwip(1.5), hanging: convertInchesToTwip(0.25) },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                reference: 'reportify-numbered',
+                levels: [
+                    {
+                        level: 0,
+                        format: LevelFormat.DECIMAL,
+                        text: '%1.',
+                        alignment: AlignmentType.LEFT,
+                        style: {
+                            paragraph: {
+                                indent: { left: convertInchesToTwip(0.5), hanging: convertInchesToTwip(0.25) },
+                            },
+                        },
+                    },
+                    {
+                        level: 1,
+                        format: LevelFormat.DECIMAL,
+                        text: '%2.',
+                        alignment: AlignmentType.LEFT,
+                        style: {
+                            paragraph: {
+                                indent: { left: convertInchesToTwip(1), hanging: convertInchesToTwip(0.25) },
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+    };
+}
+
+function flattenInlineToDocxRuns(el, docx, inherited) {
+    const { TextRun } = docx;
+    const inh = inherited || {};
+    const runs = [];
+    function walk(node, bold, italics, mono) {
+        if (node.nodeType === Node.TEXT_NODE) {
+            const t = node.textContent;
+            if (!t) return;
+            runs.push(
+                new TextRun({
+                    text: t,
+                    bold: !!bold || !!inh.bold,
+                    italics: !!italics || !!inh.italics,
+                    font: mono ? DOCX_FONT_CODE : DOCX_FONT,
+                })
+            );
+            return;
+        }
+        if (node.nodeType !== Node.ELEMENT_NODE) return;
+        const tag = node.tagName.toLowerCase();
+        if (tag === 'br') {
+            runs.push(new TextRun({ break: 1, font: DOCX_FONT }));
+            return;
+        }
+        let b = bold;
+        let i = italics;
+        let m = mono;
+        if (tag === 'strong' || tag === 'b') b = true;
+        if (tag === 'em' || tag === 'i') i = true;
+        if (tag === 'code') m = true;
+        if (tag === 'u') {
+            for (const c of node.childNodes) walk(c, b, i, m);
+            return;
+        }
+        if (tag === 'span' || tag === 'a' || tag === 'mark' || tag === 'small' || tag === 'sup' || tag === 'sub') {
+            for (const c of node.childNodes) walk(c, b, i, m);
+            return;
+        }
+        for (const c of node.childNodes) walk(c, b, i, m);
+    }
+    walk(el, false, false, false);
+    if (runs.length === 0) runs.push(new TextRun({ text: (el.textContent || '').trim(), font: DOCX_FONT }));
+    return runs;
+}
+
+function flattenNodeChildrenToRuns(el, docx) {
+    const { TextRun } = docx;
+    const runs = [];
+    const kids = Array.from(el.childNodes);
+    if (kids.length === 1 && kids[0].nodeType === Node.ELEMENT_NODE && kids[0].tagName.toLowerCase() === 'p') {
+        return flattenInlineToDocxRuns(kids[0], docx, {});
+    }
+    for (const child of kids) {
+        if (child.nodeType === Node.TEXT_NODE) {
+            const t = child.textContent;
+            if (t) runs.push(new TextRun({ text: t, font: DOCX_FONT }));
+        } else if (child.nodeType === Node.ELEMENT_NODE) {
+            runs.push(...flattenInlineToDocxRuns(child, docx, {}));
+        }
+    }
+    if (runs.length === 0) runs.push(new TextRun({ text: (el.textContent || '').trim(), font: DOCX_FONT }));
+    return runs;
+}
+
+function elementToDocxBlocks(el, docx, layoutProfile, listDepth) {
+    const {
+        Paragraph,
+        TextRun,
+        HeadingLevel,
+        Table,
+        TableRow,
+        TableCell,
+        WidthType,
+        convertInchesToTwip,
+    } = docx;
+    void layoutProfile;
+    const out = [];
+    const tag = el.tagName.toLowerCase();
+
+    if (tag === 'script' || tag === 'style') return out;
+
+    if (tag === 'div' || tag === 'section' || tag === 'article' || tag === 'main' || tag === 'center') {
+        for (const c of el.children) out.push(...elementToDocxBlocks(c, docx, layoutProfile, listDepth));
+        return out;
+    }
+
+    if (/^h[1-6]$/.test(tag)) {
+        const level = Math.min(6, parseInt(tag[1], 10));
+        const hl = [
+            HeadingLevel.HEADING_1,
+            HeadingLevel.HEADING_2,
+            HeadingLevel.HEADING_3,
+            HeadingLevel.HEADING_4,
+            HeadingLevel.HEADING_5,
+            HeadingLevel.HEADING_6,
+        ][level - 1];
+        const runs = flattenNodeChildrenToRuns(el, docx);
+        out.push(
+            new Paragraph({
+                heading: hl,
+                spacing: { before: 160, after: 120 },
+                children: runs,
+            })
+        );
+        return out;
+    }
+
+    if (tag === 'p') {
+        out.push(
+            new Paragraph({
+                spacing: { after: 120 },
+                children: flattenInlineToDocxRuns(el, docx, {}),
+            })
+        );
+        return out;
+    }
+
+    if (tag === 'blockquote') {
+        const runs = flattenNodeChildrenToRuns(el, docx);
+        out.push(
+            new Paragraph({
+                spacing: { before: 120, after: 120 },
+                indent: { left: convertInchesToTwip(0.35) },
+                children: runs,
+            })
+        );
+        return out;
+    }
+
+    if (tag === 'hr') {
+        out.push(
+            new Paragraph({
+                spacing: { before: 160, after: 160 },
+                children: [new TextRun({ text: '— — —', font: DOCX_FONT })],
+            })
+        );
+        return out;
+    }
+
+    if (tag === 'pre') {
+        const txt = el.textContent || '';
+        out.push(
+            new Paragraph({
+                spacing: { before: 120, after: 120 },
+                children: [new TextRun({ text: txt, font: DOCX_FONT_CODE })],
+            })
+        );
+        return out;
+    }
+
+    if (tag === 'ul' || tag === 'ol') {
+        const ordered = tag === 'ol';
+        const ref = ordered ? 'reportify-numbered' : 'reportify-bullet';
+        for (const li of el.children) {
+            if (li.tagName.toLowerCase() !== 'li') continue;
+            const depth = Math.min(listDepth, 8);
+            const clone = li.cloneNode(true);
+            clone.querySelectorAll('ul, ol').forEach((n) => n.remove());
+            const runs = [];
+            const ps = clone.querySelectorAll('p');
+            if (ps.length) ps.forEach((p) => runs.push(...flattenInlineToDocxRuns(p, docx, {})));
+            else runs.push(...flattenInlineToDocxRuns(clone, docx, {}));
+            out.push(
+                new Paragraph({
+                    children: runs,
+                    numbering: { reference: ref, level: depth },
+                })
+            );
+            for (const nested of li.querySelectorAll(':scope > ul, :scope > ol')) {
+                out.push(...elementToDocxBlocks(nested, docx, layoutProfile, listDepth + 1));
+            }
+        }
+        return out;
+    }
+
+    if (tag === 'table') {
+        const rows = [];
+        for (const tr of el.querySelectorAll('tr')) {
+            const cells = [];
+            for (const td of tr.querySelectorAll('th, td')) {
+                const isTh = td.tagName.toLowerCase() === 'th';
+                cells.push(
+                    new TableCell({
+                        children: [
+                            new Paragraph({
+                                children: flattenInlineToDocxRuns(td, docx, isTh ? { bold: true } : {}),
+                            }),
+                        ],
+                    })
+                );
+            }
+            if (cells.length) rows.push(new TableRow({ children: cells }));
+        }
+        if (rows.length) {
+            out.push(
+                new Table({
+                    width: { size: 100, type: WidthType.PERCENTAGE },
+                    rows,
+                })
+            );
+        }
+        return out;
+    }
+
+    if (el.children && el.children.length) {
+        for (const c of el.children) out.push(...elementToDocxBlocks(c, docx, layoutProfile, listDepth));
+        if (out.length) return out;
+    }
+
+    out.push(
+        new Paragraph({
+            spacing: { after: 80 },
+            children: flattenInlineToDocxRuns(el, docx, {}),
+        })
+    );
+    return out;
+}
+
+function htmlToDocxChildren(html, docx, layoutProfile) {
+    const d = new DOMParser().parseFromString('<div id="__docx_root">' + html + '</div>', 'text/html');
+    const root = d.getElementById('__docx_root');
+    if (!root) return [];
+    const blocks = [];
+    for (const child of root.children) {
+        blocks.push(...elementToDocxBlocks(child, docx, layoutProfile, 0));
+    }
+    return blocks;
+}
+
+async function buildDocxBlobFromHtml(htmlBody, layoutProfile, themeClass, docx) {
+    const { Document, Packer, Paragraph } = docx;
+    void themeClass;
+    const numbering = buildDocxNumberingConfig(docx);
+    let children = htmlToDocxChildren(htmlBody, docx, layoutProfile);
+    if (!children.length) children = [new Paragraph({ text: '' })];
+    let doc;
+    try {
+        doc = new Document({
+            creator: 'Reportify AI',
+            title: 'Report',
+            description: 'Generated report',
+            numbering,
+            styles: {
+                default: {
+                    document: {
+                        run: {
+                            font: 'Calibri',
+                            eastAsia: 'Microsoft YaHei',
+                        },
+                    },
+                },
+            },
+            sections: [
+                {
+                    properties: {},
+                    children,
+                },
+            ],
+        });
+    } catch (e) {
+        console.warn('buildDocxBlobFromHtml styles fallback', e);
+        doc = new Document({
+            creator: 'Reportify AI',
+            title: 'Report',
+            numbering,
+            sections: [{ properties: {}, children }],
+        });
+    }
+    return Packer.toBlob(doc);
+}
+
 // ==============================================================
-// 🟢 1. [Word 引擎 2.0]：精益求精版 (优化字体回退、行距、封面)
+// 🟢 1. [Word 引擎 3.0]：原生 .docx（OOXML），网站与 App 一致
 // ==============================================================
 async function exportToWord(content, filename, passedTemplateId = null) {
     if (content == null || String(content).trim() === '') {
         showToast("暂无内容可导出", 'error');
         return;
     }
-    showToast('正在生成专业 Word 文档...', 'info');
+    showToast('正在生成 Word 文档 (.docx)...', 'info');
 
     try {
-    let htmlBody;
-    const isNativeWord = window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform();
-    const reportBox = document.getElementById('generated-report');
-    const themeClass = reportBox ? (reportBox.className || '') : '';
-    const layoutProfile = resolveWordLayoutProfile(passedTemplateId, content);
-    if (canUseRenderedReportHtml(reportBox)) {
-        htmlBody = sanitizeHtmlFragmentForWord(stripTrailingBrandingHtml(reportBox.innerHTML));
-    } else {
-        htmlBody = buildWordHtmlByRules(content);
-    }
-    if (!htmlBody) {
-        showToast('暂无内容可导出', 'error');
-        return;
-    }
-    htmlBody = repairMarkdownBoldInTextNodes(repairStrayMarkdownBold(htmlBody));
-    htmlBody = applyWordCompatibleInlineStyles(htmlBody, { themeClass, layoutProfile });
+        const isNativeWord = window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform();
+        const reportBox = document.getElementById('generated-report');
+        const themeClass = reportBox ? (reportBox.className || '') : '';
+        const layoutProfile = resolveWordLayoutProfile(passedTemplateId, content);
+        let htmlBody;
+        if (canUseRenderedReportHtml(reportBox)) {
+            htmlBody = sanitizeHtmlFragmentForWord(stripTrailingBrandingHtml(reportBox.innerHTML));
+        } else {
+            htmlBody = buildWordHtmlByRules(content);
+        }
+        if (!htmlBody) {
+            showToast('暂无内容可导出', 'error');
+            return;
+        }
+        htmlBody = repairMarkdownBoldInTextNodes(repairStrayMarkdownBold(htmlBody));
 
-    const safeTitle = escapeHtmlForWordAttr(filename);
-    const bodyLineHeightPct = wordExportLineHeightPercent(layoutProfile.pLh);
-
-    // Word 97–2003 HTML：完整头 + MSO 条件块，桌面 Word / WPS 识别为 Word 文档；版式主要靠上行行内样式。
-    const docXml = `<!--[if gte mso 9]><xml>
-<w:WordDocument xmlns:w="urn:schemas-microsoft-com:office:word">
-<w:View>Print</w:View>
-<w:Zoom>100</w:Zoom>
-<w:DoNotOptimizeForBrowser/>
-<w:ValidateAgainstSchemas/>
-<w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
-</w:WordDocument>
-</xml><![endif]-->`;
-
-    const css = `
-        <style>
-            @page { size: 21cm 29.7cm; margin: 2.54cm; mso-page-orientation: portrait; }
-            @page Section1 { }
-            div.Section1 { page: Section1; }
-            body { font-family: Calibri, "Microsoft YaHei", "SimSun", serif; font-size: ${layoutProfile.pSize}; line-height: ${bodyLineHeightPct}; text-align: justify; mso-ascii-font-family: Calibri; mso-fareast-font-family: "Microsoft YaHei"; }
-        </style>
-    `;
-
-    const wordHTML = `<!DOCTYPE html>
-<html xmlns:o="urn:schemas-microsoft-com:office:office"
- xmlns:w="urn:schemas-microsoft-com:office:word"
- xmlns="http://www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="ProgId" content="Word.Document">
-<meta charset="utf-8">
-<title>${safeTitle}</title>
-${docXml}
-${css}
-</head>
-<body lang="ZH-CN" style="font-family:Calibri,'Microsoft YaHei','SimSun',serif;font-size:${layoutProfile.pSize};line-height:${bodyLineHeightPct};mso-ascii-font-family:Calibri;mso-fareast-font-family:'Microsoft YaHei';-webkit-text-size-adjust:100%;">
-<div class="Section1" style="mso-page: Section1;">
-${htmlBody}
-</div>
-</body>
-</html>`;
-
-    const utf8Bom = new Uint8Array([0xef, 0xbb, 0xbf]);
-    const blob = new Blob([utf8Bom, wordHTML], { type: 'application/msword;charset=utf-8' });
-    const docName = `${filename}.doc`;
-    if (isNativeWord) {
-        const ok = await reportifySaveDownloadInNative(blob, docName, 'Word 已生成，请在分享面板选择「保存」或「用 WPS 打开」');
-        if (!ok) return;
-        return;
-    }
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = docName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    showToast("Word 文档下载成功!", "success");
+        const docxMod = await loadDocxModule();
+        const blob = await buildDocxBlobFromHtml(htmlBody, layoutProfile, themeClass, docxMod);
+        const docName = `${filename}.docx`;
+        if (isNativeWord) {
+            const ok = await reportifySaveDownloadInNative(blob, docName, 'Word 已生成（.docx），请保存或分享');
+            if (!ok) return;
+            return;
+        }
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = docName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        showToast('Word 文档 (.docx) 下载成功!', 'success');
     } catch (err) {
         console.error('exportToWord', err);
         const msg = err && (err.message || String(err));
@@ -2842,7 +3163,7 @@ function setupHistoryLoader() {
                 /* native 失败时 reportifySaveDownloadInNative 已 toast */
             }
         } 
-        // 🟢 核心修复3：废弃简陋的 docx 库，强制调用主页统一的高级 Word 排版引擎
+        // 🟢 Word：与主页相同的原生 .docx（OOXML）引擎
         else if (type === 'word') {
             exportToWord(item.content, filename, item.templateId || passedTemplate);
         }
