@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775685628299",
+        "type": "blog",
+        "title": "Beyond the Spreadsheet: A PM's Guide to Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-08",
+        "author": "David Sterling",
+        "excerpt": "It’s 5 PM on a Tuesday, and the familiar dread sets in. It's time to compile the weekly progress report. You spend the next hour pulling data from Jir...",
+        "contentFile": "blog-1775685628299.md"
+    },
+    {
         "id": "1775682019370",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
