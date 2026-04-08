@@ -134,6 +134,17 @@ app.get('/api/templates', async (req, res) => {
     res.json(templates);
 });
 
+/** 与 /api/templates 中 isPro:true 的模板 id 一致；用于服务端校验，防止客户端绕过锁。 */
+const PREMIUM_TEMPLATE_IDS = new Set([
+    'monthly_review',
+    'quarterly_report',
+    'annual_summary',
+    'project_proposal',
+    'research_summary',
+    'incident_report',
+    'marketing_copy',
+]);
+
 /** OAuth state: native Capacitor app must finish on custom URL scheme (see oauth-native-bridge.html + App.addListener('appUrlOpen')). */
 const GOOGLE_OAUTH_STATE_WEB = 'web';
 const GOOGLE_OAUTH_STATE_CAPACITOR = 'capacitor_native_v1';
@@ -667,6 +678,11 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
         const safeUserPrompt = rawUserPrompt.substring(0, 2000); 
 
         const { role, templateId, tone, detailLevel, language } = req.body;
+
+        const templateIdNorm = String(templateId || 'general').toLowerCase().trim();
+        if (PREMIUM_TEMPLATE_IDS.has(templateIdNorm) && userPlan === 'free') {
+            return res.status(403).json({ error: 'This report type requires Basic or Pro. Please upgrade your plan.' });
+        }
 
         const roleMapping = {
             "General": "Standard corporate professional. Focus on task execution details, collaboration progress, and timely delivery.",

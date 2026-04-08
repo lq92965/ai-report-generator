@@ -24,7 +24,7 @@ window.getGoogleAuthStartUrl = function () {
 // 全局状态
 let allTemplates = [];
 let currentUser = null; 
-let currentUserPlan = 'basic'; 
+let currentUserPlan = 'free'; 
 window.currentReportContent = "";
 
 // [新增] 图片地址处理工具 (必须加在这里，否则后面会报错)
@@ -316,28 +316,28 @@ function applyWordCompatibleInlineStyles(html, options = {}) {
             merge(
                 el,
                 fontHead +
-                    `color:${palette.h1Color};font-weight:bold;font-size:${L.h1Size};text-align:center;border-bottom:${L.h1Border} solid ${palette.h2Accent};padding-bottom:${L.h1Pb};margin-top:${L.h1Mt};margin-bottom:${L.h1Mb};mso-line-height-rule:exactly;line-height:1.25;`
+                    `mso-outline-level:1;color:${palette.h1Color};font-weight:bold;font-size:${L.h1Size};text-align:center;border-bottom:${L.h1Border} solid ${palette.h2Accent};padding-bottom:${L.h1Pb};margin-top:${L.h1Mt};margin-bottom:${L.h1Mb};mso-line-height-rule:exactly;line-height:1.25;`
             )
         );
         root.querySelectorAll('h2').forEach((el) =>
             merge(
                 el,
                 fontHead +
-                    `color:#1F2937;font-weight:bold;font-size:${L.h2Size};border-left:5.0pt solid ${palette.h2Accent};background:#F3F4F6;padding:${L.h2Pad};margin-top:${L.h2Mt};margin-bottom:${L.h2Mb};mso-line-height-rule:exactly;line-height:1.3;`
+                    `mso-outline-level:2;color:#1F2937;font-weight:bold;font-size:${L.h2Size};border-left:5.0pt solid ${palette.h2Accent};background:#F3F4F6;padding:${L.h2Pad};margin-top:${L.h2Mt};margin-bottom:${L.h2Mb};mso-line-height-rule:exactly;line-height:1.3;`
             )
         );
         root.querySelectorAll('h3').forEach((el) =>
             merge(
                 el,
                 fontHead +
-                    `color:#1F2937;font-weight:bold;font-size:${L.h3Size};margin-top:${L.h3Mt};margin-bottom:${L.h3Mb};mso-line-height-rule:exactly;line-height:1.35;`
+                    `mso-outline-level:3;color:#1F2937;font-weight:bold;font-size:${L.h3Size};margin-top:${L.h3Mt};margin-bottom:${L.h3Mb};mso-line-height-rule:exactly;line-height:1.35;`
             )
         );
         root.querySelectorAll('h4').forEach((el) =>
             merge(
                 el,
                 fontHead +
-                    `color:#111827;font-weight:bold;font-size:${L.h4Size};margin-top:${L.h4Mt};margin-bottom:${L.h4Mb};mso-line-height-rule:exactly;line-height:1.35;`
+                    `mso-outline-level:4;color:#111827;font-weight:bold;font-size:${L.h4Size};margin-top:${L.h4Mt};margin-bottom:${L.h4Mb};mso-line-height-rule:exactly;line-height:1.35;`
             )
         );
 
@@ -476,6 +476,30 @@ function stripTrailingBrandingMarkdown(md) {
 }
 
 /** 去掉 HTML 末尾推广行（按文本匹配），用于 App 端优先导出渲染后 HTML。 */
+/** Word 导出：去掉 script/style，避免从预览 DOM 取 HTML 时带入不安全或无关片段。 */
+function sanitizeHtmlFragmentForWord(html) {
+    if (!html || typeof DOMParser === 'undefined') return html;
+    try {
+        const d = new DOMParser().parseFromString('<div id="__word_sanitize">' + html + '</div>', 'text/html');
+        const root = d.getElementById('__word_sanitize');
+        if (!root) return html;
+        root.querySelectorAll('script, style, iframe').forEach((el) => el.remove());
+        return root.innerHTML;
+    } catch (_) {
+        return html;
+    }
+}
+
+/** 是否可用「与复制一致」的预览区 HTML 做 Word 导出（避免与 markdown 再解析不一致）。 */
+function canUseRenderedReportHtml(reportBox) {
+    if (!reportBox) return false;
+    const text = reportBox.innerText || '';
+    if (text.length < 30) return false;
+    if (/appear here|Analyzing structure|AI 生成的精美报告|生成后将显示/i.test(text)) return false;
+    const html = reportBox.innerHTML || '';
+    return /<h[1-6][\s/>]|<ul[\s/>]|<ol[\s/>]|<strong[\s/>]|<li[\s/>]/i.test(html);
+}
+
 function stripTrailingBrandingHtml(html) {
     if (!html || typeof DOMParser === 'undefined') return html;
     try {
@@ -689,6 +713,10 @@ function preprocessMarkdownForWordExport(md) {
             continue;
         }
         if (/^\d+\.\d+/.test(t)) {
+            out.push('### ' + t);
+            continue;
+        }
+        if (/^\d+\.\s+/.test(t) && t.length < 120 && /[\u4e00-\u9fff]/.test(t)) {
             out.push('### ' + t);
             continue;
         }
@@ -1087,6 +1115,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 function finalizeLoginUiAfterToken() {
     setupUserDropdown();
     ensurePwaShell();
+    if (typeof setupTemplates === 'function') void setupTemplates();
     if (typeof loadAccountPageAvatar === 'function') {
         void loadAccountPageAvatar();
     }
@@ -1201,10 +1230,11 @@ async function fetchUserProfile() {
         const res = await fetch(`${API_BASE_URL}/api/me`, { headers: { 'Authorization': `Bearer ${token}` } });
         if (res.ok) {
             currentUser = await res.json();
-            currentUserPlan = currentUser.plan || 'basic';
+            currentUserPlan = currentUser.plan || 'free';
         } else if (res.status === 401) {
             localStorage.removeItem('token');
             currentUser = null;
+            currentUserPlan = 'free';
         }
     } catch (e) { console.error(e); }
 }
@@ -1259,6 +1289,7 @@ function setupAuthUI() {
                 showToast("Welcome back!", "success");
                 window.closeModal();
                 await fetchUserProfile();
+                void setupTemplates();
                 setupUserDropdown();
                 ensurePwaShell();
                 await loadAccountPageAvatar();
@@ -1693,6 +1724,11 @@ function setupProfileForm() {
     }
 }
 
+function canUsePremiumReportTemplates(plan) {
+    const p = String(plan || 'free').toLowerCase().trim();
+    return p === 'pro' || p === 'basic';
+}
+
 // --- 模块 D: 模板加载 ---
 async function setupTemplates() {
     const templateSelect = document.getElementById('template');
@@ -1720,8 +1756,9 @@ async function setupTemplates() {
             items.forEach(t => {
                 const option = document.createElement('option');
                 option.value = t._id;
-                const isLocked = t.isPro && currentUserPlan !== 'pro';
+                const isLocked = t.isPro && !canUsePremiumReportTemplates(currentUserPlan);
                 option.textContent = `${isLocked ? '🔒 ' : ''}${t.title}`;
+                if (isLocked) option.disabled = true;
                 optgroup.appendChild(option);
             });
             templateSelect.appendChild(optgroup);
@@ -1997,7 +2034,11 @@ async function exportToWord(content, filename, passedTemplateId = null) {
     const reportBox = document.getElementById('generated-report');
     const themeClass = reportBox ? (reportBox.className || '') : '';
     const layoutProfile = resolveWordLayoutProfile(passedTemplateId, content);
-    htmlBody = buildWordHtmlByRules(content);
+    if (canUseRenderedReportHtml(reportBox)) {
+        htmlBody = sanitizeHtmlFragmentForWord(stripTrailingBrandingHtml(reportBox.innerHTML));
+    } else {
+        htmlBody = buildWordHtmlByRules(content);
+    }
     if (!htmlBody) {
         showToast('暂无内容可导出', 'error');
         return;
