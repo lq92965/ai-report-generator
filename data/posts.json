@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775624425135",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "category": "Tech Radar",
+        "date": "2026-04-08",
+        "author": "Sarah Jenkins",
+        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
+        "contentFile": "news-1775624425135.md"
+    },
+    {
         "id": "1775620827909",
         "type": "blog",
         "title": "The Report Nobody Reads: A PM's Guide to Curing Reporting Fatigue",
