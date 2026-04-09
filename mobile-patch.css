@@ -409,3 +409,26 @@ html.pwa-nb-detail-layout body.has-app-nav main.flex-grow > article.max-w-4xl.mx
     height: 1.15em !important;
     text-align: center !important;
 }
+
+/*
+ * News/Blog 详情页首图：防止在 WebView / Tailwind prose 下被压扁。
+ */
+#article-content img,
+#article-content figure.article-cover img,
+#article-content .article-cover-img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    display: block !important;
+    flex-shrink: 0 !important;
+}
+
+#article-content figure.article-cover {
+    margin: 0 0 1.75rem 0;
+    width: 100%;
+    max-width: 100%;
+}
