@@ -61,6 +61,7 @@ async function loadPayments() {
 
         if (list.length === 0) {
             if (emptyEl) emptyEl.style.display = 'block';
+            if (tableWrap) tableWrap.style.display = 'none';
             return;
         }
 
