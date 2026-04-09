@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775736028001",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-09",
+        "author": "David Sterling",
+        "excerpt": "We’ve all been there. It’s Monday morning, and your inbox is flooded with automated reports. You click open the weekly performance PDF, your eyes glaz...",
+        "contentFile": "blog-1775736028001.md"
+    },
+    {
         "id": "1775732418745",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
