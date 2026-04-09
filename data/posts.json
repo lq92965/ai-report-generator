@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775692827273",
+        "type": "blog",
+        "title": "The PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-09",
+        "author": "Michael Chen",
+        "excerpt": "It’s Sunday night. You’re not thinking about the strategic product launch next quarter. You’re not whiteboarding the next big feature. You’re mentally...",
+        "contentFile": "blog-1775692827273.md"
+    },
+    {
         "id": "1775689223273",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
