@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775707227862",
+        "type": "blog",
+        "title": "Overcoming Reporting Fatigue: Turning Data Dumps into Decisions",
+        "category": "Deep Insights",
+        "date": "2026-04-09",
+        "author": "David Sterling",
+        "excerpt": "We’ve all been there. It’s Sunday night, and a familiar dread creeps in—not just about the upcoming week, but about the Monday morning report you have...",
+        "contentFile": "blog-1775707227862.md"
+    },
+    {
         "id": "1775703618873",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
