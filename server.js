@@ -88,6 +88,21 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Auth Middleware
+/** JWT payload may serialize Mongo ObjectId as string or {$oid}; normalize for DB queries. */
+function normalizeJwtUserId(payload) {
+    if (!payload || payload.userId == null) return payload;
+    const id = payload.userId;
+    if (typeof id === 'string') return { ...payload, userId: id };
+    if (typeof id === 'object') {
+        if (id.$oid) return { ...payload, userId: String(id.$oid) };
+        if (typeof id.toString === 'function') {
+            const s = id.toString();
+            if (/^[a-f0-9]{24}$/i.test(s)) return { ...payload, userId: s };
+        }
+    }
+    return { ...payload, userId: String(id) };
+}
+
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
@@ -95,7 +110,7 @@ const authenticateToken = (req, res, next) => {
 
   jwt.verify(token, JWT_SECRET, (err, user) => {
     if (err) return res.status(403).json({ message: 'Invalid Token' });
-    req.user = user;
+    req.user = normalizeJwtUserId(user);
     next();
   });
 };
@@ -106,7 +121,8 @@ const verifyAdmin = async (req, res, next) => {
     if (!token) return res.status(401).json({ message: 'Unauthorized' });
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        const user = await db.collection('users').findOne({ _id: new ObjectId(decoded.userId) });
+        const norm = normalizeJwtUserId(decoded);
+        const user = await db.collection('users').findOne({ _id: new ObjectId(norm.userId) });
         if (user && user.role === 'admin') { req.user = user; next(); } 
         else { res.status(403).json({ message: 'Admin Only' }); }
     } catch (err) { res.status(403).json({ message: 'Token Invalid' }); }
@@ -158,6 +174,228 @@ function addDays(baseDate, days) {
     return d;
 }
 
+/** Monthly ended but queued annual not started yet — keep paid access until queue activates. */
+function inQueuedGapBeforeStarts(user, now) {
+    if (!user || !user.planQueue || !user.planQueue.startsAt || !user.planExpiresAt) return false;
+    const startsAt = new Date(user.planQueue.startsAt);
+    const exp = new Date(user.planExpiresAt);
+    return now > exp && now < startsAt;
+}
+
+function tierFromSku(planId) {
+    return String(planId || '').replace(/_annual/g, '').toLowerCase().trim();
+}
+function isAnnualSku(planId) {
+    return String(planId || '').includes('_annual');
+}
+function planDaysForSku(actualPlanId) {
+    return String(actualPlanId || '').includes('annual') ? 365 : 30;
+}
+/** Prefer DB field; otherwise infer monthly vs annual from remaining time. */
+function inferPlanSku(user) {
+    if (user.planSku) return user.planSku;
+    const p = (user.plan || 'free').toLowerCase().trim();
+    if (p !== 'basic' && p !== 'pro') return null;
+    if (!user.planExpiresAt) return null;
+    const exp = new Date(user.planExpiresAt);
+    const now = new Date();
+    if (exp <= now) return null;
+    const daysLeft = (exp - now) / 86400000;
+    if (daysLeft > 60) return `${p}_annual`;
+    return p;
+}
+
+/**
+ * Activates a queued plan (e.g. annual starting after monthly ends).
+ * Call before reading user in /api/me, /api/usage, /api/generate.
+ */
+async function maybeApplyQueuedPlan(userId) {
+    if (!userId || !db) return;
+    try {
+        const uid = new ObjectId(userId);
+        const user = await db.collection('users').findOne({ _id: uid });
+        if (!user || !user.planQueue || !user.planQueue.startsAt) return;
+
+        const now = new Date();
+        const startsAt = new Date(user.planQueue.startsAt);
+        if (now < startsAt) return;
+
+        const q = user.planQueue;
+        const planIdRaw = q.planId || q.planSku;
+        if (!planIdRaw) return;
+        const realPlanId = tierFromSku(planIdRaw);
+        const nextUsageResetAt = realPlanId === 'basic' ? addDays(now, 30) : null;
+        await db.collection('users').updateOne(
+            { _id: uid },
+            {
+                $set: {
+                    plan: realPlanId,
+                    planSku: planIdRaw,
+                    planExpiresAt: new Date(q.endsAt),
+                    usageCount: 0,
+                    usageResetAt: nextUsageResetAt,
+                    planQueue: null
+                }
+            }
+        );
+    } catch (e) {
+        console.error('maybeApplyQueuedPlan', e);
+    }
+}
+
+/**
+ * Shared rules for billing quote + PayPal completion.
+ * Order matters: free/expired users must get FRESH, not "upgrade".
+ */
+function decidePaidPlanChange(user, actualPlanId) {
+    const realPlanId = tierFromSku(actualPlanId);
+    const now = new Date();
+    const currentPlan = (user.plan || 'free').toLowerCase().trim();
+    const hasActivePaid = (currentPlan === 'basic' || currentPlan === 'pro')
+        && user.planExpiresAt
+        && now <= new Date(user.planExpiresAt);
+    let currentSku = inferPlanSku(user);
+    if (!currentSku && hasActivePaid && (currentPlan === 'basic' || currentPlan === 'pro')) {
+        currentSku = currentPlan;
+    }
+
+    if (hasActivePaid && planRank(realPlanId) < planRank(currentPlan)) {
+        return {
+            ok: false,
+            status: 400,
+            body: {
+                success: false,
+                message: `You are currently on ${currentPlan.toUpperCase()}. Downgrade is blocked until your current plan expires.`
+            }
+        };
+    }
+
+    if (!hasActivePaid) {
+        return {
+            ok: true,
+            decision: { type: 'FRESH', days: planDaysForSku(actualPlanId), realPlanId }
+        };
+    }
+
+    if (planRank(realPlanId) > planRank(currentPlan)) {
+        return {
+            ok: true,
+            decision: { type: 'IMMEDIATE_UPGRADE', days: planDaysForSku(actualPlanId), realPlanId }
+        };
+    }
+
+    if (planRank(realPlanId) === planRank(currentPlan)) {
+        if (currentSku && currentSku === actualPlanId) {
+            return {
+                ok: true,
+                decision: { type: 'STACK_SAME_SKU', days: planDaysForSku(actualPlanId), realPlanId }
+            };
+        }
+
+        if (
+            currentSku
+            && !isAnnualSku(currentSku)
+            && isAnnualSku(actualPlanId)
+            && tierFromSku(currentSku) === tierFromSku(actualPlanId)
+        ) {
+            const startsAt = addDays(new Date(user.planExpiresAt), 1);
+            const endsAt = addDays(startsAt, 365);
+            return {
+                ok: true,
+                decision: {
+                    type: 'QUEUE_ANNUAL',
+                    startsAt,
+                    endsAt,
+                    planId: actualPlanId,
+                    realPlanId,
+                    currentPeriodEndsAt: user.planExpiresAt
+                }
+            };
+        }
+
+        if (
+            currentSku
+            && isAnnualSku(currentSku)
+            && !isAnnualSku(actualPlanId)
+            && tierFromSku(currentSku) === tierFromSku(actualPlanId)
+        ) {
+            return {
+                ok: true,
+                decision: { type: 'STACK_MONTHLY_AFTER_ANNUAL', days: 30, realPlanId }
+            };
+        }
+    }
+
+    return {
+        ok: true,
+        decision: { type: 'FRESH', days: planDaysForSku(actualPlanId), realPlanId }
+    };
+}
+
+function applyPlanDecisionToUserUpdate(user, decision, actualPlanId, now) {
+    const realPlanId = decision.realPlanId;
+    const days = decision.days != null ? decision.days : planDaysForSku(actualPlanId);
+
+    switch (decision.type) {
+        case 'FRESH':
+        case 'IMMEDIATE_UPGRADE': {
+            const expiry = addDays(now, days);
+            return {
+                plan: realPlanId,
+                planSku: actualPlanId,
+                planExpiresAt: expiry,
+                usageCount: 0,
+                usageResetAt: realPlanId === 'basic' ? addDays(now, 30) : null,
+                planQueue: null
+            };
+        }
+        case 'STACK_SAME_SKU': {
+            const end = user.planExpiresAt ? new Date(user.planExpiresAt) : null;
+            const base = end && end > now ? end : now;
+            const newExp = addDays(base, days);
+            return {
+                plan: realPlanId,
+                planSku: actualPlanId,
+                planExpiresAt: newExp,
+                usageCount: user.usageCount ?? 0,
+                usageResetAt: realPlanId === 'basic'
+                    ? (user.usageResetAt ? new Date(user.usageResetAt) : addDays(now, 30))
+                    : null,
+                planQueue: null
+            };
+        }
+        case 'QUEUE_ANNUAL': {
+            const keepSku = user.planSku || inferPlanSku(user) || (realPlanId === 'basic' ? 'basic' : 'pro');
+            return {
+                plan: realPlanId,
+                planSku: keepSku,
+                planExpiresAt: user.planExpiresAt,
+                planQueue: {
+                    planId: actualPlanId,
+                    startsAt: decision.startsAt,
+                    endsAt: decision.endsAt
+                }
+            };
+        }
+        case 'STACK_MONTHLY_AFTER_ANNUAL': {
+            const base = user.planExpiresAt ? new Date(user.planExpiresAt) : now;
+            const newExp = addDays(base, days);
+            return {
+                plan: realPlanId,
+                planSku: actualPlanId,
+                planExpiresAt: newExp,
+                usageCount: user.usageCount ?? 0,
+                usageResetAt: realPlanId === 'basic'
+                    ? (user.usageResetAt ? new Date(user.usageResetAt) : addDays(now, 30))
+                    : null,
+                planQueue: null
+            };
+        }
+        default:
+            throw new Error('Unknown billing decision');
+    }
+}
+
 /** OAuth state: native Capacitor app must finish on custom URL scheme (see oauth-native-bridge.html + App.addListener('appUrlOpen')). */
 const GOOGLE_OAUTH_STATE_WEB = 'web';
 const GOOGLE_OAUTH_STATE_CAPACITOR = 'capacitor_native_v1';
@@ -207,6 +445,7 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
     try {
         if (!req.user || !req.user.userId) return res.status(401).json({ message: "Invalid Token" });
 
+        await maybeApplyQueuedPlan(req.user.userId);
         let user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
         if (!user) return res.status(404).json({ message: "User not found" });
 
@@ -228,9 +467,11 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
         const activeDays = Math.ceil(Math.abs(now - joinDate) / (86400000)) || 1;
 
         if (user.plan !== 'free' && user.planExpiresAt && now > new Date(user.planExpiresAt)) {
-            await db.collection('users').updateOne({ _id: user._id }, { $set: { plan: 'free', planExpiresAt: null, usageCount: 0 } });
-            user.plan = 'free'; 
-            user.usageCount = 0;
+            if (!inQueuedGapBeforeStarts(user, now)) {
+                await db.collection('users').updateOne({ _id: user._id }, { $set: { plan: 'free', planExpiresAt: null, usageCount: 0, planSku: null, planQueue: null } });
+                user.plan = 'free';
+                user.usageCount = 0;
+            }
         }
 
         // Basic users get 45 uses per 30-day cycle; annual still resets monthly.
@@ -257,7 +498,11 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
             daysLeft = Math.max(0, trialDays - daysPassed);
             if (daysLeft === 0) displayPlan = 'expired';
         } else if (user.planExpiresAt) {
-            daysLeft = Math.ceil((new Date(user.planExpiresAt) - now) / 86400000);
+            if (inQueuedGapBeforeStarts(user, now) && user.planQueue && user.planQueue.endsAt) {
+                daysLeft = Math.ceil((new Date(user.planQueue.endsAt) - now) / 86400000);
+            } else {
+                daysLeft = Math.ceil((new Date(user.planExpiresAt) - now) / 86400000);
+            }
             daysLeft = Math.max(0, daysLeft);
         } else {
             daysLeft = 30;
@@ -266,6 +511,15 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
         let baseLimit = currentPlan === 'free' ? 21 : (currentPlan === 'basic' ? 45 : '∞');
         let finalTotalLimit = baseLimit === '∞' ? '∞' : baseLimit + (user.bonusCredits || 0);
         let finalRemaining = baseLimit === '∞' ? '∞' : Math.max(0, finalTotalLimit - (user.usageCount || 0));
+
+        let queuedPlanSummary = null;
+        if (user.planQueue && user.planQueue.startsAt && user.planQueue.endsAt) {
+            queuedPlanSummary = {
+                planId: user.planQueue.planId || user.planQueue.planSku,
+                startsAt: user.planQueue.startsAt,
+                endsAt: user.planQueue.endsAt
+            };
+        }
 
         res.json({
             plan: displayPlan === 'expired' ? 'EXPIRED' : displayPlan.toUpperCase(),
@@ -276,7 +530,8 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
             activeDays: activeDays,
             bonusCredits: user.bonusCredits || 0,
             invitedCount: user.invitedCount || 0, 
-            referralCode: user.referralCode
+            referralCode: user.referralCode,
+            queuedPlan: queuedPlanSummary
         });
 
     } catch (error) {
@@ -587,6 +842,7 @@ app.post('/api/auth/verify-and-reset', async (req, res) => {
 // Get Current User Profile
 app.get('/api/me', authenticateToken, async (req, res) => {
     try {
+        await maybeApplyQueuedPlan(req.user.userId);
         const user = await db.collection('users').findOne(
             { _id: new ObjectId(req.user.userId) }, 
             { projection: { password: 0 } }
@@ -600,6 +856,56 @@ app.get('/api/me', authenticateToken, async (req, res) => {
     } catch (e) {
         console.error(e);
         res.status(500).json({ message: "Error" });
+    }
+});
+
+/** Pre-PayPal: explains effect (stack, queue annual, upgrade replaces). */
+app.get('/api/billing-quote', authenticateToken, async (req, res) => {
+    try {
+        const planId = req.query.planId;
+        if (!planId || typeof planId !== 'string') {
+            return res.status(400).json({ success: false, message: 'Missing planId' });
+        }
+        await maybeApplyQueuedPlan(req.user.userId);
+        const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
+        if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+
+        const r = decidePaidPlanChange(user, planId);
+        if (!r.ok) return res.status(r.status).json(r.body);
+
+        const d = r.decision;
+        const now = new Date();
+        let confirmPrompt = null;
+        let effect = d.type;
+
+        if (d.type === 'IMMEDIATE_UPGRADE') {
+            confirmPrompt =
+                'You are moving to a higher tier. Your current paid membership ends immediately and is replaced by the new plan (remaining time does not stack). Continue to payment?';
+        } else if (d.type === 'STACK_SAME_SKU') {
+            const end = user.planExpiresAt ? new Date(user.planExpiresAt) : now;
+            const base = end > now ? end : now;
+            const newEnd = addDays(base, d.days);
+            confirmPrompt =
+                `This purchase extends the same plan by ${d.days} days from your current end date. New end date (approx.): ${newEnd.toLocaleDateString()}. Continue?`;
+        } else if (d.type === 'QUEUE_ANNUAL') {
+            confirmPrompt =
+                `Your annual term will start the day after your current monthly period ends (${new Date(d.startsAt).toLocaleDateString()}). Until then you keep monthly access. Continue?`;
+        } else if (d.type === 'STACK_MONTHLY_AFTER_ANNUAL') {
+            const base = user.planExpiresAt ? new Date(user.planExpiresAt) : now;
+            const newEnd = addDays(base, d.days);
+            confirmPrompt =
+                `This adds 30 days after your current annual end date. New end date (approx.): ${newEnd.toLocaleDateString()}. Continue?`;
+        }
+
+        res.json({
+            success: true,
+            effect,
+            decision: d,
+            confirmPrompt
+        });
+    } catch (e) {
+        console.error('GET /api/billing-quote', e);
+        res.status(500).json({ success: false, message: 'Quote failed' });
     }
 });
 
@@ -681,6 +987,7 @@ const genAI = new GoogleGenerativeAI(API_KEY);
 
 app.post('/api/generate', authenticateToken, async (req, res) => {
     try {
+        await maybeApplyQueuedPlan(req.user.userId);
         const user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
         if (!user) return res.status(404).json({ error: "User not found" });
 
@@ -692,10 +999,12 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
 
         if (userPlan === 'pro' || userPlan === 'basic') {
             if (user.planExpiresAt && now > new Date(user.planExpiresAt)) {
-                isTimeExpired = true;
-                await db.collection('users').updateOne({ _id: user._id }, { $set: { plan: 'free', planExpiresAt: null, usageCount: 0 } });
-                userPlan = 'free';
-                user.usageCount = 0;
+                if (!inQueuedGapBeforeStarts(user, now)) {
+                    isTimeExpired = true;
+                    await db.collection('users').updateOne({ _id: user._id }, { $set: { plan: 'free', planExpiresAt: null, usageCount: 0, planSku: null, planQueue: null } });
+                    userPlan = 'free';
+                    user.usageCount = 0;
+                }
             }
         }
 
@@ -1118,34 +1427,18 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
             return res.status(400).json({ success: false, message: "Payment verification failed" });
         }
 
+        await maybeApplyQueuedPlan(userId);
         const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
         if (!user) return res.status(404).json({ success: false, message: "User not found" });
 
-        const realPlanId = actualPlanId.replace('_annual', '');
         const now = new Date();
-        const currentPlan = (user.plan || 'free').toLowerCase().trim();
-        const hasActivePaid = (currentPlan === 'basic' || currentPlan === 'pro')
-            && user.planExpiresAt
-            && now <= new Date(user.planExpiresAt);
-        if (hasActivePaid && planRank(realPlanId) < planRank(currentPlan)) {
-            return res.status(400).json({
-                success: false,
-                message: `You are currently on ${currentPlan.toUpperCase()}. Downgrade is blocked until your current plan expires.`
-            });
+        const change = decidePaidPlanChange(user, actualPlanId);
+        if (!change.ok) {
+            return res.status(change.status).json(change.body);
         }
 
-        const expiryDate = new Date();
-        const planDays = actualPlanId.includes('annual') ? 365 : 30; 
+        const updateFields = applyPlanDecisionToUserUpdate(user, change.decision, actualPlanId, now);
 
-        expiryDate.setDate(expiryDate.getDate() + planDays); 
-        const nextUsageResetAt = realPlanId === 'basic' ? addDays(now, 30) : null;
-        let updateFields = {
-            plan: realPlanId,
-            planExpiresAt: expiryDate,
-            usageCount: 0,
-            usageResetAt: nextUsageResetAt
-        };
-        
         await db.collection('users').updateOne(
             { _id: new ObjectId(userId) },
             { $set: updateFields }

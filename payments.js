@@ -1,7 +1,8 @@
 /**
  * Payment history — uses GET /api/payments (same data for web + Capacitor www/).
+ * Prefer script.js `window.REPORTIFY_API_BASE` when present (single source of truth).
  */
-const API_BASE_URL = 'https://api.goreportify.com';
+const API_BASE_URL = (typeof window !== 'undefined' && window.REPORTIFY_API_BASE) || 'https://api.goreportify.com';
 
 function planLabel(planId) {
     if (!planId) return '—';

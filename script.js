@@ -2,6 +2,7 @@
 // 如果你在本地开发，请用 http://localhost:3000
 // 如果上线，请改为 https://goreportify.com
 const API_BASE_URL = 'https://api.goreportify.com';
+window.REPORTIFY_API_BASE = API_BASE_URL;
 /** Always relative — never assign window.location to an absolute production URL (preserves PWA shell). */
 const HOME_REL = './index.html';
 
@@ -2853,6 +2854,24 @@ async function downloadMarkdown() {
 }
 
 // --- 模块 G: 支付与卡片交互逻辑 (财务防弹版) ---
+async function fetchBillingQuote(planId) {
+    const token = localStorage.getItem('token');
+    const res = await fetch(`${API_BASE_URL}/api/billing-quote?planId=${encodeURIComponent(planId)}`, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+    let data = {};
+    try {
+        const t = await res.text();
+        if (t) data = JSON.parse(t);
+    } catch (_) {
+        data = {};
+    }
+    if (!res.ok) {
+        throw new Error(data.message || `Unable to prepare checkout (${res.status})`);
+    }
+    return data;
+}
+
 function waitForPayPal(onReady, onTimeout) {
     let tries = 0;
     const max = 160;
@@ -2942,7 +2961,7 @@ function setupPayment() {
         const newBtn = btn.cloneNode(true);
         btn.parentNode.replaceChild(newBtn, btn);
 
-        newBtn.addEventListener('click', (e) => {
+        newBtn.addEventListener('click', async (e) => {
             e.preventDefault();
             e.stopPropagation(); 
             
@@ -2966,14 +2985,6 @@ function setupPayment() {
                 return;
             }
 
-            // Paid-plan purchases are immediate and replace current entitlement (no stacking / no accumulation).
-            if (planType !== 'free' && (currentUserPlan === 'basic' || currentUserPlan === 'pro')) {
-                const confirmed = window.confirm(
-                    'Membership change takes effect immediately. Your current plan time does not stack. Continue?'
-                );
-                if (!confirmed) return;
-            }
-
             // 🟢 核心修复：根据全局的年费开关 (isYearlyBilling)，动态计算最终传给 PayPal 的金额和传给后端的套餐名！
             let finalPlanId = planType;
             let finalAmount = '0.00';
@@ -2985,6 +2996,16 @@ function setupPayment() {
             } else {
                 // 如果是月付
                 finalAmount = planType === 'basic' ? '9.90' : '19.90';
+            }
+
+            try {
+                const quote = await fetchBillingQuote(finalPlanId);
+                if (quote.confirmPrompt && !window.confirm(quote.confirmPrompt)) {
+                    return;
+                }
+            } catch (err) {
+                showToast(err.message || 'Unable to prepare checkout', 'error');
+                return;
             }
 
             const planNameEl = document.getElementById('payment-plan-name');
