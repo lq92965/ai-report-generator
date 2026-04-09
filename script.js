@@ -3530,8 +3530,11 @@ document.addEventListener('DOMContentLoaded', () => {
     forgotPwdLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault(); // 阻止页面跳转
-            // 目前如果没有做邮件发送系统，先用 Toast 提示用户
-            showToast("密码重置系统接入中。请暂时联系管理员邮箱 support@goreportify.com 找回密码。", "info");
+            if (typeof openForgotModal === 'function') {
+                openForgotModal();
+                return;
+            }
+            showToast("Password reset is unavailable on this page. Please open the login page and try again.", "warning");
         });
     });
 
