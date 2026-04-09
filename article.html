@@ -11,22 +11,29 @@
     
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <style>
-        /* 针对自动生成的图片的圆角和自适应美化 */
-        #article-content img {
+        /* 首图：圆角 + 强制保持比例（与 style.css / mobile-patch.css 一致） */
+        #article-content img,
+        #article-content figure.article-cover img {
             border-radius: 12px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             margin-bottom: 2rem;
             width: 100%;
+            max-width: 100%;
             height: auto;
+            max-height: none;
+            object-fit: contain;
+            object-position: center;
+            display: block;
         }
+        #article-content figure.article-cover { margin: 0 0 1.75rem 0; }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=3.2">
+    <link rel="stylesheet" href="style.css?v=3.3">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="mobile-patch.css?v=11">
-    <script src="mobile-patch.js?v=11"></script>
+    <link rel="stylesheet" href="mobile-patch.css?v=12">
+    <script src="mobile-patch.js?v=12"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body class="has-app-nav font-sans antialiased bg-gray-50 text-gray-800 flex flex-col min-h-screen">

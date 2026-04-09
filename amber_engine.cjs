@@ -23,6 +23,30 @@ if (!fs.existsSync(IMAGES_DIR)) fs.mkdirSync(IMAGES_DIR, { recursive: true });
 
 const FAKE_AUTHORS = ["Alex Mercer", "Sarah Jenkins", "Michael Chen", "Emily Rostova", "David Sterling", "Jessica Tran", "Marcus Webb", "Olivia Thorne"];
 
+/** Rotate visual style so Pollinations images are less same-y (title-only prompts were repetitive). */
+const COVER_VISUAL_STYLES = [
+    'editorial photo soft natural light shallow depth of field',
+    'clean tech illustration blue white minimal flat',
+    'cinematic wide shot single subject atmospheric',
+    'isometric 3d soft lighting professional',
+    'abstract geometric calm colors productivity theme',
+    'modern workspace hero no readable text on screen',
+    'conceptual still life muted professional tones',
+    'bold editorial illustration high contrast magazine'
+];
+
+/** When Pollinations download fails — pick by timestamp so fallback is not always the same Unsplash ID. */
+const UNSPLASH_FALLBACKS = [
+    'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop'
+];
+
 async function generateArticle(type) {
     const useGemini = (type === 'blog');
     const apiUrl = useGemini ? process.env.GEMINI_API_URL : process.env.DEEPSEEK_API_URL;
@@ -69,18 +93,25 @@ async function generateArticle(type) {
         let titleMatch = rawMarkdown.match(/^#\s+(.+)$/m);
         let title = titleMatch ? titleMatch[1].trim() : `Reportify ${type.toUpperCase()} Insights`;
         let contentMarkdown = rawMarkdown.replace(/^#\s+(.+)$/m, '').trim();
-        const safePrompt = title.replace(/[^a-zA-Z0-9 ]/g, "").substring(0, 40);
+        const safePrompt = title.replace(/[^a-zA-Z0-9 ]/g, "").substring(0, 48);
         const excerpt = contentMarkdown.replace(/<[^>]*>?/gm, '').replace(/[#*`>\[\]]/g, '').substring(0, 150).trim() + "...";
 
-        const remoteUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(safePrompt)}?width=1200&height=600&nologo=true`;
         const timestamp = Date.now();
+        const styleHint = COVER_VISUAL_STYLES[timestamp % COVER_VISUAL_STYLES.length];
+        let imagePrompt = `${safePrompt}. ${styleHint}. no text no letters no watermark no logo.`;
+        if (imagePrompt.length > 400) imagePrompt = imagePrompt.substring(0, 400);
+        const seed = timestamp % 2147483647;
+        const imgW = 1024;
+        const imgH = 576;
+        const remoteUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(imagePrompt)}?width=${imgW}&height=${imgH}&nologo=true&seed=${seed}`;
+
         const imageFileName = `cover-${timestamp}.png`;
         let localImageRelPath = `images/${imageFileName}`;
         
         try {
             await imageDownloader.image({ url: remoteUrl, dest: path.join(IMAGES_DIR, imageFileName) });
-        } catch(e) { 
-            localImageRelPath = "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200&auto=format&fit=crop"; 
+        } catch (e) {
+            localImageRelPath = UNSPLASH_FALLBACKS[timestamp % UNSPLASH_FALLBACKS.length];
         }
 
         return { timestamp, type, title, contentMarkdown, excerpt, author: FAKE_AUTHORS[Math.floor(Math.random() * FAKE_AUTHORS.length)], localImageRelPath, dateStr: new Date().toISOString().split('T')[0] };
@@ -90,7 +121,10 @@ async function generateArticle(type) {
 function buildStaticPage(postData) {
     console.log(`[Amber V8] ⚡ 正在为谷歌爬虫焊装纯静态独立网页...`);
     const fileName = `${postData.type}-${postData.timestamp}.md`;
-    const mdWithImg = `<img src="${postData.localImageRelPath}" alt="${postData.title.replace(/"/g, "")}" style="width:100%; border-radius:12px; margin-bottom:2rem; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);">\n\n` + postData.contentMarkdown;
+    const altEsc = postData.title.replace(/"/g, '');
+    const srcEsc = String(postData.localImageRelPath).replace(/&/g, '&amp;');
+    const hero = `<figure class="article-cover"><img class="article-cover-img" src="${srcEsc}" alt="${altEsc}" loading="lazy" decoding="async"></figure>\n\n`;
+    const mdWithImg = hero + postData.contentMarkdown;
     fs.writeFileSync(path.join(CONTENT_DIR, fileName), mdWithImg, 'utf8');
 
     const templateHtml = fs.readFileSync(TEMPLATE_PATH, 'utf8');

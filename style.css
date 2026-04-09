@@ -2547,3 +2547,21 @@ body.has-app-nav .fixed.bottom-8 {
         animation-duration: 0.18s;
     }
 }
+
+/* News/Blog article hero (sync with mobile-patch.css; keeps cover aspect ratio on all viewports) */
+#article-content img,
+#article-content figure.article-cover img,
+#article-content .article-cover-img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: none;
+    object-fit: contain;
+    object-position: center center;
+    display: block;
+}
+
+#article-content figure.article-cover {
+    margin: 0 0 1.75rem 0;
+    width: 100%;
+}
