@@ -1092,6 +1092,26 @@ document.addEventListener('DOMContentLoaded', async () => {
                     // 填充底部时间卡片 (仅限正常用户)
                     if(daysSpan) daysSpan.innerText = data.daysLeft !== undefined ? data.daysLeft : 0;
                     if(activeSpan) activeSpan.innerText = data.activeDays || 1;
+
+                    // 当已排队年费时，显示“总剩余天数 + 当前周期剩余天数”的解释，避免看起来像没变化
+                    const hintWrap = document.getElementById('upgrade-hint');
+                    let queueNote = document.getElementById('queued-plan-note');
+                    if (data.queuedPlan && hintWrap) {
+                        if (!queueNote) {
+                            queueNote = document.createElement('div');
+                            queueNote.id = 'queued-plan-note';
+                            queueNote.style.marginTop = '8px';
+                            queueNote.style.fontSize = '12px';
+                            queueNote.style.color = '#475569';
+                            hintWrap.appendChild(queueNote);
+                        }
+                        const queuedLabel = String(data.queuedPlan.planId || '').replace('_', ' ').toUpperCase();
+                        const total = data.daysLeft ?? 0;
+                        const current = data.currentPeriodDaysLeft ?? 0;
+                        queueNote.textContent = `Queued ${queuedLabel}. Total days left: ${total} (current period: ${current}).`;
+                    } else if (queueNote) {
+                        queueNote.remove();
+                    }
                 }
 
                 // 绑定邀请奖励的值 (修复Bonus不显示的问题)

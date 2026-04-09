@@ -44,15 +44,22 @@ async function loadPayments() {
     const emptyEl = document.getElementById('payments-empty');
     const errEl = document.getElementById('payments-error');
     const tableWrap = document.getElementById('payments-table-wrap');
+    const refreshBtn = document.getElementById('payments-refresh');
 
     if (tbody) tbody.innerHTML = '';
     if (emptyEl) emptyEl.style.display = 'none';
     if (errEl) errEl.style.display = 'none';
     if (tableWrap) tableWrap.style.display = '';
+    if (refreshBtn) {
+        refreshBtn.disabled = true;
+        refreshBtn.style.opacity = '0.7';
+    }
 
     try {
-        const res = await fetch(`${API_BASE_URL}/api/payments`, {
-            headers: { Authorization: `Bearer ${token}` }
+        const url = `${API_BASE_URL}/api/payments?t=${Date.now()}`;
+        const res = await fetch(url, {
+            headers: { Authorization: `Bearer ${token}` },
+            cache: 'no-store'
         });
         const data = await res.json().catch(() => ({}));
         if (!res.ok) {
@@ -93,6 +100,11 @@ async function loadPayments() {
         if (errEl) {
             errEl.textContent = e.message || 'Failed to load payments.';
             errEl.style.display = 'block';
+        }
+    } finally {
+        if (refreshBtn) {
+            refreshBtn.disabled = false;
+            refreshBtn.style.opacity = '1';
         }
     }
 }
