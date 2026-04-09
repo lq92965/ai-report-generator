@@ -145,6 +145,19 @@ const PREMIUM_TEMPLATE_IDS = new Set([
     'marketing_copy',
 ]);
 
+function planRank(plan) {
+    const p = String(plan || 'free').toLowerCase().trim();
+    if (p === 'pro') return 2;
+    if (p === 'basic') return 1;
+    return 0;
+}
+
+function addDays(baseDate, days) {
+    const d = new Date(baseDate);
+    d.setDate(d.getDate() + days);
+    return d;
+}
+
 /** OAuth state: native Capacitor app must finish on custom URL scheme (see oauth-native-bridge.html + App.addListener('appUrlOpen')). */
 const GOOGLE_OAUTH_STATE_WEB = 'web';
 const GOOGLE_OAUTH_STATE_CAPACITOR = 'capacitor_native_v1';
@@ -218,6 +231,20 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
             await db.collection('users').updateOne({ _id: user._id }, { $set: { plan: 'free', planExpiresAt: null, usageCount: 0 } });
             user.plan = 'free'; 
             user.usageCount = 0;
+        }
+
+        // Basic users get 45 uses per 30-day cycle; annual still resets monthly.
+        if (String(user.plan || '').toLowerCase() === 'basic') {
+            const resetAt = user.usageResetAt ? new Date(user.usageResetAt) : null;
+            if (!resetAt || now >= resetAt) {
+                const nextResetAt = addDays(now, 30);
+                await db.collection('users').updateOne(
+                    { _id: user._id },
+                    { $set: { usageCount: 0, usageResetAt: nextResetAt } }
+                );
+                user.usageCount = 0;
+                user.usageResetAt = nextResetAt;
+            }
         }
 
         let daysLeft = 0;
@@ -580,8 +607,14 @@ app.get('/api/me', authenticateToken, async (req, res) => {
 app.get('/api/payments', authenticateToken, async (req, res) => {
     try {
         const userId = req.user.userId;
+        const oid = new ObjectId(userId);
         const rows = await db.collection('payments')
-            .find({ userId: new ObjectId(userId) })
+            .find({
+                $or: [
+                    { userId: oid },      // new records
+                    { userId: userId }    // legacy records (string userId)
+                ]
+            })
             .sort({ date: -1 })
             .limit(100)
             .toArray();
@@ -663,6 +696,20 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
                 await db.collection('users').updateOne({ _id: user._id }, { $set: { plan: 'free', planExpiresAt: null, usageCount: 0 } });
                 userPlan = 'free';
                 user.usageCount = 0;
+            }
+        }
+
+        // Basic users get a fresh 45 every 30 days (for monthly and annual basic).
+        if (userPlan === 'basic') {
+            const resetAt = user.usageResetAt ? new Date(user.usageResetAt) : null;
+            if (!resetAt || now >= resetAt) {
+                const nextResetAt = addDays(now, 30);
+                await db.collection('users').updateOne(
+                    { _id: user._id },
+                    { $set: { usageCount: 0, usageResetAt: nextResetAt } }
+                );
+                user.usageCount = 0;
+                user.usageResetAt = nextResetAt;
             }
         }
 
@@ -1074,17 +1121,30 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
         const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
         if (!user) return res.status(404).json({ success: false, message: "User not found" });
 
-        if (user.plan === 'pro' && actualPlanId === 'basic') {
-            return res.status(400).json({ success: false, message: "您当前是 Pro 专业版，享有最高权益。若需更换为 Basic 计划，请在当前 Pro 计划到期后再操作。" });
+        const realPlanId = actualPlanId.replace('_annual', '');
+        const now = new Date();
+        const currentPlan = (user.plan || 'free').toLowerCase().trim();
+        const hasActivePaid = (currentPlan === 'basic' || currentPlan === 'pro')
+            && user.planExpiresAt
+            && now <= new Date(user.planExpiresAt);
+        if (hasActivePaid && planRank(realPlanId) < planRank(currentPlan)) {
+            return res.status(400).json({
+                success: false,
+                message: `You are currently on ${currentPlan.toUpperCase()}. Downgrade is blocked until your current plan expires.`
+            });
         }
 
         const expiryDate = new Date();
         const addDays = actualPlanId.includes('annual') ? 365 : 30; 
-        const realPlanId = actualPlanId.replace('_annual', '');
 
         expiryDate.setDate(expiryDate.getDate() + addDays); 
-        
-        let updateFields = { plan: realPlanId, planExpiresAt: expiryDate, usageCount: 0 };
+        const nextUsageResetAt = realPlanId === 'basic' ? addDays(now, 30) : null;
+        let updateFields = {
+            plan: realPlanId,
+            planExpiresAt: expiryDate,
+            usageCount: 0,
+            usageResetAt: nextUsageResetAt
+        };
         
         await db.collection('users').updateOne(
             { _id: new ObjectId(userId) },
