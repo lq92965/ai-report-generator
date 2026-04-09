@@ -285,6 +285,24 @@ function decidePaidPlanChange(user, actualPlanId) {
     }
 
     if (planRank(realPlanId) === planRank(currentPlan)) {
+        const queuedId = user.planQueue && (user.planQueue.planId || user.planQueue.planSku);
+        if (
+            user.planQueue
+            && user.planQueue.endsAt
+            && isAnnualSku(actualPlanId)
+            && queuedId
+            && tierFromSku(queuedId) === tierFromSku(actualPlanId)
+        ) {
+            return {
+                ok: true,
+                decision: {
+                    type: 'STACK_QUEUED_ANNUAL',
+                    newEndsAt: addDays(new Date(user.planQueue.endsAt), 365),
+                    realPlanId
+                }
+            };
+        }
+
         if (currentSku && currentSku === actualPlanId) {
             return {
                 ok: true,
@@ -374,6 +392,19 @@ function applyPlanDecisionToUserUpdate(user, decision, actualPlanId, now) {
                     planId: actualPlanId,
                     startsAt: decision.startsAt,
                     endsAt: decision.endsAt
+                }
+            };
+        }
+        case 'STACK_QUEUED_ANNUAL': {
+            const q = user.planQueue || {};
+            return {
+                plan: realPlanId,
+                planSku: user.planSku || inferPlanSku(user) || (realPlanId === 'basic' ? 'basic' : 'pro'),
+                planExpiresAt: user.planExpiresAt,
+                planQueue: {
+                    planId: q.planId || actualPlanId,
+                    startsAt: q.startsAt,
+                    endsAt: decision.newEndsAt
                 }
             };
         }
@@ -489,6 +520,7 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
         }
 
         let daysLeft = 0;
+        let currentPeriodDaysLeft = null;
         const currentPlan = user.plan || 'free';
 
         let displayPlan = currentPlan; 
@@ -498,12 +530,12 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
             daysLeft = Math.max(0, trialDays - daysPassed);
             if (daysLeft === 0) displayPlan = 'expired';
         } else if (user.planExpiresAt) {
-            if (inQueuedGapBeforeStarts(user, now) && user.planQueue && user.planQueue.endsAt) {
-                daysLeft = Math.ceil((new Date(user.planQueue.endsAt) - now) / 86400000);
+            if (user.planQueue && user.planQueue.endsAt) {
+                daysLeft = Math.max(0, Math.ceil((new Date(user.planQueue.endsAt) - now) / 86400000));
+                currentPeriodDaysLeft = Math.max(0, Math.ceil((new Date(user.planExpiresAt) - now) / 86400000));
             } else {
-                daysLeft = Math.ceil((new Date(user.planExpiresAt) - now) / 86400000);
+                daysLeft = Math.max(0, Math.ceil((new Date(user.planExpiresAt) - now) / 86400000));
             }
-            daysLeft = Math.max(0, daysLeft);
         } else {
             daysLeft = 30;
         }
@@ -527,6 +559,7 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
             limit: finalTotalLimit,
             remaining: finalRemaining,
             daysLeft: daysLeft > 0 ? daysLeft : 0,
+            currentPeriodDaysLeft,
             activeDays: activeDays,
             bonusCredits: user.bonusCredits || 0,
             invitedCount: user.invitedCount || 0, 
@@ -890,6 +923,9 @@ app.get('/api/billing-quote', authenticateToken, async (req, res) => {
         } else if (d.type === 'QUEUE_ANNUAL') {
             confirmPrompt =
                 `Your annual term will start the day after your current monthly period ends (${new Date(d.startsAt).toLocaleDateString()}). Until then you keep monthly access. Continue?`;
+        } else if (d.type === 'STACK_QUEUED_ANNUAL') {
+            confirmPrompt =
+                `You already have an annual term queued. This purchase extends the queued annual end date to ${new Date(d.newEndsAt).toLocaleDateString()}. Continue?`;
         } else if (d.type === 'STACK_MONTHLY_AFTER_ANNUAL') {
             const base = user.planExpiresAt ? new Date(user.planExpiresAt) : now;
             const newEnd = addDays(base, d.days);
@@ -914,11 +950,17 @@ app.get('/api/payments', authenticateToken, async (req, res) => {
     try {
         const userId = req.user.userId;
         const oid = new ObjectId(userId);
+        const user = await db.collection('users').findOne(
+            { _id: oid },
+            { projection: { email: 1 } }
+        );
+        const email = String(user?.email || '').toLowerCase().trim();
         const rows = await db.collection('payments')
             .find({
                 $or: [
                     { userId: oid },      // new records
-                    { userId: userId }    // legacy records (string userId)
+                    { userId: userId },   // legacy records (string userId)
+                    ...(email ? [{ userEmail: email }] : [])
                 ]
             })
             .sort({ date: -1 })
@@ -1451,6 +1493,7 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
 
         await db.collection('payments').insertOne({
             userId: new ObjectId(userId),
+            userEmail: String(user.email || '').toLowerCase().trim(),
             planId: actualPlanId,
             paymentId: paymentId, 
             amount: logAmount,
