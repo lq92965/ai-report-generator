@@ -1135,9 +1135,9 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
         }
 
         const expiryDate = new Date();
-        const addDays = actualPlanId.includes('annual') ? 365 : 30; 
+        const planDays = actualPlanId.includes('annual') ? 365 : 30; 
 
-        expiryDate.setDate(expiryDate.getDate() + addDays); 
+        expiryDate.setDate(expiryDate.getDate() + planDays); 
         const nextUsageResetAt = realPlanId === 'basic' ? addDays(now, 30) : null;
         let updateFields = {
             plan: realPlanId,
