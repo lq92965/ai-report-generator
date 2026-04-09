@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775743228287",
+        "type": "blog",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-09",
+        "author": "Emily Rostova",
+        "excerpt": "It’s 4:30 PM on a Friday. Your focus should be on wrapping up the week's critical tasks, but instead, you're wrestling with a spreadsheet. You're pull...",
+        "contentFile": "blog-1775743228287.md"
+    },
+    {
         "id": "1775739616127",
         "type": "news",
         "title": "The Unseen Labor Behind AI's Public Face",
