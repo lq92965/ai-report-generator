@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775718019129",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "category": "Tech Radar",
+        "date": "2026-04-09",
+        "author": "Sarah Jenkins",
+        "excerpt": "The world's leading AI developers and policymakers are gathering in Seoul this week for a high-stakes summit, marking a pivotal moment in the race to...",
+        "contentFile": "news-1775718019129.md"
+    },
+    {
         "id": "1775714428455",
         "type": "blog",
         "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
