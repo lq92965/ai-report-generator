@@ -14,6 +14,7 @@ const FOLDERS_TO_COPY = ['images', 'icons', 'data', 'vendor'];
 
 const FRONTEND_JS = new Set([
   'account.js',
+  'payments.js',
   'config.js',
   'history.js',
   'index.js',

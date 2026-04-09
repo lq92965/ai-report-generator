@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <title>Payment history - Reportify AI</title>
+    <link rel="stylesheet" href="style.css?v=2026.7">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="mobile-patch.css?v=2026.7">
+    <script src="mobile-patch.js?v=2026.7"></script>
+    <style>
+        .payments-wrap { width: 100%; max-width: 960px; margin: 0 auto; padding: 0 20px 48px; }
+        .payments-table-wrap { overflow-x: auto; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.04); }
+        .payments-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .payments-table th { text-align: left; padding: 12px 14px; background: #f8fafc; color: #475569; font-weight: 600; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
+        .payments-table td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; vertical-align: top; }
+        .payments-table tr:last-child td { border-bottom: none; }
+        .mono-small { font-family: ui-monospace, 'Cascadia Code', monospace; font-size: 0.75rem; word-break: break-all; max-width: 220px; }
+        .pay-badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
+        .pay-ok { background: #ecfdf5; color: #047857; }
+        .pay-pending { background: #fffbeb; color: #b45309; }
+        .payments-note { margin-top: 24px; padding: 16px; background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 10px; color: #0369a1; font-size: 0.875rem; line-height: 1.5; }
+        .payments-note a { color: #2563eb; font-weight: 600; }
+    </style>
+</head>
+<body class="has-app-nav" style="background-color: #f8fafc;">
+    <header class="main-header account-header pwa-app-header">
+        <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
+            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
+                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
+            </div>
+            <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
+                <ul>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="index.html#pricing">Pricing</a></li>
+                    <li><a href="generate.html">Generator</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </nav>
+            <div class="pwa-header-actions">
+                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite">
+                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
+                </a>
+                <div id="auth-container" class="header-actions"></div>
+            </div>
+        </div>
+    </header>
+
+    <section class="generator-section" style="min-height: 70vh; padding: 28px 0 0;">
+        <div class="payments-wrap">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+                <div>
+                    <h2 class="section-title" style="margin: 0 0 6px; font-weight: 700; color: #1e293b;">Payment history</h2>
+                    <p style="margin: 0; color: #64748b; font-size: 0.95rem;">Successful PayPal checkouts linked to your account.</p>
+                </div>
+                <button type="button" id="payments-refresh" style="padding: 8px 16px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; color: #64748b; font-weight: 600;">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+
+            <p id="payments-error" style="display: none; color: #b91c1c; margin-bottom: 12px; font-weight: 500;"></p>
+
+            <div id="payments-empty" style="display: none; text-align: center; padding: 48px 20px; color: #94a3b8; background: #fff; border: 1px dashed #e2e8f0; border-radius: 12px;">
+                <i class="fas fa-receipt" style="font-size: 2rem; margin-bottom: 12px; opacity: 0.6;"></i>
+                <p style="margin: 0; font-size: 1rem;">No payments recorded yet.</p>
+                <p style="margin: 8px 0 0; font-size: 0.9rem;">After you complete a purchase, it will appear here.</p>
+            </div>
+
+            <div id="payments-table-wrap" class="payments-table-wrap">
+                <table class="payments-table" aria-label="Payment history">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Plan</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Order ID</th>
+                        </tr>
+                    </thead>
+                    <tbody id="payments-tbody"></tbody>
+                </table>
+            </div>
+
+            <div class="payments-note">
+                <strong>Questions or wrong charge?</strong>
+                Open <a href="contact.html">Contact Support</a> and include your <strong>Order ID</strong> and account email so we can look it up.
+            </div>
+        </div>
+    </section>
+
+    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
+        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
+        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
+        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
+        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
+        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
+    </nav>
+
+    <footer class="main-footer" style="padding: 24px 0; background: #f8fafc; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 0.85rem; text-align: center;">
+        <div class="container">
+            <p style="margin: 0;">&copy; 2026 Beijing Cricket Information Technology Co., Ltd. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="pwa-nav.js"></script>
+    <script src="script.js?v=2026.7"></script>
+    <script src="payments.js?v=2026.7"></script>
+</body>
+</html>
