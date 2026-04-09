@@ -1041,6 +1041,9 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
         // This avoids extending plan / resetting usage multiple times on retries.
         const existingPayment = await db.collection('payments').findOne({ paymentId: paymentId, status: 'completed' });
         if (existingPayment) {
+            if (String(existingPayment.userId) !== String(userId)) {
+                return res.status(403).json({ success: false, message: 'This payment is not linked to your account.' });
+            }
             return res.json({ success: true, message: "Payment already processed." });
         }
 

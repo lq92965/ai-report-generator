@@ -66,16 +66,25 @@ async function loadPayments() {
 
         for (const p of list) {
             const st = statusLabel(p.status);
+            const oid = p.paymentId || '';
+            const appeal = oid
+                ? `<a href="${billingAppealUrl(oid)}" class="pay-appeal-link">Contact + prefill</a>
+                   <button type="button" class="pay-copy-btn" data-oid="${escapeHtml(oid)}">Copy ID</button>`
+                : '—';
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${formatWhen(p.date)}</td>
                 <td>${planLabel(p.planId)}</td>
                 <td>${formatMoneyUSD(p.amount)}</td>
                 <td><span class="pay-badge ${st.cls}">${st.text}</span></td>
-                <td class="mono-small" title="PayPal order id">${escapeHtml(p.paymentId || '—')}</td>
+                <td class="mono-small" title="PayPal order id">${escapeHtml(oid || '—')}</td>
+                <td class="pay-actions-cell">${appeal}</td>
             `;
             tbody.appendChild(tr);
         }
+        tbody.querySelectorAll('.pay-copy-btn').forEach((btn) => {
+            btn.addEventListener('click', () => copyOrderIdForEmail(btn.getAttribute('data-oid') || ''));
+        });
     } catch (e) {
         console.error(e);
         if (tableWrap) tableWrap.style.display = 'none';
@@ -90,6 +99,22 @@ function escapeHtml(s) {
     const d = document.createElement('div');
     d.textContent = s;
     return d.innerHTML;
+}
+
+function billingAppealUrl(orderId) {
+    const q = new URLSearchParams({ topic: 'Billing', orderId: orderId || '' });
+    return `contact.html?${q.toString()}`;
+}
+
+async function copyOrderIdForEmail(orderId) {
+    const text = `PayPal Order ID: ${orderId}\n(Account email: see your profile)`;
+    try {
+        await navigator.clipboard.writeText(text);
+        if (window.showToast) window.showToast('Order ID copied. Paste into email or our contact form.', 'success');
+        else alert('Copied to clipboard.');
+    } catch (e) {
+        prompt('Copy this text:', text);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

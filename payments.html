@@ -25,6 +25,11 @@
         .pay-pending { background: #fffbeb; color: #b45309; }
         .payments-note { margin-top: 24px; padding: 16px; background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 10px; color: #0369a1; font-size: 0.875rem; line-height: 1.5; }
         .payments-note a { color: #2563eb; font-weight: 600; }
+        .pay-appeal-link { color: #2563eb; font-weight: 600; text-decoration: none; display: inline-block; margin-right: 8px; }
+        .pay-appeal-link:hover { text-decoration: underline; }
+        .pay-copy-btn { font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; border: 1px solid #e2e8f0; background: #fff; color: #475569; cursor: pointer; }
+        .pay-copy-btn:hover { background: #f8fafc; }
+        .pay-actions-cell { white-space: nowrap; }
     </style>
 </head>
 <body class="has-app-nav" style="background-color: #f8fafc;">
@@ -80,6 +85,7 @@
                             <th>Amount</th>
                             <th>Status</th>
                             <th>Order ID</th>
+                            <th>Help</th>
                         </tr>
                     </thead>
                     <tbody id="payments-tbody"></tbody>
@@ -88,7 +94,8 @@
 
             <div class="payments-note">
                 <strong>Questions or wrong charge?</strong>
-                Open <a href="contact.html">Contact Support</a> and include your <strong>Order ID</strong> and account email so we can look it up.
+                Use <strong>Contact + prefill</strong> on a row to open the contact form with topic Billing and your PayPal Order ID, or tap <strong>Copy ID</strong> and email us manually.
+                You can also open <a href="contact.html?topic=Billing">Contact Support (Billing)</a> directly.
             </div>
         </div>
     </section>
