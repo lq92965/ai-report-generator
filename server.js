@@ -576,6 +576,32 @@ app.get('/api/me', authenticateToken, async (req, res) => {
     }
 });
 
+// Payment history (completed PayPal checkouts logged in `payments` collection)
+app.get('/api/payments', authenticateToken, async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const rows = await db.collection('payments')
+            .find({ userId: new ObjectId(userId) })
+            .sort({ date: -1 })
+            .limit(100)
+            .toArray();
+
+        const payments = rows.map((p) => ({
+            id: p._id.toString(),
+            planId: p.planId,
+            amount: typeof p.amount === 'number' ? p.amount : Number(p.amount),
+            status: p.status || 'completed',
+            date: p.date,
+            paymentId: p.paymentId
+        }));
+
+        res.json({ payments });
+    } catch (e) {
+        console.error('GET /api/payments', e);
+        res.status(500).json({ message: 'Error loading payments' });
+    }
+});
+
 // Avatar Upload
 app.post('/api/upload-avatar', authenticateToken, upload.single('avatar'), async (req, res) => {
     try {
