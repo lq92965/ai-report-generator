@@ -122,10 +122,13 @@ function initPayPalButtons() {
 
         // 点击“选择”按钮时
         chooseBtn.addEventListener('click', () => {
+            if (chooseBtn.dataset.paypalInit === '1') return;
+
             // 1. 先让对应的卡片变蓝
             document.querySelectorAll('.pricing-card').forEach(c => c.classList.remove('selected-plan'));
             chooseBtn.closest('.pricing-card').classList.add('selected-plan');
 
+            chooseBtn.dataset.paypalInit = '1';
             // 2. 隐藏当前按钮，准备显示 PayPal
             chooseBtn.style.display = 'none';
             container.innerHTML = '<p style="font-size:12px; color:#666;">Loading PayPal...</p>';
@@ -154,21 +157,27 @@ function initPayPalButtons() {
                     // 支付成功
                     onApprove: (data, actions) => {
                         return actions.order.capture().then(async (details) => {
-                            alert(`Payment successful! Upgrading you to ${plan.id.toUpperCase()}...`);
-                            await upgradeUserPlan(plan.id, details.id);
+                            if (window.__subscriptionUpgradeInFlight) return;
+                            window.__subscriptionUpgradeInFlight = true;
+                            try {
+                                await upgradeUserPlan(plan.id, details.id);
+                            } finally {
+                                window.__subscriptionUpgradeInFlight = false;
+                            }
                         });
                     },
                     // 支付取消
                     onCancel: (data) => {
-                        alert('Payment cancelled.');
-                        chooseBtn.style.display = 'inline-block'; // 恢复按钮
+                        chooseBtn.style.display = 'inline-block';
+                        chooseBtn.dataset.paypalInit = '0';
                         container.innerHTML = '';
                     },
                     // 支付错误
                     onError: (err) => {
                         console.error('PayPal Error Object:', err);
-                        alert('Payment Error: ' + err); // 弹出具体错误信息
-                        chooseBtn.style.display = 'inline-block'; // 恢复按钮
+                        alert('Payment Error: ' + err);
+                        chooseBtn.style.display = 'inline-block';
+                        chooseBtn.dataset.paypalInit = '0';
                         container.innerHTML = '';
                     }
                 }).render(plan.container).then(() => {
@@ -180,6 +189,7 @@ function initPayPalButtons() {
                 console.error("Render Error:", e);
                 alert("Could not load PayPal button.");
                 chooseBtn.style.display = 'inline-block';
+                chooseBtn.dataset.paypalInit = '0';
             }
         });
     });
@@ -190,30 +200,31 @@ function initPayPalButtons() {
  */
 async function upgradeUserPlan(planId, orderId) {
     try {
-        console.log(`Processing upgrade to ${planId}...`);
-        
-        const response = await fetch(`${API_BASE_URL}/api/user/upgrade`, {
+        const response = await fetch(`${API_BASE_URL}/api/upgrade-plan`, {
             method: 'POST',
-            headers: { 
+            headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ plan: planId, orderId: orderId })
+            body: JSON.stringify({ planId: planId, paymentId: orderId })
         });
 
+        let data = {};
+        try {
+            const t = await response.text();
+            if (t) data = JSON.parse(t);
+        } catch (_) {}
+
         if (!response.ok) {
-            const err = await response.json();
-            throw new Error(err.message || 'Upgrade failed on server');
+            throw new Error(data.message || `Server error (${response.status})`);
         }
 
-        // 升级成功！
-        alert(`Success! You are now on the ${planId.toUpperCase()} plan.`);
-        
-        // 刷新页面，"Current Plan" 现在会变成 PRO
+        alert(data.message && data.message.includes('already processed')
+            ? 'Your plan is already up to date.'
+            : `Success! You are now on the ${planId.toUpperCase()} plan.`);
         window.location.reload();
-
     } catch (error) {
         console.error('Upgrade API Error:', error);
-        alert('Payment verification failed: ' + error.message);
+        alert('Upgrade issue: ' + error.message + '\nIf you were charged, open Account → Payment history and contact support with your Order ID.');
     }
 }

@@ -2876,6 +2876,15 @@ function setupPayment() {
     const closePaymentBtn = document.getElementById('close-payment-btn');
     const paypalContainer = document.getElementById('paypal-button-container');
 
+    function clearPricingPayBusy() {
+        window.__reportifyPricingPayBusy = false;
+    }
+
+    function closePaymentModal() {
+        if (paymentModal) paymentModal.style.display = 'none';
+        clearPricingPayBusy();
+    }
+
     // 1. 样式定义
     const activeCardClasses = ['border-blue-600', 'ring-2', 'ring-blue-500', 'shadow-xl', 'scale-105', 'z-10'];
     const inactiveCardClasses = ['border-gray-200', 'shadow-sm'];
@@ -2965,6 +2974,12 @@ function setupPayment() {
                 return;
             }
 
+            if (window.__reportifyPricingPayBusy) {
+                showToast('Payment window is already open. Finish or close it first.', 'info');
+                return;
+            }
+            window.__reportifyPricingPayBusy = true;
+
             if (paymentModal) paymentModal.style.display = 'flex';
             paypalContainer.innerHTML = '<p style="text-align:center;color:#64748b;font-size:13px;padding:12px;">Loading PayPal…</p>';
 
@@ -2980,7 +2995,9 @@ function setupPayment() {
                             }]
                         }),
                         onApprove: (data, actions) => actions.order.capture().then(async () => {
-                            if (paymentModal) paymentModal.style.display = 'none';
+                            closePaymentModal();
+                            if (window.__reportifyUpgradePlanInFlight) return;
+                            window.__reportifyUpgradePlanInFlight = true;
                             showToast('Payment confirmed! Upgrading account...', 'info');
                             try {
                                 const res = await fetch(`${API_BASE_URL}/api/upgrade-plan`, {
@@ -2988,41 +3005,84 @@ function setupPayment() {
                                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                                     body: JSON.stringify({ planId: finalPlanId, paymentId: data.orderID })
                                 });
-                                const resultData = await res.json();
-                                if (!res.ok) throw new Error(resultData.message || 'Upgrade failed');
-                                showToast('Upgraded Successfully!', 'success');
+                                let resultData = {};
+                                try {
+                                    const t = await res.text();
+                                    if (t) resultData = JSON.parse(t);
+                                } catch (_) {
+                                    resultData = {};
+                                }
+                                if (!res.ok) {
+                                    throw new Error(resultData.message || `Server error (${res.status}). Payment may have succeeded — check Payment history or contact support.`);
+                                }
+                                showToast(resultData.message && resultData.message.includes('already processed')
+                                    ? 'Account is up to date.'
+                                    : 'Upgraded Successfully!', 'success');
                                 setTimeout(() => window.location.reload(), 1500);
                             } catch (err) {
-                                showToast(err.message || 'Upgrade failed, contact support.', 'error');
+                                showToast(err.message || 'Upgrade failed. If PayPal charged you, open Payment history and use Contact Support with your Order ID.', 'error');
+                            } finally {
+                                window.__reportifyUpgradePlanInFlight = false;
                             }
                         }),
                         onError: (err) => {
                             console.error('PayPal onError', err);
                             showToast('PayPal error. Try again or check your network.', 'error');
+                            clearPricingPayBusy();
                         },
                         onCancel: () => {
-                            if (paymentModal) paymentModal.style.display = 'none';
+                            closePaymentModal();
                         }
                     }).render('#paypal-button-container');
                 } catch (e) {
                     console.error(e);
                     paypalContainer.innerHTML = '<p style="color:#b91c1c;font-size:13px;text-align:center;">PayPal failed to start.</p>';
+                    clearPricingPayBusy();
                 }
             }, () => {
                 showToast('PayPal SDK did not load. Check network / VPN.', 'error');
                 paypalContainer.innerHTML = '<p style="color:#b91c1c;font-size:13px;text-align:center;padding:12px;">PayPal could not load (blocked or offline). Open this page in a normal browser tab or allow paypal.com.</p>';
+                clearPricingPayBusy();
             });
         });
     });
 
     if (closePaymentBtn && paymentModal) {
-        closePaymentBtn.addEventListener('click', () => paymentModal.style.display = 'none');
-        paymentModal.addEventListener('click', (e) => { if (e.target === paymentModal) paymentModal.style.display = 'none'; });
+        closePaymentBtn.addEventListener('click', closePaymentModal);
+        paymentModal.addEventListener('click', (e) => { if (e.target === paymentModal) closePaymentModal(); });
     }
 }
 
 // --- 模块 H: 联系表单 ---
+/** URL: contact.html?topic=Billing&orderId=PAYPAL_ORDER_ID — prefill for billing disputes */
+function applyContactPrefillFromQuery() {
+    try {
+        const path = window.location.pathname || '';
+        if (!path.includes('contact')) return;
+        const params = new URLSearchParams(window.location.search);
+        const topic = params.get('topic');
+        const orderId = params.get('orderId');
+        const typeSel = document.getElementById('contact-type');
+        const msg = document.getElementById('message');
+        if (topic && typeSel) {
+            const allowed = ['General', 'Billing', 'Technical'];
+            if (allowed.includes(topic)) typeSel.value = topic;
+        }
+        if (orderId && msg && !msg.value.trim()) {
+            msg.value = [
+                'Billing / payment question',
+                '',
+                `PayPal Order ID: ${orderId}`,
+                '',
+                'Please describe the issue (e.g. wrong plan, charged but not upgraded):',
+                ''
+            ].join('\n');
+        }
+    } catch (e) { console.warn('applyContactPrefillFromQuery', e); }
+}
+
 function setupContactForm() {
+    applyContactPrefillFromQuery();
     const contactForm = document.getElementById('contact-form');
     if (currentUser) {
         const emailInput = document.getElementById('email');
@@ -3048,8 +3108,18 @@ function setupContactForm() {
                 const res = await fetch(`${API_BASE_URL}/api/contact`, {
                     method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)
                 });
+                let errText = '';
+                try {
+                    const t = await res.text();
+                    errText = t;
+                } catch (_) {}
                 if (res.ok) { showToast("Sent!", "success"); newForm.reset(); }
-            } catch(e) { showToast("Error", "error"); }
+                else {
+                    let msg = 'Send failed. Try again later.';
+                    try { msg = JSON.parse(errText).message || msg; } catch (_) {}
+                    showToast(msg, 'error');
+                }
+            } catch(e) { showToast("Network error. Check connection and try again.", "error"); }
             finally { btn.disabled = false; btn.textContent = original; }
         });
     }
