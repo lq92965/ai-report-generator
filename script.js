@@ -2885,6 +2885,27 @@ function setupPayment() {
         clearPricingPayBusy();
     }
 
+    async function refreshSubscriptionPlanBadge() {
+        const badge = document.getElementById('current-plan-badge');
+        if (!badge) return;
+        const token = localStorage.getItem('token');
+        if (!token) {
+            badge.textContent = 'FREE';
+            return;
+        }
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/me`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const u = await res.json();
+            const p = String(u.plan || 'free').toUpperCase();
+            badge.textContent = p;
+        } catch (_) {
+            badge.textContent = 'UNAVAILABLE';
+        }
+    }
+
     // 1. 样式定义
     const activeCardClasses = ['border-blue-600', 'ring-2', 'ring-blue-500', 'shadow-xl', 'scale-105', 'z-10'];
     const inactiveCardClasses = ['border-gray-200', 'shadow-sm'];
@@ -2943,6 +2964,14 @@ function setupPayment() {
                 showToast('Please login to upgrade.', 'info');
                 window.openModal('login');
                 return;
+            }
+
+            // Paid-plan purchases are immediate and replace current entitlement (no stacking / no accumulation).
+            if (planType !== 'free' && (currentUserPlan === 'basic' || currentUserPlan === 'pro')) {
+                const confirmed = window.confirm(
+                    'Membership change takes effect immediately. Your current plan time does not stack. Continue?'
+                );
+                if (!confirmed) return;
             }
 
             // 🟢 核心修复：根据全局的年费开关 (isYearlyBilling)，动态计算最终传给 PayPal 的金额和传给后端的套餐名！
@@ -3051,6 +3080,9 @@ function setupPayment() {
         closePaymentBtn.addEventListener('click', closePaymentModal);
         paymentModal.addEventListener('click', (e) => { if (e.target === paymentModal) closePaymentModal(); });
     }
+
+    // subscription.html shows a "Current Plan" badge.
+    refreshSubscriptionPlanBadge();
 }
 
 // --- 模块 H: 联系表单 ---
