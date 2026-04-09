@@ -1011,6 +1011,13 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
             return res.status(400).json({ success: false, message: "Missing payment info. Please hard refresh (Ctrl+F5) and try again." });
         }
 
+        // Idempotency: prevent double-processing the same PayPal order id.
+        // This avoids extending plan / resetting usage multiple times on retries.
+        const existingPayment = await db.collection('payments').findOne({ paymentId: paymentId, status: 'completed' });
+        if (existingPayment) {
+            return res.json({ success: true, message: "Payment already processed." });
+        }
+
         try {
             const baseUrl = process.env.PAYPAL_MODE === 'sandbox' 
                 ? 'https://api-m.sandbox.paypal.com' 
