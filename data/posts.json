@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775750429050",
+        "type": "blog",
+        "title": "From Overload to Insight: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-09",
+        "author": "Alex Mercer",
+        "excerpt": "As a Product Manager, you live and die by data. But there's a dark side to our data-driven world: reporting fatigue. It's that sinking feeling you get...",
+        "contentFile": "blog-1775750429050.md"
+    },
+    {
         "id": "1775746822690",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
