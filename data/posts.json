@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775728826359",
+        "type": "blog",
+        "title": "From Drudgery to Data-Driven: A PM's Playbook for Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-09",
+        "author": "Emily Rostova",
+        "excerpt": "We've all been there. It's the end of the week, and instead of focusing on strategy or unblocking your team, you're wrestling with a spreadsheet. You'...",
+        "contentFile": "blog-1775728826359.md"
+    },
+    {
         "id": "1775725227110",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
