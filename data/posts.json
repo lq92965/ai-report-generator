@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775851226924",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-10",
+        "author": "David Sterling",
+        "excerpt": "We've all been there. It's 4 PM on a Friday, and that automated calendar reminder pops up: \"Prepare Weekly Status Report.\" A collective groan echoes t...",
+        "contentFile": "blog-1775851226924.md"
+    },
+    {
         "id": "1775847613932",
         "type": "news",
         "title": "The Unseen Labor Behind AI's Public Face",
