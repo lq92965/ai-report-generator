@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775847613932",
+        "type": "news",
+        "title": "The Unseen Labor Behind AI's Public Face",
+        "category": "Tech Radar",
+        "date": "2026-04-10",
+        "author": "Jessica Tran",
+        "excerpt": "While headlines tout AI's potential to revolutionize industries, a quieter, more complex story is unfolding behind the scenes. The focus is shifting f...",
+        "contentFile": "news-1775847613932.md"
+    },
+    {
         "id": "1775844028330",
         "type": "blog",
         "title": "Beyond the Dashboard: A PM's Deep Dive into Overcoming Reporting Fatigue",
