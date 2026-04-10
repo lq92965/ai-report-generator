@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775779228669",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-10",
+        "author": "Jessica Tran",
+        "excerpt": "We've all been there. It's 4:00 PM on a Friday, and the dreaded request hits your inbox: \"Can I get a quick status update for the steering committee?\"...",
+        "contentFile": "blog-1775779228669.md"
+    },
+    {
         "id": "1775775619229",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
