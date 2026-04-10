@@ -303,6 +303,20 @@ function decidePaidPlanChange(user, actualPlanId) {
             };
         }
 
+        // Annual (stored or inferred) + monthly same tier: stack 30 days AFTER current period end — never downgrade SKU to monthly.
+        const storedSku = user.planSku || null;
+        if (
+            storedSku
+            && isAnnualSku(storedSku)
+            && !isAnnualSku(actualPlanId)
+            && tierFromSku(storedSku) === tierFromSku(actualPlanId)
+        ) {
+            return {
+                ok: true,
+                decision: { type: 'STACK_MONTHLY_AFTER_ANNUAL', days: 30, realPlanId }
+            };
+        }
+
         if (currentSku && currentSku === actualPlanId) {
             return {
                 ok: true,
@@ -371,9 +385,14 @@ function applyPlanDecisionToUserUpdate(user, decision, actualPlanId, now) {
             const end = user.planExpiresAt ? new Date(user.planExpiresAt) : null;
             const base = end && end > now ? end : now;
             const newExp = addDays(base, days);
+            const keepAnnualSku =
+                user.planSku
+                && isAnnualSku(user.planSku)
+                && !isAnnualSku(actualPlanId)
+                && tierFromSku(user.planSku) === tierFromSku(actualPlanId);
             return {
                 plan: realPlanId,
-                planSku: actualPlanId,
+                planSku: keepAnnualSku ? user.planSku : actualPlanId,
                 planExpiresAt: newExp,
                 usageCount: user.usageCount ?? 0,
                 usageResetAt: realPlanId === 'basic'
@@ -411,9 +430,14 @@ function applyPlanDecisionToUserUpdate(user, decision, actualPlanId, now) {
         case 'STACK_MONTHLY_AFTER_ANNUAL': {
             const base = user.planExpiresAt ? new Date(user.planExpiresAt) : now;
             const newExp = addDays(base, days);
+            const keepAnnualSku =
+                user.planSku
+                && isAnnualSku(user.planSku)
+                && !isAnnualSku(actualPlanId)
+                && tierFromSku(user.planSku) === tierFromSku(actualPlanId);
             return {
                 plan: realPlanId,
-                planSku: actualPlanId,
+                planSku: keepAnnualSku ? user.planSku : actualPlanId,
                 planExpiresAt: newExp,
                 usageCount: user.usageCount ?? 0,
                 usageResetAt: realPlanId === 'basic'
@@ -892,6 +916,93 @@ app.get('/api/me', authenticateToken, async (req, res) => {
     }
 });
 
+function formatBillingDate(d) {
+    try {
+        return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    } catch (_) {
+        return String(d);
+    }
+}
+
+function humanPlanLabel(planId) {
+    const map = {
+        basic: 'Basic — Monthly',
+        pro: 'Pro — Monthly',
+        basic_annual: 'Basic — Annual',
+        pro_annual: 'Pro — Annual'
+    };
+    return map[planId] || String(planId);
+}
+
+/** Structured copy for the in-app confirmation modal (English). */
+function buildBillingConfirmDialog(planId, decision, user, now) {
+    const purch = humanPlanLabel(planId);
+    switch (decision.type) {
+        case 'IMMEDIATE_UPGRADE':
+            return {
+                title: 'Upgrade replaces your current plan',
+                lead: 'You are moving to a higher tier. Your current paid membership ends immediately and is replaced by this purchase. Remaining time on your current plan does not carry over.',
+                points: [`You are purchasing: ${purch}`],
+                confirmLabel: 'Continue to payment',
+                cancelLabel: 'Cancel'
+            };
+        case 'STACK_SAME_SKU': {
+            const end = user.planExpiresAt ? new Date(user.planExpiresAt) : now;
+            const base = end > now ? end : now;
+            const newEnd = addDays(base, decision.days);
+            return {
+                title: 'Extend the same membership',
+                lead: `You already have this exact plan type. This payment adds ${decision.days} days after your current end date (time stacks forward; it does not reset your start date to today).`,
+                points: [
+                    `Stack from (approx.): ${formatBillingDate(base)}`,
+                    `New end date after purchase (approx.): ${formatBillingDate(newEnd)}`,
+                    `You are purchasing: ${purch}`
+                ],
+                confirmLabel: 'Continue to payment',
+                cancelLabel: 'Cancel'
+            };
+        }
+        case 'QUEUE_ANNUAL':
+            return {
+                title: 'Annual membership is queued',
+                lead: 'Your annual term will begin the day after your current monthly access ends. Until that date, you keep your current monthly benefits without interruption.',
+                points: [
+                    `Current monthly access ends (approx.): ${formatBillingDate(user.planExpiresAt)}`,
+                    `Queued annual starts (approx.): ${formatBillingDate(decision.startsAt)}`,
+                    `Queued annual ends (approx.): ${formatBillingDate(decision.endsAt)}`,
+                    `You are purchasing: ${purch}`
+                ],
+                confirmLabel: 'Continue to payment',
+                cancelLabel: 'Cancel'
+            };
+        case 'STACK_QUEUED_ANNUAL':
+            return {
+                title: 'Extend your queued annual term',
+                lead: 'You already have an annual membership scheduled to start after your current period. This payment extends the end date of that queued annual window by 365 days.',
+                points: [
+                    `New queued annual end (approx.): ${formatBillingDate(decision.newEndsAt)}`,
+                    `You are purchasing: ${purch}`
+                ],
+                confirmLabel: 'Continue to payment',
+                cancelLabel: 'Cancel'
+            };
+        case 'STACK_MONTHLY_AFTER_ANNUAL':
+            return {
+                title: 'Add monthly time after your annual term',
+                lead: 'Your account is on an annual (or annual-class) membership window. This monthly purchase adds 30 days after your current membership end date. It does not replace or cancel your annual term.',
+                points: [
+                    `Membership end before this purchase (approx.): ${formatBillingDate(user.planExpiresAt)}`,
+                    `Membership end after this purchase (approx.): ${formatBillingDate(addDays(new Date(user.planExpiresAt || now), decision.days))}`,
+                    `You are purchasing: ${purch}`
+                ],
+                confirmLabel: 'Continue to payment',
+                cancelLabel: 'Cancel'
+            };
+        default:
+            return null;
+    }
+}
+
 /** Pre-PayPal: explains effect (stack, queue annual, upgrade replaces). */
 app.get('/api/billing-quote', authenticateToken, async (req, res) => {
     try {
@@ -908,36 +1019,14 @@ app.get('/api/billing-quote', authenticateToken, async (req, res) => {
 
         const d = r.decision;
         const now = new Date();
-        let confirmPrompt = null;
-        let effect = d.type;
-
-        if (d.type === 'IMMEDIATE_UPGRADE') {
-            confirmPrompt =
-                'You are moving to a higher tier. Your current paid membership ends immediately and is replaced by the new plan (remaining time does not stack). Continue to payment?';
-        } else if (d.type === 'STACK_SAME_SKU') {
-            const end = user.planExpiresAt ? new Date(user.planExpiresAt) : now;
-            const base = end > now ? end : now;
-            const newEnd = addDays(base, d.days);
-            confirmPrompt =
-                `This purchase extends the same plan by ${d.days} days from your current end date. New end date (approx.): ${newEnd.toLocaleDateString()}. Continue?`;
-        } else if (d.type === 'QUEUE_ANNUAL') {
-            confirmPrompt =
-                `Your annual term will start the day after your current monthly period ends (${new Date(d.startsAt).toLocaleDateString()}). Until then you keep monthly access. Continue?`;
-        } else if (d.type === 'STACK_QUEUED_ANNUAL') {
-            confirmPrompt =
-                `You already have an annual term queued. This purchase extends the queued annual end date to ${new Date(d.newEndsAt).toLocaleDateString()}. Continue?`;
-        } else if (d.type === 'STACK_MONTHLY_AFTER_ANNUAL') {
-            const base = user.planExpiresAt ? new Date(user.planExpiresAt) : now;
-            const newEnd = addDays(base, d.days);
-            confirmPrompt =
-                `This adds 30 days after your current annual end date. New end date (approx.): ${newEnd.toLocaleDateString()}. Continue?`;
-        }
+        const effect = d.type;
+        const confirmDialog = buildBillingConfirmDialog(planId, d, user, now);
 
         res.json({
             success: true,
             effect,
             decision: d,
-            confirmPrompt
+            confirmDialog
         });
     } catch (e) {
         console.error('GET /api/billing-quote', e);
@@ -949,20 +1038,27 @@ app.get('/api/billing-quote', authenticateToken, async (req, res) => {
 app.get('/api/payments', authenticateToken, async (req, res) => {
     try {
         const userId = req.user.userId;
-        const oid = new ObjectId(userId);
+        let oid;
+        try {
+            oid = new ObjectId(String(userId));
+        } catch (_) {
+            return res.status(400).json({ message: 'Invalid session. Please sign in again.', payments: [] });
+        }
         const user = await db.collection('users').findOne(
             { _id: oid },
             { projection: { email: 1 } }
         );
         const email = String(user?.email || '').toLowerCase().trim();
+        const orClauses = [
+            { userId: oid },
+            { userId: String(userId) },
+            { userId: userId }
+        ];
+        if (email) {
+            orClauses.push({ userEmail: email }, { email: email });
+        }
         const rows = await db.collection('payments')
-            .find({
-                $or: [
-                    { userId: oid },      // new records
-                    { userId: userId },   // legacy records (string userId)
-                    ...(email ? [{ userEmail: email }] : [])
-                ]
-            })
+            .find({ $or: orClauses })
             .sort({ date: -1 })
             .limit(100)
             .toArray();
@@ -1491,9 +1587,11 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
         else if (actualPlanId === 'basic_annual') logAmount = 99.00; 
         else if (actualPlanId === 'pro_annual') logAmount = 199.00;
 
+        const payEmail = String(user.email || '').toLowerCase().trim();
         await db.collection('payments').insertOne({
             userId: new ObjectId(userId),
-            userEmail: String(user.email || '').toLowerCase().trim(),
+            userEmail: payEmail,
+            email: payEmail,
             planId: actualPlanId,
             paymentId: paymentId, 
             amount: logAmount,
