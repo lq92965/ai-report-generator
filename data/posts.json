@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775844028330",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Deep Dive into Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-10",
+        "author": "Emily Rostova",
+        "excerpt": "It's 4 PM on a Friday. Instead of focusing on strategic planning for the next sprint, you're stuck in what I call the \"Reporting Gauntlet.\" You're upd...",
+        "contentFile": "blog-1775844028330.md"
+    },
+    {
         "id": "1775840417264",
         "type": "news",
         "title": "The Unseen Cost of AI's Data Hunger",
