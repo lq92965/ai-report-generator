@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775833219166",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-10",
+        "author": "Sarah Jenkins",
+        "excerpt": "The rapid evolution of artificial intelligence has propelled global regulatory efforts into a high-stakes race, with the European Union, United States...",
+        "contentFile": "news-1775833219166.md"
+    },
+    {
         "id": "1775829628676",
         "type": "blog",
         "title": "The Silent Killer: A PM's Guide to Conquering Reporting Fatigue",
