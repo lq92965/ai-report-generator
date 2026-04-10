@@ -424,46 +424,77 @@ function decidePaidPlanChange(user, actualPlanId) {
     };
 }
 
-/** Extra Basic report pool: +45 per stacked month, +540 (12×45) per annual purchase (invite bonus stays separate). */
-function bonusCreditsDeltaForBasicPurchase(decision, actualPlanId) {
-    if (tierFromSku(actualPlanId) !== 'basic') return 0;
-    if (actualPlanId === 'basic_annual') return 540;
-    if (actualPlanId === 'basic') {
-        if (decision.type === 'FRESH') return 0;
-        return 45;
-    }
-    return 0;
+/** Invite / referral report credits (Basic): +5 if you joined via a link; +5 per friend you invite, max 5 friends → max +25 from inviting. */
+function computeInviteReportBonus(user) {
+    const ref = user.referredBy ? 5 : 0;
+    const inv = Math.min(25, (user.invitedCount || 0) * 5);
+    return Math.min(30, ref + inv);
 }
 
-function buildSubscriptionNoteLines(plan, paymentTally, bonusCredits) {
+/** Pro referral display: 1 day per successful invite, max 5 days from inviting others. */
+function computeProReferralDaysEarned(user) {
+    return Math.min(5, user.invitedCount || 0);
+}
+
+/**
+ * Basic monthly/annual caps from completed payments + invite-only bonus (not mixed with purchase pool).
+ * Each completed basic = 45 reports; each basic_annual = 540 (12×45).
+ */
+function computeBasicTotalLimitFromPayments(paymentTally, user) {
+    const nB = paymentTally.basic || 0;
+    const nA = paymentTally.basic_annual || 0;
+    const invite = computeInviteReportBonus(user);
+    const purchasePool = 45 * nB + 540 * nA;
+    if (nB + nA === 0) {
+        return 45 + invite;
+    }
+    return purchasePool + invite;
+}
+
+function describeCurrentBasicPeriod(user, queuedPlanSummary) {
+    const sku = user.planSku || inferPlanSku(user) || '';
+    const hasQueue =
+        queuedPlanSummary && queuedPlanSummary.endsAt && queuedPlanSummary.startsAt;
+    if (hasQueue) {
+        return 'You are currently on a monthly Basic window; when it ends, your queued annual term starts automatically (order follows purchase time).';
+    }
+    if (sku && String(sku).includes('annual')) {
+        return 'You are currently within a Basic annual membership window.';
+    }
+    return 'You are currently on a Basic monthly membership window.';
+}
+
+function buildSubscriptionNoteLines(displayPlan, paymentTally, user, queuedPlanSummary) {
     const lines = [];
-    const p = String(plan || 'free').toLowerCase();
+    const p = String(displayPlan || 'free').toLowerCase();
+    const nb = paymentTally.basic || 0;
+    const na = paymentTally.basic_annual || 0;
     if (p === 'pro') {
         lines.push('Pro includes unlimited report generations during your prepaid membership.');
         lines.push(
             'Remaining days show when your paid access ends (including any queued annual period).'
+        );
+        lines.push(
+            'Referral reward here is membership days from invites (max 5 days when you have referred 5 friends), not report credits.'
         );
         lines.push('You can extend membership anytime; completed purchases appear in Payment history.');
         return lines;
     }
     if (p === 'basic') {
         lines.push(
-            'Basic: each paid month adds 45 report credits to your pool; each paid year adds 12×45 (540). Referral bonuses count toward the same pool.'
+            `To date, your completed purchases include ${nb} Basic monthly checkout(s) and ${na} Basic annual checkout(s).`
+        );
+        lines.push(describeCurrentBasicPeriod(user, queuedPlanSummary));
+        lines.push(
+            'Report total = 45 × (monthly purchases) + 540 × (annual purchases) + invite rewards (max +30: +5 if you joined via a referral, up to +25 from inviting others).'
         );
         lines.push(
-            `Total limit = 45 per 30-day cycle plus bonus credits (currently ${bonusCredits || 0} bonus).`
+            'You can stack more months or years anytime; use Payment history to review past orders.'
         );
-        if (paymentTally && Object.keys(paymentTally).length) {
-            const bits = Object.entries(paymentTally)
-                .filter(([, n]) => n > 0)
-                .map(([k, v]) => `${k} ×${v}`);
-            if (bits.length) lines.push(`Completed purchases on file: ${bits.join(', ')}.`);
-        }
-        lines.push('You can stack more months or years anytime; use Payment history to review past orders.');
         return lines;
     }
     lines.push(
-        'After you upgrade, you can extend prepaid access as needed; Payment history keeps a clear record of purchases.'
+        'After you upgrade, Payment history lists each purchase; you can extend prepaid access as needed.'
     );
     return lines;
 }
@@ -476,7 +507,7 @@ function applyPlanDecisionToUserUpdate(user, decision, actualPlanId, now) {
         case 'FRESH':
         case 'IMMEDIATE_UPGRADE': {
             const expiry = addDays(now, days);
-            return {
+            const base = {
                 plan: realPlanId,
                 planSku: actualPlanId,
                 planExpiresAt: expiry,
@@ -484,6 +515,10 @@ function applyPlanDecisionToUserUpdate(user, decision, actualPlanId, now) {
                 usageResetAt: realPlanId === 'basic' ? addDays(now, 30) : null,
                 planQueue: null
             };
+            if (realPlanId === 'pro') {
+                base.bonusCredits = 0;
+            }
+            return base;
         }
         case 'STACK_SAME_SKU': {
             let base;
@@ -538,7 +573,8 @@ function applyPlanDecisionToUserUpdate(user, decision, actualPlanId, now) {
             };
         }
         case 'STACK_MONTHLY_AFTER_ANNUAL': {
-            const base = user.planExpiresAt ? new Date(user.planExpiresAt) : now;
+            const eff = effectivePaidEnd(user);
+            const base = eff > now ? eff : now;
             const newExp = addDays(base, days);
             const keepAnnualSku =
                 user.planSku
@@ -605,6 +641,29 @@ app.get('/api/oauth/bridge-token', (req, res) => {
     res.json({ token: rec.token });
 });
 
+async function aggregatePaymentTally(db, userId, email) {
+    const uidPay = new ObjectId(userId);
+    const payOr = [
+        { userId: uidPay },
+        { userId: String(userId) },
+        { userId: userId }
+    ];
+    const payEmail = String(email || '').toLowerCase().trim();
+    if (payEmail) {
+        payOr.push({ userEmail: payEmail }, { email: payEmail });
+    }
+    const tallyRows = await db
+        .collection('payments')
+        .aggregate([
+            { $match: { $or: payOr, status: { $in: ['completed', null] } } },
+            { $group: { _id: '$planId', n: { $sum: 1 } } }
+        ])
+        .toArray();
+    return Object.fromEntries(
+        tallyRows.filter((r) => r._id).map((r) => [String(r._id), r.n])
+    );
+}
+
 // Usage Stats API
 app.get('/api/usage', authenticateToken, async (req, res) => {
     try {
@@ -665,18 +724,23 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
             if (daysLeft === 0) displayPlan = 'expired';
         } else if (user.planExpiresAt) {
             if (user.planQueue && user.planQueue.endsAt) {
-                daysLeft = Math.max(0, Math.ceil((new Date(user.planQueue.endsAt) - now) / 86400000));
-                currentPeriodDaysLeft = Math.max(0, Math.ceil((new Date(user.planExpiresAt) - now) / 86400000));
+                daysLeft = Math.max(
+                    0,
+                    Math.floor((new Date(user.planQueue.endsAt) - now) / 86400000)
+                );
+                currentPeriodDaysLeft = Math.max(
+                    0,
+                    Math.floor((new Date(user.planExpiresAt) - now) / 86400000)
+                );
             } else {
-                daysLeft = Math.max(0, Math.ceil((new Date(user.planExpiresAt) - now) / 86400000));
+                daysLeft = Math.max(
+                    0,
+                    Math.floor((new Date(user.planExpiresAt) - now) / 86400000)
+                );
             }
         } else {
             daysLeft = 30;
         }
-
-        let baseLimit = currentPlan === 'free' ? 21 : (currentPlan === 'basic' ? 45 : '∞');
-        let finalTotalLimit = baseLimit === '∞' ? '∞' : baseLimit + (user.bonusCredits || 0);
-        let finalRemaining = baseLimit === '∞' ? '∞' : Math.max(0, finalTotalLimit - (user.usageCount || 0));
 
         let queuedPlanSummary = null;
         if (user.planQueue && user.planQueue.startsAt && user.planQueue.endsAt) {
@@ -687,37 +751,38 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
             };
         }
 
-        const payEmail = String(user.email || '').toLowerCase().trim();
-        const uidPay = new ObjectId(req.user.userId);
-        const payOr = [
-            { userId: uidPay },
-            { userId: String(req.user.userId) },
-            { userId: req.user.userId }
-        ];
-        if (payEmail) {
-            payOr.push({ userEmail: payEmail }, { email: payEmail });
-        }
         let paymentTally = {};
         try {
-            const tallyRows = await db
-                .collection('payments')
-                .aggregate([
-                    { $match: { $or: payOr, status: { $in: ['completed', null] } } },
-                    { $group: { _id: '$planId', n: { $sum: 1 } } }
-                ])
-                .toArray();
-            paymentTally = Object.fromEntries(
-                tallyRows.filter((r) => r._id).map((r) => [String(r._id), r.n])
-            );
+            paymentTally = await aggregatePaymentTally(db, req.user.userId, user.email);
         } catch (tallyErr) {
             console.error('usage payment tally', tallyErr);
+        }
+
+        let finalTotalLimit;
+        let finalRemaining;
+        if (currentPlan === 'free') {
+            finalTotalLimit = 21;
+            finalRemaining = Math.max(0, finalTotalLimit - (user.usageCount || 0));
+        } else if (String(currentPlan).toLowerCase() === 'basic') {
+            finalTotalLimit = computeBasicTotalLimitFromPayments(paymentTally, user);
+            finalRemaining = Math.max(0, finalTotalLimit - (user.usageCount || 0));
+        } else {
+            finalTotalLimit = '∞';
+            finalRemaining = '∞';
         }
 
         const subscriptionNoteLines = buildSubscriptionNoteLines(
             displayPlan,
             paymentTally,
-            user.bonusCredits || 0
+            user,
+            queuedPlanSummary
         );
+
+        const inviteReports = computeInviteReportBonus(user);
+        const referralInviteDisplay =
+            String(currentPlan).toLowerCase() === 'pro'
+                ? { unit: 'days', value: computeProReferralDaysEarned(user) }
+                : { unit: 'reports', value: inviteReports };
 
         res.json({
             plan: displayPlan === 'expired' ? 'EXPIRED' : displayPlan.toUpperCase(),
@@ -727,8 +792,9 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
             daysLeft: daysLeft > 0 ? daysLeft : 0,
             currentPeriodDaysLeft,
             activeDays: activeDays,
-            bonusCredits: user.bonusCredits || 0,
-            invitedCount: user.invitedCount || 0, 
+            bonusCredits: inviteReports,
+            referralInviteDisplay,
+            invitedCount: user.invitedCount || 0,
             referralCode: user.referralCode,
             queuedPlan: queuedPlanSummary,
             paymentTally,
@@ -864,7 +930,10 @@ app.post('/api/register', async (req, res) => {
                         }
                         adminMessage = `Awesome! Someone joined using your invite link. As a Pro user, we've extended your membership by +1 Day!`;
                     } else {
-                        await db.collection('users').updateOne({ _id: referrer._id }, { $inc: { bonusCredits: 5, invitedCount: 1 } });
+                        await db.collection('users').updateOne(
+                            { _id: referrer._id },
+                            { $inc: { inviteBonusCredits: 5, invitedCount: 1 } }
+                        );
                         adminMessage = `Awesome! Someone joined using your invite link. We've added +5 Free Reports to your account!`;
                     }
 
@@ -885,7 +954,7 @@ app.post('/api/register', async (req, res) => {
         await db.collection('users').insertOne({ 
             name: displayName, email: email.toLowerCase().trim(), password: hashedPassword, 
             plan: startingPlan, 
-            role: 'user', usageCount: 0, bonusCredits: initialBonus, 
+            role: 'user', usageCount: 0, bonusCredits: 0, inviteBonusCredits: initialBonus,
             referralCode: myReferralCode, referredBy: validReferredBy,
             registrationIp: clientIp, createdAt: new Date() 
         });
@@ -1151,18 +1220,22 @@ function buildBillingConfirmDialog(planId, decision, user, now) {
                 confirmLabel: 'Continue to payment',
                 cancelLabel: 'Cancel'
             };
-        case 'STACK_MONTHLY_AFTER_ANNUAL':
+        case 'STACK_MONTHLY_AFTER_ANNUAL': {
+            const effEnd = effectivePaidEnd(user);
+            const baseStack = effEnd > now ? effEnd : now;
+            const newEnd = addDays(baseStack, decision.days);
             return {
                 title: 'Add monthly time after your annual term',
-                lead: 'Your account is on an annual (or annual-class) membership window. This monthly purchase adds 30 days after your current membership end date. It does not replace or cancel your annual term.',
+                lead: 'Your account is on an annual (or annual-class) membership window. This monthly purchase adds 30 days after your full prepaid end date (including any queued term). It does not replace or cancel your annual time.',
                 points: [
-                    `Membership end before this purchase (approx.): ${formatBillingDate(user.planExpiresAt)}`,
-                    `Membership end after this purchase (approx.): ${formatBillingDate(addDays(new Date(user.planExpiresAt || now), decision.days))}`,
+                    `Membership end before this purchase (approx.): ${formatBillingDate(effEnd)}`,
+                    `Membership end after this purchase (approx.): ${formatBillingDate(newEnd)}`,
                     `You are purchasing: ${purch}`
                 ],
                 confirmLabel: 'Continue to payment',
                 cancelLabel: 'Cancel'
             };
+        }
         default:
             return null;
     }
@@ -1342,11 +1415,22 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
         // 🔒 Count Limit Check
         let allowGen = false;
         const isPro = userPlan === 'pro';
-        
-        let baseLimit = userPlan === 'free' ? 21 : (userPlan === 'basic' ? 45 : Infinity);
-        let bonus = parseInt(user.bonusCredits) || 0;
-        let finalTotalLimit = baseLimit === Infinity ? Infinity : baseLimit + bonus;
+
+        let finalTotalLimit;
         let usedCount = parseInt(user.usageCount) || 0;
+        if (userPlan === 'free') {
+            finalTotalLimit = 21;
+        } else if (userPlan === 'basic') {
+            let paymentTally = {};
+            try {
+                paymentTally = await aggregatePaymentTally(db, req.user.userId, user.email);
+            } catch (e) {
+                console.error('generate payment tally', e);
+            }
+            finalTotalLimit = computeBasicTotalLimitFromPayments(paymentTally, user);
+        } else {
+            finalTotalLimit = Infinity;
+        }
 
         if (isPro) {
             allowGen = true; 
@@ -1744,11 +1828,7 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
 
         const updateFields = applyPlanDecisionToUserUpdate(user, change.decision, actualPlanId, now);
 
-        const creditDelta = bonusCreditsDeltaForBasicPurchase(change.decision, actualPlanId);
         const userUpdate = { $set: updateFields };
-        if (creditDelta > 0) {
-            userUpdate.$inc = { bonusCredits: creditDelta };
-        }
 
         await db.collection('users').updateOne({ _id: new ObjectId(userId) }, userUpdate);
 

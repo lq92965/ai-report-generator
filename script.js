@@ -1179,10 +1179,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
                 }
 
-                // 绑定邀请奖励的值 (修复Bonus不显示的问题)
+                // 邀请奖励：Basic=报告次数；Pro=邀请所得天数（最多5天），与购买叠加积分分开
                 const bonusVal = document.getElementById('bonus-val');
                 if (bonusVal) {
-                    bonusVal.innerText = data.bonusCredits || 0;
+                    if (data.referralInviteDisplay) {
+                        bonusVal.innerText = String(data.referralInviteDisplay.value);
+                        bonusVal.title =
+                            data.referralInviteDisplay.unit === 'days'
+                                ? 'Referral reward: extra membership days earned (max 5)'
+                                : 'Referral reward: extra report credits from invites (max 30)';
+                    } else {
+                        bonusVal.innerText = data.bonusCredits || 0;
+                        bonusVal.title = '';
+                    }
                 }
                 
                 // 更新分享链接
