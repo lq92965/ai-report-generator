@@ -64,11 +64,22 @@ body {
 body.has-app-nav {
     background: #f9fafb;
     background-image: none;
+    justify-content: flex-start; /* 避免某些环境下整列内容被垂直居中，导致页脚悬在视窗中部 */
 }
 
 main {
     flex-grow: 1; /* 讓 main 區域填充剩餘空間 */
     width: 100%;
+}
+
+/* 无 <main> 的账户子页：让主区块吃满 header 与 footer 之间的空间，短页也把页脚推到底部 */
+body.has-app-nav > section.generator-section,
+body.has-app-nav > section.pricing-section,
+body.has-app-nav > div.container {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
 }
 
 .main-header, .main-footer {
@@ -592,7 +603,20 @@ textarea {
 /* Desktop: account-area pages — readable type + form shells */
 @media (min-width: 768px) {
     body.has-app-nav {
-        font-size: 1.0625rem;
+        font-size: 1.125rem; /* ~18px，桌面端更易读 */
+    }
+    .contact-section .contact-form {
+        max-width: min(720px, 92vw);
+    }
+    /* 顶栏返回与桌面导航字号（避免像移动端一样过小） */
+    header.pwa-app-header .unified-back-btn {
+        font-size: 0.9375rem !important;
+    }
+    header.pwa-app-header .unified-back-btn .back-arrow {
+        font-size: 1rem !important;
+    }
+    .main-header.pwa-app-header .main-nav.pwa-desktop-nav a {
+        font-size: 1rem !important;
     }
     .security-page-card {
         max-width: 720px;
@@ -1316,9 +1340,8 @@ hr.section-divider {
    2025-11-17 最终布局修正
    ========================================= */
 
-/* 1. 在账户、模板、安全页面，隐藏中间的 "Features/Pricing" 菜单 */
-/* 这将直接解决页眉过宽/过高的问题，尤其是在手机上 */
-.account-header .main-nav {
+/* 1. 旧版 account 子页（无 pwa-app-header）：隐藏中间导航。含 pwa-app-header 的页面由 .pwa-desktop-nav 控制显隐 */
+.account-header:not(.pwa-app-header) .main-nav {
     display: none !important;
 }
 
@@ -1367,11 +1390,6 @@ hr.section-divider {
     justify-content: space-between !important; 
     align-items: center !important;
     flex-wrap: nowrap !important;
-}
-
-/* 3. 彻底隐藏中间导航，防止干扰布局 */
-.account-header .main-nav {
-    display: none !important;
 }
 
 /* 4. 修复 Logo 位置，防止被挤压 */
