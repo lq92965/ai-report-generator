@@ -10,7 +10,7 @@
     <title>Contact Support - Reportify AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=2026.12">
+    <link rel="stylesheet" href="style.css?v=2026.13">
     <style>
         .account-hub .container { max-width: 1200px !important; width: 95% !important; margin: 0 auto !important; padding: 40px 15px !important; }
         .final-grid-container { display: flex !important; flex-wrap: wrap !important; gap: 25px !important; margin-top: 40px !important; width: 100% !important; justify-content: flex-start !important; }
@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="mobile-patch.css">
     <script src="mobile-patch.js"></script>
 </head>
-<body class="font-sans antialiased has-app-nav bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+<body class="font-sans antialiased has-app-nav text-gray-800 flex flex-col min-h-screen">
     <script>
         if (!localStorage.getItem('token')) {
             window.location.replace('account.html');
@@ -60,8 +60,9 @@
         </div>
     </header>
 
-    <main class="flex-grow">
-        <section id="contact-us" class="py-12 bg-white border-t border-gray-200">
+    <!-- main 整段同色背景，避免「白区块只有表单高度、下面透出灰底」在视窗中间出现一条横分色 -->
+    <main class="flex flex-1 flex-col min-h-0 bg-white">
+        <section id="contact-us" class="flex flex-1 flex-col py-12 border-t border-gray-200 w-full">
             <div class="container contact-page-shell" style="max-width: 560px; margin: 0 auto; padding: 0 20px;">
                 <h1 class="section-title" style="text-align: center; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 800; color: #0f172a;">Contact Support</h1>
                 <p style="text-align: center; color: #64748b; margin-top: 8px; font-size: 1rem;">We typically reply within 1–2 business days.</p>
