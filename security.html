@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Security Settings - Reportify AI</title>
-    <link rel="stylesheet" href="style.css?v=2026.2">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css?v=2026.9">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="mobile-patch.css">
     <script src="mobile-patch.js"></script>
@@ -15,6 +16,15 @@
             <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
                 <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
             </div>
+            <nav class="main-nav pwa-desktop-nav" id="pwa-collapse-nav">
+                <ul>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="index.html#pricing">Pricing</a></li>
+                    <li><a href="generate.html">Generator</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </nav>
             <div class="pwa-header-actions" style="display: flex; align-items: center; margin-left: auto;">
                 <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite" style="margin-right: 12px;">
                     <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
@@ -24,13 +34,13 @@
         </div>
     </header>
 
-    <section class="generator-section">
+    <section class="generator-section" style="padding-top: 2rem; padding-bottom: 3rem;">
         <div class="container">
-            <h2 class="section-title">Security</h2>
+            <h2 class="section-title" style="margin-bottom: 1.75rem;">Security</h2>
 
-            <div class="account-container">
+            <div class="account-container security-page-card account-profile-form-wide">
                 <div class="account-profile-form">
-                    <h3>Change Password</h3>
+                    <h3 style="font-size: 1.35rem; margin-bottom: 1.25rem;">Change Password</h3>
                     <form id="change-password-form" onsubmit="return false;">
                         <div class="input-wrapper">
                             <label for="old-password">Current Password</label>
@@ -67,7 +77,7 @@
                                 </button>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Update Password</button>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 0.5rem;">Update Password</button>
                         <p id="password-status" class="status-message"></p>
                     </form>
                     
@@ -83,12 +93,6 @@
         </div>
     </section>
 
-    <footer class="main-footer">
-        <div class="container">
-            <p>&copy; 2026 Reportify AI. All Rights Reserved.</p>
-        </div>
-    </footer>
-
     <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
         <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
         <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
@@ -96,6 +100,25 @@
         <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
         <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
     </nav>
+
+    <footer class="main-footer site-footer-rich" role="contentinfo">
+        <div class="container site-footer-inner">
+            <div class="site-footer-social">
+                <a href="https://discord.gg/UtNfS8kH" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://www.reddit.com/user/Automatic_Pitch5117" target="_blank" rel="noopener noreferrer" title="Reddit" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://google.com" target="_blank" rel="noopener noreferrer" title="Google" aria-label="Google"><i class="fa-brands fa-google"></i></a>
+            </div>
+            <div class="site-footer-legal">
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+            <p class="site-footer-copy">&copy; 2026 Beijing Cricket Information Technology Co., Ltd. All Rights Reserved.</p>
+        </div>
+    </footer>
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script src="pwa-nav.js"></script>
