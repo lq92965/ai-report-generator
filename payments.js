@@ -31,19 +31,6 @@ function formatWhen(iso) {
     if (!iso) return '—';
     const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return '—';
-    const narrow =
-        typeof window !== 'undefined' &&
-        window.matchMedia &&
-        window.matchMedia('(max-width: 768px)').matches;
-    if (narrow) {
-        return d.toLocaleString(undefined, {
-            month: 'numeric',
-            day: 'numeric',
-            year: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    }
     return d.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
 }
 

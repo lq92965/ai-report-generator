@@ -10,7 +10,7 @@
     <title>Payment history - Reportify AI</title>
     <!-- 与其它账户子页一致：顶栏用了 Tailwind 工具类，需加载 Tailwind，否则 flex / max-w-[60%] 等不生效 -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css?v=2026.16">
+    <link rel="stylesheet" href="style.css?v=2026.17">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="mobile-patch.css?v=2026.7">
     <script src="mobile-patch.js?v=2026.7"></script>
@@ -25,7 +25,7 @@
         .payments-table-wrap { overflow-x: auto; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.04); }
         .payments-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
         .payments-table th { text-align: left; padding: 12px 14px; background: #f8fafc; color: #475569; font-weight: 600; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
-        .payments-table td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; vertical-align: top; word-wrap: break-word; overflow-wrap: anywhere; }
+        .payments-table td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; vertical-align: top; word-wrap: break-word; overflow-wrap: break-word; }
         .payments-table tr:last-child td { border-bottom: none; }
         .mono-small { font-family: ui-monospace, 'Cascadia Code', monospace; font-size: 0.75rem; word-break: break-all; max-width: 220px; }
         .payments-pagination {
@@ -55,66 +55,54 @@
         }
         .payments-pagination button:disabled { opacity: 0.45; cursor: not-allowed; }
         .payments-pagination button:not(:disabled):active { background: #f1f5f9; }
-        /* App / 窄屏：与网页端相同的横向表格，整体缩小字号与内边距，禁止横向滚动 */
+        /* App / 窄屏：与网页端同一套表，列宽不足时横向滑动（避免把 Success / 按钮文字竖着拆） */
         @media (max-width: 768px) {
             .payments-wrap { padding-left: 10px; padding-right: 10px; max-width: 100%; }
             .payments-table-wrap {
-                overflow-x: hidden !important;
+                overflow-x: auto !important;
                 -webkit-overflow-scrolling: touch;
+                overscroll-behavior-x: contain;
             }
             .payments-table {
-                table-layout: fixed;
-                width: 100%;
-                font-size: 0.65rem;
+                table-layout: auto;
+                min-width: 720px;
+                font-size: 0.8125rem;
             }
             .payments-table th,
             .payments-table td {
-                padding: 6px 4px;
-                vertical-align: top;
-                hyphens: auto;
+                padding: 10px 10px;
+                vertical-align: middle;
+                overflow-wrap: normal;
+                word-break: normal;
             }
             .payments-table th {
-                white-space: normal;
-                line-height: 1.15;
-                font-size: 0.6rem;
-                letter-spacing: -0.01em;
+                white-space: nowrap;
+                font-size: 0.75rem;
             }
-            /* 列宽：与桌面同一套表头，按比例压缩 */
-            .payments-table th:nth-child(1),
-            .payments-table td:nth-child(1) { width: 17%; }
-            .payments-table th:nth-child(2),
-            .payments-table td:nth-child(2) { width: 18%; }
-            .payments-table th:nth-child(3),
-            .payments-table td:nth-child(3) { width: 11%; }
-            .payments-table th:nth-child(4),
-            .payments-table td:nth-child(4) { width: 12%; }
-            .payments-table th:nth-child(5),
-            .payments-table td:nth-child(5) { width: 22%; }
-            .payments-table th:nth-child(6),
-            .payments-table td:nth-child(6) { width: 20%; }
             .mono-small {
                 max-width: none !important;
-                font-size: 0.58rem;
-                line-height: 1.2;
+                font-size: 0.7rem;
+                line-height: 1.35;
+                word-break: break-all;
+                overflow-wrap: anywhere;
             }
             .pay-badge {
-                font-size: 0.58rem;
-                padding: 1px 5px;
-                font-weight: 700;
+                white-space: nowrap;
+                font-size: 0.7rem;
+                padding: 3px 10px;
             }
             .pay-actions-cell {
-                white-space: normal !important;
-                line-height: 1.25;
+                white-space: nowrap !important;
+                vertical-align: middle;
             }
             .pay-actions-cell .pay-appeal-link {
-                display: inline;
-                font-size: 0.58rem;
-                margin-right: 4px;
+                font-size: 0.75rem;
+                margin-right: 8px;
             }
             .pay-actions-cell .pay-copy-btn {
-                font-size: 0.55rem;
-                padding: 2px 5px;
-                margin-top: 2px;
+                font-size: 0.7rem;
+                padding: 5px 10px;
+                white-space: nowrap;
             }
         }
         .pay-badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
@@ -229,6 +217,6 @@
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script src="pwa-nav.js"></script>
     <script src="script.js?v=2026.7"></script>
-    <script src="payments.js?v=2026.16"></script>
+    <script src="payments.js?v=2026.17"></script>
 </body>
 </html>
