@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775836828187",
+        "type": "blog",
+        "title": "Curing the Corporate Malaise: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-10",
+        "author": "Michael Chen",
+        "excerpt": "We've all been there. It's 4:00 PM on a Friday, and instead of wrapping up strategic work, you're wrestling with a spreadsheet, trying to make the wee...",
+        "contentFile": "blog-1775836828187.md"
+    },
+    {
         "id": "1775833219166",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
