@@ -191,9 +191,13 @@ function isAnnualSku(planId) {
 function planDaysForSku(actualPlanId) {
     return String(actualPlanId || '').includes('annual') ? 365 : 30;
 }
-/** Prefer DB field; otherwise infer monthly vs annual from remaining time. */
+/**
+ * Prefer DB annual SKU; otherwise infer monthly vs annual from remaining time.
+ * If planSku is monthly but the paid horizon is longer than ~2 stacked prepay months,
+ * treat as annual-class so buying another month routes to STACK_MONTHLY_AFTER_ANNUAL
+ * (keeps annual semantics) instead of STACK_SAME_SKU (which overwrites planSku).
+ */
 function inferPlanSku(user) {
-    if (user.planSku) return user.planSku;
     const p = (user.plan || 'free').toLowerCase().trim();
     if (p !== 'basic' && p !== 'pro') return null;
     if (!user.planExpiresAt) return null;
@@ -201,6 +205,16 @@ function inferPlanSku(user) {
     const now = new Date();
     if (exp <= now) return null;
     const daysLeft = (exp - now) / 86400000;
+
+    if (user.planSku && isAnnualSku(user.planSku)) return user.planSku;
+
+    const LONG_HORIZON_DAYS = 62;
+    if (user.planSku && !isAnnualSku(user.planSku) && daysLeft > LONG_HORIZON_DAYS) {
+        return `${p}_annual`;
+    }
+
+    if (user.planSku) return user.planSku;
+
     if (daysLeft > 60) return `${p}_annual`;
     return p;
 }
@@ -1577,10 +1591,18 @@ app.post('/api/upgrade-plan', authenticateToken, async (req, res) => {
 
         const updateFields = applyPlanDecisionToUserUpdate(user, change.decision, actualPlanId, now);
 
-        await db.collection('users').updateOne(
-            { _id: new ObjectId(userId) },
-            { $set: updateFields }
-        );
+        const dec = change.decision;
+        const addBasicStackCredits =
+            dec.realPlanId === 'basic'
+            && actualPlanId === 'basic'
+            && (dec.type === 'STACK_SAME_SKU' || dec.type === 'STACK_MONTHLY_AFTER_ANNUAL');
+
+        const userUpdate = { $set: updateFields };
+        if (addBasicStackCredits) {
+            userUpdate.$inc = { bonusCredits: 45 };
+        }
+
+        await db.collection('users').updateOne({ _id: new ObjectId(userId) }, userUpdate);
 
         let logAmount = 9.90;
         if (actualPlanId === 'pro') logAmount = 19.90;

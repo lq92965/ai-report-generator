@@ -2,7 +2,9 @@
  * Payment history — uses GET /api/payments (same data for web + Capacitor www/).
  * Prefer script.js `window.REPORTIFY_API_BASE` when present (single source of truth).
  */
-const API_BASE_URL = (typeof window !== 'undefined' && window.REPORTIFY_API_BASE) || 'https://api.goreportify.com';
+/** Must not be named API_BASE_URL — script.js on the same page already declares that const. */
+const PAYMENTS_API_BASE =
+    (typeof window !== 'undefined' && window.REPORTIFY_API_BASE) || 'https://api.goreportify.com';
 
 function planLabel(planId) {
     if (!planId) return '—';
@@ -56,7 +58,7 @@ async function loadPayments() {
     }
 
     try {
-        const url = `${API_BASE_URL}/api/payments?t=${Date.now()}`;
+        const url = `${PAYMENTS_API_BASE}/api/payments?t=${Date.now()}`;
         const res = await fetch(url, {
             headers: { Authorization: `Bearer ${token}` },
             cache: 'no-store'
@@ -75,7 +77,7 @@ async function loadPayments() {
                     <p style="margin: 12px 0 0; font-size: 0.88rem; color: #64748b; line-height: 1.5; max-width: 520px; margin-left: auto; margin-right: auto;">
                         Records appear after a successful checkout and server upgrade. If you paid but see nothing:
                         hard-refresh this page (Ctrl+F5), sign out and sign in again, and confirm the site is using the latest <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;">server.js</code>.
-                        API in use: <strong>${escapeHtml(API_BASE_URL)}</strong>.
+                        API in use: <strong>${escapeHtml(PAYMENTS_API_BASE)}</strong>.
                         You can still use <strong>Contact (Billing)</strong> with your PayPal Order ID from the PayPal receipt.
                     </p>`;
                 emptyEl.style.display = 'block';
