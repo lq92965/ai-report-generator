@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775822428546",
+        "type": "blog",
+        "title": "Beyond the Dashboard: How to Conquer Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-10",
+        "author": "Alex Mercer",
+        "excerpt": "It's Monday morning. Your calendar is a wall of status meetings. Your inbox is flooded with automated reports, each one a dense collection of charts a...",
+        "contentFile": "blog-1775822428546.md"
+    },
+    {
         "id": "1775818821423",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
