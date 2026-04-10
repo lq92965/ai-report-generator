@@ -252,7 +252,7 @@
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script src="pwa-nav.js"></script>
-    <script src="script.js?v=2026.4"></script>
+    <script src="script.js?v=2026.5"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
@@ -281,7 +281,7 @@
                         bv.title =
                             data.referralInviteDisplay.unit === 'days'
                                 ? 'Referral reward: extra membership days (max 5)'
-                                : 'Referral reward: extra report credits from invites (max 30)';
+                                : 'Referral reward: +5 if you used a referral link; up to +25 from inviting others';
                     } else {
                         bv.innerText = data.bonusCredits || 0;
                         bv.title = '';

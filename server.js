@@ -198,13 +198,8 @@ function projectedMembershipEnd(user, decision, actualPlanId, now) {
             return addDays(now, d.days != null ? d.days : daysSku);
         case 'STACK_SAME_SKU': {
             const addD = d.days != null ? d.days : daysSku;
-            if (isAnnualSku(actualPlanId)) {
-                const eff = effectivePaidEnd(user);
-                const base = eff > now ? eff : now;
-                return addDays(base, addD);
-            }
-            const end = user.planExpiresAt ? new Date(user.planExpiresAt) : null;
-            const base = end && end > now ? end : now;
+            const eff = effectivePaidEnd(user);
+            const base = eff > now ? eff : now;
             return addDays(base, addD);
         }
         case 'QUEUE_ANNUAL':
@@ -212,7 +207,8 @@ function projectedMembershipEnd(user, decision, actualPlanId, now) {
         case 'STACK_QUEUED_ANNUAL':
             return new Date(d.newEndsAt);
         case 'STACK_MONTHLY_AFTER_ANNUAL': {
-            const base = user.planExpiresAt ? new Date(user.planExpiresAt) : now;
+            const eff = effectivePaidEnd(user);
+            const base = eff > now ? eff : now;
             return addDays(base, d.days);
         }
         default:
@@ -486,7 +482,7 @@ function buildSubscriptionNoteLines(displayPlan, paymentTally, user, queuedPlanS
         );
         lines.push(describeCurrentBasicPeriod(user, queuedPlanSummary));
         lines.push(
-            'Report total = 45 × (monthly purchases) + 540 × (annual purchases) + invite rewards (max +30: +5 if you joined via a referral, up to +25 from inviting others).'
+            'Report total = 45 × (monthly purchases) + 540 × (annual purchases) + invite rewards (+5 if you joined via a referral; up to +25 more from inviting others, max 5 friends).'
         );
         lines.push(
             'You can stack more months or years anytime; use Payment history to review past orders.'
@@ -521,20 +517,35 @@ function applyPlanDecisionToUserUpdate(user, decision, actualPlanId, now) {
             return base;
         }
         case 'STACK_SAME_SKU': {
-            let base;
-            if (isAnnualSku(actualPlanId)) {
-                const eff = effectivePaidEnd(user);
-                base = eff > now ? eff : now;
-            } else {
-                const end = user.planExpiresAt ? new Date(user.planExpiresAt) : null;
-                base = end && end > now ? end : now;
-            }
+            const eff = effectivePaidEnd(user);
+            const base = eff > now ? eff : now;
             const newExp = addDays(base, days);
             const keepAnnualSku =
                 user.planSku
                 && isAnnualSku(user.planSku)
                 && !isAnnualSku(actualPlanId)
                 && tierFromSku(user.planSku) === tierFromSku(actualPlanId);
+
+            const qAt = user.planQueue && user.planQueue.endsAt ? new Date(user.planQueue.endsAt).getTime() : 0;
+            const pAt = user.planExpiresAt ? new Date(user.planExpiresAt).getTime() : 0;
+            const extendQueuedWindow = user.planQueue && user.planQueue.endsAt && qAt >= pAt;
+
+            if (extendQueuedWindow) {
+                return {
+                    plan: realPlanId,
+                    planSku: keepAnnualSku ? user.planSku : actualPlanId,
+                    planExpiresAt: user.planExpiresAt,
+                    planQueue: {
+                        planId: user.planQueue.planId || user.planQueue.planSku,
+                        startsAt: user.planQueue.startsAt,
+                        endsAt: newExp
+                    },
+                    usageCount: user.usageCount ?? 0,
+                    usageResetAt: realPlanId === 'basic'
+                        ? (user.usageResetAt ? new Date(user.usageResetAt) : addDays(now, 30))
+                        : null
+                };
+            }
             return {
                 plan: realPlanId,
                 planSku: keepAnnualSku ? user.planSku : actualPlanId,
@@ -726,16 +737,16 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
             if (user.planQueue && user.planQueue.endsAt) {
                 daysLeft = Math.max(
                     0,
-                    Math.floor((new Date(user.planQueue.endsAt) - now) / 86400000)
+                    Math.ceil((new Date(user.planQueue.endsAt) - now) / 86400000)
                 );
                 currentPeriodDaysLeft = Math.max(
                     0,
-                    Math.floor((new Date(user.planExpiresAt) - now) / 86400000)
+                    Math.ceil((new Date(user.planExpiresAt) - now) / 86400000)
                 );
             } else {
                 daysLeft = Math.max(
                     0,
-                    Math.floor((new Date(user.planExpiresAt) - now) / 86400000)
+                    Math.ceil((new Date(user.planExpiresAt) - now) / 86400000)
                 );
             }
         } else {
@@ -1175,18 +1186,12 @@ function buildBillingConfirmDialog(planId, decision, user, now) {
             };
         case 'STACK_SAME_SKU': {
             const addD = decision.days != null ? decision.days : planDaysForSku(planId);
-            let base;
-            if (isAnnualSku(planId)) {
-                const eff = effectivePaidEnd(user);
-                base = eff > now ? eff : now;
-            } else {
-                const end = user.planExpiresAt ? new Date(user.planExpiresAt) : now;
-                base = end > now ? end : now;
-            }
+            const eff = effectivePaidEnd(user);
+            const base = eff > now ? eff : now;
             const newEnd = addDays(base, addD);
             return {
                 title: 'Extend the same membership',
-                lead: `You already have this exact plan type. This payment adds ${addD} days after your current membership end (time stacks forward; it does not reset your start date to today).`,
+                lead: `You already have this exact plan type. This payment adds ${addD} days after your full prepaid end date (including any queued term). Time stacks forward; your start date is not reset to today.`,
                 points: [
                     `Stack from (approx.): ${formatBillingDate(base)}`,
                     `New end date after purchase (approx.): ${formatBillingDate(newEnd)}`,

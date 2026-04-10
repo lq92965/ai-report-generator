@@ -1187,7 +1187,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         bonusVal.title =
                             data.referralInviteDisplay.unit === 'days'
                                 ? 'Referral reward: extra membership days earned (max 5)'
-                                : 'Referral reward: extra report credits from invites (max 30)';
+                                : 'Referral reward: +5 if you used a referral link; up to +25 from inviting others';
                     } else {
                         bonusVal.innerText = data.bonusCredits || 0;
                         bonusVal.title = '';
