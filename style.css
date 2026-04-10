@@ -73,10 +73,11 @@ main {
 }
 
 /* 无 <main> 的账户子页：让主区块吃满 header 与 footer 之间的空间，短页也把页脚推到底部 */
+body.has-app-nav > main,
 body.has-app-nav > section.generator-section,
 body.has-app-nav > section.pricing-section,
 body.has-app-nav > div.container {
-    flex: 1 1 auto;
+    flex: 1 1 auto !important;
     width: 100%;
     min-width: 0;
     min-height: 0;
@@ -2691,4 +2692,43 @@ body.has-app-nav .fixed.bottom-8 {
 #article-content figure.article-cover {
     margin: 0 0 1.75rem 0;
     width: 100%;
+}
+
+/* =============================================================================
+   Critical fix: 全局 .hidden 与 Tailwind「hidden md:flex / md:block」冲突
+   - .hidden 使用 !important，会压过 Tailwind 响应式工具（无 !important）
+   - 顶栏 nav 常带 class="... hidden md:flex"，结果桌面端导航永久不可见
+   - 以下用更高优先级或 id 强制恢复；并兼容其他 hidden sm:/md:/lg: 组合
+   ============================================================================= */
+@media (min-width: 768px) {
+    header.main-header.pwa-app-header nav#pwa-collapse-nav.main-nav {
+        display: flex !important;
+    }
+}
+@media (min-width: 640px) {
+    .hidden.sm\:inline {
+        display: inline !important;
+    }
+    .hidden.sm\:block {
+        display: block !important;
+    }
+}
+@media (min-width: 768px) {
+    .hidden.md\:flex {
+        display: flex !important;
+    }
+    .hidden.md\:block {
+        display: block !important;
+    }
+    .hidden.md\:inline-flex {
+        display: inline-flex !important;
+    }
+}
+@media (min-width: 1024px) {
+    .hidden.lg\:flex {
+        display: flex !important;
+    }
+    .hidden.lg\:block {
+        display: block !important;
+    }
 }
