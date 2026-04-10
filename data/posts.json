@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775840417264",
+        "type": "news",
+        "title": "The Unseen Cost of AI's Data Hunger",
+        "category": "Tech Radar",
+        "date": "2026-04-10",
+        "author": "Marcus Webb",
+        "excerpt": "As artificial intelligence systems grow more sophisticated, a critical bottleneck is emerging: the world is running out of high-quality training data....",
+        "contentFile": "news-1775840417264.md"
+    },
+    {
         "id": "1775836828187",
         "type": "blog",
         "title": "Curing the Corporate Malaise: A PM's Guide to Overcoming Reporting Fatigue",
