@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775829628676",
+        "type": "blog",
+        "title": "The Silent Killer: A PM's Guide to Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-10",
+        "author": "Sarah Jenkins",
+        "excerpt": "It’s 4 PM on a Friday. Your core work is done, but a familiar dread creeps in. It’s time to compile the weekly status report. You open a dozen tabs—Ji...",
+        "contentFile": "blog-1775829628676.md"
+    },
+    {
         "id": "1775826019765",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
