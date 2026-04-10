@@ -163,6 +163,7 @@
                 <div id="upgrade-hint" style="display:none; margin-top:10px;">
                     <a href="subscription.html" class="btn btn-sm btn-outline" style="border-radius:20px; padding:5px 15px; font-size:0.8rem;">Upgrade Plan &rarr;</a>
                 </div>
+                <div id="usage-subscription-note" style="display:none; margin-top:14px; text-align:left; max-width:560px; margin-left:auto; margin-right:auto; padding:14px 16px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; font-size:0.82rem; line-height:1.55; color:#475569;"></div>
             </div>
 
             <div style="max-width: 600px; margin: 0 auto 40px; text-align: center;">
@@ -251,7 +252,7 @@
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script src="pwa-nav.js"></script>
-    <script src="script.js?v=2026.2"></script>
+    <script src="script.js?v=2026.3"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
@@ -263,7 +264,8 @@
 
             try {
                 // 请求数据
-                const res = await fetch('https://api.goreportify.com/api/usage', {
+                const apiBase = (typeof window !== 'undefined' && window.REPORTIFY_API_BASE) || 'https://api.goreportify.com';
+                const res = await fetch(`${apiBase}/api/usage`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 
@@ -284,10 +286,23 @@
                 const planNameEl = document.getElementById('plan-name');
                 if (planCode === 'pro') {
                     planNameEl.textContent = 'Professional';
-                    planNameEl.style.color = '#e63946'; 
+                    planNameEl.style.color = '#e63946';
+                    document.getElementById('upgrade-hint').style.display = 'none';
                 } else {
                     planNameEl.textContent = 'Basic / Free';
                     document.getElementById('upgrade-hint').style.display = 'block';
+                }
+
+                const noteEl = document.getElementById('usage-subscription-note');
+                if (noteEl && Array.isArray(data.subscriptionNoteLines) && data.subscriptionNoteLines.length) {
+                    noteEl.textContent = '';
+                    data.subscriptionNoteLines.forEach(function (line) {
+                        const p = document.createElement('p');
+                        p.style.margin = '0 0 8px 0';
+                        p.textContent = line;
+                        noteEl.appendChild(p);
+                    });
+                    noteEl.style.display = 'block';
                 }
 
                 // --- 3. 填充用量数字与卡片 ---
