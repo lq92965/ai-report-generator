@@ -252,7 +252,7 @@
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script src="pwa-nav.js"></script>
-    <script src="script.js?v=2026.3"></script>
+    <script src="script.js?v=2026.4"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
@@ -274,7 +274,19 @@
                 
                 // 1. 更新分享卡片数据
                 const myCode = data.referralCode || 'ERROR';
-                document.getElementById('bonus-val').innerText = data.bonusCredits || 0;
+                const bv = document.getElementById('bonus-val');
+                if (bv) {
+                    if (data.referralInviteDisplay) {
+                        bv.innerText = String(data.referralInviteDisplay.value);
+                        bv.title =
+                            data.referralInviteDisplay.unit === 'days'
+                                ? 'Referral reward: extra membership days (max 5)'
+                                : 'Referral reward: extra report credits from invites (max 30)';
+                    } else {
+                        bv.innerText = data.bonusCredits || 0;
+                        bv.title = '';
+                    }
+                }
                 
                 // 更新链接生成逻辑
                 updateShareLinks(myCode);
