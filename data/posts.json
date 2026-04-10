@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775800827502",
+        "type": "blog",
+        "title": "Overcoming Reporting Fatigue: A PM's Guide to Meaningful Metrics",
+        "category": "Deep Insights",
+        "date": "2026-04-10",
+        "author": "Marcus Webb",
+        "excerpt": "The email lands in your inbox at 4:15 PM. The subject line is simple, yet it fills you with a familiar dread: \"Quick status update?\" You know it's not...",
+        "contentFile": "blog-1775800827502.md"
+    },
+    {
         "id": "1775797220976",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
