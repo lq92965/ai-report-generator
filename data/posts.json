@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775808028046",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-10",
+        "author": "Michael Chen",
+        "excerpt": "It’s the project manager’s recurring nightmare: the Sunday evening realization that Monday morning is for chasing down data, wrangling spreadsheets, a...",
+        "contentFile": "blog-1775808028046.md"
+    },
+    {
         "id": "1775804421606",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
