@@ -8,18 +8,115 @@
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
     <title>Payment history - Reportify AI</title>
-    <link rel="stylesheet" href="style.css?v=2026.12">
+    <!-- 与其它账户子页一致：顶栏用了 Tailwind 工具类，需加载 Tailwind，否则 flex / max-w-[60%] 等不生效 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css?v=2026.16">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="mobile-patch.css?v=2026.7">
     <script src="mobile-patch.js?v=2026.7"></script>
     <style>
-        .payments-wrap { width: 100%; max-width: 960px; margin: 0 auto; padding: 0 20px 48px; }
+        /* 主区横向铺满视口，避免 App / 窄屏里出现「中间一条白、两侧深色」的错觉 */
+        section.payments-page.generator-section {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        .payments-wrap { width: 100%; max-width: min(960px, 100%); margin: 0 auto; padding: 0 20px 48px; box-sizing: border-box; }
         .payments-table-wrap { overflow-x: auto; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.04); }
         .payments-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
         .payments-table th { text-align: left; padding: 12px 14px; background: #f8fafc; color: #475569; font-weight: 600; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
-        .payments-table td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; vertical-align: top; }
+        .payments-table td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; vertical-align: top; word-wrap: break-word; overflow-wrap: anywhere; }
         .payments-table tr:last-child td { border-bottom: none; }
         .mono-small { font-family: ui-monospace, 'Cascadia Code', monospace; font-size: 0.75rem; word-break: break-all; max-width: 220px; }
+        .payments-pagination {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
+            padding: 12px;
+            font-size: 0.875rem;
+            color: #475569;
+        }
+        .payments-pagination.is-visible { display: flex; }
+        @media (max-width: 768px) {
+            .payments-pagination.is-visible { font-size: 0.72rem; gap: 8px; padding: 10px 6px; }
+            .payments-pagination.is-visible button { padding: 6px 10px; font-size: 0.72rem; }
+        }
+        .payments-pagination button {
+            padding: 8px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: #fff;
+            color: #334155;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .payments-pagination button:disabled { opacity: 0.45; cursor: not-allowed; }
+        .payments-pagination button:not(:disabled):active { background: #f1f5f9; }
+        /* App / 窄屏：与网页端相同的横向表格，整体缩小字号与内边距，禁止横向滚动 */
+        @media (max-width: 768px) {
+            .payments-wrap { padding-left: 10px; padding-right: 10px; max-width: 100%; }
+            .payments-table-wrap {
+                overflow-x: hidden !important;
+                -webkit-overflow-scrolling: touch;
+            }
+            .payments-table {
+                table-layout: fixed;
+                width: 100%;
+                font-size: 0.65rem;
+            }
+            .payments-table th,
+            .payments-table td {
+                padding: 6px 4px;
+                vertical-align: top;
+                hyphens: auto;
+            }
+            .payments-table th {
+                white-space: normal;
+                line-height: 1.15;
+                font-size: 0.6rem;
+                letter-spacing: -0.01em;
+            }
+            /* 列宽：与桌面同一套表头，按比例压缩 */
+            .payments-table th:nth-child(1),
+            .payments-table td:nth-child(1) { width: 17%; }
+            .payments-table th:nth-child(2),
+            .payments-table td:nth-child(2) { width: 18%; }
+            .payments-table th:nth-child(3),
+            .payments-table td:nth-child(3) { width: 11%; }
+            .payments-table th:nth-child(4),
+            .payments-table td:nth-child(4) { width: 12%; }
+            .payments-table th:nth-child(5),
+            .payments-table td:nth-child(5) { width: 22%; }
+            .payments-table th:nth-child(6),
+            .payments-table td:nth-child(6) { width: 20%; }
+            .mono-small {
+                max-width: none !important;
+                font-size: 0.58rem;
+                line-height: 1.2;
+            }
+            .pay-badge {
+                font-size: 0.58rem;
+                padding: 1px 5px;
+                font-weight: 700;
+            }
+            .pay-actions-cell {
+                white-space: normal !important;
+                line-height: 1.25;
+            }
+            .pay-actions-cell .pay-appeal-link {
+                display: inline;
+                font-size: 0.58rem;
+                margin-right: 4px;
+            }
+            .pay-actions-cell .pay-copy-btn {
+                font-size: 0.55rem;
+                padding: 2px 5px;
+                margin-top: 2px;
+            }
+        }
         .pay-badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
         .pay-ok { background: #ecfdf5; color: #047857; }
         .pay-pending { background: #fffbeb; color: #b45309; }
@@ -56,7 +153,7 @@
         </div>
     </header>
 
-    <section class="generator-section" style="min-height: 70vh; padding: 28px 0 0;">
+    <section class="generator-section payments-page" style="min-height: 70vh; padding: 28px 0 0;">
         <div class="payments-wrap">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
                 <div>
@@ -91,6 +188,8 @@
                     <tbody id="payments-tbody"></tbody>
                 </table>
             </div>
+
+            <div id="payments-pagination" class="payments-pagination" aria-label="Payment history pagination"></div>
 
             <div class="payments-note">
                 <strong>Questions or wrong charge?</strong>
@@ -130,6 +229,6 @@
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script src="pwa-nav.js"></script>
     <script src="script.js?v=2026.7"></script>
-    <script src="payments.js?v=2026.8"></script>
+    <script src="payments.js?v=2026.16"></script>
 </body>
 </html>
