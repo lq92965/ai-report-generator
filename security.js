@@ -69,10 +69,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. --- 【新功能】绑定“删除账户”按钮 ---
     deleteAccountBtn.addEventListener('click', async () => {
 
-        // 1. 第一次确认
-        if (!confirm('Are you absolutely sure you want to delete your account? This action cannot be undone.')) {
+        // 1. First confirmation (custom modal when script.js is loaded on the page)
+        let proceed = true;
+        if (typeof window.showReportifyConfirmModal === 'function') {
+            proceed = await window.showReportifyConfirmModal({
+                title: 'Delete your account?',
+                lead: 'This permanently deletes your account. This action cannot be undone.',
+                confirmLabel: 'Continue',
+                cancelLabel: 'Cancel'
+            });
+        } else if (!confirm('Are you absolutely sure you want to delete your account? This action cannot be undone.')) {
             return;
         }
+        if (!proceed) return;
 
         // 2. 第二次确认 (输入密码)
         const password = prompt('To confirm deletion, please enter your current password:');
@@ -113,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error('Error deleting account:', error);
-            showStatusMessage(error.message, true); // (在 security.html 页面上显示错误)
+            showStatusMessage(error.message, true);
             deleteAccountBtn.disabled = false;
             deleteAccountBtn.textContent = 'Delete My Account';
         }
@@ -121,22 +130,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-/**
- * (辅助函数) 在*指定*元素中显示状态消息
- * (!!!) 修复: 现在接受 'element' 作为参数
- */
-function showStatusMessage(element, message, isError) {
-    if (!element) {
-    console.error('showStatusMessage: element not provided');
-    return;
-}
-    element.textContent = message;
-    element.className = isError ? 'status-message error-message' : 'status-message success-message';
-    element.style.display = 'block'; // 确保可见
-    
+function showStatusMessage(message, isError) {
+    const el = document.getElementById('password-status');
+    if (!el) {
+        console.error('showStatusMessage: password-status not found');
+        return;
+    }
+    el.textContent = message;
+    el.className = isError ? 'status-message error-message' : 'status-message success-message';
+    el.style.display = 'block';
     setTimeout(() => {
-        element.textContent = '';
-        element.className = 'status-message';
-        element.style.display = 'none'; // 隐藏
-        // }, 5000);
+        el.textContent = '';
+        el.className = 'status-message';
+        el.style.display = 'none';
+    }, 5000);
 }

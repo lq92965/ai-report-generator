@@ -68,7 +68,18 @@ async function loadPayments() {
         const list = data.payments || [];
 
         if (list.length === 0) {
-            if (emptyEl) emptyEl.style.display = 'block';
+            if (emptyEl) {
+                emptyEl.innerHTML = `
+                    <i class="fas fa-receipt" style="font-size: 2rem; margin-bottom: 12px; opacity: 0.6;"></i>
+                    <p style="margin: 0; font-size: 1rem;">No payments found for this account.</p>
+                    <p style="margin: 12px 0 0; font-size: 0.88rem; color: #64748b; line-height: 1.5; max-width: 520px; margin-left: auto; margin-right: auto;">
+                        Records appear after a successful checkout and server upgrade. If you paid but see nothing:
+                        hard-refresh this page (Ctrl+F5), sign out and sign in again, and confirm the site is using the latest <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;">server.js</code>.
+                        API in use: <strong>${escapeHtml(API_BASE_URL)}</strong>.
+                        You can still use <strong>Contact (Billing)</strong> with your PayPal Order ID from the PayPal receipt.
+                    </p>`;
+                emptyEl.style.display = 'block';
+            }
             if (tableWrap) tableWrap.style.display = 'none';
             return;
         }

@@ -162,7 +162,17 @@ async function handleFormSubmit(e) {
 }
 
 async function deleteTemplate(id) {
-    if(!confirm('Delete this template?')) return;
+    if (typeof window.showReportifyConfirmModal === 'function') {
+        const ok = await window.showReportifyConfirmModal({
+            title: 'Delete this template?',
+            lead: 'This removes the template from your list. This cannot be undone.',
+            confirmLabel: 'Delete',
+            cancelLabel: 'Cancel'
+        });
+        if (!ok) return;
+    } else if (!confirm('Delete this template?')) {
+        return;
+    }
     await fetch(`${API_BASE_URL}/api/templates/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
