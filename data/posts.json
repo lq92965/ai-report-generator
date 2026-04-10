@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775786425635",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-10",
+        "author": "Emily Rostova",
+        "excerpt": "As a Product Manager, you live in a world of data. Sprint reports, velocity charts, stakeholder updates, roadmap progress, quarterly business reviews—...",
+        "contentFile": "blog-1775786425635.md"
+    },
+    {
         "id": "1775782822270",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
