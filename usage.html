@@ -9,7 +9,7 @@
     <link rel="apple-touch-icon" href="icons/icon-192.png">
     <title>Usage & Limits - Reportify AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css?v=2026.2">
+    <link rel="stylesheet" href="style.css?v=2026.9">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Usage stat cards: layout handled via Tailwind classes only (no custom CSS). */
@@ -91,7 +91,7 @@
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 8px 10px;
             width: 100%;
-            max-width: 300px;
+            max-width: min(420px, 100%);
             margin: 16px auto 0;
             box-sizing: border-box;
             justify-items: stretch;
@@ -119,6 +119,10 @@
         .btn-tg { background: #229ED9; } 
         .btn-rd { background: #FF4500; } 
 
+        @media (min-width: 768px) {
+            .usage-share-grid { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 10px !important; max-width: 720px !important; margin-left: auto !important; margin-right: auto !important; }
+            .link-input { font-size: 0.85rem !important; }
+        }
         @media (max-width: 768px) {
             .container { padding: 0 15px; }
             h1 { font-size: 1.8rem; }
@@ -136,7 +140,7 @@
             <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
                 <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
             </div>
-            <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
+            <nav class="main-nav pwa-desktop-nav" id="pwa-collapse-nav">
                 <ul>
                     <li><a href="index.html#features">Features</a></li>
                     <li><a href="index.html#pricing">Pricing</a></li>
@@ -154,8 +158,8 @@
         </div>
     </header>
 
-    <div class="container" style="max-width: 900px; margin: 20px auto 60px; padding: 0 20px;">
-        <div style="background: white; border-radius: 24px; padding: 50px; box-shadow: 0 10px 40px rgba(0,0,0,0.06);">
+    <div class="container" style="max-width: min(1100px, 96vw); margin: 24px auto 64px; padding: 0 20px;">
+        <div style="background: white; border-radius: 24px; padding: clamp(28px, 4vw, 56px); box-shadow: 0 10px 40px rgba(0,0,0,0.06); border: 1px solid #e5e7eb;">
             
             <div style="text-align: center; margin-bottom: 40px;">
                 <h1 style="margin: 0 0 10px; color: #333; font-size: 2rem;">Usage Statistics</h1>
@@ -197,7 +201,7 @@
                     <button type="button" class="btn-copy" onclick="copyLink()">Copy</button>
                 </div>
 
-                <div class="flex flex-wrap justify-center gap-2 w-full mt-4">
+                <div class="flex flex-wrap justify-center gap-2 w-full mt-4 usage-share-grid">
                     <a href="#" id="share-x" target="_blank" class="btn-social btn-x"><i class="fab fa-x-twitter"></i> <span>X</span></a>
                     <a href="#" id="share-wa" target="_blank" class="btn-social btn-wa"><i class="fab fa-whatsapp"></i> <span>WhatsApp</span></a>
                     <a href="#" id="share-in" target="_blank" class="btn-social btn-in"><i class="fab fa-linkedin"></i> <span>LinkedIn</span></a>
@@ -249,6 +253,25 @@
         <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
         <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
     </nav>
+
+    <footer class="main-footer site-footer-rich" role="contentinfo">
+        <div class="container site-footer-inner">
+            <div class="site-footer-social">
+                <a href="https://discord.gg/UtNfS8kH" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://www.reddit.com/user/Automatic_Pitch5117" target="_blank" rel="noopener noreferrer" title="Reddit" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://google.com" target="_blank" rel="noopener noreferrer" title="Google" aria-label="Google"><i class="fa-brands fa-google"></i></a>
+            </div>
+            <div class="site-footer-legal">
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+            <p class="site-footer-copy">&copy; 2026 Beijing Cricket Information Technology Co., Ltd. All Rights Reserved.</p>
+        </div>
+    </footer>
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script src="pwa-nav.js"></script>

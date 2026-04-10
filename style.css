@@ -28,7 +28,7 @@ html {
     --spacing-xxl: clamp(4rem, 8vw + 1rem, 6.25rem); /* ~64px to 100px */
 
     /* 顶栏内容区宽度（与首页 index.html 的 .container 一致；横向 padding 仍由 .container 及媒体查询控制） */
-    --app-header-content-max-width: 1100px;
+    --app-header-content-max-width: 1200px;
     /* 移动端顶栏与 Generate / Mine / 详情正文同一左右留白，避免「顶栏比主页看起来更宽」 */
     --app-header-pad-x-mobile: 20px;
 }
@@ -55,7 +55,8 @@ body {
     font-size: var(--font-size-base); /* Apply responsive base font size */
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* stretch: column flex + align-items:center was shrink-wrapping direct child sections to ~content width on desktop */
+    align-items: stretch;
     min-height: 100vh;
 }
 
@@ -536,6 +537,114 @@ textarea {
     color: var(--text-secondary);
     font-size: clamp(0.8rem, 1vw + 0.4rem, 0.875rem); /* Responsive footer text */
     border-top: 1px solid #EAEAEA;
+}
+
+/* Unified footer (social + Terms + Privacy) — use on account subpages for parity with account.html */
+.main-footer.site-footer-rich {
+    padding: 2rem 0 2.25rem;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+.site-footer-rich .site-footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    max-width: var(--app-header-content-max-width);
+    margin: 0 auto;
+}
+.site-footer-rich .site-footer-social {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+    margin: 0.25rem 0;
+}
+.site-footer-rich .site-footer-social a {
+    color: #64748b;
+    font-size: 1.35rem;
+    line-height: 1;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+.site-footer-rich .site-footer-social a:hover {
+    transform: translateY(-2px);
+}
+.site-footer-rich .site-footer-legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+}
+.site-footer-rich .site-footer-legal a {
+    color: #64748b;
+    text-decoration: none;
+}
+.site-footer-rich .site-footer-legal a:hover {
+    color: #2563eb;
+}
+.site-footer-rich .site-footer-copy {
+    margin: 0;
+    font-size: 0.875rem;
+}
+
+/* Desktop: account-area pages — readable type + form shells */
+@media (min-width: 768px) {
+    body.has-app-nav {
+        font-size: 1.0625rem;
+    }
+    .security-page-card {
+        max-width: 720px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .account-profile-form-wide {
+        padding: 2.5rem 2.75rem !important;
+    }
+    .contact-page-shell {
+        max-width: 720px !important;
+    }
+    .account-hub .final-grid-container {
+        gap: 28px !important;
+    }
+    /* Override account.html inline .final-card !important (broader selector) */
+    .account-hub .final-card {
+        min-height: 158px !important;
+        padding: 32px !important;
+    }
+    .account-hub .final-card h3 {
+        font-size: 1.3rem !important;
+    }
+    .account-hub .final-card p {
+        font-size: 0.95rem !important;
+    }
+}
+
+.account-profile-form-wide {
+    background: #fff;
+    border-radius: 1rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+    padding: 1.75rem 1.5rem;
+}
+
+@media (min-width: 1024px) {
+    .profile-layout-responsive {
+        display: grid !important;
+        grid-template-columns: 240px 1fr !important;
+        gap: 3rem !important;
+        align-items: start !important;
+        flex-wrap: nowrap !important;
+    }
+    .profile-layout-responsive > .profile-avatar-col {
+        width: auto !important;
+        max-width: none !important;
+        text-align: center;
+    }
+    .profile-page-hero h1 {
+        font-size: 2rem !important;
+    }
 }
 
 /* --- Loading Animation --- */
