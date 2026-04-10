@@ -65,6 +65,71 @@ window.showToast = function(message, type = 'info') {
     }, 3000);
 };
 
+/**
+ * App-styled confirm dialog (replaces window.confirm). English copy only.
+ * @param {{ title?: string, lead?: string, points?: string[], confirmLabel?: string, cancelLabel?: string }} opts
+ * @returns {Promise<boolean>}
+ */
+window.showReportifyConfirmModal = function showReportifyConfirmModal(opts) {
+    const title = (opts && opts.title) || 'Confirm';
+    const lead = (opts && opts.lead) || '';
+    const points = Array.isArray(opts && opts.points) ? opts.points.filter(Boolean) : [];
+    const confirmLabel = (opts && opts.confirmLabel) || 'Continue';
+    const cancelLabel = (opts && opts.cancelLabel) || 'Cancel';
+
+    return new Promise((resolve) => {
+        let overlay = document.getElementById('reportify-confirm-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.id = 'reportify-confirm-overlay';
+            document.body.appendChild(overlay);
+        }
+
+        const bullets = points.length
+            ? `<ul style="margin:12px 0 0 18px;padding:0;color:#475569;font-size:14px;line-height:1.55;">${points.map((p) => `<li style="margin-bottom:6px;">${String(p).replace(/</g, '&lt;')}</li>`).join('')}</ul>`
+            : '';
+
+        overlay.innerHTML = `
+<div role="dialog" aria-modal="true" aria-labelledby="reportify-confirm-title" style="position:fixed;inset:0;background:rgba(15,23,42,0.55);display:flex;align-items:center;justify-content:center;z-index:10050;padding:20px;box-sizing:border-box;">
+  <div style="background:#fff;border-radius:16px;max-width:440px;width:100%;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);overflow:hidden;border:1px solid #e2e8f0;">
+    <div style="padding:20px 22px 0;">
+      <h2 id="reportify-confirm-title" style="margin:0;font-size:1.15rem;font-weight:800;color:#0f172a;letter-spacing:-0.02em;">${String(title).replace(/</g, '&lt;')}</h2>
+      ${lead ? `<p style="margin:14px 0 0;font-size:14px;line-height:1.6;color:#334155;">${String(lead).replace(/</g, '&lt;')}</p>` : ''}
+      ${bullets}
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;padding:18px 22px 20px;margin-top:8px;background:#f8fafc;border-top:1px solid #e2e8f0;">
+      <button type="button" data-reportify-confirm-cancel style="padding:10px 16px;border-radius:10px;border:1px solid #cbd5e1;background:#fff;color:#475569;font-weight:600;font-size:14px;cursor:pointer;">${String(cancelLabel).replace(/</g, '&lt;')}</button>
+      <button type="button" data-reportify-confirm-ok style="padding:10px 18px;border-radius:10px;border:none;background:#2563eb;color:#fff;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 1px 2px rgba(37,99,235,0.35);">${String(confirmLabel).replace(/</g, '&lt;')}</button>
+    </div>
+  </div>
+</div>`;
+
+        overlay.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+
+        const backdrop = overlay.firstElementChild;
+        const btnOk = overlay.querySelector('[data-reportify-confirm-ok]');
+        const btnCancel = overlay.querySelector('[data-reportify-confirm-cancel]');
+
+        function teardown(result) {
+            document.removeEventListener('keydown', onKey);
+            overlay.style.display = 'none';
+            overlay.innerHTML = '';
+            document.body.style.overflow = '';
+            resolve(result);
+        }
+        function onKey(e) {
+            if (e.key === 'Escape') teardown(false);
+        }
+        document.addEventListener('keydown', onKey);
+        btnOk.addEventListener('click', () => teardown(true));
+        btnCancel.addEventListener('click', () => teardown(false));
+        backdrop.addEventListener('click', (e) => {
+            if (e.target === backdrop) teardown(false);
+        });
+    });
+};
+
 /** 清除底部栏上由移动端逻辑写入的 !important 内联样式（否则桌面 CSS 无法覆盖） */
 function clearPwaShellInlineStyles() {
     const nav = document.getElementById('app-bottom-nav') || document.querySelector('.app-bottom-nav');
@@ -3020,8 +3085,9 @@ function setupPayment() {
 
             try {
                 const quote = await fetchBillingQuote(finalPlanId);
-                if (quote.confirmPrompt && !window.confirm(quote.confirmPrompt)) {
-                    return;
+                if (quote.confirmDialog && typeof window.showReportifyConfirmModal === 'function') {
+                    const ok = await window.showReportifyConfirmModal(quote.confirmDialog);
+                    if (!ok) return;
                 }
             } catch (err) {
                 showToast(err.message || 'Unable to prepare checkout', 'error');
@@ -3344,7 +3410,17 @@ function setupHistoryLoader() {
 
 // 补充 View 和 Delete (保持你原来的，不用变，这里为了完整性列出)
 window.deleteReport = async function(id) {
-    if(!confirm("Delete this report?")) return;
+    if (typeof window.showReportifyConfirmModal === 'function') {
+        const ok = await window.showReportifyConfirmModal({
+            title: 'Delete this report?',
+            lead: 'This removes the item from your history. You cannot undo this action.',
+            confirmLabel: 'Delete',
+            cancelLabel: 'Cancel'
+        });
+        if (!ok) return;
+    } else if (!window.confirm('Delete this report?')) {
+        return;
+    }
     try {
         const token = localStorage.getItem('token');
         await fetch(`${API_BASE_URL}/api/history/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
@@ -3780,11 +3856,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         newDeleteBtn.addEventListener('click', async (e) => {
             e.preventDefault();
-            
-            // 二次确认，防止误触
-            if (!confirm("⚠️ 警告：确定要永久删除您的账号和所有生成的报告吗？此操作不可逆！")) {
-                return;
+
+            let proceed = true;
+            if (typeof window.showReportifyConfirmModal === 'function') {
+                proceed = await window.showReportifyConfirmModal({
+                    title: 'Permanently delete your account?',
+                    lead: 'This will delete your account and all generated reports. This action cannot be undone.',
+                    points: ['You will be signed out immediately after deletion.'],
+                    confirmLabel: 'Delete account',
+                    cancelLabel: 'Cancel'
+                });
+            } else {
+                proceed = window.confirm('Permanently delete your account and all reports? This cannot be undone.');
             }
+            if (!proceed) return;
 
             try {
                 const token = localStorage.getItem('token');
@@ -3794,15 +3879,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (res.ok) {
-                    showToast("账号已彻底删除，期待您的再次使用。", "success");
+                    showToast('Your account has been deleted.', 'success');
                     localStorage.removeItem('token');
                     setTimeout(() => { window.location.href = HOME_REL; }, 1500);
                 } else {
                     const data = await res.json();
-                    showToast(data.message || "删除失败", "error");
+                    showToast(data.message || 'Deletion failed', 'error');
                 }
             } catch (err) {
-                showToast("网络错误，请稍后重试", "error");
+                showToast('Network error. Please try again.', 'error');
             }
         });
     }
