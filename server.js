@@ -174,9 +174,6 @@ function addDays(baseDate, days) {
     return d;
 }
 
-/** Max prepaid horizon from "today" (new purchases cannot push the end date beyond this). */
-const MAX_PAID_AHEAD_DAYS = 1095;
-
 /** Latest end among current period and any queued plan (for stacking annuals and modal math). */
 function effectivePaidEnd(user) {
     let maxT = 0;
@@ -221,27 +218,6 @@ function projectedMembershipEnd(user, decision, actualPlanId, now) {
         default:
             return effectivePaidEnd(user);
     }
-}
-
-function exceedsPaidAheadCap(user, decision, actualPlanId, now) {
-    const end = projectedMembershipEnd(user, decision, actualPlanId, now);
-    const cap = addDays(now, MAX_PAID_AHEAD_DAYS);
-    return end > cap;
-}
-
-function withCapOrError(user, actualPlanId, decision, now) {
-    if (exceedsPaidAheadCap(user, decision, actualPlanId, now)) {
-        return {
-            ok: false,
-            status: 400,
-            body: {
-                success: false,
-                message:
-                    'Purchases cannot extend paid access more than 3 years (1095 days) from today. Please try again later, or contact support for billing help.'
-            }
-        };
-    }
-    return { ok: true, decision };
 }
 
 /** Monthly ended but queued annual not started yet — keep paid access until queue activates. */
@@ -355,21 +331,17 @@ function decidePaidPlanChange(user, actualPlanId) {
     }
 
     if (!hasActivePaid) {
-        return withCapOrError(
-            user,
-            actualPlanId,
-            { type: 'FRESH', days: planDaysForSku(actualPlanId), realPlanId },
-            now
-        );
+        return {
+            ok: true,
+            decision: { type: 'FRESH', days: planDaysForSku(actualPlanId), realPlanId }
+        };
     }
 
     if (planRank(realPlanId) > planRank(currentPlan)) {
-        return withCapOrError(
-            user,
-            actualPlanId,
-            { type: 'IMMEDIATE_UPGRADE', days: planDaysForSku(actualPlanId), realPlanId },
-            now
-        );
+        return {
+            ok: true,
+            decision: { type: 'IMMEDIATE_UPGRADE', days: planDaysForSku(actualPlanId), realPlanId }
+        };
     }
 
     if (planRank(realPlanId) === planRank(currentPlan)) {
@@ -381,16 +353,14 @@ function decidePaidPlanChange(user, actualPlanId) {
             && queuedId
             && tierFromSku(queuedId) === tierFromSku(actualPlanId)
         ) {
-            return withCapOrError(
-                user,
-                actualPlanId,
-                {
+            return {
+                ok: true,
+                decision: {
                     type: 'STACK_QUEUED_ANNUAL',
                     newEndsAt: addDays(new Date(user.planQueue.endsAt), 365),
                     realPlanId
-                },
-                now
-            );
+                }
+            };
         }
 
         // Annual (stored or inferred) + monthly same tier: stack 30 days AFTER current period end — never downgrade SKU to monthly.
@@ -401,21 +371,17 @@ function decidePaidPlanChange(user, actualPlanId) {
             && !isAnnualSku(actualPlanId)
             && tierFromSku(storedSku) === tierFromSku(actualPlanId)
         ) {
-            return withCapOrError(
-                user,
-                actualPlanId,
-                { type: 'STACK_MONTHLY_AFTER_ANNUAL', days: 30, realPlanId },
-                now
-            );
+            return {
+                ok: true,
+                decision: { type: 'STACK_MONTHLY_AFTER_ANNUAL', days: 30, realPlanId }
+            };
         }
 
         if (currentSku && currentSku === actualPlanId) {
-            return withCapOrError(
-                user,
-                actualPlanId,
-                { type: 'STACK_SAME_SKU', days: planDaysForSku(actualPlanId), realPlanId },
-                now
-            );
+            return {
+                ok: true,
+                decision: { type: 'STACK_SAME_SKU', days: planDaysForSku(actualPlanId), realPlanId }
+            };
         }
 
         if (
@@ -426,19 +392,17 @@ function decidePaidPlanChange(user, actualPlanId) {
         ) {
             const startsAt = addDays(new Date(user.planExpiresAt), 1);
             const endsAt = addDays(startsAt, 365);
-            return withCapOrError(
-                user,
-                actualPlanId,
-                {
+            return {
+                ok: true,
+                decision: {
                     type: 'QUEUE_ANNUAL',
                     startsAt,
                     endsAt,
                     planId: actualPlanId,
                     realPlanId,
                     currentPeriodEndsAt: user.planExpiresAt
-                },
-                now
-            );
+                }
+            };
         }
 
         if (
@@ -447,21 +411,17 @@ function decidePaidPlanChange(user, actualPlanId) {
             && !isAnnualSku(actualPlanId)
             && tierFromSku(currentSku) === tierFromSku(actualPlanId)
         ) {
-            return withCapOrError(
-                user,
-                actualPlanId,
-                { type: 'STACK_MONTHLY_AFTER_ANNUAL', days: 30, realPlanId },
-                now
-            );
+            return {
+                ok: true,
+                decision: { type: 'STACK_MONTHLY_AFTER_ANNUAL', days: 30, realPlanId }
+            };
         }
     }
 
-    return withCapOrError(
-        user,
-        actualPlanId,
-        { type: 'FRESH', days: planDaysForSku(actualPlanId), realPlanId },
-        now
-    );
+    return {
+        ok: true,
+        decision: { type: 'FRESH', days: planDaysForSku(actualPlanId), realPlanId }
+    };
 }
 
 /** Extra Basic report pool: +45 per stacked month, +540 (12×45) per annual purchase (invite bonus stays separate). */
@@ -483,9 +443,7 @@ function buildSubscriptionNoteLines(plan, paymentTally, bonusCredits) {
         lines.push(
             'Remaining days show when your paid access ends (including any queued annual period).'
         );
-        lines.push(
-            `Purchases cannot extend paid access more than 3 years (${MAX_PAID_AHEAD_DAYS} days) from today.`
-        );
+        lines.push('You can extend membership anytime; completed purchases appear in Payment history.');
         return lines;
     }
     if (p === 'basic') {
@@ -501,13 +459,11 @@ function buildSubscriptionNoteLines(plan, paymentTally, bonusCredits) {
                 .map(([k, v]) => `${k} ×${v}`);
             if (bits.length) lines.push(`Completed purchases on file: ${bits.join(', ')}.`);
         }
-        lines.push(
-            `Purchases cannot extend paid access more than 3 years (${MAX_PAID_AHEAD_DAYS} days) from today.`
-        );
+        lines.push('You can stack more months or years anytime; use Payment history to review past orders.');
         return lines;
     }
     lines.push(
-        `After you upgrade, prepaid access cannot exceed 3 years (${MAX_PAID_AHEAD_DAYS} days) from the purchase date.`
+        'After you upgrade, you can extend prepaid access as needed; Payment history keeps a clear record of purchases.'
     );
     return lines;
 }
@@ -776,8 +732,7 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
             referralCode: user.referralCode,
             queuedPlan: queuedPlanSummary,
             paymentTally,
-            subscriptionNoteLines,
-            maxPaidAheadDays: MAX_PAID_AHEAD_DAYS
+            subscriptionNoteLines
         });
 
     } catch (error) {
@@ -1238,8 +1193,7 @@ app.get('/api/billing-quote', authenticateToken, async (req, res) => {
             effect,
             decision: d,
             confirmDialog,
-            projectedEndsAt: projectedEndsAt.toISOString(),
-            maxPaidAheadDays: MAX_PAID_AHEAD_DAYS
+            projectedEndsAt: projectedEndsAt.toISOString()
         });
     } catch (e) {
         console.error('GET /api/billing-quote', e);
