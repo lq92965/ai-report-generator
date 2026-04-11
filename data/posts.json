@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775944826838",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-11",
+        "author": "Olivia Thorne",
+        "excerpt": "We've all been there. It's 4 PM on a Friday, and instead of planning next week's priorities, you're wrestling with a spreadsheet. You're pulling data...",
+        "contentFile": "blog-1775944826838.md"
+    },
+    {
         "id": "1775941215068",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
