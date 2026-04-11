@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775937628188",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-11",
+        "author": "Jessica Tran",
+        "excerpt": "We've all been there. It's Monday morning, and instead of diving into strategic work, you're wrestling with spreadsheets. You're pulling data from Jir...",
+        "contentFile": "blog-1775937628188.md"
+    },
+    {
         "id": "1775934021555",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
