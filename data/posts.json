@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775930428786",
+        "type": "blog",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-11",
+        "author": "Marcus Webb",
+        "excerpt": "We’ve all been there. It’s Tuesday afternoon, and the calendar notification pops up: \"Prepare Weekly Stakeholder Report.\" A collective groan echoes th...",
+        "contentFile": "blog-1775930428786.md"
+    },
+    {
         "id": "1775926820904",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
