@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775883623952",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "category": "Tech Radar",
+        "date": "2026-04-11",
+        "author": "Olivia Thorne",
+        "excerpt": "The rapid advancement of artificial intelligence has triggered an unprecedented diplomatic scramble, as world leaders and tech executives gather in Br...",
+        "contentFile": "news-1775883623952.md"
+    },
+    {
         "id": "1775880028213",
         "type": "blog",
         "title": "Beyond the Dashboard: A PM's Guide to Overcoming Reporting Fatigue",
