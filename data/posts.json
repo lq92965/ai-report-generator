@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775872830212",
+        "type": "blog",
+        "title": "Beyond the Status Update: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-11",
+        "author": "Alex Mercer",
+        "excerpt": "It’s Sunday night. You’re not thinking about the week ahead, you’re dreading the Monday morning status report you still have to compile. You open a sp...",
+        "contentFile": "blog-1775872830212.md"
+    },
+    {
         "id": "1775869220892",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
