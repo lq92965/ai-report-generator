@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775901628869",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-11",
+        "author": "Emily Rostova",
+        "excerpt": "We’ve all been there. It’s Tuesday morning, and you’re staring at the weekly performance report you spent hours compiling. It’s dense, it’s comprehens...",
+        "contentFile": "blog-1775901628869.md"
+    },
+    {
         "id": "1775898025429",
         "type": "news",
         "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
