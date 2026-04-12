@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775977216124",
+        "type": "news",
+        "title": "AI Regulation Debate Intensifies as Models Surpass Human Benchmarks",
+        "category": "Tech Radar",
+        "date": "2026-04-12",
+        "author": "Olivia Thorne",
+        "excerpt": "The rapid advancement of artificial intelligence has triggered a global regulatory scramble, as new models from leading labs demonstrate capabilities...",
+        "contentFile": "news-1775977216124.md"
+    },
+    {
         "id": "1775973627933",
         "type": "blog",
         "title": "The Silent Killer of Productivity: A PM's Guide to Overcoming Reporting Fatigue",
