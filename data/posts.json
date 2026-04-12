@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776002427291",
+        "type": "blog",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-12",
+        "author": "Olivia Thorne",
+        "excerpt": "We’ve all been there. It’s 4 PM on a Friday, and that dreaded calendar reminder pops up: \"Compile Weekly Status Report.\" You spend the next hour pulli...",
+        "contentFile": "blog-1776002427291.md"
+    },
+    {
         "id": "1775998817957",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
