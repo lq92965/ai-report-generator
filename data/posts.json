@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775980827581",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-12",
+        "author": "Sarah Jenkins",
+        "excerpt": "We've all been there. It's 4 PM on a Friday, and that recurring calendar notification pops up: \"Generate Weekly Stakeholder Report.\" A wave of exhaust...",
+        "contentFile": "blog-1775980827581.md"
+    },
+    {
         "id": "1775977216124",
         "type": "news",
         "title": "AI Regulation Debate Intensifies as Models Surpass Human Benchmarks",
