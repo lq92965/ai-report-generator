@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775955623968",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-12",
+        "author": "Michael Chen",
+        "excerpt": "The rapid evolution of artificial intelligence has propelled global regulatory efforts into a high-stakes race, with the European Union, United States...",
+        "contentFile": "news-1775955623968.md"
+    },
+    {
         "id": "1775952027032",
         "type": "blog",
         "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
