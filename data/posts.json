@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776006016012",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-12",
+        "author": "Alex Mercer",
+        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory race among world governments, leading to a fragmented landscape of proposed...",
+        "contentFile": "news-1776006016012.md"
+    },
+    {
         "id": "1776002427291",
         "type": "blog",
         "title": "From Drudgery to Data-Driven: A PM's Guide to Conquering Reporting Fatigue",
