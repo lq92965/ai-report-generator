@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775959227151",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-12",
+        "author": "Alex Mercer",
+        "excerpt": "We've all been there. It's 9 AM on a Monday, and your inbox is already flooded with automated status reports. There's the weekly project tracker, the...",
+        "contentFile": "blog-1775959227151.md"
+    },
+    {
         "id": "1775955623968",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
