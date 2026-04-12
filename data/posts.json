@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776020425439",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "category": "Tech Radar",
+        "date": "2026-04-12",
+        "author": "Sarah Jenkins",
+        "excerpt": "While headlines often focus on AI-driven layoffs and automation apocalypses, a quieter, more profound transformation is underway in offices and indust...",
+        "contentFile": "news-1776020425439.md"
+    },
+    {
         "id": "1776016832102",
         "type": "blog",
         "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
