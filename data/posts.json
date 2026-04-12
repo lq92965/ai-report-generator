@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776031228991",
+        "type": "blog",
+        "title": "Beyond the Dashboard: Curing Reporting Fatigue and Reclaiming Your Team's Focus",
+        "category": "Deep Insights",
+        "date": "2026-04-12",
+        "author": "Emily Rostova",
+        "excerpt": "It's 4:00 PM on a Friday. The most creative, high-impact work of the week is done. But you're not celebrating. You're staring at a spreadsheet, a slid...",
+        "contentFile": "blog-1776031228991.md"
+    },
+    {
         "id": "1776027625196",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
