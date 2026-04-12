@@ -1,5 +1,5 @@
 // amber_engine.cjs
-// 完整文件：Reportify AI V8.6 极速引擎 (内置实时热点 + 1小时高频发文 + 标准 RSS 引擎)
+// 完整文件：Reportify AI V8.6 极速引擎 (内置实时热点 + 4小时高频发文 + 标准 RSS 引擎)
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
@@ -203,7 +203,7 @@ async function runEngine(type) {
     } catch (e) { console.error("[Amber V8] ❌ GitHub 推送失败: ", e.message); }
 }
 
-console.log("🚀 Reportify AI - 终极版 V8.6 引擎已激活 (双轨解绑 & 1小时高频发文 & RSS引擎) !");
-cron.schedule('0 */2 * * *', () => runEngine('blog'));
-cron.schedule('0 1-23/2 * * *', () => runEngine('news'));
+console.log("🚀 Reportify AI - 终极版 V8.6 引擎已激活 (双轨解绑 & 4小时高频发文 & RSS引擎) !");
+cron.schedule('0 */4 * * *', () => runEngine('blog'));
+cron.schedule('0 1-23/4 * * *', () => runEngine('news'));
 module.exports = { runEngine };
