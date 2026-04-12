@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776009628219",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-12",
+        "author": "Michael Chen",
+        "excerpt": "It’s 4:00 PM on a Friday. Your project is on track, your team is collaborating well, but a familiar sense of dread creeps in. It’s time to compile the...",
+        "contentFile": "blog-1776009628219.md"
+    },
+    {
         "id": "1776006016012",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
