@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776034823049",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "category": "Tech Radar",
+        "date": "2026-04-12",
+        "author": "Alex Mercer",
+        "excerpt": "While flashy chatbots and image generators capture headlines, a more profound—and often invisible—transformation is underway. Across the foundational...",
+        "contentFile": "news-1776034823049.md"
+    },
+    {
         "id": "1776031228991",
         "type": "blog",
         "title": "Beyond the Dashboard: Curing Reporting Fatigue and Reclaiming Your Team's Focus",
