@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775970018214",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-12",
+        "author": "Alex Mercer",
+        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, United States, and China finalizing starkly different...",
+        "contentFile": "news-1775970018214.md"
+    },
+    {
         "id": "1775966428223",
         "type": "blog",
         "title": "Beyond the Dashboard: How to Overcome Reporting Fatigue and Make Data Work for You",
