@@ -1,5 +1,15 @@
 [
     {
+        "id": "1775995227370",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-12",
+        "author": "Jessica Tran",
+        "excerpt": "We’ve all been there. You spend hours pulling data, crafting the perfect charts, and writing a crisp summary for your weekly stakeholder report. You h...",
+        "contentFile": "blog-1775995227370.md"
+    },
+    {
         "id": "1775991623360",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
