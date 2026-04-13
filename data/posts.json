@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776092422208",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "category": "Tech Radar",
+        "date": "2026-04-13",
+        "author": "Jessica Tran",
+        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the backbone of...",
+        "contentFile": "news-1776092422208.md"
+    },
+    {
         "id": "1776088827773",
         "type": "blog",
         "title": "Beyond the Dashboard: A PM's Deep Dive into Curing Reporting Fatigue",
