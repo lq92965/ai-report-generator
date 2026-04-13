@@ -67,23 +67,45 @@ function renderPaymentsTable() {
     for (const p of slice) {
         const st = statusLabel(p.status);
         const oid = p.paymentId || '';
-        const appeal = oid
-            ? `<a href="${billingAppealUrl(oid)}" class="pay-appeal-link">Contact + prefill</a>
-               <button type="button" class="pay-copy-btn" data-oid="${escapeHtml(oid)}">Copy ID</button>`
+        const appealUrl = billingAppealUrl(oid);
+        const desktopHelp = oid
+            ? `<a href="${appealUrl}" class="pay-appeal-link">Contact + prefill</a>`
             : '—';
+        const copyIconBtn = oid
+            ? `<button type="button" class="pay-copy-icon-btn" data-oid="${escapeHtml(oid)}" aria-label="Copy order ID" title="Copy order ID"><i class="fas fa-copy"></i></button>`
+            : '';
         const tr = document.createElement('tr');
+        tr.className = 'pay-row';
         tr.innerHTML = `
-            <td data-label="Date">${formatWhen(p.date)}</td>
-            <td data-label="Plan">${planLabel(p.planId)}</td>
-            <td data-label="Amount">${formatMoneyUSD(p.amount)}</td>
-            <td data-label="Status"><span class="pay-badge ${st.cls}">${st.text}</span></td>
-            <td class="mono-small" data-label="Order ID" title="PayPal order id">${escapeHtml(oid || '—')}</td>
-            <td class="pay-actions-cell" data-label="Help">${appeal}</td>
+            <td class="pay-desktop-only">${formatWhen(p.date)}</td>
+            <td class="pay-desktop-only">${planLabel(p.planId)}</td>
+            <td class="pay-desktop-only">${formatMoneyUSD(p.amount)}</td>
+            <td class="pay-desktop-only"><span class="pay-badge ${st.cls}">${st.text}</span></td>
+            <td class="pay-desktop-only mono-small" title="PayPal order id">${escapeHtml(oid || '—')}</td>
+            <td class="pay-desktop-only pay-actions-cell">${desktopHelp}</td>
+            <td class="pay-mobile-only" colspan="6">
+                <div class="pay-mobile-card">
+                    <div class="pay-mobile-line1">
+                        <span class="pay-mobile-meta">${formatWhen(p.date)}</span>
+                        <span class="pay-mobile-meta pay-mobile-dot" aria-hidden="true">·</span>
+                        <span class="pay-mobile-order mono-small">${escapeHtml(oid || '—')}</span>
+                        ${copyIconBtn}
+                    </div>
+                    <div class="pay-mobile-line2">
+                        <span class="pay-mobile-plan">${planLabel(p.planId)}</span>
+                        <span class="pay-mobile-amount">${formatMoneyUSD(p.amount)}</span>
+                        <span class="pay-mobile-status"><span class="pay-badge ${st.cls}">${st.text}</span></span>
+                    </div>
+                    <div class="pay-mobile-line3">
+                        <a href="${appealUrl}" class="pay-mobile-help">Help — payment issue</a>
+                    </div>
+                </div>
+            </td>
         `;
         tbody.appendChild(tr);
     }
 
-    tbody.querySelectorAll('.pay-copy-btn').forEach((btn) => {
+    tbody.querySelectorAll('.pay-copy-icon-btn').forEach((btn) => {
         btn.addEventListener('click', () => copyOrderIdForEmail(btn.getAttribute('data-oid') || ''));
     });
 
