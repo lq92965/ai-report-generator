@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776117628396",
+        "type": "blog",
+        "title": "Drowning in Data? A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-13",
+        "author": "David Sterling",
+        "excerpt": "You know the feeling. It’s Sunday night, and the dread creeping in isn’t about the complex problem you’re solving at work. It’s about the report you h...",
+        "contentFile": "blog-1776117628396.md"
+    },
+    {
         "id": "1776114018092",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
