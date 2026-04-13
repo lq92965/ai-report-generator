@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776088827773",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Deep Dive into Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-13",
+        "author": "Michael Chen",
+        "excerpt": "As a Product Manager, your job is to create value. But if you're like most PMs, a huge chunk of your time is spent reporting on the creation of value....",
+        "contentFile": "blog-1776088827773.md"
+    },
+    {
         "id": "1776085216132",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
