@@ -1991,8 +1991,9 @@ function setupGenerator() {
             });
 
             // 🟢 定位到 script.js 第 338 行附近的 .then(data => { ... })
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.error || 'Generation failed');
+            const data = await res.json().catch(() => ({}));
+            const apiErr = data.error || data.message;
+            if (!res.ok) throw new Error(apiErr || `Generation failed (${res.status})`);
 
             // 1. 分类存储 RIE 3.0 的多维数据
             window.currentReportContent = data.generatedText; // 主报告 (用于 Word)
@@ -2000,7 +2001,7 @@ function setupGenerator() {
             window.currentEmailSummary = data.emailSummary;   // 邮件摘要 (用于 Email)
 
             // --- RIE 3.0 核心联动开始 ---  
-            if (data.error) throw new Error(data.error || 'Generation failed');
+            if (data.error) throw new Error(apiErr || 'Generation failed');
 
             // 1. 存储主报告内容
             window.currentReportContent = data.generatedText;
