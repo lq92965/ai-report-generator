@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776038429790",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-13",
+        "author": "Jessica Tran",
+        "excerpt": "We've all been there. It's 4 PM on a Friday, and you're scrambling to pull numbers for the \"Weekly Status Report.\" You copy, paste, format, and send i...",
+        "contentFile": "blog-1776038429790.md"
+    },
+    {
         "id": "1776034823049",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
