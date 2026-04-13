@@ -1,5 +1,5 @@
 // amber_engine.cjs
-// 完整文件：Reportify AI V8.6 极速引擎 (内置实时热点 + 4小时高频发文 + 标准 RSS 引擎)
+// 完整文件：Reportify AI V8.6 极速引擎 (内置实时热点 + 每日美国东部 9:00 发文 + 标准 RSS 引擎)
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
@@ -191,11 +191,18 @@ function publishAndSEO(postMeta) {
     fs.writeFileSync(path.join(REPO_DIR, 'robots.txt'), robots, 'utf8');
 }
 
-async function runEngine(type) {
+/**
+ * @param {'news'|'blog'} type
+ * @param {{ skipPush?: boolean }} [options] skipPush=true：只生成文件并更新 posts.json，不 git push（供每日批处理一次推送）
+ */
+async function runEngine(type, options = {}) {
+    const skipPush = options.skipPush === true;
     const rawData = await generateArticle(type);
     if (!rawData) return;
     const postMeta = buildStaticPage(rawData);
     publishAndSEO(postMeta);
+
+    if (skipPush) return;
 
     try {
         execSync(`git add . && git commit -m "feat(UX): Auto-gen ${type} - ${postMeta.id}" && git pull origin main --rebase && git push origin main`, { cwd: REPO_DIR });
@@ -203,7 +210,29 @@ async function runEngine(type) {
     } catch (e) { console.error("[Amber V8] ❌ GitHub 推送失败: ", e.message); }
 }
 
-console.log("🚀 Reportify AI - 终极版 V8.6 引擎已激活 (双轨解绑 & 4小时高频发文 & RSS引擎) !");
-cron.schedule('0 */4 * * *', () => runEngine('blog'));
-cron.schedule('0 1-23/4 * * *', () => runEngine('news'));
-module.exports = { runEngine };
+/** 每日一篇新闻 + 一篇博客，最后只 push 一次 → Netlify 每日约一次构建 */
+async function runDailyBatch() {
+    console.log('[Amber V8] 📅 Daily batch: news → blog (single git push)');
+    await runEngine('news', { skipPush: true });
+    await runEngine('blog', { skipPush: true });
+    try {
+        const stamp = Date.now();
+        execSync(
+            `git add . && git commit -m "feat(UX): Auto-gen daily news+blog - ${stamp}" && git pull origin main --rebase && git push origin main`,
+            { cwd: REPO_DIR }
+        );
+        console.log('[Amber V8] 🚀 Daily batch pushed once; Netlify builds once.');
+    } catch (e) {
+        console.error('[Amber V8] ❌ GitHub 推送失败 (daily batch): ', e.message);
+    }
+}
+
+console.log('🚀 Reportify AI - 终极版 V8.6 引擎已激活 (每日美国东部 9:00 新闻+博客 & 单次推送 & RSS) !');
+cron.schedule(
+    '0 9 * * *',
+    () => {
+        runDailyBatch().catch((err) => console.error('[Amber V8] ❌ Daily batch:', err));
+    },
+    { timezone: 'America/New_York' }
+);
+module.exports = { runEngine, runDailyBatch };
