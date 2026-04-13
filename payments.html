@@ -23,6 +23,81 @@
         }
         .payments-wrap { width: 100%; max-width: min(960px, 100%); margin: 0 auto; padding: 0 20px 48px; box-sizing: border-box; }
         .payments-table-wrap { overflow-x: auto; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.04); }
+        .pay-mobile-only { display: none !important; }
+        @media (min-width: 769px) {
+            .pay-mobile-only { display: none !important; }
+            .pay-desktop-only { display: table-cell !important; }
+        }
+        @media (max-width: 768px) {
+            .pay-desktop-only { display: none !important; }
+            .pay-mobile-only { display: table-cell !important; }
+        }
+        .pay-mobile-card {
+            background: #fff;
+            border: 1px solid #eef2f6;
+            border-radius: 12px;
+            padding: 14px 14px 12px;
+            margin: 0 0 12px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+        .pay-row:last-child .pay-mobile-card { margin-bottom: 0; }
+        .pay-mobile-line1 {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px 8px;
+            font-size: 0.7rem;
+            line-height: 1.35;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+        .pay-mobile-meta { color: #94a3b8; font-weight: 500; }
+        .pay-mobile-dot { opacity: 0.7; }
+        .pay-mobile-order {
+            font-family: ui-monospace, 'Cascadia Code', monospace;
+            word-break: break-all;
+            flex: 1 1 auto;
+            min-width: 0;
+            color: #94a3b8;
+        }
+        .pay-copy-icon-btn {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: #f8fafc;
+            color: #64748b;
+            cursor: pointer;
+        }
+        .pay-copy-icon-btn:active { background: #f1f5f9; }
+        .pay-mobile-line2 {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px 14px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        .pay-mobile-plan { flex: 1 1 140px; min-width: 0; }
+        .pay-mobile-amount { color: #0f172a; font-variant-numeric: tabular-nums; }
+        .pay-mobile-status .pay-badge { font-size: 0.72rem; }
+        .pay-mobile-line3 { margin-top: 2px; }
+        .pay-mobile-help {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #2563eb;
+            text-decoration: none;
+        }
+        .pay-mobile-help:hover, .pay-mobile-help:focus-visible { text-decoration: underline; color: #1d4ed8; }
         .payments-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
         .payments-table th { text-align: left; padding: 12px 14px; background: #f8fafc; color: #475569; font-weight: 600; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
         .payments-table td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; vertical-align: top; word-wrap: break-word; overflow-wrap: break-word; }
@@ -55,55 +130,30 @@
         }
         .payments-pagination button:disabled { opacity: 0.45; cursor: not-allowed; }
         .payments-pagination button:not(:disabled):active { background: #f1f5f9; }
-        /* App / 窄屏：与网页端同一套表，列宽不足时横向滑动（避免把 Success / 按钮文字竖着拆） */
+        /* App / 窄屏：卡片式多行记录，无需横向滑动（与 History 列表风格接近） */
         @media (max-width: 768px) {
             .payments-wrap { padding-left: 10px; padding-right: 10px; max-width: 100%; }
             .payments-table-wrap {
-                overflow-x: auto !important;
-                -webkit-overflow-scrolling: touch;
-                overscroll-behavior-x: contain;
+                overflow-x: hidden !important;
+                background: transparent;
+                border: none;
+                box-shadow: none;
             }
             .payments-table {
-                table-layout: auto;
-                min-width: 720px;
-                font-size: 0.8125rem;
+                width: 100%;
+                font-size: 0.875rem;
+                border-collapse: separate;
+                border-spacing: 0;
             }
-            .payments-table th,
-            .payments-table td {
-                padding: 10px 10px;
-                vertical-align: middle;
-                overflow-wrap: normal;
-                word-break: normal;
+            .payments-table thead { display: none; }
+            .payments-table tbody { display: block; }
+            .payments-table tr.pay-row { display: block; }
+            .payments-table tr.pay-row td.pay-mobile-only {
+                display: block !important;
+                padding: 0;
+                border: none;
             }
-            .payments-table th {
-                white-space: nowrap;
-                font-size: 0.75rem;
-            }
-            .mono-small {
-                max-width: none !important;
-                font-size: 0.7rem;
-                line-height: 1.35;
-                word-break: break-all;
-                overflow-wrap: anywhere;
-            }
-            .pay-badge {
-                white-space: nowrap;
-                font-size: 0.7rem;
-                padding: 3px 10px;
-            }
-            .pay-actions-cell {
-                white-space: nowrap !important;
-                vertical-align: middle;
-            }
-            .pay-actions-cell .pay-appeal-link {
-                font-size: 0.75rem;
-                margin-right: 8px;
-            }
-            .pay-actions-cell .pay-copy-btn {
-                font-size: 0.7rem;
-                padding: 5px 10px;
-                white-space: nowrap;
-            }
+            .payments-table td { border-bottom: none; }
         }
         .pay-badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
         .pay-ok { background: #ecfdf5; color: #047857; }
@@ -181,7 +231,7 @@
 
             <div class="payments-note">
                 <strong>Questions or wrong charge?</strong>
-                Use <strong>Contact + prefill</strong> on a row to open the contact form with topic Billing and your PayPal Order ID, or tap <strong>Copy ID</strong> and email us manually.
+                On desktop, use <strong>Contact + prefill</strong> in the table. On mobile, use <strong>Help — payment issue</strong> on each card or the copy icon next to the Order ID.
                 You can also open <a href="contact.html?topic=Billing">Contact Support (Billing)</a> directly.
             </div>
         </div>
@@ -217,6 +267,6 @@
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script src="pwa-nav.js"></script>
     <script src="script.js?v=2026.7"></script>
-    <script src="payments.js?v=2026.17"></script>
+    <script src="payments.js?v=2026.18"></script>
 </body>
 </html>
