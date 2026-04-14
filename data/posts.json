@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776146427727",
+        "type": "blog",
+        "title": "Reporting on Empty: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-14",
+        "author": "Marcus Webb",
+        "excerpt": "As a Product Manager, you know the feeling. It's Sunday evening, and a familiar dread creeps in. It's not about the week ahead, the challenging roadma...",
+        "contentFile": "blog-1776146427727.md"
+    },
+    {
         "id": "1776142828557",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
