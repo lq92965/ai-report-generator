@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776196827471",
+        "type": "blog",
+        "title": "Beyond the Dashboard: How to Conquer Reporting Fatigue and Make Data Meaningful Again",
+        "category": "Deep Insights",
+        "date": "2026-04-14",
+        "author": "Michael Chen",
+        "excerpt": "We’ve all been there. It’s 4 PM on a Friday, and you’re scrambling to pull numbers for the weekly stakeholder report. You copy-paste charts, manually...",
+        "contentFile": "blog-1776196827471.md"
+    },
+    {
         "id": "1776193215236",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
