@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776175227823",
+        "type": "blog",
+        "title": "Beyond the Spreadsheet: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-14",
+        "author": "David Sterling",
+        "excerpt": "We've all been there. It's 4:00 PM on a Friday. The finish line is in sight, but one final hurdle remains: the weekly status report. You pull up the t...",
+        "contentFile": "blog-1776175227823.md"
+    },
+    {
         "id": "1776171629212",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
