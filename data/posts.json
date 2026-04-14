@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776150028293",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "category": "Tech Radar",
+        "date": "2026-04-14",
+        "author": "Marcus Webb",
+        "excerpt": "While flashy chatbots and image generators capture headlines, a more profound—and often invisible—transformation is underway. Across the foundational...",
+        "contentFile": "news-1776150028293.md"
+    },
+    {
         "id": "1776146427727",
         "type": "blog",
         "title": "Reporting on Empty: A PM's Guide to Overcoming Reporting Fatigue",
