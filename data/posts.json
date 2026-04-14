@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776182428298",
+        "type": "blog",
+        "title": "Beyond the Dashboard: Overcoming Reporting Fatigue for Good",
+        "category": "Deep Insights",
+        "date": "2026-04-14",
+        "author": "Emily Rostova",
+        "excerpt": "It’s Sunday night. You’re not thinking about the strategic breakthrough you’re about to lead. You’re dreading the 4 hours you’ll spend on Monday morni...",
+        "contentFile": "blog-1776182428298.md"
+    },
+    {
         "id": "1776178826276",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
