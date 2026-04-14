@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776157220352",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-14",
+        "author": "Sarah Jenkins",
+        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, United States, and China finalizing starkly different...",
+        "contentFile": "news-1776157220352.md"
+    },
+    {
         "id": "1776153629498",
         "type": "blog",
         "title": "Drowning in Data? A PM's Guide to Overcoming Reporting Fatigue",
