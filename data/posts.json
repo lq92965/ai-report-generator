@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776160828156",
+        "type": "blog",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-14",
+        "author": "Sarah Jenkins",
+        "excerpt": "We’ve all been there. It’s 4 PM on a Friday. You have a dozen critical tasks vying for your attention, but instead, you're wrestling with a spreadshee...",
+        "contentFile": "blog-1776160828156.md"
+    },
+    {
         "id": "1776157220352",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
