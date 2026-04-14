@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776124827813",
+        "type": "blog",
+        "title": "Beyond the Dashboard: Curing Reporting Fatigue in Your Organization",
+        "category": "Deep Insights",
+        "date": "2026-04-14",
+        "author": "David Sterling",
+        "excerpt": "We’ve all been there. It’s 4:00 PM on a Friday, and you’re scrambling to compile the weekly status report. You pull data from three different systems,...",
+        "contentFile": "blog-1776124827813.md"
+    },
+    {
         "id": "1776121220570",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
