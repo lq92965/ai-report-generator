@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776261630822",
+        "type": "blog",
+        "title": "Beyond the Dashboard: Curing Reporting Fatigue for Good",
+        "category": "Deep Insights",
+        "date": "2026-04-15",
+        "author": "Emily Rostova",
+        "excerpt": "We’ve all been there. It’s 4:00 PM on a Friday, and that recurring calendar reminder pops up: \"Submit Weekly Status Report.\" You drag your mouse over...",
+        "contentFile": "blog-1776261630822.md"
+    },
+    {
         "id": "1776258024192",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
