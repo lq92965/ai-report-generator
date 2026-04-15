@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776283228791",
+        "type": "blog",
+        "title": "Beyond the Status Update: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-15",
+        "author": "Alex Mercer",
+        "excerpt": "We've all been there. It's Sunday night, and a sense of dread creeps in. It's not about the work week ahead, but about the tedious, soul-crushing task...",
+        "contentFile": "blog-1776283228791.md"
+    },
+    {
         "id": "1776279624885",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
