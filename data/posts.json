@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776225628628",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-15",
+        "author": "Sarah Jenkins",
+        "excerpt": "As Product and Project Managers, we live and breathe data. We track velocity, burn-downs, user engagement, conversion funnels, and a dozen other KPIs....",
+        "contentFile": "blog-1776225628628.md"
+    },
+    {
         "id": "1776222020983",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
