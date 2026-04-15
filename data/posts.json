@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776222020983",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "category": "Tech Radar",
+        "date": "2026-04-15",
+        "author": "Emily Rostova",
+        "excerpt": "For years, the dominant narrative around artificial intelligence in the workplace has been one of displacement and job loss. However, a quiet revoluti...",
+        "contentFile": "news-1776222020983.md"
+    },
+    {
         "id": "1776218428588",
         "type": "blog",
         "title": "Beyond the Dashboard: Curing Your Team's Reporting Fatigue",
