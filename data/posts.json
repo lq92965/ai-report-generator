@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776294019401",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "category": "Tech Radar",
+        "date": "2026-04-15",
+        "author": "Emily Rostova",
+        "excerpt": "While headlines chase the latest chatbot drama or doomsday scenarios, a quiet revolution is unfolding in the background. Across industries, artificial...",
+        "contentFile": "news-1776294019401.md"
+    },
+    {
         "id": "1776290427473",
         "type": "blog",
         "title": "Beyond the Burndown: A PM's Guide to Curing Reporting Fatigue",
