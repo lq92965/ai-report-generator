@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776243627214",
+        "type": "news",
+        "title": "AI Regulation Debate Intensifies as New Models Challenge Existing Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-15",
+        "author": "David Sterling",
+        "excerpt": "The rapid evolution of artificial intelligence has triggered a global scramble among policymakers, with existing regulatory frameworks appearing incre...",
+        "contentFile": "news-1776243627214.md"
+    },
+    {
         "id": "1776240031978",
         "type": "blog",
         "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
