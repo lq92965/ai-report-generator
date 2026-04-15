@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776258024192",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "category": "Tech Radar",
+        "date": "2026-04-15",
+        "author": "Michael Chen",
+        "excerpt": "While headlines often scream about AI-induced layoffs, a quieter, more profound transformation is underway in the global workplace. The narrative of d...",
+        "contentFile": "news-1776258024192.md"
+    },
+    {
         "id": "1776254428549",
         "type": "blog",
         "title": "Beyond the Update: A PM's Guide to Curing Reporting Fatigue",
