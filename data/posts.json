@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776247227192",
+        "type": "blog",
+        "title": "From Drudgery to Data-Driven: Conquering Reporting Fatigue for Good",
+        "category": "Deep Insights",
+        "date": "2026-04-15",
+        "author": "Marcus Webb",
+        "excerpt": "As a Product Manager, you live and breathe data. Status reports, sprint velocity charts, stakeholder updates, post-mortems, quarterly business reviews...",
+        "contentFile": "blog-1776247227192.md"
+    },
+    {
         "id": "1776243627214",
         "type": "news",
         "title": "AI Regulation Debate Intensifies as New Models Challenge Existing Frameworks",
