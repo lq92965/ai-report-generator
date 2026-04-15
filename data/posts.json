@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776286827698",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "category": "Tech Radar",
+        "date": "2026-04-15",
+        "author": "Emily Rostova",
+        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
+        "contentFile": "news-1776286827698.md"
+    },
+    {
         "id": "1776283228791",
         "type": "blog",
         "title": "Beyond the Status Update: A PM's Guide to Curing Reporting Fatigue",
