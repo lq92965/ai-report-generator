@@ -3104,6 +3104,30 @@ function setupPayment() {
                 return;
             }
 
+            if (typeof window.reportifyIsAndroidNative === 'function' && window.reportifyIsAndroidNative()) {
+                const mapped = window.reportifyGooglePlanToProduct(planType, !!window.isYearlyBilling);
+                if (!mapped) {
+                    showToast('Invalid plan', 'error');
+                    return;
+                }
+                try {
+                    showToast('Opening Google Play…', 'info');
+                    const tx = await window.reportifyGooglePlayPurchase(mapped.productId, mapped.basePlanId);
+                    const pt = tx && tx.purchaseToken;
+                    if (!pt) throw new Error('No purchase token');
+                    if (tx.purchaseState != null && String(tx.purchaseState) !== '1') {
+                        throw new Error('Purchase not completed');
+                    }
+                    await window.reportifyGooglePlayVerify(pt, mapped.productId);
+                    showToast('Subscription active!', 'success');
+                    setTimeout(() => window.location.reload(), 1200);
+                } catch (err) {
+                    console.error(err);
+                    showToast(err.message || 'Google Play purchase failed', 'error');
+                }
+                return;
+            }
+
             const planNameEl = document.getElementById('payment-plan-name');
             if (planNameEl) {
                 if (planType === 'basic') {

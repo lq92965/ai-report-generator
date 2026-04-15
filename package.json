@@ -15,6 +15,7 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
+    "@capgo/native-purchases": "^8.3.0",
     "@capacitor/android": "^8.3.0",
     "@capacitor/app": "^8.1.0",
     "@capacitor/cli": "^8.3.0",
@@ -23,6 +24,8 @@
     "@capacitor/share": "^8.0.1",
     "@flydotio/dockerfile": "^0.5.8",
     "@google/generative-ai": "^0.1.0",
+    "google-auth-library": "^9.14.0",
+    "googleapis": "^144.0.0",
     "axios": "^1.13.6",
     "bcryptjs": "^2.4.3",
     "cheerio": "^1.2.0",

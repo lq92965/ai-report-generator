@@ -12,6 +12,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { Resend } from 'resend';
 import crypto from 'crypto';
+import { registerGooglePlayBillingRoutes } from './google-play-billing.js';
 
 // Path definitions
 const __filename = fileURLToPath(import.meta.url);
@@ -31,6 +32,13 @@ const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 /** PWA shell: never hardcode production domain — set FRONTEND_URL for local/dev (e.g. http://localhost:8080) */
 const FRONTEND_BASE = (process.env.FRONTEND_URL || 'https://goreportify.com').replace(/\/$/, '');
+const GOOGLE_PLAY_PACKAGE_NAME = (process.env.GOOGLE_PLAY_PACKAGE_NAME || 'com.crickettechnology.reportifyai').trim();
+const GOOGLE_PLAY_PRODUCT_TO_PLAN = {
+    reportify_basic_monthly: 'basic',
+    reportify_basic_annual: 'basic_annual',
+    reportify_pro_monthly: 'pro',
+    reportify_pro_annual: 'pro_annual'
+};
 
 // 2. Database Connection
 const client = new MongoClient(MONGO_URI);
@@ -1924,6 +1932,15 @@ app.delete('/api/delete-account', authenticateToken, async (req, res) => {
         console.error("Delete Account Error:", error);
         res.status(500).json({ message: "Failed to delete account." });
     }
+});
+
+registerGooglePlayBillingRoutes(app, {
+    db,
+    ObjectId,
+    authenticateToken,
+    sendSystemMessage,
+    GOOGLE_PLAY_PACKAGE_NAME,
+    GOOGLE_PLAY_PRODUCT_TO_PLAN
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
