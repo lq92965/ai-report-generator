@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776240031978",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-15",
+        "author": "Michael Chen",
+        "excerpt": "We've all been there. It’s Tuesday morning, and your calendar is a minefield of reminders: \"Prep weekly metrics,\" \"Update stakeholder deck,\" \"Pull spr...",
+        "contentFile": "blog-1776240031978.md"
+    },
+    {
         "id": "1776236425110",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
