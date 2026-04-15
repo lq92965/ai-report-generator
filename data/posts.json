@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776290427473",
+        "type": "blog",
+        "title": "Beyond the Burndown: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-15",
+        "author": "Jessica Tran",
+        "excerpt": "We've all been there. It’s 4:00 PM on a Friday, and instead of focusing on next week's strategy, you're scrambling to update three different spreadshe...",
+        "contentFile": "blog-1776290427473.md"
+    },
+    {
         "id": "1776286827698",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
