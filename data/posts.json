@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776218428588",
+        "type": "blog",
+        "title": "Beyond the Dashboard: Curing Your Team's Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-15",
+        "author": "Jessica Tran",
+        "excerpt": "It's 4:00 PM on a Friday. The project is humming along, but a familiar dread creeps in. It's time to compile the weekly status report. An hour is los...",
+        "contentFile": "blog-1776218428588.md"
+    },
+    {
         "id": "1776214828156",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
