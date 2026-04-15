@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776232829212",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-15",
+        "author": "Jessica Tran",
+        "excerpt": "We’ve all been there. It’s Tuesday morning, and your calendar is a minefield of reminders: \"Prep Weekly Status Deck,\" \"Update Sprint Progress Tracker,...",
+        "contentFile": "blog-1776232829212.md"
+    },
+    {
         "id": "1776229225704",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
