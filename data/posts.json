@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776268830464",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-15",
+        "author": "Jessica Tran",
+        "excerpt": "As a Product Manager, I've seen it countless times. The glazed-over eyes in a weekly status meeting. The frantic, last-minute scramble to pull metrics...",
+        "contentFile": "blog-1776268830464.md"
+    },
+    {
         "id": "1776265224060",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
