@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776322824165",
+        "type": "news",
+        "title": "AI Regulation Debate Intensifies as New Model Capabilities Outpace Legislation",
+        "category": "Tech Radar",
+        "date": "2026-04-16",
+        "author": "Jessica Tran",
+        "excerpt": "The global conversation surrounding artificial intelligence regulation reached a fever pitch this week, as the release of a new open-source multimodal...",
+        "contentFile": "news-1776322824165.md"
+    },
+    {
         "id": "1776319228239",
         "type": "blog",
         "title": "Beyond the Update: Curing Reporting Fatigue for Good",
