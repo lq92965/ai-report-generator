@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776340831539",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-16",
+        "author": "Michael Chen",
+        "excerpt": "We've all been there. It's the end of the week, and the dreaded calendar reminder pops up: \"Compile Weekly Status Report.\" A collective groan echoes t...",
+        "contentFile": "blog-1776340831539.md"
+    },
+    {
         "id": "1776337227133",
         "type": "news",
         "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
