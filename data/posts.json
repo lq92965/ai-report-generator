@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776337227133",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "category": "Tech Radar",
+        "date": "2026-04-16",
+        "author": "Olivia Thorne",
+        "excerpt": "While flashy chatbots and image generators capture headlines, a more profound transformation is underway. Across the globe, artificial intelligence is...",
+        "contentFile": "news-1776337227133.md"
+    },
+    {
         "id": "1776333632251",
         "type": "blog",
         "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
