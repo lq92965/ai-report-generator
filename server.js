@@ -1959,19 +1959,19 @@ app.delete('/api/delete-account', authenticateToken, async (req, res) => {
     }
 });
 
-registerGooglePlayBillingRoutes(app, {
-    db,
-    ObjectId,
-    authenticateToken,
-    sendSystemMessage,
-    GOOGLE_PLAY_PACKAGE_NAME,
-    GOOGLE_PLAY_PRODUCT_TO_PLAN
-});
-
 connectDB().then((ok) => {
     if (!ok) {
         console.error('Fatal: MongoDB connection failed');
         process.exit(1);
     }
+    // Must register after Mongo `db` is assigned — passing `db` earlier snapshots `undefined` into google-play-billing.js
+    registerGooglePlayBillingRoutes(app, {
+        db,
+        ObjectId,
+        authenticateToken,
+        sendSystemMessage,
+        GOOGLE_PLAY_PACKAGE_NAME,
+        GOOGLE_PLAY_PRODUCT_TO_PLAN
+    });
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });

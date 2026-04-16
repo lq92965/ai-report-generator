@@ -47,7 +47,9 @@ pm2 save
 
 至少确认：`MONGO_URI`、`JWT_SECRET`、`GEMINI_API_KEY`（或 `GOOGLE_API_KEY`）、`DEEPSEEK_API_KEY`（Basic 用）、`GOOGLE_PLAY_SERVICE_ACCOUNT_JSON`（Google Play 验单）。
 
-可选：`GEMINI_MODEL`、`GEMINI_FALLBACK_MODEL`（例如预览模型不可用时兜底）。
+可选：`GEMINI_MODEL`（默认 `gemini-3-flash-preview`）、`GEMINI_FALLBACK_MODEL`（例如 `gemini-2.0-flash`，仅当主模型仍 404 时由服务端重试一次）。
+
+依赖 **`@google/generative-ai` 需较新版本**（与旧版 `0.1.x` 不同），否则可能对 `gemini-3-flash-preview` 走错误 API 路径导致 404。
 
 修改环境变量后需 **`pm2 restart all`**。
 
