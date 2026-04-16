@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776380433612",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "category": "Tech Radar",
+        "date": "2026-04-16",
+        "author": "Alex Mercer",
+        "excerpt": "The rapid advancement of artificial intelligence has triggered an unprecedented diplomatic scramble, as world leaders and tech executives gather in Se...",
+        "contentFile": "news-1776380433612.md"
+    },
+    {
         "id": "1776376827778",
         "type": "blog",
         "title": "Beyond the Status Update: A PM's Guide to Curing Reporting Fatigue",
