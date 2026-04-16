@@ -106,6 +106,7 @@ cat ~/.ssh/github_deploy_ed25519
 | `DEPLOY_HOST` | `68.183.162.193` |
 | `DEPLOY_USER` | `root` |
 | `DEPLOY_SSH_KEY` | 上一步私钥**全文** |
+| `DEPLOY_SSH_PORT` | `2222`（你当前服务器 SSH 端口） |
 
 ### 3. 触发方式
 
@@ -142,7 +143,7 @@ pm2 restart all
 | 网站 502 / 打不开 | Nginx 未 reload、证书未签好 | `sudo nginx -t`；`sudo certbot certificates` |
 | API 502 | PM2 未运行或端口不是 3000 | `pm2 list`；用 `ss -tlnp` 查 3000 端口 |
 | git pull 在 Actions 里失败 | 服务器 Git 远程、权限、分支 | SSH 手动登录执行同样命令看报错 |
-| SSH 连不上 | 防火墙、22 端口、密钥错 | `ufw status`；核对 `DEPLOY_SSH_KEY` |
+| SSH 连不上 | 防火墙、SSH 端口、密钥错 | `ufw status`；核对 `DEPLOY_SSH_KEY` 与 `DEPLOY_SSH_PORT` |
 | 静态页能开、接口跨域 | 后端 CORS 一般可过 | 看浏览器 Network 与 `server.js` CORS |
 
 ---

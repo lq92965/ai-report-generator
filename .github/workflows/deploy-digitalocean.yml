@@ -3,6 +3,7 @@
 #   DEPLOY_HOST      例如 68.183.162.193
 #   DEPLOY_USER      例如 root
 #   DEPLOY_SSH_KEY   服务器上为「部署专用」生成的私钥全文（含 BEGIN/END 行）
+#   DEPLOY_SSH_PORT  可选；默认 2222（你的服务器当前 SSH 端口）
 #
 # 服务器需已 clone 本仓库到 /root/ai-report-generator，且该目录可 git pull。
 
@@ -27,7 +28,7 @@ jobs:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
-          port: 2222
+          port: ${{ secrets.DEPLOY_SSH_PORT || '2222' }}
           command_timeout: 15m
           script_stop: true
           script: |
