@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776362429057",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-16",
+        "author": "David Sterling",
+        "excerpt": "As a Project Manager, you live and breathe data. Status updates, progress reports, burndown charts, and stakeholder summaries are the currency of your...",
+        "contentFile": "blog-1776362429057.md"
+    },
+    {
         "id": "1776358831001",
         "type": "news",
         "title": "AI Regulation Debate Intensifies as New Models Challenge Existing Frameworks",
