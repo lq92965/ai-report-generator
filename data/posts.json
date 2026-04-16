@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776304828405",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-16",
+        "author": "David Sterling",
+        "excerpt": "We've all been there. It’s Tuesday morning, and your calendar reminds you it’s time to compile the \"Weekly Status Report.\" You spend the next two hour...",
+        "contentFile": "blog-1776304828405.md"
+    },
+    {
         "id": "1776301226779",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
