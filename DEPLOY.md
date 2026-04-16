@@ -57,6 +57,8 @@ pm2 save
 
 ## 二、前端网站
 
+自托管静态站（Nginx on DO、摆脱 Netlify 构建分钟）见 **`docs/SELF_HOST_WEB.md`** 与 **`deploy/nginx-goreportify.conf.example`**。
+
 存在两条可能路径，请团队约定**以哪一条为线上真源**：
 
 | 路径 | 说明 |

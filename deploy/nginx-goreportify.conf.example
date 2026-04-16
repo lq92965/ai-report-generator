@@ -1,0 +1,40 @@
+# 示例：在 DigitalOcean 上用 Nginx 直接提供静态站（替代 Netlify）
+# 1) 将站点根目录指向本仓库克隆路径（与 amber_engine 写入路径一致）
+# 2) 用 certbot 申请 HTTPS
+# 3) 禁止访问敏感文件，避免把 server.js / .env 暴露为静态下载
+#
+# 安装：sudo apt install nginx certbot python3-certbot-nginx
+# 复制到 /etc/nginx/sites-available/goreportify.conf 后 ln -s 到 sites-enabled，nginx -t && systemctl reload nginx
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name goreportify.com www.goreportify.com;
+
+    # 与仓库路径一致（示例）
+    root /root/ai-report-generator;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location ~ /\.(git|svn|hg) {
+        deny all;
+    }
+    location ~ /\.env {
+        deny all;
+    }
+    location ~* ^/(server\.js|google-play-billing\.js|index\.js|package\.json|package-lock\.json|amber_engine\.cjs)$ {
+        deny all;
+    }
+    location ^~ /node_modules/ {
+        deny all;
+    }
+    location ^~ /android/ {
+        deny all;
+    }
+}
+
+# HTTPS：sudo certbot --nginx -d goreportify.com -d www.goreportify.com
+# API 子域 api.goreportify.com 应指向 Node（PM2），勿用此 root 提供 API。

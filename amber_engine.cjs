@@ -212,9 +212,14 @@ async function runEngine(type, options = {}) {
 
 /** 每日一篇新闻 + 一篇博客，最后只 push 一次 → Netlify 每日约一次构建 */
 async function runDailyBatch() {
-    console.log('[Amber V8] 📅 Daily batch: news → blog (single git push)');
+    const noGitPush = process.env.AMBER_NO_GIT_PUSH === '1' || process.env.AMBER_NO_GIT_PUSH === 'true';
+    console.log('[Amber V8] 📅 Daily batch: news → blog' + (noGitPush ? ' (no git push — self-host / Nginx)' : ' (single git push)'));
     await runEngine('news', { skipPush: true });
     await runEngine('blog', { skipPush: true });
+    if (noGitPush) {
+        console.log('[Amber V8] ✅ Files written under repo; Nginx serves this directory — no Netlify build.');
+        return;
+    }
     try {
         const stamp = Date.now();
         execSync(
@@ -227,12 +232,16 @@ async function runDailyBatch() {
     }
 }
 
-console.log('🚀 Reportify AI - 终极版 V8.6 引擎已激活 (每日美国东部 9:00 新闻+博客 & 单次推送 & RSS) !');
-cron.schedule(
-    '0 9 * * *',
-    () => {
-        runDailyBatch().catch((err) => console.error('[Amber V8] ❌ Daily batch:', err));
-    },
-    { timezone: 'America/New_York' }
-);
+console.log('🚀 Reportify AI - 终极版 V8.6 引擎已激活 (每日美国东部 9:00 新闻+博客 & RSS) !');
+if (process.env.AMBER_DISABLE_CRON !== '1' && process.env.AMBER_DISABLE_CRON !== 'true') {
+    cron.schedule(
+        '0 9 * * *',
+        () => {
+            runDailyBatch().catch((err) => console.error('[Amber V8] ❌ Daily batch:', err));
+        },
+        { timezone: 'America/New_York' }
+    );
+} else {
+    console.log('[Amber V8] ⏸ Built-in cron disabled (AMBER_DISABLE_CRON=1). Use systemd/crontab + tools/run-amber-daily-once.cjs');
+}
 module.exports = { runEngine, runDailyBatch };
