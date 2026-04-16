@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776312027562",
+        "type": "blog",
+        "title": "Beyond the Dashboard: Overcoming Reporting Fatigue for Good",
+        "category": "Deep Insights",
+        "date": "2026-04-16",
+        "author": "Olivia Thorne",
+        "excerpt": "We've all been there. The Monday morning meeting starts, and someone shares their screen to present \"the numbers.\" Eyes glaze over. The same charts yo...",
+        "contentFile": "blog-1776312027562.md"
+    },
+    {
         "id": "1776308416478",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
