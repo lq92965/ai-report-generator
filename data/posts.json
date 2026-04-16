@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776301226779",
+        "type": "news",
+        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "category": "Tech Radar",
+        "date": "2026-04-16",
+        "author": "Michael Chen",
+        "excerpt": "While headlines chase the latest chatbot drama or doomsday scenarios, a quiet revolution is unfolding in the background. Across industries, artificial...",
+        "contentFile": "news-1776301226779.md"
+    },
+    {
         "id": "1776297626959",
         "type": "blog",
         "title": "Beyond the Update: How to Conquer Reporting Fatigue and Make Your Reports Matter",
