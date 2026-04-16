@@ -27,6 +27,11 @@ function formatMoneyUSD(n) {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(n));
 }
 
+function formatPaymentAmount(p) {
+    if (p && p.provider === 'google_play') return 'Google Play';
+    return formatMoneyUSD(p && p.amount);
+}
+
 function formatWhen(iso) {
     if (!iso) return '—';
     const d = new Date(iso);
@@ -71,17 +76,18 @@ function renderPaymentsTable() {
         const desktopHelp = oid
             ? `<a href="${appealUrl}" class="pay-appeal-link">Contact + prefill</a>`
             : '—';
+        const prov = p.provider || 'paypal';
         const copyIconBtn = oid
-            ? `<button type="button" class="pay-copy-icon-btn" data-oid="${escapeHtml(oid)}" aria-label="Copy order ID" title="Copy order ID"><i class="fas fa-copy"></i></button>`
+            ? `<button type="button" class="pay-copy-icon-btn" data-oid="${escapeHtml(oid)}" data-provider="${escapeHtml(prov)}" aria-label="Copy order ID" title="Copy order ID"><i class="fas fa-copy"></i></button>`
             : '';
         const tr = document.createElement('tr');
         tr.className = 'pay-row';
         tr.innerHTML = `
             <td class="pay-desktop-only">${formatWhen(p.date)}</td>
             <td class="pay-desktop-only">${planLabel(p.planId)}</td>
-            <td class="pay-desktop-only">${formatMoneyUSD(p.amount)}</td>
+            <td class="pay-desktop-only">${formatPaymentAmount(p)}</td>
             <td class="pay-desktop-only"><span class="pay-badge ${st.cls}">${st.text}</span></td>
-            <td class="pay-desktop-only mono-small" title="PayPal order id">${escapeHtml(oid || '—')}</td>
+            <td class="pay-desktop-only mono-small" title="Order or payment reference">${escapeHtml(oid || '—')}</td>
             <td class="pay-desktop-only pay-actions-cell">${desktopHelp}</td>
             <td class="pay-mobile-only" colspan="6">
                 <div class="pay-mobile-card">
@@ -93,7 +99,7 @@ function renderPaymentsTable() {
                     </div>
                     <div class="pay-mobile-line2">
                         <span class="pay-mobile-plan">${planLabel(p.planId)}</span>
-                        <span class="pay-mobile-amount">${formatMoneyUSD(p.amount)}</span>
+                        <span class="pay-mobile-amount">${formatPaymentAmount(p)}</span>
                         <span class="pay-mobile-status"><span class="pay-badge ${st.cls}">${st.text}</span></span>
                     </div>
                     <div class="pay-mobile-line3">
@@ -106,7 +112,9 @@ function renderPaymentsTable() {
     }
 
     tbody.querySelectorAll('.pay-copy-icon-btn').forEach((btn) => {
-        btn.addEventListener('click', () => copyOrderIdForEmail(btn.getAttribute('data-oid') || ''));
+        btn.addEventListener('click', () =>
+            copyOrderIdForEmail(btn.getAttribute('data-oid') || '', btn.getAttribute('data-provider') || 'paypal')
+        );
     });
 
     renderPagination(total, totalPages, start, slice.length);
@@ -197,10 +205,10 @@ async function loadPayments() {
                     <i class="fas fa-receipt" style="font-size: 2rem; margin-bottom: 12px; opacity: 0.6;"></i>
                     <p style="margin: 0; font-size: 1rem;">No payments found for this account.</p>
                     <p style="margin: 12px 0 0; font-size: 0.88rem; color: #64748b; line-height: 1.5; max-width: 520px; margin-left: auto; margin-right: auto;">
-                        Records appear after a successful checkout and server upgrade. If you paid but see nothing:
-                        hard-refresh this page (Ctrl+F5), sign out and sign in again, and confirm the site is using the latest <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;">server.js</code>.
-                        API in use: <strong>${escapeHtml(PAYMENTS_API_BASE)}</strong>.
-                        You can still use <strong>Contact (Billing)</strong> with your PayPal Order ID from the PayPal receipt.
+                        Records appear after PayPal checkout or after <strong>Google Play</strong> purchase once the app calls server verification (<code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;">/api/billing/google-play/verify</code>).
+                        If you subscribed on Android but see nothing: open the app while logged in, wait for “Subscription active”, then pull to refresh here.
+                        Otherwise hard-refresh (Ctrl+F5), sign out and in, and confirm the API is up to date: <strong>${escapeHtml(PAYMENTS_API_BASE)}</strong>.
+                        For PayPal, use your PayPal receipt order ID with <strong>Contact (Billing)</strong>.
                     </p>`;
                 emptyEl.style.display = 'block';
             }
@@ -225,8 +233,11 @@ async function loadPayments() {
     }
 }
 
-async function copyOrderIdForEmail(orderId) {
-    const text = `PayPal Order ID: ${orderId}\n(Account email: see your profile)`;
+async function copyOrderIdForEmail(orderId, provider) {
+    const text =
+        provider === 'google_play'
+            ? `Google Play ref: ${orderId}\n(Account email: see your profile)`
+            : `PayPal Order ID: ${orderId}\n(Account email: see your profile)`;
     try {
         await navigator.clipboard.writeText(text);
         if (window.showToast) window.showToast('Order ID copied. Paste into email or our contact form.', 'success');

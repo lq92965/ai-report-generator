@@ -25,6 +25,10 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 // 1. Core Config
 const API_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+/** Pro / trial / free-within-trial: primary Gemini model (override with GEMINI_MODEL). */
+const GEMINI_MODEL = (process.env.GEMINI_MODEL || 'gemini-3-flash-preview').trim();
+/** Optional: if primary fails (e.g. preview not enabled for your API key), try once — e.g. `gemini-2.0-flash` (do not set to 1.5 unless you intend). */
+const GEMINI_FALLBACK_MODEL = (process.env.GEMINI_FALLBACK_MODEL || '').trim();
 const DEEPSEEK_KEY = process.env.DEEPSEEK_API_KEY; // 🟢 引入 DeepSeek 秘钥
 const MONGO_URI = process.env.MONGO_URI;
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -48,9 +52,12 @@ async function connectDB() {
     await client.connect();
     db = client.db('ReportifyAI');
     console.log("✅ MongoDB Connected");
-  } catch (error) { console.error("❌ DB Error", error); }
+    return true;
+  } catch (error) {
+    console.error("❌ DB Error", error);
+    return false;
+  }
 }
-connectDB();
 
 // --- 底层通用站内信发送引擎 ---
 async function sendSystemMessage(email, type, message) {
@@ -1319,10 +1326,11 @@ app.get('/api/payments', authenticateToken, async (req, res) => {
         const payments = rows.map((p) => ({
             id: p._id.toString(),
             planId: p.planId,
-            amount: typeof p.amount === 'number' ? p.amount : Number(p.amount),
+            amount: typeof p.amount === 'number' ? p.amount : p.amount == null ? null : Number(p.amount),
             status: p.status || 'completed',
             date: p.date,
-            paymentId: p.paymentId
+            paymentId: p.paymentId,
+            provider: p.provider || 'paypal'
         }));
 
         res.json({ payments });
@@ -1557,21 +1565,38 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
             }
 
         } else {
-            // 💎 梯队 A：Pro / 7天试用新用户调用 Gemini 3 Flash Preview (旗舰品质)
-            console.log(`💎 [${userPlan.toUpperCase()}] Routing to Google Gemini 3 Flash Preview...`);
-            try {
-                const model = genAI.getGenerativeModel({ 
-                    model: "gemini-3-flash-preview",
-                    systemInstruction: finalSystemInstructions 
+            // 💎 梯队 A：Pro / 试用期内免费用户 → Gemini（与 Basic 的 DeepSeek 分流见上；并非「先 DS 再 Gemini 补图表」的双段式，若要做需另行实现）
+            async function runGemini(modelId) {
+                const model = genAI.getGenerativeModel({
+                    model: modelId,
+                    systemInstruction: finalSystemInstructions
                 });
-                const result = await model.generateContent({ 
+                const result = await model.generateContent({
                     contents: [{ role: 'user', parts: [{ text: expandedUserPrompt }] }],
                     generationConfig: { maxOutputTokens: 2048, temperature: 0.7 }
                 });
-                rawText = result.response.text();
+                return result.response.text();
+            }
+            console.log(`💎 [${userPlan.toUpperCase()}] Routing to Gemini (primary: ${GEMINI_MODEL})...`);
+            try {
+                rawText = await runGemini(GEMINI_MODEL);
             } catch (geminiError) {
-                console.error("❌ Gemini API Failed:", geminiError.message);
-                throw new Error("AI Service Currently Unavailable");
+                const canFallback =
+                    GEMINI_FALLBACK_MODEL &&
+                    GEMINI_FALLBACK_MODEL !== GEMINI_MODEL &&
+                    API_KEY;
+                if (canFallback) {
+                    console.warn(`⚠️ Gemini primary (${GEMINI_MODEL}) failed: ${geminiError.message}. Retrying with GEMINI_FALLBACK_MODEL=${GEMINI_FALLBACK_MODEL}`);
+                    try {
+                        rawText = await runGemini(GEMINI_FALLBACK_MODEL);
+                    } catch (fallbackErr) {
+                        console.error("❌ Gemini fallback failed:", fallbackErr.message);
+                        throw new Error("AI Service Currently Unavailable");
+                    }
+                } else {
+                    console.error("❌ Gemini API Failed:", geminiError.message);
+                    throw new Error("AI Service Currently Unavailable");
+                }
             }
         }
 
@@ -1943,4 +1968,10 @@ registerGooglePlayBillingRoutes(app, {
     GOOGLE_PLAY_PRODUCT_TO_PLAN
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+connectDB().then((ok) => {
+    if (!ok) {
+        console.error('Fatal: MongoDB connection failed');
+        process.exit(1);
+    }
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+});

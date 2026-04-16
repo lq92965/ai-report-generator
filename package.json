@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
+    "start": "node server.js",
     "build": "echo 'Build step not required, skipping...'",
     "serve:web": "npx --yes serve@14 . -l 8888",
     "build:www": "node build_www.cjs",
