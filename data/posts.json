@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776319228239",
+        "type": "blog",
+        "title": "Beyond the Update: Curing Reporting Fatigue for Good",
+        "category": "Deep Insights",
+        "date": "2026-04-16",
+        "author": "Jessica Tran",
+        "excerpt": "We've all been there. It's the end of the week, and that calendar reminder pops up: \"Submit Weekly Status Report.\" A collective groan echoes through t...",
+        "contentFile": "blog-1776319228239.md"
+    },
+    {
         "id": "1776315626388",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
