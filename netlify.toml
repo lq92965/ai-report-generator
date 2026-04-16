@@ -1,3 +1,5 @@
+# 已迁移：主站与 API 由 DigitalOcean + Nginx 托管（见 docs/NGINX_AND_DEPLOY_RUNBOOK.md）。
+# 若不再使用 Netlify，可忽略本文件或从 Netlify 项目中断开连接。
 [build]
   publish = "."
   command = "npm run build"

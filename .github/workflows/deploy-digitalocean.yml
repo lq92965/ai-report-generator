@@ -1,0 +1,40 @@
+# 推送 main 后，SSH 到 DigitalOcean 执行 git pull + 依赖 + PM2 重启
+# 需在仓库 Settings → Secrets and variables → Actions 中配置：
+#   DEPLOY_HOST      例如 68.183.162.193
+#   DEPLOY_USER      例如 root
+#   DEPLOY_SSH_KEY   服务器上为「部署专用」生成的私钥全文（含 BEGIN/END 行）
+#
+# 服务器需已 clone 本仓库到 /root/ai-report-generator，且该目录可 git pull。
+
+name: Deploy to DigitalOcean
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-do
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH — git pull, npm, pm2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: 22
+          command_timeout: 15m
+          script_stop: true
+          script: |
+            set -e
+            cd /root/ai-report-generator
+            git fetch origin main
+            git checkout main
+            git pull --ff-only origin main
+            npm install --omit=dev
+            pm2 restart all

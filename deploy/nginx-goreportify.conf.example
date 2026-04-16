@@ -1,17 +1,26 @@
-# 示例：在 DigitalOcean 上用 Nginx 直接提供静态站（替代 Netlify）
-# 1) 将站点根目录指向本仓库克隆路径（与 amber_engine 写入路径一致）
-# 2) 用 certbot 申请 HTTPS
-# 3) 禁止访问敏感文件，避免把 server.js / .env 暴露为静态下载
+# =============================================================================
+# Reportify — Nginx 示例（替代 Netlify：静态站 + API 反代）
+# 服务器：DigitalOcean 68.183.162.193（示例路径 /root/ai-report-generator）
 #
-# 安装：sudo apt install nginx certbot python3-certbot-nginx
-# 复制到 /etc/nginx/sites-available/goreportify.conf 后 ln -s 到 sites-enabled，nginx -t && systemctl reload nginx
+# 安装：sudo apt update && sudo apt install -y nginx certbot python3-certbot-nginx
+# 用法：
+#   sudo cp deploy/nginx-goreportify.conf.example /etc/nginx/sites-available/goreportify.conf
+#   sudo ln -sf /etc/nginx/sites-available/goreportify.conf /etc/nginx/sites-enabled/
+#   sudo rm -f /etc/nginx/sites-enabled/default
+#   sudo nginx -t && sudo systemctl reload nginx
+# HTTPS（一次性，证书会自动续期）：
+#   sudo certbot --nginx -d goreportify.com -d www.goreportify.com -d api.goreportify.com
+#
+# DNS（Namecheap）：@ 与 www 的 A 记录 → 服务器公网 IP；api 子域 A → 同 IP。
+# 停用 Netlify：删除或改掉指向 Netlify 的 CNAME/A，避免冲突。
+# =============================================================================
 
+# ---------- 主站：静态 HTML（与仓库根目录一致，Amber 写入同目录）----------
 server {
     listen 80;
     listen [::]:80;
     server_name goreportify.com www.goreportify.com;
 
-    # 与仓库路径一致（示例）
     root /root/ai-report-generator;
     index index.html;
 
@@ -34,7 +43,26 @@ server {
     location ^~ /android/ {
         deny all;
     }
+    location ^~ /.github/ {
+        deny all;
+    }
 }
 
-# HTTPS：sudo certbot --nginx -d goreportify.com -d www.goreportify.com
-# API 子域 api.goreportify.com 应指向 Node（PM2），勿用此 root 提供 API。
+# ---------- API：反代到本机 PM2（server.js 默认 PORT=3000）----------
+server {
+    listen 80;
+    listen [::]:80;
+    server_name api.goreportify.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 120s;
+    }
+}
+
+# certbot 会在上述 server 块上自动插入 ssl_certificate / listen 443 ssl 等。
