@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776348033746",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-16",
+        "author": "Michael Chen",
+        "excerpt": "It's 4 PM on a Friday. You're staring at a spreadsheet, your dashboard is a sea of charts, and you feel a familiar sense of dread. It's time to compil...",
+        "contentFile": "blog-1776348033746.md"
+    },
+    {
         "id": "1776344421055",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
