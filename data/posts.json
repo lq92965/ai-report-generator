@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776355231562",
+        "type": "blog",
+        "title": "From Data Dumps to Actionable Insights: Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-16",
+        "author": "David Sterling",
+        "excerpt": "We've all been there. It's 4:30 PM on a Friday, and the recurring calendar reminder pops up: \"Submit Weekly Status Report.\" A collective groan echoes...",
+        "contentFile": "blog-1776355231562.md"
+    },
+    {
         "id": "1776351628167",
         "type": "news",
         "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
