@@ -3,6 +3,8 @@
 > 本文与仓库内 `deploy/nginx-goreportify.conf.example`、`.github/workflows/deploy-digitalocean.yml` 配套使用。  
 > **本次变更未修改** `server.js` 业务逻辑、**未改** Amber **每日一次** 的抓取策略。
 
+**若 Markdown 预览异常**：本文件已避免在表格单元格内使用竖线 `|`（会与表格语法冲突）。请再试 **右下角 CRLF → LF** 后重新打开预览。
+
 ---
 
 ## 一、架构说明（完成后长什么样）
@@ -37,7 +39,7 @@ sudo nginx -t
 sudo systemctl reload nginx
 ```
 
-### 3. HTTPS（Let’s Encrypt）
+### 3. HTTPS（Let's Encrypt）
 
 ```bash
 sudo certbot --nginx -d goreportify.com -d www.goreportify.com -d api.goreportify.com
@@ -46,8 +48,8 @@ sudo certbot --nginx -d goreportify.com -d www.goreportify.com -d api.goreportif
 **为何有时没有「选 Redirect」的菜单？**  
 若是 **续期已有证书**，日志会出现 **“Renewing an existing certificate”**，Certbot 会 **沿用之前的重定向策略**，**不再弹出**首次安装时的交互。只要最后显示 **Successfully** / **installed** 即正常。
 
-**`nginx -t` 提示 conflicting server name**  
-表示 **80 端口** 上多套配置重复声明了同一域名。执行 `ls /etc/nginx/sites-enabled/`，只保留 **一套** 站点定义；certbot 可能额外生成了 `goreportify` 等文件，与手动的 `goreportify.conf` 重复时需 **合并或禁用其一** 后再 `sudo nginx -t && sudo systemctl reload nginx`。
+**`nginx -t` 提示 conflicting server name（可选、可延后）**  
+表示 **80 端口** 上多套配置重复声明了同一域名。站点 **能正常访问时**，这条警告**不阻塞使用**；**可以等 DNS、HTTPS、网站与 API 全部验证通过之后**，再统一整理：执行 `ls /etc/nginx/sites-enabled/`，只保留 **一套** 站点定义；certbot 可能额外生成了 `goreportify` 等文件，与手动的 `goreportify.conf` 重复时需 **合并或禁用其一** 后再 `sudo nginx -t && sudo systemctl reload nginx`。目的主要是 **消除警告、避免以后改配置踩坑**。
 
 ---
 
@@ -138,10 +140,10 @@ pm2 restart all
 | 现象 | 可能原因 | 处理 |
 |------|----------|------|
 | 网站 502 / 打不开 | Nginx 未 reload、证书未签好 | `sudo nginx -t`；`sudo certbot certificates` |
-| API 502 | PM2 未运行或端口不是 3000 | `pm2 list`；`ss -tlnp \| grep 3000` |
-| `git pull` 在 Actions 里失败 | 服务器 Git 远程、权限、分支 | SSH 手动登录执行同样命令看报错 |
+| API 502 | PM2 未运行或端口不是 3000 | `pm2 list`；用 `ss -tlnp` 查 3000 端口 |
+| git pull 在 Actions 里失败 | 服务器 Git 远程、权限、分支 | SSH 手动登录执行同样命令看报错 |
 | SSH 连不上 | 防火墙、22 端口、密钥错 | `ufw status`；核对 `DEPLOY_SSH_KEY` |
-| 静态页能开、接口跨域 | 后端 CORS 已 `origin: true` 一般可过 | 看浏览器 Network 与 `server.js` CORS |
+| 静态页能开、接口跨域 | 后端 CORS 一般可过 | 看浏览器 Network 与 `server.js` CORS |
 
 ---
 
