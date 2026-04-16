@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776330022308",
+        "type": "news",
+        "title": "AI's Next Frontier: The Unseen Cost of Reasoning",
+        "category": "Tech Radar",
+        "date": "2026-04-16",
+        "author": "Michael Chen",
+        "excerpt": "The race to build ever-larger language models is giving way to a new, more critical competition: the pursuit of artificial intelligence that can reaso...",
+        "contentFile": "news-1776330022308.md"
+    },
+    {
         "id": "1776326427803",
         "type": "blog",
         "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
