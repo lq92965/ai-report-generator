@@ -43,21 +43,37 @@ sudo systemctl reload nginx
 sudo certbot --nginx -d goreportify.com -d www.goreportify.com -d api.goreportify.com
 ```
 
-按提示选 **Redirect HTTP to HTTPS**。证书会自动续期。
+**为何有时没有「选 Redirect」的菜单？**  
+若是 **续期已有证书**，日志会出现 **“Renewing an existing certificate”**，Certbot 会 **沿用之前的重定向策略**，**不再弹出**首次安装时的交互。只要最后显示 **Successfully** / **installed** 即正常。
 
-### 4. DNS（Namecheap）
+**`nginx -t` 提示 conflicting server name**  
+表示 **80 端口** 上多套配置重复声明了同一域名。执行 `ls /etc/nginx/sites-enabled/`，只保留 **一套** 站点定义；certbot 可能额外生成了 `goreportify` 等文件，与手动的 `goreportify.conf` 重复时需 **合并或禁用其一** 后再 `sudo nginx -t && sudo systemctl reload nginx`。
 
-- **`@`（根域）** A 记录 → `68.183.162.193`  
-- **`www`** A 记录 → `68.183.162.193`（或 CNAME 到根域，按你习惯）  
-- **`api`** A 记录 → `68.183.162.193`  
+---
 
-**停用 Netlify**：删除或修改原先指向 Netlify 的 **A/CNAME**，避免同一域名解析到两处。
+### 4. DNS（Namecheap）——操作步骤
+
+1. 登录 Namecheap → **Domain List** → **goreportify.com** → **Manage**。  
+2. 打开 **Advanced DNS**（确保使用 **Namecheap BasicDNS** 或当前生效的 DNS）。  
+3. 在 **Host Records** 中设置（示例）：
+
+| Type | Host | Value |
+|------|------|--------|
+| A Record | `@` | `68.183.162.193` |
+| A Record | `www` | `68.183.162.193` |
+| A Record | `api` | `68.183.162.193` |
+
+4. **删除或修改** 仍指向 **Netlify** 或其它旧 IP 的 **A / CNAME**，避免同一名字解析到两处。  
+5. 保存。全球生效可能 **数分钟～数小时**。
+
+---
 
 ### 5. 验证
 
-- 浏览器打开 `https://goreportify.com` → 应出现站点。  
-- `https://api.goreportify.com/` → 若后端有根路径响应（如 `Backend Online`），应能访问。  
-- App / 前端里 **`REPORTIFY_API_BASE` 或等价配置** 须为 `https://api.goreportify.com`（与现有一致即可）。
+1. `ping goreportify.com`（或用手机 4G）看是否解析到 **193**（若前面有 CDN 属正常，以浏览器能否打开为准）。  
+2. 浏览器：`https://goreportify.com` 能打开首页；`https://api.goreportify.com/` 能访问 API 根路径（如 `Backend Online`）。  
+3. 访问 `http://goreportify.com`（故意用 http）应 **跳转到 https**。  
+4. App 中 API 基址为 **`https://api.goreportify.com`**。若 DNS 刚改，可用 **无痕窗口** 或换网络排除缓存。
 
 ---
 
