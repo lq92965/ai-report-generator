@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776333632251",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-16",
+        "author": "Marcus Webb",
+        "excerpt": "Let's be honest. For many of us, the calendar notification for a \"Weekly Status Report\" triggers a specific kind of dread. It's the Sunday Scaries, bu...",
+        "contentFile": "blog-1776333632251.md"
+    },
+    {
         "id": "1776330022308",
         "type": "news",
         "title": "AI's Next Frontier: The Unseen Cost of Reasoning",
