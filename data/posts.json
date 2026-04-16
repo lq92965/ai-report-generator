@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776376827778",
+        "type": "blog",
+        "title": "Beyond the Status Update: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-16",
+        "author": "Michael Chen",
+        "excerpt": "We’ve all been there. It’s 4:00 PM on a Friday, and that recurring calendar reminder pops up: \"Prepare Weekly Status Report.\" A wave of exhaustion was...",
+        "contentFile": "blog-1776376827778.md"
+    },
+    {
         "id": "1776373213973",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
