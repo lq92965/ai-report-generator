@@ -21,12 +21,16 @@
 ssh root@68.183.162.193
 cd /root/ai-report-generator
 git pull origin main
-npm install --production
+npm install --omit=dev
 pm2 restart all
 pm2 logs --lines 50
 ```
 
 （分支若不是 `main`，改成你的分支名。）
+
+若 `npm install` 报 `patch-package: not found`，请 `git pull` 到包含将 `patch-package` 列入 `dependencies` 的版本后再装。
+
+`npm WARN EBADENGINE`（例如 `@capacitor/cli` 要求 Node ≥22）在仅运行 `server.js` 时一般为**警告**，不阻止安装；若要消除可日后将服务器 Node 升到 22+。
 
 ### 2. PM2 启动命令必须是全功能后端
 
