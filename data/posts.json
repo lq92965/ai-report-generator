@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776373213973",
+        "type": "news",
+        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "category": "Tech Radar",
+        "date": "2026-04-16",
+        "author": "David Sterling",
+        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, United States, and China finalizing starkly different...",
+        "contentFile": "news-1776373213973.md"
+    },
+    {
         "id": "1776369628672",
         "type": "blog",
         "title": "Beyond the Spreadsheet: A PM's Guide to Curing Reporting Fatigue",
