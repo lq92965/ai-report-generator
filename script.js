@@ -5,6 +5,7 @@ const API_BASE_URL = 'https://api.goreportify.com';
 window.REPORTIFY_API_BASE = API_BASE_URL;
 /** Always relative — never assign window.location to an absolute production URL (preserves PWA shell). */
 const HOME_REL = './index.html';
+const DEFAULT_AVATAR_ICON = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4=';
 
 /** Google OAuth: native app uses ?native_app=1 + oauth-native-bridge.html → custom scheme (see server.js). */
 window.getGoogleAuthStartUrl = function () {
@@ -30,11 +31,8 @@ window.currentReportContent = "";
 
 // [新增] 图片地址处理工具 (必须加在这里，否则后面会报错)
 function getFullImageUrl(path) {
-    // 1. 定义默认头像 (Base64灰色圆底图)，防止图片裂开
-    const DEFAULT_ICON = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4=';
-
     // 2. 拦截脏数据 (如果数据库存的是那个打不开的国外网站，强制用默认图)
-    if (!path || path.includes('via.placeholder.com')) return DEFAULT_ICON;
+    if (!path || path.includes('via.placeholder.com')) return DEFAULT_AVATAR_ICON;
 
     // 3. 如果已经是完整链接 (比如 Base64 或 http)，直接返回
     if (path.startsWith('data:') || path.startsWith('http')) return path;
@@ -43,6 +41,12 @@ function getFullImageUrl(path) {
     const cleanPath = path.startsWith('/') ? path : '/' + path;
     return `${API_BASE_URL}${cleanPath}`;
 }
+
+window.fallbackAvatarOnError = function (imgEl) {
+    if (!imgEl) return;
+    imgEl.onerror = null;
+    imgEl.src = DEFAULT_AVATAR_ICON;
+};
 
 // --- 2. 全局工具函数 ---
 
@@ -1308,7 +1312,15 @@ function setupCapacitorOAuthBridge() {
         return;
     }
     App.addListener('appUrlOpen', (data) => {
-        if (data && data.url) void applyGoogleTokenFromDeepLink(data.url);
+        if (data && data.url) {
+            const Browser =
+                (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Browser) ||
+                (typeof window.CapacitorPlugins !== 'undefined' && window.CapacitorPlugins.Browser);
+            if (Browser && typeof Browser.close === 'function') {
+                Browser.close().catch(() => {});
+            }
+            void applyGoogleTokenFromDeepLink(data.url);
+        }
     });
     App.getLaunchUrl()
         .then((res) => {
@@ -1543,10 +1555,30 @@ function setupAuthUI() {
                 e.stopPropagation();
                 const originalText = newBtn.innerHTML;
                 newBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
-                window.location.href =
+                const authUrl =
                     typeof window.getGoogleAuthStartUrl === 'function'
                         ? window.getGoogleAuthStartUrl()
                         : `${API_BASE_URL}/auth/google`;
+                try {
+                    const isNative = !!(
+                        window.Capacitor &&
+                        typeof window.Capacitor.isNativePlatform === 'function' &&
+                        window.Capacitor.isNativePlatform()
+                    );
+                    const Browser =
+                        (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Browser) ||
+                        (typeof window.CapacitorPlugins !== 'undefined' && window.CapacitorPlugins.Browser);
+                    if (isNative && Browser && typeof Browser.open === 'function') {
+                        await Browser.open({ url: authUrl });
+                    } else {
+                        window.location.href = authUrl;
+                    }
+                } catch (err) {
+                    console.warn('Google auth open failed, fallback to location redirect', err);
+                    window.location.href = authUrl;
+                } finally {
+                    newBtn.innerHTML = originalText;
+                }
             });
         }
     });
@@ -3664,6 +3696,7 @@ function setupUserDropdown() {
         const avatarHtml = picUrl
             ? `<img src="${picUrl}" alt="Avatar" class="pwa-user-avatar"
                    style="border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer;" 
+                   onerror="fallbackAvatarOnError(this)"
                    onclick="toggleUserMenu()">`
             : `<div onclick="toggleUserMenu()" class="pwa-user-avatar pwa-user-avatar--initial"
                    style="border-radius: 50%; background-color: #2563eb; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
