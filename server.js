@@ -36,6 +36,8 @@ const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 /** PWA shell: never hardcode production domain — set FRONTEND_URL for local/dev (e.g. http://localhost:8080) */
 const FRONTEND_BASE = (process.env.FRONTEND_URL || 'https://goreportify.com').replace(/\/$/, '');
+/** Native OAuth bridge can live on API domain to avoid frontend cert/DNS issues. */
+const OAUTH_BRIDGE_BASE = (process.env.OAUTH_BRIDGE_BASE || 'https://api.goreportify.com').replace(/\/$/, '');
 const GOOGLE_PLAY_PACKAGE_NAME = (process.env.GOOGLE_PLAY_PACKAGE_NAME || 'com.crickettechnology.reportifyai').trim();
 const GOOGLE_PLAY_PRODUCT_TO_PLAN = {
     reportify_basic_monthly: 'basic',
@@ -89,6 +91,12 @@ app.use(express.json());
 
 // Serve static uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.get('/oauth-native-bridge.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'oauth-native-bridge.html'));
+});
+app.get('/api/oauth-native-bridge.html', (req, res) => {
+    res.redirect(302, `/oauth-native-bridge.html${req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : ''}`);
+});
 
 // Absolute path for multer storage
 const storage = multer.diskStorage({
@@ -837,12 +845,13 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
 app.get('/api/auth/google/callback', async (req, res) => {
     const state = req.query.state || '';
     const useNativeReturn = state === GOOGLE_OAUTH_STATE_CAPACITOR;
+    const nativeBridgeUrl = `${OAUTH_BRIDGE_BASE}/oauth-native-bridge.html`;
 
     if (req.query.error) {
         const msg = req.query.error_description || req.query.error || 'access_denied';
         if (useNativeReturn) {
             return res.redirect(
-                `${FRONTEND_BASE}/oauth-native-bridge.html?error=${encodeURIComponent(msg)}`
+                `${nativeBridgeUrl}?error=${encodeURIComponent(msg)}`
             );
         }
         return res.redirect(`${FRONTEND_BASE}/?error=google_login_failed`);
@@ -852,7 +861,7 @@ app.get('/api/auth/google/callback', async (req, res) => {
     if (!code) {
         if (useNativeReturn) {
             return res.redirect(
-                `${FRONTEND_BASE}/oauth-native-bridge.html?error=${encodeURIComponent('missing_code')}`
+                `${nativeBridgeUrl}?error=${encodeURIComponent('missing_code')}`
             );
         }
         return res.redirect(`${FRONTEND_BASE}/?error=google_login_failed`);
@@ -889,7 +898,7 @@ app.get('/api/auth/google/callback', async (req, res) => {
         if (useNativeReturn) {
             const bridgeId = createOAuthBridgeEntry(token);
             return res.redirect(
-                `${FRONTEND_BASE}/oauth-native-bridge.html?bridge=${encodeURIComponent(bridgeId)}`
+                `${nativeBridgeUrl}?bridge=${encodeURIComponent(bridgeId)}`
             );
         }
         res.redirect(`${FRONTEND_BASE}/?token=${encodeURIComponent(token)}`);
@@ -897,7 +906,7 @@ app.get('/api/auth/google/callback', async (req, res) => {
         console.error("Google Login Error:", error);
         if (useNativeReturn) {
             return res.redirect(
-                `${FRONTEND_BASE}/oauth-native-bridge.html?error=${encodeURIComponent('google_login_failed')}`
+                `${nativeBridgeUrl}?error=${encodeURIComponent('google_login_failed')}`
             );
         }
         res.redirect(`${FRONTEND_BASE}/?error=google_login_failed`); 
