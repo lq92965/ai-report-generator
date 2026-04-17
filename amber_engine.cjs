@@ -8,7 +8,6 @@ const cron = require('node-cron');
 const { execSync } = require('child_process');
 const imageDownloader = require('image-downloader');
 const cheerio = require('cheerio');
-const { marked } = require('marked');
 
 const REPO_DIR = __dirname;
 const DATA_DIR = path.join(REPO_DIR, 'data');
@@ -118,7 +117,8 @@ async function generateArticle(type) {
     } catch (e) { console.error(`[Amber V8] ❌大脑生成失败\n`, e); return null; }
 }
 
-function buildStaticPage(postData) {
+async function buildStaticPage(postData) {
+    const { marked } = await import('marked');
     console.log(`[Amber V8] ⚡ 正在为谷歌爬虫焊装纯静态独立网页...`);
     const fileName = `${postData.type}-${postData.timestamp}.md`;
     const altEsc = postData.title.replace(/"/g, '');
@@ -199,7 +199,7 @@ async function runEngine(type, options = {}) {
     const skipPush = options.skipPush === true;
     const rawData = await generateArticle(type);
     if (!rawData) return;
-    const postMeta = buildStaticPage(rawData);
+    const postMeta = await buildStaticPage(rawData);
     publishAndSEO(postMeta);
 
     if (skipPush) return;
