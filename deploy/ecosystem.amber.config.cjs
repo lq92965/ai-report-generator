@@ -20,6 +20,7 @@ module.exports = {
       cwd: repoRoot,
       script: 'amber_engine.cjs',
       interpreter: 'node',
+      exec_mode: 'fork',
       instances: 1,
       autorestart: true,
       max_restarts: 20,
