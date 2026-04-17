@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776384023509",
+        "type": "blog",
+        "title": "The Silent Project Killer: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-17",
+        "author": "Alex Mercer",
+        "excerpt": "We've all been there. It's 4 PM on a Friday, and that automated calendar reminder pops up: \"Submit Weekly Project Status Report.\" A collective groan e...",
+        "contentFile": "blog-1776384023509.md"
+    },
+    {
         "id": "1776380433612",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
