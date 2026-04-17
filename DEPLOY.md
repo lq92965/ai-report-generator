@@ -4,8 +4,8 @@
 
 | 资源 | 用途 |
 |------|------|
-| **68.183.162.193** | 产品 API / 后端（`server.js`、PM2）。**`api.goreportify.com` 应解析到此 IP。** |
-| **206.189.151.206** | OpenClaw / 运营维护，**不是**产品 API；不要在这里部署 `server.js`。 |
+| **68.183.162.193** | 产品 API / 后端（`server.js`、PM2）；**Amber（news/blog）应在此机运行**。详见 **`docs/AMBER_MIGRATE_193.md`**。 |
+| **206.189.151.206** | OpenClaw / 运营维护，**不是**产品 API；**不要**在此部署 `server.js`，**不要**再跑 `amber_engine`（已迁 193）。 |
 | **Namecheap** | 域名注册与 DNS（A/CNAME 记录）。 |
 | **MongoDB Atlas** | 用户与业务数据。 |
 
