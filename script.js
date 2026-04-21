@@ -3,6 +3,37 @@
 // 如果上线，请改为 https://goreportify.com
 const API_BASE_URL = 'https://api.goreportify.com';
 window.REPORTIFY_API_BASE = API_BASE_URL;
+
+/** Apex site origin (for static JSON when the WebView is bundled under capacitor:// / https://localhost). */
+function reportifyPublicSiteOrigin() {
+    try {
+        const u = new URL(API_BASE_URL);
+        const h = u.hostname || '';
+        if (h.startsWith('api.')) u.hostname = h.slice(4);
+        return u.origin;
+    } catch (_) {
+        return 'https://goreportify.com';
+    }
+}
+
+/** News/blog index: relative `data/posts.json` in the App APK is stale; always load from the live site when native. */
+window.reportifyPostsJsonUrl = function reportifyPostsJsonUrl() {
+    const live = `${reportifyPublicSiteOrigin()}/data/posts.json`;
+    try {
+        const C = window.Capacitor;
+        if (C) {
+            if (typeof C.isNativePlatform === 'function' && C.isNativePlatform()) return live;
+            const plat = typeof C.getPlatform === 'function' ? C.getPlatform() : '';
+            if (plat === 'android' || plat === 'ios') return live;
+        }
+    } catch (e) { /* noop */ }
+    try {
+        const C2 = window.Capacitor;
+        const h = window.location && window.location.hostname;
+        if (C2 && (h === 'localhost' || h === '127.0.0.1')) return live;
+    } catch (e2) { /* noop */ }
+    return 'data/posts.json';
+};
 /** Always relative — never assign window.location to an absolute production URL (preserves PWA shell). */
 const HOME_REL = './index.html';
 const DEFAULT_AVATAR_ICON = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4=';
@@ -42,10 +73,37 @@ function getFullImageUrl(path) {
     return `${API_BASE_URL}${cleanPath}`;
 }
 
+window.applyAvatarElementHints = function (imgEl, url) {
+    if (!imgEl) return;
+    const s = (url != null ? url : imgEl.src) || '';
+    if (typeof s === 'string' && /^https?:\/\//i.test(s)) {
+        imgEl.referrerPolicy = 'no-referrer';
+        imgEl.loading = 'eager';
+        imgEl.decoding = 'async';
+    }
+};
+
+function ensureGoogleAvatarPreconnect() {
+    if (document.getElementById('preconnect-google-avatar')) return;
+    const l = document.createElement('link');
+    l.id = 'preconnect-google-avatar';
+    l.rel = 'preconnect';
+    l.href = 'https://lh3.googleusercontent.com';
+    document.head.appendChild(l);
+}
+
 window.fallbackAvatarOnError = function (imgEl) {
     if (!imgEl) return;
-    imgEl.onerror = null;
-    imgEl.src = DEFAULT_AVATAR_ICON;
+    if (imgEl.dataset.avatarRetry === '1') {
+        imgEl.onerror = null;
+        imgEl.src = DEFAULT_AVATAR_ICON;
+        return;
+    }
+    imgEl.dataset.avatarRetry = '1';
+    imgEl.referrerPolicy = 'no-referrer';
+    const prev = imgEl.src;
+    imgEl.src = '';
+    imgEl.src = prev;
 };
 
 // --- 2. 全局工具函数 ---
@@ -1333,6 +1391,10 @@ function setupCapacitorOAuthBridge() {
                 if (res && res.url) void applyGoogleTokenFromDeepLink(res.url);
             })
             .catch(() => {});
+        void fetchUserProfile().then(() => {
+            if (typeof setupUserDropdown === 'function') setupUserDropdown();
+            if (typeof loadAccountPageAvatar === 'function') loadAccountPageAvatar();
+        });
     });
 }
 
@@ -1363,6 +1425,12 @@ async function fetchUserProfile() {
         if (res.ok) {
             currentUser = await res.json();
             currentUserPlan = currentUser.plan || 'free';
+            try {
+                const pic = currentUser.picture || '';
+                if (typeof pic === 'string' && pic.includes('googleusercontent.com')) {
+                    ensureGoogleAvatarPreconnect();
+                }
+            } catch (_) { /* noop */ }
         } else if (res.status === 401) {
             localStorage.removeItem('token');
             currentUser = null;
@@ -3151,6 +3219,10 @@ function setupPayment() {
                         throw new Error('Purchase not completed');
                     }
                     await window.reportifyGooglePlayVerify(pt, mapped.productId);
+                    try {
+                        await fetchUserProfile();
+                        if (typeof setupUserDropdown === 'function') setupUserDropdown();
+                    } catch (_) { /* noop */ }
                     showToast('Subscription active!', 'success');
                     setTimeout(() => window.location.reload(), 1200);
                 } catch (err) {
@@ -3695,6 +3767,7 @@ function setupUserDropdown() {
         // 4. 生成头像 HTML
         const avatarHtml = picUrl
             ? `<img src="${picUrl}" alt="Avatar" class="pwa-user-avatar"
+                   referrerpolicy="no-referrer" loading="eager" decoding="async"
                    style="border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer;" 
                    onerror="fallbackAvatarOnError(this)"
                    onclick="toggleUserMenu()">`
@@ -3755,7 +3828,12 @@ async function loadProfilePageData() {
     // 2. 填充头像 (关键：这里使用了 getFullImageUrl 来修补链接)
     const avatarImg = document.getElementById('profile-avatar');
     if (avatarImg) {
-        avatarImg.src = getFullImageUrl(currentUser.picture);
+        avatarImg.onerror = function () {
+            window.fallbackAvatarOnError(this);
+        };
+        const pu = getFullImageUrl(currentUser.picture);
+        window.applyAvatarElementHints(avatarImg, pu);
+        avatarImg.src = pu;
     }
 
     // 3. 填充名字和邮箱
@@ -3796,12 +3874,13 @@ async function loadAccountPageAvatar() {
     bigAvatar.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
 
     // 4. 设置图片与错误处理
+    window.applyAvatarElementHints(bigAvatar, finalUrl);
     bigAvatar.src = finalUrl;
     
     // 如果加载失败（被墙或404），自动切回默认图
     bigAvatar.onerror = function() {
         console.warn("头像加载失败，已切换为默认图");
-        this.src = getFullImageUrl(null);
+        window.fallbackAvatarOnError(this);
     };
 }
 

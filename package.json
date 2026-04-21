@@ -13,6 +13,7 @@
     "android:web": "node build_www.cjs && npx cap sync android",
     "android:fileprovider": "node tools/apply-android-fileprovider.cjs",
     "amber:once": "node tools/run-amber-daily-once.cjs",
+    "amber:catchup": "node tools/amber-catchup-days.cjs",
     "postinstall": "patch-package"
   },
   "dependencies": {

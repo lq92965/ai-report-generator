@@ -88,7 +88,10 @@
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                const response = await fetch('data/posts.json?t=' + new Date().getTime());
+                const postsBase = (typeof window.reportifyPostsJsonUrl === 'function')
+                    ? window.reportifyPostsJsonUrl()
+                    : 'data/posts.json';
+                const response = await fetch(postsBase + '?t=' + Date.now());
                 const allPosts = await response.json();
                 const newsPosts = allPosts.filter(p => p.type === 'news');
                 
@@ -193,6 +196,6 @@
     </script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script src="pwa-nav.js"></script>
-    <script src="script.js?v=2026.1"></script>
+    <script src="script.js?v=2026.20"></script>
 </body>
 </html>

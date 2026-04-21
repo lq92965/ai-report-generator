@@ -4,6 +4,8 @@
  *
  * 例（每日 9:00 美东 → 用服务器本地时区换算）或简单每日一次：
  *   0 2 * * * cd /root/ai-report-generator && AMBER_DISABLE_CRON=1 AMBER_NO_GIT_PUSH=1 /usr/bin/node tools/run-amber-daily-once.cjs
+ *
+ * 补过去多天的 news+blog（按美东日历写 `date`）：见 tools/amber-catchup-days.cjs 或 npm run amber:catchup
  */
 process.env.AMBER_DISABLE_CRON = '1';
 process.env.AMBER_NO_GIT_PUSH = process.env.AMBER_NO_GIT_PUSH || '1';

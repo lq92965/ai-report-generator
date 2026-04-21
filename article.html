@@ -254,7 +254,10 @@
 
             try {
                 // 带时间戳破除缓存
-                const response = await fetch('data/posts.json?t=' + new Date().getTime());
+                const postsBase = (typeof window.reportifyPostsJsonUrl === 'function')
+                    ? window.reportifyPostsJsonUrl()
+                    : 'data/posts.json';
+                const response = await fetch(postsBase + '?t=' + Date.now());
                 const posts = await response.json();
                 const post = posts.find(p => p.id === articleId);
 
@@ -308,6 +311,6 @@
         });
     </script>
     <script src="pwa-nav.js"></script>
-    <script src="script.js?v=2026.1"></script>
+    <script src="script.js?v=2026.20"></script>
 </body>
 </html>

@@ -54,8 +54,34 @@ export async function fetchSubscriptionV2(packageName, purchaseToken) {
 }
 
 function expiryFromV2(v2) {
-    const t = v2?.lineItems?.[0]?.expiryTime;
-    return t ? new Date(t) : null;
+    const items = v2?.lineItems;
+    if (!Array.isArray(items) || !items.length) return null;
+    let best = null;
+    for (const li of items) {
+        const t = li?.expiryTime;
+        if (!t) continue;
+        const d = new Date(t);
+        if (Number.isNaN(d.getTime())) continue;
+        if (!best || d.getTime() > best.getTime()) best = d;
+    }
+    return best;
+}
+
+function paidRowFromPlay(tier, internalPlanId, exp, now) {
+    const row = {
+        plan: tier,
+        planSku: internalPlanId,
+        planExpiresAt: exp,
+        planQueue: null,
+        billingProvider: 'google_play'
+    };
+    if (tier === 'basic') {
+        row.usageResetAt = addDays(now, 30);
+    } else {
+        row.usageResetAt = null;
+        row.bonusCredits = 0;
+    }
+    return row;
 }
 
 function buildUserUpdateFromV2(v2, internalPlanId) {
@@ -64,34 +90,8 @@ function buildUserUpdateFromV2(v2, internalPlanId) {
     const tier = String(internalPlanId).toLowerCase().startsWith('pro') ? 'pro' : 'basic';
     const now = new Date();
 
-    const active = [
-        'SUBSCRIPTION_STATE_ACTIVE',
-        'SUBSCRIPTION_STATE_IN_GRACE_PERIOD',
-        'SUBSCRIPTION_STATE_ON_HOLD'
-    ].includes(state);
-
-    if (active && exp && exp.getTime() > now.getTime()) {
-        const row = {
-            plan: tier,
-            planSku: internalPlanId,
-            planExpiresAt: exp,
-            planQueue: null,
-            billingProvider: 'google_play'
-        };
-        if (tier === 'basic') {
-            row.usageResetAt = addDays(now, 30);
-        } else {
-            row.usageResetAt = null;
-            row.bonusCredits = 0;
-        }
-        return row;
-    }
-
-    if (
-        state === 'SUBSCRIPTION_STATE_EXPIRED' ||
-        state === 'SUBSCRIPTION_STATE_CANCELED' ||
-        state === 'SUBSCRIPTION_STATE_REVOKED'
-    ) {
+    /** Revoked = access removed regardless of printed expiry. */
+    if (state === 'SUBSCRIPTION_STATE_REVOKED') {
         return {
             plan: 'free',
             planSku: null,
@@ -102,16 +102,25 @@ function buildUserUpdateFromV2(v2, internalPlanId) {
         };
     }
 
+    /**
+     * Any future expiryTime on line items ⇒ paid through that instant (incl. canceled-but-not-ended, odd states, first-verify quirks).
+     */
     if (exp && exp.getTime() > now.getTime()) {
-        const row = {
-            plan: tier,
-            planSku: internalPlanId,
-            planExpiresAt: exp,
+        return paidRowFromPlay(tier, internalPlanId, exp, now);
+    }
+
+    if (
+        state === 'SUBSCRIPTION_STATE_EXPIRED' ||
+        state === 'SUBSCRIPTION_STATE_CANCELED'
+    ) {
+        return {
+            plan: 'free',
+            planSku: null,
+            planExpiresAt: null,
+            usageCount: 0,
             planQueue: null,
             billingProvider: 'google_play'
         };
-        if (tier === 'basic') row.usageResetAt = addDays(now, 30);
-        return row;
     }
 
     return {

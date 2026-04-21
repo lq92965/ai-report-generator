@@ -22,6 +22,15 @@ if (!fs.existsSync(IMAGES_DIR)) fs.mkdirSync(IMAGES_DIR, { recursive: true });
 
 const FAKE_AUTHORS = ["Alex Mercer", "Sarah Jenkins", "Michael Chen", "Emily Rostova", "David Sterling", "Jessica Tran", "Marcus Webb", "Olivia Thorne"];
 
+/** Calendar date shown in posts.json / article header (YYYY-MM-DD). Override for catch-up runs: AMBER_ARTICLE_DATE=2026-04-18 */
+function articleDateStr() {
+    const raw = process.env.AMBER_ARTICLE_DATE;
+    if (raw && /^\d{4}-\d{2}-\d{2}$/.test(String(raw).trim())) {
+        return String(raw).trim();
+    }
+    return new Date().toISOString().split('T')[0];
+}
+
 /** Rotate visual style so Pollinations images are less same-y (title-only prompts were repetitive). */
 const COVER_VISUAL_STYLES = [
     'editorial photo soft natural light shallow depth of field',
@@ -113,7 +122,7 @@ async function generateArticle(type) {
             localImageRelPath = UNSPLASH_FALLBACKS[timestamp % UNSPLASH_FALLBACKS.length];
         }
 
-        return { timestamp, type, title, contentMarkdown, excerpt, author: FAKE_AUTHORS[Math.floor(Math.random() * FAKE_AUTHORS.length)], localImageRelPath, dateStr: new Date().toISOString().split('T')[0] };
+        return { timestamp, type, title, contentMarkdown, excerpt, author: FAKE_AUTHORS[Math.floor(Math.random() * FAKE_AUTHORS.length)], localImageRelPath, dateStr: articleDateStr() };
     } catch (e) { console.error(`[Amber V8] ❌大脑生成失败\n`, e); return null; }
 }
 
@@ -241,6 +250,7 @@ if (process.env.AMBER_DISABLE_CRON !== '1' && process.env.AMBER_DISABLE_CRON !==
         },
         { timezone: 'America/New_York' }
     );
+    console.log('[Amber V8] ⏰ Built-in cron ON: `0 9 * * *` timezone=America/New_York (one news + one blog per trigger).');
 } else {
     console.log('[Amber V8] ⏸ Built-in cron disabled (AMBER_DISABLE_CRON=1). Use systemd/crontab + tools/run-amber-daily-once.cjs');
 }

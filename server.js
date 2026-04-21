@@ -1522,6 +1522,14 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
             ? `[OUTPUT FORMAT REQUIREMENTS]\nDO NOT use JSON formatting. You MUST return pure text using EXACTLY these boundaries. Do not add markdown code blocks around them:\n\n===WORD_CONTENT_START===\n[Insert full, deeply expanded markdown report here based on the instructions]\n===WORD_CONTENT_END===\n\n===PPT_OUTLINE_START===\n[Extract a 5-8 slides PPT outline from the report. Use Markdown format with Slide titles and bullet points]\n===PPT_OUTLINE_END===\n\n===EMAIL_SUMMARY_START===\n[Extract a 3-5 lines executive summary. CRITICAL: This must be PURELY OBJECTIVE conclusions and strategic outlook. DO NOT include ANY letter salutations or sign-offs (e.g., NO "Dear Team", NO "尊敬的领导"). Just the core insights.]\n===EMAIL_SUMMARY_END===`
             : `[OUTPUT FORMAT REQUIREMENTS]\nDO NOT use JSON formatting. You MUST return pure text using EXACTLY these boundaries. Do not add markdown code blocks around them:\n\n===WORD_CONTENT_START===\n[Insert full, deeply expanded markdown report here based on the instructions]\n===WORD_CONTENT_END===`;
 
+        const reportAsOfUtcIso = now.toISOString();
+        const reportCalendarUtc = reportAsOfUtcIso.slice(0, 10);
+        const temporalBlock = `[CRITICAL — TIME SCOPE & KNOWLEDGE (applies to EVERY output language and every template/role setting)]
+- Default "as-of" instant for this report (UTC, server time): ${reportAsOfUtcIso}. Unless the user's own text names a different period, treat the substance of the report as grounded in the present: current-era business practice, plausible contemporary metrics, and forward-looking framing. Do NOT pretend the world is still in an obsolete model-training cutoff year (e.g. 2023) as "today".
+- If the user explicitly requests a **specific date, month, quarter, year, or historical window** (examples: "2022 review", "Q3 2025", "以2024年报为准", "as of 2019"), that request **overrides** the default as-of scope: generate for that time frame and label sections accordingly.
+- If real-time prices, live market data, or facts after your knowledge cutoff cannot be verified, do **not** invent them as facts; use clearly marked **illustrative** figures or ranges and add **one short sentence** explaining the limitation (no long disclaimer blocks).
+- Language, tone, and detail level settings do **not** change these time rules.`;
+
         let finalSystemInstructions = `You are RIE (Reportify Intelligence Engine) Flagship Edition - the world's top workplace report generation brain.
         Your task is to take the user's extremely brief, fragmented prompts and [Deeply Expand] them into a highly professional document through strong logical reasoning and workplace experience.
 
@@ -1532,13 +1540,15 @@ app.post('/api/generate', authenticateToken, async (req, res) => {
         4. Report Length & Expansion Requirement: ${detailMapping[detailLevel] || detailMapping["Standard"]}
         5. Output Language: Strictly use ${language || "English"} for all output content.
 
+        ${temporalBlock}
+
         [Unbreakable Iron Rules]
         - STRICTLY FORBIDDEN to simply repeat the user's prompts! You MUST actively imagine reasonable details and invent logical data metrics (e.g., increased by 15%, decreased by 20%) based on the set [Persona] and [Context], making the report look like a real, content-rich work summary.
         - The main body MUST use high-quality Markdown formatting (#, ##, **, blockquotes, etc.) to make it visually clear and readable.
 
         ${formatInstructions}`;
 
-        const expandedUserPrompt = `Here are the rough bullet points of my work/thoughts today:\n"${safeUserPrompt}"\n\nPlease immediately deeply reconstruct and significantly expand this into a final professional report based on your system instructions, persona, and style settings.`;
+        const expandedUserPrompt = `Here are the rough bullet points of my work/thoughts:\n"${safeUserPrompt}"\n\nDefault as-of (UTC) if no other period is named above: ${reportCalendarUtc} (${reportAsOfUtcIso}). If the user named a specific time scope in the notes, follow that scope.\n\nPlease immediately deeply reconstruct and significantly expand this into a final professional report based on your system instructions, persona, and style settings.`;
 
         let rawText = "";
 
