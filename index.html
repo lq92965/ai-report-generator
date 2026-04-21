@@ -825,8 +825,20 @@
             newsGrid.innerHTML = '';
             blogGrid.innerHTML = '';
 
-            const latestNews = posts.filter(p => p.type === 'news').slice(0, 3);
-            const latestBlogs = posts.filter(p => p.type === 'blog').slice(0, 3);
+            function dedupeByIdSorted(list, type) {
+                const byId = new Map();
+                for (const p of list) {
+                    if (!p || p.type !== type || !p.id) continue;
+                    if (!byId.has(String(p.id))) byId.set(String(p.id), p);
+                }
+                return [...byId.values()].sort((a, b) => {
+                    const da = String(a.date || '').replace(/\//g, '-');
+                    const db = String(b.date || '').replace(/\//g, '-');
+                    return db.localeCompare(da);
+                });
+            }
+            const latestNews = dedupeByIdSorted(posts, 'news').slice(0, 3);
+            const latestBlogs = dedupeByIdSorted(posts, 'blog').slice(0, 3);
 
             const renderCard = (post, isNews) => {
                 const borderLeft = isNews ? 'border-l-purple-500' : 'border-l-blue-500';
