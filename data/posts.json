@@ -1,5 +1,95 @@
 [
     {
+        "id": "1776739155508",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-19",
+        "author": "Alex Mercer",
+        "excerpt": "We’ve all been there. It’s the end of the week, and the familiar dread sets in. The status report. The sprint summary. The stakeholder update. You spe...",
+        "contentFile": "blog-1776739155508.md"
+    },
+    {
+        "id": "1776739118580",
+        "type": "blog",
+        "title": "Beyond the Update: A PM's Guide to Conquering Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-18",
+        "author": "Jessica Tran",
+        "excerpt": "It’s Sunday night. You’re not thinking about the strategic challenges of the week ahead. You’re dreading the hours you’ll spend wrangling spreadsheets...",
+        "contentFile": "blog-1776739118580.md"
+    },
+    {
+        "id": "1776739004686",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-17",
+        "author": "David Sterling",
+        "excerpt": "As a Product Manager, you live at the intersection of strategy, execution, and communication. The last one, communication, often manifests as a relent...",
+        "contentFile": "blog-1776739004686.md"
+    },
+    {
+        "id": "1776738967897",
+        "type": "blog",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Overcoming Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-16",
+        "author": "Olivia Thorne",
+        "excerpt": "It’s Sunday night. You’re not thinking about the strategic challenges of the week ahead. You’re dreading the 4 hours it’s going to take to pull data f...",
+        "contentFile": "blog-1776738967897.md"
+    },
+    {
+        "id": "1776738856885",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-15",
+        "author": "Jessica Tran",
+        "excerpt": "We've all been there. It's 4:00 PM on a Friday, and you're scrambling to pull together the \"Weekly Status Report.\" You copy-paste some metrics, write...",
+        "contentFile": "blog-1776738856885.md"
+    },
+    {
+        "id": "1776690029641",
+        "type": "blog",
+        "title": "Overcoming Reporting Fatigue: A PM's Guide to Meaningful Metrics",
+        "category": "Deep Insights",
+        "date": "2026-04-20",
+        "author": "Marcus Webb",
+        "excerpt": "We’ve all been there. It’s 4:00 PM on a Tuesday, and the email lands in your inbox: \"Can I get a quick report on X?\" You know it’s not quick. You know...",
+        "contentFile": "blog-1776690029641.md"
+    },
+    {
+        "id": "1776603628720",
+        "type": "blog",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "category": "Deep Insights",
+        "date": "2026-04-19",
+        "author": "Jessica Tran",
+        "excerpt": "As a Project Manager, you live and breathe data. Status reports, burn-down charts, risk logs, and stakeholder updates are the currency of your world....",
+        "contentFile": "blog-1776603628720.md"
+    },
+    {
+        "id": "1776517225473",
+        "type": "blog",
+        "title": "Beyond the Dashboard: How to Cure Reporting Fatigue and Make Your Data Matter",
+        "category": "Deep Insights",
+        "date": "2026-04-18",
+        "author": "Alex Mercer",
+        "excerpt": "It's the end of the week, and a familiar sense of dread creeps in. It's not the work you've done, but the work you have to talk about. The status repo...",
+        "contentFile": "blog-1776517225473.md"
+    },
+    {
+        "id": "1776430830669",
+        "type": "blog",
+        "title": "Beyond the Status Update: Curing Reporting Fatigue and Reclaiming Your Team's Focus",
+        "category": "Deep Insights",
+        "date": "2026-04-17",
+        "author": "Michael Chen",
+        "excerpt": "It's the end of the week. Your team has been shipping features, crushing bugs, and navigating complex dependencies. But now, the real work begins: fil...",
+        "contentFile": "blog-1776430830669.md"
+    },
+    {
         "id": "1776402020435",
         "type": "news",
         "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
