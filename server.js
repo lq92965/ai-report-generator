@@ -706,6 +706,87 @@ async function aggregatePaymentTally(db, userId, email) {
     );
 }
 
+async function findLatestCompletedPayment(db, userId, email) {
+    const uidPay = new ObjectId(userId);
+    const payOr = [
+        { userId: uidPay },
+        { userId: String(userId) },
+        { userId: userId }
+    ];
+    const payEmail = String(email || '').toLowerCase().trim();
+    if (payEmail) {
+        payOr.push({ userEmail: payEmail }, { email: payEmail });
+    }
+    return db
+        .collection('payments')
+        .find({ $or: payOr, status: { $in: ['completed', null] } })
+        .sort({ date: -1, _id: -1 })
+        .limit(1)
+        .next();
+}
+
+function planDaysFromPlanId(planId) {
+    const p = String(planId || '').toLowerCase();
+    if (!p) return 0;
+    if (p.includes('annual')) return 365;
+    if (p.includes('monthly')) return 30;
+    if (p === 'basic' || p === 'pro') return 30;
+    return 0;
+}
+
+async function maybeRecoverPlanFromPayments(db, user) {
+    try {
+        const latest = await findLatestCompletedPayment(db, user._id, user.email);
+        if (!latest || !latest.planId || !latest.date) return user;
+        const days = planDaysFromPlanId(latest.planId);
+        if (!days) return user;
+        const start = new Date(latest.date);
+        if (Number.isNaN(start.getTime())) return user;
+        const exp = addDays(start, days);
+        const now = new Date();
+        if (exp <= now) return user;
+
+        const tier = String(latest.planId).toLowerCase().startsWith('pro') ? 'pro' : 'basic';
+        const patch = {
+            plan: tier,
+            planSku: String(latest.planId),
+            planExpiresAt: exp,
+            billingProvider: latest.provider || 'google_play'
+        };
+        if (tier === 'basic') {
+            patch.usageResetAt = addDays(now, 30);
+            if (typeof user.usageCount !== 'number') patch.usageCount = 0;
+        }
+        await db.collection('users').updateOne({ _id: user._id }, { $set: patch });
+        return { ...user, ...patch };
+    } catch (_) {
+        return user;
+    }
+}
+
+app.get('/api/posts-json', async (req, res) => {
+    try {
+        const localCandidates = [
+            path.join('/var/www/html', 'data', 'posts.json'),
+            path.join(__dirname, 'data', 'posts.json')
+        ];
+        for (const p of localCandidates) {
+            if (fs.existsSync(p)) {
+                const txt = fs.readFileSync(p, 'utf8');
+                const json = JSON.parse(txt);
+                res.set('Cache-Control', 'no-store');
+                return res.json(json);
+            }
+        }
+        const remote = await axios.get('https://goreportify.com/data/posts.json', { timeout: 8000 });
+        res.set('Cache-Control', 'no-store');
+        return res.json(remote.data || []);
+    } catch (e) {
+        console.error('GET /api/posts-json', e.message || e);
+        return res.status(500).json({ message: 'Failed to load posts' });
+    }
+});
+
 // Usage Stats API
 app.get('/api/usage', authenticateToken, async (req, res) => {
     try {
@@ -714,6 +795,9 @@ app.get('/api/usage', authenticateToken, async (req, res) => {
         await maybeApplyQueuedPlan(req.user.userId);
         let user = await db.collection('users').findOne({ _id: new ObjectId(req.user.userId) });
         if (!user) return res.status(404).json({ message: "User not found" });
+        if ((!user.plan || String(user.plan).toLowerCase() === 'free') && !user.planExpiresAt) {
+            user = await maybeRecoverPlanFromPayments(db, user);
+        }
 
         if (!user.referralCode) {
             const rawName = user.name || user.email.split('@')[0];

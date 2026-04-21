@@ -19,8 +19,9 @@ function reportifyPublicSiteOrigin() {
 /** News/blog index: relative `data/posts.json` in the App APK is stale; always load from the live site when native. */
 window.reportifyPostsJsonUrl = function reportifyPostsJsonUrl() {
     const bust = `t=${Date.now()}`;
-    const live = `${reportifyPublicSiteOrigin()}/data/posts.json?${bust}`;
-    const preferLive = () => live;
+    const live = `${reportifyPublicSiteOrigin()}/data/posts.json`;
+    const liveViaApi = `${API_BASE_URL}/api/posts-json?${bust}`;
+    const preferLive = () => liveViaApi;
     try {
         const C = window.Capacitor;
         if (C) {
@@ -44,7 +45,7 @@ window.reportifyPostsJsonUrl = function reportifyPostsJsonUrl() {
             return preferLive();
         }
     } catch (e2) { /* noop */ }
-    return 'data/posts.json';
+    return `${live}?${bust}`;
 };
 /** Always relative — never assign window.location to an absolute production URL (preserves PWA shell). */
 const HOME_REL = './index.html';
