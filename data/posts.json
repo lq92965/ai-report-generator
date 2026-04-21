@@ -32,7 +32,7 @@
     {
         "id": "1776738967897",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Over… · It’s Sunday night.",
         "category": "Deep Insights",
         "date": "2026-04-16",
         "author": "Olivia Thorne",
@@ -42,7 +42,7 @@
     {
         "id": "1776738856885",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there.",
         "category": "Deep Insights",
         "date": "2026-04-15",
         "author": "Jessica Tran",
@@ -62,7 +62,7 @@
     {
         "id": "1776603628720",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · As a Project Manager, you live and breathe data.",
         "category": "Deep Insights",
         "date": "2026-04-19",
         "author": "Jessica Tran",
@@ -110,16 +110,6 @@
         "contentFile": "blog-1776398423422.md"
     },
     {
-        "id": "1776394825990",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
-        "category": "Tech Radar",
-        "date": "2026-04-17",
-        "author": "Marcus Webb",
-        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory scramble, with the European Union, United States, and China charting starkly...",
-        "contentFile": "news-1776394825990.md"
-    },
-    {
         "id": "1776391230038",
         "type": "blog",
         "title": "Are Your Reports Putting Your Team to Sleep? A PM's Guide to Curing Reporting Fatigue",
@@ -128,16 +118,6 @@
         "author": "Jessica Tran",
         "excerpt": "You know the feeling. It’s 4 PM on a Friday, and the automated reminder pops up: \"Weekly Status Report Due.\" You drag and drop the same charts into a...",
         "contentFile": "blog-1776391230038.md"
-    },
-    {
-        "id": "1776387625566",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
-        "category": "Tech Radar",
-        "date": "2026-04-17",
-        "author": "Olivia Thorne",
-        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory scramble, with the European Union, United States, and China charting starkly...",
-        "contentFile": "news-1776387625566.md"
     },
     {
         "id": "1776384023509",
@@ -192,7 +172,7 @@
     {
         "id": "1776366019566",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intelligence has triggered a reg…",
         "category": "Tech Radar",
         "date": "2026-04-16",
         "author": "Alex Mercer",
@@ -242,7 +222,7 @@
     {
         "id": "1776348033746",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · It's 4 PM on a Friday.",
         "category": "Deep Insights",
         "date": "2026-04-16",
         "author": "Michael Chen",
@@ -252,7 +232,7 @@
     {
         "id": "1776344421055",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (1)",
         "category": "Tech Radar",
         "date": "2026-04-16",
         "author": "Michael Chen",
@@ -262,7 +242,7 @@
     {
         "id": "1776340831539",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (1)",
         "category": "Deep Insights",
         "date": "2026-04-16",
         "author": "Michael Chen",
@@ -282,7 +262,7 @@
     {
         "id": "1776333632251",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: How to Overcome Repo… · Let's be honest.",
         "category": "Deep Insights",
         "date": "2026-04-16",
         "author": "Marcus Webb",
@@ -302,7 +282,7 @@
     {
         "id": "1776326427803",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: How to Overcome Repo… · We've all been there.",
         "category": "Deep Insights",
         "date": "2026-04-16",
         "author": "Alex Mercer",
@@ -350,19 +330,9 @@
         "contentFile": "blog-1776312027562.md"
     },
     {
-        "id": "1776308416478",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
-        "category": "Tech Radar",
-        "date": "2026-04-16",
-        "author": "Marcus Webb",
-        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory scramble, with the European Union, United States, and China charting starkly...",
-        "contentFile": "news-1776308416478.md"
-    },
-    {
         "id": "1776304828405",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (2)",
         "category": "Deep Insights",
         "date": "2026-04-16",
         "author": "David Sterling",
@@ -372,7 +342,7 @@
     {
         "id": "1776301226779",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot drama or doomsday scenari…",
         "category": "Tech Radar",
         "date": "2026-04-16",
         "author": "Michael Chen",
@@ -392,7 +362,7 @@
     {
         "id": "1776294019401",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot d (1)",
         "category": "Tech Radar",
         "date": "2026-04-15",
         "author": "Emily Rostova",
@@ -412,7 +382,7 @@
     {
         "id": "1776286827698",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators dominate headlines, a m…",
         "category": "Tech Radar",
         "date": "2026-04-15",
         "author": "Emily Rostova",
@@ -422,7 +392,7 @@
     {
         "id": "1776283228791",
         "type": "blog",
-        "title": "Beyond the Status Update: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Status Update: A PM's Guide to Curing Report… · We've all been there.",
         "category": "Deep Insights",
         "date": "2026-04-15",
         "author": "Alex Mercer",
@@ -432,7 +402,7 @@
     {
         "id": "1776279624885",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot drama or doomsday predict…",
         "category": "Tech Radar",
         "date": "2026-04-15",
         "author": "Michael Chen",
@@ -450,19 +420,9 @@
         "contentFile": "blog-1776276030347.md"
     },
     {
-        "id": "1776272424906",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-04-15",
-        "author": "Olivia Thorne",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1776272424906.md"
-    },
-    {
         "id": "1776268830464",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: How to Overcome Repo… · As a Product Manager, I've seen it countless times.",
         "category": "Deep Insights",
         "date": "2026-04-15",
         "author": "Jessica Tran",
@@ -472,7 +432,7 @@
     {
         "id": "1776265224060",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (2)",
         "category": "Tech Radar",
         "date": "2026-04-15",
         "author": "Alex Mercer",
@@ -492,7 +452,7 @@
     {
         "id": "1776258024192",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · While headlines often scream about AI-induced layoffs, a quieter, …",
         "category": "Tech Radar",
         "date": "2026-04-15",
         "author": "Michael Chen",
@@ -512,7 +472,7 @@
     {
         "id": "1776250825283",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (3)",
         "category": "Tech Radar",
         "date": "2026-04-15",
         "author": "Jessica Tran",
@@ -532,7 +492,7 @@
     {
         "id": "1776243627214",
         "type": "news",
-        "title": "AI Regulation Debate Intensifies as New Models Challenge Existing Frameworks",
+        "title": "AI Regulation Debate Intensifies as New Models Challeng… · The rapid evolution of artificial intelligence has triggered a glo…",
         "category": "Tech Radar",
         "date": "2026-04-15",
         "author": "David Sterling",
@@ -552,7 +512,7 @@
     {
         "id": "1776236425110",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (4)",
         "category": "Tech Radar",
         "date": "2026-04-15",
         "author": "Jessica Tran",
@@ -562,7 +522,7 @@
     {
         "id": "1776232829212",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We’ve all been there.",
         "category": "Deep Insights",
         "date": "2026-04-15",
         "author": "Jessica Tran",
@@ -572,7 +532,7 @@
     {
         "id": "1776229225704",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summi… · The rapid advancement of artificial intelligence has triggered an …",
         "category": "Tech Radar",
         "date": "2026-04-15",
         "author": "Alex Mercer",
@@ -582,7 +542,7 @@
     {
         "id": "1776225628628",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · As Product and Project Managers, we live and breathe data.",
         "category": "Deep Insights",
         "date": "2026-04-15",
         "author": "Sarah Jenkins",
@@ -592,7 +552,7 @@
     {
         "id": "1776222020983",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · For years, the dominant narrative around artificial intelligence i…",
         "category": "Tech Radar",
         "date": "2026-04-15",
         "author": "Emily Rostova",
@@ -612,7 +572,7 @@
     {
         "id": "1776214828156",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intelligence has thrust global r…",
         "category": "Tech Radar",
         "date": "2026-04-15",
         "author": "Alex Mercer",
@@ -622,7 +582,7 @@
     {
         "id": "1776211229974",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (3)",
         "category": "Deep Insights",
         "date": "2026-04-15",
         "author": "Emily Rostova",
@@ -632,7 +592,7 @@
     {
         "id": "1776207618442",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (1)",
         "category": "Tech Radar",
         "date": "2026-04-14",
         "author": "Marcus Webb",
@@ -642,7 +602,7 @@
     {
         "id": "1776204028221",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · It's 4 PM on a Friday. (1)",
         "category": "Deep Insights",
         "date": "2026-04-14",
         "author": "Emily Rostova",
@@ -652,7 +612,7 @@
     {
         "id": "1776200425700",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligence has long been dominat…",
         "category": "Tech Radar",
         "date": "2026-04-14",
         "author": "Olivia Thorne",
@@ -672,7 +632,7 @@
     {
         "id": "1776193215236",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (5)",
         "category": "Tech Radar",
         "date": "2026-04-14",
         "author": "Sarah Jenkins",
@@ -692,7 +652,7 @@
     {
         "id": "1776186024096",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · While headlines often focus on AI-driven layoffs, a quieter transf…",
         "category": "Tech Radar",
         "date": "2026-04-14",
         "author": "Sarah Jenkins",
@@ -702,7 +662,7 @@
     {
         "id": "1776182428298",
         "type": "blog",
-        "title": "Beyond the Dashboard: Overcoming Reporting Fatigue for Good",
+        "title": "Beyond the Dashboard: Overcoming Reporting Fatigue for … · It’s Sunday night.",
         "category": "Deep Insights",
         "date": "2026-04-14",
         "author": "Emily Rostova",
@@ -712,7 +672,7 @@
     {
         "id": "1776178826276",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (6)",
         "category": "Tech Radar",
         "date": "2026-04-14",
         "author": "Jessica Tran",
@@ -722,22 +682,12 @@
     {
         "id": "1776175227823",
         "type": "blog",
-        "title": "Beyond the Spreadsheet: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Spreadsheet: A PM's Guide to Curing Reportin… · We've all been there.",
         "category": "Deep Insights",
         "date": "2026-04-14",
         "author": "David Sterling",
         "excerpt": "We've all been there. It's 4:00 PM on a Friday. The finish line is in sight, but one final hurdle remains: the weekly status report. You pull up the t...",
         "contentFile": "blog-1776175227823.md"
-    },
-    {
-        "id": "1776171629212",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-04-14",
-        "author": "Michael Chen",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1776171629212.md"
     },
     {
         "id": "1776168028928",
@@ -752,7 +702,7 @@
     {
         "id": "1776164427913",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (7)",
         "category": "Tech Radar",
         "date": "2026-04-14",
         "author": "Michael Chen",
@@ -762,7 +712,7 @@
     {
         "id": "1776160828156",
         "type": "blog",
-        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming … · We’ve all been there.",
         "category": "Deep Insights",
         "date": "2026-04-14",
         "author": "Sarah Jenkins",
@@ -772,7 +722,7 @@
     {
         "id": "1776157220352",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence has entered a pivotal p…",
         "category": "Tech Radar",
         "date": "2026-04-14",
         "author": "Sarah Jenkins",
@@ -792,7 +742,7 @@
     {
         "id": "1776150028293",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators capture headlines, a mo…",
         "category": "Tech Radar",
         "date": "2026-04-14",
         "author": "Marcus Webb",
@@ -810,19 +760,9 @@
         "contentFile": "blog-1776146427727.md"
     },
     {
-        "id": "1776142828557",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-04-14",
-        "author": "Alex Mercer",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1776142828557.md"
-    },
-    {
         "id": "1776139226054",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curi… · We've all been there.",
         "category": "Deep Insights",
         "date": "2026-04-14",
         "author": "Marcus Webb",
@@ -832,7 +772,7 @@
     {
         "id": "1776135620906",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (8)",
         "category": "Tech Radar",
         "date": "2026-04-14",
         "author": "Olivia Thorne",
@@ -842,7 +782,7 @@
     {
         "id": "1776132026255",
         "type": "blog",
-        "title": "Beyond the Dashboard: Curing Reporting Fatigue for Good",
+        "title": "Beyond the Dashboard: Curing Reporting Fatigue for Good · It’s a familiar scene: Friday afternoon, and the only thing standin…",
         "category": "Deep Insights",
         "date": "2026-04-14",
         "author": "Olivia Thorne",
@@ -852,7 +792,7 @@
     {
         "id": "1776128429151",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (1)",
         "category": "Tech Radar",
         "date": "2026-04-14",
         "author": "Marcus Webb",
@@ -872,7 +812,7 @@
     {
         "id": "1776121220570",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (2)",
         "category": "Tech Radar",
         "date": "2026-04-13",
         "author": "Sarah Jenkins",
@@ -892,7 +832,7 @@
     {
         "id": "1776114018092",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (9)",
         "category": "Tech Radar",
         "date": "2026-04-13",
         "author": "Marcus Webb",
@@ -912,7 +852,7 @@
     {
         "id": "1776106821296",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summi… · The rapid advancement of artificial intell (1)",
         "category": "Tech Radar",
         "date": "2026-04-13",
         "author": "Jessica Tran",
@@ -922,7 +862,7 @@
     {
         "id": "1776103229211",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Over… · It’s 4:30 PM on a Friday.",
         "category": "Deep Insights",
         "date": "2026-04-13",
         "author": "David Sterling",
@@ -932,7 +872,7 @@
     {
         "id": "1776099628632",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot d (2)",
         "category": "Tech Radar",
         "date": "2026-04-13",
         "author": "David Sterling",
@@ -942,7 +882,7 @@
     {
         "id": "1776092422208",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (2)",
         "category": "Tech Radar",
         "date": "2026-04-13",
         "author": "Jessica Tran",
@@ -962,7 +902,7 @@
     {
         "id": "1776085216132",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (10)",
         "category": "Tech Radar",
         "date": "2026-04-13",
         "author": "Marcus Webb",
@@ -980,16 +920,6 @@
         "contentFile": "blog-1776081626989.md"
     },
     {
-        "id": "1776078023857",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
-        "category": "Tech Radar",
-        "date": "2026-04-13",
-        "author": "David Sterling",
-        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory race among world governments, leading to a fragmented landscape of proposed...",
-        "contentFile": "news-1776078023857.md"
-    },
-    {
         "id": "1776074429218",
         "type": "blog",
         "title": "From Drudgery to Data-Driven: Curing Your Team's Reporting Fatigue",
@@ -1002,7 +932,7 @@
     {
         "id": "1776070828533",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (1)",
         "category": "Tech Radar",
         "date": "2026-04-13",
         "author": "Emily Rostova",
@@ -1012,7 +942,7 @@
     {
         "id": "1776063619469",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (2)",
         "category": "Tech Radar",
         "date": "2026-04-13",
         "author": "Emily Rostova",
@@ -1022,7 +952,7 @@
     {
         "id": "1776060027986",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We’ve all been there. (1)",
         "category": "Deep Insights",
         "date": "2026-04-13",
         "author": "Marcus Webb",
@@ -1032,7 +962,7 @@
     {
         "id": "1776056422041",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · While headlines often focus on AI-driven l (1)",
         "category": "Tech Radar",
         "date": "2026-04-13",
         "author": "Jessica Tran",
@@ -1050,16 +980,6 @@
         "contentFile": "blog-1776052831678.md"
     },
     {
-        "id": "1776049224519",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
-        "category": "Tech Radar",
-        "date": "2026-04-13",
-        "author": "Marcus Webb",
-        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, United States, and China finalizing starkly different...",
-        "contentFile": "news-1776049224519.md"
-    },
-    {
         "id": "1776045629725",
         "type": "blog",
         "title": "Drowning in Data, Starving for Insight: Conquering Reporting Fatigue",
@@ -1072,7 +992,7 @@
     {
         "id": "1776042028815",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (3)",
         "category": "Tech Radar",
         "date": "2026-04-13",
         "author": "Jessica Tran",
@@ -1082,7 +1002,7 @@
     {
         "id": "1776038429790",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: How to Overcome Repo… · We've all been there. (1)",
         "category": "Deep Insights",
         "date": "2026-04-13",
         "author": "Jessica Tran",
@@ -1092,7 +1012,7 @@
     {
         "id": "1776034823049",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (4)",
         "category": "Tech Radar",
         "date": "2026-04-12",
         "author": "Alex Mercer",
@@ -1112,7 +1032,7 @@
     {
         "id": "1776027625196",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot sensation or doomsday pre…",
         "category": "Tech Radar",
         "date": "2026-04-12",
         "author": "Emily Rostova",
@@ -1122,7 +1042,7 @@
     {
         "id": "1776024027508",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curi… · We’ve all been there.",
         "category": "Deep Insights",
         "date": "2026-04-12",
         "author": "Sarah Jenkins",
@@ -1132,7 +1052,7 @@
     {
         "id": "1776020425439",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · While headlines often focus on AI-driven layoffs and automation ap…",
         "category": "Tech Radar",
         "date": "2026-04-12",
         "author": "Sarah Jenkins",
@@ -1142,7 +1062,7 @@
     {
         "id": "1776016832102",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curi… · As a Product Manager, you live and die by data.",
         "category": "Deep Insights",
         "date": "2026-04-12",
         "author": "Jessica Tran",
@@ -1152,7 +1072,7 @@
     {
         "id": "1776013224473",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summi… · The rapid advancement of artificial intell (2)",
         "category": "Tech Radar",
         "date": "2026-04-12",
         "author": "Jessica Tran",
@@ -1162,7 +1082,7 @@
     {
         "id": "1776009628219",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: How to Overcome Repo… · It’s 4:00 PM on a Friday.",
         "category": "Deep Insights",
         "date": "2026-04-12",
         "author": "Michael Chen",
@@ -1172,7 +1092,7 @@
     {
         "id": "1776006016012",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (11)",
         "category": "Tech Radar",
         "date": "2026-04-12",
         "author": "Alex Mercer",
@@ -1192,7 +1112,7 @@
     {
         "id": "1775998817957",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (12)",
         "category": "Tech Radar",
         "date": "2026-04-12",
         "author": "Alex Mercer",
@@ -1202,7 +1122,7 @@
     {
         "id": "1775995227370",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curi… · We’ve all been there. (1)",
         "category": "Deep Insights",
         "date": "2026-04-12",
         "author": "Jessica Tran",
@@ -1212,7 +1132,7 @@
     {
         "id": "1775991623360",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (3)",
         "category": "Tech Radar",
         "date": "2026-04-12",
         "author": "Sarah Jenkins",
@@ -1222,7 +1142,7 @@
     {
         "id": "1775988028101",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (4)",
         "category": "Deep Insights",
         "date": "2026-04-12",
         "author": "Emily Rostova",
@@ -1232,7 +1152,7 @@
     {
         "id": "1775984421379",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · While headlines often focus on AI-driven l (2)",
         "category": "Tech Radar",
         "date": "2026-04-12",
         "author": "Emily Rostova",
@@ -1242,7 +1162,7 @@
     {
         "id": "1775980827581",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (5)",
         "category": "Deep Insights",
         "date": "2026-04-12",
         "author": "Sarah Jenkins",
@@ -1262,7 +1182,7 @@
     {
         "id": "1775973627933",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Over… · We’ve all been there.",
         "category": "Deep Insights",
         "date": "2026-04-12",
         "author": "Jessica Tran",
@@ -1272,7 +1192,7 @@
     {
         "id": "1775970018214",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (3)",
         "category": "Tech Radar",
         "date": "2026-04-12",
         "author": "Alex Mercer",
@@ -1302,7 +1222,7 @@
     {
         "id": "1775959227151",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (6)",
         "category": "Deep Insights",
         "date": "2026-04-12",
         "author": "Alex Mercer",
@@ -1312,7 +1232,7 @@
     {
         "id": "1775955623968",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intelligence has propelled globa…",
         "category": "Tech Radar",
         "date": "2026-04-12",
         "author": "Michael Chen",
@@ -1322,7 +1242,7 @@
     {
         "id": "1775952027032",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We’ve all been there. (2)",
         "category": "Deep Insights",
         "date": "2026-04-12",
         "author": "Michael Chen",
@@ -1332,7 +1252,7 @@
     {
         "id": "1775948419201",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summi… · The rapid advancement of artificial intell (3)",
         "category": "Tech Radar",
         "date": "2026-04-11",
         "author": "Jessica Tran",
@@ -1342,7 +1262,7 @@
     {
         "id": "1775944826838",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (7)",
         "category": "Deep Insights",
         "date": "2026-04-11",
         "author": "Olivia Thorne",
@@ -1352,7 +1272,7 @@
     {
         "id": "1775941215068",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot d (3)",
         "category": "Tech Radar",
         "date": "2026-04-11",
         "author": "Michael Chen",
@@ -1362,7 +1282,7 @@
     {
         "id": "1775937628188",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (8)",
         "category": "Deep Insights",
         "date": "2026-04-11",
         "author": "Jessica Tran",
@@ -1372,7 +1292,7 @@
     {
         "id": "1775934021555",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (5)",
         "category": "Tech Radar",
         "date": "2026-04-11",
         "author": "Marcus Webb",
@@ -1392,7 +1312,7 @@
     {
         "id": "1775926820904",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot sensation or doomsday sce…",
         "category": "Tech Radar",
         "date": "2026-04-11",
         "author": "Emily Rostova",
@@ -1402,7 +1322,7 @@
     {
         "id": "1775923227936",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (9)",
         "category": "Deep Insights",
         "date": "2026-04-11",
         "author": "Sarah Jenkins",
@@ -1412,7 +1332,7 @@
     {
         "id": "1775919620699",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (4)",
         "category": "Tech Radar",
         "date": "2026-04-11",
         "author": "Jessica Tran",
@@ -1432,7 +1352,7 @@
     {
         "id": "1775912431107",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot d (4)",
         "category": "Tech Radar",
         "date": "2026-04-11",
         "author": "Marcus Webb",
@@ -1442,7 +1362,7 @@
     {
         "id": "1775908829615",
         "type": "blog",
-        "title": "Beyond the Dashboard: Overcoming Reporting Fatigue for Good",
+        "title": "Beyond the Dashboard: Overcoming Reporting Fatigue for … · We've all been there.",
         "category": "Deep Insights",
         "date": "2026-04-11",
         "author": "Emily Rostova",
@@ -1452,7 +1372,7 @@
     {
         "id": "1775905216045",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (13)",
         "category": "Tech Radar",
         "date": "2026-04-11",
         "author": "Sarah Jenkins",
@@ -1462,7 +1382,7 @@
     {
         "id": "1775901628869",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We’ve all been there. (3)",
         "category": "Deep Insights",
         "date": "2026-04-11",
         "author": "Emily Rostova",
@@ -1492,7 +1412,7 @@
     {
         "id": "1775890818201",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (6)",
         "category": "Tech Radar",
         "date": "2026-04-11",
         "author": "Sarah Jenkins",
@@ -1502,7 +1422,7 @@
     {
         "id": "1775887229290",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (10)",
         "category": "Deep Insights",
         "date": "2026-04-11",
         "author": "Sarah Jenkins",
@@ -1512,7 +1432,7 @@
     {
         "id": "1775883623952",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summi… · The rapid advancement of artificial intell (4)",
         "category": "Tech Radar",
         "date": "2026-04-11",
         "author": "Olivia Thorne",
@@ -1532,7 +1452,7 @@
     {
         "id": "1775876417197",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (14)",
         "category": "Tech Radar",
         "date": "2026-04-11",
         "author": "Alex Mercer",
@@ -1542,7 +1462,7 @@
     {
         "id": "1775872830212",
         "type": "blog",
-        "title": "Beyond the Status Update: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Status Update: A PM's Guide to Curing Report… · It’s Sunday night.",
         "category": "Deep Insights",
         "date": "2026-04-11",
         "author": "Alex Mercer",
@@ -1550,19 +1470,9 @@
         "contentFile": "blog-1775872830212.md"
     },
     {
-        "id": "1775869220892",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
-        "category": "Tech Radar",
-        "date": "2026-04-11",
-        "author": "Emily Rostova",
-        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, United States, and China finalizing starkly different...",
-        "contentFile": "news-1775869220892.md"
-    },
-    {
         "id": "1775865625653",
         "type": "blog",
-        "title": "From Drudgery to Data-Driven: Conquering Reporting Fatigue for Good",
+        "title": "From Drudgery to Data-Driven: Conquering Reporting Fati… · We've all been there.",
         "category": "Deep Insights",
         "date": "2026-04-11",
         "author": "Jessica Tran",
@@ -1572,7 +1482,7 @@
     {
         "id": "1775862016187",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (4)",
         "category": "Tech Radar",
         "date": "2026-04-10",
         "author": "Alex Mercer",
@@ -1582,7 +1492,7 @@
     {
         "id": "1775858427903",
         "type": "blog",
-        "title": "From Drudgery to Data-Driven: Conquering Reporting Fatigue for Good",
+        "title": "From Drudgery to Data-Driven: Conquering Reporting Fati… · We’ve all been there.",
         "category": "Deep Insights",
         "date": "2026-04-10",
         "author": "Olivia Thorne",
@@ -1592,7 +1502,7 @@
     {
         "id": "1775854816548",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (7)",
         "category": "Tech Radar",
         "date": "2026-04-10",
         "author": "Marcus Webb",
@@ -1602,7 +1512,7 @@
     {
         "id": "1775851226924",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Over… · We've all been there.",
         "category": "Deep Insights",
         "date": "2026-04-10",
         "author": "David Sterling",
@@ -1612,7 +1522,7 @@
     {
         "id": "1775847613932",
         "type": "news",
-        "title": "The Unseen Labor Behind AI's Public Face",
+        "title": "The Unseen Labor Behind AI's Public Face · While headlines tout AI's potential to revolutionize industries, a quieter, more c…",
         "category": "Tech Radar",
         "date": "2026-04-10",
         "author": "Jessica Tran",
@@ -1652,7 +1562,7 @@
     {
         "id": "1775833219166",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (15)",
         "category": "Tech Radar",
         "date": "2026-04-10",
         "author": "Sarah Jenkins",
@@ -1672,7 +1582,7 @@
     {
         "id": "1775826019765",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (5)",
         "category": "Tech Radar",
         "date": "2026-04-10",
         "author": "Alex Mercer",
@@ -1690,19 +1600,9 @@
         "contentFile": "blog-1775822428546.md"
     },
     {
-        "id": "1775818821423",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
-        "category": "Tech Radar",
-        "date": "2026-04-10",
-        "author": "Jessica Tran",
-        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, the United States, and China finalizing starkly diffe...",
-        "contentFile": "news-1775818821423.md"
-    },
-    {
         "id": "1775815226887",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Overcoming Report… · We've all been there.",
         "category": "Deep Insights",
         "date": "2026-04-10",
         "author": "Olivia Thorne",
@@ -1712,7 +1612,7 @@
     {
         "id": "1775811622002",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (5)",
         "category": "Tech Radar",
         "date": "2026-04-10",
         "author": "Olivia Thorne",
@@ -1722,7 +1622,7 @@
     {
         "id": "1775808028046",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Report… · It’s the project manager’s recurring nightmare: the Sunday evening…",
         "category": "Deep Insights",
         "date": "2026-04-10",
         "author": "Michael Chen",
@@ -1730,19 +1630,9 @@
         "contentFile": "blog-1775808028046.md"
     },
     {
-        "id": "1775804421606",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
-        "category": "Tech Radar",
-        "date": "2026-04-10",
-        "author": "Olivia Thorne",
-        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, the United States, and China finalizing starkly diffe...",
-        "contentFile": "news-1775804421606.md"
-    },
-    {
         "id": "1775800827502",
         "type": "blog",
-        "title": "Overcoming Reporting Fatigue: A PM's Guide to Meaningful Metrics",
+        "title": "Overcoming Reporting Fatigue: A PM's Guide to Meaningfu… · The email lands in your inbox at 4:15 PM.",
         "category": "Deep Insights",
         "date": "2026-04-10",
         "author": "Marcus Webb",
@@ -1750,19 +1640,9 @@
         "contentFile": "blog-1775800827502.md"
     },
     {
-        "id": "1775797220976",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-04-10",
-        "author": "Sarah Jenkins",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1775797220976.md"
-    },
-    {
         "id": "1775793627756",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · It's 4:00 PM on a Friday.",
         "category": "Deep Insights",
         "date": "2026-04-10",
         "author": "Sarah Jenkins",
@@ -1772,7 +1652,7 @@
     {
         "id": "1775790020270",
         "type": "news",
-        "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
+        "title": "The Silent Shift: How AI is Rewriting the Code of Softw… · In a move that signals a profound, yet quiet, transformation, majo…",
         "category": "Tech Radar",
         "date": "2026-04-10",
         "author": "Marcus Webb",
@@ -1782,7 +1662,7 @@
     {
         "id": "1775786425635",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · As a Product Manager, you live in a world of data.",
         "category": "Deep Insights",
         "date": "2026-04-10",
         "author": "Emily Rostova",
@@ -1792,7 +1672,7 @@
     {
         "id": "1775782822270",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot d (5)",
         "category": "Tech Radar",
         "date": "2026-04-10",
         "author": "Emily Rostova",
@@ -1802,7 +1682,7 @@
     {
         "id": "1775779228669",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curi… · We've all been there. (1)",
         "category": "Deep Insights",
         "date": "2026-04-10",
         "author": "Jessica Tran",
@@ -1812,7 +1692,7 @@
     {
         "id": "1775775619229",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (16)",
         "category": "Tech Radar",
         "date": "2026-04-09",
         "author": "Olivia Thorne",
@@ -1822,7 +1702,7 @@
     {
         "id": "1775772028567",
         "type": "blog",
-        "title": "Beyond the Status Update: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Status Update: A PM's Guide to Curing Report… · We've all been there. (1)",
         "category": "Deep Insights",
         "date": "2026-04-09",
         "author": "Alex Mercer",
@@ -1832,7 +1712,7 @@
     {
         "id": "1775768417498",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (17)",
         "category": "Tech Radar",
         "date": "2026-04-09",
         "author": "David Sterling",
@@ -1842,7 +1722,7 @@
     {
         "id": "1775764827168",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · It’s 8 AM on a Monday.",
         "category": "Deep Insights",
         "date": "2026-04-09",
         "author": "David Sterling",
@@ -1850,19 +1730,9 @@
         "contentFile": "blog-1775764827168.md"
     },
     {
-        "id": "1775761220817",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
-        "category": "Tech Radar",
-        "date": "2026-04-09",
-        "author": "Emily Rostova",
-        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory race among world governments, leading to a fragmented landscape of proposed...",
-        "contentFile": "news-1775761220817.md"
-    },
-    {
         "id": "1775757627054",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (11)",
         "category": "Deep Insights",
         "date": "2026-04-09",
         "author": "Alex Mercer",
@@ -1872,7 +1742,7 @@
     {
         "id": "1775754015884",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (6)",
         "category": "Tech Radar",
         "date": "2026-04-09",
         "author": "Sarah Jenkins",
@@ -1892,7 +1762,7 @@
     {
         "id": "1775746822690",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summi… · The rapid advancement of artificial intell (5)",
         "category": "Tech Radar",
         "date": "2026-04-09",
         "author": "Michael Chen",
@@ -1902,7 +1772,7 @@
     {
         "id": "1775743228287",
         "type": "blog",
-        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming … · It’s 4:30 PM on a Friday.",
         "category": "Deep Insights",
         "date": "2026-04-09",
         "author": "Emily Rostova",
@@ -1912,7 +1782,7 @@
     {
         "id": "1775739616127",
         "type": "news",
-        "title": "The Unseen Labor Behind AI's Public Face",
+        "title": "The Unseen Labor Behind AI's Public Face · While headlines tout AI's potential to rev (1)",
         "category": "Tech Radar",
         "date": "2026-04-09",
         "author": "Sarah Jenkins",
@@ -1922,7 +1792,7 @@
     {
         "id": "1775736028001",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Report… · We’ve all been there.",
         "category": "Deep Insights",
         "date": "2026-04-09",
         "author": "David Sterling",
@@ -1932,7 +1802,7 @@
     {
         "id": "1775732418745",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (8)",
         "category": "Tech Radar",
         "date": "2026-04-09",
         "author": "Jessica Tran",
@@ -1942,7 +1812,7 @@
     {
         "id": "1775728826359",
         "type": "blog",
-        "title": "From Drudgery to Data-Driven: A PM's Playbook for Overcoming Reporting Fatigue",
+        "title": "From Drudgery to Data-Driven: A PM's Playbook for Overc… · We've all been there.",
         "category": "Deep Insights",
         "date": "2026-04-09",
         "author": "Emily Rostova",
@@ -1950,19 +1820,9 @@
         "contentFile": "blog-1775728826359.md"
     },
     {
-        "id": "1775725227110",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-04-09",
-        "author": "Emily Rostova",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1775725227110.md"
-    },
-    {
         "id": "1775718019129",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summi… · The world's leading AI developers and policymakers are gathering i…",
         "category": "Tech Radar",
         "date": "2026-04-09",
         "author": "Sarah Jenkins",
@@ -1972,22 +1832,12 @@
     {
         "id": "1775714428455",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curi… · We’ve all been there. (2)",
         "category": "Deep Insights",
         "date": "2026-04-09",
         "author": "Alex Mercer",
         "excerpt": "We’ve all been there. It’s 4 PM on a Friday, and that recurring calendar notification pops up: \"Prepare Weekly Stakeholder Update.\" You sigh, open las...",
         "contentFile": "blog-1775714428455.md"
-    },
-    {
-        "id": "1775710817647",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
-        "category": "Tech Radar",
-        "date": "2026-04-09",
-        "author": "David Sterling",
-        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory race among world governments, leading to a fragmented landscape of proposed...",
-        "contentFile": "news-1775710817647.md"
     },
     {
         "id": "1775707227862",
@@ -2002,7 +1852,7 @@
     {
         "id": "1775703618873",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (7)",
         "category": "Tech Radar",
         "date": "2026-04-09",
         "author": "David Sterling",
@@ -2022,7 +1872,7 @@
     {
         "id": "1775696421484",
         "type": "news",
-        "title": "The Unseen Labor Behind AI's Public Face",
+        "title": "The Unseen Labor Behind AI's Public Face · While headlines tout AI's potential to revolutionize industries, a quieter story i…",
         "category": "Tech Radar",
         "date": "2026-04-09",
         "author": "Jessica Tran",
@@ -2032,7 +1882,7 @@
     {
         "id": "1775692827273",
         "type": "blog",
-        "title": "The PM's Guide to Curing Reporting Fatigue",
+        "title": "The PM's Guide to Curing Reporting Fatigue · It’s Sunday night.",
         "category": "Deep Insights",
         "date": "2026-04-09",
         "author": "Michael Chen",
@@ -2042,7 +1892,7 @@
     {
         "id": "1775689223273",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (9)",
         "category": "Tech Radar",
         "date": "2026-04-08",
         "author": "David Sterling",
@@ -2062,7 +1912,7 @@
     {
         "id": "1775682019370",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summi… · The world's leading AI developers and poli (1)",
         "category": "Tech Radar",
         "date": "2026-04-08",
         "author": "Olivia Thorne",
@@ -2072,7 +1922,7 @@
     {
         "id": "1775678427318",
         "type": "blog",
-        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming … · As a Project Manager, you live and breathe data.",
         "category": "Deep Insights",
         "date": "2026-04-08",
         "author": "Emily Rostova",
@@ -2082,7 +1932,7 @@
     {
         "id": "1775674821739",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot d (6)",
         "category": "Tech Radar",
         "date": "2026-04-08",
         "author": "Alex Mercer",
@@ -2102,7 +1952,7 @@
     {
         "id": "1775667618885",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · While headlines often focus on AI-driven l (3)",
         "category": "Tech Radar",
         "date": "2026-04-08",
         "author": "Michael Chen",
@@ -2112,7 +1962,7 @@
     {
         "id": "1775664027044",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Report… · It's the project manager's Groundhog Day.",
         "category": "Deep Insights",
         "date": "2026-04-08",
         "author": "Emily Rostova",
@@ -2122,7 +1972,7 @@
     {
         "id": "1775660418849",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (18)",
         "category": "Tech Radar",
         "date": "2026-04-08",
         "author": "Sarah Jenkins",
@@ -2132,7 +1982,7 @@
     {
         "id": "1775656825375",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (12)",
         "category": "Deep Insights",
         "date": "2026-04-08",
         "author": "David Sterling",
@@ -2140,19 +1990,9 @@
         "contentFile": "blog-1775656825375.md"
     },
     {
-        "id": "1775653225406",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
-        "category": "Tech Radar",
-        "date": "2026-04-08",
-        "author": "David Sterling",
-        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory race among world governments, leading to a fragmented landscape of proposed...",
-        "contentFile": "news-1775653225406.md"
-    },
-    {
         "id": "1775649627799",
         "type": "blog",
-        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming … · We've all been there.",
         "category": "Deep Insights",
         "date": "2026-04-08",
         "author": "Alex Mercer",
@@ -2162,7 +2002,7 @@
     {
         "id": "1775646025222",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (10)",
         "category": "Tech Radar",
         "date": "2026-04-08",
         "author": "Olivia Thorne",
@@ -2172,7 +2012,7 @@
     {
         "id": "1775642429128",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Report… · It's 9 AM on Monday.",
         "category": "Deep Insights",
         "date": "2026-04-08",
         "author": "David Sterling",
@@ -2180,19 +2020,9 @@
         "contentFile": "blog-1775642429128.md"
     },
     {
-        "id": "1775638821782",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
-        "category": "Tech Radar",
-        "date": "2026-04-08",
-        "author": "Michael Chen",
-        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory race among world governments, leading to a fragmented landscape of proposed...",
-        "contentFile": "news-1775638821782.md"
-    },
-    {
         "id": "1775635225706",
         "type": "blog",
-        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Fatigue",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming … · It’s 4:00 PM on a Friday.",
         "category": "Deep Insights",
         "date": "2026-04-08",
         "author": "Jessica Tran",
@@ -2202,7 +2032,7 @@
     {
         "id": "1775631621060",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (6)",
         "category": "Tech Radar",
         "date": "2026-04-08",
         "author": "Marcus Webb",
@@ -2212,22 +2042,12 @@
     {
         "id": "1775628026095",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (13)",
         "category": "Deep Insights",
         "date": "2026-04-08",
         "author": "Marcus Webb",
         "excerpt": "We've all been there. It's 4:45 PM on a Friday, and you're scrambling to pull together the weekly status report. You copy-paste charts, update spreads...",
         "contentFile": "blog-1775628026095.md"
-    },
-    {
-        "id": "1775624425135",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-04-08",
-        "author": "Sarah Jenkins",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1775624425135.md"
     },
     {
         "id": "1775620827909",
@@ -2238,16 +2058,6 @@
         "author": "Jessica Tran",
         "excerpt": "We’ve all been there. It’s 4:00 PM on a Friday, and you're frantically pulling data from three different systems to compile the weekly status report....",
         "contentFile": "blog-1775620827909.md"
-    },
-    {
-        "id": "1775617220326",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-04-08",
-        "author": "Michael Chen",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1775617220326.md"
     },
     {
         "id": "1775613624856",
@@ -2262,7 +2072,7 @@
     {
         "id": "1775610028969",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (19)",
         "category": "Tech Radar",
         "date": "2026-04-08",
         "author": "Emily Rostova",
@@ -2272,7 +2082,7 @@
     {
         "id": "1775606428957",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (14)",
         "category": "Deep Insights",
         "date": "2026-04-08",
         "author": "Olivia Thorne",
@@ -2282,7 +2092,7 @@
     {
         "id": "1775602817385",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (20)",
         "category": "Tech Radar",
         "date": "2026-04-07",
         "author": "Michael Chen",
@@ -2292,7 +2102,7 @@
     {
         "id": "1775599227854",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curi… · We've all been there. (2)",
         "category": "Deep Insights",
         "date": "2026-04-07",
         "author": "Olivia Thorne",
@@ -2302,7 +2112,7 @@
     {
         "id": "1775595617587",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (8)",
         "category": "Tech Radar",
         "date": "2026-04-07",
         "author": "Jessica Tran",
@@ -2312,7 +2122,7 @@
     {
         "id": "1775592028441",
         "type": "blog",
-        "title": "From Data Dumps to Actionable Insights: A PM's Guide to Curing Reporting Fatigue",
+        "title": "From Data Dumps to Actionable Insights: A PM's Guide to… · We've all been there.",
         "category": "Deep Insights",
         "date": "2026-04-07",
         "author": "Jessica Tran",
@@ -2322,7 +2132,7 @@
     {
         "id": "1775588422954",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (11)",
         "category": "Tech Radar",
         "date": "2026-04-07",
         "author": "Jessica Tran",
@@ -2332,7 +2142,7 @@
     {
         "id": "1775584829615",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We’ve all been there. (4)",
         "category": "Deep Insights",
         "date": "2026-04-07",
         "author": "Jessica Tran",
@@ -2342,7 +2152,7 @@
     {
         "id": "1775581216091",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · While headlines often scream about AI-indu (1)",
         "category": "Tech Radar",
         "date": "2026-04-07",
         "author": "David Sterling",
@@ -2362,7 +2172,7 @@
     {
         "id": "1775574014784",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (21)",
         "category": "Tech Radar",
         "date": "2026-04-07",
         "author": "Emily Rostova",
@@ -2370,19 +2180,9 @@
         "contentFile": "news-1775574014784.md"
     },
     {
-        "id": "1775566823261",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-04-07",
-        "author": "Sarah Jenkins",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1775566823261.md"
-    },
-    {
         "id": "1775563227874",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We’ve all been there. (5)",
         "category": "Deep Insights",
         "date": "2026-04-07",
         "author": "Marcus Webb",
@@ -2390,19 +2190,9 @@
         "contentFile": "blog-1775563227874.md"
     },
     {
-        "id": "1775559616374",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
-        "category": "Tech Radar",
-        "date": "2026-04-07",
-        "author": "Marcus Webb",
-        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory race among world governments, leading to a fragmented landscape of proposed...",
-        "contentFile": "news-1775559616374.md"
-    },
-    {
         "id": "1775556029704",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Overcoming Report… · It’s 4 PM on a Friday.",
         "category": "Deep Insights",
         "date": "2026-04-07",
         "author": "Sarah Jenkins",
@@ -2412,7 +2202,7 @@
     {
         "id": "1775552422385",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot d (7)",
         "category": "Tech Radar",
         "date": "2026-04-07",
         "author": "Alex Mercer",
@@ -2422,22 +2212,12 @@
     {
         "id": "1775548828127",
         "type": "blog",
-        "title": "Beyond the Status Update: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Status Update: A PM's Guide to Curing Report… · We've all been there. (2)",
         "category": "Deep Insights",
         "date": "2026-04-07",
         "author": "Michael Chen",
         "excerpt": "We've all been there. It's 4 PM on a Friday, and instead of focusing on strategic work for the week ahead, you're wrestling with spreadsheets and slid...",
         "contentFile": "blog-1775548828127.md"
-    },
-    {
-        "id": "1775545216683",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-04-07",
-        "author": "David Sterling",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1775545216683.md"
     },
     {
         "id": "1775541628186",
@@ -2450,16 +2230,6 @@
         "contentFile": "blog-1775541628186.md"
     },
     {
-        "id": "1775538020388",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-04-07",
-        "author": "David Sterling",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1775538020388.md"
-    },
-    {
         "id": "1775534428103",
         "type": "blog",
         "title": "Beyond the Status Update: A PM's Guide to Conquering Reporting Fatigue",
@@ -2470,19 +2240,9 @@
         "contentFile": "blog-1775534428103.md"
     },
     {
-        "id": "1775530816049",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
-        "category": "Tech Radar",
-        "date": "2026-04-07",
-        "author": "Emily Rostova",
-        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, United States, and China finalizing starkly different...",
-        "contentFile": "news-1775530816049.md"
-    },
-    {
         "id": "1775527227101",
         "type": "blog",
-        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming … · We’ve all been there. (1)",
         "category": "Deep Insights",
         "date": "2026-04-07",
         "author": "Jessica Tran",
@@ -2492,7 +2252,7 @@
     {
         "id": "1775523623332",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (7)",
         "category": "Tech Radar",
         "date": "2026-04-07",
         "author": "Marcus Webb",
@@ -2502,7 +2262,7 @@
     {
         "id": "1775520027553",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (15)",
         "category": "Deep Insights",
         "date": "2026-04-07",
         "author": "Alex Mercer",
@@ -2512,7 +2272,7 @@
     {
         "id": "1775516414197",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (22)",
         "category": "Tech Radar",
         "date": "2026-04-06",
         "author": "Emily Rostova",
@@ -2532,7 +2292,7 @@
     {
         "id": "1775509220611",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (8)",
         "category": "Tech Radar",
         "date": "2026-04-06",
         "author": "Sarah Jenkins",
@@ -2542,7 +2302,7 @@
     {
         "id": "1775505628183",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · It’s a familiar scene for any project manager: the end of the spri…",
         "category": "Deep Insights",
         "date": "2026-04-06",
         "author": "Michael Chen",
@@ -2552,7 +2312,7 @@
     {
         "id": "1775502016141",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · While headlines often scream about AI-induced layoffs, a quieter b…",
         "category": "Tech Radar",
         "date": "2026-04-06",
         "author": "Alex Mercer",
@@ -2572,7 +2332,7 @@
     {
         "id": "1775494821812",
         "type": "news",
-        "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
+        "title": "The Silent Shift: How AI is Rewriting the Code of Softw… · In a move that signals a profound, yet often unseen, transformatio…",
         "category": "Tech Radar",
         "date": "2026-04-06",
         "author": "David Sterling",
@@ -2592,7 +2352,7 @@
     {
         "id": "1775487621693",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (23)",
         "category": "Tech Radar",
         "date": "2026-04-06",
         "author": "Michael Chen",
@@ -2610,19 +2370,9 @@
         "contentFile": "blog-1775484027295.md"
     },
     {
-        "id": "1775480412937",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
-        "category": "Tech Radar",
-        "date": "2026-04-06",
-        "author": "Olivia Thorne",
-        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory scramble, with the European Union, United States, and China charting starkly...",
-        "contentFile": "news-1775480412937.md"
-    },
-    {
         "id": "1775476827875",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · Let's be honest.",
         "category": "Deep Insights",
         "date": "2026-04-06",
         "author": "Sarah Jenkins",
@@ -2632,7 +2382,7 @@
     {
         "id": "1775473217356",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (24)",
         "category": "Tech Radar",
         "date": "2026-04-06",
         "author": "Marcus Webb",
@@ -2652,7 +2402,7 @@
     {
         "id": "1775466018107",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summi… · The rapid advancement of artificial intell (6)",
         "category": "Tech Radar",
         "date": "2026-04-06",
         "author": "Michael Chen",
@@ -2662,7 +2412,7 @@
     {
         "id": "1775462427588",
         "type": "blog",
-        "title": "Beyond the Status Update: A PM's Guide to Conquering Reporting Fatigue",
+        "title": "Beyond the Status Update: A PM's Guide to Conquering Re… · We’ve all been there.",
         "category": "Deep Insights",
         "date": "2026-04-06",
         "author": "Emily Rostova",
@@ -2672,7 +2422,7 @@
     {
         "id": "1775458823749",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (25)",
         "category": "Tech Radar",
         "date": "2026-04-06",
         "author": "Emily Rostova",
@@ -2682,7 +2432,7 @@
     {
         "id": "1775455225953",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curi… · We've all been there. (3)",
         "category": "Deep Insights",
         "date": "2026-04-06",
         "author": "Alex Mercer",
@@ -2692,7 +2442,7 @@
     {
         "id": "1775451617420",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (9)",
         "category": "Tech Radar",
         "date": "2026-04-06",
         "author": "Olivia Thorne",
@@ -2702,7 +2452,7 @@
     {
         "id": "1775448028802",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curi… · We’ve all been there. (3)",
         "category": "Deep Insights",
         "date": "2026-04-06",
         "author": "Emily Rostova",
@@ -2712,7 +2462,7 @@
     {
         "id": "1775444419144",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (26)",
         "category": "Tech Radar",
         "date": "2026-04-06",
         "author": "Michael Chen",
@@ -2722,7 +2472,7 @@
     {
         "id": "1775440826670",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (16)",
         "category": "Deep Insights",
         "date": "2026-04-06",
         "author": "David Sterling",
@@ -2732,7 +2482,7 @@
     {
         "id": "1775437225727",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (9)",
         "category": "Tech Radar",
         "date": "2026-04-06",
         "author": "Michael Chen",
@@ -2752,7 +2502,7 @@
     {
         "id": "1775430016103",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (27)",
         "category": "Tech Radar",
         "date": "2026-04-05",
         "author": "Jessica Tran",
@@ -2772,7 +2522,7 @@
     {
         "id": "1775422814238",
         "type": "news",
-        "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
+        "title": "The Silent Shift: How AI is Rewriting the Code of Softw… · In a move that signals a profound, quiet transformation, major tec…",
         "category": "Tech Radar",
         "date": "2026-04-05",
         "author": "Olivia Thorne",
@@ -2782,7 +2532,7 @@
     {
         "id": "1775419227011",
         "type": "blog",
-        "title": "Drowning in Data? A PM's Guide to Curing Reporting Fatigue",
+        "title": "Drowning in Data? A PM's Guide to Curing Reporting Fatigue · As a Product Manager, you live and breathe data.",
         "category": "Deep Insights",
         "date": "2026-04-05",
         "author": "Jessica Tran",
@@ -2792,7 +2542,7 @@
     {
         "id": "1775415615773",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (10)",
         "category": "Tech Radar",
         "date": "2026-04-05",
         "author": "Jessica Tran",
@@ -2802,7 +2552,7 @@
     {
         "id": "1775412026395",
         "type": "blog",
-        "title": "Beyond the Update: A PM's Guide to Conquering Reporting Fatigue",
+        "title": "Beyond the Update: A PM's Guide to Conquering Reporting… · The Sunday Scaries hit differently for a Project Manager.",
         "category": "Deep Insights",
         "date": "2026-04-05",
         "author": "Emily Rostova",
@@ -2832,7 +2582,7 @@
     {
         "id": "1775401214356",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (10)",
         "category": "Tech Radar",
         "date": "2026-04-05",
         "author": "Alex Mercer",
@@ -2842,7 +2592,7 @@
     {
         "id": "1775397626394",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (17)",
         "category": "Deep Insights",
         "date": "2026-04-05",
         "author": "Emily Rostova",
@@ -2852,7 +2602,7 @@
     {
         "id": "1775394018705",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (12)",
         "category": "Tech Radar",
         "date": "2026-04-05",
         "author": "David Sterling",
@@ -2882,7 +2632,7 @@
     {
         "id": "1775383230748",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curi… · We've all been there. (4)",
         "category": "Deep Insights",
         "date": "2026-04-05",
         "author": "Jessica Tran",
@@ -2892,7 +2642,7 @@
     {
         "id": "1775379616426",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (13)",
         "category": "Tech Radar",
         "date": "2026-04-05",
         "author": "Jessica Tran",
@@ -2902,7 +2652,7 @@
     {
         "id": "1775376034934",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (18)",
         "category": "Deep Insights",
         "date": "2026-04-05",
         "author": "Sarah Jenkins",
@@ -2912,7 +2662,7 @@
     {
         "id": "1775372417963",
         "type": "news",
-        "title": "The Unseen Cost of AI's Thirst: Data Centers Strain Global Resources",
+        "title": "The Unseen Cost of AI's Thirst: Data Centers Strain Glo… · The artificial intelligence revolution, once hailed as a purely di…",
         "category": "Tech Radar",
         "date": "2026-04-05",
         "author": "Sarah Jenkins",
@@ -2942,7 +2692,7 @@
     {
         "id": "1775361625415",
         "type": "blog",
-        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Fatigue",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming … · We’ve all been there. (2)",
         "category": "Deep Insights",
         "date": "2026-04-05",
         "author": "Alex Mercer",
@@ -2950,19 +2700,9 @@
         "contentFile": "blog-1775361625415.md"
     },
     {
-        "id": "1775358019706",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-04-05",
-        "author": "David Sterling",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1775358019706.md"
-    },
-    {
         "id": "1775354426474",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Overcoming Report… · As a Product Manager, you live and breathe data.",
         "category": "Deep Insights",
         "date": "2026-04-05",
         "author": "Michael Chen",
@@ -2972,7 +2712,7 @@
     {
         "id": "1775350818375",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (28)",
         "category": "Tech Radar",
         "date": "2026-04-05",
         "author": "Marcus Webb",
@@ -2992,7 +2732,7 @@
     {
         "id": "1775343621223",
         "type": "news",
-        "title": "The Unseen Cost: AI's Growing Energy Appetite Sparks Industry Debate",
+        "title": "The Unseen Cost: AI's Growing Energy Appetite Sparks In… · While headlines tout AI's potential to revolutionize industries, a…",
         "category": "Tech Radar",
         "date": "2026-04-04",
         "author": "Sarah Jenkins",
@@ -3002,7 +2742,7 @@
     {
         "id": "1775340028042",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Over… · You know the feeling.",
         "category": "Deep Insights",
         "date": "2026-04-04",
         "author": "Alex Mercer",
@@ -3012,7 +2752,7 @@
     {
         "id": "1775336410829",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (29)",
         "category": "Tech Radar",
         "date": "2026-04-04",
         "author": "Marcus Webb",
@@ -3032,7 +2772,7 @@
     {
         "id": "1775329217146",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (11)",
         "category": "Tech Radar",
         "date": "2026-04-04",
         "author": "Olivia Thorne",
@@ -3042,7 +2782,7 @@
     {
         "id": "1775325624982",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · As a Product Manager, you live and breathe data.",
         "category": "Deep Insights",
         "date": "2026-04-04",
         "author": "Jessica Tran",
@@ -3052,7 +2792,7 @@
     {
         "id": "1775322018441",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (12)",
         "category": "Tech Radar",
         "date": "2026-04-04",
         "author": "Emily Rostova",
@@ -3062,7 +2802,7 @@
     {
         "id": "1775318426173",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We’ve all been there. (6)",
         "category": "Deep Insights",
         "date": "2026-04-04",
         "author": "Sarah Jenkins",
@@ -3072,7 +2812,7 @@
     {
         "id": "1775314815469",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (30)",
         "category": "Tech Radar",
         "date": "2026-04-04",
         "author": "Jessica Tran",
@@ -3082,7 +2822,7 @@
     {
         "id": "1775311221153",
         "type": "blog",
-        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Re… · As a Product Manager, your calendar is a battlefield.",
         "category": "Deep Insights",
         "date": "2026-04-04",
         "author": "Sarah Jenkins",
@@ -3092,7 +2832,7 @@
     {
         "id": "1775307616490",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot d (8)",
         "category": "Tech Radar",
         "date": "2026-04-04",
         "author": "Olivia Thorne",
@@ -3102,7 +2842,7 @@
     {
         "id": "1775304025818",
         "type": "blog",
-        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Re… · We've all been there.",
         "category": "Deep Insights",
         "date": "2026-04-04",
         "author": "Jessica Tran",
@@ -3112,7 +2852,7 @@
     {
         "id": "1775300415666",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (11)",
         "category": "Tech Radar",
         "date": "2026-04-04",
         "author": "Marcus Webb",
@@ -3122,7 +2862,7 @@
     {
         "id": "1775296825095",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Report… · You know the feeling.",
         "category": "Deep Insights",
         "date": "2026-04-04",
         "author": "Sarah Jenkins",
@@ -3132,7 +2872,7 @@
     {
         "id": "1775293218605",
         "type": "news",
-        "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
+        "title": "The Silent Shift: How AI is Rewriting the Code of Softw… · In a quiet revolution with seismic implications, artificial intell…",
         "category": "Tech Radar",
         "date": "2026-04-04",
         "author": "Marcus Webb",
@@ -3152,7 +2892,7 @@
     {
         "id": "1775286017517",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot d (9)",
         "category": "Tech Radar",
         "date": "2026-04-04",
         "author": "Emily Rostova",
@@ -3162,7 +2902,7 @@
     {
         "id": "1775282425868",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We’ve all been there. (7)",
         "category": "Deep Insights",
         "date": "2026-04-04",
         "author": "Emily Rostova",
@@ -3172,7 +2912,7 @@
     {
         "id": "1775278811368",
         "type": "news",
-        "title": "The Unseen Labor Behind AI's Public Face",
+        "title": "The Unseen Labor Behind AI's Public Face · While headlines tout AI's potential to rev (2)",
         "category": "Tech Radar",
         "date": "2026-04-04",
         "author": "Emily Rostova",
@@ -3182,7 +2922,7 @@
     {
         "id": "1775275223951",
         "type": "blog",
-        "title": "The PM's Guide to Curing Reporting Fatigue",
+        "title": "The PM's Guide to Curing Reporting Fatigue · We've all been there.",
         "category": "Deep Insights",
         "date": "2026-04-04",
         "author": "Olivia Thorne",
@@ -3192,7 +2932,7 @@
     {
         "id": "1775271616641",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summi… · The rapid advancement of artificial intell (7)",
         "category": "Tech Radar",
         "date": "2026-04-04",
         "author": "Jessica Tran",
@@ -3202,7 +2942,7 @@
     {
         "id": "1775268022285",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curi… · It’s 4:00 PM on a Friday.",
         "category": "Deep Insights",
         "date": "2026-04-04",
         "author": "Alex Mercer",
@@ -3212,7 +2952,7 @@
     {
         "id": "1775264422916",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (31)",
         "category": "Tech Radar",
         "date": "2026-04-04",
         "author": "Olivia Thorne",
@@ -3222,7 +2962,7 @@
     {
         "id": "1775260823663",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: How to Overcome Repo… · We've all been there. (2)",
         "category": "Deep Insights",
         "date": "2026-04-04",
         "author": "Alex Mercer",
@@ -3232,7 +2972,7 @@
     {
         "id": "1775257212640",
         "type": "news",
-        "title": "The Unseen Labor Behind AI's Public Face",
+        "title": "The Unseen Labor Behind AI's Public Face · While headlines tout AI's revolutionary potential, a growing chorus of experts is …",
         "category": "Tech Radar",
         "date": "2026-04-03",
         "author": "Sarah Jenkins",
@@ -3252,7 +2992,7 @@
     {
         "id": "1775250017308",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (12)",
         "category": "Tech Radar",
         "date": "2026-04-03",
         "author": "Jessica Tran",
@@ -3272,7 +3012,7 @@
     {
         "id": "1775242816293",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (13)",
         "category": "Tech Radar",
         "date": "2026-04-03",
         "author": "David Sterling",
@@ -3282,7 +3022,7 @@
     {
         "id": "1775239223854",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We’ve all been there. (8)",
         "category": "Deep Insights",
         "date": "2026-04-03",
         "author": "Michael Chen",
@@ -3292,7 +3032,7 @@
     {
         "id": "1775235612887",
         "type": "news",
-        "title": "The Unseen Cost of AI's Thirst: Data Centers Strain Global Resources",
+        "title": "The Unseen Cost of AI's Thirst: Data Centers Strain Glo… · As artificial intelligence models grow more sophisticated, a hidde…",
         "category": "Tech Radar",
         "date": "2026-04-03",
         "author": "Marcus Webb",
@@ -3312,7 +3052,7 @@
     {
         "id": "1775228416623",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (14)",
         "category": "Tech Radar",
         "date": "2026-04-03",
         "author": "Marcus Webb",
@@ -3322,7 +3062,7 @@
     {
         "id": "1775224825242",
         "type": "blog",
-        "title": "From Drudgery to Data-Driven: A PM's Guide to Conquering Reporting Fatigue",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Conquerin… · It’s 4 PM on a Friday.",
         "category": "Deep Insights",
         "date": "2026-04-03",
         "author": "Olivia Thorne",
@@ -3332,7 +3072,7 @@
     {
         "id": "1775221213513",
         "type": "news",
-        "title": "The Unseen Labor Behind AI's Public Face",
+        "title": "The Unseen Labor Behind AI's Public Face · While headlines tout AI's potential to rev (3)",
         "category": "Tech Radar",
         "date": "2026-04-03",
         "author": "Alex Mercer",
@@ -3352,7 +3092,7 @@
     {
         "id": "1775214015211",
         "type": "news",
-        "title": "AI Regulation Debate Intensifies as New Model Capabilities Outpace Legislation",
+        "title": "AI Regulation Debate Intensifies as New Model Capabilit… · The global conversation surrounding artificial intelligence regula…",
         "category": "Tech Radar",
         "date": "2026-04-03",
         "author": "Olivia Thorne",
@@ -3362,7 +3102,7 @@
     {
         "id": "1775210425921",
         "type": "blog",
-        "title": "From Data Dumps to Actionable Insights: A PM's Guide to Curing Reporting Fatigue",
+        "title": "From Data Dumps to Actionable Insights: A PM's Guide to… · We've all been there. (1)",
         "category": "Deep Insights",
         "date": "2026-04-03",
         "author": "Olivia Thorne",
@@ -3372,7 +3112,7 @@
     {
         "id": "1775206817189",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (13)",
         "category": "Tech Radar",
         "date": "2026-04-03",
         "author": "Marcus Webb",
@@ -3382,7 +3122,7 @@
     {
         "id": "1775203227010",
         "type": "blog",
-        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming … · We've all been there. (1)",
         "category": "Deep Insights",
         "date": "2026-04-03",
         "author": "Sarah Jenkins",
@@ -3392,7 +3132,7 @@
     {
         "id": "1775199622156",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (32)",
         "category": "Tech Radar",
         "date": "2026-04-03",
         "author": "Olivia Thorne",
@@ -3402,7 +3142,7 @@
     {
         "id": "1775196026614",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curi… · As a Product Manager, you live and die by  (1)",
         "category": "Deep Insights",
         "date": "2026-04-03",
         "author": "Olivia Thorne",
@@ -3410,19 +3150,9 @@
         "contentFile": "blog-1775196026614.md"
     },
     {
-        "id": "1775192416283",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
-        "category": "Tech Radar",
-        "date": "2026-04-03",
-        "author": "Olivia Thorne",
-        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, United States, and China finalizing starkly different...",
-        "contentFile": "news-1775192416283.md"
-    },
-    {
         "id": "1775188822817",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Report… · You know the feeling. (1)",
         "category": "Deep Insights",
         "date": "2026-04-03",
         "author": "David Sterling",
@@ -3432,7 +3162,7 @@
     {
         "id": "1775185218647",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summi… · The rapid advancement of artificial intell (8)",
         "category": "Tech Radar",
         "date": "2026-04-03",
         "author": "Marcus Webb",
@@ -3442,22 +3172,12 @@
     {
         "id": "1775181623285",
         "type": "blog",
-        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Re… · We've all been there. (1)",
         "category": "Deep Insights",
         "date": "2026-04-03",
         "author": "Emily Rostova",
         "excerpt": "We've all been there. It's the end of the week, the sprint, or the month, and that familiar dread sets in. It's time to \"pull the numbers.\" You spend...",
         "contentFile": "blog-1775181623285.md"
-    },
-    {
-        "id": "1775178019014",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
-        "category": "Tech Radar",
-        "date": "2026-04-03",
-        "author": "Marcus Webb",
-        "excerpt": "The race to govern artificial intelligence has entered a pivotal phase, with the European Union, United States, and China finalizing starkly different...",
-        "contentFile": "news-1775178019014.md"
     },
     {
         "id": "1775174424768",
@@ -3472,7 +3192,7 @@
     {
         "id": "1775170815164",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (14)",
         "category": "Tech Radar",
         "date": "2026-04-02",
         "author": "David Sterling",
@@ -3482,7 +3202,7 @@
     {
         "id": "1775167225406",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Report… · We’ve all been there. (1)",
         "category": "Deep Insights",
         "date": "2026-04-02",
         "author": "Marcus Webb",
@@ -3492,7 +3212,7 @@
     {
         "id": "1775163619710",
         "type": "news",
-        "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
+        "title": "The Silent Shift: How AI is Rewriting the Code of Softw… · In the hushed server rooms and on the glowing screens of developer…",
         "category": "Tech Radar",
         "date": "2026-04-02",
         "author": "Emily Rostova",
@@ -3502,7 +3222,7 @@
     {
         "id": "1775160024806",
         "type": "blog",
-        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Re… · As a Product Manager, you live and breathe data.",
         "category": "Deep Insights",
         "date": "2026-04-02",
         "author": "Jessica Tran",
@@ -3512,7 +3232,7 @@
     {
         "id": "1775156416436",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (15)",
         "category": "Tech Radar",
         "date": "2026-04-02",
         "author": "David Sterling",
@@ -3522,7 +3242,7 @@
     {
         "id": "1775152827457",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Report… · We've all been there.",
         "category": "Deep Insights",
         "date": "2026-04-02",
         "author": "Jessica Tran",
@@ -3532,7 +3252,7 @@
     {
         "id": "1775149223853",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (14)",
         "category": "Tech Radar",
         "date": "2026-04-02",
         "author": "Olivia Thorne",
@@ -3542,7 +3262,7 @@
     {
         "id": "1775145626820",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · As a Product Manager, you live and breathe (1)",
         "category": "Deep Insights",
         "date": "2026-04-02",
         "author": "Marcus Webb",
@@ -3550,19 +3270,9 @@
         "contentFile": "blog-1775145626820.md"
     },
     {
-        "id": "1775142024850",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-04-02",
-        "author": "Sarah Jenkins",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1775142024850.md"
-    },
-    {
         "id": "1775138425571",
         "type": "blog",
-        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming … · We've all been there. (2)",
         "category": "Deep Insights",
         "date": "2026-04-02",
         "author": "David Sterling",
@@ -3572,7 +3282,7 @@
     {
         "id": "1775134830108",
         "type": "news",
-        "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
+        "title": "The Silent Shift: How AI is Rewriting the Code of Softw… · In a move that signals a profound, yet qui (1)",
         "category": "Tech Radar",
         "date": "2026-04-02",
         "author": "David Sterling",
@@ -3592,7 +3302,7 @@
     {
         "id": "1775127619409",
         "type": "news",
-        "title": "The Unseen Labor Behind AI's Public Face",
+        "title": "The Unseen Labor Behind AI's Public Face · While headlines tout AI's potential to rev (4)",
         "category": "Tech Radar",
         "date": "2026-04-02",
         "author": "David Sterling",
@@ -3602,7 +3312,7 @@
     {
         "id": "1775124027708",
         "type": "blog",
-        "title": "From Data Dumps to Actionable Insights: A PM's Guide to Curing Reporting Fatigue",
+        "title": "From Data Dumps to Actionable Insights: A PM's Guide to… · We've all been there. (2)",
         "category": "Deep Insights",
         "date": "2026-04-02",
         "author": "Emily Rostova",
@@ -3612,7 +3322,7 @@
     {
         "id": "1775120429561",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot d (10)",
         "category": "Tech Radar",
         "date": "2026-04-02",
         "author": "Olivia Thorne",
@@ -3622,7 +3332,7 @@
     {
         "id": "1775116826682",
         "type": "blog",
-        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Re… · We've all been there. (2)",
         "category": "Deep Insights",
         "date": "2026-04-02",
         "author": "Michael Chen",
@@ -3632,7 +3342,7 @@
     {
         "id": "1775113225671",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot d (11)",
         "category": "Tech Radar",
         "date": "2026-04-02",
         "author": "Sarah Jenkins",
@@ -3642,7 +3352,7 @@
     {
         "id": "1775109625156",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We’ve all been there. (9)",
         "category": "Deep Insights",
         "date": "2026-04-02",
         "author": "Olivia Thorne",
@@ -3652,7 +3362,7 @@
     {
         "id": "1775106020567",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (33)",
         "category": "Tech Radar",
         "date": "2026-04-02",
         "author": "Olivia Thorne",
@@ -3672,7 +3382,7 @@
     {
         "id": "1775098825516",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot d (12)",
         "category": "Tech Radar",
         "date": "2026-04-02",
         "author": "Emily Rostova",
@@ -3682,22 +3392,12 @@
     {
         "id": "1775095225626",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Report… · As a Project Manager, you live and breathe data.",
         "category": "Deep Insights",
         "date": "2026-04-02",
         "author": "David Sterling",
         "excerpt": "As a Project Manager, you live and breathe data. Status reports, burn-down charts, velocity metrics, budget variance analyses—they are the lifeblood o...",
         "contentFile": "blog-1775095225626.md"
-    },
-    {
-        "id": "1775091618727",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-04-02",
-        "author": "Alex Mercer",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1775091618727.md"
     },
     {
         "id": "1775088026637",
@@ -3712,7 +3412,7 @@
     {
         "id": "1775084419750",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summi… · The rapid advancement of artificial intell (9)",
         "category": "Tech Radar",
         "date": "2026-04-01",
         "author": "David Sterling",
@@ -3722,7 +3422,7 @@
     {
         "id": "1775080827108",
         "type": "blog",
-        "title": "Beyond the Status Update: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Status Update: A PM's Guide to Curing Report… · We’ve all been there.",
         "category": "Deep Insights",
         "date": "2026-04-01",
         "author": "Emily Rostova",
@@ -3732,7 +3432,7 @@
     {
         "id": "1775077224722",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (15)",
         "category": "Tech Radar",
         "date": "2026-04-01",
         "author": "Emily Rostova",
@@ -3742,7 +3442,7 @@
     {
         "id": "1775073625376",
         "type": "blog",
-        "title": "Beyond the Status Update: Curing Reporting Fatigue for Good",
+        "title": "Beyond the Status Update: Curing Reporting Fatigue for … · It's 4 PM on a Friday.",
         "category": "Deep Insights",
         "date": "2026-04-01",
         "author": "Jessica Tran",
@@ -3752,7 +3452,7 @@
     {
         "id": "1775070017293",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (34)",
         "category": "Tech Radar",
         "date": "2026-04-01",
         "author": "Olivia Thorne",
@@ -3762,7 +3462,7 @@
     {
         "id": "1775066427626",
         "type": "blog",
-        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Re… · We've all been there. (3)",
         "category": "Deep Insights",
         "date": "2026-04-01",
         "author": "Jessica Tran",
@@ -3772,7 +3472,7 @@
     {
         "id": "1775062822112",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot d (13)",
         "category": "Tech Radar",
         "date": "2026-04-01",
         "author": "Jessica Tran",
@@ -3782,7 +3482,7 @@
     {
         "id": "1775059224994",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · It’s Monday morning.",
         "category": "Deep Insights",
         "date": "2026-04-01",
         "author": "Emily Rostova",
@@ -3792,7 +3492,7 @@
     {
         "id": "1775055623178",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (16)",
         "category": "Tech Radar",
         "date": "2026-04-01",
         "author": "Olivia Thorne",
@@ -3802,7 +3502,7 @@
     {
         "id": "1775052026683",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Report… · As a Product Manager, you live and breathe data.",
         "category": "Deep Insights",
         "date": "2026-04-01",
         "author": "Emily Rostova",
@@ -3812,7 +3512,7 @@
     {
         "id": "1775048424073",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (16)",
         "category": "Tech Radar",
         "date": "2026-04-01",
         "author": "Olivia Thorne",
@@ -3822,7 +3522,7 @@
     {
         "id": "1775044825469",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Report… · As a Product Manager, you live and breathe (1)",
         "category": "Deep Insights",
         "date": "2026-04-01",
         "author": "Alex Mercer",
@@ -3830,19 +3530,9 @@
         "contentFile": "blog-1775044825469.md"
     },
     {
-        "id": "1775041223524",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-04-01",
-        "author": "Olivia Thorne",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1775041223524.md"
-    },
-    {
         "id": "1775037623426",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (19)",
         "category": "Deep Insights",
         "date": "2026-04-01",
         "author": "Marcus Webb",
@@ -3852,7 +3542,7 @@
     {
         "id": "1775034026131",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (35)",
         "category": "Tech Radar",
         "date": "2026-04-01",
         "author": "David Sterling",
@@ -3862,7 +3552,7 @@
     {
         "id": "1775030425701",
         "type": "blog",
-        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Re… · It’s 4:00 PM on a Friday.",
         "category": "Deep Insights",
         "date": "2026-04-01",
         "author": "Alex Mercer",
@@ -3872,7 +3562,7 @@
     {
         "id": "1775026823445",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summi… · The rapid advancement of artificial intell (10)",
         "category": "Tech Radar",
         "date": "2026-04-01",
         "author": "Jessica Tran",
@@ -3882,7 +3572,7 @@
     {
         "id": "1775023225811",
         "type": "blog",
-        "title": "From Data Dumps to Actionable Insights: A PM's Guide to Curing Reporting Fatigue",
+        "title": "From Data Dumps to Actionable Insights: A PM's Guide to… · We've all been there. (3)",
         "category": "Deep Insights",
         "date": "2026-04-01",
         "author": "Olivia Thorne",
@@ -3890,34 +3580,14 @@
         "contentFile": "blog-1775023225811.md"
     },
     {
-        "id": "1775019627887",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
-        "category": "Tech Radar",
-        "date": "2026-04-01",
-        "author": "Alex Mercer",
-        "excerpt": "While headlines chase the latest chatbot drama or doomsday scenarios, a quiet revolution is unfolding in the background. Across industries, artificial...",
-        "contentFile": "news-1775019627887.md"
-    },
-    {
         "id": "1775016023975",
         "type": "blog",
-        "title": "Drowning in Data? A PM's Guide to Curing Reporting Fatigue",
+        "title": "Drowning in Data? A PM's Guide to Curing Reporting Fatigue · We’ve all been there.",
         "category": "Deep Insights",
         "date": "2026-04-01",
         "author": "Alex Mercer",
         "excerpt": "We’ve all been there. It’s 4 PM on a Friday, and instead of planning the weekend, you’re wrestling with a spreadsheet. You're pulling data from three...",
         "contentFile": "blog-1775016023975.md"
-    },
-    {
-        "id": "1775012424538",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
-        "category": "Tech Radar",
-        "date": "2026-04-01",
-        "author": "Marcus Webb",
-        "excerpt": "The narrative around artificial intelligence has long been dominated by a binary debate: job creation versus job destruction. Headlines warn of mass u...",
-        "contentFile": "news-1775012424538.md"
     },
     {
         "id": "1775008825139",
@@ -3928,16 +3598,6 @@
         "author": "Emily Rostova",
         "excerpt": "It’s a familiar scene in any modern workplace: the Monday morning inbox, flooded with automated status reports. The weekly performance dashboard that...",
         "contentFile": "blog-1775008825139.md"
-    },
-    {
-        "id": "1775005229778",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-04-01",
-        "author": "Michael Chen",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1775005229778.md"
     },
     {
         "id": "1775001627348",
@@ -3952,7 +3612,7 @@
     {
         "id": "1774998020783",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot d (14)",
         "category": "Tech Radar",
         "date": "2026-03-31",
         "author": "Sarah Jenkins",
@@ -3962,7 +3622,7 @@
     {
         "id": "1774994423255",
         "type": "blog",
-        "title": "From Data Dumps to Actionable Insights: Conquering Reporting Fatigue",
+        "title": "From Data Dumps to Actionable Insights: Conquering Repo… · As a Product Manager, you live and die by data.",
         "category": "Deep Insights",
         "date": "2026-03-31",
         "author": "Emily Rostova",
@@ -3972,7 +3632,7 @@
     {
         "id": "1774990820054",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (36)",
         "category": "Tech Radar",
         "date": "2026-03-31",
         "author": "David Sterling",
@@ -3982,7 +3642,7 @@
     {
         "id": "1774987223268",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We’ve all been there. (10)",
         "category": "Deep Insights",
         "date": "2026-03-31",
         "author": "Marcus Webb",
@@ -3992,7 +3652,7 @@
     {
         "id": "1774983615413",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (15)",
         "category": "Tech Radar",
         "date": "2026-03-31",
         "author": "Marcus Webb",
@@ -4002,7 +3662,7 @@
     {
         "id": "1774980026803",
         "type": "blog",
-        "title": "Beyond the Dashboard: How to Conquer Reporting Fatigue",
+        "title": "Beyond the Dashboard: How to Conquer Reporting Fatigue · As a Product or Project Manager, you live and breathe data.",
         "category": "Deep Insights",
         "date": "2026-03-31",
         "author": "David Sterling",
@@ -4012,7 +3672,7 @@
     {
         "id": "1774976424153",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot d (15)",
         "category": "Tech Radar",
         "date": "2026-03-31",
         "author": "Jessica Tran",
@@ -4022,7 +3682,7 @@
     {
         "id": "1774972825201",
         "type": "blog",
-        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Re… · As a Project Manager, you live and breathe data.",
         "category": "Deep Insights",
         "date": "2026-03-31",
         "author": "Emily Rostova",
@@ -4032,7 +3692,7 @@
     {
         "id": "1774969217642",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (37)",
         "category": "Tech Radar",
         "date": "2026-03-31",
         "author": "Emily Rostova",
@@ -4042,7 +3702,7 @@
     {
         "id": "1774965624568",
         "type": "blog",
-        "title": "Beyond the Dashboard: Curing Your Team's Reporting Fatigue",
+        "title": "Beyond the Dashboard: Curing Your Team's Reporting Fatigue · As a Project Manager, you live by data.",
         "category": "Deep Insights",
         "date": "2026-03-31",
         "author": "Michael Chen",
@@ -4052,7 +3712,7 @@
     {
         "id": "1774962024255",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summi… · The rapid advancement of artificial intell (11)",
         "category": "Tech Radar",
         "date": "2026-03-31",
         "author": "Michael Chen",
@@ -4062,7 +3722,7 @@
     {
         "id": "1774958425862",
         "type": "blog",
-        "title": "From Data Dumps to Actionable Insights: A PM's Guide to Curing Reporting Fatigue",
+        "title": "From Data Dumps to Actionable Insights: A PM's Guide to… · We've all been there. (4)",
         "category": "Deep Insights",
         "date": "2026-03-31",
         "author": "Marcus Webb",
@@ -4072,7 +3732,7 @@
     {
         "id": "1774954827730",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (17)",
         "category": "Tech Radar",
         "date": "2026-03-31",
         "author": "Olivia Thorne",
@@ -4082,7 +3742,7 @@
     {
         "id": "1774951226358",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: How to Overcome Repo… · We’ve all been there.",
         "category": "Deep Insights",
         "date": "2026-03-31",
         "author": "Sarah Jenkins",
@@ -4092,7 +3752,7 @@
     {
         "id": "1774947617613",
         "type": "news",
-        "title": "The Unseen Labor Behind AI's Public Face",
+        "title": "The Unseen Labor Behind AI's Public Face · While headlines tout AI's potential to rev (5)",
         "category": "Tech Radar",
         "date": "2026-03-31",
         "author": "Marcus Webb",
@@ -4122,7 +3782,7 @@
     {
         "id": "1774933220124",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (17)",
         "category": "Tech Radar",
         "date": "2026-03-31",
         "author": "Alex Mercer",
@@ -4132,7 +3792,7 @@
     {
         "id": "1774929626010",
         "type": "blog",
-        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Re… · We've all been there. (4)",
         "category": "Deep Insights",
         "date": "2026-03-31",
         "author": "Sarah Jenkins",
@@ -4142,7 +3802,7 @@
     {
         "id": "1774926017681",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (16)",
         "category": "Tech Radar",
         "date": "2026-03-31",
         "author": "Jessica Tran",
@@ -4152,7 +3812,7 @@
     {
         "id": "1774922436138",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (20)",
         "category": "Deep Insights",
         "date": "2026-03-31",
         "author": "Emily Rostova",
@@ -4160,19 +3820,9 @@
         "contentFile": "blog-1774922436138.md"
     },
     {
-        "id": "1774918829200",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
-        "category": "Tech Radar",
-        "date": "2026-03-31",
-        "author": "David Sterling",
-        "excerpt": "The narrative around artificial intelligence has long been dominated by a binary, dystopian debate: will AI create new frontiers of productivity or wi...",
-        "contentFile": "news-1774918829200.md"
-    },
-    {
         "id": "1774915224509",
         "type": "blog",
-        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming … · We’ve all been there. (3)",
         "category": "Deep Insights",
         "date": "2026-03-31",
         "author": "Marcus Webb",
@@ -4182,7 +3832,7 @@
     {
         "id": "1774911614695",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (38)",
         "category": "Tech Radar",
         "date": "2026-03-30",
         "author": "Michael Chen",
@@ -4192,7 +3842,7 @@
     {
         "id": "1774908026089",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curi… · We've all been there. (5)",
         "category": "Deep Insights",
         "date": "2026-03-30",
         "author": "Jessica Tran",
@@ -4202,7 +3852,7 @@
     {
         "id": "1774904413733",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intelligence has thrust internat…",
         "category": "Tech Radar",
         "date": "2026-03-30",
         "author": "Alex Mercer",
@@ -4212,7 +3862,7 @@
     {
         "id": "1774900827818",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Overcoming Report… · We’ve all been there.",
         "category": "Deep Insights",
         "date": "2026-03-30",
         "author": "Emily Rostova",
@@ -4222,7 +3872,7 @@
     {
         "id": "1774897217814",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (39)",
         "category": "Tech Radar",
         "date": "2026-03-30",
         "author": "Sarah Jenkins",
@@ -4232,7 +3882,7 @@
     {
         "id": "1774890021340",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (17)",
         "category": "Tech Radar",
         "date": "2026-03-30",
         "author": "Sarah Jenkins",
@@ -4242,7 +3892,7 @@
     {
         "id": "1774882825331",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (18)",
         "category": "Tech Radar",
         "date": "2026-03-30",
         "author": "Emily Rostova",
@@ -4252,7 +3902,7 @@
     {
         "id": "1774879227706",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Overcoming Report… · It’s 4:00 PM on a Friday.",
         "category": "Deep Insights",
         "date": "2026-03-30",
         "author": "Alex Mercer",
@@ -4262,7 +3912,7 @@
     {
         "id": "1774875624827",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet From the Inside Out",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Fr… · The internet is undergoing a fundamental transformation, but not w…",
         "category": "Tech Radar",
         "date": "2026-03-30",
         "author": "Sarah Jenkins",
@@ -4272,7 +3922,7 @@
     {
         "id": "1774872025436",
         "type": "blog",
-        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming … · You know the feeling.",
         "category": "Deep Insights",
         "date": "2026-03-30",
         "author": "Jessica Tran",
@@ -4280,19 +3930,9 @@
         "contentFile": "blog-1774872025436.md"
     },
     {
-        "id": "1774868426570",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-03-30",
-        "author": "Michael Chen",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1774868426570.md"
-    },
-    {
         "id": "1774864824832",
         "type": "blog",
-        "title": "Overcoming Reporting Fatigue: A PM's Guide to Meaningful Metrics",
+        "title": "Overcoming Reporting Fatigue: A PM's Guide to Meaningfu… · You know the feeling.",
         "category": "Deep Insights",
         "date": "2026-03-30",
         "author": "David Sterling",
@@ -4300,19 +3940,9 @@
         "contentFile": "blog-1774864824832.md"
     },
     {
-        "id": "1774861219695",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
-        "category": "Tech Radar",
-        "date": "2026-03-30",
-        "author": "Jessica Tran",
-        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory scramble, with the European Union, United States, and China charting starkly...",
-        "contentFile": "news-1774861219695.md"
-    },
-    {
         "id": "1774857626448",
         "type": "blog",
-        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Re… · We've all been there. (5)",
         "category": "Deep Insights",
         "date": "2026-03-30",
         "author": "David Sterling",
@@ -4320,19 +3950,9 @@
         "contentFile": "blog-1774857626448.md"
     },
     {
-        "id": "1774854025486",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-03-30",
-        "author": "Jessica Tran",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1774854025486.md"
-    },
-    {
         "id": "1774850425551",
         "type": "blog",
-        "title": "Beyond the Status Update: A PM's Guide to Conquering Reporting Fatigue",
+        "title": "Beyond the Status Update: A PM's Guide to Conquering Re… · It’s Sunday evening.",
         "category": "Deep Insights",
         "date": "2026-03-30",
         "author": "Alex Mercer",
@@ -4342,7 +3962,7 @@
     {
         "id": "1774846818968",
         "type": "news",
-        "title": "The Unseen Labor Behind AI's Public Face",
+        "title": "The Unseen Labor Behind AI's Public Face · While headlines tout AI's potential to rev (6)",
         "category": "Tech Radar",
         "date": "2026-03-30",
         "author": "Marcus Webb",
@@ -4362,7 +3982,7 @@
     {
         "id": "1774839615280",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (40)",
         "category": "Tech Radar",
         "date": "2026-03-30",
         "author": "Emily Rostova",
@@ -4380,19 +4000,9 @@
         "contentFile": "blog-1774836023728.md"
     },
     {
-        "id": "1774832428868",
-        "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
-        "category": "Tech Radar",
-        "date": "2026-03-30",
-        "author": "Jessica Tran",
-        "excerpt": "The rapid evolution of artificial intelligence has triggered a regulatory scramble, with the United States, European Union, and China charting starkly...",
-        "contentFile": "news-1774832428868.md"
-    },
-    {
         "id": "1774828825665",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (21)",
         "category": "Deep Insights",
         "date": "2026-03-30",
         "author": "Jessica Tran",
@@ -4402,7 +4012,7 @@
     {
         "id": "1774825217153",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · While headlines often focus on AI-driven l (4)",
         "category": "Tech Radar",
         "date": "2026-03-29",
         "author": "Alex Mercer",
@@ -4422,7 +4032,7 @@
     {
         "id": "1774818017402",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (18)",
         "category": "Tech Radar",
         "date": "2026-03-29",
         "author": "Marcus Webb",
@@ -4432,7 +4042,7 @@
     {
         "id": "1774814423405",
         "type": "blog",
-        "title": "Beyond the Status Update: A PM's Deep-Dive into Curing Reporting Fatigue",
+        "title": "Beyond the Status Update: A PM's Deep-Dive into Curing … · It's Monday morning.",
         "category": "Deep Insights",
         "date": "2026-03-29",
         "author": "Jessica Tran",
@@ -4442,7 +4052,7 @@
     {
         "id": "1774810821529",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (19)",
         "category": "Tech Radar",
         "date": "2026-03-29",
         "author": "Michael Chen",
@@ -4452,7 +4062,7 @@
     {
         "id": "1774807226813",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We’ve all been there. (11)",
         "category": "Deep Insights",
         "date": "2026-03-29",
         "author": "Marcus Webb",
@@ -4462,7 +4072,7 @@
     {
         "id": "1774803620351",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (19)",
         "category": "Tech Radar",
         "date": "2026-03-29",
         "author": "David Sterling",
@@ -4480,19 +4090,9 @@
         "contentFile": "blog-1774800027282.md"
     },
     {
-        "id": "1774796423259",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-03-29",
-        "author": "Jessica Tran",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1774796423259.md"
-    },
-    {
         "id": "1774792827395",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · It’s Sunday night.",
         "category": "Deep Insights",
         "date": "2026-03-29",
         "author": "Sarah Jenkins",
@@ -4502,7 +4102,7 @@
     {
         "id": "1774789222576",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (18)",
         "category": "Tech Radar",
         "date": "2026-03-29",
         "author": "Alex Mercer",
@@ -4512,7 +4112,7 @@
     {
         "id": "1774785628745",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We’ve all been there. (12)",
         "category": "Deep Insights",
         "date": "2026-03-29",
         "author": "Emily Rostova",
@@ -4522,7 +4122,7 @@
     {
         "id": "1774782022273",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summi… · The world's leading AI developers and poli (2)",
         "category": "Tech Radar",
         "date": "2026-03-29",
         "author": "Marcus Webb",
@@ -4532,7 +4132,7 @@
     {
         "id": "1774778428425",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Report… · As a Product Manager, you live and breathe (2)",
         "category": "Deep Insights",
         "date": "2026-03-29",
         "author": "Alex Mercer",
@@ -4542,7 +4142,7 @@
     {
         "id": "1774774830583",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (20)",
         "category": "Tech Radar",
         "date": "2026-03-29",
         "author": "David Sterling",
@@ -4552,7 +4152,7 @@
     {
         "id": "1774771227221",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: How to Overcome Repo… · As a Product Manager, you live and die by data.",
         "category": "Deep Insights",
         "date": "2026-03-29",
         "author": "Sarah Jenkins",
@@ -4560,19 +4160,9 @@
         "contentFile": "blog-1774771227221.md"
     },
     {
-        "id": "1774767624297",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
-        "category": "Tech Radar",
-        "date": "2026-03-29",
-        "author": "Alex Mercer",
-        "excerpt": "While flashy chatbots and image generators dominate headlines, a more profound—and often invisible—transformation is underway. Across the globe, artif...",
-        "contentFile": "news-1774767624297.md"
-    },
-    {
         "id": "1774764026428",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Overcoming Report… · We've all been there. (1)",
         "category": "Deep Insights",
         "date": "2026-03-29",
         "author": "Olivia Thorne",
@@ -4582,7 +4172,7 @@
     {
         "id": "1774760420016",
         "type": "news",
-        "title": "AI Regulation Debate Intensifies as New Model Capabilities Outpace Legislation",
+        "title": "AI Regulation Debate Intensifies as New Model Capabilit… · The rapid advancement of artificial intelligence has ignited a glo…",
         "category": "Tech Radar",
         "date": "2026-03-29",
         "author": "Alex Mercer",
@@ -4592,7 +4182,7 @@
     {
         "id": "1774756825737",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curi… · You know the feeling.",
         "category": "Deep Insights",
         "date": "2026-03-29",
         "author": "Emily Rostova",
@@ -4602,7 +4192,7 @@
     {
         "id": "1774753219923",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (41)",
         "category": "Tech Radar",
         "date": "2026-03-29",
         "author": "Alex Mercer",
@@ -4612,7 +4202,7 @@
     {
         "id": "1774749625408",
         "type": "blog",
-        "title": "Beyond the Dashboard: Conquering Reporting Fatigue",
+        "title": "Beyond the Dashboard: Conquering Reporting Fatigue · We've all been there.",
         "category": "Deep Insights",
         "date": "2026-03-29",
         "author": "Olivia Thorne",
@@ -4622,7 +4212,7 @@
     {
         "id": "1774746025891",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (20)",
         "category": "Tech Radar",
         "date": "2026-03-29",
         "author": "Emily Rostova",
@@ -4632,7 +4222,7 @@
     {
         "id": "1774742421019",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We’ve all been there. (13)",
         "category": "Deep Insights",
         "date": "2026-03-29",
         "author": "Emily Rostova",
@@ -4642,7 +4232,7 @@
     {
         "id": "1774738824729",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (21)",
         "category": "Tech Radar",
         "date": "2026-03-28",
         "author": "Olivia Thorne",
@@ -4652,7 +4242,7 @@
     {
         "id": "1774735223664",
         "type": "blog",
-        "title": "Beyond the Status Update: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Status Update: A PM's Guide to Curing Report… · As a Product Manager, you live and breathe data.",
         "category": "Deep Insights",
         "date": "2026-03-28",
         "author": "Alex Mercer",
@@ -4662,7 +4252,7 @@
     {
         "id": "1774731621414",
         "type": "news",
-        "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
+        "title": "The Silent Shift: How AI is Rewriting the Code of Softw… · In the hushed server rooms and on the glow (1)",
         "category": "Tech Radar",
         "date": "2026-03-28",
         "author": "Marcus Webb",
@@ -4672,7 +4262,7 @@
     {
         "id": "1774728021699",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · The scene is familiar to any product or project manager.",
         "category": "Deep Insights",
         "date": "2026-03-28",
         "author": "David Sterling",
@@ -4682,7 +4272,7 @@
     {
         "id": "1774724419427",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summi… · The rapid advancement of artificial intell (12)",
         "category": "Tech Radar",
         "date": "2026-03-28",
         "author": "Olivia Thorne",
@@ -4692,7 +4282,7 @@
     {
         "id": "1774720827786",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting … · We've all been there. (22)",
         "category": "Deep Insights",
         "date": "2026-03-28",
         "author": "Olivia Thorne",
@@ -4700,19 +4290,9 @@
         "contentFile": "blog-1774720827786.md"
     },
     {
-        "id": "1774717222300",
-        "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
-        "category": "Tech Radar",
-        "date": "2026-03-28",
-        "author": "Alex Mercer",
-        "excerpt": "The narrative around artificial intelligence has long been dominated by a binary debate: job creation versus job destruction. Headlines warn of mass u...",
-        "contentFile": "news-1774717222300.md"
-    },
-    {
         "id": "1774713624792",
         "type": "blog",
-        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Reporting Fatigue",
+        "title": "From Drudgery to Data-Driven: A PM's Guide to Curing Re… · As a Project Manager, you live and breathe (1)",
         "category": "Deep Insights",
         "date": "2026-03-28",
         "author": "Sarah Jenkins",
@@ -4722,7 +4302,7 @@
     {
         "id": "1774710017396",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (42)",
         "category": "Tech Radar",
         "date": "2026-03-28",
         "author": "David Sterling",
@@ -4742,7 +4322,7 @@
     {
         "id": "1774702827575",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (22)",
         "category": "Tech Radar",
         "date": "2026-03-28",
         "author": "Emily Rostova",
@@ -4762,7 +4342,7 @@
     {
         "id": "1774695617519",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (43)",
         "category": "Tech Radar",
         "date": "2026-03-28",
         "author": "Marcus Webb",
@@ -4782,7 +4362,7 @@
     {
         "id": "1774688425552",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Summit Convenes",
+        "title": "AI Regulation Reaches Critical Juncture as Global Summi… · The world's leading technology powers are gathering in Brussels th…",
         "category": "Tech Radar",
         "date": "2026-03-28",
         "author": "Michael Chen",
@@ -4792,7 +4372,7 @@
     {
         "id": "1774684825650",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: How to Overcome Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: How to Overcome Repo… · It's Friday afternoon.",
         "category": "Deep Insights",
         "date": "2026-03-28",
         "author": "Alex Mercer",
@@ -4802,7 +4382,7 @@
     {
         "id": "1774681224813",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Forge Divergent Paths",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (44)",
         "category": "Tech Radar",
         "date": "2026-03-28",
         "author": "Michael Chen",
@@ -4812,7 +4392,7 @@
     {
         "id": "1774677627121",
         "type": "blog",
-        "title": "Beyond the Status Update: A PM's Guide to Curing Reporting Fatigue",
+        "title": "Beyond the Status Update: A PM's Guide to Curing Report… · We’ve all been there. (1)",
         "category": "Deep Insights",
         "date": "2026-03-28",
         "author": "Sarah Jenkins",
@@ -4822,7 +4402,7 @@
     {
         "id": "1774674022085",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot sensation or AI-generated…",
         "category": "Tech Radar",
         "date": "2026-03-28",
         "author": "Jessica Tran",
@@ -4842,7 +4422,7 @@
     {
         "id": "1774666819463",
         "type": "news",
-        "title": "The Unseen Cost of AI's Thirst: Data Centers Strain Global Resources",
+        "title": "The Unseen Cost of AI's Thirst: Data Centers Strain Glo… · The relentless expansion of artificial intelligence is colliding w…",
         "category": "Tech Radar",
         "date": "2026-03-28",
         "author": "Marcus Webb",
@@ -4852,7 +4432,7 @@
     {
         "id": "1774663225165",
         "type": "blog",
-        "title": "The Silent Project Killer: A PM's Guide to Curing Reporting Fatigue",
+        "title": "The Silent Project Killer: A PM's Guide to Curing Repor… · As a Product Manager, you live and breathe data.",
         "category": "Deep Insights",
         "date": "2026-03-28",
         "author": "Sarah Jenkins",
@@ -4862,7 +4442,7 @@
     {
         "id": "1774659626159",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (21)",
         "category": "Tech Radar",
         "date": "2026-03-28",
         "author": "Olivia Thorne",
@@ -4872,7 +4452,7 @@
     {
         "id": "1774656025536",
         "type": "blog",
-        "title": "Beyond the Dashboard: Curing Reporting Fatigue and Reclaiming Your Team's Focus",
+        "title": "Beyond the Dashboard: Curing Reporting Fatigue and Recl… · The Sunday Scaries hit, but it's not the upcoming meetings you're …",
         "category": "Deep Insights",
         "date": "2026-03-28",
         "author": "David Sterling",
@@ -4882,7 +4462,7 @@
     {
         "id": "1774652421197",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The rapid evolution of artificial intellig (45)",
         "category": "Tech Radar",
         "date": "2026-03-27",
         "author": "Marcus Webb",
@@ -4892,7 +4472,7 @@
     {
         "id": "1774648825163",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Deep-Dive into Curing Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Deep-Dive into Curing Repo… · It’s 7 PM on a Tuesday.",
         "category": "Deep Insights",
         "date": "2026-03-27",
         "author": "Jessica Tran",
@@ -4902,7 +4482,7 @@
     {
         "id": "1774645222737",
         "type": "news",
-        "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
+        "title": "The Silent Shift: How AI is Rewriting the Code of Softw… · In the hushed server farms and on the glowing screens of developer…",
         "category": "Tech Radar",
         "date": "2026-03-27",
         "author": "Alex Mercer",
@@ -4912,7 +4492,7 @@
     {
         "id": "1774641623397",
         "type": "blog",
-        "title": "Beyond the Update: A PM's Guide to Conquering Reporting Fatigue",
+        "title": "Beyond the Update: A PM's Guide to Conquering Reporting… · It’s Sunday night.",
         "category": "Deep Insights",
         "date": "2026-03-27",
         "author": "Alex Mercer",
@@ -4922,7 +4502,7 @@
     {
         "id": "1774638021126",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Productivity Without Fanfare",
+        "title": "The Silent Shift: How AI is Redefining Productivity Wit… · While headlines chase the latest chatbot d (16)",
         "category": "Tech Radar",
         "date": "2026-03-27",
         "author": "Emily Rostova",
@@ -4942,7 +4522,7 @@
     {
         "id": "1774630830171",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redefining Work Without Firing a Single Person",
+        "title": "The Silent Shift: How AI is Redefining Work Without Fir… · The narrative around artificial intelligen (23)",
         "category": "Tech Radar",
         "date": "2026-03-27",
         "author": "David Sterling",
@@ -4952,7 +4532,7 @@
     {
         "id": "1774627227098",
         "type": "blog",
-        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming Reporting Fatigue",
+        "title": "Taming the Reporting Beast: A PM's Guide to Overcoming … · We’ve all been there. (4)",
         "category": "Deep Insights",
         "date": "2026-03-27",
         "author": "Olivia Thorne",
@@ -4962,7 +4542,7 @@
     {
         "id": "1774623625657",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (22)",
         "category": "Tech Radar",
         "date": "2026-03-27",
         "author": "David Sterling",
@@ -4972,7 +4552,7 @@
     {
         "id": "1774620028083",
         "type": "blog",
-        "title": "Beyond the Dashboard: A PM's Guide to Conquering Reporting Fatigue",
+        "title": "Beyond the Dashboard: A PM's Guide to Conquering Report… · We've all been there. (1)",
         "category": "Deep Insights",
         "date": "2026-03-27",
         "author": "Emily Rostova",
@@ -4982,7 +4562,7 @@
     {
         "id": "1774616429284",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet From the Inside Out",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Fr… · The internet is undergoing a fundamental, yet nearly invisible, tr…",
         "category": "Tech Radar",
         "date": "2026-03-27",
         "author": "Marcus Webb",
@@ -5002,7 +4582,7 @@
     {
         "id": "1774609222496",
         "type": "news",
-        "title": "AI Regulation Debate Intensifies as New Models Challenge Existing Frameworks",
+        "title": "AI Regulation Debate Intensifies as New Models Challeng… · The global conversation surrounding artificial intelligence regula…",
         "category": "Tech Radar",
         "date": "2026-03-27",
         "author": "Emily Rostova",
@@ -5012,7 +4592,7 @@
     {
         "id": "1774605624534",
         "type": "blog",
-        "title": "The Silent Killer of Productivity: A PM's Guide to Curing Reporting Fatigue",
+        "title": "The Silent Killer of Productivity: A PM's Guide to Curi… · We've all been there. (6)",
         "category": "Deep Insights",
         "date": "2026-03-27",
         "author": "Michael Chen",
@@ -5022,7 +4602,7 @@
     {
         "id": "1774602025364",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (19)",
         "category": "Tech Radar",
         "date": "2026-03-27",
         "author": "Olivia Thorne",
@@ -5042,7 +4622,7 @@
     {
         "id": "1774599932701",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (23)",
         "category": "Tech Radar",
         "date": "2026-03-27",
         "author": "Michael Chen",
@@ -5052,7 +4632,7 @@
     {
         "id": "1774591222568",
         "type": "news",
-        "title": "AI Regulation Reaches Critical Juncture as Global Powers Draft Divergent Frameworks",
+        "title": "AI Regulation Reaches Critical Juncture as Global Power… · The race to govern artificial intelligence (20)",
         "category": "Tech Radar",
         "date": "2026-03-27",
         "author": "Alex Mercer",
@@ -5072,7 +4652,7 @@
     {
         "id": "1774548021803",
         "type": "news",
-        "title": "The Silent Shift: How AI is Rewriting the Code of Software Development",
+        "title": "The Silent Shift: How AI is Rewriting the Code of Softw… · In a move that signals a profound, yet qui (2)",
         "category": "Tech Radar",
         "date": "2026-03-26",
         "author": "Sarah Jenkins",
@@ -5092,7 +4672,7 @@
     {
         "id": "1774504832848",
         "type": "news",
-        "title": "The Silent Shift: How AI is Redesigning the Internet Behind the Scenes",
+        "title": "The Silent Shift: How AI is Redesigning the Internet Be… · While flashy chatbots and image generators (24)",
         "category": "Tech Radar",
         "date": "2026-03-26",
         "author": "Michael Chen",
@@ -5142,7 +4722,7 @@
     {
         "id": "1774427444362",
         "type": "news",
-        "title": "Enterprise AI Adoption Accelerates Amid Economic Uncertainty",
+        "title": "Enterprise AI Adoption Accelerates Amid Economic Uncert… · Silicon Valley's boardrooms are buzzing with a new consensus: arti…",
         "category": "Tech Radar",
         "date": "2026-03-25",
         "author": "Sarah Jenkins",

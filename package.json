@@ -14,6 +14,7 @@
     "android:fileprovider": "node tools/apply-android-fileprovider.cjs",
     "amber:once": "node tools/run-amber-daily-once.cjs",
     "amber:catchup": "node tools/amber-catchup-days.cjs",
+    "posts:dedupe": "node tools/dedupe-and-retitle-posts.cjs",
     "postinstall": "patch-package"
   },
   "dependencies": {

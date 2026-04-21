@@ -8,6 +8,7 @@ const cron = require('node-cron');
 const { execSync } = require('child_process');
 const imageDownloader = require('image-downloader');
 const cheerio = require('cheerio');
+const crypto = require('crypto');
 
 const REPO_DIR = __dirname;
 const DATA_DIR = path.join(REPO_DIR, 'data');
@@ -44,6 +45,32 @@ const COVER_VISUAL_STYLES = [
 ];
 
 /** When Pollinations download fails — pick by timestamp so fallback is not always the same Unsplash ID. */
+/** Load recent titles + image URLs so new articles avoid repeating them. */
+function loadExistingCorpusHints(type) {
+    let titles = [];
+    const imageUrls = new Set();
+    try {
+        if (fs.existsSync(POSTS_JSON_PATH)) {
+            const posts = JSON.parse(fs.readFileSync(POSTS_JSON_PATH, 'utf8'));
+            titles = posts
+                .filter((p) => p.type === type && p.title)
+                .map((p) => String(p.title).trim())
+                .slice(0, 80);
+        }
+    } catch (e) {}
+    try {
+        if (fs.existsSync(CONTENT_DIR)) {
+            const files = fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith('.md') && f.startsWith(`${type}-`));
+            for (const f of files.slice(0, 200)) {
+                const raw = fs.readFileSync(path.join(CONTENT_DIR, f), 'utf8');
+                const m = raw.match(/src="([^"]+cover[^"]+)"/i);
+                if (m) imageUrls.add(m[1]);
+            }
+        }
+    } catch (e) {}
+    return { titles, imageUrls: [...imageUrls].slice(0, 24) };
+}
+
 const UNSPLASH_FALLBACKS = [
     'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1200&auto=format&fit=crop',
@@ -55,6 +82,13 @@ const UNSPLASH_FALLBACKS = [
     'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop'
 ];
 
+const ANTI_AI_VOICE = `Writing rules (mandatory):
+- Sound human: concrete scenes, specific details, one clear opinion. No filler.
+- Do NOT use these phrases or close variants: "in today's fast-paced", "in the ever-evolving landscape", "delve into", "leverage", "it's important to note", "game-changer", "robust", "unlock", "synergy", "paradigm", "in conclusion", "in summary", "as we have seen".
+- Vary sentence length; avoid three parallel rhetorical questions in a row.
+- No meta disclaimers ("as an AI", "this article will explore").
+- First line must be exactly one H1: # Your Title`;
+
 async function generateArticle(type) {
     const useGemini = (type === 'blog');
     const apiUrl = useGemini ? process.env.GEMINI_API_URL : process.env.DEEPSEEK_API_URL;
@@ -62,9 +96,28 @@ async function generateArticle(type) {
     const aiModel = useGemini ? process.env.GEMINI_MODEL : process.env.DEEPSEEK_MODEL;
 
     console.log(`\n[Amber V8] 🧠 正在撰写 ${type}...`);
-    
-    let systemPrompt = type === 'news' ? "You are an elite Tech Journalist. Write a news analysis. Format in standard Markdown." : "You are a PM expert. Write a blog post about workplace efficiency. Format in standard Markdown.";
-    let userPrompt = type === 'news' ? "Write a tech news article about AI. First line must be '# Title'. Output ONLY raw markdown." : "Write a deep-dive post about overcoming reporting fatigue. First line must be '# Title'. Output ONLY raw markdown.";
+
+    const { titles: existingTitles, imageUrls: existingImages } = loadExistingCorpusHints(type);
+    const titleBlock =
+        existingTitles.length > 0
+            ? `\n\nALREADY-PUBLISHED TITLES (must not reuse, paraphrase, or closely mimic — pick a different angle and wording):\n${existingTitles
+                  .slice(0, 50)
+                  .map((t) => `- ${t}`)
+                  .join('\n')}\n`
+            : '';
+    const imgBlock =
+        existingImages.length > 0
+            ? `\n\nExisting cover image URLs (your article will get a new cover; do not echo the same visual theme as a single headline repeated in the past): ${existingImages.join(', ')}\n`
+            : '';
+
+    let systemPrompt =
+        type === 'news'
+            ? `You are an experienced tech editor for a serious publication. Write a sharp news analysis with real stakes. Format in standard Markdown.\n${ANTI_AI_VOICE}`
+            : `You are a senior product manager who writes for peers. Practical, direct, no corporate fluff. Format in standard Markdown.\n${ANTI_AI_VOICE}`;
+    let userPrompt =
+        type === 'news'
+            ? `Write a tech news analysis. ${titleBlock}${imgBlock} First line must be '# Title'. Output ONLY raw markdown.`
+            : `Write a deep-dive post about reporting / PM communication (not generic self-help). ${titleBlock}${imgBlock} First line must be '# Title'. Output ONLY raw markdown.`;
 
     if (type === 'news') {
         try {
@@ -81,7 +134,7 @@ async function generateArticle(type) {
                     newsContext += `${index + 1}. 标题：${item.title}\n摘要：${item.snippet}\n\n`;
                 });
                 
-                userPrompt = `Please write a highly engaging tech news analysis article based on the following real-time trending news. \n\n${newsContext}\nCombine these points into a cohesive, insightful article. Emphasize how AI/Tech is changing the landscape, and subtly mention how Reportify AI helps professionals save time to stay updated with such fast-paced tech. First line must be '# Title'. Output ONLY raw markdown.`;
+                userPrompt = `Please write a highly engaging tech news analysis article based on the following real-time trending news. \n\n${newsContext}\nCombine these points into a cohesive, insightful article. Emphasize how AI/Tech is changing the landscape, and subtly mention how Reportify AI helps professionals save time to stay updated with such fast-paced tech. Avoid generic AI-ish phrasing. ${titleBlock}${imgBlock} First line must be '# Title'. Output ONLY raw markdown.`;
                 console.log("[Amber V8] 🎯 已成功将全球实时热点注入 AI 大脑！");
             }
         } catch (err) {
@@ -101,14 +154,29 @@ async function generateArticle(type) {
         let titleMatch = rawMarkdown.match(/^#\s+(.+)$/m);
         let title = titleMatch ? titleMatch[1].trim() : `Reportify ${type.toUpperCase()} Insights`;
         let contentMarkdown = rawMarkdown.replace(/^#\s+(.+)$/m, '').trim();
+
+        let postsExisting = [];
+        if (fs.existsSync(POSTS_JSON_PATH)) try { postsExisting = JSON.parse(fs.readFileSync(POSTS_JSON_PATH, 'utf8')); } catch (e) {}
+        const normTitle = (s) => String(s || '').replace(/\s+/g, ' ').trim().toLowerCase();
+        if (postsExisting.some((p) => p.type === type && normTitle(p.title) === normTitle(title))) {
+            title = `${title} · ${Date.now().toString().slice(-6)}`;
+            rawMarkdown = `# ${title}\n\n${contentMarkdown}`;
+            contentMarkdown = rawMarkdown.replace(/^#\s+(.+)$/m, '').trim();
+        }
+
         const safePrompt = title.replace(/[^a-zA-Z0-9 ]/g, "").substring(0, 48);
         const excerpt = contentMarkdown.replace(/<[^>]*>?/gm, '').replace(/[#*`>\[\]]/g, '').substring(0, 150).trim() + "...";
 
         const timestamp = Date.now();
-        const styleHint = COVER_VISUAL_STYLES[timestamp % COVER_VISUAL_STYLES.length];
+        const dateStr = articleDateStr();
+        const hashSeed = crypto
+            .createHash('sha256')
+            .update(`${type}|${title}|${dateStr}|${timestamp}|${contentMarkdown.slice(0, 400)}`)
+            .digest('hex');
+        const styleHint = COVER_VISUAL_STYLES[parseInt(hashSeed.slice(0, 8), 16) % COVER_VISUAL_STYLES.length];
         let imagePrompt = `${safePrompt}. ${styleHint}. no text no letters no watermark no logo.`;
         if (imagePrompt.length > 400) imagePrompt = imagePrompt.substring(0, 400);
-        const seed = timestamp % 2147483647;
+        const seed = parseInt(hashSeed.slice(8, 16), 16) % 2147483647;
         const imgW = 1024;
         const imgH = 576;
         const remoteUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(imagePrompt)}?width=${imgW}&height=${imgH}&nologo=true&seed=${seed}`;
@@ -119,10 +187,10 @@ async function generateArticle(type) {
         try {
             await imageDownloader.image({ url: remoteUrl, dest: path.join(IMAGES_DIR, imageFileName) });
         } catch (e) {
-            localImageRelPath = UNSPLASH_FALLBACKS[timestamp % UNSPLASH_FALLBACKS.length];
+            localImageRelPath = UNSPLASH_FALLBACKS[parseInt(hashSeed.slice(16, 24), 16) % UNSPLASH_FALLBACKS.length];
         }
 
-        return { timestamp, type, title, contentMarkdown, excerpt, author: FAKE_AUTHORS[Math.floor(Math.random() * FAKE_AUTHORS.length)], localImageRelPath, dateStr: articleDateStr() };
+        return { timestamp, type, title, contentMarkdown, excerpt, author: FAKE_AUTHORS[Math.floor(Math.random() * FAKE_AUTHORS.length)], localImageRelPath, dateStr };
     } catch (e) { console.error(`[Amber V8] ❌大脑生成失败\n`, e); return null; }
 }
 
