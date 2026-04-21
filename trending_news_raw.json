@@ -1,32 +1,32 @@
 [
   {
-    "title": "Who is John Ternus, the incoming Apple CEO?",
-    "link": "https://techcrunch.com/2026/04/20/who-is-john-ternus-the-incoming-apple-ceo/",
-    "pubDate": "Tue, 21 Apr 2026 01:02:04 +0000",
-    "snippet": "Starting on September 1, Ternus will lead one of the world's most valuable companies, but if you're not a dedicated Apple enthusiast, you've probably never heard of this man, who has largely remained out of the spotlight until now."
+    "title": "Show HN: VidStudio, a browser based video editor that doesn't upload your files",
+    "link": "https://vidstudio.app/video-editor",
+    "pubDate": "Tue, 21 Apr 2026 11:58:16 +0000",
+    "snippet": "Hi HN,\nI built VidStudio, a privacy focused video editor that runs in the browser. I tried to keep it as frictionless as possible, so there are no accounts and no uploads. Everything is persisted on your\nmachine.\nSome of the features: multi-track timeline, frame accurate seek, MP4 export, audio, video, image, and text tracks, and a WebGL backed canvas where available. It also works on mobile.\nUnder the hood, WebCodecs handles frame decode for timeline playback and scrubbing, which is what makes seeking responsive since decode runs on the hardware decoder when the browser supports it.\nFFmpeg compiled to WebAssembly handles final encode, format conversion, and anything WebCodecs does not cover. Rendering goes through Pixi.js on a WebGL canvas, with a software fallback when WebGL is\nnot available. Projects live in IndexedDB and the heavy work runs in Web Workers so the UI stays responsive during exports.\nHappy to answer technical questions about the tradeoffs involved in keeping the whole pipeline client-side. Any feedback welcome.\nLink: https://vidstudio.app/video-editor\nComments URL: https://news.ycombinator.com/item?id=47847558\nPoints: 29\n# Comments: 3"
   },
   {
-    "title": "How to Make a Fast Dynamic Language Interpreter",
-    "link": "https://zef-lang.dev/implementation",
-    "pubDate": "Tue, 21 Apr 2026 00:48:07 +0000",
-    "snippet": "Article URL: https://zef-lang.dev/implementation\nComments URL: https://news.ycombinator.com/item?id=47843194\nPoints: 39\n# Comments: 2"
+    "title": "Tim Cook's Impeccable Timing",
+    "link": "https://stratechery.com/2026/tim-cooks-impeccable-timing/",
+    "pubDate": "Tue, 21 Apr 2026 11:30:03 +0000",
+    "snippet": "Article URL: https://stratechery.com/2026/tim-cooks-impeccable-timing/\nComments URL: https://news.ycombinator.com/item?id=47847324\nPoints: 5\n# Comments: 0"
   },
   {
-    "title": "Anthropic takes $5B from Amazon and pledges $100B in cloud spending in return",
-    "link": "https://techcrunch.com/2026/04/20/anthropic-takes-5b-from-amazon-and-pledges-100b-in-cloud-spending-in-return/",
-    "pubDate": "Mon, 20 Apr 2026 23:10:27 +0000",
-    "snippet": "Amazon has made another circular AI deal: It's investing another $5 billion in Anthropic. Anthropic has agreed to spend $100 billion on AWS in return."
+    "title": "Laws of Software Engineering",
+    "link": "https://lawsofsoftwareengineering.com",
+    "pubDate": "Tue, 21 Apr 2026 11:04:56 +0000",
+    "snippet": "Article URL: https://lawsofsoftwareengineering.com\nComments URL: https://news.ycombinator.com/item?id=47847179\nPoints: 131\n# Comments: 42"
   },
   {
-    "title": "Even 'uncensored' models can't say what they want",
-    "link": "https://morgin.ai/articles/even-uncensored-models-cant-say-what-they-want.html",
-    "pubDate": "Mon, 20 Apr 2026 22:43:29 +0000",
-    "snippet": "Article URL: https://morgin.ai/articles/even-uncensored-models-cant-say-what-they-want.html\nComments URL: https://news.ycombinator.com/item?id=47842021\nPoints: 101\n# Comments: 77"
+    "title": "Yelp’s updated AI assistant can answer questions and book a restaurant or service in one conversation",
+    "link": "https://techcrunch.com/2026/04/21/yelps-updated-ai-assistant-can-answer-questions-and-book-a-restaurant-or-service-in-one-conversation/",
+    "pubDate": "Tue, 21 Apr 2026 11:00:00 +0000",
+    "snippet": "Yelp said that users can ask questions about a restaurant and place an order or book a table in one conversation"
   },
   {
-    "title": "Google rolls out Gemini in Chrome in 7 new countries",
-    "link": "https://techcrunch.com/2026/04/20/google-rolls-out-gemini-in-chrome-in-seven-new-countries/",
-    "pubDate": "Mon, 20 Apr 2026 22:00:00 +0000",
-    "snippet": "Google is rolling out Gemini in Chrome in Australia, Indonesia, Japan, the Philippines, Singapore, South Korea, and Vietnam. The company is rolling this feature out to both desktop and iOS in all of these countries except Japan."
+    "title": "Blue Energy raises $380M to build grid-scale nuclear reactors in shipyards",
+    "link": "https://techcrunch.com/2026/04/21/blue-energy-raises-380m-to-build-grid-scale-nuclear-reactors-in-shipyards/",
+    "pubDate": "Tue, 21 Apr 2026 10:00:00 +0000",
+    "snippet": "By building reactors in shipyards, Blue Energy says it will tame nuclear power's cost problems, giving it access to cheaper financing."
   }
 ]

@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776776430415",
+        "type": "blog",
+        "title": "Reporting Isn't a Chore, It's a Product",
+        "category": "Deep Insights",
+        "date": "2026-04-21",
+        "author": "Jessica Tran",
+        "excerpt": "It’s Tuesday morning. You spent two hours yesterday pulling data from three different systems, pasting screenshots into a slide deck, and writing comm...",
+        "contentFile": "blog-1776776430415.md"
+    },
+    {
         "id": "1776739155508",
         "type": "blog",
         "title": "Beyond the Dashboard: A PM's Guide to Curing Reporting Fatigue",
