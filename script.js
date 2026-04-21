@@ -18,19 +18,31 @@ function reportifyPublicSiteOrigin() {
 
 /** News/blog index: relative `data/posts.json` in the App APK is stale; always load from the live site when native. */
 window.reportifyPostsJsonUrl = function reportifyPostsJsonUrl() {
-    const live = `${reportifyPublicSiteOrigin()}/data/posts.json`;
+    const bust = `t=${Date.now()}`;
+    const live = `${reportifyPublicSiteOrigin()}/data/posts.json?${bust}`;
+    const preferLive = () => live;
     try {
         const C = window.Capacitor;
         if (C) {
-            if (typeof C.isNativePlatform === 'function' && C.isNativePlatform()) return live;
+            if (typeof C.isNativePlatform === 'function' && C.isNativePlatform()) return preferLive();
             const plat = typeof C.getPlatform === 'function' ? C.getPlatform() : '';
-            if (plat === 'android' || plat === 'ios') return live;
+            if (plat === 'android' || plat === 'ios') return preferLive();
         }
     } catch (e) { /* noop */ }
     try {
         const C2 = window.Capacitor;
-        const h = window.location && window.location.hostname;
-        if (C2 && (h === 'localhost' || h === '127.0.0.1')) return live;
+        const loc = window.location;
+        const h = loc && loc.hostname;
+        const proto = loc && loc.protocol;
+        if (
+            C2 &&
+            (h === 'localhost' ||
+                h === '127.0.0.1' ||
+                proto === 'capacitor:' ||
+                (loc.href && String(loc.href).indexOf('localhost') >= 0))
+        ) {
+            return preferLive();
+        }
     } catch (e2) { /* noop */ }
     return 'data/posts.json';
 };
@@ -1270,6 +1282,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    window.__reportifyReloadUsage = loadRealUsageData;
+
     // 🟢 监听跨页面传来的开窗指令与邀请链接
     const urlParams = new URLSearchParams(window.location.search);
     const modalAction = urlParams.get('modal');
@@ -1394,6 +1408,12 @@ function setupCapacitorOAuthBridge() {
         void fetchUserProfile().then(() => {
             if (typeof setupUserDropdown === 'function') setupUserDropdown();
             if (typeof loadAccountPageAvatar === 'function') loadAccountPageAvatar();
+            try {
+                const p = window.location && window.location.pathname;
+                if (p && /usage\.html/i.test(p) && typeof window.__reportifyReloadUsage === 'function') {
+                    void window.__reportifyReloadUsage();
+                }
+            } catch (_) { /* noop */ }
         });
     });
 }
@@ -1839,7 +1859,13 @@ function setupAvatarUpload() {
         showToast('Uploading...', 'info');
 
         try {
-            const toUpload = await compressImageFileForAvatar(file);
+            let toUpload = file;
+            try {
+                toUpload = await compressImageFileForAvatar(file);
+            } catch (compErr) {
+                console.warn('[avatar] compress skipped', compErr);
+                toUpload = file;
+            }
             const formData = new FormData();
             formData.append('avatar', toUpload);
 
@@ -1882,7 +1908,10 @@ function setupAvatarUpload() {
             }
         } catch (err) {
             console.error(err);
-            const msg = (err && err.message) ? err.message : 'Network error';
+            const raw = err && err.message ? String(err.message) : 'Network error';
+            const msg = raw.includes('ENOENT')
+                ? '上传失败：服务器存储目录异常，请稍后重试或联系支持。'
+                : raw;
             showToast(msg.length > 100 ? msg.slice(0, 100) + '…' : msg, 'error');
         } finally {
             fileInput.value = '';
