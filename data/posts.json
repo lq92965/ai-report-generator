@@ -1,5 +1,15 @@
 [
     {
+        "id": "1776862833225",
+        "type": "blog",
+        "title": "Your Weekly Report is a Wasted Opportunity",
+        "category": "Deep Insights",
+        "date": "2026-04-22",
+        "author": "David Sterling",
+        "excerpt": "It’s 4 PM on a Friday. You’re staring at a half-finished slide deck or a sprawling email draft, trying to summarize a week of chaos into neat little b...",
+        "contentFile": "blog-1776862833225.md"
+    },
+    {
         "id": "1776776430415",
         "type": "blog",
         "title": "Reporting Isn't a Chore, It's a Product",

@@ -1,35 +1,32 @@
 [
   {
-    "title": "Show HN: VidStudio, a browser based video editor that doesn't upload your files",
-    "link": "https://vidstudio.app/video-editor",
-    "pubDate": "Tue, 21 Apr 2026 11:58:16 +0000",
-    "snippet": "Hi HN,\nI built VidStudio, a privacy focused video editor that runs in the browser. I tried to keep it as frictionless as possible, so there are no accounts and no uploads. Everything is persisted on your\nmachine.\nSome of the features: multi-track timeline, frame accurate seek, MP4 export, audio, video, image, and text tracks, and a WebGL backed canvas where available. It also works on mobile.\nUnder the hood, WebCodecs handles frame decode for timeline playback and scrubbing, which is what makes seeking responsive since decode runs on the hardware decoder when the browser supports it.\nFFmpeg compiled to WebAssembly handles final encode, format conversion, and anything WebCodecs does not cover. Rendering goes through Pixi.js on a WebGL canvas, with a software fallback when WebGL is\nnot available. Projects live in IndexedDB and the heavy work runs in Web Workers so the UI stays responsive during exports.\nHappy to answer technical questions about the tradeoffs involved in keeping the whole pipeline client-side. Any feedback welcome.\nLink: https://vidstudio.app/video-editor\nComments URL: https://news.ycombinator.com/item?id=47847558\nPoints: 29\n# Comments: 3"
+    "title": "Our eighth generation TPUs: two chips for the agentic era",
+    "link": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/eighth-generation-tpu-agentic-era/",
+    "pubDate": "Wed, 22 Apr 2026 12:15:29 +0000",
+    "snippet": "Article URL: https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/eighth-generation-tpu-agentic-era/\nComments URL: https://news.ycombinator.com/item?id=47862497\nPoints: 13\n# Comments: 5"
   },
   {
-    "title": "Tim Cook's Impeccable Timing",
-    "link": "https://stratechery.com/2026/tim-cooks-impeccable-timing/",
-    "pubDate": "Tue, 21 Apr 2026 11:30:03 +0000",
-    "snippet": "Article URL: https://stratechery.com/2026/tim-cooks-impeccable-timing/\nComments URL: https://news.ycombinator.com/item?id=47847324\nPoints: 5\n# Comments: 0"
+    "title": "3.4M Solar Panels",
+    "link": "https://tech.marksblogg.com/american-solar-farms-v2.html",
+    "pubDate": "Wed, 22 Apr 2026 12:04:30 +0000",
+    "snippet": "Article URL: https://tech.marksblogg.com/american-solar-farms-v2.html\nComments URL: https://news.ycombinator.com/item?id=47862386\nPoints: 54\n# Comments: 3"
   },
   {
-    "title": "Laws of Software Engineering",
-    "link": "https://lawsofsoftwareengineering.com",
-    "pubDate": "Tue, 21 Apr 2026 11:04:56 +0000",
-    "snippet": "Article URL: https://lawsofsoftwareengineering.com\nComments URL: https://news.ycombinator.com/item?id=47847179\nPoints: 131\n# Comments: 42"
-<<<<<<< HEAD
+    "title": "The most interesting startups showcased at Google Cloud Next 2026",
+    "link": "https://techcrunch.com/2026/04/22/the-most-interesting-startups-showcased-at-google-cloud-next-2026/",
+    "pubDate": "Wed, 22 Apr 2026 12:00:00 +0000",
+    "snippet": "Google wants AI startups on its cloud and has showcased a long list of them at its annual conference."
   },
   {
-    "title": "Yelp’s updated AI assistant can answer questions and book a restaurant or service in one conversation",
-    "link": "https://techcrunch.com/2026/04/21/yelps-updated-ai-assistant-can-answer-questions-and-book-a-restaurant-or-service-in-one-conversation/",
-    "pubDate": "Tue, 21 Apr 2026 11:00:00 +0000",
-    "snippet": "Yelp said that users can ask questions about a restaurant and place an order or book a table in one conversation"
+    "title": "Duolingo is now giving free users access to advanced learning content",
+    "link": "https://techcrunch.com/2026/04/22/duolingo-is-now-giving-free-users-access-to-advanced-learning-content-that-was-previously-reserved-for-paid-subs/",
+    "pubDate": "Wed, 22 Apr 2026 12:00:00 +0000",
+    "snippet": "Duolingo is opening up its advanced language learning content offering to free users, allowing them to acquire skills that were previously reserved to paid subscribers."
   },
   {
-    "title": "Blue Energy raises $380M to build grid-scale nuclear reactors in shipyards",
-    "link": "https://techcrunch.com/2026/04/21/blue-energy-raises-380m-to-build-grid-scale-nuclear-reactors-in-shipyards/",
-    "pubDate": "Tue, 21 Apr 2026 10:00:00 +0000",
-    "snippet": "By building reactors in shipyards, Blue Energy says it will tame nuclear power's cost problems, giving it access to cheaper financing."
-=======
->>>>>>> 982f475 (feat(UX): Auto-gen daily news+blog - 1776776456778)
+    "title": "Google Maps is about to get a big dose of AI",
+    "link": "https://techcrunch.com/2026/04/22/google-maps-is-about-to-get-a-big-dose-of-ai/",
+    "pubDate": "Wed, 22 Apr 2026 12:00:00 +0000",
+    "snippet": "Generative AI is being infused into Google's popular feature within Maps."
   }
 ]
