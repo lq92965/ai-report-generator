@@ -762,7 +762,7 @@
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script src="pwa-nav.js?v=3.5"></script>
 <script src="google-play-iap.js?v=1"></script>
-<script src="script.js?v=2026.20"></script>
+<script src="script.js?v=2026.21"></script>
 
 <div id="forgot-password-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 z-[9999] flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden relative p-8">
@@ -817,11 +817,9 @@
         if (!newsGrid || !blogGrid) return;
 
         try {
-            const postsBase = (typeof window.reportifyPostsJsonUrl === 'function')
-                ? window.reportifyPostsJsonUrl()
-                : 'data/posts.json';
-            const response = await fetch(postsBase + '?t=' + Date.now());
-            const posts = await response.json();
+            const posts = (typeof window.reportifyFetchPostsJson === 'function')
+                ? await window.reportifyFetchPostsJson()
+                : await (await fetch('data/posts.json?t=' + Date.now(), { cache: 'no-store' })).json();
             newsGrid.innerHTML = '';
             blogGrid.innerHTML = '';
 

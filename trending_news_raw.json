@@ -16,6 +16,7 @@
     "link": "https://lawsofsoftwareengineering.com",
     "pubDate": "Tue, 21 Apr 2026 11:04:56 +0000",
     "snippet": "Article URL: https://lawsofsoftwareengineering.com\nComments URL: https://news.ycombinator.com/item?id=47847179\nPoints: 131\n# Comments: 42"
+<<<<<<< HEAD
   },
   {
     "title": "Yelp’s updated AI assistant can answer questions and book a restaurant or service in one conversation",
@@ -28,5 +29,7 @@
     "link": "https://techcrunch.com/2026/04/21/blue-energy-raises-380m-to-build-grid-scale-nuclear-reactors-in-shipyards/",
     "pubDate": "Tue, 21 Apr 2026 10:00:00 +0000",
     "snippet": "By building reactors in shipyards, Blue Energy says it will tame nuclear power's cost problems, giving it access to cheaper financing."
+=======
+>>>>>>> 982f475 (feat(UX): Auto-gen daily news+blog - 1776776456778)
   }
 ]

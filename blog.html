@@ -211,11 +211,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                const postsBase = (typeof window.reportifyPostsJsonUrl === 'function')
-                    ? window.reportifyPostsJsonUrl()
-                    : 'data/posts.json';
-                const response = await fetch(postsBase + '?t=' + Date.now());
-                const allPosts = await response.json();
+                const allPosts = (typeof window.reportifyFetchPostsJson === 'function')
+                    ? await window.reportifyFetchPostsJson()
+                    : await (await fetch('data/posts.json?t=' + Date.now(), { cache: 'no-store' })).json();
                 const byId = new Map();
                 for (const p of allPosts) {
                     if (!p || p.type !== 'blog' || !p.id) continue;
@@ -355,6 +353,6 @@
     </script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script src="pwa-nav.js"></script>
-    <script src="script.js?v=2026.20"></script>
+    <script src="script.js?v=2026.21"></script>
 </body>
 </html>

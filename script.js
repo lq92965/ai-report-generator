@@ -47,6 +47,29 @@ window.reportifyPostsJsonUrl = function reportifyPostsJsonUrl() {
     } catch (e2) { /* noop */ }
     return `${live}?${bust}`;
 };
+
+/** Robust posts loader for native/web: API -> apex -> bundled fallback. */
+window.reportifyFetchPostsJson = async function reportifyFetchPostsJson() {
+    const bust = Date.now();
+    const candidates = [
+        `${API_BASE_URL}/api/posts-json?t=${bust}`,
+        `${reportifyPublicSiteOrigin()}/data/posts.json?t=${bust}`,
+        `data/posts.json?t=${bust}`
+    ];
+    let lastErr = null;
+    for (const url of candidates) {
+        try {
+            const res = await fetch(url, { cache: 'no-store' });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
+            if (Array.isArray(data)) return data;
+            throw new Error('Invalid posts payload');
+        } catch (e) {
+            lastErr = e;
+        }
+    }
+    throw lastErr || new Error('Failed to load posts.json');
+};
 /** Always relative — never assign window.location to an absolute production URL (preserves PWA shell). */
 const HOME_REL = './index.html';
 const DEFAULT_AVATAR_ICON = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4=';

@@ -253,12 +253,9 @@
             }
 
             try {
-                // 带时间戳破除缓存
-                const postsBase = (typeof window.reportifyPostsJsonUrl === 'function')
-                    ? window.reportifyPostsJsonUrl()
-                    : 'data/posts.json';
-                const response = await fetch(postsBase + '?t=' + Date.now());
-                const posts = await response.json();
+                const posts = (typeof window.reportifyFetchPostsJson === 'function')
+                    ? await window.reportifyFetchPostsJson()
+                    : await (await fetch('data/posts.json?t=' + Date.now(), { cache: 'no-store' })).json();
                 const post = posts.find(p => p.id === articleId);
 
                 if (!post) {
@@ -311,6 +308,6 @@
         });
     </script>
     <script src="pwa-nav.js"></script>
-    <script src="script.js?v=2026.20"></script>
+    <script src="script.js?v=2026.21"></script>
 </body>
 </html>
