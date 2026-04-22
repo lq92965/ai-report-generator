@@ -1,7 +1,7 @@
 /**
  * One-off / maintenance: dedupe posts.json (same title+date+excerpt), then
  * assign unique titles for remaining collisions using the first paragraph of content/*.md.
- * Updates: data/posts.json, content/*.md (cover alt), type-id.html (title/h1), sitemap.xml, rss.xml
+ * Updates: data/posts.json, content/*.md (cover alt), article-pages/type-id.html (title/h1), sitemap.xml, rss.xml
  *
  * Usage: node tools/dedupe-and-retitle-posts.cjs [--dry-run] [--no-delete]
  */
@@ -13,6 +13,7 @@ const cheerio = require('cheerio');
 const REPO = path.join(__dirname, '..');
 const POSTS_PATH = path.join(REPO, 'data', 'posts.json');
 const CONTENT_DIR = path.join(REPO, 'content');
+const ARTICLE_PAGES_DIR = path.join(REPO, 'article-pages');
 
 function norm(s) {
     return String(s || '')
@@ -107,15 +108,15 @@ function writeSitemapAndRss(posts) {
     let rss =
         '<?xml version="1.0" encoding="UTF-8" ?>\n<rss version="2.0">\n<channel>\n  <title>Reportify AI Insights</title>\n  <link>https://www.goreportify.com</link>\n  <description>Latest tech insights and PM strategies</description>\n';
     posts.forEach((p) => {
-        sitemap += `  <url>\n    <loc>https://www.goreportify.com/${p.type}-${p.id}.html</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n`;
+        sitemap += `  <url>\n    <loc>https://www.goreportify.com/article-pages/${p.type}-${p.id}.html</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n`;
         const pubDate = new Date(parseInt(p.id, 10)).toUTCString();
-        rss += `  <item>\n    <title><![CDATA[${p.title}]]></title>\n    <link>https://www.goreportify.com/${p.type}-${p.id}.html</link>\n    <description><![CDATA[${p.excerpt}]]></description>\n    <pubDate>${pubDate}</pubDate>\n  </item>\n`;
+        rss += `  <item>\n    <title><![CDATA[${p.title}]]></title>\n    <link>https://www.goreportify.com/article-pages/${p.type}-${p.id}.html</link>\n    <description><![CDATA[${p.excerpt}]]></description>\n    <pubDate>${pubDate}</pubDate>\n  </item>\n`;
     });
     sitemap += '</urlset>';
     rss += '</channel>\n</rss>';
     fs.writeFileSync(path.join(REPO, 'sitemap.xml'), sitemap, 'utf8');
     fs.writeFileSync(path.join(REPO, 'rss.xml'), rss, 'utf8');
-    const robots = `User-agent: *\nAllow: /\nAllow: /images/\nAllow: /content/\nSitemap: https://www.goreportify.com/sitemap.xml\n`;
+    const robots = `User-agent: *\nAllow: /\nAllow: /images/\nAllow: /content/\nAllow: /article-pages/\nSitemap: https://www.goreportify.com/sitemap.xml\n`;
     fs.writeFileSync(path.join(REPO, 'robots.txt'), robots, 'utf8');
 }
 
@@ -177,14 +178,14 @@ function main() {
 
     for (const c of [...changesNews, ...changesBlog]) {
         updateMarkdownAlt(c.mdPath, c.newTitle);
-        const htmlPath = path.join(REPO, `${c.post.type}-${c.post.id}.html`);
+        const htmlPath = path.join(ARTICLE_PAGES_DIR, `${c.post.type}-${c.post.id}.html`);
         updateStaticHtml(htmlPath, c.newTitle);
     }
 
     if (!noDelete && removed.length) {
         for (const p of removed) {
             const md = path.join(REPO, 'content', p.contentFile);
-            const html = path.join(REPO, `${p.type}-${p.id}.html`);
+            const html = path.join(ARTICLE_PAGES_DIR, `${p.type}-${p.id}.html`);
             try {
                 if (fs.existsSync(md)) fs.unlinkSync(md);
             } catch (e) {}

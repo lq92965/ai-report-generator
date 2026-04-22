@@ -15,7 +15,7 @@
 # 停用 Netlify：删除或改掉指向 Netlify 的 CNAME/A，避免冲突。
 # =============================================================================
 
-# ---------- 主站：静态 HTML（与仓库根目录一致，Amber 写入同目录）----------
+# ---------- 主站：静态 HTML（仓库根目录；每篇 news/blog 独立页在 article-pages/）----------
 server {
     listen 80;
     listen [::]:80;
@@ -23,6 +23,11 @@ server {
 
     root /root/ai-report-generator;
     index index.html;
+
+    # 旧链接 /blog-{id}.html → /article-pages/blog-{id}.html（书签与外链 301）
+    location ~ ^/(blog|news)-[0-9]+\.html$ {
+        return 301 /article-pages$uri;
+    }
 
     location / {
         try_files $uri $uri/ /index.html;

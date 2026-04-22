@@ -10,7 +10,7 @@ const path = require('path');
 const ROOT = __dirname;
 const WWW = path.join(ROOT, 'www');
 
-const FOLDERS_TO_COPY = ['images', 'icons', 'data', 'vendor'];
+const FOLDERS_TO_COPY = ['images', 'icons', 'data', 'vendor', 'article-pages'];
 
 const FRONTEND_JS = new Set([
   'account.js',
@@ -47,6 +47,11 @@ function isLogoImageAtRoot(fileName) {
   if (!LOGO_IMAGE_EXT.has(ext)) return false;
   const base = path.basename(fileName, ext).toLowerCase();
   return base.includes('logo');
+}
+
+/** Per-post SEO pages live under article-pages/; skip any legacy copies at repo root. */
+function isRootPostStandaloneHtml(fileName) {
+  return /^(blog|news)-[0-9]+\.html$/i.test(fileName);
 }
 
 function emptyDir(dir) {
@@ -111,6 +116,7 @@ function main() {
     let bucket = null;
 
     if (ext === '.html') {
+      if (isRootPostStandaloneHtml(name)) continue;
       take = true;
       bucket = 'html';
     } else if (ext === '.css') {

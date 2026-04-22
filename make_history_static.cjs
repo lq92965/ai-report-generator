@@ -4,6 +4,7 @@ const cheerio = require('cheerio');
 const { execSync } = require('child_process');
 
 const REPO_DIR = __dirname;
+const ARTICLE_PAGES_DIR = path.join(REPO_DIR, 'article-pages');
 const posts = JSON.parse(fs.readFileSync(path.join(REPO_DIR, 'data', 'posts.json'), 'utf8'));
 const templateHtml = fs.readFileSync(path.join(REPO_DIR, 'article.html'), 'utf8');
 
@@ -11,6 +12,7 @@ const templateHtml = fs.readFileSync(path.join(REPO_DIR, 'article.html'), 'utf8'
     const { marked } = await import('marked');
 
     console.log("🚀 启动时光机 V8：批量修复历史静态网页的返回按钮与文字...");
+    if (!fs.existsSync(ARTICLE_PAGES_DIR)) fs.mkdirSync(ARTICLE_PAGES_DIR, { recursive: true });
     let count = 0;
 
     for (const post of posts) {
@@ -35,13 +37,13 @@ const templateHtml = fs.readFileSync(path.join(REPO_DIR, 'article.html'), 'utf8'
         });
 
         const staticFile = `${post.type}-${post.id}.html`;
-        fs.writeFileSync(path.join(REPO_DIR, staticFile), $.html(), 'utf8');
+        fs.writeFileSync(path.join(ARTICLE_PAGES_DIR, staticFile), $.html(), 'utf8');
         count++;
     }
 
     console.log(`🎉 历史静态化修复完毕！成功拯救 ${count} 个真实网页。`);
     try {
-        execSync('git add *.html sitemap.xml && git commit -m "fix(UX): Correct back button text and href on all historical static pages" && git pull origin main --rebase && git push origin main', { cwd: REPO_DIR });
+        execSync('git add article-pages/ sitemap.xml && git commit -m "fix(UX): Correct back button text and href on all historical static pages" && git pull origin main --rebase && git push origin main', { cwd: REPO_DIR });
         console.log("✅ GitHub 同步完成！您网站的返回逻辑已完美无瑕！");
     } catch (e) {
         console.error("推送报错，请检查终端", e.message);

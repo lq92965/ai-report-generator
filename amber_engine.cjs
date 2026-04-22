@@ -14,12 +14,15 @@ const REPO_DIR = __dirname;
 const DATA_DIR = path.join(REPO_DIR, 'data');
 const CONTENT_DIR = path.join(REPO_DIR, 'content');
 const IMAGES_DIR = path.join(REPO_DIR, 'images');
+/** Standalone SEO HTML for each post (keeps repo root clean). */
+const ARTICLE_PAGES_DIR = path.join(REPO_DIR, 'article-pages');
 const POSTS_JSON_PATH = path.join(DATA_DIR, 'posts.json');
 const TEMPLATE_PATH = path.join(REPO_DIR, 'article.html');
 
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(CONTENT_DIR)) fs.mkdirSync(CONTENT_DIR, { recursive: true });
 if (!fs.existsSync(IMAGES_DIR)) fs.mkdirSync(IMAGES_DIR, { recursive: true });
+if (!fs.existsSync(ARTICLE_PAGES_DIR)) fs.mkdirSync(ARTICLE_PAGES_DIR, { recursive: true });
 
 const FAKE_AUTHORS = ["Alex Mercer", "Sarah Jenkins", "Michael Chen", "Emily Rostova", "David Sterling", "Jessica Tran", "Marcus Webb", "Olivia Thorne"];
 
@@ -232,10 +235,17 @@ async function buildStaticPage(postData) {
     });
 
     const staticFileName = `${postData.type}-${postData.timestamp}.html`;
-    fs.writeFileSync(path.join(REPO_DIR, staticFileName), $.html(), 'utf8');
-    console.log(`[Amber V8] ✅ 静态网页装配成功: ${staticFileName}`);
+    const staticPath = path.join(ARTICLE_PAGES_DIR, staticFileName);
+    fs.writeFileSync(staticPath, $.html(), 'utf8');
+    console.log(`[Amber V8] ✅ 静态网页装配成功: article-pages/${staticFileName}`);
 
-    return { ...postData, id: postData.timestamp.toString(), category: categoryName, contentFile: fileName, staticHtmlFile: staticFileName };
+    return {
+        ...postData,
+        id: postData.timestamp.toString(),
+        category: categoryName,
+        contentFile: fileName,
+        staticHtmlFile: `article-pages/${staticFileName}`
+    };
 }
 
 function publishAndSEO(postMeta) {
@@ -251,11 +261,11 @@ function publishAndSEO(postMeta) {
     let rss = `<?xml version="1.0" encoding="UTF-8" ?>\n<rss version="2.0">\n<channel>\n  <title>Reportify AI Insights</title>\n  <link>https://www.goreportify.com</link>\n  <description>Latest tech insights and PM strategies</description>\n`;
 
     posts.forEach(p => {
-        sitemap += `  <url>\n    <loc>https://www.goreportify.com/${p.type}-${p.id}.html</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n`;
+        sitemap += `  <url>\n    <loc>https://www.goreportify.com/article-pages/${p.type}-${p.id}.html</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n`;
         
         // 转换时间格式以符合 RSS 标准
         const pubDate = new Date(parseInt(p.id)).toUTCString();
-        rss += `  <item>\n    <title><![CDATA[${p.title}]]></title>\n    <link>https://www.goreportify.com/${p.type}-${p.id}.html</link>\n    <description><![CDATA[${p.excerpt}]]></description>\n    <pubDate>${pubDate}</pubDate>\n  </item>\n`;
+        rss += `  <item>\n    <title><![CDATA[${p.title}]]></title>\n    <link>https://www.goreportify.com/article-pages/${p.type}-${p.id}.html</link>\n    <description><![CDATA[${p.excerpt}]]></description>\n    <pubDate>${pubDate}</pubDate>\n  </item>\n`;
     });
     
     sitemap += '</urlset>';
@@ -264,7 +274,7 @@ function publishAndSEO(postMeta) {
     fs.writeFileSync(path.join(REPO_DIR, 'sitemap.xml'), sitemap, 'utf8');
     fs.writeFileSync(path.join(REPO_DIR, 'rss.xml'), rss, 'utf8'); // 保存 RSS 文件
 
-    const robots = `User-agent: *\nAllow: /\nAllow: /images/\nAllow: /content/\nSitemap: https://www.goreportify.com/sitemap.xml\n`;
+    const robots = `User-agent: *\nAllow: /\nAllow: /images/\nAllow: /content/\nAllow: /article-pages/\nSitemap: https://www.goreportify.com/sitemap.xml\n`;
     fs.writeFileSync(path.join(REPO_DIR, 'robots.txt'), robots, 'utf8');
 }
 
