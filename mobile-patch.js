@@ -17,6 +17,48 @@
     if (byUrl()) document.documentElement.classList.add('pwa-nb-detail-layout');
 })();
 
+/**
+ * Native launch warm screen (single session):
+ * avoid perceived white flash before first paint.
+ */
+(function showNativeWarmSplashOnce() {
+    try {
+        if (!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform())) return;
+    } catch (e) {
+        return;
+    }
+    const KEY = 'reportify_warm_splash_seen_v1';
+    try {
+        if (sessionStorage.getItem(KEY) === '1') return;
+        sessionStorage.setItem(KEY, '1');
+    } catch (e2) {}
+
+    const overlay = document.createElement('div');
+    overlay.className = 'reportify-warm-splash';
+    overlay.innerHTML = '' +
+        '<div class="reportify-warm-splash-inner">' +
+        '  <img src="logo-3d.png.png" alt="Reportify AI" class="reportify-warm-splash-logo" />' +
+        '  <div class="reportify-warm-splash-title">Reportify AI</div>' +
+        '  <div class="reportify-warm-splash-sub">Preparing your workspace...</div>' +
+        '</div>';
+    document.documentElement.appendChild(overlay);
+
+    const start = Date.now();
+    const MIN_MS = 900;
+    const hide = function() {
+        const remain = Math.max(0, MIN_MS - (Date.now() - start));
+        setTimeout(function () {
+            overlay.classList.add('is-hide');
+            setTimeout(function () {
+                if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+            }, 240);
+        }, remain);
+    };
+    if (document.readyState === 'complete') hide();
+    else window.addEventListener('load', hide, { once: true });
+    setTimeout(hide, 4500);
+})();
+
 document.addEventListener('DOMContentLoaded', function() {
     if (
         !document.documentElement.classList.contains('pwa-nb-detail-layout') &&

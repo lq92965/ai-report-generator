@@ -787,6 +787,80 @@ app.get('/api/posts-json', async (req, res) => {
     }
 });
 
+/**
+ * Article markdown fetch with fallback:
+ * 1) local filesystem (server repo or /var/www/html)
+ * 2) public site content URL
+ */
+app.get('/api/content/:file', async (req, res) => {
+    try {
+        const file = String(req.params.file || '').trim();
+        if (!/^(news|blog)-[0-9]+\.md$/i.test(file)) {
+            return res.status(400).json({ message: 'Invalid content file' });
+        }
+
+        const localCandidates = [
+            path.join('/var/www/html', 'content', file),
+            path.join(__dirname, 'content', file)
+        ];
+        for (const p of localCandidates) {
+            if (fs.existsSync(p)) {
+                res.set('Cache-Control', 'no-store');
+                res.type('text/markdown; charset=utf-8');
+                return res.send(fs.readFileSync(p, 'utf8'));
+            }
+        }
+
+        const remote = await axios.get(`https://goreportify.com/content/${encodeURIComponent(file)}`, {
+            timeout: 8000,
+            responseType: 'text'
+        });
+        res.set('Cache-Control', 'no-store');
+        res.type('text/markdown; charset=utf-8');
+        return res.send(String(remote.data || ''));
+    } catch (e) {
+        console.error('GET /api/content/:file', e.message || e);
+        return res.status(404).json({ message: 'Content not found' });
+    }
+});
+
+/**
+ * Article markdown fetch with fallback:
+ * 1) local filesystem (server repo or /var/www/html)
+ * 2) public site content URL
+ */
+app.get('/api/content/:file', async (req, res) => {
+    try {
+        const file = String(req.params.file || '').trim();
+        if (!/^(news|blog)-[0-9]+\.md$/i.test(file)) {
+            return res.status(400).json({ message: 'Invalid content file' });
+        }
+
+        const localCandidates = [
+            path.join('/var/www/html', 'content', file),
+            path.join(__dirname, 'content', file)
+        ];
+        for (const p of localCandidates) {
+            if (fs.existsSync(p)) {
+                res.set('Cache-Control', 'no-store');
+                res.type('text/markdown; charset=utf-8');
+                return res.send(fs.readFileSync(p, 'utf8'));
+            }
+        }
+
+        const remote = await axios.get(`https://goreportify.com/content/${encodeURIComponent(file)}`, {
+            timeout: 8000,
+            responseType: 'text'
+        });
+        res.set('Cache-Control', 'no-store');
+        res.type('text/markdown; charset=utf-8');
+        return res.send(String(remote.data || ''));
+    } catch (e) {
+        console.error('GET /api/content/:file', e.message || e);
+        return res.status(404).json({ message: 'Content not found' });
+    }
+});
+
 // Usage Stats API
 app.get('/api/usage', authenticateToken, async (req, res) => {
     try {

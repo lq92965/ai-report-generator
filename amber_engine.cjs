@@ -92,6 +92,93 @@ const ANTI_AI_VOICE = `Writing rules (mandatory):
 - No meta disclaimers ("as an AI", "this article will explore").
 - First line must be exactly one H1: # Your Title`;
 
+const TITLE_BANNED_PREFIXES = {
+    news: [
+        'the silent shift',
+        'ai regulation reaches',
+        'the unseen labor',
+        'the unseen cost'
+    ],
+    blog: [
+        'beyond the dashboard',
+        'the silent killer',
+        'from drudgery to',
+        'beyond the status update',
+        'taming the reporting beast'
+    ]
+};
+
+function normalizeTitle(s) {
+    return String(s || '').replace(/\s+/g, ' ').trim().toLowerCase();
+}
+
+function titleStemWords(s, n = 4) {
+    return normalizeTitle(s)
+        .replace(/[^a-z0-9\s]/g, ' ')
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, n)
+        .join(' ');
+}
+
+function buildStemCount(titles) {
+    const m = new Map();
+    for (const t of titles || []) {
+        const k = titleStemWords(t, 4);
+        if (!k) continue;
+        m.set(k, (m.get(k) || 0) + 1);
+    }
+    return m;
+}
+
+function extractKeywordFromMarkdown(md) {
+    const STOP = new Set([
+        'this', 'that', 'with', 'from', 'into', 'about', 'have', 'will', 'your', 'you', 'they', 'their',
+        'what', 'when', 'where', 'which', 'while', 'there', 'these', 'those', 'been', 'being', 'over',
+        'under', 'after', 'before', 'more', 'less', 'than', 'then', 'them', 'onto', 'across', 'through',
+        'report', 'reporting', 'project', 'projects', 'team', 'teams', 'work', 'data', 'analysis'
+    ]);
+    const text = String(md || '')
+        .replace(/<[^>]*>/g, ' ')
+        .replace(/[`#*_>\[\]\(\)]/g, ' ')
+        .toLowerCase();
+    const parts = text.split(/[^a-z0-9]+/).filter((w) => w.length >= 5 && !STOP.has(w));
+    const freq = new Map();
+    for (const w of parts) freq.set(w, (freq.get(w) || 0) + 1);
+    const ranked = [...freq.entries()].sort((a, b) => b[1] - a[1]);
+    return ranked.length ? ranked[0][0] : '';
+}
+
+function diversifyTitle(type, title, contentMarkdown, existingTitles) {
+    let t = String(title || '').replace(/·.*$/g, '').replace(/\s+/g, ' ').trim();
+    const low = normalizeTitle(t);
+    const stemMap = buildStemCount(existingTitles || []);
+    const stem = titleStemWords(t, 4);
+    const repeatedStem = stem && (stemMap.get(stem) || 0) >= 3;
+    const banned = (TITLE_BANNED_PREFIXES[type] || []).some((p) => low.startsWith(p));
+    const weak = /…|\.\.\./.test(t) || t.length < 24;
+
+    if (!banned && !repeatedStem && !weak) return t;
+
+    const key = extractKeywordFromMarkdown(contentMarkdown);
+    const capKey = key ? key.charAt(0).toUpperCase() + key.slice(1) : 'Execution';
+    const templates = type === 'news'
+        ? [
+            `What Changes Now in ${capKey} Markets`,
+            `${capKey} Becomes a Competitive Battleground`,
+            `The Next Phase of ${capKey} Adoption`
+        ]
+        : [
+            `A Practical Playbook for ${capKey} Decisions`,
+            `How PM Teams Can Improve ${capKey} Outcomes`,
+            `Fixing Reporting Workflows with Better ${capKey}`
+        ];
+    const seed = Math.abs(
+        Array.from((t || '') + '|' + capKey).reduce((acc, ch) => acc * 31 + ch.charCodeAt(0), 7)
+    );
+    return templates[seed % templates.length];
+}
+
 async function generateArticle(type) {
     const useGemini = (type === 'blog');
     const apiUrl = useGemini ? process.env.GEMINI_API_URL : process.env.DEEPSEEK_API_URL;
@@ -160,12 +247,15 @@ async function generateArticle(type) {
 
         let postsExisting = [];
         if (fs.existsSync(POSTS_JSON_PATH)) try { postsExisting = JSON.parse(fs.readFileSync(POSTS_JSON_PATH, 'utf8')); } catch (e) {}
-        const normTitle = (s) => String(s || '').replace(/\s+/g, ' ').trim().toLowerCase();
-        if (postsExisting.some((p) => p.type === type && normTitle(p.title) === normTitle(title))) {
-            title = `${title} · ${Date.now().toString().slice(-6)}`;
-            rawMarkdown = `# ${title}\n\n${contentMarkdown}`;
-            contentMarkdown = rawMarkdown.replace(/^#\s+(.+)$/m, '').trim();
+        const sameTypeTitles = postsExisting.filter((p) => p.type === type).map((p) => p.title);
+        title = diversifyTitle(type, title, contentMarkdown, sameTypeTitles);
+        let suffixTry = 0;
+        while (postsExisting.some((p) => p.type === type && normalizeTitle(p.title) === normalizeTitle(title))) {
+            suffixTry += 1;
+            title = `${title} ${new Date().getUTCMonth() + 1}/${new Date().getUTCDate()}-${suffixTry}`;
         }
+        rawMarkdown = `# ${title}\n\n${contentMarkdown}`;
+        contentMarkdown = rawMarkdown.replace(/^#\s+(.+)$/m, '').trim();
 
         const safePrompt = title.replace(/[^a-zA-Z0-9 ]/g, "").substring(0, 48);
         const excerpt = contentMarkdown.replace(/<[^>]*>?/gm, '').replace(/[#*`>\[\]]/g, '').substring(0, 150).trim() + "...";
