@@ -22,16 +22,19 @@
  * avoid perceived white flash before first paint.
  */
 (function showNativeWarmSplashOnce() {
+    let isNative = false;
     try {
-        if (!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform())) return;
-    } catch (e) {
-        return;
-    }
-    const KEY = 'reportify_warm_splash_seen_v1';
-    try {
-        if (sessionStorage.getItem(KEY) === '1') return;
-        sessionStorage.setItem(KEY, '1');
-    } catch (e2) {}
+        const C = window.Capacitor;
+        if (C) {
+            if (typeof C.isNativePlatform === 'function') isNative = !!C.isNativePlatform();
+            if (!isNative && typeof C.getPlatform === 'function') {
+                const p = String(C.getPlatform() || '').toLowerCase();
+                isNative = (p === 'android' || p === 'ios');
+            }
+            if (!isNative && C.isNative === true) isNative = true;
+        }
+    } catch (e) {}
+    if (!isNative) return;
 
     const overlay = document.createElement('div');
     overlay.className = 'reportify-warm-splash';
@@ -44,7 +47,7 @@
     document.documentElement.appendChild(overlay);
 
     const start = Date.now();
-    const MIN_MS = 900;
+    const MIN_MS = 1200;
     const hide = function() {
         const remain = Math.max(0, MIN_MS - (Date.now() - start));
         setTimeout(function () {
