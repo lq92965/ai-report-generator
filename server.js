@@ -1057,7 +1057,14 @@ app.get('/api/auth/google/callback', async (req, res) => {
             });
             user = { _id: result.insertedId, plan: startingPlan };
         } else {
-            await db.collection('users').updateOne({ email: cleanEmail }, { $set: { picture: picture } });
+            const prevPic = user.picture != null ? String(user.picture) : '';
+            const hasCustomUpload = prevPic.startsWith('/uploads/');
+            if (!hasCustomUpload) {
+                await db.collection('users').updateOne(
+                    { email: cleanEmail },
+                    { $set: { picture: picture } }
+                );
+            }
         }
 
         const token = jwt.sign({ userId: user._id, plan: user.plan }, JWT_SECRET, { expiresIn: '7d' });

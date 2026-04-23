@@ -32,8 +32,8 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="mobile-patch.css?v=12">
-    <script src="mobile-patch.js?v=12"></script>
+    <link rel="stylesheet" href="mobile-patch.css?v=13">
+    <script src="mobile-patch.js?v=13"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body class="has-app-nav font-sans antialiased bg-gray-50 text-gray-800 flex flex-col min-h-screen">
@@ -316,8 +316,27 @@
                     }
                 }
                 if (!mdText || !mdText.trim()) throw (mdErr || new Error('Markdown file not found'));
-                
-                document.getElementById('article-content').innerHTML = marked.parse(mdText);
+
+                const ASSET_ORIGIN = 'https://www.goreportify.com';
+                const host = document.getElementById('article-content');
+                host.innerHTML = marked.parse(mdText);
+                host.querySelectorAll('img[src]').forEach(function (img) {
+                    var s = img.getAttribute('src') || '';
+                    if (/^https?:\/\//i.test(s)) {
+                        img.setAttribute('referrerpolicy', 'no-referrer');
+                        return;
+                    }
+                    if (/^\/\//.test(s)) {
+                        img.setAttribute('src', 'https:' + s);
+                        img.setAttribute('referrerpolicy', 'no-referrer');
+                        return;
+                    }
+                    var clean = s.replace(/^\.\//, '');
+                    if (clean.indexOf('images/') === 0) {
+                        img.setAttribute('src', ASSET_ORIGIN + '/' + clean);
+                    }
+                    img.setAttribute('referrerpolicy', 'no-referrer');
+                });
             } catch (error) {
                 console.error(error);
                 document.getElementById('article-content').innerHTML = '<p class="text-center text-gray-500 py-10">Oops! The article you are looking for could not be loaded.</p>';

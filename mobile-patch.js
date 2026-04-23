@@ -18,8 +18,8 @@
 })();
 
 /**
- * Native launch warm screen (single session):
- * avoid perceived white flash before first paint.
+ * Native launch warm screen (once per WebView session):
+ * avoid perceived white flash before first paint; do not repeat on in-app navigation.
  */
 (function showNativeWarmSplashOnce() {
     let isNative = false;
@@ -35,6 +35,11 @@
         }
     } catch (e) {}
     if (!isNative) return;
+
+    try {
+        if (sessionStorage.getItem('reportifyNativeWarmSplashShown') === '1') return;
+        sessionStorage.setItem('reportifyNativeWarmSplashShown', '1');
+    } catch (e) {}
 
     const overlay = document.createElement('div');
     overlay.className = 'reportify-warm-splash';

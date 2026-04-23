@@ -275,12 +275,38 @@ async function generateArticle(type) {
         const remoteUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(imagePrompt)}?width=${imgW}&height=${imgH}&nologo=true&seed=${seed}`;
 
         const imageFileName = `cover-${timestamp}.png`;
+        const destAbs = path.join(IMAGES_DIR, imageFileName);
         let localImageRelPath = `images/${imageFileName}`;
-        
+        const fb =
+            UNSPLASH_FALLBACKS[parseInt(hashSeed.slice(16, 24), 16) % UNSPLASH_FALLBACKS.length];
+
         try {
-            await imageDownloader.image({ url: remoteUrl, dest: path.join(IMAGES_DIR, imageFileName) });
+            await imageDownloader.image({ url: remoteUrl, dest: destAbs });
+            const st = fs.statSync(destAbs);
+            let looksPng = false;
+            try {
+                const fd = fs.openSync(destAbs, 'r');
+                try {
+                    const head = Buffer.alloc(8);
+                    const n = fs.readSync(fd, head, 0, 8, 0);
+                    looksPng =
+                        n >= 8 &&
+                        head[0] === 0x89 &&
+                        head[1] === 0x50 &&
+                        head[2] === 0x4e &&
+                        head[3] === 0x47;
+                } finally {
+                    fs.closeSync(fd);
+                }
+            } catch (_) {}
+            if (!st.isFile() || st.size < 2048 || !looksPng) {
+                try {
+                    fs.unlinkSync(destAbs);
+                } catch (_) {}
+                localImageRelPath = fb;
+            }
         } catch (e) {
-            localImageRelPath = UNSPLASH_FALLBACKS[parseInt(hashSeed.slice(16, 24), 16) % UNSPLASH_FALLBACKS.length];
+            localImageRelPath = fb;
         }
 
         return { timestamp, type, title, contentMarkdown, excerpt, author: FAKE_AUTHORS[Math.floor(Math.random() * FAKE_AUTHORS.length)], localImageRelPath, dateStr };
@@ -316,6 +342,18 @@ async function buildStaticPage(postData) {
     $('#article-header').html(headerHtml);
 
     $('#article-content').removeClass('text-center text-gray-400 py-10').html(marked.parse(mdWithImg));
+    $('#article-content img[src]').each((_, el) => {
+        const src = $(el).attr('src') || '';
+        if (/^https?:\/\//i.test(src)) {
+            $(el).attr('referrerpolicy', 'no-referrer');
+            return;
+        }
+        const clean = String(src).replace(/^\.\//, '');
+        if (clean.startsWith('images/')) {
+            $(el).attr('src', `https://www.goreportify.com/${clean}`);
+            $(el).attr('referrerpolicy', 'no-referrer');
+        }
+    });
 
     $('script').each((i, el) => {
         const scriptText = $(el).html();
@@ -375,24 +413,40 @@ function publishAndSEO(postMeta) {
 async function runEngine(type, options = {}) {
     const skipPush = options.skipPush === true;
     const rawData = await generateArticle(type);
-    if (!rawData) return;
+    if (!rawData) {
+        const hint =
+            type === 'news'
+                ? 'Check DEEPSEEK_API_URL, DEEPSEEK_API_KEY, DEEPSEEK_MODEL and tech_radar_crawler logs.'
+                : 'Check GEMINI_API_URL, GEMINI_API_KEY, GEMINI_MODEL and upstream errors.';
+        console.error(`[Amber V8] ❌ ${type} step produced no article. ${hint}`);
+        return false;
+    }
     const postMeta = await buildStaticPage(rawData);
     publishAndSEO(postMeta);
 
-    if (skipPush) return;
+    if (skipPush) return true;
 
     try {
         execSync(`git add . && git commit -m "feat(UX): Auto-gen ${type} - ${postMeta.id}" && git pull origin main --rebase && git push origin main`, { cwd: REPO_DIR });
         console.log(`[Amber V8] 🚀 物理文件已推送 GitHub，Netlify 即刻开始构建全站！`);
     } catch (e) { console.error("[Amber V8] ❌ GitHub 推送失败: ", e.message); }
+    return true;
 }
 
 /** 每日一篇新闻 + 一篇博客，最后只 push 一次 → Netlify 每日约一次构建 */
 async function runDailyBatch() {
     const noGitPush = process.env.AMBER_NO_GIT_PUSH === '1' || process.env.AMBER_NO_GIT_PUSH === 'true';
     console.log('[Amber V8] 📅 Daily batch: news → blog' + (noGitPush ? ' (no git push — self-host / Nginx)' : ' (single git push)'));
-    await runEngine('news', { skipPush: true });
-    await runEngine('blog', { skipPush: true });
+    const newsOk = await runEngine('news', { skipPush: true });
+    const blogOk = await runEngine('blog', { skipPush: true });
+    if (!newsOk) {
+        console.error(
+            '[Amber V8] ⚠️ News was not added today (generation failed). Blog may still update — fix DeepSeek/crawler so news advances in data/posts.json.'
+        );
+    }
+    if (!blogOk) {
+        console.error('[Amber V8] ⚠️ Blog was not added today (generation failed). Check Gemini configuration.');
+    }
     if (noGitPush) {
         console.log('[Amber V8] ✅ Files written under repo; Nginx serves this directory — no Netlify build.');
         return;
