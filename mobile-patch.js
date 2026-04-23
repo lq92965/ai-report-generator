@@ -17,11 +17,6 @@
     if (byUrl()) document.documentElement.classList.add('pwa-nb-detail-layout');
 })();
 
-/**
- * 原生 App：欢迎/启动只使用各平台原生 splash（Android 为 res 里 splash.png 小鸡图）。
- * 不再叠第二屏 HTML，避免「小鸡页 -> 二次欢迎页 -> 首页」。
- */
-
 document.addEventListener('DOMContentLoaded', function() {
     if (
         !document.documentElement.classList.contains('pwa-nb-detail-layout') &&

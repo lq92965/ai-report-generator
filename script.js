@@ -66,7 +66,6 @@ window.reportifyFetchPostsJson = async function reportifyFetchPostsJson() {
     const candidates = isNative
         ? [
               `${API_BASE_URL}/api/posts-json?t=${bust}`,
-              `${reportifyPublicSiteOrigin()}/data/posts.json?t=${bust}`,
               `data/posts.json?t=${bust}`
           ]
         : [
