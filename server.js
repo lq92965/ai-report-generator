@@ -766,21 +766,44 @@ async function maybeRecoverPlanFromPayments(db, user) {
 
 app.get('/api/posts-json', async (req, res) => {
     try {
+        const pickLatestNewsPayload = (candidates) => {
+            const scored = candidates
+                .filter((arr) => Array.isArray(arr))
+                .map((arr) => {
+                    const latest = arr
+                        .filter((p) => p && p.type === 'news' && p.date)
+                        .map((p) => String(p.date).replace(/\//g, '-'))
+                        .sort()
+                        .pop() || '';
+                    return { arr, latest };
+                })
+                .sort((a, b) => String(b.latest).localeCompare(String(a.latest)));
+            return scored.length ? scored[0].arr : null;
+        };
+
         const localCandidates = [
             path.join('/var/www/html', 'data', 'posts.json'),
             path.join(__dirname, 'data', 'posts.json')
         ];
+        const payloadCandidates = [];
         for (const p of localCandidates) {
             if (fs.existsSync(p)) {
                 const txt = fs.readFileSync(p, 'utf8');
                 const json = JSON.parse(txt);
-                res.set('Cache-Control', 'no-store');
-                return res.json(json);
+                if (Array.isArray(json)) payloadCandidates.push(json);
             }
         }
-        const remote = await axios.get('https://goreportify.com/data/posts.json', { timeout: 8000 });
+
+        try {
+            const remote = await axios.get('https://goreportify.com/data/posts.json', { timeout: 8000 });
+            if (Array.isArray(remote.data)) payloadCandidates.push(remote.data);
+        } catch (_) {
+            // ignore remote failure; local sources may still work
+        }
+
+        const best = pickLatestNewsPayload(payloadCandidates);
         res.set('Cache-Control', 'no-store');
-        return res.json(remote.data || []);
+        return res.json(best || []);
     } catch (e) {
         console.error('GET /api/posts-json', e.message || e);
         return res.status(500).json({ message: 'Failed to load posts' });

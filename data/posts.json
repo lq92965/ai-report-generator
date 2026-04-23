@@ -1,5 +1,35 @@
 [
     {
+        "id": "1776925735392",
+        "type": "blog",
+        "title": "The Signal in the Static",
+        "category": "Deep Insights",
+        "date": "2026-04-23",
+        "author": "David Sterling",
+        "excerpt": "You spend an hour crafting the perfect weekly update. It has the burndown chart, the list of completed tickets, the summary of the design review. You...",
+        "contentFile": "blog-1776925735392.md"
+    },
+    {
+        "id": "1776925709062",
+        "type": "news",
+        "title": "The Next Phase of Building Adoption",
+        "category": "Tech Radar",
+        "date": "2026-04-23",
+        "author": "Alex Mercer",
+        "excerpt": "In a quiet corner of the internet, a newsroom just published its constitution. Ars Technica, a publication built on explaining the guts of technology,...",
+        "contentFile": "news-1776925709062.md"
+    },
+    {
+        "id": "1776923024605",
+        "type": "blog",
+        "title": "Stop Reporting History. Start Proposing the Future.",
+        "category": "Deep Insights",
+        "date": "2026-04-23",
+        "author": "David Sterling",
+        "excerpt": "It’s 8 AM on Monday. A VP of Engineering opens her inbox. She sees twenty emails with subject lines like, \"Project Phoenix Weekly Status\" and \"Metrics...",
+        "contentFile": "blog-1776923024605.md"
+    },
+    {
         "id": "1776862833225",
         "type": "blog",
         "title": "Your Weekly Report is a Wasted Opportunity",

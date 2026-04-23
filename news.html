@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css?v=3.4-ios">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="mobile-patch.css?v=2026.10">
-    <script src="mobile-patch.js?v=2026.10"></script>
+    <link rel="stylesheet" href="mobile-patch.css?v=2026.15">
+    <script src="mobile-patch.js?v=2026.15"></script>
 </head>
 <body class="has-app-nav font-sans antialiased bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
@@ -22,7 +22,7 @@
         <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
             <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
                 <a id="pwa-header-logo" href="index.html" class="logo flex items-center gap-2 no-underline" style="text-decoration: none;">
-                    <img src="https://raw.githubusercontent.com/lq92965/ai-report-generator/main/logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain;">
+                    <img src="logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain;">
                     <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
                 </a>
                 <a id="news-list-back" href="news.html" class="unified-back-btn hidden" aria-hidden="true"><span class="back-arrow">←</span><span class="back-text">Previous Page</span></a>
@@ -88,9 +88,34 @@
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                const allPosts = (typeof window.reportifyFetchPostsJson === 'function')
-                    ? await window.reportifyFetchPostsJson()
-                    : await (await fetch('data/posts.json?t=' + Date.now(), { cache: 'no-store' })).json();
+                async function fetchFreshestPosts() {
+                    const bust = Date.now();
+                    const urls = [
+                        'https://www.goreportify.com/data/posts.json?t=' + bust,
+                        'data/posts.json?t=' + bust
+                    ];
+                    const payloads = [];
+                    for (const url of urls) {
+                        try {
+                            const res = await fetch(url, { cache: 'no-store' });
+                            if (!res.ok) continue;
+                            const data = await res.json();
+                            if (Array.isArray(data)) payloads.push(data);
+                        } catch (_) {}
+                    }
+                    if (!payloads.length) throw new Error('No posts payload available');
+                    const latestNewsDate = (arr) => {
+                        const dates = arr
+                            .filter((p) => p && p.type === 'news' && p.date)
+                            .map((p) => String(p.date).replace(/\//g, '-'))
+                            .sort();
+                        return dates.length ? dates[dates.length - 1] : '';
+                    };
+                    payloads.sort((a, b) => String(latestNewsDate(b)).localeCompare(String(latestNewsDate(a))));
+                    return payloads[0];
+                }
+
+                const allPosts = await fetchFreshestPosts();
                 const byId = new Map();
                 for (const p of allPosts) {
                     if (!p || p.type !== 'news' || !p.id) continue;
@@ -230,6 +255,6 @@
     </script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script src="pwa-nav.js"></script>
-    <script src="script.js?v=2026.22"></script>
+    <script src="script.js?v=2026.27"></script>
 </body>
 </html>

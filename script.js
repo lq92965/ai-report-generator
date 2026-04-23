@@ -51,23 +51,58 @@ window.reportifyPostsJsonUrl = function reportifyPostsJsonUrl() {
 /** Robust posts loader for native/web: API -> apex -> bundled fallback. */
 window.reportifyFetchPostsJson = async function reportifyFetchPostsJson() {
     const bust = Date.now();
-    /* Prefer apex static JSON first: API 可能读服务器上未更新的 data/posts.json，而站点已发布新列表 */
-    const candidates = [
-        `${reportifyPublicSiteOrigin()}/data/posts.json?t=${bust}`,
-        `${API_BASE_URL}/api/posts-json?t=${bust}`,
-        `data/posts.json?t=${bust}`
-    ];
+    // Native app 常在服务器本地先写入 posts.json（AMBER_NO_GIT_PUSH=1）；优先 API 可最快看到新新闻。
+    const isNative = (() => {
+        try {
+            const C = window.Capacitor;
+            if (!C) return false;
+            if (typeof C.isNativePlatform === 'function') return C.isNativePlatform();
+            const p = typeof C.getPlatform === 'function' ? String(C.getPlatform() || '').toLowerCase() : '';
+            return p === 'android' || p === 'ios' || C.isNative === true;
+        } catch (_) {
+            return false;
+        }
+    })();
+    const candidates = isNative
+        ? [
+              `${API_BASE_URL}/api/posts-json?t=${bust}`,
+              `${reportifyPublicSiteOrigin()}/data/posts.json?t=${bust}`,
+              `data/posts.json?t=${bust}`
+          ]
+        : [
+              `${reportifyPublicSiteOrigin()}/data/posts.json?t=${bust}`,
+              `${API_BASE_URL}/api/posts-json?t=${bust}`,
+              `data/posts.json?t=${bust}`
+          ];
+    function latestNewsDate(payload) {
+        if (!Array.isArray(payload)) return '';
+        const dates = payload
+            .filter((x) => x && x.type === 'news' && x.date)
+            .map((x) => String(x.date).replace(/\//g, '-'));
+        dates.sort();
+        return dates.length ? dates[dates.length - 1] : '';
+    }
+
     let lastErr = null;
+    const fetched = [];
     for (const url of candidates) {
         try {
             const res = await fetch(url, { cache: 'no-store' });
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const data = await res.json();
-            if (Array.isArray(data)) return data;
+            if (Array.isArray(data)) {
+                fetched.push({ url, data, newsDate: latestNewsDate(data) });
+                continue;
+            }
             throw new Error('Invalid posts payload');
         } catch (e) {
             lastErr = e;
         }
+    }
+    if (fetched.length > 0) {
+        // Pick the freshest news feed; this avoids API lag showing stale dates in native app.
+        fetched.sort((a, b) => String(b.newsDate || '').localeCompare(String(a.newsDate || '')));
+        return fetched[0].data;
     }
     throw lastErr || new Error('Failed to load posts.json');
 };

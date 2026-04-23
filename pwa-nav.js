@@ -2,13 +2,33 @@
 (function () {
   'use strict';
 
-  if ('serviceWorker' in navigator) {
+  function isNativeRuntime() {
+    try {
+      var C = window.Capacitor;
+      if (!C) return false;
+      if (typeof C.isNativePlatform === 'function') return C.isNativePlatform();
+      if (typeof C.getPlatform === 'function') {
+        var p = String(C.getPlatform() || '').toLowerCase();
+        if (p === 'android' || p === 'ios') return true;
+      }
+      return C.isNative === true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  if ('serviceWorker' in navigator && !isNativeRuntime()) {
     window.addEventListener('load', function () {
       var swUrl = new URL('sw.js', window.location.href).href;
       navigator.serviceWorker.register(swUrl).catch(function () {
         /* non-fatal on file:// or blocked scope */
       });
     });
+  } else if ('serviceWorker' in navigator && isNativeRuntime()) {
+    // Native WebView: avoid stale shell/content from SW cache.
+    navigator.serviceWorker.getRegistrations().then(function (regs) {
+      regs.forEach(function (r) { r.unregister(); });
+    }).catch(function () {});
   }
 
   function setActiveBottomNav() {
