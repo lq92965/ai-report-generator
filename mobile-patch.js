@@ -18,54 +18,9 @@
 })();
 
 /**
- * Native launch warm screen (once per WebView session):
- * avoid perceived white flash before first paint; do not repeat on in-app navigation.
+ * 原生 App：欢迎/启动只使用各平台原生 splash（Android 为 res 里 splash.png 小鸡图），
+ * 不再叠第二屏 HTML，避免与原生开机动画重复。
  */
-(function showNativeWarmSplashOnce() {
-    let isNative = false;
-    try {
-        const C = window.Capacitor;
-        if (C) {
-            if (typeof C.isNativePlatform === 'function') isNative = !!C.isNativePlatform();
-            if (!isNative && typeof C.getPlatform === 'function') {
-                const p = String(C.getPlatform() || '').toLowerCase();
-                isNative = (p === 'android' || p === 'ios');
-            }
-            if (!isNative && C.isNative === true) isNative = true;
-        }
-    } catch (e) {}
-    if (!isNative) return;
-
-    try {
-        if (sessionStorage.getItem('reportifyNativeWarmSplashShown') === '1') return;
-        sessionStorage.setItem('reportifyNativeWarmSplashShown', '1');
-    } catch (e) {}
-
-    const overlay = document.createElement('div');
-    overlay.className = 'reportify-warm-splash';
-    overlay.innerHTML = '' +
-        '<div class="reportify-warm-splash-inner">' +
-        '  <img src="logo-3d.png.png" alt="Reportify AI" class="reportify-warm-splash-logo" />' +
-        '  <div class="reportify-warm-splash-title">Reportify AI</div>' +
-        '  <div class="reportify-warm-splash-sub">Preparing your workspace...</div>' +
-        '</div>';
-    document.documentElement.appendChild(overlay);
-
-    const start = Date.now();
-    const MIN_MS = 1200;
-    const hide = function() {
-        const remain = Math.max(0, MIN_MS - (Date.now() - start));
-        setTimeout(function () {
-            overlay.classList.add('is-hide');
-            setTimeout(function () {
-                if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
-            }, 240);
-        }, remain);
-    };
-    if (document.readyState === 'complete') hide();
-    else window.addEventListener('load', hide, { once: true });
-    setTimeout(hide, 4500);
-})();
 
 document.addEventListener('DOMContentLoaded', function() {
     if (

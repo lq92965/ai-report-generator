@@ -51,9 +51,10 @@ window.reportifyPostsJsonUrl = function reportifyPostsJsonUrl() {
 /** Robust posts loader for native/web: API -> apex -> bundled fallback. */
 window.reportifyFetchPostsJson = async function reportifyFetchPostsJson() {
     const bust = Date.now();
+    /* Prefer apex static JSON first: API 可能读服务器上未更新的 data/posts.json，而站点已发布新列表 */
     const candidates = [
-        `${API_BASE_URL}/api/posts-json?t=${bust}`,
         `${reportifyPublicSiteOrigin()}/data/posts.json?t=${bust}`,
+        `${API_BASE_URL}/api/posts-json?t=${bust}`,
         `data/posts.json?t=${bust}`
     ];
     let lastErr = null;

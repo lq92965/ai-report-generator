@@ -2,6 +2,37 @@
 /* 作用：纯净版移动端UI补丁，包含顶部安全区避让、底部居中及极简返回按钮 */
 
 @media (max-width: 768px) {
+    /*
+     * 顶栏桌面导航：Tailwind CDN 偶发未生效时 .hidden md:flex 会失效，Features 等会挤成第二行像「多一栏」。
+     * 用原生媒体查询强制隐藏（与 style.css 767px 规则一致、提高保险系数）。
+     */
+    body.has-app-nav header.main-header.pwa-app-header nav.main-nav.pwa-desktop-nav,
+    body.has-app-nav header.main-header.pwa-app-header nav#pwa-collapse-nav {
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        min-width: 0 !important;
+        height: 0 !important;
+        max-height: 0 !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        position: absolute !important;
+        left: -9999px !important;
+        clip: rect(0, 0, 0, 0) !important;
+        pointer-events: none !important;
+    }
+
+    /* 与 news/blog 一致：整行顶栏 single row，避免 index 在 WebView 里折成两栏感 */
+    body.has-app-nav header.main-header.pwa-app-header .pwa-header-inner {
+        flex-wrap: nowrap !important;
+    }
+    body.has-app-nav header.main-header.pwa-app-header .pwa-header-inner > .pwa-header-leading {
+        flex: 0 1 auto;
+        min-width: 0;
+    }
+
     /* 1. 基础安全区：与首页顶栏高度对齐，避免其它页「顶栏过厚」 */
     body.has-app-nav {
         padding-bottom: max(env(safe-area-inset-bottom, 0px), 12px) !important;
@@ -15,15 +46,15 @@
         align-items: center !important;
         width: 100% !important;
         box-sizing: border-box !important;
-        /* env() may be 0 in Android WebView; keep clear of status bar */
-        padding-top: max(env(safe-area-inset-top, 0px), 28px) !important;
-        padding-bottom: 10px !important;
+        /* Android 15 + emulator：28px 会让白边过厚，这里收窄为接近原生单行顶栏 */
+        padding-top: max(env(safe-area-inset-top, 0px), 8px) !important;
+        padding-bottom: 6px !important;
         min-height: 0 !important;
     }
 
     /* 与首页顶栏内容行垂直占位对齐 */
     header.main-header.pwa-app-header > .app-header-shell.pwa-header-inner {
-        min-height: 40px;
+        min-height: 36px;
         align-items: center;
     }
 
@@ -433,41 +464,122 @@ html.pwa-nb-detail-layout body.has-app-nav main.flex-grow > article.max-w-4xl.mx
     max-width: 100%;
 }
 
+/* Native app: 白/浅底 → 欢迎层 → 主界面（JS 中延迟挂载；首帧多为白屏） */
+html.reportify-splash-on {
+    background-color: #ffffff;
+}
+html.reportify-splash-on body {
+    background-color: #ffffff;
+}
+
 /* Native app first-paint warm screen (mobile-patch.js injects this layer). */
 .reportify-warm-splash {
     position: fixed;
     inset: 0;
     z-index: 12000;
-    background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 38%, #eef2ff 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 1;
-    transition: opacity 0.22s ease;
+    transition: opacity 0.3s ease;
+    padding: max(env(safe-area-inset-top, 0px), 12px) max(env(safe-area-inset-right, 0px), 12px)
+        max(env(safe-area-inset-bottom, 0px), 12px) max(env(safe-area-inset-left, 0px), 12px);
+    box-sizing: border-box;
 }
 .reportify-warm-splash.is-hide {
     opacity: 0;
+    pointer-events: none;
 }
 .reportify-warm-splash-inner {
     text-align: center;
-    padding: 16px 20px;
+    padding: 12px 16px;
+    width: 100%;
+    max-width: 360px;
 }
-.reportify-warm-splash-logo {
-    width: 64px;
-    height: 64px;
-    object-fit: contain;
-    margin: 0 auto 10px;
-    filter: drop-shadow(0 4px 10px rgba(37, 99, 235, 0.18));
+.reportify-warm-splash-card {
+    margin: 0 auto;
+    padding: 26px 20px 22px;
+    border-radius: 18px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+}
+.reportify-warm-splash-mark {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+    filter: drop-shadow(0 6px 16px rgba(37, 99, 235, 0.2));
 }
 .reportify-warm-splash-title {
-    font-size: 1.05rem;
-    line-height: 1.2;
+    font-size: 1.2rem;
+    line-height: 1.25;
     font-weight: 800;
     color: #0f172a;
     letter-spacing: 0.01em;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+.reportify-warm-splash-line {
+    margin: 10px 0 0 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: #475569;
+    font-weight: 500;
+}
+.reportify-warm-splash-features {
+    list-style: none;
+    margin: 14px 0 0 0;
+    padding: 0 2px;
+    text-align: left;
+}
+.reportify-warm-splash-features li {
+    position: relative;
+    padding: 0 0 0 1.1rem;
+    margin: 0 0 0.5rem 0;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: #334155;
+}
+.reportify-warm-splash-features li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #2563eb;
+    font-weight: 800;
 }
 .reportify-warm-splash-sub {
-    margin-top: 6px;
-    font-size: 0.8rem;
+    margin-top: 14px;
+    font-size: 0.8125rem;
     color: #64748b;
+    font-weight: 500;
+}
+.reportify-warm-splash-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 16px;
+}
+.reportify-warm-splash-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: #cbd5e1;
+    animation: reportify-warm-dot 1s ease-in-out infinite;
+}
+.reportify-warm-splash-dots span:nth-child(2) {
+    animation-delay: 0.15s;
+}
+.reportify-warm-splash-dots span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+@keyframes reportify-warm-dot {
+    0%,
+    100% {
+        opacity: 0.45;
+        transform: scale(0.92);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }

@@ -179,11 +179,36 @@ function diversifyTitle(type, title, contentMarkdown, existingTitles) {
     return templates[seed % templates.length];
 }
 
+/** LLM providers occasionally change payload shape; parse robustly instead of assuming OpenAI-style choices[0]. */
+function extractModelText(respData) {
+    if (!respData) return '';
+
+    // OpenAI / DeepSeek compatible
+    const c0 = respData?.choices?.[0];
+    if (typeof c0?.message?.content === 'string' && c0.message.content.trim()) {
+        return c0.message.content.trim();
+    }
+    if (typeof c0?.text === 'string' && c0.text.trim()) {
+        return c0.text.trim();
+    }
+
+    // Gemini style variants
+    const p0 = respData?.candidates?.[0]?.content?.parts?.[0];
+    if (typeof p0?.text === 'string' && p0.text.trim()) {
+        return p0.text.trim();
+    }
+    if (typeof respData?.output_text === 'string' && respData.output_text.trim()) {
+        return respData.output_text.trim();
+    }
+
+    return '';
+}
+
 async function generateArticle(type) {
     const useGemini = (type === 'blog');
-    const apiUrl = useGemini ? process.env.GEMINI_API_URL : process.env.DEEPSEEK_API_URL;
-    const apiKey = useGemini ? process.env.GEMINI_API_KEY : process.env.DEEPSEEK_API_KEY;
-    const aiModel = useGemini ? process.env.GEMINI_MODEL : process.env.DEEPSEEK_MODEL;
+    let apiUrl = useGemini ? process.env.GEMINI_API_URL : process.env.DEEPSEEK_API_URL;
+    let apiKey = useGemini ? process.env.GEMINI_API_KEY : process.env.DEEPSEEK_API_KEY;
+    let aiModel = useGemini ? process.env.GEMINI_MODEL : process.env.DEEPSEEK_MODEL;
 
     console.log(`\n[Amber V8] 🧠 正在撰写 ${type}...`);
 
@@ -232,15 +257,47 @@ async function generateArticle(type) {
         }
     }
 
+    async function callModel(url, key, model) {
+        const response = await axios.post(
+            url,
+            {
+                model,
+                messages: [
+                    { role: 'system', content: systemPrompt },
+                    { role: 'user', content: userPrompt }
+                ],
+                temperature: 0.7,
+                max_tokens: 2500
+            },
+            { headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' } }
+        );
+        const txt = extractModelText(response.data);
+        if (!txt) {
+            throw new Error(`Empty model content (model=${model || 'unknown'})`);
+        }
+        return txt;
+    }
+
     try {
-        const response = await axios.post(apiUrl, { 
-            model: aiModel, 
-            messages: [{ role: "system", content: systemPrompt }, { role: "user", content: userPrompt }], 
-            temperature: 0.7, 
-            max_tokens: 2500 
-        }, { headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' } });
-        
-        let rawMarkdown = response.data.choices[0].message.content.trim();
+        if (!apiUrl || !apiKey || !aiModel) {
+            throw new Error(`[Amber V8] Missing model env for ${type}.`);
+        }
+        let rawMarkdown = '';
+        try {
+            rawMarkdown = await callModel(apiUrl, apiKey, aiModel);
+        } catch (firstErr) {
+            // News 主链路是 DeepSeek；若它配额/格式临时异常，自动回退 Gemini，避免当天 news 断更。
+            if (type === 'news' && process.env.GEMINI_API_URL && process.env.GEMINI_API_KEY && process.env.GEMINI_MODEL) {
+                console.warn(`[Amber V8] ⚠️ News primary model failed, fallback to Gemini. reason=${firstErr.message}`);
+                apiUrl = process.env.GEMINI_API_URL;
+                apiKey = process.env.GEMINI_API_KEY;
+                aiModel = process.env.GEMINI_MODEL;
+                rawMarkdown = await callModel(apiUrl, apiKey, aiModel);
+            } else {
+                throw firstErr;
+            }
+        }
+
         let titleMatch = rawMarkdown.match(/^#\s+(.+)$/m);
         let title = titleMatch ? titleMatch[1].trim() : `Reportify ${type.toUpperCase()} Insights`;
         let contentMarkdown = rawMarkdown.replace(/^#\s+(.+)$/m, '').trim();
