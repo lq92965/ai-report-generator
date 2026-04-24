@@ -204,6 +204,24 @@ function extractModelText(respData) {
     return '';
 }
 
+function looksLikeCorruptedArticleMarkdown(md) {
+    const s = String(md || '').toLowerCase();
+    if (!s.trim()) return true;
+    const badSignals = [
+        '#generated-report',
+        'continue with google',
+        'create your report',
+        'feedback history',
+        'reset password',
+        'document.addEventlistener',
+        'tailwindcss.com',
+        'subject / inquiry type'
+    ];
+    const hits = badSignals.reduce((n, t) => n + (s.includes(t) ? 1 : 0), 0);
+    // 2+ strong markers means the content is likely a dumped landing page, not an article.
+    return hits >= 2;
+}
+
 async function generateArticle(type) {
     const useGemini = (type === 'blog');
     let apiUrl = useGemini ? process.env.GEMINI_API_URL : process.env.DEEPSEEK_API_URL;
@@ -295,6 +313,18 @@ async function generateArticle(type) {
                 rawMarkdown = await callModel(apiUrl, apiKey, aiModel);
             } else {
                 throw firstErr;
+            }
+        }
+        if (looksLikeCorruptedArticleMarkdown(rawMarkdown)) {
+            console.warn(`[Amber V8] ⚠️ ${type} output looks corrupted (landing-page/css/js dump). Retrying once with stricter prompt...`);
+            userPrompt +=
+                '\n\nHard constraints (must follow):\n' +
+                '- Output only ONE standalone article in Markdown.\n' +
+                '- Do NOT output CSS/JS/HTML/template/navigation/login/pricing/forms.\n' +
+                '- Do NOT include words like "Create Your Report", "Login", "Sign Up", or page UI labels.\n';
+            rawMarkdown = await callModel(apiUrl, apiKey, aiModel);
+            if (looksLikeCorruptedArticleMarkdown(rawMarkdown)) {
+                throw new Error('Corrupted markdown detected twice; abort publish to prevent bad content release.');
             }
         }
 
