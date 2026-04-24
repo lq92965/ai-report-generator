@@ -91,8 +91,10 @@
                 async function fetchFreshestPosts() {
                     const bust = Date.now();
                     const urls = [
+                        'data/posts.json?t=' + bust,
+                        'https://api.goreportify.com/api/posts-json?t=' + bust,
                         'https://www.goreportify.com/data/posts.json?t=' + bust,
-                        'data/posts.json?t=' + bust
+                        'https://goreportify.com/data/posts.json?t=' + bust
                     ];
                     const payloads = [];
                     for (const url of urls) {
