@@ -13,6 +13,7 @@
     "android:web": "node build_www.cjs && npx cap sync android",
     "android:fileprovider": "node tools/apply-android-fileprovider.cjs",
     "amber:once": "node tools/run-amber-daily-once.cjs",
+    "amber:health": "node tools/check-daily-health.cjs",
     "amber:catchup": "node tools/amber-catchup-days.cjs",
     "posts:dedupe": "node tools/dedupe-and-retitle-posts.cjs",
     "postinstall": "patch-package"
