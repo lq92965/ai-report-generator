@@ -303,19 +303,28 @@
                     `https://goreportify.com/content/${encodeURIComponent(file)}?t=${bust}`,
                     `content/${encodeURIComponent(file)}?t=${bust}`
                 ];
-                let mdText = '';
-                let mdErr = null;
-                for (const url of mdCandidates) {
+                async function fetchTextWithTimeout(url, timeoutMs) {
+                    const ctrl = new AbortController();
+                    const timer = setTimeout(() => ctrl.abort(), timeoutMs);
                     try {
-                        const mdResponse = await fetch(url, { cache: 'no-store' });
+                        const mdResponse = await fetch(url, { cache: 'no-store', signal: ctrl.signal });
                         if (!mdResponse.ok) throw new Error(`HTTP ${mdResponse.status}`);
-                        mdText = await mdResponse.text();
-                        if (mdText && mdText.trim()) break;
-                    } catch (e) {
-                        mdErr = e;
+                        const txt = await mdResponse.text();
+                        if (!txt || !txt.trim()) throw new Error('Empty markdown');
+                        return txt;
+                    } finally {
+                        clearTimeout(timer);
                     }
                 }
-                if (!mdText || !mdText.trim()) throw (mdErr || new Error('Markdown file not found'));
+                const mdSettled = await Promise.allSettled(
+                    mdCandidates.map((url) => fetchTextWithTimeout(url, 1800))
+                );
+                const mdWinner = mdSettled.find((x) => x.status === 'fulfilled' && x.value && x.value.trim());
+                if (!mdWinner) {
+                    const lastErr = mdSettled.find((x) => x.status === 'rejected');
+                    throw (lastErr && lastErr.reason) || new Error('Markdown file not found');
+                }
+                const mdText = mdWinner.value;
 
                 const ASSET_ORIGIN = 'https://www.goreportify.com';
                 const host = document.getElementById('article-content');

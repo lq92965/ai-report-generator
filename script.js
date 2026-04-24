@@ -82,20 +82,34 @@ window.reportifyFetchPostsJson = async function reportifyFetchPostsJson() {
         return dates.length ? dates[dates.length - 1] : '';
     }
 
-    let lastErr = null;
-    const fetched = [];
-    for (const url of candidates) {
+    async function fetchJsonWithTimeout(url, timeoutMs) {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), timeoutMs);
         try {
-            const res = await fetch(url, { cache: 'no-store' });
+            const res = await fetch(url, { cache: 'no-store', signal: ctrl.signal });
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const data = await res.json();
-            if (Array.isArray(data)) {
-                fetched.push({ url, data, newsDate: latestNewsDate(data) });
-                continue;
-            }
-            throw new Error('Invalid posts payload');
-        } catch (e) {
-            lastErr = e;
+            if (!Array.isArray(data)) throw new Error('Invalid posts payload');
+            return data;
+        } finally {
+            clearTimeout(timer);
+        }
+    }
+
+    let lastErr = null;
+    const settled = await Promise.allSettled(
+        candidates.map(async (url) => {
+            const timeoutMs = /^data\//i.test(url) ? 700 : 1800;
+            const data = await fetchJsonWithTimeout(url, timeoutMs);
+            return { url, data, newsDate: latestNewsDate(data) };
+        })
+    );
+    const fetched = [];
+    for (const item of settled) {
+        if (item.status === 'fulfilled' && item.value && Array.isArray(item.value.data)) {
+            fetched.push(item.value);
+        } else if (item.status === 'rejected') {
+            lastErr = item.reason;
         }
     }
     if (fetched.length > 0) {
@@ -142,6 +156,17 @@ function getFullImageUrl(path) {
     // 4. 如果是本地路径，拼接 API 地址
     const cleanPath = path.startsWith('/') ? path : '/' + path;
     return `${API_BASE_URL}${cleanPath}`;
+}
+
+function warmAvatarImage(url) {
+    const full = getFullImageUrl(url);
+    if (!full || full === DEFAULT_AVATAR_ICON) return;
+    try {
+        const img = new Image();
+        img.referrerPolicy = 'no-referrer';
+        img.decoding = 'async';
+        img.src = full;
+    } catch (_) { /* noop */ }
 }
 
 window.applyAvatarElementHints = function (imgEl, url) {
@@ -1536,6 +1561,7 @@ function hydrateUserFromLocalCache() {
         if (cached && typeof cached === 'object') {
             currentUser = cached;
             currentUserPlan = cached.plan || currentUserPlan || 'free';
+            if (cached.picture) warmAvatarImage(cached.picture);
         }
     } catch (_) { /* noop */ }
 }
