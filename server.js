@@ -1081,7 +1081,10 @@ app.get('/api/auth/google/callback', async (req, res) => {
             user = { _id: result.insertedId, plan: startingPlan };
         } else {
             const prevPic = user.picture != null ? String(user.picture) : '';
-            const hasCustomUpload = prevPic.startsWith('/uploads/');
+            const hasCustomUpload =
+                prevPic.startsWith('/uploads/') ||
+                prevPic.includes('/uploads/') ||
+                /^https?:\/\/[^/]+\/uploads\//i.test(prevPic);
             if (!hasCustomUpload) {
                 await db.collection('users').updateOne(
                     { email: cleanEmail },

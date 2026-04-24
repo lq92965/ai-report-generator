@@ -1166,7 +1166,7 @@ window.closeModal = function() {
 document.addEventListener('DOMContentLoaded', async () => {
     setupCapacitorOAuthBridge();
     handleGoogleCallback();
-    await fetchUserProfile();
+    hydrateUserFromLocalCache();
     
     setupAuthUI();          // 登录/注册/Google逻辑
     setupGenerator();       
@@ -1182,6 +1182,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupAvatarUpload();
     setupHistoryLoader(); // 🟢 核心修复：在这里调用历史加载器，让页面一打开就去拉取数据！
     console.log("Reportify AI v22.2 Initialized");
+
+    // Do not block first paint on /api/me. Refresh account data in background.
+    void fetchUserProfile().then(() => {
+        setupUserDropdown();
+        if (window.location.pathname.includes('profile')) void loadProfilePageData();
+        if (window.location.pathname.includes('account')) void loadAccountPageAvatar();
+    });
 
     // ... 现有的代码 ...
     if (window.location.pathname.includes('profile')) {
@@ -1505,6 +1512,9 @@ async function fetchUserProfile() {
             currentUser = await res.json();
             currentUserPlan = currentUser.plan || 'free';
             try {
+                localStorage.setItem('user', JSON.stringify(currentUser));
+            } catch (_) { /* noop */ }
+            try {
                 const pic = currentUser.picture || '';
                 if (typeof pic === 'string' && pic.includes('googleusercontent.com')) {
                     ensureGoogleAvatarPreconnect();
@@ -1516,6 +1526,18 @@ async function fetchUserProfile() {
             currentUserPlan = 'free';
         }
     } catch (e) { console.error(e); }
+}
+
+function hydrateUserFromLocalCache() {
+    const raw = localStorage.getItem('user');
+    if (!raw) return;
+    try {
+        const cached = JSON.parse(raw);
+        if (cached && typeof cached === 'object') {
+            currentUser = cached;
+            currentUserPlan = cached.plan || currentUserPlan || 'free';
+        }
+    } catch (_) { /* noop */ }
 }
 
 // --- 模块 C: 认证 UI ---
@@ -3905,7 +3927,11 @@ function setupUserDropdown() {
 }
 
 window.toggleUserMenu = function() { const m = document.getElementById('user-dropdown'); if(m) m.classList.toggle('hidden'); };
-window.logout = function() { localStorage.removeItem('token'); window.location.reload(); };
+window.logout = function() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.reload();
+};
 
 // --- 修改点 A：加载个人资料页数据 ---
 async function loadProfilePageData() {
