@@ -1,33 +1,43 @@
 [
     {
-        "id": "1776925735392",
+        "id": "1777035658107",
         "type": "blog",
-        "title": "The Signal in the Static",
+        "title": "Your Report is a Mirror, a Megaphone, or a Map",
         "category": "Deep Insights",
-        "date": "2026-04-23",
-        "author": "David Sterling",
-        "excerpt": "You spend an hour crafting the perfect weekly update. It has the burndown chart, the list of completed tickets, the summary of the design review. You...",
-        "contentFile": "blog-1776925735392.md"
+        "date": "2026-04-24",
+        "author": "Emily Rostova",
+        "excerpt": "It’s Thursday afternoon. You’re staring at a blank Google Doc titled \"Weekly Product Update.\" You start typing. You paste in the burndown chart for yo...",
+        "contentFile": "blog-1777035658107.md"
     },
     {
-        "id": "1776925709062",
+        "id": "1777035630137",
         "type": "news",
-        "title": "The Next Phase of Building Adoption",
+        "title": "The Price of Progress Is Your Data",
         "category": "Tech Radar",
-        "date": "2026-04-23",
-        "author": "Alex Mercer",
-        "excerpt": "In a quiet corner of the internet, a newsroom just published its constitution. Ars Technica, a publication built on explaining the guts of technology,...",
-        "contentFile": "news-1776925709062.md"
+        "date": "2026-04-24",
+        "author": "Jessica Tran",
+        "excerpt": "In a quiet transaction that rippled through the industry, Meta just signed a deal for millions of Amazon’s custom CPUs. This wasn't the usual scramble...",
+        "contentFile": "news-1777035630137.md"
     },
     {
-        "id": "1776923024605",
+        "id": "1777012215007",
         "type": "blog",
-        "title": "Stop Reporting History. Start Proposing the Future.",
+        "title": "Kill the All-Hands Update. Write for an Audience of One.",
         "category": "Deep Insights",
-        "date": "2026-04-23",
-        "author": "David Sterling",
-        "excerpt": "It’s 8 AM on Monday. A VP of Engineering opens her inbox. She sees twenty emails with subject lines like, \"Project Phoenix Weekly Status\" and \"Metrics...",
-        "contentFile": "blog-1776923024605.md"
+        "date": "2026-04-24",
+        "author": "Sarah Jenkins",
+        "excerpt": "It’s 4 PM on a Friday. You’re staring at a blank document titled \"Weekly Product Update.\" You pull up the dashboard, copy-paste the latest adoption nu...",
+        "contentFile": "blog-1777012215007.md"
+    },
+    {
+        "id": "1777012188034",
+        "type": "news",
+        "title": "Your Old Habits Are the New Competition",
+        "category": "Tech Radar",
+        "date": "2026-04-24",
+        "author": "Michael Chen",
+        "excerpt": "In a factory in Leipzig, Germany, Porsche is building a betrayal. The new Cayenne Coupe Electric is a direct assault on the company's own legacy—the s...",
+        "contentFile": "news-1777012188034.md"
     },
     {
         "id": "1776862833225",
