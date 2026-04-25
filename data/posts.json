@@ -1,5 +1,25 @@
 [
     {
+        "id": "1777122058446",
+        "type": "blog",
+        "title": "Reporting for Offense, Not Defense",
+        "category": "Deep Insights",
+        "date": "2026-04-25",
+        "author": "David Sterling",
+        "excerpt": "It’s 4 PM on a Friday. You’re staring at a blank document titled \"Weekly Product Update.\" You start listing what your team did. Closed some tickets. R...",
+        "contentFile": "blog-1777122058446.md"
+    },
+    {
+        "id": "1777122031138",
+        "type": "news",
+        "title": "What Changes Now in Ballmer Markets",
+        "category": "Tech Radar",
+        "date": "2026-04-25",
+        "author": "Michael Chen",
+        "excerpt": "Steve Ballmer, a man who once screamed “Developers! Developers! Developers!” with sweat beading on his forehead, now writes of feeling “duped and sill...",
+        "contentFile": "news-1777122031138.md"
+    },
+    {
         "id": "1777035658107",
         "type": "blog",
         "title": "Your Report is a Mirror, a Megaphone, or a Map",
