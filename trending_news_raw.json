@@ -1,32 +1,32 @@
 [
   {
-    "title": "Lambda Calculus Benchmark for AI",
-    "link": "https://victortaelin.github.io/lambench/",
-    "pubDate": "Sat, 25 Apr 2026 11:16:23 +0000",
-    "snippet": "Article URL: https://victortaelin.github.io/lambench/\nComments URL: https://news.ycombinator.com/item?id=47900506\nPoints: 8\n# Comments: 1"
+    "title": "Asahi Linux Progress Linux 7.0",
+    "link": "https://asahilinux.org/2026/04/progress-report-7-0/",
+    "pubDate": "Sun, 26 Apr 2026 10:50:32 +0000",
+    "snippet": "Article URL: https://asahilinux.org/2026/04/progress-report-7-0/\nComments URL: https://news.ycombinator.com/item?id=47909226\nPoints: 70\n# Comments: 0"
   },
   {
-    "title": "A web-based RDP client built with Go WebAssembly and grdp",
-    "link": "https://github.com/nakagami/grdpwasm",
-    "pubDate": "Sat, 25 Apr 2026 10:59:29 +0000",
-    "snippet": "Article URL: https://github.com/nakagami/grdpwasm\nComments URL: https://news.ycombinator.com/item?id=47900440\nPoints: 9\n# Comments: 3"
+    "title": "Show HN: A free ESG stock screener that publishes its losses and methodology",
+    "link": "https://jumpstartsignal.com/",
+    "pubDate": "Sun, 26 Apr 2026 09:50:21 +0000",
+    "snippet": "Hey HN, JSS(JumpstartSignal) is a free, ESG-filtered daily stock screener. I built it after some really badly-timed quantum computing stock buys, so I felt I needed to learn more about systematic, longer-horizon approaches and the underlying technicals instead of chasing themes. Three things about it that might be of interest:\n1. Methodology is fully documented at https://jumpstartsignal.com/how-it-works/ 5-stage pipeline, 54 signals tested individually plus 1,836 combinations evaluated, walk-forward validation across 25 hold periods. Nothing hand-tuned to a single backtest window.\n2. Many wins, misses, and losses are published as case studies e.g. https://jumpstartsignal.com/case-studies/nvda/ walks through the 32 times the system flagged NVDA starting at $5.44 in 2018. https://jumpstartsignal.com/case-studies/sedg/ shows a -49% loss, and https://jumpstartsignal.com/case-studies/tsla/ explains why the system never flagged Tesla (it passed Stages 1 and 2 on 207 days but only peaked at 20/100 in scoring vs the 70 needed for OPPORTUNITY tier). https://jumpstartsignal.com/results/ also shows the 10 best entries alongside the 10 worst.\n3. A genetic algorithm picked the signal weights, but constrained to maintain alpha across multiple market regimes (otherwise it overfits to a single bull market). The constraint dropped some \"best in backtest\" configurations that only worked 2018-2021.\nTopline: 2012-2025 backtest at SPOTLIGHT + OPPORTUNITY tier produced +163% alpha vs SPY (results page has the per-trade breakdown).\nDaily watchlist emailed free; reports + results + case studies are publicly browsable without signup.\nHappy to take questions about methodology, what the system gets wrong, or why specific tickers landed where they did.\nComments URL: https://news.ycombinator.com/item?id=47908912\nPoints: 6\n# Comments: 4"
   },
   {
-    "title": "Martin Galway's music source files from 1980's Commodore 64 games",
-    "link": "https://github.com/MartinGalway/C64_music",
-    "pubDate": "Sat, 25 Apr 2026 10:46:14 +0000",
-    "snippet": "Article URL: https://github.com/MartinGalway/C64_music\nComments URL: https://news.ycombinator.com/item?id=47900398\nPoints: 5\n# Comments: 0"
+    "title": "Statecharts: hierarchical state machines",
+    "link": "https://statecharts.dev/",
+    "pubDate": "Sun, 26 Apr 2026 09:32:22 +0000",
+    "snippet": "Article URL: https://statecharts.dev/\nComments URL: https://news.ycombinator.com/item?id=47908833\nPoints: 78\n# Comments: 16"
   },
   {
-    "title": "Lachy Groom to back India startup Pronto at a $200M valuation, sources say",
-    "link": "https://techcrunch.com/2026/04/24/lachy-groom-to-back-pronto-as-indias-house-help-startup-scales-fast-sources-say/",
-    "pubDate": "Sat, 25 Apr 2026 03:30:00 +0000",
-    "snippet": "This round, should it occur, would double the house-help startup's valuation in a matter of weeks."
+    "title": "Anthropic created a test marketplace for agent-on-agent commerce",
+    "link": "https://techcrunch.com/2026/04/25/anthropic-created-a-test-marketplace-for-agent-on-agent-commerce/",
+    "pubDate": "Sat, 25 Apr 2026 21:43:37 +0000",
+    "snippet": "In a recent experiment, Anthropic created a classified marketplace where AI agents represented both buyers and sellers, striking real deals for real goods and real money."
   },
   {
-    "title": "Steve Ballmer blasts founder he backed who pleaded guilty to fraud: ‘I was duped and feel silly’",
-    "link": "https://techcrunch.com/2026/04/24/steve-ballmer-blasts-founder-he-backed-who-pleaded-guilty-to-fraud-i-was-duped-and-feel-silly/",
-    "pubDate": "Fri, 24 Apr 2026 23:32:11 +0000",
-    "snippet": "Steve Ballmer wrote a fiery letter in the sentencing of disgraced founder Joseph Sanberg documenting all the harm that's befalling him as an investor."
+    "title": "Maine’s governor vetoes data center moratorium",
+    "link": "https://techcrunch.com/2026/04/25/maines-governor-vetoes-data-center-moratorium/",
+    "pubDate": "Sat, 25 Apr 2026 20:57:08 +0000",
+    "snippet": "L.D. 307 would have imposed the country’s first statewide moratorium on new data centers — lasting, in this case, until November 1, 2027."
   }
 ]

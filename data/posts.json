@@ -1,5 +1,25 @@
 [
     {
+        "id": "1777208459149",
+        "type": "blog",
+        "title": "Stop Broadcasting. Start Narrowcasting.",
+        "category": "Deep Insights",
+        "date": "2026-04-26",
+        "author": "Michael Chen",
+        "excerpt": "It’s 4:45 PM on a Friday. You’re staring at a half-written weekly update email. The recipient list is a monster: product-team@, eng-all@, your boss, h...",
+        "contentFile": "blog-1777208459149.md"
+    },
+    {
+        "id": "1777208430654",
+        "type": "news",
+        "title": "The AI Economy's Physical Bill Is Coming Due",
+        "category": "Tech Radar",
+        "date": "2026-04-26",
+        "author": "Alex Mercer",
+        "excerpt": "An AI agent just bought a coffee mug...",
+        "contentFile": "news-1777208430654.md"
+    },
+    {
         "id": "1777122058446",
         "type": "blog",
         "title": "Reporting for Offense, Not Defense",
