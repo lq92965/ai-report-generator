@@ -1,5 +1,15 @@
 [
     {
+        "id": "1777294837735",
+        "type": "news",
+        "title": "The Craftsman's Code and the Corporate Cosmos",
+        "category": "Tech Radar",
+        "date": "2026-04-27",
+        "author": "Alex Mercer",
+        "excerpt": "This week, a developer posted a quiet victory on Hacker News. Their open-source AI agent, built without corporate backing, had just beaten Google's ow...",
+        "contentFile": "news-1777294837735.md"
+    },
+    {
         "id": "1777208459149",
         "type": "blog",
         "title": "Stop Broadcasting. Start Narrowcasting.",
