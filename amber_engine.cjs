@@ -400,6 +400,11 @@ async function generateArticle(type) {
     } catch (e) { console.error(`[Amber V8] ❌大脑生成失败\n`, e); return null; }
 }
 
+// Helper: escape HTML attribute values for SEO meta tags
+function $escapeAttr(s) {
+    return String(s || '').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/&/g, '&amp;');
+}
+
 async function buildStaticPage(postData) {
     const { marked } = await import('marked');
     console.log(`[Amber V8] ⚡ 正在为谷歌爬虫焊装纯静态独立网页...`);
@@ -415,6 +420,53 @@ async function buildStaticPage(postData) {
 
     $('title').text(`${postData.title} - Reportify AI`);
     $('meta[name="description"]').attr('content', postData.excerpt);
+
+    // ---- SEO: Open Graph / Twitter / Canonical ----
+    const articleUrl = `https://www.goreportify.com/article-pages/${postData.type}-${postData.timestamp}.html`;
+    const ogTitle = $escapeAttr(postData.title) + ' - Reportify AI';
+    const ogDesc = $escapeAttr(postData.excerpt);
+
+    // OG tags (override template defaults if exist, otherwise they're already in template)
+    if ($('meta[property="og:title"]').length) {
+        $('meta[property="og:title"]').attr('content', ogTitle);
+        $('meta[property="og:description"]').attr('content', ogDesc);
+        $('meta[property="og:url"]').attr('content', articleUrl);
+        $('meta[property="og:type"]').attr('content', 'article');
+    }
+    // Twitter
+    if ($('meta[name="twitter:title"]').length) {
+        $('meta[name="twitter:title"]').attr('content', ogTitle);
+        $('meta[name="twitter:description"]').attr('content', ogDesc);
+    }
+    // Canonical
+    if ($('link[rel="canonical"]').length) {
+        $('link[rel="canonical"]').attr('href', articleUrl);
+    }
+
+    // ---- JSON-LD Article / BlogPosting ----
+    const articleType = postData.type === 'blog' ? 'BlogPosting' : 'NewsArticle';
+    const jsonldScript = $('script[type="application/ld+json"]');
+    const jsonld = {
+        "@context": "https://schema.org",
+        "@type": articleType,
+        "@id": articleUrl + "#article",
+        "headline": postData.title,
+        "description": postData.excerpt,
+        "datePublished": postData.dateStr + "T00:00:00Z",
+        "dateModified": postData.dateStr + "T00:00:00Z",
+        "author": { "@type": "Organization", "name": "Reportify AI" },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Reportify AI",
+            "logo": { "@type": "ImageObject", "url": "https://www.goreportify.com/logo-3d.png.png" }
+        },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": articleUrl },
+        "image": { "@type": "ImageObject", "url": "https://www.goreportify.com/images/og-default.png" }
+    };
+    if (jsonldScript.length) {
+        jsonldScript.attr('type', 'application/ld+json');
+        jsonldScript.html(JSON.stringify(jsonld, null, 2));
+    }
 
     const backLink = postData.type === 'news' ? 'news.html' : 'blog.html';
     const sectionName = postData.type === 'news' ? 'News' : 'Blog';
@@ -470,7 +522,7 @@ function publishAndSEO(postMeta) {
     fs.writeFileSync(POSTS_JSON_PATH, JSON.stringify(posts, null, 4), 'utf8');
 
     // 1. 生成 Sitemap (供 Google SEO)
-    let sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>https://www.goreportify.com/</loc>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>\n`;
+    let sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>https://www.goreportify.com/</loc>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>\n  <url>\n    <loc>https://www.goreportify.com/blog.html</loc>\n    <changefreq>daily</changefreq>\n    <priority>0.9</priority>\n  </url>\n  <url>\n    <loc>https://www.goreportify.com/news.html</loc>\n    <changefreq>daily</changefreq>\n    <priority>0.9</priority>\n  </url>\n  <url>\n    <loc>https://www.goreportify.com/generate.html</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n  <url>\n    <loc>https://www.goreportify.com/contact.html</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.5</priority>\n  </url>\n  <url>\n    <loc>https://www.goreportify.com/privacy.html</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.3</priority>\n  </url>\n  <url>\n    <loc>https://www.goreportify.com/terms.html</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.3</priority>\n  </url>\n`;
     
     // 2. 🚀 新增：生成标准 RSS 订阅源 (供 Make.com 和 Substack 分发)
     let rss = `<?xml version="1.0" encoding="UTF-8" ?>\n<rss version="2.0">\n<channel>\n  <title>Reportify AI Insights</title>\n  <link>https://www.goreportify.com</link>\n  <description>Latest tech insights and PM strategies</description>\n`;
