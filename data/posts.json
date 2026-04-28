@@ -1,5 +1,25 @@
 [
     {
+        "id": "1777381256764",
+        "type": "blog",
+        "title": "Your Report Isn't a History Book, It's a Contract",
+        "category": "Deep Insights",
+        "date": "2026-04-28",
+        "author": "Marcus Webb",
+        "excerpt": "It’s Monday morning. You open a blank document to write your weekly update. You list the tickets your team closed, the meetings you had, the metric th...",
+        "contentFile": "blog-1777381256764.md"
+    },
+    {
+        "id": "1777381229917",
+        "type": "news",
+        "title": "A World of Talking AI and Leaky Apps",
+        "category": "Tech Radar",
+        "date": "2026-04-28",
+        "author": "Emily Rostova",
+        "excerpt": "Your laptop hums. In one window, an AI assistant from Otter is transcribing a meeting you couldn’t attend, its text appearing silently, ready to be se...",
+        "contentFile": "news-1777381229917.md"
+    },
+    {
         "id": "1777294837735",
         "type": "news",
         "title": "The Craftsman's Code and the Corporate Cosmos",

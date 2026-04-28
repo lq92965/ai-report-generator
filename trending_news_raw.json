@@ -1,32 +1,32 @@
 [
   {
-    "title": "Show HN: OSS Agent I built topped the TerminalBench on Gemini-3-flash-preview",
-    "link": "https://github.com/dirac-run/dirac",
-    "pubDate": "Mon, 27 Apr 2026 12:35:55 +0000",
-    "snippet": "Scored 65.2% vs google's official 47.8%, and the existing top closed source model Junie CLI's 64.3%.\nSince there are a lot of reports of deliberate cheating on TerminalBench 2.0 lately (https://debugml.github.io/cheating-agents/), I would like to also clarify a few things\n1. Absolutely no {agents/skills}.md files were inserted at any point. No cheating mechanisms whatsoever\n2. The cli agent was run in leaderboard compliant way (no modification of resources or timeouts)\n3. The full terminal bench run was done using the fully open source version of the agent, no difference between what is on github and what was run.\nI was originally going to wait for it to land on the leaderboard, but it has been 8 days and the maintainers do not respond unfortunately (there is a large backlog of the pull requests on their HF) so I decided to post anyways.\nHF PR: https://huggingface.co/datasets/harborframework/terminal-ben...\nIt is astounding how much the harness matters, based on this and other experiments I have done.\nComments URL: https://news.ycombinator.com/item?id=47920787\nPoints: 4\n# Comments: 0"
+    "title": "Otter’s new feature lets users search across their enterprise tools",
+    "link": "https://techcrunch.com/2026/04/28/otters-new-feature-lets-users-search-across-their-enterprise-tools/",
+    "pubDate": "Tue, 28 Apr 2026 12:00:00 +0000",
+    "snippet": "Otter is also releasing a new Windows app that can capture meeting notes without joining one"
   },
   {
-    "title": "Spotify’s next frontier: fitness content",
-    "link": "https://techcrunch.com/2026/04/27/spotifys-next-frontier-fitness-content/",
-    "pubDate": "Mon, 27 Apr 2026 12:00:00 +0000",
-    "snippet": "Spotify is adding fitness as its next major category, launching workout videos, playlists, and Peloton classes inside the app for free and Premium users."
+    "title": "Microsoft VibeVoice: Open-Source Frontier Voice AI",
+    "link": "https://github.com/microsoft/VibeVoice",
+    "pubDate": "Tue, 28 Apr 2026 11:56:04 +0000",
+    "snippet": "Article URL: https://github.com/microsoft/VibeVoice\nComments URL: https://news.ycombinator.com/item?id=47933236\nPoints: 26\n# Comments: 6"
   },
   {
-    "title": "Show HN: A terminal spreadsheet editor with Vim keybindings",
-    "link": "https://github.com/garritfra/cell",
-    "pubDate": "Mon, 27 Apr 2026 11:39:49 +0000",
-    "snippet": "While speccing out this spreadsheet tool, I realized that I never had to think about the keybindings. It all just came naturally from Vim. Normal/insert/visual modes, hjkl navigation, dd/yy/p, :w, :q. The usual muscle memory works.\nIt supports CSV/TSV import and export, and a native .cell format that preserves formulas. The formula engine handles SUM, AVERAGE, COUNT, MIN, MAX, and IF with range references.\nThe codebase is a Cargo workspace: a pure cell-sheet-core library (no TUI dependency) and a cell-sheet-tui crate on top of ratatui. Early days, but it's usable.\nTo try it out:\ncargo install cell-sheet-tui\nFeedback of any kind is greatly appreciated!\nComments URL: https://news.ycombinator.com/item?id=47920289\nPoints: 8\n# Comments: 1"
+    "title": "Localsend: An open-source cross-platform alternative to AirDrop",
+    "link": "https://github.com/localsend/localsend",
+    "pubDate": "Tue, 28 Apr 2026 11:54:20 +0000",
+    "snippet": "Article URL: https://github.com/localsend/localsend\nComments URL: https://news.ycombinator.com/item?id=47933208\nPoints: 97\n# Comments: 28"
   },
   {
-    "title": "Men Who Stare at Walls",
-    "link": "https://www.alexselimov.com/posts/men_who_stare_at_walls/",
-    "pubDate": "Mon, 27 Apr 2026 11:08:26 +0000",
-    "snippet": "Article URL: https://www.alexselimov.com/posts/men_who_stare_at_walls/\nComments URL: https://news.ycombinator.com/item?id=47920074\nPoints: 4\n# Comments: 1"
+    "title": "Period tracking app has been yapping about your flow to Meta",
+    "link": "https://femtechdesigndesk.substack.com/p/your-period-tracking-app-has-been",
+    "pubDate": "Tue, 28 Apr 2026 11:31:40 +0000",
+    "snippet": "Article URL: https://femtechdesigndesk.substack.com/p/your-period-tracking-app-has-been\nComments URL: https://news.ycombinator.com/item?id=47932990\nPoints: 46\n# Comments: 38"
   },
   {
-    "title": "Meta inks deal for solar power at night, beamed from space",
-    "link": "https://techcrunch.com/2026/04/27/meta-inks-deal-for-solar-power-at-night-beamed-from-space/",
-    "pubDate": "Mon, 27 Apr 2026 10:00:00 +0000",
-    "snippet": "Overview Energy's first contract with Meta is a small step toward a future of space-based solar power."
+    "title": "Drizzle on top: a new high-end dog food brand is coming for the 1%",
+    "link": "https://techcrunch.com/2026/04/27/drizzle-on-top-a-new-high-end-dog-food-brand-is-coming-for-the-1/",
+    "pubDate": "Tue, 28 Apr 2026 05:02:04 +0000",
+    "snippet": "Golden Child is launching with two \"five-star\" products: a fresh frozen meal system and, more intriguingly, a \"drizzle.\" It has also raised $37 million in funding."
   }
 ]
