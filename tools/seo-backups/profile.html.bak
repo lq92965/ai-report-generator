@@ -7,16 +7,17 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
-    <title>History - Reportify AI</title>
+    <title>My Profile - Reportify AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css?v=2026.12">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="mobile-patch.css?v=2026.6">
-    <script src="mobile-patch.js?v=2026.6"></script>
+    <link rel="stylesheet" href="mobile-patch.css?v=2026.13">
+    <script src="mobile-patch.js?v=2026.13"></script>
 
     <!-- Open Graph / Social -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.goreportify.com/history.html" />
-    <meta property="og:title" content="History - Reportify AI" />
+    <meta property="og:url" content="https://www.goreportify.com/profile.html" />
+    <meta property="og:title" content="My Profile - Reportify AI" />
     <meta property="og:description" content="Reportify AI - AI-powered report generation" />
     <meta property="og:image" content="https://www.goreportify.com/images/og-default.png" />
     <meta property="og:site_name" content="Reportify AI" />
@@ -24,18 +25,18 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="History - Reportify AI" />
+    <meta name="twitter:title" content="My Profile - Reportify AI" />
     <meta name="twitter:description" content="Reportify AI - AI-powered report generation" />
     <meta name="twitter:image" content="https://www.goreportify.com/images/og-default.png" />
 
     <!-- Canonical -->
-    <link rel="canonical" href="https://www.goreportify.com/history.html" />
+    <link rel="canonical" href="https://www.goreportify.com/profile.html" />
 
 
     <!-- Open Graph / Social -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.goreportify.com/history.html" />
-    <meta property="og:title" content="History - Reportify AI" />
+    <meta property="og:url" content="https://www.goreportify.com/profile.html" />
+    <meta property="og:title" content="My Profile - Reportify AI" />
     <meta property="og:description" content="Reportify AI - AI-powered report generation" />
     <meta property="og:image" content="https://www.goreportify.com/images/og-default.png" />
     <meta property="og:site_name" content="Reportify AI" />
@@ -43,17 +44,16 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="History - Reportify AI" />
+    <meta name="twitter:title" content="My Profile - Reportify AI" />
     <meta name="twitter:description" content="Reportify AI - AI-powered report generation" />
     <meta name="twitter:image" content="https://www.goreportify.com/images/og-default.png" />
 
     <!-- Canonical -->
-    <link rel="canonical" href="https://www.goreportify.com/history.html" />
+    <link rel="canonical" href="https://www.goreportify.com/profile.html" />
 
-
-    <meta name="description" content="View your report generation history and past AI-generated reports." />
 </head>
-<body class="has-app-nav" style="background-color: #f8fafc;">
+<body class="has-app-nav" style="background-color: #f8f9fa;">
+
     <header class="main-header account-header pwa-app-header">
         <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
             <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
@@ -68,7 +68,7 @@
                     <li><a href="blog.html">Blog</a></li>
                 </ul>
             </nav>
-            <div class="pwa-header-actions">
+            <div class="pwa-header-actions" style="display: flex; align-items: center;">
                 <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite">
                     <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
                 </a>
@@ -77,19 +77,64 @@
         </div>
     </header>
 
-<section class="generator-section" style="min-height: 80vh; padding: 40px 0;">
-        <div class="container" style="width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 20px;">
-            <div style="margin-bottom: 30px; text-align: left;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h2 class="section-title" style="margin: 0; font-weight: 600; color: #1e293b;">History & Reports</h2>
-                    <button onclick="loadHistoryData()" style="padding: 8px 15px; background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; color: #64748b;">
-                        <i class="fas fa-sync-alt"></i> Refresh
-                    </button>
+    <div class="container" style="max-width: 1100px; margin: 40px auto; padding: 0 20px;">
+        <div class="profile-page-title-wrap profile-page-hero" style="margin-bottom: 28px; text-align: center;">
+            <h1 style="margin: 0; font-size: clamp(1.5rem, 2.5vw, 2rem); color: #111827; font-weight: 800;">My Profile</h1>
+            <p style="margin: 10px 0 0; color: #64748b; font-size: 1rem;">Photo, name, and how you appear across Reportify.</p>
+        </div>
+
+        <div style="background: white; border-radius: 20px; padding: clamp(24px, 4vw, 48px); box-shadow: 0 8px 32px rgba(15, 23, 42, 0.08); border: 1px solid #e5e7eb;">
+            <div class="profile-layout-wrap profile-layout-responsive" style="display: flex; gap: 50px; align-items: flex-start; margin-top: 8px; flex-wrap: wrap;">
+    
+            <div class="profile-avatar-col" style="flex-shrink: 0; text-align: center; width: 150px; max-width: 100%;">
+                <div style="position: relative; display: inline-block; margin-bottom: 15px;">
+                     <img id="profile-avatar" 
+                          src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4=" 
+                          alt="Profile Avatar" 
+                          style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #fff; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer; background-color: #f3f4f6;"
+                          onclick="document.getElementById('upload-avatar').click()">
+                </div>
+
+                <input type="file" id="upload-avatar" accept="image/*" style="display: none;">
+
+                <button type="button" id="btn-trigger-upload" 
+                        onclick="document.getElementById('upload-avatar').click()"
+                        style="background-color: #f3f4f6; border: 1px solid #d1d5db; color: #374151; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; width: 100%;">
+                    Change Photo
+                </button>
+            </div>
+
+                <div style="flex-grow: 1;">
+                    <form id="profile-form" onsubmit="return false;">
+                        <div class="profile-form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                            <div>
+                                <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #444;">Display Name</label>
+                                <input type="text" id="profile-name" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                            </div>
+                            <div>
+                                <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #444;">Job Title</label>
+                                <input type="text" id="profile-job" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <label style="font-weight: 600; display: block; margin-bottom: 8px;">Professional Bio</label>
+                            <textarea id="profile-bio" rows="3" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;"></textarea>
+                        </div>
+
+                        <div style="margin-bottom: 30px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #444;">Account Email</label>
+                            <input type="email" id="profile-email" readonly style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; color: #999;">
+                        </div>
+
+                        <div style="text-align: right;">
+                            <button type="button" class="btn btn-primary save-btn" style="padding: 12px 40px;">Save Changes</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div id="history-container" style="width: 100%;"></div>
         </div>
-    </section>
+    </div>
 
     <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
         <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
@@ -118,39 +163,9 @@
         </div>
     </footer>
 
-    <script src="vendor/docx.umd.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-    <div id="report-view-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
-        <div style="background: white; width: 90%; max-width: 800px; max-height: 85vh; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); display: flex; flex-direction: column; overflow: hidden; animation: fadeIn 0.3s ease;">
-            
-            <div style="padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; background: #f9fafb;">
-                <h3 id="modal-title" style="margin: 0; font-size: 1.2rem; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Report Details</h3>
-                <button type="button" onclick="closeViewModal()" style="background: none; border: none; font-size: 24px; color: #999; cursor: pointer; padding: 0 10px;">&times;</button>
-            </div>
-
-            <div id="modal-body" style="padding: 30px; overflow-y: auto; line-height: 1.8; color: #374151; font-size: 15px;">
-                </div>
-
-            <div style="padding: 15px 20px; border-top: 1px solid #eee; text-align: right; background: white;">
-                <button type="button" onclick="closeViewModal()" style="padding: 8px 20px; background: #f3f4f6; color: #555; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; margin-right: 10px;">Close</button>
-                <button type="button" id="modal-copy-btn" style="padding: 8px 20px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer;">Copy Text</button>
-            </div>
-        </div>
-    </div>
-
-    <style>
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        /* 让生成的 Markdown 内容好看一点 */
-        #modal-body h1, #modal-body h2, #modal-body h3 { margin-top: 1.5em; margin-bottom: 0.5em; color: #111; }
-        #modal-body ul, #modal-body ol { padding-left: 20px; }
-        #modal-body p { margin-bottom: 1em; }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
-    
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script src="pwa-nav.js"></script>
-    <script src="script.js?v=2026.18"></script>
+    <script src="script.js?v=2026.20"></script>
+
 </body>
 </html>

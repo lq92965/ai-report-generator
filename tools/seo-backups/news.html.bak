@@ -53,23 +53,6 @@
     <!-- Canonical -->
     <link rel="canonical" href="https://www.goreportify.com/news.html" />
 
-
-    <meta name="description" content="Stay updated with the latest tech news and AI industry trends. Curated tech radar by Reportify AI." />
-
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "@id": "https://www.goreportify.com/news.html#page",
-  "name": "Global Tech Radar - Reportify AI",
-  "description": "Curated tech news and AI industry trends.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Reportify AI",
-    "url": "https://www.goreportify.com"
-  }
-}
-    </script>
 </head>
 <body class="has-app-nav font-sans antialiased bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 

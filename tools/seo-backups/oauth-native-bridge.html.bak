@@ -78,8 +78,6 @@
     <!-- Canonical -->
     <link rel="canonical" href="https://www.goreportify.com/oauth-native-bridge.html" />
 
-
-    <meta name="description" content="Sign in to your Reportify AI account to generate AI-powered reports." />
 </head>
 <body>
   <p id="msg">Opening Reportify AI…</p>

@@ -53,23 +53,6 @@
     <!-- Canonical -->
     <link rel="canonical" href="https://www.goreportify.com/blog.html" />
 
-
-    <meta name="description" content="Expert insights on AI, productivity, and modern report writing. Learn how AI can transform your workflow." />
-
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Blog",
-  "@id": "https://www.goreportify.com/blog.html#blog",
-  "name": "Deep Insights - Reportify AI Blog",
-  "description": "Expert insights on AI, productivity, and modern report writing.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Reportify AI",
-    "url": "https://www.goreportify.com"
-  }
-}
-    </script>
 </head>
 <body class="has-app-nav font-sans antialiased bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 

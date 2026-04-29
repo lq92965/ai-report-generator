@@ -170,8 +170,6 @@
     <!-- Canonical -->
     <link rel="canonical" href="https://www.goreportify.com/usage.html" />
 
-
-    <meta name="description" content="Track your Reportify AI usage, manage credits, and view report generation history." />
 </head>
 <body class="has-app-nav font-sans antialiased" style="background-color: #f8f9fa;">
 

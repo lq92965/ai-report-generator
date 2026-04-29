@@ -47,8 +47,6 @@
     <!-- Canonical -->
     <link rel="canonical" href="https://www.goreportify.com/security.html" />
 
-
-    <meta name="description" content="Security settings and authentication management for your Reportify AI account." />
 </head>
 <body class="has-app-nav" style="background-color: #f8f9fa;">
     <header class="main-header account-header pwa-app-header">

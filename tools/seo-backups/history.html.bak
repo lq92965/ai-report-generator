@@ -50,8 +50,6 @@
     <!-- Canonical -->
     <link rel="canonical" href="https://www.goreportify.com/history.html" />
 
-
-    <meta name="description" content="View your report generation history and past AI-generated reports." />
 </head>
 <body class="has-app-nav" style="background-color: #f8fafc;">
     <header class="main-header account-header pwa-app-header">

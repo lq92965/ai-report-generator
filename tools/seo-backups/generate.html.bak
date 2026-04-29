@@ -162,8 +162,6 @@
     <!-- Canonical -->
     <link rel="canonical" href="https://www.goreportify.com/generate.html" />
 
-
-    <meta name="description" content="Create professional AI-powered reports instantly. Choose from daily, weekly, or executive report templates." />
 </head>
 <body class="font-sans antialiased has-app-nav"> <header class="main-header pwa-app-header">
         <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">

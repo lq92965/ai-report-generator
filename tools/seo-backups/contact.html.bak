@@ -67,8 +67,6 @@
     <!-- Canonical -->
     <link rel="canonical" href="https://www.goreportify.com/contact.html" />
 
-
-    <meta name="description" content="Get in touch with the Reportify AI team. We are here to help with any questions or feedback." />
 </head>
 <body class="font-sans antialiased has-app-nav text-gray-800 flex flex-col min-h-screen">
     <script>

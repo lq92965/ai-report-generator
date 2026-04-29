@@ -204,8 +204,6 @@
     <!-- Canonical -->
     <link rel="canonical" href="https://www.goreportify.com/payments.html" />
 
-
-    <meta name="description" content="Payment history and billing management for Reportify AI." />
 </head>
 <body class="has-app-nav" style="background-color: #f8fafc;">
     <header class="main-header account-header pwa-app-header">
