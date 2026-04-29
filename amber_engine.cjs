@@ -246,11 +246,32 @@ async function generateArticle(type) {
     let systemPrompt =
         type === 'news'
             ? `You are an experienced tech editor for a serious publication. Write a sharp news analysis with real stakes. Format in standard Markdown.\n${ANTI_AI_VOICE}`
-            : `You are a senior product manager who writes for peers. Practical, direct, no corporate fluff. Format in standard Markdown.\n${ANTI_AI_VOICE}`;
+            : `You are a senior product manager who writes SEO-optimized blog posts for professional peers. You write practical, actionable guides that rank well in search engines while being genuinely useful to readers.\n${ANTI_AI_VOICE}`;
     let userPrompt =
         type === 'news'
             ? `Write a tech news analysis. ${titleBlock}${imgBlock} First line must be '# Title'. Output ONLY raw markdown.`
-            : `Write a deep-dive post about reporting / PM communication (not generic self-help). ${titleBlock}${imgBlock} First line must be '# Title'. Output ONLY raw markdown.`;
+            : `Write a practical, SEO-optimized blog post about reporting, productivity, AI tools, or PM communication.
+
+SEO GUIDELINES (must follow):
+- Title must be 45-60 characters, include a keyword naturally, and be compelling for search results
+- First paragraph (2-3 sentences) must hook the reader AND include a primary keyword naturally
+- Use H2 subheadings every 200-300 words with related keywords
+- Article length: 800-1500 words
+- Include one natural mention of "Reportify AI" or "AI report generator" as a solution
+- Write for humans first, SEO second — no keyword stuffing
+- End with a takeaway or call to action
+
+PRIMARY KEYWORD OPTIONS (choose the one that best fits the angle):
+1. "AI report generator" — general tool recommendation
+2. "AI weekly report generator" — weekly report automation
+3. "AI daily standup report" — daily standups
+4. "meeting notes to report" — converting notes to reports
+5. "automated report writing" — automation focus
+6. "project status report tool" — project management
+7. "how to write a weekly report" — tutorial/guide
+8. "best AI report generator" — comparison/roundup
+
+${titleBlock}${imgBlock} First line must be '# Title'. Output ONLY raw markdown.;
 
     if (type === 'news') {
         try {
