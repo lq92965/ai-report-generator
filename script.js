@@ -2900,8 +2900,6 @@ function exportToPPT(content, filename, passedTemplate = null, passedSummary = n
             { rect: { x: 0, y: 0.9, w: '100%', h: 0.04, fill: { color: c.accent } } },
             // 页脚分割线
             { rect: { x: '5%', y: '92%', w: '90%', h: 0.01, fill: { color: 'CBD5E1' } } },
-            // 页脚文字
-            { text: { text: "Reportify AI Proprietary", options: { x: '5%', y: '94%', w: '30%', color: c.textMuted, fontSize: 9, fontFace: fontBody } } }
         ],
         slideNumber: { x: '90%', y: '94%', color: c.textMuted, fontSize: 9, align: 'right', fontFace: fontBody }
     });
