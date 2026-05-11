@@ -345,9 +345,8 @@ function exportToPPT(content, filename) {
             });
         }
 
-        // 页脚
+        // 页脚分割线（无品牌水印，便于对外分享）
         s.addShape(pptx.ShapeType.line, { x: 0.5, y: 6.8, w: '90%', h:0, line: {color: 'E5E7EB', width: 1} });
-        s.addText("Reportify AI - Confidential Draft", { x: 0.5, y: 6.9, fontSize: 9, color: '9CA3AF' });
     });
 
     pptx.writeFile({ fileName: `Draft_${filename}.pptx` })

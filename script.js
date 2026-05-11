@@ -2985,11 +2985,8 @@ function exportToPPT(content, filename, passedTemplate = null, passedSummary = n
         x: '8%', y: '18%', w: '84%', h: 2.5, 
         fontSize: titleFontSize, color: 'FFFFFF', bold: true, fontFace: fontTitle, breakLine: true
     });
-    cover.addText("CONFIDENTIAL & PROPRIETARY", { 
-        x: '8%', y: '50%', w: '84%', fontSize: 13, color: c.accent, letterSpacing: 2, fontFace: fontBody 
-    });
     cover.addText(`Prepared: ${new Date().toLocaleDateString()}`, { 
-        x: '8%', y: '55%', w: '84%', fontSize: 11, color: '9CA3AF', fontFace: fontBody 
+        x: '8%', y: '50%', w: '84%', fontSize: 11, color: '9CA3AF', fontFace: fontBody 
     });
 
     // --- 6. 自动生成目录页 (Agenda) ---

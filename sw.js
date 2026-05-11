@@ -1,5 +1,5 @@
 /* Service Worker — Reportify PWA (cache shell + offline fallback) */
-const CACHE_NAME = 'reportify-pwa-v28-word-layout-presets';
+const CACHE_NAME = 'reportify-pwa-v29-ppt-clean-footer';
 const PRECACHE_URLS = [
   './',
   './index.html',
