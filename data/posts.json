@@ -1,5 +1,215 @@
 [
     {
+        "id": "1778677255566",
+        "type": "blog",
+        "title": "Stop Losing Context from Meeting Notes to Report",
+        "category": "Deep Insights",
+        "date": "2026-05-13",
+        "author": "Olivia Thorne",
+        "excerpt": "The Zoom window closes. You’re left with a blinking cursor in a document filled with cryptic bullet points, half-finished sentences, and a direct quot...",
+        "contentFile": "blog-1778677255566.md"
+    },
+    {
+        "id": "1778677229976",
+        "type": "news",
+        "title": "What Changes Now in World Markets",
+        "category": "Tech Radar",
+        "date": "2026-05-13",
+        "author": "Emily Rostova",
+        "excerpt": "Forget the slick demos for a moment. While one corner of the tech world celebrates AI models that can train themselves, the most significant event thi...",
+        "contentFile": "news-1778677229976.md"
+    },
+    {
+        "id": "1778649413864",
+        "type": "blog",
+        "title": "The Best AI Report Generator Isn't Just a Robot",
+        "category": "Deep Insights",
+        "date": "2026-05-12",
+        "author": "Emily Rostova",
+        "excerpt": "You spent two hours collating updates from Jira, Slack, and three different design docs. You polished the bullets, checked the metrics, and sent your...",
+        "contentFile": "blog-1778649413864.md"
+    },
+    {
+        "id": "1778649389042",
+        "type": "news",
+        "title": "The Revolution Will Be Billed in Triplicate",
+        "category": "Tech Radar",
+        "date": "2026-05-12",
+        "author": "David Sterling",
+        "excerpt": "No one holds a keynote to announce a new billing code. There are no slick launch videos for a change in government payment models. Yet last week, the...",
+        "contentFile": "news-1778649389042.md"
+    },
+    {
+        "id": "1778649282137",
+        "type": "blog",
+        "title": "A Project Status Report Tool Can't Fix a Bad Story",
+        "category": "Deep Insights",
+        "date": "2026-05-11",
+        "author": "Michael Chen",
+        "excerpt": "It’s Tuesday afternoon and the calendar reminder pops up: \"Weekly Project Status Report Due EOD.\" You open your project status report tool, pull the l...",
+        "contentFile": "blog-1778649282137.md"
+    },
+    {
+        "id": "1778649258948",
+        "type": "news",
+        "title": "Forget the Launchpad, Look at the Ledger",
+        "category": "Tech Radar",
+        "date": "2026-05-11",
+        "author": "Marcus Webb",
+        "excerpt": "The internet lit up this week with renders of Starship V3. Sleek, massive, and gleaming, SpaceX’s new rocket is a perfect spectacle for an industry th...",
+        "contentFile": "news-1778649258948.md"
+    },
+    {
+        "id": "1778649218815",
+        "type": "blog",
+        "title": "A PM's Framework: From Meeting Notes to Report",
+        "category": "Deep Insights",
+        "date": "2026-05-10",
+        "author": "Marcus Webb",
+        "excerpt": "It’s 4 PM on a Friday. You have a dozen open tabs: a chaotic Google Doc from Tuesday’s design sync, a long Slack thread about a new bug, and three dif...",
+        "contentFile": "blog-1778649218815.md"
+    },
+    {
+        "id": "1778649196637",
+        "type": "news",
+        "title": "The Future Arrives as a PDF",
+        "category": "Tech Radar",
+        "date": "2026-05-10",
+        "author": "Jessica Tran",
+        "excerpt": "SpaceX lit up the sky again, showcasing the third iteration of its colossal Starship, a gleaming monument to ambition that filled every tech...",
+        "contentFile": "news-1778649196637.md"
+    },
+    {
+        "id": "1778643370511",
+        "type": "blog",
+        "title": "How to Write a Weekly Report People Actually Read",
+        "category": "Deep Insights",
+        "date": "2026-05-11",
+        "author": "Alex Mercer",
+        "excerpt": "You hit send on your weekly project update and listen to the sound of… silence. Is anyone reading it? Learning how to write a weekly report that grabs...",
+        "contentFile": "blog-1778643370511.md"
+    },
+    {
+        "id": "1778643346911",
+        "type": "news",
+        "title": "The Real Engine of Change Isn't Rocket Fuel",
+        "category": "Tech Radar",
+        "date": "2026-05-11",
+        "author": "David Sterling",
+        "excerpt": "The sky over Texas will soon burn again with the launch of SpaceX’s Starship V3. It is a spectacle of raw power, a 400-foot monument to ambition clad...",
+        "contentFile": "news-1778643346911.md"
+    },
+    {
+        "id": "1778643307057",
+        "type": "blog",
+        "title": "Your AI Daily Standup Report: The 5-Minute Update",
+        "category": "Deep Insights",
+        "date": "2026-05-10",
+        "author": "Emily Rostova",
+        "excerpt": "It’s 10:07 AM, and the daily standup is officially off the rails. The designer is giving a five-minute monologue about Figma variants, and you’ve comp...",
+        "contentFile": "blog-1778643307057.md"
+    },
+    {
+        "id": "1778643277105",
+        "type": "news",
+        "title": "The Real AI Revolution Is Buried in a Billing Code",
+        "category": "Tech Radar",
+        "date": "2026-05-10",
+        "author": "Marcus Webb",
+        "excerpt": "While Silicon Valley was live-streaming its latest AI model, a bureaucrat in Washington D.C. quietly signed off on a new payment model for Medicare. T...",
+        "contentFile": "news-1778643277105.md"
+    },
+    {
+        "id": "1778643170744",
+        "type": "blog",
+        "title": "Fix Your Project Status Report with the Right Tool",
+        "category": "Deep Insights",
+        "date": "2026-05-09",
+        "author": "Olivia Thorne",
+        "excerpt": "It’s 4:30 PM on a Friday. You have six browser tabs open: a sprawling Jira board, a dozen Slack threads, a messy Google Doc with meeting notes, and th...",
+        "contentFile": "blog-1778643170744.md"
+    },
+    {
+        "id": "1778643147055",
+        "type": "news",
+        "title": "The Real Revolution is Unseen",
+        "category": "Tech Radar",
+        "date": "2026-05-09",
+        "author": "Jessica Tran",
+        "excerpt": "The images are undeniable. SpaceX just showed off Starship V3, a tower of steel and fire promising to carry humanity to Mars. It’s a spectacle of raw...",
+        "contentFile": "news-1778643147055.md"
+    },
+    {
+        "id": "1778643105065",
+        "type": "blog",
+        "title": "The Strategic PM's Guide to Automated Reporting",
+        "category": "Deep Insights",
+        "date": "2026-05-08",
+        "author": "Sarah Jenkins",
+        "excerpt": "It’s 4 PM on a Friday. Your team has shipped good work, but now you face the weekly tax: writing the project status report. You pull up last week’s te...",
+        "contentFile": "blog-1778643105065.md"
+    },
+    {
+        "id": "1778643080476",
+        "type": "news",
+        "title": "The Spectacle and the Spreadsheet",
+        "category": "Tech Radar",
+        "date": "2026-05-08",
+        "author": "Marcus Webb",
+        "excerpt": "On the same day SpaceX showed off new renders of Starship V3, a machine designed to carry humanity to Mars, the U.S. government quietly created a new...",
+        "contentFile": "news-1778643080476.md"
+    },
+    {
+        "id": "1778643038456",
+        "type": "blog",
+        "title": "Stop Writing Reports. Start Automating Them.",
+        "category": "Deep Insights",
+        "date": "2026-05-07",
+        "author": "Alex Mercer",
+        "excerpt": "It’s 4 PM on a Friday and the familiar dread sets in. The weekly status report. You spend the next hour digging through Jira tickets, scrolling throug...",
+        "contentFile": "blog-1778643038456.md"
+    },
+    {
+        "id": "1778643013231",
+        "type": "news",
+        "title": "The Real Tech Money Is In The Plumbing",
+        "category": "Tech Radar",
+        "date": "2026-05-07",
+        "author": "Michael Chen",
+        "excerpt": "Scroll through your feed on any given day and you’ll see it: a slick demo of an AI making a music video, another generating a perfect corporate memo....",
+        "contentFile": "news-1778643013231.md"
+    },
+    {
+        "id": "1778642905067",
+        "type": "blog",
+        "title": "From Meeting Notes to Report: A PM's AI Guide",
+        "category": "Deep Insights",
+        "date": "2026-05-06",
+        "author": "Sarah Jenkins",
+        "excerpt": "It’s 4 PM on a Tuesday. You just left a two-hour product strategy session, and your Google Doc is a chaotic mess of bullet points, half-sentences, and...",
+        "contentFile": "blog-1778642905067.md"
+    },
+    {
+        "id": "1778642843620",
+        "type": "blog",
+        "title": "Turn Your Messy Meeting Notes into Clean Reports",
+        "category": "Deep Insights",
+        "date": "2026-05-05",
+        "author": "Michael Chen",
+        "excerpt": "You just left a 90-minute roadmap sync. Your notebook is a chaotic battlefield of shorthand, half-drawn diagrams, and follow-up questions you scrawled...",
+        "contentFile": "blog-1778642843620.md"
+    },
+    {
+        "id": "1778642819728",
+        "type": "news",
+        "title": "While We Watch the Rockets, Code Remakes the World",
+        "category": "Tech Radar",
+        "date": "2026-05-05",
+        "author": "Olivia Thorne",
+        "excerpt": "The images from SpaceX are always spectacular. A tower of stainless steel, impossibly large, breathing fire and clawing its way to orbit. Starship V3...",
+        "contentFile": "news-1778642819728.md"
+    },
+    {
         "id": "1777381256764",
         "type": "blog",
         "title": "Your Report Isn't a History Book, It's a Contract",

@@ -1,32 +1,32 @@
 [
   {
-    "title": "Otter’s new feature lets users search across their enterprise tools",
-    "link": "https://techcrunch.com/2026/04/28/otters-new-feature-lets-users-search-across-their-enterprise-tools/",
-    "pubDate": "Tue, 28 Apr 2026 12:00:00 +0000",
-    "snippet": "Otter is also releasing a new Windows app that can capture meeting notes without joining one"
+    "title": "Adaption aims big with AutoScientist, an AI tool that helps models train themselves",
+    "link": "https://techcrunch.com/2026/05/13/adaption-aims-big-with-autoscientist-an-ai-tool-that-helps-models-train-themselves/",
+    "pubDate": "Wed, 13 May 2026 12:11:33 +0000",
+    "snippet": "Adaption's new AutoScientist tool is designed to let models adapt to specific capabilities quickly through an automated approach to conventional fine-tuning."
   },
   {
-    "title": "Microsoft VibeVoice: Open-Source Frontier Voice AI",
-    "link": "https://github.com/microsoft/VibeVoice",
-    "pubDate": "Tue, 28 Apr 2026 11:56:04 +0000",
-    "snippet": "Article URL: https://github.com/microsoft/VibeVoice\nComments URL: https://news.ycombinator.com/item?id=47933236\nPoints: 26\n# Comments: 6"
+    "title": "Substrate (YC S24) Is Hiring a Technical Success Manager",
+    "link": "https://www.ycombinator.com/companies/substrate/jobs/T2fMBhD-technical-success-manager",
+    "pubDate": "Wed, 13 May 2026 12:00:30 +0000",
+    "snippet": "Article URL: https://www.ycombinator.com/companies/substrate/jobs/T2fMBhD-technical-success-manager\nComments URL: https://news.ycombinator.com/item?id=48120776\nPoints: 0\n# Comments: 0"
   },
   {
-    "title": "Localsend: An open-source cross-platform alternative to AirDrop",
-    "link": "https://github.com/localsend/localsend",
-    "pubDate": "Tue, 28 Apr 2026 11:54:20 +0000",
-    "snippet": "Article URL: https://github.com/localsend/localsend\nComments URL: https://news.ycombinator.com/item?id=47933208\nPoints: 97\n# Comments: 28"
+    "title": "I Moved My Digital Stack to Europe",
+    "link": "https://monokai.com/articles/how-i-moved-my-digital-stack-to-europe/",
+    "pubDate": "Wed, 13 May 2026 11:42:20 +0000",
+    "snippet": "Article URL: https://monokai.com/articles/how-i-moved-my-digital-stack-to-europe/\nComments URL: https://news.ycombinator.com/item?id=48120629\nPoints: 201\n# Comments: 112"
   },
   {
-    "title": "Period tracking app has been yapping about your flow to Meta",
-    "link": "https://femtechdesigndesk.substack.com/p/your-period-tracking-app-has-been",
-    "pubDate": "Tue, 28 Apr 2026 11:31:40 +0000",
-    "snippet": "Article URL: https://femtechdesigndesk.substack.com/p/your-period-tracking-app-has-been\nComments URL: https://news.ycombinator.com/item?id=47932990\nPoints: 46\n# Comments: 38"
+    "title": "Using OR-Tools CP-SAT for Scheduling Problems",
+    "link": "https://atalaykutlay.com/or-tools-cp-sat-for-scheduling-problems.html",
+    "pubDate": "Wed, 13 May 2026 11:02:57 +0000",
+    "snippet": "Article URL: https://atalaykutlay.com/or-tools-cp-sat-for-scheduling-problems.html\nComments URL: https://news.ycombinator.com/item?id=48120351\nPoints: 15\n# Comments: 1"
   },
   {
-    "title": "Drizzle on top: a new high-end dog food brand is coming for the 1%",
-    "link": "https://techcrunch.com/2026/04/27/drizzle-on-top-a-new-high-end-dog-food-brand-is-coming-for-the-1/",
-    "pubDate": "Tue, 28 Apr 2026 05:02:04 +0000",
-    "snippet": "Golden Child is launching with two \"five-star\" products: a fresh frozen meal system and, more intriguingly, a \"drizzle.\" It has also raised $37 million in funding."
+    "title": "Medicare’s new payment model is built for AI, and most of the tech world has no idea",
+    "link": "https://techcrunch.com/2026/05/12/medicares-new-payment-model-is-built-for-ai-and-most-of-the-tech-world-has-no-idea/",
+    "pubDate": "Wed, 13 May 2026 00:26:48 +0000",
+    "snippet": "There is no governmental mechanism to pay for an AI agent that monitors a patient between visits, calls to check in, coordinates a housing referral, or makes sure someone picks up their medication. ACCESS creates that mechanism for the first time."
   }
 ]
