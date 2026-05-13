@@ -271,7 +271,7 @@ PRIMARY KEYWORD OPTIONS (choose the one that best fits the angle):
 7. "how to write a weekly report" — tutorial/guide
 8. "best AI report generator" — comparison/roundup
 
-${titleBlock}${imgBlock} First line must be '# Title'. Output ONLY raw markdown.;
+${titleBlock}${imgBlock} First line must be '# Title'. Output ONLY raw markdown.`;
 
     if (type === 'news') {
         try {
