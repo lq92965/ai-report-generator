@@ -766,12 +766,12 @@ async function maybeRecoverPlanFromPayments(db, user) {
 
 app.get('/api/posts-json', async (req, res) => {
     try {
-        const pickLatestNewsPayload = (candidates) => {
+        const pickLatestPostsPayload = (candidates) => {
             const scored = candidates
                 .filter((arr) => Array.isArray(arr))
                 .map((arr) => {
                     const latest = arr
-                        .filter((p) => p && p.type === 'news' && p.date)
+                        .filter((p) => p && (p.type === 'news' || p.type === 'blog') && p.date)
                         .map((p) => String(p.date).replace(/\//g, '-'))
                         .sort()
                         .pop() || '';
@@ -801,7 +801,7 @@ app.get('/api/posts-json', async (req, res) => {
             // ignore remote failure; local sources may still work
         }
 
-        const best = pickLatestNewsPayload(payloadCandidates);
+        const best = pickLatestPostsPayload(payloadCandidates);
         res.set('Cache-Control', 'no-store');
         return res.json(best || []);
     } catch (e) {

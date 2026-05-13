@@ -73,10 +73,11 @@ window.reportifyFetchPostsJson = async function reportifyFetchPostsJson() {
               `${API_BASE_URL}/api/posts-json?t=${bust}`,
               `data/posts.json?t=${bust}`
           ];
-    function latestNewsDate(payload) {
+    /** Max catalog date across news + blog so we don't pick a stale feed when only one type moved. */
+    function latestPostsCatalogDate(payload) {
         if (!Array.isArray(payload)) return '';
         const dates = payload
-            .filter((x) => x && x.type === 'news' && x.date)
+            .filter((x) => x && (x.type === 'news' || x.type === 'blog') && x.date)
             .map((x) => String(x.date).replace(/\//g, '-'));
         dates.sort();
         return dates.length ? dates[dates.length - 1] : '';
@@ -101,7 +102,7 @@ window.reportifyFetchPostsJson = async function reportifyFetchPostsJson() {
         candidates.map(async (url) => {
             const timeoutMs = /^data\//i.test(url) ? 700 : 1800;
             const data = await fetchJsonWithTimeout(url, timeoutMs);
-            return { url, data, newsDate: latestNewsDate(data) };
+            return { url, data, catalogDate: latestPostsCatalogDate(data) };
         })
     );
     const fetched = [];
@@ -113,8 +114,8 @@ window.reportifyFetchPostsJson = async function reportifyFetchPostsJson() {
         }
     }
     if (fetched.length > 0) {
-        // Pick the freshest news feed; this avoids API lag showing stale dates in native app.
-        fetched.sort((a, b) => String(b.newsDate || '').localeCompare(String(a.newsDate || '')));
+        // Pick the freshest combined news+blog index; avoids one source lagging on a single type.
+        fetched.sort((a, b) => String(b.catalogDate || '').localeCompare(String(a.catalogDate || '')));
         return fetched[0].data;
     }
     throw lastErr || new Error('Failed to load posts.json');
