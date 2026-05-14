@@ -1,5 +1,25 @@
 [
     {
+        "id": "1778763769988",
+        "type": "blog",
+        "title": "How to Choose the Best AI Report Generator for PMs",
+        "category": "Deep Insights",
+        "date": "2026-05-14",
+        "author": "Marcus Webb",
+        "excerpt": "You’ve seen the flood of new AI tools. Every week, another one promises to magically write your reports, but most are just fancy wrappers around a gen...",
+        "contentFile": "blog-1778763769988.md"
+    },
+    {
+        "id": "1778763744571",
+        "type": "news",
+        "title": "The Real Work Is Happening Offstage",
+        "category": "Tech Radar",
+        "date": "2026-05-14",
+        "author": "Sarah Jenkins",
+        "excerpt": "A lawyer in Chicago closes her laptop at 2 AM. She didn't spend the night debating the consciousness of a large language model. She used an AI tool to...",
+        "contentFile": "news-1778763744571.md"
+    },
+    {
         "id": "1778677255566",
         "type": "blog",
         "title": "Stop Losing Context from Meeting Notes to Report",

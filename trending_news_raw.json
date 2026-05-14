@@ -1,32 +1,20 @@
 [
   {
-    "title": "Adaption aims big with AutoScientist, an AI tool that helps models train themselves",
-    "link": "https://techcrunch.com/2026/05/13/adaption-aims-big-with-autoscientist-an-ai-tool-that-helps-models-train-themselves/",
-    "pubDate": "Wed, 13 May 2026 12:11:33 +0000",
-    "snippet": "Adaption's new AutoScientist tool is designed to let models adapt to specific capabilities quickly through an automated approach to conventional fine-tuning."
+    "title": "Who decides what AI tells you? Campbell Brown, once Meta’s news chief, has thoughts",
+    "link": "https://techcrunch.com/2026/05/13/who-decides-what-ai-tells-you-campbell-brown-once-metas-news-chief-has-thoughts/",
+    "pubDate": "Thu, 14 May 2026 06:05:31 +0000",
+    "snippet": "\"The conversation is sort of happening in Silicon Valley around one thing, and a totally different conversation is happening among consumers.\""
   },
   {
-    "title": "Substrate (YC S24) Is Hiring a Technical Success Manager",
-    "link": "https://www.ycombinator.com/companies/substrate/jobs/T2fMBhD-technical-success-manager",
-    "pubDate": "Wed, 13 May 2026 12:00:30 +0000",
-    "snippet": "Article URL: https://www.ycombinator.com/companies/substrate/jobs/T2fMBhD-technical-success-manager\nComments URL: https://news.ycombinator.com/item?id=48120776\nPoints: 0\n# Comments: 0"
+    "title": "Clio’s $500M milestone arrives just as Anthropic ups the ante",
+    "link": "https://techcrunch.com/2026/05/13/clios-500m-milestone-arrives-just-as-anthropic-ups-the-ante/",
+    "pubDate": "Thu, 14 May 2026 05:24:39 +0000",
+    "snippet": "Legal tech startups, including Clio, which just hit $500 million in ARR, are seeing massive customer adoption."
   },
   {
-    "title": "I Moved My Digital Stack to Europe",
-    "link": "https://monokai.com/articles/how-i-moved-my-digital-stack-to-europe/",
-    "pubDate": "Wed, 13 May 2026 11:42:20 +0000",
-    "snippet": "Article URL: https://monokai.com/articles/how-i-moved-my-digital-stack-to-europe/\nComments URL: https://news.ycombinator.com/item?id=48120629\nPoints: 201\n# Comments: 112"
-  },
-  {
-    "title": "Using OR-Tools CP-SAT for Scheduling Problems",
-    "link": "https://atalaykutlay.com/or-tools-cp-sat-for-scheduling-problems.html",
-    "pubDate": "Wed, 13 May 2026 11:02:57 +0000",
-    "snippet": "Article URL: https://atalaykutlay.com/or-tools-cp-sat-for-scheduling-problems.html\nComments URL: https://news.ycombinator.com/item?id=48120351\nPoints: 15\n# Comments: 1"
-  },
-  {
-    "title": "Medicare’s new payment model is built for AI, and most of the tech world has no idea",
-    "link": "https://techcrunch.com/2026/05/12/medicares-new-payment-model-is-built-for-ai-and-most-of-the-tech-world-has-no-idea/",
-    "pubDate": "Wed, 13 May 2026 00:26:48 +0000",
-    "snippet": "There is no governmental mechanism to pay for an AI agent that monitors a patient between visits, calls to check in, coordinates a housing referral, or makes sure someone picks up their medication. ACCESS creates that mechanism for the first time."
+    "title": "Notion just turned its workspace into a hub for AI agents",
+    "link": "https://techcrunch.com/2026/05/13/notion-just-turned-its-workspace-into-a-hub-for-ai-agents/",
+    "pubDate": "Wed, 13 May 2026 21:45:09 +0000",
+    "snippet": "Notion’s new developer platform lets teams connect AI agents, external data sources, and custom code directly into their workspace as the company pushes deeper into agentic productivity software."
   }
 ]
