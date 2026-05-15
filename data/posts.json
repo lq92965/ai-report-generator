@@ -1,5 +1,25 @@
 [
     {
+        "id": "1778850057092",
+        "type": "blog",
+        "title": "Raw Meeting Notes to a Report Execs Actually Read",
+        "category": "Deep Insights",
+        "date": "2026-05-15",
+        "author": "Olivia Thorne",
+        "excerpt": "It’s 4:30 PM on a Friday. You have a dozen browser tabs open: a chaotic Google Doc from the design sync, three Slack threads with conflicting opinions...",
+        "contentFile": "blog-1778850057092.md"
+    },
+    {
+        "id": "1778850026808",
+        "type": "news",
+        "title": "The Digital Homesteaders",
+        "category": "Tech Radar",
+        "date": "2026-05-15",
+        "author": "Emily Rostova",
+        "excerpt": "A new Mac app called Osaurus landed this week. At first glance, it’s another entry in a crowded field of AI assistants. But its architecture tells a d...",
+        "contentFile": "news-1778850026808.md"
+    },
+    {
         "id": "1778763769988",
         "type": "blog",
         "title": "How to Choose the Best AI Report Generator for PMs",

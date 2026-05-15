@@ -1,20 +1,32 @@
 [
   {
-    "title": "Who decides what AI tells you? Campbell Brown, once Meta’s news chief, has thoughts",
-    "link": "https://techcrunch.com/2026/05/13/who-decides-what-ai-tells-you-campbell-brown-once-metas-news-chief-has-thoughts/",
-    "pubDate": "Thu, 14 May 2026 06:05:31 +0000",
-    "snippet": "\"The conversation is sort of happening in Silicon Valley around one thing, and a totally different conversation is happening among consumers.\""
+    "title": "Osaurus brings both local and cloud AI models to your Mac",
+    "link": "https://techcrunch.com/2026/05/15/osaurus-brings-both-local-and-cloud-ai-models-to-your-mac/",
+    "pubDate": "Fri, 15 May 2026 12:19:48 +0000",
+    "snippet": "Osaurus￼ combines local and cloud AI models in a Mac app that keeps users’ memory, files, and tools on their own hardware."
   },
   {
-    "title": "Clio’s $500M milestone arrives just as Anthropic ups the ante",
-    "link": "https://techcrunch.com/2026/05/13/clios-500m-milestone-arrives-just-as-anthropic-ups-the-ante/",
-    "pubDate": "Thu, 14 May 2026 05:24:39 +0000",
-    "snippet": "Legal tech startups, including Clio, which just hit $500 million in ARR, are seeing massive customer adoption."
+    "title": "Radicle: Sovereign {code forge} built on Git",
+    "link": "https://radicle.dev/",
+    "pubDate": "Fri, 15 May 2026 12:07:55 +0000",
+    "snippet": "Article URL: https://radicle.dev/\nComments URL: https://news.ycombinator.com/item?id=48147603\nPoints: 23\n# Comments: 3"
   },
   {
-    "title": "Notion just turned its workspace into a hub for AI agents",
-    "link": "https://techcrunch.com/2026/05/13/notion-just-turned-its-workspace-into-a-hub-for-ai-agents/",
-    "pubDate": "Wed, 13 May 2026 21:45:09 +0000",
-    "snippet": "Notion’s new developer platform lets teams connect AI agents, external data sources, and custom code directly into their workspace as the company pushes deeper into agentic productivity software."
+    "title": "SigNoz (YC W21, open source Datadog) Is hiring for growth and engineering roles",
+    "link": "https://signoz.io/careers",
+    "pubDate": "Fri, 15 May 2026 12:00:31 +0000",
+    "snippet": "Article URL: https://signoz.io/careers\nComments URL: https://news.ycombinator.com/item?id=48147533\nPoints: 0\n# Comments: 0"
+  },
+  {
+    "title": "Welcome to the Strip Mining Era of OSS Security",
+    "link": "https://www.metabase.com/blog/strip-mining-era-of-open-source-security",
+    "pubDate": "Fri, 15 May 2026 11:37:17 +0000",
+    "snippet": "Article URL: https://www.metabase.com/blog/strip-mining-era-of-open-source-security\nComments URL: https://news.ycombinator.com/item?id=48147339\nPoints: 29\n# Comments: 24"
+  },
+  {
+    "title": "Indian Uber rival Rapido raises $240M at $3B valuation",
+    "link": "https://techcrunch.com/2026/05/15/indian-uber-rival-rapido-raises-240m-at-3b-valuation/",
+    "pubDate": "Fri, 15 May 2026 11:24:12 +0000",
+    "snippet": "Rapido has driven its growth by enabling ride-hailing for lower-cost and more flexible modes of transport such as motorbikes and autorickshaws."
   }
 ]

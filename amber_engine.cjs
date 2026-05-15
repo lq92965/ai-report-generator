@@ -443,7 +443,7 @@ async function buildStaticPage(postData) {
     $('meta[name="description"]').attr('content', postData.excerpt);
 
     // ---- SEO: Open Graph / Twitter / Canonical ----
-    const articleUrl = `https://www.goreportify.com/article-pages/${postData.type}-${postData.timestamp}.html`;
+    const articleUrl = `https://goreportify.com/article-pages/${postData.type}-${postData.timestamp}.html`;
     const ogTitle = $escapeAttr(postData.title) + ' - Reportify AI';
     const ogDesc = $escapeAttr(postData.excerpt);
 
@@ -479,10 +479,10 @@ async function buildStaticPage(postData) {
         "publisher": {
             "@type": "Organization",
             "name": "Reportify AI",
-            "logo": { "@type": "ImageObject", "url": "https://www.goreportify.com/logo-3d.png.png" }
+            "logo": { "@type": "ImageObject", "url": "https://goreportify.com/logo-3d.png.png" }
         },
         "mainEntityOfPage": { "@type": "WebPage", "@id": articleUrl },
-        "image": { "@type": "ImageObject", "url": "https://www.goreportify.com/images/og-default.png" }
+        "image": { "@type": "ImageObject", "url": "https://goreportify.com/images/og-default.png" }
     };
     if (jsonldScript.length) {
         jsonldScript.attr('type', 'application/ld+json');
@@ -510,7 +510,7 @@ async function buildStaticPage(postData) {
         }
         const clean = String(src).replace(/^\.\//, '');
         if (clean.startsWith('images/')) {
-            $(el).attr('src', `https://www.goreportify.com/${clean}`);
+            $(el).attr('src', `https://goreportify.com/${clean}`);
             $(el).attr('referrerpolicy', 'no-referrer');
         }
     });
@@ -543,17 +543,17 @@ function publishAndSEO(postMeta) {
     fs.writeFileSync(POSTS_JSON_PATH, JSON.stringify(posts, null, 4), 'utf8');
 
     // 1. 生成 Sitemap (供 Google SEO)
-    let sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>https://www.goreportify.com/</loc>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>\n  <url>\n    <loc>https://www.goreportify.com/blog.html</loc>\n    <changefreq>daily</changefreq>\n    <priority>0.9</priority>\n  </url>\n  <url>\n    <loc>https://www.goreportify.com/news.html</loc>\n    <changefreq>daily</changefreq>\n    <priority>0.9</priority>\n  </url>\n  <url>\n    <loc>https://www.goreportify.com/generate.html</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n  <url>\n    <loc>https://www.goreportify.com/contact.html</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.5</priority>\n  </url>\n  <url>\n    <loc>https://www.goreportify.com/privacy.html</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.3</priority>\n  </url>\n  <url>\n    <loc>https://www.goreportify.com/terms.html</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.3</priority>\n  </url>\n`;
+    let sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>https://goreportify.com/</loc>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>\n  <url>\n    <loc>https://goreportify.com/blog.html</loc>\n    <changefreq>daily</changefreq>\n    <priority>0.9</priority>\n  </url>\n  <url>\n    <loc>https://goreportify.com/news.html</loc>\n    <changefreq>daily</changefreq>\n    <priority>0.9</priority>\n  </url>\n  <url>\n    <loc>https://goreportify.com/generate.html</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n  <url>\n    <loc>https://goreportify.com/contact.html</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.5</priority>\n  </url>\n  <url>\n    <loc>https://goreportify.com/privacy.html</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.3</priority>\n  </url>\n  <url>\n    <loc>https://goreportify.com/terms.html</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.3</priority>\n  </url>\n`;
     
     // 2. 🚀 新增：生成标准 RSS 订阅源 (供 Make.com 和 Substack 分发)
-    let rss = `<?xml version="1.0" encoding="UTF-8" ?>\n<rss version="2.0">\n<channel>\n  <title>Reportify AI Insights</title>\n  <link>https://www.goreportify.com</link>\n  <description>Latest tech insights and PM strategies</description>\n`;
+    let rss = `<?xml version="1.0" encoding="UTF-8" ?>\n<rss version="2.0">\n<channel>\n  <title>Reportify AI Insights</title>\n  <link>https://goreportify.com</link>\n  <description>Latest tech insights and PM strategies</description>\n`;
 
     posts.forEach(p => {
-        sitemap += `  <url>\n    <loc>https://www.goreportify.com/article-pages/${p.type}-${p.id}.html</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n`;
+        sitemap += `  <url>\n    <loc>https://goreportify.com/article-pages/${p.type}-${p.id}.html</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n`;
         
         // 转换时间格式以符合 RSS 标准
         const pubDate = new Date(parseInt(p.id)).toUTCString();
-        rss += `  <item>\n    <title><![CDATA[${p.title}]]></title>\n    <link>https://www.goreportify.com/article-pages/${p.type}-${p.id}.html</link>\n    <description><![CDATA[${p.excerpt}]]></description>\n    <pubDate>${pubDate}</pubDate>\n  </item>\n`;
+        rss += `  <item>\n    <title><![CDATA[${p.title}]]></title>\n    <link>https://goreportify.com/article-pages/${p.type}-${p.id}.html</link>\n    <description><![CDATA[${p.excerpt}]]></description>\n    <pubDate>${pubDate}</pubDate>\n  </item>\n`;
     });
     
     sitemap += '</urlset>';
@@ -562,7 +562,7 @@ function publishAndSEO(postMeta) {
     fs.writeFileSync(path.join(REPO_DIR, 'sitemap.xml'), sitemap, 'utf8');
     fs.writeFileSync(path.join(REPO_DIR, 'rss.xml'), rss, 'utf8'); // 保存 RSS 文件
 
-    const robots = `User-agent: *\nAllow: /\nAllow: /images/\nAllow: /content/\nAllow: /article-pages/\nSitemap: https://www.goreportify.com/sitemap.xml\n`;
+    const robots = `User-agent: *\nAllow: /\nAllow: /images/\nAllow: /content/\nAllow: /article-pages/\nSitemap: https://goreportify.com/sitemap.xml\n`;
     fs.writeFileSync(path.join(REPO_DIR, 'robots.txt'), robots, 'utf8');
 }
 

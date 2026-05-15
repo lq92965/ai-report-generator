@@ -3,4 +3,4 @@ Allow: /
 Allow: /images/
 Allow: /content/
 Allow: /article-pages/
-Sitemap: https://www.goreportify.com/sitemap.xml
+Sitemap: https://goreportify.com/sitemap.xml
