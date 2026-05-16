@@ -1,5 +1,25 @@
 [
     {
+        "id": "1778936451517",
+        "type": "blog",
+        "title": "Your PM Time is Too Valuable for Manual Reports",
+        "category": "Deep Insights",
+        "date": "2026-05-16",
+        "author": "Jessica Tran",
+        "excerpt": "It’s 4 PM on a Friday. You should be clearing the path for next week’s sprint or digging into user feedback, but instead, you’re hunting through Slack...",
+        "contentFile": "blog-1778936451517.md"
+    },
+    {
+        "id": "1778936427895",
+        "type": "news",
+        "title": "While VCs Tweet, the Code Compiles",
+        "category": "Tech Radar",
+        "date": "2026-05-16",
+        "author": "Sarah Jenkins",
+        "excerpt": "On the public internet, the tech industry is a stage. This week, the play was a farce. General Catalyst tossed out what can only be described as ventu...",
+        "contentFile": "news-1778936427895.md"
+    },
+    {
         "id": "1778850057092",
         "type": "blog",
         "title": "Raw Meeting Notes to a Report Execs Actually Read",

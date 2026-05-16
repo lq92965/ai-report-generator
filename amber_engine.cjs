@@ -562,8 +562,12 @@ function publishAndSEO(postMeta) {
     fs.writeFileSync(path.join(REPO_DIR, 'sitemap.xml'), sitemap, 'utf8');
     fs.writeFileSync(path.join(REPO_DIR, 'rss.xml'), rss, 'utf8'); // 保存 RSS 文件
 
-    const robots = `User-agent: *\nAllow: /\nAllow: /images/\nAllow: /content/\nAllow: /article-pages/\nSitemap: https://goreportify.com/sitemap.xml\n`;
+    const robots = `User-agent: *\nAllow: /\nAllow: /images/\nAllow: /content/\nAllow: /article-pages/\nAllow: /llms.txt\nAllow: /llms-full.txt\nSitemap: https://goreportify.com/sitemap.xml\n`;
     fs.writeFileSync(path.join(REPO_DIR, 'robots.txt'), robots, 'utf8');
+
+    try { const { main: gen } = require('./tools/generate-llmstxt.cjs'); gen(); } catch (e) { console.error('[Amber V8] llms.txt failed:', e.message); }
+}
+
 }
 
 /**
