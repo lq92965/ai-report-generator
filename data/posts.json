@@ -1,5 +1,25 @@
 [
     {
+        "id": "1779109260688",
+        "type": "blog",
+        "title": "The 'No Surprises' Rule: Your Best Defense Against Stakeholder Panic",
+        "category": "Deep Insights",
+        "date": "2026-05-18",
+        "author": "David Sterling",
+        "excerpt": "It’s 4:53 PM on a Friday. You’re about to close your laptop when the Slack notification glows red. It’s the VP of Sales. “Just saw the Q3 roadmap. Why...",
+        "contentFile": "blog-1779109260688.md"
+    },
+    {
+        "id": "1779109230677",
+        "type": "news",
+        "title": "The AI Revolution's Last Mile Is a Turf War",
+        "category": "Tech Radar",
+        "date": "2026-05-18",
+        "author": "Marcus Webb",
+        "excerpt": "The demo is always flawless. In a slick, pre-recorded video, a new enterprise AI assistant digests a decade of sales data, identifies three underserve...",
+        "contentFile": "news-1779109230677.md"
+    },
+    {
         "id": "1778936451517",
         "type": "blog",
         "title": "Your PM Time is Too Valuable for Manual Reports",

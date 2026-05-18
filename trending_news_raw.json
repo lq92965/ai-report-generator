@@ -1,38 +1,32 @@
 [
   {
-    "title": "A Meta employee gets real about the horror of working there",
-    "link": "https://sfstandard.com/pacific-standard-time/2026/05/15/meta-employee-gets-real-horror-working-right-now/",
-    "pubDate": "Sat, 16 May 2026 12:19:46 +0000",
-    "snippet": "Article URL: https://sfstandard.com/pacific-standard-time/2026/05/15/meta-employee-gets-real-horror-working-right-now/\nComments URL: https://news.ycombinator.com/item?id=48159528\nPoints: 5\n# Comments: 3"
+    "title": "Linux security mailing list 'almost unmanageable'",
+    "link": "https://www.theregister.com/security/2026/05/18/linus-torvalds-says-ai-powered-bug-hunters-have-made-linux-security-mailing-list-almost-entirely-unmanageable/5241633",
+    "pubDate": "Mon, 18 May 2026 12:20:50 +0000",
+    "snippet": "Article URL: https://www.theregister.com/security/2026/05/18/linus-torvalds-says-ai-powered-bug-hunters-have-made-linux-security-mailing-list-almost-entirely-unmanageable/5241633\nComments URL: https://news.ycombinator.com/item?id=48178692\nPoints: 15\n# Comments: 3"
   },
   {
-    "title": "SANA-WM, a 2.6B open-source world model for 1-minute 720p video",
-    "link": "https://nvlabs.github.io/Sana/WM/",
-    "pubDate": "Sat, 16 May 2026 12:06:21 +0000",
-    "snippet": "Article URL: https://nvlabs.github.io/Sana/WM/\nComments URL: https://news.ycombinator.com/item?id=48159445\nPoints: 6\n# Comments: 3"
+    "title": "Utah lawmakers form united front in push to ban prediction markets",
+    "link": "https://www.theguardian.com/us-news/2026/may/18/you-can-bet-on-it-utah-lawmakers-form-united-front-in-push-to-ban-prediction-markets",
+    "pubDate": "Mon, 18 May 2026 11:38:48 +0000",
+    "snippet": "Article URL: https://www.theguardian.com/us-news/2026/may/18/you-can-bet-on-it-utah-lawmakers-form-united-front-in-push-to-ban-prediction-markets\nComments URL: https://news.ycombinator.com/item?id=48178255\nPoints: 7\n# Comments: 0"
   },
   {
-    "title": "Kyber (YC W23) Is Hiring a Founding Marketer",
-    "link": "https://www.ycombinator.com/companies/kyber/jobs/1rLQAro-founding-marketer-content-community",
-    "pubDate": "Sat, 16 May 2026 12:01:06 +0000",
-    "snippet": "Article URL: https://www.ycombinator.com/companies/kyber/jobs/1rLQAro-founding-marketer-content-community\nComments URL: https://news.ycombinator.com/item?id=48159405\nPoints: 0\n# Comments: 0"
+    "title": "I automated opt-outs for 500 data broker sites (open source)",
+    "link": "https://github.com/stephenlthorn/auto-identity-remove",
+    "pubDate": "Mon, 18 May 2026 11:32:42 +0000",
+    "snippet": "Article URL: https://github.com/stephenlthorn/auto-identity-remove\nComments URL: https://news.ycombinator.com/item?id=48178184\nPoints: 106\n# Comments: 37"
   },
   {
-    "title": "RJ Scaringe has raised more than $12B across three startups and investors still want more",
-    "link": "https://techcrunch.com/2026/05/15/rj-scaringe-has-raised-more-than-12-billion-across-three-startups-and-investors-still-want-more/",
-    "pubDate": "Fri, 15 May 2026 20:30:20 +0000",
-    "snippet": "Investors can't seem to get enough of RJ Scaringe or his ideas."
+    "title": "South Korea’s LetinAR is building optics behind AI glasses",
+    "link": "https://techcrunch.com/2026/05/18/south-koreas-letinar-is-building-the-optics-behind-ai-glasses/",
+    "pubDate": "Mon, 18 May 2026 11:00:00 +0000",
+    "snippet": "A lens the size of a thumbnail — and the South Korean startup that makes it could become the optical backbone of the AI glasses era."
   },
   {
-    "title": "General Catalyst posted VC rage bait and it worked, especially on a16z",
-    "link": "https://techcrunch.com/2026/05/15/general-catalyst-posted-vc-rage-bait-and-it-worked-especially-on-a16z/",
-    "pubDate": "Fri, 15 May 2026 20:25:35 +0000",
-    "snippet": "Compulsive X user Marc Andreessen himself couldn't resist responding."
-  },
-  {
-    "title": "A hotel check-in system left a million passports and driver's licenses open for anyone to see",
-    "link": "https://techcrunch.com/2026/05/15/a-hotel-check-in-system-left-a-million-passports-and-drivers-licenses-open-for-anyone-to-see/",
-    "pubDate": "Fri, 15 May 2026 18:51:33 +0000",
-    "snippet": "The tech company that maintains the hotel check-in system set its cloud storage to public."
+    "title": "Apple’s Siri revamp could include auto-deleting chats",
+    "link": "https://techcrunch.com/2026/05/17/apples-siri-revamp-could-include-auto-deleting-chats/",
+    "pubDate": "Sun, 17 May 2026 20:15:00 +0000",
+    "snippet": "Privacy will be a major theme when Apple unveils a new version of Siri."
   }
 ]

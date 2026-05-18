@@ -15,6 +15,18 @@
 
 ## All Articles
 
+- [The 'No Surprises' Rule: Your Best Defense Against Stakeholder Panic](https://goreportify.com/article-pages/blog-1779109260688.html)
+  - Type: Deep Insights | Date: 2026-05-18 | Author: David Sterling
+  - It’s 4:53 PM on a Friday. You’re about to close your laptop when the Slack notification glows red. It’s the VP of Sales. “Just saw the Q3 roadmap. Why...
+- [The AI Revolution's Last Mile Is a Turf War](https://goreportify.com/article-pages/news-1779109230677.html)
+  - Type: Tech Radar | Date: 2026-05-18 | Author: Marcus Webb
+  - The demo is always flawless. In a slick, pre-recorded video, a new enterprise AI assistant digests a decade of sales data, identifies three underserve...
+- [Your PM Time is Too Valuable for Manual Reports](https://goreportify.com/article-pages/blog-1778936451517.html)
+  - Type: Deep Insights | Date: 2026-05-16 | Author: Jessica Tran
+  - It’s 4 PM on a Friday. You should be clearing the path for next week’s sprint or digging into user feedback, but instead, you’re hunting through Slack...
+- [While VCs Tweet, the Code Compiles](https://goreportify.com/article-pages/news-1778936427895.html)
+  - Type: Tech Radar | Date: 2026-05-16 | Author: Sarah Jenkins
+  - On the public internet, the tech industry is a stage. This week, the play was a farce. General Catalyst tossed out what can only be described as ventu...
 - [Raw Meeting Notes to a Report Execs Actually Read](https://goreportify.com/article-pages/blog-1778850057092.html)
   - Type: Deep Insights | Date: 2026-05-15 | Author: Olivia Thorne
   - It’s 4:30 PM on a Friday. You have a dozen browser tabs open: a chaotic Google Doc from the design sync, three Slack threads with conflicting opinions...
@@ -1595,4 +1607,4 @@
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 526 articles (284 blog + 242 news) + 8 core pages._
+_Total: 530 articles (286 blog + 244 news) + 8 core pages._
