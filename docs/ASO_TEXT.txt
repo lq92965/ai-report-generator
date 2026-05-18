@@ -1,0 +1,36 @@
+# ASO 文案（字数合规版）
+
+## 1️⃣ App Name（30字符）
+```
+Reportify AI: AI Report Gen
+```
+（刚好30字符，包含核心词 "AI Report Gen"）
+
+## 2️⃣ Short Description（80字符）
+```
+Turn messy meeting notes into Word & PPT reports in 30s
+```
+（68字符 ✅）
+
+## 3️⃣ Full Description（≤4000字符）
+```
+Stop drowning in report formatting. Reportify AI instantly transforms your messy meeting notes, Slack threads, and quick thoughts into professional Word reports, PPT decks, and email summaries — in 30 seconds. No templates needed. Our RIE (Reportify Intelligence Engine) automatically organizes your fragments into executive-level assets.
+
+Key Features:
+⚡ AI Report Generator — Dump raw text, get structured reports
+📊 Auto PPT Drafts — One click from notes to presentation
+🧠 Manager-Ready Logic — Professional structure, every time
+📱 Cross-Platform — Web + Android, sync everywhere
+
+One input, three professional assets. Stop fighting with formatting and start focusing on what truly matters.
+
+Perfect for:
+- Project managers writing weekly status reports
+- Team leads summarizing daily standups
+- Consultants preparing client deliverables
+- Remote teams sharing async updates
+
+Reportify AI handles the formatting. You handle the thinking.
+
+Updated on May 11, 2026
+```

@@ -1,43 +1,23 @@
 [
     {
-        "id": "1779195662203",
+        "id": "1779109259999",
         "type": "blog",
-        "title": "Your RAG Status is a Lie. Here's How to Fix It.",
+        "title": "Write a Weekly Report That Builds Stakeholder Trust",
         "category": "Deep Insights",
-        "date": "2026-05-19",
-        "author": "Marcus Webb",
-        "excerpt": "It’s 4:45 PM on a Thursday. You’re staring at the project dashboard, mouse hovering over the status dropdown for your team’s biggest initiative. The b...",
-        "contentFile": "blog-1779195662203.md"
-    },
-    {
-        "id": "1779195629166",
-        "type": "news",
-        "title": "What Changes Now in Model Markets",
-        "category": "Tech Radar",
-        "date": "2026-05-19",
+        "date": "2026-05-18",
         "author": "Alex Mercer",
-        "excerpt": "The recipe for Neapolitan-style pizza dough seemed simple enough. But the first Google result led to a blog post with a photo of a perfect crust, blis...",
-        "contentFile": "news-1779195629166.md"
+        "excerpt": "It’s Tuesday afternoon and your calendar reminder goes off: “Weekly Report Due.” You feel a familiar dread as you open a dozen tabs—Jira, Slack, Figma...",
+        "contentFile": "blog-1779109259999.md"
     },
     {
-        "id": "1779109260688",
-        "type": "blog",
-        "title": "The 'No Surprises' Rule: Your Best Defense Against Stakeholder Panic",
-        "category": "Deep Insights",
-        "date": "2026-05-18",
-        "author": "David Sterling",
-        "excerpt": "It’s 4:53 PM on a Friday. You’re about to close your laptop when the Slack notification glows red. It’s the VP of Sales. “Just saw the Q3 roadmap. Why...",
-        "contentFile": "blog-1779109260688.md"
-    },
-    {
-        "id": "1779109230677",
+        "id": "1779109233181",
         "type": "news",
-        "title": "The AI Revolution's Last Mile Is a Turf War",
+        "title": "The Noise Machine and Its Ghosts",
         "category": "Tech Radar",
         "date": "2026-05-18",
-        "author": "Marcus Webb",
-        "excerpt": "The demo is always flawless. In a slick, pre-recorded video, a new enterprise AI assistant digests a decade of sales data, identifies three underserve...",
-        "contentFile": "news-1779109230677.md"
+        "author": "Sarah Jenkins",
+        "excerpt": "A security mailing list for the world’s most critical open-source project is now “almost unmanageable.” Not because of a coordinated human attack, but...",
+        "contentFile": "news-1779109233181.md"
     },
     {
         "id": "1778936451517",
