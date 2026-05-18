@@ -421,6 +421,18 @@ async function buildStaticPage(postData) {
 
     $('title').text(`${postData.title} - Reportify AI`);
     $('meta[name="description"]').attr('content', postData.excerpt);
+    // ---- Google Analytics (auto-inject if not present) ----
+    const gaCode = `<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3PX3FEY6F6"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-3PX3FEY6F6');
+</script>`;
+    if (!$('script[src*="googletagmanager.com"]').length) {
+        $('head').append(gaCode);
+    }
     // ---- SEO: Open Graph / Twitter / Canonical ----
     const articleUrl = `https://goreportify.com/article-pages/${postData.type}-${postData.timestamp}.html`;
     const ogTitle = $escapeAttr(postData.title) + ' - Reportify AI';
