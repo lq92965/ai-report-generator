@@ -12,14 +12,6 @@
 
 ## Core Pages
 
-- [Homepage](https://goreportify.com) - Generate professional AI-powered business reports.
-- [Generate Report](https://goreportify.com/generate.html) - Upload your data and generate comprehensive AI reports.
-- [Deep Insights Blog](https://goreportify.com/blog.html) - Articles on PM, reporting, and AI automation.
-- [Global Tech Radar](https://goreportify.com/news.html) - Daily curated tech news.
-- [Pricing](https://goreportify.com/index.html#pricing) - Reportify AI subscription plans.
-- [Contact Support](https://goreportify.com/contact.html) - Get in touch with Reportify AI.
-- [Privacy Policy](https://goreportify.com/privacy.html) - Data handling and privacy practices.
-- [Terms of Service](https://goreportify.com/terms.html) - Terms for using Reportify AI.
 
 ## FAQ
 

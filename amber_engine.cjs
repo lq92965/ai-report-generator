@@ -464,25 +464,12 @@ async function buildStaticPage(postData) {
         $('link[rel="canonical"]').attr('href', articleUrl);
     }
 
-    // ---- JSON-LD Article / BlogPosting ----
+    // ---- JSON-LD Article / BlogPosting + BreadcrumbList ----
     const articleType = postData.type === 'blog' ? 'BlogPosting' : 'NewsArticle';
+    const sectionName = postData.type === 'news' ? 'News' : 'Blog';
     const jsonldScript = $('script[type="application/ld+json"]');
     const jsonld = {
         "@context": "https://schema.org",
-        "@type": articleType,
-        "@id": articleUrl + "#article",
-        "headline": postData.title,
-        "description": postData.excerpt,
-        "datePublished": postData.dateStr + "T00:00:00Z",
-        "dateModified": postData.dateStr + "T00:00:00Z",
-        "author": { "@type": "Organization", "name": "Reportify AI" },
-        "publisher": {
-            "@type": "Organization",
-            "name": "Reportify AI",
-            "logo": { "@type": "ImageObject", "url": "https://goreportify.com/logo-3d.png.png" }
-        },
-        "mainEntityOfPage": { "@type": "WebPage", "@id": articleUrl },
-        "image": { "@type": "ImageObject", "url": "https://goreportify.com/images/og-default.png" }
     };
     if (jsonldScript.length) {
         jsonldScript.attr('type', 'application/ld+json');
@@ -490,7 +477,6 @@ async function buildStaticPage(postData) {
     }
 
     const backLink = postData.type === 'news' ? 'news.html' : 'blog.html';
-    const sectionName = postData.type === 'news' ? 'News' : 'Blog';
     const backInner = `<span class="back-arrow">←</span><span class="back-text">Back to ${sectionName}</span>`;
     // Use the template's single unified back button; never emit multiple.
     $('.unified-back-btn').attr('href', backLink).html(backInner);
@@ -566,8 +552,6 @@ function publishAndSEO(postMeta) {
     fs.writeFileSync(path.join(REPO_DIR, 'robots.txt'), robots, 'utf8');
 
     try { const { main: gen } = require('./tools/generate-llmstxt.cjs'); gen(); } catch (e) { console.error('[Amber V8] llms.txt failed:', e.message); }
-}
-
 }
 
 /**
