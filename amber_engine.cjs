@@ -253,24 +253,6 @@ async function generateArticle(type) {
             : `Write a practical, SEO-optimized blog post about reporting, productivity, AI tools, or PM communication.
 
 SEO GUIDELINES (must follow):
-- Title must be 45-60 characters, include a keyword naturally, and be compelling for search results
-- First paragraph (2-3 sentences) must hook the reader AND include a primary keyword naturally
-- Use H2 subheadings every 200-300 words with related keywords
-- Article length: 800-1500 words
-- Include one natural mention of "Reportify AI" or "AI report generator" as a solution
-- Write for humans first, SEO second — no keyword stuffing
-- End with a takeaway or call to action
-
-PRIMARY KEYWORD OPTIONS (choose the one that best fits the angle):
-1. "AI report generator" — general tool recommendation
-2. "AI weekly report generator" — weekly report automation
-3. "AI daily standup report" — daily standups
-4. "meeting notes to report" — converting notes to reports
-5. "automated report writing" — automation focus
-6. "project status report tool" — project management
-7. "how to write a weekly report" — tutorial/guide
-8. "best AI report generator" — comparison/roundup
-
 ${titleBlock}${imgBlock} First line must be '# Title'. Output ONLY raw markdown.`;
 
     if (type === 'news') {
@@ -287,8 +269,6 @@ ${titleBlock}${imgBlock} First line must be '# Title'. Output ONLY raw markdown.
                 newsData.forEach((item, index) => {
                     newsContext += `${index + 1}. 标题：${item.title}\n摘要：${item.snippet}\n\n`;
                 });
-                
-                userPrompt = `Please write a highly engaging tech news analysis article based on the following real-time trending news. \n\n${newsContext}\nCombine these points into a cohesive, insightful article. Emphasize how AI/Tech is changing the landscape, and subtly mention how Reportify AI helps professionals save time to stay updated with such fast-paced tech. Avoid generic AI-ish phrasing. ${titleBlock}${imgBlock} First line must be '# Title'. Output ONLY raw markdown.`;
                 console.log("[Amber V8] 🎯 已成功将全球实时热点注入 AI 大脑！");
             }
         } catch (err) {
@@ -441,7 +421,6 @@ async function buildStaticPage(postData) {
 
     $('title').text(`${postData.title} - Reportify AI`);
     $('meta[name="description"]').attr('content', postData.excerpt);
-
     // ---- SEO: Open Graph / Twitter / Canonical ----
     const articleUrl = `https://goreportify.com/article-pages/${postData.type}-${postData.timestamp}.html`;
     const ogTitle = $escapeAttr(postData.title) + ' - Reportify AI';
