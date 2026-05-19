@@ -1,5 +1,25 @@
 [
     {
+        "id": "1779195670431",
+        "type": "blog",
+        "title": "Automated Report Writing: Your Strategic Advantage",
+        "category": "Deep Insights",
+        "date": "2026-05-19",
+        "author": "David Sterling",
+        "excerpt": "It’s 4 PM on a Friday. You have a dozen tabs open: Jira, Slack, Google Docs, Figma. Your task is to synthesize a week of chaotic progress into a clean...",
+        "contentFile": "blog-1779195670431.md"
+    },
+    {
+        "id": "1779195636097",
+        "type": "news",
+        "title": "The Earthly Cost of Digital Gods",
+        "category": "Tech Radar",
+        "date": "2026-05-19",
+        "author": "Jessica Tran",
+        "excerpt": "We love to talk about colonizing Venus. It’s the ultimate tech-bro fantasy: terraforming a hellscape into a paradise, a triumph of engineering over ho...",
+        "contentFile": "news-1779195636097.md"
+    },
+    {
         "id": "1779109259999",
         "type": "blog",
         "title": "Write a Weekly Report That Builds Stakeholder Trust",
