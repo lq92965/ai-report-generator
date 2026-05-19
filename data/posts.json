@@ -1,5 +1,25 @@
 [
     {
+        "id": "1779195662203",
+        "type": "blog",
+        "title": "Your RAG Status is a Lie. Here's How to Fix It.",
+        "category": "Deep Insights",
+        "date": "2026-05-19",
+        "author": "Marcus Webb",
+        "excerpt": "It’s 4:45 PM on a Thursday. You’re staring at the project dashboard, mouse hovering over the status dropdown for your team’s biggest initiative. The b...",
+        "contentFile": "blog-1779195662203.md"
+    },
+    {
+        "id": "1779195629166",
+        "type": "news",
+        "title": "What Changes Now in Model Markets",
+        "category": "Tech Radar",
+        "date": "2026-05-19",
+        "author": "Alex Mercer",
+        "excerpt": "The recipe for Neapolitan-style pizza dough seemed simple enough. But the first Google result led to a blog post with a photo of a perfect crust, blis...",
+        "contentFile": "news-1779195629166.md"
+    },
+    {
         "id": "1779109260688",
         "type": "blog",
         "title": "The 'No Surprises' Rule: Your Best Defense Against Stakeholder Panic",
