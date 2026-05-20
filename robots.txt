@@ -5,5 +5,4 @@ Allow: /content/
 Allow: /article-pages/
 Allow: /llms.txt
 Allow: /llms-full.txt
-Sitemap: https://www.goreportify.com/sitemap.xml
-Sitemap: https://www.goreportify.com/news.xml
+Sitemap: https://goreportify.com/sitemap.xml

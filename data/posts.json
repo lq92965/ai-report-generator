@@ -1,5 +1,25 @@
 [
     {
+        "id": "1779282071024",
+        "type": "blog",
+        "title": "Your AI Assistant Should Read Your Reports, Not Write Them",
+        "category": "Deep Insights",
+        "date": "2026-05-20",
+        "author": "Sarah Jenkins",
+        "excerpt": "It’s Monday morning. You open your laptop to a firehose. There’s the engineering update in the dev-updates Slack channel, a long email thread from mar...",
+        "contentFile": "blog-1779282071024.md"
+    },
+    {
+        "id": "1779282039697",
+        "type": "news",
+        "title": "The Next Phase of Chicken Adoption",
+        "category": "Tech Radar",
+        "date": "2026-05-20",
+        "author": "Marcus Webb",
+        "excerpt": "You search for a simple chicken recipe. Instead of a page from a trusted food blogger or a legacy cooking site, the top results are a slurry of AI-gen...",
+        "contentFile": "news-1779282039697.md"
+    },
+    {
         "id": "1779195670431",
         "type": "blog",
         "title": "Automated Report Writing: Your Strategic Advantage",
