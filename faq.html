@@ -50,6 +50,134 @@
         .faq-icon { transition: transform 0.3s ease; }
         .faq-search:focus { box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
     </style>
+
+    <!-- Structured Data (JSON-LD) for FAQ + BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://www.goreportify.com/faq.html#breadcrumb",
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.goreportify.com/" },
+                    { "@type": "ListItem", "position": 2, "name": "FAQ", "item": "https://www.goreportify.com/faq.html" }
+                ]
+            },
+            {
+                "@type": "FAQPage",
+                "@id": "https://www.goreportify.com/faq.html#faq",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "What is Reportify AI?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Reportify AI is an AI-powered report generator that transforms your raw meeting notes, chat logs, and quick thoughts into professional Word documents, PPT decks, and email summaries in 30 seconds. It uses our proprietary RIE (Reportify Intelligence Engine) to understand context and structure your content logically."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How do I get started?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Just visit the generate page on our website or download the Android app. No credit card required. You can start with a 7-day Elite Trial for free, no sign-up needed to try the generator."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is there a mobile app?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes! Reportify AI is available on Google Play. The app syncs with your web account, so you can generate and access reports anywhere, anytime."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Do I need an account?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "You can try the report generator without an account. To save, export, and access your reports across devices, you need to sign up (Google login or email). It's free and takes 30 seconds."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What types of reports can I generate?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "You can generate Daily and Weekly work reports, Meeting summaries, Project status updates, Executive summaries, and more. Simply choose the report type, detail level, and tone."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How does the RIE Engine work?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "RIE (Reportify Intelligence Engine) uses advanced AI to analyze your raw input and automatically organizes it into logical sections with professional headings, bullet points, and executive summaries."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What output formats are supported?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Reportify AI supports four export formats: Word (.doc) for formal documentation, PPT for presentation-ready slide decks, Email for stakeholder summaries, and Markdown for developers and note-takers."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What languages does Reportify AI support?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Currently, Reportify AI supports English, Chinese (Simplified), Japanese, Korean, Spanish, German, French, and Portuguese. More languages coming soon."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How long does it take to generate a report?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Most reports generate in under 30 seconds. Brief mode is nearly instant, while Detailed mode takes a few extra seconds for comprehensive analysis."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What plans are available?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "We offer three plans: Elite Trial (Free for 7 days, full access to RIE 3.0 flagship engine and PPT generation), Basic ($9.90/month, RIE 2.5 engine, 45 reports monthly), and Professional ($19.90/month, unlimited generation, full-scene PPT, strategic depth analysis)."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is there a free trial?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes! You get a 7-day Elite Trial completely free with full access to the RIE 3.0 flagship engine, PPT generation, and automated reporting. No credit card required."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is my data secure?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. Reportify AI uses encryption in transit. Your report content is not shared with third parties, and you can request data deletion at any time."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How do I contact support?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "You can reach us through the Contact page. Professional plan users receive priority support. You can also join our Discord community for quick help and discussions."
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+
 </head>
 <body class="has-app-nav font-sans antialiased bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
