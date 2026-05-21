@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [The One-Decision Report: A PM's Framework for Driving Action](https://goreportify.com/article-pages/blog-1779368483780.html)
+  - Type: Deep Insights | Date: 2026-05-21 | Author: Jessica Tran
+  - You hit send on the weekly status report. It’s a masterpiece of detail—sprint velocity, bug counts, progress against quarterly goals, a link to the la...
+- [Human Becomes a Competitive Battleground](https://goreportify.com/article-pages/news-1779368455504.html)
+  - Type: Tech Radar | Date: 2026-05-21 | Author: Emily Rostova
+  - For a decade, the internet was a vast, open frontier of human expression, ripe for the harvest. AI labs sent out their digital combines, scraping up e...
 - [Your AI Assistant Should Read Your Reports, Not Write Them](https://goreportify.com/article-pages/blog-1779282071024.html)
   - Type: Deep Insights | Date: 2026-05-20 | Author: Sarah Jenkins
   - It’s Monday morning. You open your laptop to a firehose. There’s the engineering update in the dev-updates Slack channel, a long email thread from mar...
@@ -1619,4 +1625,4 @@
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 534 articles (288 blog + 246 news) + 8 core pages._
+_Total: 536 articles (289 blog + 247 news) + 8 core pages._

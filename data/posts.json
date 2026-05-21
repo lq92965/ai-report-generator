@@ -1,5 +1,25 @@
 [
     {
+        "id": "1779368483780",
+        "type": "blog",
+        "title": "The One-Decision Report: A PM's Framework for Driving Action",
+        "category": "Deep Insights",
+        "date": "2026-05-21",
+        "author": "Jessica Tran",
+        "excerpt": "You hit send on the weekly status report. It’s a masterpiece of detail—sprint velocity, bug counts, progress against quarterly goals, a link to the la...",
+        "contentFile": "blog-1779368483780.md"
+    },
+    {
+        "id": "1779368455504",
+        "type": "news",
+        "title": "Human Becomes a Competitive Battleground",
+        "category": "Tech Radar",
+        "date": "2026-05-21",
+        "author": "Emily Rostova",
+        "excerpt": "For a decade, the internet was a vast, open frontier of human expression, ripe for the harvest. AI labs sent out their digital combines, scraping up e...",
+        "contentFile": "news-1779368455504.md"
+    },
+    {
         "id": "1779282071024",
         "type": "blog",
         "title": "Your AI Assistant Should Read Your Reports, Not Write Them",
