@@ -1,5 +1,25 @@
 [
     {
+        "id": "1779454865199",
+        "type": "blog",
+        "title": "Your AI Assistant is Starving for Context",
+        "category": "Deep Insights",
+        "date": "2026-05-22",
+        "author": "Marcus Webb",
+        "excerpt": "I watched a junior PM feed a meeting transcript into an AI summarizer last week. He was thrilled. \"Look,\" he said, \"it pulled out all the action items...",
+        "contentFile": "blog-1779454865199.md"
+    },
+    {
+        "id": "1779454832343",
+        "type": "news",
+        "title": "The New Gatekeepers Are Forging Keys, Not Apps",
+        "category": "Tech Radar",
+        "date": "2026-05-22",
+        "author": "Marcus Webb",
+        "excerpt": "A developer hunches over a screen, not in a gleaming keynote hall, but in a quiet office lit by a single monitor. She deletes a line of code referenci...",
+        "contentFile": "news-1779454832343.md"
+    },
+    {
         "id": "1779368483780",
         "type": "blog",
         "title": "The One-Decision Report: A PM's Framework for Driving Action",
