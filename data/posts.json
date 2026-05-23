@@ -1,5 +1,15 @@
 [
     {
+        "id": "1779541286432",
+        "type": "blog",
+        "title": "How to Turn Meeting Notes into a Status Report",
+        "category": "Deep Insights",
+        "date": "2026-05-23",
+        "author": "Marcus Webb",
+        "excerpt": "You just wrapped up the weekly stakeholder sync. Your Google Doc is a chaotic mix of bullet points, half-finished sentences, direct quotes, and a remi...",
+        "contentFile": "blog-1779541286432.md"
+    },
+    {
         "id": "1779454861337",
         "type": "blog",
         "title": "Your AI Weekly Report Generator: Reclaim Your Friday",
