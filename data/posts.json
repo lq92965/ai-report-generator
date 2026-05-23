@@ -1,5 +1,25 @@
 [
     {
+        "id": "1779541253187",
+        "type": "blog",
+        "title": "Stop Reporting Metrics. Start Telling Data Stories.",
+        "category": "Deep Insights",
+        "date": "2026-05-23",
+        "author": "David Sterling",
+        "excerpt": "It’s Tuesday morning. You pull up the dashboard for the feature you launched last week. Daily Active Users are up 3%. Time-on-page is up 7%. You copy-...",
+        "contentFile": "blog-1779541253187.md"
+    },
+    {
+        "id": "1779541224171",
+        "type": "news",
+        "title": "The New Company Town Is an API",
+        "category": "Tech Radar",
+        "date": "2026-05-23",
+        "author": "Olivia Thorne",
+        "excerpt": "The scene is a standing desk in a San Francisco loft, but it could be a cubicle in Omaha or a bedroom in Bangalore. A developer squints at a screen, b...",
+        "contentFile": "news-1779541224171.md"
+    },
+    {
         "id": "1779454865199",
         "type": "blog",
         "title": "Your AI Assistant is Starving for Context",

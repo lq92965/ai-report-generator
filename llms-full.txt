@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Stop Reporting Metrics. Start Telling Data Stories.](https://goreportify.com/article-pages/blog-1779541253187.html)
+  - Type: Deep Insights | Date: 2026-05-23 | Author: David Sterling
+  - It’s Tuesday morning. You pull up the dashboard for the feature you launched last week. Daily Active Users are up 3%. Time-on-page is up 7%. You copy-...
+- [The New Company Town Is an API](https://goreportify.com/article-pages/news-1779541224171.html)
+  - Type: Tech Radar | Date: 2026-05-23 | Author: Olivia Thorne
+  - The scene is a standing desk in a San Francisco loft, but it could be a cubicle in Omaha or a bedroom in Bangalore. A developer squints at a screen, b...
 - [Your AI Assistant is Starving for Context](https://goreportify.com/article-pages/blog-1779454865199.html)
   - Type: Deep Insights | Date: 2026-05-22 | Author: Marcus Webb
   - I watched a junior PM feed a meeting transcript into an AI summarizer last week. He was thrilled. "Look," he said, "it pulled out all the action items...
@@ -1631,4 +1637,4 @@
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 538 articles (290 blog + 248 news) + 8 core pages._
+_Total: 540 articles (291 blog + 249 news) + 8 core pages._
