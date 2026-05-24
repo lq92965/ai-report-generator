@@ -1,5 +1,25 @@
 [
     {
+        "id": "1779627691818",
+        "type": "blog",
+        "title": "The Pre-Mortem Report: Stop Documenting Fires, Start Preventing Them",
+        "category": "Deep Insights",
+        "date": "2026-05-24",
+        "author": "Jessica Tran",
+        "excerpt": "It’s Tuesday morning. You open your project tracker and see the little green circle next to the “API Integration” epic. All looks good. Then a Slack m...",
+        "contentFile": "blog-1779627691818.md"
+    },
+    {
+        "id": "1779627662797",
+        "type": "news",
+        "title": "The Information Age Is Drowning in Itself",
+        "category": "Tech Radar",
+        "date": "2026-05-24",
+        "author": "David Sterling",
+        "excerpt": "Try to find a decent recipe for chicken soup. Not one from a celebrity chef or a major food publication, but a real one, from a person. Ten years ago,...",
+        "contentFile": "news-1779627662797.md"
+    },
+    {
         "id": "1779541253187",
         "type": "blog",
         "title": "Stop Reporting Metrics. Start Telling Data Stories.",
