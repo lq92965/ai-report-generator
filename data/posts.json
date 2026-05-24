@@ -1,5 +1,25 @@
 [
     {
+        "id": "1779627655356",
+        "type": "blog",
+        "title": "Your Next Project Status Report Tool Isn't a Spreadsheet",
+        "category": "Deep Insights",
+        "date": "2026-05-24",
+        "author": "Alex Mercer",
+        "excerpt": "It’s 4 PM on a Friday, and the familiar dread washes over you: the weekly status report. You spend the next hour digging through Slack threads, Jira t...",
+        "contentFile": "blog-1779627655356.md"
+    },
+    {
+        "id": "1779627627799",
+        "type": "news",
+        "title": "The New Uncharted Territories",
+        "category": "Tech Radar",
+        "date": "2026-05-24",
+        "author": "David Sterling",
+        "excerpt": "There's a peculiar whiplash that comes from watching the tech world’s ticker tape. One moment, you’re reading a wistful remembrance of a first family...",
+        "contentFile": "news-1779627627799.md"
+    },
+    {
         "id": "1779541286432",
         "type": "blog",
         "title": "How to Turn Meeting Notes into a Status Report",
