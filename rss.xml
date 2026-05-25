@@ -2,35 +2,47 @@
 <rss version="2.0">
 <channel>
   <title>Reportify AI Insights</title>
-  <link>https://www.goreportify.com</link>
+  <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Kill the Status Report: A PM’s Guide to Asynchronous Updates]]></title>
+    <link>https://goreportify.com/article-pages/blog-1779714059176.html</link>
+    <description><![CDATA[It’s 4 PM on a Friday. You’re staring at a blank document titled “Weekly Project Status Update.” Your brain is fried from a week of meetings, but you...]]></description>
+    <pubDate>Mon, 25 May 2026 13:00:59 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Billion-Dollar Answer Nobody Asked For]]></title>
+    <link>https://goreportify.com/article-pages/news-1779714026918.html</link>
+    <description><![CDATA[The new AI button sits in the corner of your document editor, pulsing softly. You click it, prompted by a tooltip promising to "summarize your text."...]]></description>
+    <pubDate>Mon, 25 May 2026 13:00:26 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Next Project Status Report Tool Isn't a Spreadsheet]]></title>
-    <link>https://www.goreportify.com/article-pages/blog-1779627655356.html</link>
+    <link>https://goreportify.com/article-pages/blog-1779627655356.html</link>
     <description><![CDATA[It’s 4 PM on a Friday, and the familiar dread washes over you: the weekly status report. You spend the next hour digging through Slack threads, Jira t...]]></description>
     <pubDate>Sun, 24 May 2026 13:00:55 GMT</pubDate>
   </item>
   <item>
     <title><![CDATA[The New Uncharted Territories]]></title>
-    <link>https://www.goreportify.com/article-pages/news-1779627627799.html</link>
+    <link>https://goreportify.com/article-pages/news-1779627627799.html</link>
     <description><![CDATA[There's a peculiar whiplash that comes from watching the tech world’s ticker tape. One moment, you’re reading a wistful remembrance of a first family...]]></description>
     <pubDate>Sun, 24 May 2026 13:00:27 GMT</pubDate>
   </item>
   <item>
     <title><![CDATA[How to Turn Meeting Notes into a Status Report]]></title>
-    <link>https://www.goreportify.com/article-pages/blog-1779541286432.html</link>
+    <link>https://goreportify.com/article-pages/blog-1779541286432.html</link>
     <description><![CDATA[You just wrapped up the weekly stakeholder sync. Your Google Doc is a chaotic mix of bullet points, half-finished sentences, direct quotes, and a remi...]]></description>
     <pubDate>Sat, 23 May 2026 13:01:26 GMT</pubDate>
   </item>
   <item>
     <title><![CDATA[Your AI Weekly Report Generator: Reclaim Your Friday]]></title>
-    <link>https://www.goreportify.com/article-pages/blog-1779454861337.html</link>
+    <link>https://goreportify.com/article-pages/blog-1779454861337.html</link>
     <description><![CDATA[It’s 4 PM on a Friday and you’re staring at a blank document titled "Weekly Status Update." You mentally scroll through Slack channels, Jira tickets,...]]></description>
     <pubDate>Fri, 22 May 2026 13:01:01 GMT</pubDate>
   </item>
   <item>
     <title><![CDATA[The Puddle and the Pink Slip]]></title>
-    <link>https://www.goreportify.com/article-pages/news-1779454830494.html</link>
+    <link>https://goreportify.com/article-pages/news-1779454830494.html</link>
     <description><![CDATA[A driverless Waymo taxi, packed with a trillion dollars of R&D, met its match this week: a puddle. The company has now paused operations in four citie...]]></description>
     <pubDate>Fri, 22 May 2026 13:00:30 GMT</pubDate>
   </item>

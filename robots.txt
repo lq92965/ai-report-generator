@@ -3,4 +3,6 @@ Allow: /
 Allow: /images/
 Allow: /content/
 Allow: /article-pages/
-Sitemap: https://www.goreportify.com/sitemap.xml
+Allow: /llms.txt
+Allow: /llms-full.txt
+Sitemap: https://goreportify.com/sitemap.xml

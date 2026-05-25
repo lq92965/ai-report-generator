@@ -1,5 +1,25 @@
 [
     {
+        "id": "1779714059176",
+        "type": "blog",
+        "title": "Kill the Status Report: A PM’s Guide to Asynchronous Updates",
+        "category": "Deep Insights",
+        "date": "2026-05-25",
+        "author": "Marcus Webb",
+        "excerpt": "It’s 4 PM on a Friday. You’re staring at a blank document titled “Weekly Project Status Update.” Your brain is fried from a week of meetings, but you...",
+        "contentFile": "blog-1779714059176.md"
+    },
+    {
+        "id": "1779714026918",
+        "type": "news",
+        "title": "The Billion-Dollar Answer Nobody Asked For",
+        "category": "Tech Radar",
+        "date": "2026-05-25",
+        "author": "Michael Chen",
+        "excerpt": "The new AI button sits in the corner of your document editor, pulsing softly. You click it, prompted by a tooltip promising to \"summarize your text.\"...",
+        "contentFile": "news-1779714026918.md"
+    },
+    {
         "id": "1779627655356",
         "type": "blog",
         "title": "Your Next Project Status Report Tool Isn't a Spreadsheet",
