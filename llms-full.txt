@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [The Exception Report: A PM's Guide to Only Updating What's Broken](https://goreportify.com/article-pages/blog-1779714059912.html)
+  - Type: Deep Insights | Date: 2026-05-25 | Author: Alex Mercer
+  - It’s 4:45 PM on a Friday. You’re staring at a blank weekly status report template. The project is fine. Not great, not terrible, just… fine. The team...
+- [The Brittle Giants of the AI Boom](https://goreportify.com/article-pages/news-1779714028477.html)
+  - Type: Tech Radar | Date: 2026-05-25 | Author: Olivia Thorne
+  - A junior developer in Austin wires up another feature. The task is to add an AI-powered summary to a new client’s customer service dashboard. He doesn...
 - [The Pre-Mortem Report: Stop Documenting Fires, Start Preventing Them](https://goreportify.com/article-pages/blog-1779627691818.html)
   - Type: Deep Insights | Date: 2026-05-24 | Author: Jessica Tran
   - It’s Tuesday morning. You open your project tracker and see the little green circle next to the “API Integration” epic. All looks good. Then a Slack m...
@@ -1643,4 +1649,4 @@
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 542 articles (292 blog + 250 news) + 8 core pages._
+_Total: 544 articles (293 blog + 251 news) + 8 core pages._

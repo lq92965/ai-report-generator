@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[The Exception Report: A PM's Guide to Only Updating What's Broken]]></title>
+    <link>https://goreportify.com/article-pages/blog-1779714059912.html</link>
+    <description><![CDATA[It’s 4:45 PM on a Friday. You’re staring at a blank weekly status report template. The project is fine. Not great, not terrible, just… fine. The team...]]></description>
+    <pubDate>Mon, 25 May 2026 13:00:59 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Brittle Giants of the AI Boom]]></title>
+    <link>https://goreportify.com/article-pages/news-1779714028477.html</link>
+    <description><![CDATA[A junior developer in Austin wires up another feature. The task is to add an AI-powered summary to a new client’s customer service dashboard. He doesn...]]></description>
+    <pubDate>Mon, 25 May 2026 13:00:28 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The Pre-Mortem Report: Stop Documenting Fires, Start Preventing Them]]></title>
     <link>https://goreportify.com/article-pages/blog-1779627691818.html</link>
     <description><![CDATA[It’s Tuesday morning. You open your project tracker and see the little green circle next to the “API Integration” epic. All looks good. Then a Slack m...]]></description>

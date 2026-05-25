@@ -1,5 +1,25 @@
 [
     {
+        "id": "1779714059912",
+        "type": "blog",
+        "title": "The Exception Report: A PM's Guide to Only Updating What's Broken",
+        "category": "Deep Insights",
+        "date": "2026-05-25",
+        "author": "Alex Mercer",
+        "excerpt": "It’s 4:45 PM on a Friday. You’re staring at a blank weekly status report template. The project is fine. Not great, not terrible, just… fine. The team...",
+        "contentFile": "blog-1779714059912.md"
+    },
+    {
+        "id": "1779714028477",
+        "type": "news",
+        "title": "The Brittle Giants of the AI Boom",
+        "category": "Tech Radar",
+        "date": "2026-05-25",
+        "author": "Olivia Thorne",
+        "excerpt": "A junior developer in Austin wires up another feature. The task is to add an AI-powered summary to a new client’s customer service dashboard. He doesn...",
+        "contentFile": "news-1779714028477.md"
+    },
+    {
         "id": "1779627691818",
         "type": "blog",
         "title": "The Pre-Mortem Report: Stop Documenting Fires, Start Preventing Them",
