@@ -536,7 +536,9 @@ function publishAndSEO(postMeta) {
     // 2. 🚀 新增：生成标准 RSS 订阅源 (供 Make.com 和 Substack 分发)
     let rss = `<?xml version="1.0" encoding="UTF-8" ?>\n<rss version="2.0">\n<channel>\n  <title>Reportify AI Insights</title>\n  <link>https://goreportify.com</link>\n  <description>Latest tech insights and PM strategies</description>\n`;
 
-    posts.forEach(p => {
+    const MAX_SITEMAP_URLS = 50; // 限制 sitemap 文章数量，避免抓取预算浪费
+    const sitemapPosts = posts.slice(0, MAX_SITEMAP_URLS);
+    sitemapPosts.forEach(p => {
         sitemap += `  <url>\n    <loc>https://goreportify.com/article-pages/${p.type}-${p.id}.html</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n`;
         
         // 转换时间格式以符合 RSS 标准
