@@ -2,197 +2,358 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Reportify Admin Console</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         .nav-item.active { background-color: #2563EB; color: white; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        .nav-item { color: #94a3b8; transition: all 0.2s; }
+        .nav-item { color: #94a3b8; transition: all 0.2s; cursor: pointer; }
         .nav-item:hover:not(.active) { background-color: #1e293b; color: white; }
         .hide-scroll::-webkit-scrollbar { width: 6px; }
         .hide-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-    
-    @media (max-width: 768px) {
-        body > div { flex-direction: column; }
-        aside { width: 100% !important; height: auto !important; min-height: auto; }
-        aside nav { display: flex; overflow-x: auto; padding-bottom: 5px; }
-        aside nav a, aside nav button { white-space: nowrap; margin-right: 10px; padding: 10px 15px; }
-        aside .p-6 { display: none; } 
-        main { width: 100% !important; padding: 10px !important; }
-        .grid { grid-template-columns: 1fr !important; }
-    }
 
-    .badge {
-        background-color: #ef4444; color: white; font-size: 0.7rem; font-weight: bold;
-        padding: 2px 6px; border-radius: 99px; display: none; line-height: 1;
-    }
+        /* Toast */
+        #toast-container { position: fixed; top: 20px; right: 20px; z-index: 10000; }
+        .toast-msg { background: white; border-left: 4px solid #10b981; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 15px; margin-bottom: 10px; min-width: 300px; animation: slideIn 0.3s ease-out; }
+        .toast-msg.error { border-left-color: #ef4444; }
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        .toast-msg.warning { border-left-color: #f59e0b; }
 
-    #toast-container { position: fixed; top: 20px; right: 20px; z-index: 10000; }
-    .toast-msg {
-        background: white; border-left: 4px solid #10b981; padding: 15px 20px; border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 15px;
-        margin-bottom: 10px; min-width: 300px; animation: slideIn 0.3s ease-out;
-    }
-    .toast-msg.error { border-left-color: #ef4444; }
-    @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        /* Badge for unread */
+        .badge { background-color: #ef4444; color: white; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 99px; display: none; line-height: 1; }
+
+        /* Sidebar - desktop */
+        @media (min-width: 769px) {
+            aside { width: 240px; }
+        }
+
+        /* Mobile bottom tab bar — 原生 App 风格 */
+        @media (max-width: 768px) {
+            body > .desktop-flex { flex-direction: column; }
+            /* 侧栏变成底部固定 Tab */
+            aside {
+                width: 100% !important; height: auto !important; min-height: 0 !important;
+                position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+                flex-direction: row !important; background: #0f172a !important;
+                border-top: 1px solid #1e293b; padding: 0 !important;
+                box-shadow: 0 -2px 12px rgba(0,0,0,0.15);
+            }
+            aside nav {
+                display: flex; flex-direction: row !important;
+                padding: 4px 0 !important; justify-content: space-around;
+                width: 100%; overflow: visible;
+            }
+            aside nav button, aside nav a {
+                white-space: nowrap; padding: 6px 4px !important;
+                font-size: 0.6rem !important; line-height: 1.1;
+                flex-direction: column !important; flex: 1; text-align: center;
+                border-radius: 0 !important; min-height: 48px;
+                display: flex; align-items: center; justify-content: center;
+                gap: 2px;
+            }
+            aside nav button i, aside nav a i {
+                font-size: 1.15rem !important; margin: 0 !important;
+                display: block;
+            }
+            aside nav button span, aside nav a span {
+                display: block; font-size: 0.6rem !important;
+            }
+            aside .sidebar-top, aside .sidebar-bottom { display: none !important; }
+            /* 主内容区给底部让位 */
+            main { width: 100% !important; padding: 10px !important; padding-bottom: 68px !important; }
+            header { padding: 0 10px !important; height: auto !important; min-height: 44px !important; }
+            header h2 { font-size: 0.95rem !important; }
+            .grid { grid-template-columns: 1fr !important; gap: 8px !important; }
+            .lg\\:col-span-2 { grid-column: span 1 !important; }
+            table { font-size: 0.7rem !important; }
+            th, td { padding: 6px 6px !important; }
+            .stat-card { padding: 10px !important; }
+            .stat-card h3 { font-size: 1.35rem !important; }
+            .stat-card p { font-size: 0.65rem !important; }
+            #reply-modal > div { margin: 8px !important; max-width: 100% !important; }
+            /* Toast 移动端适配 */
+            #toast-container { right: 10px; left: 10px; }
+            .toast-msg { min-width: 0; font-size: 0.85rem; padding: 12px 15px; }
+        }
+
+        /* Chat style for feedback */
+        .chat-bubble-user { background: #f1f5f9; border-radius: 12px 12px 12px 4px; }
+        .chat-bubble-admin { background: #2563eb; color: white; border-radius: 12px 12px 4px 12px; }
+        .chat-timestamp { font-size: 0.65rem; opacity: 0.6; }
+
+        /* Feedback card hover */
+        .feedback-card { transition: all 0.15s ease; }
+        .feedback-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .feedback-card.unread { border-left: 3px solid #2563eb; }
+
+        /* Skeleton loading */
+        .skeleton { background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 6px; }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        /* Search bar */
+        .search-input { border: 1px solid #d1d5db; border-radius: 8px; padding: 8px 12px 8px 36px; width: 100%; font-size: 0.875rem; outline: none; transition: border-color 0.2s; }
+        .search-input:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        .search-wrap { position: relative; }
+        .search-wrap i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #9ca3af; }
     </style>
     <link rel="stylesheet" href="mobile-patch.css">
     <script src="mobile-patch.js"></script>
-
-    <!-- Open Graph / Social -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.goreportify.com/admin.html" />
     <meta property="og:title" content="Reportify Admin Console" />
-    <meta property="og:description" content="Reportify AI - AI-powered report generation" />
+    <meta property="og:description" content="Reportify AI administration panel." />
     <meta property="og:image" content="https://www.goreportify.com/images/og-default.png" />
-    <meta property="og:site_name" content="Reportify AI" />
-    <meta property="og:locale" content="en_US" />
-
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Reportify Admin Console" />
-    <meta name="twitter:description" content="Reportify AI - AI-powered report generation" />
     <meta name="twitter:image" content="https://www.goreportify.com/images/og-default.png" />
-
-    <!-- Canonical -->
     <link rel="canonical" href="https://www.goreportify.com/admin.html" />
-
-
-    
-
-
     <meta name="description" content="Reportify AI administration panel." />
-        <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PX3FEY6F6"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-3PX3FEY6F6');
-    </script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3PX3FEY6F6');</script>
 </head>
 <body class="bg-gray-100 font-sans text-gray-800">
 
+    <!-- Auth Loading -->
     <div id="auth-check" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
         <div class="animate-spin text-4xl text-blue-600"><i class="fas fa-circle-notch"></i></div>
     </div>
 
-    <div class="flex h-screen overflow-hidden">
-        
-        <aside class="w-64 bg-slate-900 text-white flex-shrink-0 flex flex-col transition-all duration-300">
-            <div class="p-6 flex items-center gap-3 border-b border-slate-800">
-                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold">R</div>
-                <h1 class="text-lg font-bold tracking-wide">Reportify Admin</h1>
+    <!-- Main Layout -->
+    <div class="desktop-flex flex min-h-screen">
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="w-60 bg-slate-900 text-white flex-shrink-0 flex flex-col">
+            <!-- Top brand -->
+            <div class="sidebar-top p-5 flex items-center gap-3 border-b border-slate-800">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-sm">R</div>
+                <h1 class="font-bold tracking-wide">Reportify Admin</h1>
             </div>
-            
-            <nav class="flex-1 p-4 space-y-2 mt-4">
-                <button onclick="switchView('dashboard')" id="nav-dashboard" class="nav-item active w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left">
-                    <i class="fas fa-chart-pie w-5 text-center"></i> Dashboard
+            <!-- Nav -->
+            <nav class="flex-1 p-3 space-y-1 sidebar-nav">
+                <button onclick="switchView('dashboard')" id="nav-dashboard" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left">
+                    <i class="fas fa-chart-pie w-5 text-center"></i> <span>仪表盘</span>
                 </button>
                 <button onclick="switchView('users')" id="nav-users" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left">
-                    <i class="fas fa-users w-5 text-center"></i> Users Management
+                    <i class="fas fa-users w-5 text-center"></i> <span>用户管理</span>
                 </button>
                 <button onclick="switchView('feedback')" id="nav-feedback" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left relative">
-                    <i class="fas fa-inbox w-5 text-center"></i> Feedback & Inbox
-                    <span id="msg-badge" class="badge absolute right-4 top-3">0</span>
+                    <i class="fas fa-inbox w-5 text-center"></i> <span>反馈与收件箱</span>
+                    <span id="msg-badge" class="badge absolute right-3 top-3">0</span>
                 </button>
-                <a href="index.html" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left mt-10">
-                    <i class="fas fa-home w-5 text-center"></i> Back to Main Site
+                <button onclick="switchView('reports')" id="nav-reports" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left">
+                    <i class="fas fa-file-alt w-5 text-center"></i> <span>报告统计</span>
+                </button>
+                <button onclick="switchView('revenue')" id="nav-revenue" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left">
+                    <i class="fas fa-dollar-sign w-5 text-center"></i> <span>收入面板</span>
+                </button>
+                <a href="index.html" class="hidden md:flex nav-item w-full items-center gap-3 px-4 py-3 rounded-lg text-left mt-10">
+                    <i class="fas fa-home w-5 text-center"></i> <span>返回主站</span>
                 </a>
             </nav>
-
-            <div class="p-4 border-t border-slate-800">
-                <div class="flex items-center gap-3 px-4 py-3 mb-2">
+            <!-- Bottom user -->
+            <div class="sidebar-bottom p-4 border-t border-slate-800">
+                <div class="flex items-center gap-3 px-4 py-2 mb-2">
                     <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-xs">AD</div>
                     <div class="flex-1 min-w-0">
-                        <p class="text-sm font-medium truncate text-white">Administrator</p>
+                        <p class="text-sm font-medium truncate text-white">管理员</p>
                     </div>
                 </div>
                 <button onclick="logout()" class="w-full flex items-center justify-center gap-2 px-4 py-2 text-red-400 hover:bg-red-900/20 rounded transition text-sm">
-                    <i class="fas fa-sign-out-alt"></i> Logout
+                    <i class="fas fa-sign-out-alt"></i> 退出登录
                 </button>
             </div>
         </aside>
 
-        <div class="flex-1 flex flex-col overflow-hidden relative">
-            
-            <header class="bg-white shadow-sm h-16 flex items-center justify-between px-8 z-10">
-                <h2 class="text-xl font-bold text-gray-800" id="page-title">Dashboard Overview</h2>
-                <div class="flex items-center gap-4">
+        <!-- ===== MAIN CONTENT ===== -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header bar -->
+            <header class="bg-white shadow-sm flex items-center justify-between px-5 md:px-8 py-3 z-10">
+                <div class="flex items-center gap-3">
+                    <a href="index.html" class="md:hidden text-gray-400 hover:text-blue-600 transition text-sm flex items-center gap-1">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <h2 class="text-lg font-bold text-gray-800" id="page-title">仪表盘</h2>
+                </div>
+                <div class="flex items-center gap-3">
                     <span class="text-sm text-gray-500" id="current-date"></span>
-                    <button onclick="initData()" class="p-2 text-gray-400 hover:text-blue-600 transition" title="Refresh Data">
+                    <button onclick="initData()" class="p-2 text-gray-400 hover:text-blue-600 transition" title="刷新数据">
                         <i class="fas fa-sync-alt"></i>
                     </button>
                 </div>
             </header>
 
+            <!-- Scrollable main area -->
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-8 hide-scroll">
-                
-                <div id="view-dashboard" class="view-section animate-fade-in">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                        <div class="bg-white p-6 rounded-xl shadow-sm border-b-4 border-blue-500">
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Total Users</p>
-                            <h3 class="text-3xl font-extrabold text-gray-800 mt-2" id="stat-users">-</h3>
+                <!-- ======================== VIEW: DASHBOARD ======================== -->
+                <div id="view-dashboard" class="view-section">
+                    <!-- Stat cards -->
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                        <div class="stat-card bg-white p-5 rounded-xl shadow-sm border-b-4 border-blue-500">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">总用户</p>
+                            <h3 class="text-2xl font-extrabold text-gray-800 mt-1" id="stat-users">-</h3>
+                            <p class="text-xs text-gray-400 mt-1">Web: <span id="stat-web-users">-</span> · App: <span id="stat-app-users">-</span></p>
                         </div>
-                        <div class="bg-white p-6 rounded-xl shadow-sm border-b-4 border-green-500">
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Basic Plan ($9.9)</p>
-                            <h3 class="text-3xl font-extrabold text-gray-800 mt-2" id="stat-basic">-</h3>
+                        <div class="stat-card bg-white p-5 rounded-xl shadow-sm border-b-4 border-green-500">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">基本计划 ($9.9)</p>
+                            <h3 class="text-2xl font-extrabold text-gray-800 mt-1" id="stat-basic">-</h3>
                         </div>
-                        <div class="bg-white p-6 rounded-xl shadow-sm border-b-4 border-purple-600">
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Pro Plan ($19.9)</p>
-                            <h3 class="text-3xl font-extrabold text-gray-800 mt-2" id="stat-pros">-</h3>
+                        <div class="stat-card bg-white p-5 rounded-xl shadow-sm border-b-4 border-purple-600">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">专业计划 ($19.9)</p>
+                            <h3 class="text-2xl font-extrabold text-gray-800 mt-1" id="stat-pros">-</h3>
                         </div>
-                        <div class="bg-white p-6 rounded-xl shadow-sm border-b-4 border-yellow-500">
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Pending Feedback</p>
-                            <h3 class="text-3xl font-extrabold text-gray-800 mt-2" id="stat-unread">-</h3>
+                        <div class="stat-card bg-white p-5 rounded-xl shadow-sm border-b-4 border-yellow-500">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">待处理反馈</p>
+                            <h3 class="text-2xl font-extrabold text-gray-800 mt-1" id="stat-unread">-</h3>
+                        </div>
+                        <div class="stat-card bg-white p-5 rounded-xl shadow-sm border-b-4 border-teal-500">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">报告生成(累计)</p>
+                            <h3 class="text-2xl font-extrabold text-gray-800 mt-1" id="stat-total-reports">-</h3>
+                            <p class="text-xs text-gray-400 mt-1">今日: <span id="stat-reports-today">-</span> · 本周: <span id="stat-reports-week">-</span></p>
+                        </div>
+                        <div class="stat-card bg-white p-5 rounded-xl shadow-sm border-b-4 border-rose-500">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">总收入</p>
+                            <h3 class="text-2xl font-extrabold text-gray-800 mt-1">$<span id="stat-revenue">-</span></h3>
+                            <p class="text-xs text-gray-400 mt-1">本月: <span id="stat-revenue-month">-</span> 笔</p>
+                        </div>
+                        <div class="stat-card bg-white p-5 rounded-xl shadow-sm border-b-4 border-orange-500">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">付费用户</p>
+                            <h3 class="text-2xl font-extrabold text-gray-800 mt-1" id="stat-paid-users">-</h3>
+                            <p class="text-xs text-gray-400 mt-1">完成 <span id="stat-payments-total">-</span> 笔</p>
+                        </div>
+                        <div class="stat-card bg-white p-5 rounded-xl shadow-sm border-b-4 border-cyan-500">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Google 登录</p>
+                            <h3 class="text-2xl font-extrabold text-gray-800 mt-1" id="stat-google-users">-</h3>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="bg-white p-6 rounded-xl shadow-sm lg:col-span-1">
-                            <h3 class="font-bold text-gray-700 mb-4">User Distribution</h3>
-                            <div class="relative h-64">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- User chart -->
+                        <div class="bg-white p-5 rounded-xl shadow-sm">
+                            <h3 class="font-bold text-gray-700 mb-4">用户订阅分布</h3>
+                            <div class="relative h-56">
                                 <canvas id="userChart"></canvas>
                             </div>
                         </div>
-                        <div class="bg-white p-6 rounded-xl shadow-sm lg:col-span-2">
-                            <h3 class="font-bold text-gray-700 mb-4">Recent Feedback Activity</h3>
-                            <div id="dash-recent-list" class="space-y-3">
-                                <div class="text-gray-400 text-sm">Loading...</div>
+                        <!-- Recent feedback -->
+                        <div class="bg-white p-5 rounded-xl shadow-sm">
+                            <h3 class="font-bold text-gray-700 mb-4">最近反馈动态</h3>
+                            <div id="dash-recent-list" class="space-y-2 max-h-72 overflow-y-auto">
+                                <div class="text-gray-400 text-sm py-8 text-center">加载中...</div>
+                            </div>
+                        </div>
+                        <!-- Reg trend chart -->
+                        <div class="bg-white p-5 rounded-xl shadow-sm lg:col-span-2">
+                            <h3 class="font-bold text-gray-700 mb-4">注册趋势（最近14天）</h3>
+                            <div class="relative h-48">
+                                <canvas id="regTrendChart"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- ======================== VIEW: USERS ======================== -->
                 <div id="view-users" class="view-section hidden">
                     <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                        <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
-                            <h3 class="font-bold text-gray-800">All Registered Users</h3>
-                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full" id="user-count-badge">0</span>
+                        <div class="px-5 py-4 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <div>
+                                <h3 class="font-bold text-gray-800">所有注册用户</h3>
+                                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full mt-1 inline-block" id="user-count-badge">0 个用户</span>
+                            </div>
+                            <div class="search-wrap w-full sm:w-64">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="user-search-input" class="search-input" placeholder="搜索邮箱/名称..." oninput="debounceSearch()">
+                            </div>
                         </div>
-                        <div class="overflow-x-auto">
+                        <div class="overflow-x-auto" id="user-table-container">
                             <table class="w-full text-left text-sm">
-                                <thead class="bg-gray-50 text-gray-500 uppercase font-semibold">
+                                <thead class="bg-gray-50 text-gray-500 uppercase font-semibold text-xs">
                                     <tr>
-                                        <th class="px-6 py-4">Name</th>
-                                        <th class="px-6 py-4">Email</th>
-                                        <th class="px-6 py-4">Plan</th>
-                                        <th class="px-6 py-4">Joined Date</th>
+                                        <th class="px-5 py-3">名称</th>
+                                        <th class="px-5 py-3">邮箱</th>
+                                        <th class="px-5 py-3">套餐</th>
+                                        <th class="px-5 py-3">来源</th>
+                                        <th class="px-5 py-3">注册时间</th>
                                     </tr>
                                 </thead>
                                 <tbody id="table-users" class="divide-y divide-gray-100"></tbody>
                             </table>
                         </div>
+                        <div class="px-5 py-3 border-t border-gray-100 flex justify-between items-center text-sm text-gray-500">
+                            <span id="user-pagination-info">第 1 页</span>
+                            <div class="flex gap-2">
+                                <button onclick="loadUsers(currentUserPage - 1)" id="user-prev-btn" class="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200 disabled:opacity-40" disabled>上一页</button>
+                                <button onclick="loadUsers(currentUserPage + 1)" id="user-next-btn" class="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200 disabled:opacity-40">下一页</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- ======================== VIEW: FEEDBACK ======================== -->
                 <div id="view-feedback" class="view-section hidden">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-bold text-gray-800 text-lg">Message Inbox</h3>
+                        <h3 class="font-bold text-gray-800 text-lg">消息收件箱</h3>
+                        <div class="flex gap-2">
+                            <button onclick="filterFeedback('all')" id="filter-all" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white transition">全部</button>
+                            <button onclick="filterFeedback('unread')" id="filter-unread" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-200 text-gray-600 hover:bg-gray-300 transition">未读</button>
+                            <button onclick="filterFeedback('replied')" id="filter-replied" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-200 text-gray-600 hover:bg-gray-300 transition">已回复</button>
+                        </div>
                     </div>
-                    <div class="grid grid-cols-1 gap-4" id="feedback-grid">
+                    <div class="space-y-4" id="feedback-grid">
+                        <div class="text-gray-400 text-center py-12">加载中...</div>
+                    </div>
+                </div>
+
+                <!-- ======================== VIEW: REPORTS ======================== -->
+                <div id="view-reports" class="view-section hidden">
+                    <div class="bg-white p-5 rounded-xl shadow-sm mb-5">
+                        <h3 class="font-bold text-gray-700 mb-4">报告生成趋势（最近14天）</h3>
+                        <div class="relative h-56">
+                            <canvas id="reportTrendChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-5 rounded-xl shadow-sm text-center">
+                            <p class="text-xs font-bold text-gray-400 uppercase">总报告数</p>
+                            <h2 class="text-3xl font-extrabold text-gray-800 mt-1" id="rpt-total">-</h2>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl shadow-sm text-center">
+                            <p class="text-xs font-bold text-gray-400 uppercase">今天生成</p>
+                            <h2 class="text-3xl font-extrabold text-gray-800 mt-1" id="rpt-today">-</h2>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl shadow-sm text-center">
+                            <p class="text-xs font-bold text-gray-400 uppercase">本周生成</p>
+                            <h2 class="text-3xl font-extrabold text-gray-800 mt-1" id="rpt-week">-</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ======================== VIEW: REVENUE ======================== -->
+                <div id="view-revenue" class="view-section hidden">
+                    <div class="bg-white p-5 rounded-xl shadow-sm mb-5">
+                        <h3 class="font-bold text-gray-700 mb-4">月度收入趋势</h3>
+                        <div class="relative h-56">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-5 rounded-xl shadow-sm text-center">
+                            <p class="text-xs font-bold text-gray-400 uppercase">累计收入</p>
+                            <h2 class="text-3xl font-extrabold text-gray-800 mt-1">$<span id="rev-total">-</span></h2>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl shadow-sm text-center">
+                            <p class="text-xs font-bold text-gray-400 uppercase">总付费笔数</p>
+                            <h2 class="text-3xl font-extrabold text-gray-800 mt-1" id="rev-payments">-</h2>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl shadow-sm text-center">
+                            <p class="text-xs font-bold text-gray-400 uppercase">本月付费</p>
+                            <h2 class="text-3xl font-extrabold text-gray-800 mt-1" id="rev-month">-</h2>
+                        </div>
                     </div>
                 </div>
 
@@ -200,104 +361,147 @@
         </div>
     </div>
 
-    <div id="reply-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+    <!-- ===== REPLY MODAL ===== -->
+    <div id="reply-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg overflow-hidden transform transition-all">
             <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-                <h3 class="font-bold text-gray-700">回复用户 (Reply)</h3>
+                <h3 class="font-bold text-gray-700">回复用户</h3>
                 <button onclick="closeReplyModal()" class="text-gray-400 hover:text-red-500 text-xl">&times;</button>
             </div>
-            <div class="p-6">
-                <div class="mb-4">
-                    <span class="text-xs font-bold text-gray-500 uppercase">To User:</span>
-                    <span id="reply-target-name" class="ml-2 font-medium text-gray-800"></span>
+            <div class="p-5">
+                <div class="mb-3 flex items-center gap-2">
+                    <span class="text-xs font-bold text-gray-500 uppercase">发给:</span>
+                    <span id="reply-target-name" class="font-medium text-gray-800"></span>
+                    <span id="reply-target-email" class="text-xs text-gray-400"></span>
                 </div>
-                <textarea id="reply-content" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none h-40" placeholder="请输入您的回复内容 (将同步发送邮件)..."></textarea>
+                <textarea id="reply-content" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none h-36" placeholder="输入回复内容（将同步发送邮件通知用户）..."></textarea>
                 <input type="hidden" id="current-feedback-id">
             </div>
             <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-end gap-3">
                 <button onclick="closeReplyModal()" class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-lg text-sm transition">取消</button>
-                <button onclick="sendReply()" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm shadow hover:bg-blue-700 transition flex items-center gap-2">
+                <button onclick="sendReply()" id="send-reply-btn" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm shadow hover:bg-blue-700 transition flex items-center gap-2">
                     <i class="fas fa-paper-plane"></i> 发送回复
                 </button>
             </div>
         </div>
     </div>
 
+
+    <!-- TOAST -->
+    <div id="toast-container"></div>
+
     <script>
-        function showToast(title, message, type = 'success') {
+        // Force reload on every visit - bust service worker cache
+        (function() {
+            var sw = navigator.serviceWorker;
+            if (sw && sw.controller) {
+                sw.controller.postMessage({action: 'skipWaiting'});
+            }
+        })();
+        // === Toast ===
+        function showToast(title, message, type) {
+            type = type || 'success';
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            toast.className = `toast-msg ${type}`;
-            toast.innerHTML = `
-                <div>
-                    <div style="font-weight:bold; color:#333;">${title}</div>
-                    <div style="font-size:0.9em; color:#666;">${message}</div>
-                </div>
-            `;
+            toast.className = 'toast-msg ' + type;
+            toast.innerHTML = '<div><div style="font-weight:bold;color:#333;">' + title + '</div><div style="font-size:0.9em;color:#666;">' + message + '</div></div>';
             container.appendChild(toast);
-            setTimeout(() => { toast.remove(); }, 3000);
+            setTimeout(function() { toast.remove(); }, 3500);
         }
 
         const API_BASE = 'https://api.goreportify.com';
         const token = localStorage.getItem('token');
-
         document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
         if (!token) {
             window.location.href = './index.html?error=admin_required';
         } else {
-            setTimeout(() => document.getElementById('auth-check').style.display = 'none', 500);
+            setTimeout(function() { document.getElementById('auth-check').style.display = 'none'; }, 500);
             initData();
         }
 
+        // === Debounce for search ===
+        var searchTimer = null;
+        var currentUserPage = 1;
+        var currentSearch = '';
+
+        function debounceSearch() {
+            if (searchTimer) clearTimeout(searchTimer);
+            searchTimer = setTimeout(function() {
+                currentSearch = document.getElementById('user-search-input').value;
+                currentUserPage = 1;
+                loadUsers(1);
+            }, 400);
+        }
+
+        // === Init Data ===
         async function initData() {
             try {
-                const headers = { 'Authorization': `Bearer ${token}` };
-                
-                const [statsRes, msgsRes, usersRes] = await Promise.all([
-                    fetch(`${API_BASE}/api/admin/stats`, { headers }),
-                    fetch(`${API_BASE}/api/admin/feedbacks`, { headers }),
-                    fetch(`${API_BASE}/api/admin/users`, { headers })
+                var headers = { 'Authorization': 'Bearer ' + token };
+                var [statsRes, msgsRes, usersRes] = await Promise.all([
+                    fetch(API_BASE + '/api/admin/stats', { headers: headers }),
+                    fetch(API_BASE + '/api/admin/feedbacks', { headers: headers }),
+                    fetch(API_BASE + '/api/admin/users?page=1&limit=20', { headers: headers })
                 ]);
 
-                if (statsRes.status === 403) {
-                    alert("Access Denied: You are not an Admin.");
-                    window.location.href = './index.html';
-                    return;
-                }
+                if (statsRes.status === 403) { alert('拒绝访问：您不是管理员'); window.location.href = './index.html'; return; }
+                if (!statsRes.ok) throw new Error('后端连接失败');
 
-                if (!statsRes.ok) throw new Error("Backend Connection Failed");
+                var stats = await statsRes.json();
+                var msgs = await msgsRes.json();
+                var usersData = await usersRes.json();
 
-                const stats = await statsRes.json();
-                const msgs = await msgsRes.json();
-                const users = await usersRes.json();
+                // 兼容旧版API和新版API
+                var users = Array.isArray(usersData) ? usersData : (usersData.users || []);
 
                 renderDashboard(stats);
-                renderUserTable(users);
+                renderUserTable(users, usersData.total || users.length);
                 renderFeedbackList(msgs);
                 renderCharts(stats);
+                renderReportCharts(stats);
+                renderRevenueCharts(stats);
 
             } catch (err) {
                 console.error(err);
+                showToast('错误', '数据加载失败: ' + err.message, 'error');
             }
         }
 
+        // === Switch View ===
         window.switchView = function(viewName) {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`view-${viewName}`).classList.remove('hidden');
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            document.getElementById(`nav-${viewName}`).classList.add('active');
-            const titles = { 'dashboard': 'Dashboard Overview', 'users': 'User Database', 'feedback': 'Feedback & Inbox' };
-            document.getElementById('page-title').innerText = titles[viewName];
+            document.querySelectorAll('.view-section').forEach(function(el) { el.classList.add('hidden'); });
+            var target = document.getElementById('view-' + viewName);
+            if (target) target.classList.remove('hidden');
+            document.querySelectorAll('.nav-item').forEach(function(el) { el.classList.remove('active'); });
+            var navEl = document.getElementById('nav-' + viewName);
+            if (navEl) navEl.classList.add('active');
+            var titles = { 'dashboard': '仪表盘', 'users': '用户管理', 'feedback': '反馈与收件箱', 'reports': '报告统计', 'revenue': '收入面板' };
+            var titleEl = document.getElementById('page-title');
+            if (titleEl) titleEl.innerText = titles[viewName] || viewName;
+
+            // 进入反馈页时自动重新加载
+            if (viewName === 'feedback') initData();
         }
 
+        // === Render Dashboard ===
         function renderDashboard(data) {
-            document.getElementById('stat-users').innerText = data.users;
-            document.getElementById('stat-basic').innerText = data.basic;
-            document.getElementById('stat-pros').innerText = data.pros;
-            document.getElementById('stat-unread').innerText = data.unread;
+            var setText = function(id, val) { var el = document.getElementById(id); if (el) el.innerText = val != null ? val : '-'; };
+            setText('stat-users', data.users);
+            setText('stat-basic', data.basic);
+            setText('stat-pros', data.pros);
+            setText('stat-unread', data.unread);
+            setText('stat-total-reports', data.totalReports);
+            setText('stat-reports-today', data.reportsToday);
+            setText('stat-reports-week', data.reportsThisWeek);
+            setText('stat-web-users', data.webUsers);
+            setText('stat-app-users', data.androidUsers);
+            setText('stat-google-users', data.googleUsers);
+            setText('stat-payments-total', data.paymentsTotal);
+            setText('stat-revenue', data.revenueTotal ? data.revenueTotal.toFixed(2) : '0.00');
+            setText('stat-revenue-month', data.paymentsThisMonth);
+            setText('stat-paid-users', (data.basic || 0) + (data.pros || 0));
 
-            const badge = document.getElementById('msg-badge');
+            var badge = document.getElementById('msg-badge');
             if (data.unread > 0) {
                 badge.style.display = 'inline-block';
                 badge.innerText = data.unread > 99 ? '99+' : data.unread;
@@ -306,208 +510,358 @@
             }
         }
 
-        function renderUserTable(users) {
-            const tbody = document.getElementById('table-users');
-            tbody.innerHTML = '';
-            document.getElementById('user-count-badge').innerText = users.length;
+        // === Render User Table (支持新版分页格式) ===
+        function loadUsers(page) {
+            if (page < 1) return;
+            currentUserPage = page;
+            var search = currentSearch;
+            var headers = { 'Authorization': 'Bearer ' + token };
+            var url = API_BASE + '/api/admin/users?page=' + page + '&limit=20';
+            if (search) url += '&search=' + encodeURIComponent(search);
 
-            users.forEach(u => {
-                let badge = '<span class="px-2 py-1 rounded text-xs bg-gray-100 text-gray-500 font-bold">Free</span>';
-                if(u.plan === 'basic') badge = '<span class="px-2 py-1 rounded text-xs bg-green-100 text-green-700 font-bold">Basic</span>';
-                if(u.plan === 'pro') badge = '<span class="px-2 py-1 rounded text-xs bg-purple-100 text-purple-700 font-bold">PRO</span>';
-                
-                tbody.innerHTML += `
-                    <tr class="hover:bg-gray-50 border-b border-gray-50 last:border-0">
-                        <td class="px-6 py-4 font-medium text-gray-900">${u.name || 'User'}</td>
-                        <td class="px-6 py-4 text-gray-500">${u.email}</td>
-                        <td class="px-6 py-4">${badge}</td>
-                        <td class="px-6 py-4 text-gray-400">${new Date(u.createdAt).toLocaleDateString()}</td>
-                    </tr>
-                `;
-            });
+            fetch(url, { headers: headers })
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    var users = Array.isArray(data) ? data : (data.users || []);
+                    var total = data.total || users.length;
+                    var totalPages = data.totalPages || Math.ceil(total / 20);
+                    renderUserTable(users, total, page, totalPages);
+                })
+                .catch(function(err) {
+                    console.error(err);
+                    showToast('错误', '加载用户列表失败', 'error');
+                });
         }
 
-        function renderFeedbackList(msgs) {
-            const container = document.getElementById('feedback-grid');
-            const dashList = document.getElementById('dash-recent-list');
-            
-            container.innerHTML = '';
-            dashList.innerHTML = '';
+        function renderUserTable(users, total, page, totalPages) {
+            page = page || 1;
+            totalPages = totalPages || 1;
+            var tbody = document.getElementById('table-users');
+            tbody.innerHTML = '';
+            document.getElementById('user-count-badge').innerText = (total || users.length) + ' 个用户';
 
-            if(msgs.length === 0) {
-                container.innerHTML = '<div class="text-center py-10 text-gray-400">No feedback messages yet.</div>';
-                dashList.innerHTML = '<div class="text-center py-10 text-gray-400">Empty</div>';
+            if (!users || users.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="px-5 py-8 text-center text-gray-400">暂无用户</td></tr>';
                 return;
             }
 
-            msgs.forEach((msg, index) => {
-                const tagColor = msg.type === 'Bug' ? 'bg-red-100 text-red-800' : (msg.type === 'Priority' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800');
-                const isVIP = msg.isVIP ? '<span class="ml-2 bg-purple-100 text-purple-700 px-2 py-0.5 rounded text-xs font-bold">VIP</span>' : '';
-                
-                let chatHistoryHtml = `
-                    <div class="flex flex-col space-y-2 mb-4">
-                        <div class="flex items-start">
-                            <div class="bg-gray-100 text-gray-800 p-3 rounded-lg rounded-tl-none text-sm max-w-[85%]">
-                                <p class="font-bold text-xs text-gray-500 mb-1">User (${new Date(msg.submittedAt).toLocaleDateString()})</p>
-                                ${msg.message}
-                            </div>
-                        </div>
-                `;
+            users.forEach(function(u) {
+                var badge = '<span class="px-2 py-1 rounded text-xs bg-gray-100 text-gray-500 font-bold">免费</span>';
+                if (u.plan === 'basic') badge = '<span class="px-2 py-1 rounded text-xs bg-green-100 text-green-700 font-bold">Basic</span>';
+                if (u.plan === 'pro') badge = '<span class="px-2 py-1 rounded text-xs bg-purple-100 text-purple-700 font-bold">PRO</span>';
 
-                if (msg.reply) {
-                    chatHistoryHtml += `
-                        <div class="flex items-end justify-end mt-2">
-                            <div class="bg-blue-50 border border-blue-100 text-gray-800 p-3 rounded-lg rounded-tr-none text-sm max-w-[85%]">
-                                <p class="font-bold text-xs text-blue-500 mb-1 text-right">Admin (Old Reply)</p>
-                                ${msg.reply}
-                            </div>
-                        </div>
-                    `;
+                var source = u.registerSource || (u.authProvider === 'google' ? 'Google' : 'Web');
+                var sourceBadge = '<span class="text-xs text-gray-400">' + source + '</span>';
+
+                tbody.innerHTML += '<tr class="hover:bg-gray-50 border-b border-gray-50 last:border-0">' +
+                    '<td class="px-5 py-3 font-medium text-gray-900">' + (u.name || u.displayName || '用户') + '</td>' +
+                    '<td class="px-5 py-3 text-gray-500 text-xs">' + u.email + '</td>' +
+                    '<td class="px-5 py-3">' + badge + '</td>' +
+                    '<td class="px-5 py-3">' + sourceBadge + '</td>' +
+                    '<td class="px-5 py-3 text-gray-400 text-xs">' + (u.createdAt ? new Date(u.createdAt).toLocaleDateString() : '-') + '</td>' +
+                    '</tr>';
+            });
+
+            // Pagination
+            document.getElementById('user-pagination-info').innerText = '第 ' + page + ' / ' + totalPages + ' 页（共 ' + (total || '?') + ' 个用户）';
+            var prevBtn = document.getElementById('user-prev-btn');
+            var nextBtn = document.getElementById('user-next-btn');
+            if (prevBtn) { prevBtn.disabled = page <= 1; }
+            if (nextBtn) { nextBtn.disabled = page >= totalPages; }
+        }
+
+        // === Feedback Filter ===
+        var allMessages = [];
+        function filterFeedback(filter) {
+            var btns = ['filter-all', 'filter-unread', 'filter-replied'];
+            btns.forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) {
+                    if (id === 'filter-' + filter) { el.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white'; }
+                    else { el.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-200 text-gray-600 hover:bg-gray-300'; }
                 }
+            });
+            renderFilteredFeedback(filter);
+        }
 
-                if (msg.conversation && msg.conversation.length > 0) {
-                    msg.conversation.forEach(chat => {
-                        const isAdmin = chat.role === 'admin';
-                        const alignClass = isAdmin ? 'items-end justify-end' : 'items-start';
-                        const bubbleClass = isAdmin ? 'bg-blue-600 text-white rounded-tr-none' : 'bg-gray-100 text-gray-800 rounded-tl-none';
-                        const senderName = isAdmin ? 'Admin' : 'User';
-                        const timeStr = chat.createdAt ? new Date(chat.createdAt).toLocaleString() : '';
+        function renderFilteredFeedback(filter) {
+            var msgs = allMessages;
+            if (filter === 'unread') msgs = allMessages.filter(function(m) { return m.status === 'unread'; });
+            else if (filter === 'replied') msgs = allMessages.filter(function(m) { return m.status === 'replied'; });
+            renderFeedbackCards(msgs);
+        }
 
-                        chatHistoryHtml += `
-                            <div class="flex ${alignClass} mt-2">
-                                <div class="${bubbleClass} p-3 rounded-lg text-sm max-w-[85%] shadow-sm">
-                                    <p class="text-[10px] opacity-70 mb-1 ${isAdmin ? 'text-right' : ''}">${senderName} ${timeStr}</p>
-                                    ${chat.message}
-                                </div>
-                            </div>
-                        `;
-                    });
-                }
-                chatHistoryHtml += `</div>`; 
+        // === Render Feedback List ===
+        function renderFeedbackList(msgs) {
+            allMessages = msgs || [];
+            renderFilteredFeedback('all');
+            // Update dash recent list
+            renderDashRecent(msgs);
+        }
 
-                const actionBtn = `
-                    <button onclick="openReplyModal('${msg._id}', '${msg.name}')" class="bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-lg text-sm transition shadow-sm flex items-center gap-2">
-                        <i class="fas fa-comment-dots"></i> 回复 / 追加 (Reply)
-                    </button>
-                `;
-
-                const card = `
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
-                        <div class="flex justify-between items-start mb-4 border-b border-gray-50 pb-3">
-                            <div class="flex items-center gap-2">
-                                <span class="font-bold text-gray-800 text-lg">${msg.name}</span>
-                                ${isVIP}
-                            </div>
-                            <div class="text-right">
-                                <span class="text-xs text-gray-400 block">${msg.email}</span>
-                                <span class="${tagColor} px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide mt-1 inline-block">${msg.type || 'General'}</span>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 mb-4 max-h-80 overflow-y-auto">
-                            ${chatHistoryHtml}
-                        </div>
-
-                        <div class="flex justify-end pt-2">
-                            ${actionBtn}
-                        </div>
-                    </div>
-                `;
-                container.innerHTML += card;
-
-                if(index < 5) {
-                    dashList.innerHTML += `
-                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg text-sm border border-gray-100">
-                            <div class="flex items-center gap-3 overflow-hidden">
-                                <span class="w-2 h-2 rounded-full ${msg.type === 'Bug' ? 'bg-red-500' : 'bg-blue-500'} flex-shrink-0"></span>
-                                <span class="font-medium text-gray-700 truncate">${msg.name}</span>
-                            </div>
-                            <span class="text-xs text-gray-400 whitespace-nowrap">${new Date(msg.submittedAt).toLocaleDateString()}</span>
-                        </div>
-                    `;
-                }
+        function renderDashRecent(msgs) {
+            var dashList = document.getElementById('dash-recent-list');
+            if (!dashList) return;
+            dashList.innerHTML = '';
+            if (!msgs || msgs.length === 0) {
+                dashList.innerHTML = '<div class="text-gray-400 text-sm py-4 text-center">暂无消息</div>';
+                return;
+            }
+            var recent = msgs.slice(0, 8);
+            recent.forEach(function(msg) {
+                var dotColor = msg.type === 'Bug' ? 'bg-red-500' : (msg.status === 'unread' ? 'bg-blue-500' : 'bg-green-500');
+                dashList.innerHTML += '<div class="flex items-center justify-between p-2.5 bg-gray-50 rounded-lg text-xs border border-gray-100">' +
+                    '<div class="flex items-center gap-2 overflow-hidden">' +
+                    '<span class="w-2 h-2 rounded-full ' + dotColor + ' flex-shrink-0"></span>' +
+                    '<span class="font-medium text-gray-700 truncate">' + (msg.name || '未知') + '</span>' +
+                    '<span class="text-gray-400 truncate hidden sm:inline">' + (msg.message ? msg.message.substring(0, 30) : '') + '</span>' +
+                    '</div>' +
+                    '<span class="text-gray-400 whitespace-nowrap">' + new Date(msg.submittedAt).toLocaleDateString() + '</span>' +
+                    '</div>';
             });
         }
 
-        function openReplyModal(id, name) {
+        function renderFeedbackCards(msgs) {
+            var container = document.getElementById('feedback-grid');
+            container.innerHTML = '';
+            if (!msgs || msgs.length === 0) {
+                container.innerHTML = '<div class="text-center py-12 text-gray-400">暂无消息</div>';
+                return;
+            }
+
+            msgs.forEach(function(msg) {
+                var tagColor = msg.type === 'Bug' ? 'bg-red-100 text-red-800' : (msg.type === 'Priority' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800');
+                var isVIP = msg.isVIP ? '<span class="ml-2 bg-purple-100 text-purple-700 px-2 py-0.5 rounded text-xs font-bold">VIP</span>' : '';
+                var unreadClass = msg.status === 'unread' ? 'unread' : '';
+
+                // Build chat history
+                var chatHtml = '<div class="space-y-3">';
+                // Original message
+                chatHtml += '<div class="flex items-start">' +
+                    '<div class="chat-bubble-user p-3 max-w-[85%]">' +
+                    '<p class="font-bold text-xs text-gray-500 mb-1">' + (msg.name || '用户') + ' <span class="font-normal">' + new Date(msg.submittedAt).toLocaleDateString() + '</span></p>' +
+                    '<p class="text-sm text-gray-800">' + (msg.message || '') + '</p>' +
+                    '</div></div>';
+
+                // Old reply (if exists, without conversation)
+                if (msg.reply && (!msg.conversation || msg.conversation.length === 0)) {
+                    chatHtml += '<div class="flex items-end justify-end">' +
+                        '<div class="chat-bubble-admin p-3 max-w-[85%]">' +
+                        '<p class="font-bold text-xs text-blue-200 mb-1 text-right">管理员 <span class="font-normal">' + (msg.repliedAt ? new Date(msg.repliedAt).toLocaleDateString() : '') + '</span></p>' +
+                        '<p class="text-sm">' + msg.reply + '</p>' +
+                        '</div></div>';
+                }
+
+                // Conversation entries
+                if (msg.conversation && msg.conversation.length > 0) {
+                    msg.conversation.forEach(function(chat) {
+                        var isAdmin = chat.role === 'admin';
+                        var align = isAdmin ? 'items-end justify-end' : 'items-start';
+                        var bubble = isAdmin ? 'chat-bubble-admin' : 'chat-bubble-user';
+                        var textColor = isAdmin ? 'text-white' : 'text-gray-800';
+                        var senderLabel = isAdmin ? '管理员' : (msg.name || '用户');
+                        var timeStr = chat.createdAt ? new Date(chat.createdAt).toLocaleString() : '';
+                        chatHtml += '<div class="flex ' + align + '">' +
+                            '<div class="' + bubble + ' p-3 max-w-[85%] shadow-sm">' +
+                            '<p class="font-bold text-xs opacity-70 mb-1 ' + (isAdmin ? 'text-right text-blue-200' : 'text-gray-500') + '">' + senderLabel + ' ' + timeStr + '</p>' +
+                            '<p class="text-sm ' + textColor + '">' + (chat.message || '') + '</p>' +
+                            '</div></div>';
+                    });
+                }
+                chatHtml += '</div>';
+
+                // Action buttons
+                var actionBtn = '<button onclick="openReplyModal(\'' + msg._id + '\',\'' + (msg.name || '').replace(/'/g, "\\'") + '\',\'' + (msg.email || '').replace(/'/g, "\\'") + '\')" class="bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-lg text-sm transition shadow-sm flex items-center gap-2">' +
+                    '<i class="fas fa-comment-dots"></i> 回复</button>';
+
+                var card = '<div class="feedback-card ' + unreadClass + ' bg-white p-5 rounded-xl shadow-sm border border-gray-100">' +
+                    '<div class="flex justify-between items-start mb-3 border-b border-gray-50 pb-3">' +
+                    '<div class="flex items-center gap-2">' +
+                    '<span class="font-bold text-gray-800">' + (msg.name || '匿名') + '</span>' +
+                    (msg.status === 'unread' ? '<span class="bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded text-[10px] font-bold">新</span>' : '') +
+                    isVIP +
+                    '</div>' +
+                    '<div class="text-right">' +
+                    '<span class="text-xs text-gray-400 block">' + (msg.email || '') + '</span>' +
+                    '<span class="' + tagColor + ' px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide mt-1 inline-block">' + (msg.type || '一般') + '</span>' +
+                    '</div></div>' +
+                    '<div class="bg-slate-50 p-4 rounded-xl border border-slate-100 mb-4 max-h-80 overflow-y-auto">' +
+                    chatHtml +
+                    '</div>' +
+                    '<div class="flex justify-end pt-1">' + actionBtn + '</div>' +
+                    '</div>';
+
+                container.innerHTML += card;
+            });
+        }
+
+        // === Reply Modal ===
+        function openReplyModal(id, name, email) {
             document.getElementById('current-feedback-id').value = id;
-            document.getElementById('reply-target-name').innerText = name;
-            document.getElementById('reply-content').value = ''; 
-            document.getElementById('reply-modal').classList.remove('hidden'); 
+            document.getElementById('reply-target-name').innerText = name || '用户';
+            document.getElementById('reply-target-email').innerText = email ? '(' + email + ')' : '';
+            document.getElementById('reply-content').value = '';
+            document.getElementById('reply-modal').classList.remove('hidden');
         }
 
         function closeReplyModal() {
             document.getElementById('reply-modal').classList.add('hidden');
         }
 
-        async function sendReply() { 
-            const feedbackId = document.getElementById('current-feedback-id').value;
-            const textarea = document.querySelector('#reply-modal textarea') || document.querySelector('textarea'); 
-            const content = textarea ? textarea.value : '';
-
+        async function sendReply() {
+            var feedbackId = document.getElementById('current-feedback-id').value;
+            var content = document.getElementById('reply-content').value.trim();
             if (!feedbackId) return showToast('错误', '无法获取消息ID，请刷新重试', 'error');
             if (!content) return showToast('错误', '请输入回复内容', 'error');
 
-            const sendBtns = document.querySelectorAll('button');
-            let targetBtn = null;
-            sendBtns.forEach(btn => { if(btn.innerText.includes('发送回复')) targetBtn = btn; });
-    
-            if(targetBtn) { targetBtn.disabled = true; targetBtn.innerText = '发送中...'; }
+            var btn = document.getElementById('send-reply-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 发送中...';
 
             try {
-                const token = localStorage.getItem('token');
-                const res = await fetch('https://api.goreportify.com/api/admin/reply', {
+                var res = await fetch(API_BASE + '/api/admin/reply', {
                     method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ feedbackId, replyContent: content })
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                    body: JSON.stringify({ feedbackId: feedbackId, replyContent: content })
                 });
-
                 if (res.ok) {
-                    showToast('发送成功', '回复已送达用户邮箱及站内信！');
-                    closeReplyModal(); 
-                    initData(); 
-                    if(textarea) textarea.value = '';
+                    showToast('发送成功', '回复已送达用户邮箱！');
+                    closeReplyModal();
+                    initData();
                 } else {
-                    const errData = await res.json();
+                    var errData = await res.json();
                     showToast('发送失败', errData.error || '服务器拒绝请求', 'error');
                 }
             } catch (e) {
                 showToast('网络错误', e.message, 'error');
             } finally {
-                if(targetBtn) { targetBtn.disabled = false; targetBtn.innerText = '发送回复'; }
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 发送回复';
             }
         }
 
+        // === Charts ===
         function renderCharts(data) {
-            const ctx = document.getElementById('userChart').getContext('2d');
+            // Doughnut: User distribution
+            var ctx = document.getElementById('userChart');
+            if (!ctx) return;
+            var c = ctx.getContext('2d');
             if (window.myChart) window.myChart.destroy();
-            const free = data.users - data.basic - data.pros;
-            
-            window.myChart = new Chart(ctx, {
+            var free = data.users - data.basic - data.pros;
+            window.myChart = new Chart(c, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Free Users', 'Basic', 'Pro'],
+                    labels: ['免费用户', 'Basic', 'Pro'],
+                    datasets: [{ data: [free > 0 ? free : 0, data.basic, data.pros], backgroundColor: ['#e2e8f0', '#22c55e', '#9333ea'], borderWidth: 0 }]
+                },
+                options: { cutout: '65%', responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+
+            // Line: Registration trend
+            var ctx2 = document.getElementById('regTrendChart');
+            if (!ctx2 || !data.regTrend || data.regTrend.length === 0) return;
+            var c2 = ctx2.getContext('2d');
+            if (window.regChart) window.regChart.destroy();
+            var labels = data.regTrend.map(function(r) { return r._id.substring(5); });
+            var values = data.regTrend.map(function(r) { return r.count; });
+            window.regChart = new Chart(c2, {
+                type: 'line',
+                data: {
+                    labels: labels,
                     datasets: [{
-                        data: [free, data.basic, data.pros],
-                        backgroundColor: ['#e2e8f0', '#22c55e', '#9333ea'],
-                        borderWidth: 0
+                        label: '新注册',
+                        data: values,
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37,99,235,0.08)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 3,
+                        pointBackgroundColor: '#2563eb'
                     }]
                 },
                 options: {
-                    cutout: '70%',
-                    plugins: { legend: { position: 'bottom' } }
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
                 }
             });
         }
 
+        function renderReportCharts(data) {
+            var ctx = document.getElementById('reportTrendChart');
+            if (!ctx || !data.reportTrend || data.reportTrend.length === 0) return;
+            var c = ctx.getContext('2d');
+            if (window.reportChart) window.reportChart.destroy();
+            var labels = data.reportTrend.map(function(r) { return r._id.substring(5); });
+            var values = data.reportTrend.map(function(r) { return r.count; });
+            window.reportChart = new Chart(c, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '报告生成',
+                        data: values,
+                        backgroundColor: '#22c55e',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                }
+            });
+
+            // Stat cards
+            var setText = function(id, val) { var el = document.getElementById(id); if (el) el.innerText = val != null ? val : '-'; };
+            setText('rpt-total', data.totalReports);
+            setText('rpt-today', data.reportsToday);
+            setText('rpt-week', data.reportsThisWeek);
+        }
+
+        function renderRevenueCharts(data) {
+            var ctx = document.getElementById('revenueChart');
+            if (!ctx || !data.revenueMonthly || data.revenueMonthly.length === 0) return;
+            var c = ctx.getContext('2d');
+            if (window.revChart) window.revChart.destroy();
+            var labels = data.revenueMonthly.map(function(r) { return r._id; });
+            var values = data.revenueMonthly.map(function(r) { return r.revenue; });
+            window.revChart = new Chart(c, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '收入 ($)',
+                        data: values,
+                        backgroundColor: '#f59e0b',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { callback: function(v) { return "$" + v; } } } }
+                }
+            });
+
+            var setText = function(id, val) { var el = document.getElementById(id); if (el) el.innerText = val != null ? val : '-'; };
+            setText('rev-total', data.revenueTotal ? data.revenueTotal.toFixed(2) : '0.00');
+            setText('rev-payments', data.paymentsTotal);
+            setText('rev-month', data.paymentsThisMonth);
+        }
+
+        // === Logout ===
         window.logout = function() {
             localStorage.removeItem('token');
             window.location.href = './index.html';
         }
+
+        // Init user pagination
+        window.addEventListener('DOMContentLoaded', function() {
+            // Additional structure if needed
+        });
+
     </script>
-    <div id="toast-container"></div>
+
 </body>
 </html>

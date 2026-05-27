@@ -1076,7 +1076,7 @@ app.get('/api/auth/google/callback', async (req, res) => {
 
             const result = await db.collection('users').insertOne({ 
                 name, email: cleanEmail, picture,
-                password: null, authProvider: 'google', registerSource: req.query.native_app ? 'android' : 'web', plan: startingPlan, createdAt: new Date() 
+                password: null, authProvider: 'google', plan: startingPlan, createdAt: new Date() 
             });
             user = { _id: result.insertedId, plan: startingPlan };
         } else {
@@ -1190,7 +1190,6 @@ app.post('/api/register', async (req, res) => {
             plan: startingPlan, 
             role: 'user', usageCount: 0, bonusCredits: 0, inviteBonusCredits: initialBonus,
             referralCode: myReferralCode, referredBy: validReferredBy,
-            registerSource: req.get('X-Source') || 'web',
             registrationIp: clientIp, createdAt: new Date() 
         });
 
@@ -1963,51 +1962,18 @@ app.post('/api/admin/reply', authenticateToken, async (req, res) => {
     }
 });
 
-// Admin Expanded Stats
+// Admin Stats
 app.get('/api/admin/stats', verifyAdmin, async (req, res) => {
     try {
-        const now = new Date();
-        const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-        const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-
-        const [users, basic, pro, feedbacks, unread, totalReports, reportsToday, reportsThisWeek, androidUsers, webUsers, paymentsTotal, paymentsThisMonth, revenueTotal] = await Promise.all([
+        const [users, basic, pro, feedbacks, unread] = await Promise.all([
             db.collection('users').countDocuments(),
             db.collection('users').countDocuments({ plan: 'basic' }),
             db.collection('users').countDocuments({ plan: 'pro' }),
             db.collection('feedbacks').countDocuments(),
-            db.collection('feedbacks').countDocuments({ status: 'unread' }),
-            db.collection('reports').countDocuments(),
-            db.collection('reports').countDocuments({ createdAt: { $gte: todayStart } }),
-            db.collection('reports').countDocuments({ createdAt: { $gte: weekAgo } }),
-            db.collection('users').countDocuments({ registerSource: { $in: ['android', 'ios'] } }),
-            db.collection('users').countDocuments({ $or: [ { registerSource: 'web' }, { registerSource: { $exists: false } } ] }),
-            db.collection('payments').countDocuments({ status: 'completed' }),
-            db.collection('payments').countDocuments({ status: 'completed', date: { $gte: monthAgo } }),
-            db.collection('payments').aggregate([{ $match: { status: 'completed' } }, { $group: { _id: null, total: { $sum: '$amount' } } }]).toArray()
+            db.collection('feedbacks').countDocuments({ status: 'unread' })
         ]);
-
-        const regTrend = await db.collection('users').aggregate([
-            { $match: { createdAt: { $gte: new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000) } } },
-            { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
-            { $sort: { _id: 1 } }
-        ]).toArray();
-
-        const reportTrend = await db.collection('reports').aggregate([
-            { $match: { createdAt: { $gte: new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000) } } },
-            { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } }, count: { $sum: 1 } } },
-            { $sort: { _id: 1 } }
-        ]).toArray();
-
-        const sixMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 5, 1);
-        const revenueMonthly = await db.collection('payments').aggregate([
-            { $match: { status: 'completed', date: { $gte: sixMonthsAgo } } },
-            { $group: { _id: { $dateToString: { format: '%Y-%m', date: '$date' } }, revenue: { $sum: '$amount' }, count: { $sum: 1 } } },
-            { $sort: { _id: 1 } }
-        ]).toArray();
-
-        res.json({ users, basic, pros: pro, feedbacks, unread, totalReports, reportsToday, reportsThisWeek, androidUsers, webUsers, paymentsTotal, paymentsThisMonth, revenueTotal: revenueTotal.length > 0 ? revenueTotal[0].total : 0, regTrend, reportTrend, revenueMonthly });
-    } catch (e) { console.error('Admin Stats Error:', e); res.status(500).json({ message: "Error" }); }
+        res.json({ users, basic, pros: pro, feedbacks, unread });
+    } catch (e) { res.status(500).json({ message: "Error" }); }
 });
 
 // Admin Feedbacks
@@ -2016,23 +1982,10 @@ app.get('/api/admin/feedbacks', verifyAdmin, async (req, res) => {
     res.json(msgs);
 });
 
-// Admin Users (支持搜索与翻页)
+// Admin Users
 app.get('/api/admin/users', verifyAdmin, async (req, res) => {
-    try {
-        const page = Math.max(1, parseInt(req.query.page) || 1);
-        const limit = Math.min(100, Math.max(1, parseInt(req.query.limit) || 20));
-        const search = (req.query.search || '').trim();
-        let filter = {};
-        if (search) {
-            const safe = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            filter = { $or: [ { email: new RegExp(safe, 'i') }, { name: new RegExp(safe, 'i') }, { displayName: new RegExp(safe, 'i') } ] };
-        }
-        const [total, users] = await Promise.all([
-            db.collection('users').countDocuments(filter),
-            db.collection('users').find(filter, { projection: { password: 0 } }).sort({ createdAt: -1 }).skip((page - 1) * limit).limit(limit).toArray()
-        ]);
-        res.json({ users, total, page, limit, totalPages: Math.ceil(total / limit) });
-    } catch (e) { console.error('Admin Users Error:', e); res.status(500).json({ message: "Error" }); }
+    const users = await db.collection('users').find({}, { projection: { password: 0 } }).sort({ createdAt: -1 }).limit(20).toArray();
+    res.json(users);
 });
 
 // Get User History

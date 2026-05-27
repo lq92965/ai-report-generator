@@ -1,5 +1,5 @@
 /* Service Worker — Reportify PWA (cache shell + offline fallback) */
-const CACHE_NAME = 'reportify-pwa-v29-ppt-clean-footer';
+const CACHE_NAME = 'reportify-pwa-v30-admin-bypass';
 const PRECACHE_URLS = [
   './',
   './index.html',
@@ -48,6 +48,12 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
+
+  // 🚫 管理后台页面不走缓存，始终从网络加载
+  if (url.pathname.startsWith('/admin') || url.pathname.startsWith('/admin-panel') || url.pathname.startsWith('/admin-v2')) {
+    event.respondWith(fetch(req).catch(() => caches.match('./index.html')));
+    return;
+  }
 
   event.respondWith(
     fetch(req)

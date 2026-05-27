@@ -1,5 +1,25 @@
 [
     {
+        "id": "1779886864239",
+        "type": "blog",
+        "title": "Your Report Failed the \"So What?\" Test",
+        "category": "Deep Insights",
+        "date": "2026-05-27",
+        "author": "Marcus Webb",
+        "excerpt": "It’s Tuesday morning. You hit send on your weekly project status report. It’s packed with data: user engagement is up 3%, sprint velocity is steady at...",
+        "contentFile": "blog-1779886864239.md"
+    },
+    {
+        "id": "1779886831199",
+        "type": "news",
+        "title": "Building on Borrowed Intelligence",
+        "category": "Tech Radar",
+        "date": "2026-05-27",
+        "author": "Alex Mercer",
+        "excerpt": "The scene repeats itself in thousands of startups every night. A founder, lit by the blue glow of a monitor, isn’t checking sales figures or user enga...",
+        "contentFile": "news-1779886831199.md"
+    },
+    {
         "id": "1779800458382",
         "type": "blog",
         "title": "Your RAG Status Report is a Lie",

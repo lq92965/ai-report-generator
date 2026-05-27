@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Report Failed the "So What?" Test](https://goreportify.com/article-pages/blog-1779886864239.html)
+  - Type: Deep Insights | Date: 2026-05-27 | Author: Marcus Webb
+  - It’s Tuesday morning. You hit send on your weekly project status report. It’s packed with data: user engagement is up 3%, sprint velocity is steady at...
+- [Building on Borrowed Intelligence](https://goreportify.com/article-pages/news-1779886831199.html)
+  - Type: Tech Radar | Date: 2026-05-27 | Author: Alex Mercer
+  - The scene repeats itself in thousands of startups every night. A founder, lit by the blue glow of a monitor, isn’t checking sales figures or user enga...
 - [Your RAG Status Report is a Lie](https://goreportify.com/article-pages/blog-1779800458382.html)
   - Type: Deep Insights | Date: 2026-05-26 | Author: David Sterling
   - It’s Monday morning. You’re in the weekly leadership review, and the project status slide comes up. It’s a sea of reassuring green dots. One project,...
@@ -1625,4 +1631,4 @@
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 536 articles (289 blog + 247 news) + 8 core pages._
+_Total: 538 articles (290 blog + 248 news) + 8 core pages._
