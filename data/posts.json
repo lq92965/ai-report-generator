@@ -1,5 +1,25 @@
 [
     {
+        "id": "1779973258752",
+        "type": "blog",
+        "title": "Let an AI Write Your First PRD Draft",
+        "category": "Deep Insights",
+        "date": "2026-05-28",
+        "author": "Sarah Jenkins",
+        "excerpt": "The cursor blinks. A fresh Google Doc, pristine and intimidating. You have to write the Product Requirements Document for the next big feature. You’ve...",
+        "contentFile": "blog-1779973258752.md"
+    },
+    {
+        "id": "1779973231873",
+        "type": "news",
+        "title": "The Reckoning in the Code",
+        "category": "Tech Radar",
+        "date": "2026-05-28",
+        "author": "Jessica Tran",
+        "excerpt": "The demo looked fantastic. In a conference room on the 27th floor, the Chief Technology Officer showed a slide, then a video: the company’s staid ente...",
+        "contentFile": "news-1779973231873.md"
+    },
+    {
         "id": "1779886864239",
         "type": "blog",
         "title": "Your Report Failed the \"So What?\" Test",

@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Let an AI Write Your First PRD Draft](https://goreportify.com/article-pages/blog-1779973258752.html)
+  - Type: Deep Insights | Date: 2026-05-28 | Author: Sarah Jenkins
+  - The cursor blinks. A fresh Google Doc, pristine and intimidating. You have to write the Product Requirements Document for the next big feature. You’ve...
+- [The Reckoning in the Code](https://goreportify.com/article-pages/news-1779973231873.html)
+  - Type: Tech Radar | Date: 2026-05-28 | Author: Jessica Tran
+  - The demo looked fantastic. In a conference room on the 27th floor, the Chief Technology Officer showed a slide, then a video: the company’s staid ente...
 - [Your Report Failed the "So What?" Test](https://goreportify.com/article-pages/blog-1779886864239.html)
   - Type: Deep Insights | Date: 2026-05-27 | Author: Marcus Webb
   - It’s Tuesday morning. You hit send on your weekly project status report. It’s packed with data: user engagement is up 3%, sprint velocity is steady at...
@@ -1631,4 +1637,4 @@
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 538 articles (290 blog + 248 news) + 8 core pages._
+_Total: 540 articles (291 blog + 249 news) + 8 core pages._

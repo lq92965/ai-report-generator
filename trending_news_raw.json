@@ -1,32 +1,32 @@
 [
   {
-    "title": "Tech CEOs are apparently suffering from AI psychosis",
-    "link": "https://techcrunch.com/2026/05/27/tech-ceos-are-apparently-suffering-from-ai-psychosis/",
-    "pubDate": "Wed, 27 May 2026 12:30:00 +0000",
-    "snippet": "\"CEOs are uniquely prone to AI psychosis,\" Box CEO Aaron Levie opines. Maybe that explains the almost religious belief in AI productivity gains."
+    "title": "Five frontier LLMs disagree on 67% of 1k real-world fact-check claims",
+    "link": "https://lenz.io/research/llm-disagreement",
+    "pubDate": "Thu, 28 May 2026 12:20:19 +0000",
+    "snippet": "Article URL: https://lenz.io/research/llm-disagreement\nComments URL: https://news.ycombinator.com/item?id=48307887\nPoints: 66\n# Comments: 29"
   },
   {
-    "title": "Robinhood now lets your AI agents trade stocks",
-    "link": "https://techcrunch.com/2026/05/27/robinhood-now-lets-your-ai-agents-trade-stocks/",
-    "pubDate": "Wed, 27 May 2026 12:30:00 +0000",
-    "snippet": "Robinhood will let users create a separate account with pre-loaded balance that an agent use to trade"
+    "title": "Oura unveils its Ring 5 with a thinner, lighter design starting at $399",
+    "link": "https://techcrunch.com/2026/05/28/oura-unveils-its-ring-5-with-a-thinner-lighter-design-starting-at-399/",
+    "pubDate": "Thu, 28 May 2026 12:00:00 +0000",
+    "snippet": "The ring is 40% smaller than its predecessor, and comes with more accurate sensing, enhanced battery life, and more."
   },
   {
-    "title": "Incident with Pull Requests, Issues, Git Operations and API Requests",
-    "link": "https://www.githubstatus.com/incidents/xy1tt3hs572m",
-    "pubDate": "Wed, 27 May 2026 12:15:14 +0000",
-    "snippet": "Article URL: https://www.githubstatus.com/incidents/xy1tt3hs572m\nComments URL: https://news.ycombinator.com/item?id=48293080\nPoints: 77\n# Comments: 39"
+    "title": "Commission fines Temu €200M for breaching the Digital Services Act",
+    "link": "https://ec.europa.eu/commission/presscorner/home/en",
+    "pubDate": "Thu, 28 May 2026 10:57:34 +0000",
+    "snippet": "Article URL: https://ec.europa.eu/commission/presscorner/home/en\nComments URL: https://news.ycombinator.com/item?id=48307237\nPoints: 40\n# Comments: 22"
   },
   {
-    "title": "XLIDE: VBA without excel",
-    "link": "https://github.com/WilliamSmithEdward/xlide_vscode",
-    "pubDate": "Wed, 27 May 2026 12:08:18 +0000",
-    "snippet": "Article URL: https://github.com/WilliamSmithEdward/xlide_vscode\nComments URL: https://news.ycombinator.com/item?id=48293014\nPoints: 4\n# Comments: 0"
+    "title": "AMD pulls a bait-and-switch on Linux users with Vivado licensing changes",
+    "link": "https://itsfoss.com/news/amd-vivado-bait-and-switch-on-linux-users/",
+    "pubDate": "Thu, 28 May 2026 10:56:55 +0000",
+    "snippet": "Article URL: https://itsfoss.com/news/amd-vivado-bait-and-switch-on-linux-users/\nComments URL: https://news.ycombinator.com/item?id=48307231\nPoints: 125\n# Comments: 55"
   },
   {
-    "title": "Private Equity Bought America's Essential Services",
-    "link": "https://rubbishtalk.com/economy/how-private-equity-bought-americas-essential-services/",
-    "pubDate": "Wed, 27 May 2026 12:00:53 +0000",
-    "snippet": "Article URL: https://rubbishtalk.com/economy/how-private-equity-bought-americas-essential-services/\nComments URL: https://news.ycombinator.com/item?id=48292941\nPoints: 30\n# Comments: 6"
+    "title": "Vertu wants CEOs to run companies from an AI foldable starting at $6,880",
+    "link": "https://techcrunch.com/2026/05/28/vertu-wants-ceos-to-run-companies-from-an-ai-foldable-starting-at-6880/",
+    "pubDate": "Thu, 28 May 2026 07:00:00 +0000",
+    "snippet": "Built on top of the open-source Hermes project, Vertu's new foldable combines AI-agent workflows, enterprise integrations, and ultra-premium luxury finishes."
   }
 ]
