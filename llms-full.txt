@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your AI Prompts Are Too Vague: A PM's Guide to Getting Better Results](https://goreportify.com/article-pages/blog-1780059667490.html)
+  - Type: Deep Insights | Date: 2026-05-29 | Author: Michael Chen
+  - You stare at the screen. The AI-generated user story is a mess of generic business jargon. It’s technically correct, but completely useless. It has no...
+- [The Two Churches of Artificial Intelligence](https://goreportify.com/article-pages/news-1780059634187.html)
+  - Type: Tech Radar | Date: 2026-05-29 | Author: Alex Mercer
+  - The demonstration is always clean. A developer types a few lines of Python, makes an API call to a San Francisco server, and a perfectly formed block...
 - [Let an AI Write Your First PRD Draft](https://goreportify.com/article-pages/blog-1779973258752.html)
   - Type: Deep Insights | Date: 2026-05-28 | Author: Sarah Jenkins
   - The cursor blinks. A fresh Google Doc, pristine and intimidating. You have to write the Product Requirements Document for the next big feature. You’ve...
@@ -1637,4 +1643,4 @@
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 540 articles (291 blog + 249 news) + 8 core pages._
+_Total: 542 articles (292 blog + 250 news) + 8 core pages._

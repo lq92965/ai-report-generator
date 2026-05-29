@@ -1,5 +1,25 @@
 [
     {
+        "id": "1780059667490",
+        "type": "blog",
+        "title": "Your AI Prompts Are Too Vague: A PM's Guide to Getting Better Results",
+        "category": "Deep Insights",
+        "date": "2026-05-29",
+        "author": "Michael Chen",
+        "excerpt": "You stare at the screen. The AI-generated user story is a mess of generic business jargon. It’s technically correct, but completely useless. It has no...",
+        "contentFile": "blog-1780059667490.md"
+    },
+    {
+        "id": "1780059634187",
+        "type": "news",
+        "title": "The Two Churches of Artificial Intelligence",
+        "category": "Tech Radar",
+        "date": "2026-05-29",
+        "author": "Alex Mercer",
+        "excerpt": "The demonstration is always clean. A developer types a few lines of Python, makes an API call to a San Francisco server, and a perfectly formed block...",
+        "contentFile": "news-1780059634187.md"
+    },
+    {
         "id": "1779973258752",
         "type": "blog",
         "title": "Let an AI Write Your First PRD Draft",
