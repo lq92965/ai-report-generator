@@ -1,5 +1,25 @@
 [
     {
+        "id": "1780146058641",
+        "type": "blog",
+        "title": "My Report Went Into a Black Hole. Now What?",
+        "category": "Deep Insights",
+        "date": "2026-05-30",
+        "author": "Olivia Thorne",
+        "excerpt": "You spent two hours on it. You polished the metrics, clarified the risks, and even found the perfect GIF for the team shout-out. You hit \"send\" on the...",
+        "contentFile": "blog-1780146058641.md"
+    },
+    {
+        "id": "1780146031340",
+        "type": "news",
+        "title": "The Race to Zero in the AI Cloud",
+        "category": "Tech Radar",
+        "date": "2026-05-30",
+        "author": "Olivia Thorne",
+        "excerpt": "A few years ago, a startup’s pitch deck would lead with the name of the large language model they had exclusive access to. It was a badge of honor, a...",
+        "contentFile": "news-1780146031340.md"
+    },
+    {
         "id": "1780059667490",
         "type": "blog",
         "title": "Your AI Prompts Are Too Vague: A PM's Guide to Getting Better Results",
