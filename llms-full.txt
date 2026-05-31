@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Execs Aren't Reading Your Reports. Write for the Skim.](https://goreportify.com/article-pages/blog-1780232466096.html)
+  - Type: Deep Insights | Date: 2026-05-31 | Author: Olivia Thorne
+  - It’s Tuesday morning. You’re in the weekly leadership sync. The VP of Sales clears his throat and asks, "So, what’s the latest on Project Chimera? Are...
+- [An Economy Built on Someone Else's API](https://goreportify.com/article-pages/news-1780232439413.html)
+  - Type: Tech Radar | Date: 2026-05-31 | Author: Olivia Thorne
+  - The pitch deck glows on the conference room screen. A founder, sharp and confident, walks the venture capitalists through the architecture. He doesn’t...
 - [My Report Went Into a Black Hole. Now What?](https://goreportify.com/article-pages/blog-1780146058641.html)
   - Type: Deep Insights | Date: 2026-05-30 | Author: Olivia Thorne
   - You spent two hours on it. You polished the metrics, clarified the risks, and even found the perfect GIF for the team shout-out. You hit "send" on the...
@@ -1649,4 +1655,4 @@
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 544 articles (293 blog + 251 news) + 8 core pages._
+_Total: 546 articles (294 blog + 252 news) + 8 core pages._

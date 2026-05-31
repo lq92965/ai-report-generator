@@ -1,5 +1,25 @@
 [
     {
+        "id": "1780232466096",
+        "type": "blog",
+        "title": "Your Execs Aren't Reading Your Reports. Write for the Skim.",
+        "category": "Deep Insights",
+        "date": "2026-05-31",
+        "author": "Olivia Thorne",
+        "excerpt": "It’s Tuesday morning. You’re in the weekly leadership sync. The VP of Sales clears his throat and asks, \"So, what’s the latest on Project Chimera? Are...",
+        "contentFile": "blog-1780232466096.md"
+    },
+    {
+        "id": "1780232439413",
+        "type": "news",
+        "title": "An Economy Built on Someone Else's API",
+        "category": "Tech Radar",
+        "date": "2026-05-31",
+        "author": "Olivia Thorne",
+        "excerpt": "The pitch deck glows on the conference room screen. A founder, sharp and confident, walks the venture capitalists through the architecture. He doesn’t...",
+        "contentFile": "news-1780232439413.md"
+    },
+    {
         "id": "1780146058641",
         "type": "blog",
         "title": "My Report Went Into a Black Hole. Now What?",
