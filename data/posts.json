@@ -1,5 +1,25 @@
 [
     {
+        "id": "1780318870178",
+        "type": "blog",
+        "title": "Your Director Thinks Your Project is Fine. It's Not. Here's the Conversation to Have.",
+        "category": "Deep Insights",
+        "date": "2026-06-01",
+        "author": "David Sterling",
+        "excerpt": "You’re in your weekly 1:1. Your director scans their notes and says, \"Looks like the Phoenix project is tracking green. Great work.\"\n\nYour stomach sin...",
+        "contentFile": "blog-1780318870178.md"
+    },
+    {
+        "id": "1780318839644",
+        "type": "news",
+        "title": "Your AI Feature Runs on a Handshake Deal",
+        "category": "Tech Radar",
+        "date": "2026-06-01",
+        "author": "Olivia Thorne",
+        "excerpt": "The Slack channel was full of rocket emojis. A small team at a well-funded startup had just pushed a new feature, a clever AI assistant that summarize...",
+        "contentFile": "news-1780318839644.md"
+    },
+    {
         "id": "1780232466096",
         "type": "blog",
         "title": "Your Execs Aren't Reading Your Reports. Write for the Skim.",
