@@ -1,5 +1,25 @@
 [
     {
+        "id": "1780405311094",
+        "type": "blog",
+        "title": "Your Status Update is Just Noise. Connect it to the P&L.",
+        "category": "Deep Insights",
+        "date": "2026-06-02",
+        "author": "Alex Mercer",
+        "excerpt": "I once spent two hours every Friday crafting the perfect weekly status report. It had everything: tickets closed, burndown charts, a list of every fea...",
+        "contentFile": "blog-1780405311094.md"
+    },
+    {
+        "id": "1780405282946",
+        "type": "news",
+        "title": "The Magic Is Now Table Stakes",
+        "category": "Tech Radar",
+        "date": "2026-06-02",
+        "author": "Jessica Tran",
+        "excerpt": "A year ago, a startup could walk into a Sand Hill Road office, say \"we put a GPT-4 wrapper on it,\" and walk out with a check. The \"it\" barely mattered...",
+        "contentFile": "news-1780405282946.md"
+    },
+    {
         "id": "1780318870178",
         "type": "blog",
         "title": "Your Director Thinks Your Project is Fine. It's Not. Here's the Conversation to Have.",

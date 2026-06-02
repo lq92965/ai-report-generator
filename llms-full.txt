@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Status Update is Just Noise. Connect it to the P&L.](https://goreportify.com/article-pages/blog-1780405311094.html)
+  - Type: Deep Insights | Date: 2026-06-02 | Author: Alex Mercer
+  - I once spent two hours every Friday crafting the perfect weekly status report. It had everything: tickets closed, burndown charts, a list of every fea...
+- [The Magic Is Now Table Stakes](https://goreportify.com/article-pages/news-1780405282946.html)
+  - Type: Tech Radar | Date: 2026-06-02 | Author: Jessica Tran
+  - A year ago, a startup could walk into a Sand Hill Road office, say "we put a GPT-4 wrapper on it," and walk out with a check. The "it" barely mattered...
 - [Your Director Thinks Your Project is Fine. It's Not. Here's the Conversation to Have.](https://goreportify.com/article-pages/blog-1780318870178.html)
   - Type: Deep Insights | Date: 2026-06-01 | Author: David Sterling
   - You’re in your weekly 1:1. Your director scans their notes and says, "Looks like the Phoenix project is tracking green. Great work."
@@ -1663,4 +1669,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 548 articles (295 blog + 253 news) + 8 core pages._
+_Total: 550 articles (296 blog + 254 news) + 8 core pages._
