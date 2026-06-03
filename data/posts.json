@@ -1,5 +1,25 @@
 [
     {
+        "id": "1780491678884",
+        "type": "blog",
+        "title": "Your Roadmap Is a Wishlist, Not a Strategy",
+        "category": "Deep Insights",
+        "date": "2026-06-03",
+        "author": "Olivia Thorne",
+        "excerpt": "I sat in the quarterly review, watching the VP of Sales’s eyes glaze over. The product manager on stage was walking through a beautiful Gantt chart, a...",
+        "contentFile": "blog-1780491678884.md"
+    },
+    {
+        "id": "1780491649622",
+        "type": "news",
+        "title": "The Amnesiac in the Machine",
+        "category": "Tech Radar",
+        "date": "2026-06-03",
+        "author": "Sarah Jenkins",
+        "excerpt": "You’re thirty minutes into a planning session with your new AI assistant. You’ve outlined the project goals, the key stakeholders, and the target Q3 l...",
+        "contentFile": "news-1780491649622.md"
+    },
+    {
         "id": "1780405311094",
         "type": "blog",
         "title": "Your Status Update is Just Noise. Connect it to the P&L.",

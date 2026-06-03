@@ -1,20 +1,32 @@
 [
   {
-    "title": "ZeroDrift raises $10 million to protect AI models from themselves",
-    "link": "https://techcrunch.com/2026/06/02/zerodrift-raises-10-million-to-protect-ai-models-from-themselves/",
-    "pubDate": "Tue, 02 Jun 2026 12:32:59 +0000",
-    "snippet": "A new AI compliance service sits between AI models and end users to flag and replace any messages that might present a compliance problem."
+    "title": "Bun Has Been Converted to Rust. Now What?",
+    "link": "https://bytecode.news/posts/2026/06/bun-has-been-converted-to-rust-now-what",
+    "pubDate": "Wed, 03 Jun 2026 12:20:38 +0000",
+    "snippet": "Article URL: https://bytecode.news/posts/2026/06/bun-has-been-converted-to-rust-now-what\nComments URL: https://news.ycombinator.com/item?id=48383018\nPoints: 26\n# Comments: 16"
   },
   {
-    "title": "Rocket engine startup Impulse raises $500 million to hire people, not AI",
-    "link": "https://techcrunch.com/2026/06/02/rocket-engine-startup-impulse-raises-500-million-to-hire-people-not-ai/",
-    "pubDate": "Tue, 02 Jun 2026 12:00:00 +0000",
-    "snippet": "Engineering physical systems still depends on human talent, according to Impulse Space president Eric Romo."
+    "title": "Piramidal (YC W24) – Software Engineers – NYC Onsite",
+    "link": "https://news.ycombinator.com/item?id=48382853",
+    "pubDate": "Wed, 03 Jun 2026 12:00:18 +0000",
+    "snippet": "Comments URL: https://news.ycombinator.com/item?id=48382853\nPoints: 0\n# Comments: 0"
   },
   {
-    "title": "Pacific Fusion’s latest prototype packs 440 gigawatts into an 80-nanosecond burst",
-    "link": "https://techcrunch.com/2026/06/02/pacific-fusions-latest-prototype-packs-440-gigawatts-into-an-80-nanosecond-burst/",
-    "pubDate": "Tue, 02 Jun 2026 11:00:00 +0000",
-    "snippet": "Pacific Fusion's sub-scale prototype delivered enormous amounts of power in a flash, setting the company up for its demonstration power plant."
+    "title": "Every Byte Matters",
+    "link": "https://fzakaria.com/2026/06/01/every-byte-matters",
+    "pubDate": "Wed, 03 Jun 2026 11:04:04 +0000",
+    "snippet": "Article URL: https://fzakaria.com/2026/06/01/every-byte-matters\nComments URL: https://news.ycombinator.com/item?id=48382382\nPoints: 68\n# Comments: 18"
+  },
+  {
+    "title": "The world’s largest privately owned laser just turned on",
+    "link": "https://techcrunch.com/2026/06/03/the-worlds-largest-privately-owned-laser-just-turned-on/",
+    "pubDate": "Wed, 03 Jun 2026 10:00:00 +0000",
+    "snippet": "Fusion startup Xcimer fired up the world's largest privately owned laser."
+  },
+  {
+    "title": "Squishmallows, dentures, and an ‘I Heart Hot Dads’ bag: Uber has found thousands of items left in robotaxis",
+    "link": "https://techcrunch.com/2026/06/02/squishmallows-dentures-and-an-i-heart-hot-dads-bag-uber-has-found-thousands-of-items-left-in-robotaxis/",
+    "pubDate": "Tue, 02 Jun 2026 23:25:20 +0000",
+    "snippet": "Even in a future of robot taxis, someone still has to return the things passengers leave behind."
   }
 ]

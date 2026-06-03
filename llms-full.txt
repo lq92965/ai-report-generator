@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Roadmap Is a Wishlist, Not a Strategy](https://goreportify.com/article-pages/blog-1780491678884.html)
+  - Type: Deep Insights | Date: 2026-06-03 | Author: Olivia Thorne
+  - I sat in the quarterly review, watching the VP of Sales’s eyes glaze over. The product manager on stage was walking through a beautiful Gantt chart, a...
+- [The Amnesiac in the Machine](https://goreportify.com/article-pages/news-1780491649622.html)
+  - Type: Tech Radar | Date: 2026-06-03 | Author: Sarah Jenkins
+  - You’re thirty minutes into a planning session with your new AI assistant. You’ve outlined the project goals, the key stakeholders, and the target Q3 l...
 - [Your Status Update is Just Noise. Connect it to the P&L.](https://goreportify.com/article-pages/blog-1780405311094.html)
   - Type: Deep Insights | Date: 2026-06-02 | Author: Alex Mercer
   - I once spent two hours every Friday crafting the perfect weekly status report. It had everything: tickets closed, burndown charts, a list of every fea...
@@ -1669,4 +1675,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 550 articles (296 blog + 254 news) + 8 core pages._
+_Total: 552 articles (297 blog + 255 news) + 8 core pages._
