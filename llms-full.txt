@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Stop Saying 'Technical Debt'. Frame It As a Product Risk.](https://goreportify.com/article-pages/blog-1780664461107.html)
+  - Type: Deep Insights | Date: 2026-06-05 | Author: Michael Chen
+  - You’re in the Q3 planning meeting. Everything is going fine until an engineering lead clears their throat. "We need to address our technical debt. We...
+- [The Ghost in the Machine Is a Person](https://goreportify.com/article-pages/news-1780664429986.html)
+  - Type: Tech Radar | Date: 2026-06-05 | Author: Michael Chen
+  - The demo is always slick. A chatbot writes a flawless sonnet, a summary of a dense legal document appears in a flash, a line of code autocompletes wit...
 - [The One-Pager Is Your Most Important Product. Don't Ship a Bad One.](https://goreportify.com/article-pages/blog-1780578069770.html)
   - Type: Deep Insights | Date: 2026-06-04 | Author: Marcus Webb
   - You’ve seen it happen. The PM shares their screen. Up comes a wall of text—a "one-pager" that's actually three pages of dense paragraphs, vague...
@@ -1681,4 +1687,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 554 articles (298 blog + 256 news) + 8 core pages._
+_Total: 556 articles (299 blog + 257 news) + 8 core pages._

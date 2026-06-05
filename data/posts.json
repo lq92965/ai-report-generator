@@ -1,5 +1,25 @@
 [
     {
+        "id": "1780664461107",
+        "type": "blog",
+        "title": "Stop Saying 'Technical Debt'. Frame It As a Product Risk.",
+        "category": "Deep Insights",
+        "date": "2026-06-05",
+        "author": "Michael Chen",
+        "excerpt": "You’re in the Q3 planning meeting. Everything is going fine until an engineering lead clears their throat. \"We need to address our technical debt. We...",
+        "contentFile": "blog-1780664461107.md"
+    },
+    {
+        "id": "1780664429986",
+        "type": "news",
+        "title": "The Ghost in the Machine Is a Person",
+        "category": "Tech Radar",
+        "date": "2026-06-05",
+        "author": "Michael Chen",
+        "excerpt": "The demo is always slick. A chatbot writes a flawless sonnet, a summary of a dense legal document appears in a flash, a line of code autocompletes wit...",
+        "contentFile": "news-1780664429986.md"
+    },
+    {
         "id": "1780578069770",
         "type": "blog",
         "title": "The One-Pager Is Your Most Important Product. Don't Ship a Bad One.",
