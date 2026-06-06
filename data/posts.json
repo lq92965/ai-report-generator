@@ -1,5 +1,25 @@
 [
     {
+        "id": "1780750857365",
+        "type": "blog",
+        "title": "The 'No' Is Not Enough: Give Them a Better 'Yes' Instead",
+        "category": "Deep Insights",
+        "date": "2026-06-06",
+        "author": "Jessica Tran",
+        "excerpt": "The VP of Sales catches you on Slack. \"Quick question,\" the message begins, and your stomach tightens. \"Could we add a button to the dashboard that ex...",
+        "contentFile": "blog-1780750857365.md"
+    },
+    {
+        "id": "1780750833474",
+        "type": "news",
+        "title": "The Fine-Tuning Treadmill",
+        "category": "Tech Radar",
+        "date": "2026-06-06",
+        "author": "Olivia Thorne",
+        "excerpt": "The engineering team celebrated with pizza and warm beer. For three months, they had lived in a world of curated datasets and hyperparameter tuning, p...",
+        "contentFile": "news-1780750833474.md"
+    },
+    {
         "id": "1780664461107",
         "type": "blog",
         "title": "Stop Saying 'Technical Debt'. Frame It As a Product Risk.",
