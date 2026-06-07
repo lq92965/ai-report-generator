@@ -1,5 +1,25 @@
 [
     {
+        "id": "1780837260569",
+        "type": "blog",
+        "title": "Your Skip-Level Meeting Isn't a Status Update. It's a Strategy Session",
+        "category": "Deep Insights",
+        "date": "2026-06-07",
+        "author": "Olivia Thorne",
+        "excerpt": "You have 30 minutes on the calendar with your manager’s boss. You spend an hour prepping, polishing a list of your project’s recent wins, key metrics,...",
+        "contentFile": "blog-1780837260569.md"
+    },
+    {
+        "id": "1780837234971",
+        "type": "news",
+        "title": "After the Demo, the Drift",
+        "category": "Tech Radar",
+        "date": "2026-06-07",
+        "author": "Jessica Tran",
+        "excerpt": "The demo was perfect. In a glass-walled conference room, the startup’s AI-powered logistics tool ingested a messy pile of shipping manifests and, in s...",
+        "contentFile": "news-1780837234971.md"
+    },
+    {
         "id": "1780750857365",
         "type": "blog",
         "title": "The 'No' Is Not Enough: Give Them a Better 'Yes' Instead",

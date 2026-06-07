@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Skip-Level Meeting Isn't a Status Update. It's a Strategy Session](https://goreportify.com/article-pages/blog-1780837260569.html)
+  - Type: Deep Insights | Date: 2026-06-07 | Author: Olivia Thorne
+  - You have 30 minutes on the calendar with your manager’s boss. You spend an hour prepping, polishing a list of your project’s recent wins, key metrics,...
+- [After the Demo, the Drift](https://goreportify.com/article-pages/news-1780837234971.html)
+  - Type: Tech Radar | Date: 2026-06-07 | Author: Jessica Tran
+  - The demo was perfect. In a glass-walled conference room, the startup’s AI-powered logistics tool ingested a messy pile of shipping manifests and, in s...
 - [The 'No' Is Not Enough: Give Them a Better 'Yes' Instead](https://goreportify.com/article-pages/blog-1780750857365.html)
   - Type: Deep Insights | Date: 2026-06-06 | Author: Jessica Tran
   - The VP of Sales catches you on Slack. "Quick question," the message begins, and your stomach tightens. "Could we add a button to the dashboard that ex...
@@ -1693,4 +1699,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 558 articles (300 blog + 258 news) + 8 core pages._
+_Total: 560 articles (301 blog + 259 news) + 8 core pages._
