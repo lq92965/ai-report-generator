@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Reporting Up vs. Reporting Out: A PM’s Guide to Two Different Audiences](https://goreportify.com/article-pages/blog-1780923661930.html)
+  - Type: Deep Insights | Date: 2026-06-08 | Author: Jessica Tran
+  - I once watched a junior PM send his weekly project update. It was a beautiful, comprehensive email. It had sprint velocity charts, detailed technical...
+- [From Magic Trick to Maintenance Ticket](https://goreportify.com/article-pages/news-1780923633983.html)
+  - Type: Tech Radar | Date: 2026-06-08 | Author: David Sterling
+  - The demo starts. On screen, a conversational agent digests a year's worth of sales transcripts and, in seconds, produces a strategic plan for entering...
 - [Your Skip-Level Meeting Isn't a Status Update. It's a Strategy Session](https://goreportify.com/article-pages/blog-1780837260569.html)
   - Type: Deep Insights | Date: 2026-06-07 | Author: Olivia Thorne
   - You have 30 minutes on the calendar with your manager’s boss. You spend an hour prepping, polishing a list of your project’s recent wins, key metrics,...
@@ -1699,4 +1705,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 560 articles (301 blog + 259 news) + 8 core pages._
+_Total: 562 articles (302 blog + 260 news) + 8 core pages._
