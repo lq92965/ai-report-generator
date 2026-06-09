@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Calendar is a Product. Start Managing It.](https://goreportify.com/article-pages/blog-1781010059159.html)
+  - Type: Deep Insights | Date: 2026-06-09 | Author: David Sterling
+  - It’s 9 AM on Monday. You open your calendar and see it. A wall of back-to-back meetings scheduled by other people. A 30-minute “quick sync” that will...
+- [The Hand-Wired Intelligence](https://goreportify.com/article-pages/news-1781010032068.html)
+  - Type: Tech Radar | Date: 2026-06-09 | Author: Alex Mercer
+  - The demo was flawless. In a conference room six months ago, the AI-powered “insights generator” ingested a sales report and produced a crisp, three-pa...
 - [Reporting Up vs. Reporting Out: A PM’s Guide to Two Different Audiences](https://goreportify.com/article-pages/blog-1780923661930.html)
   - Type: Deep Insights | Date: 2026-06-08 | Author: Jessica Tran
   - I once watched a junior PM send his weekly project update. It was a beautiful, comprehensive email. It had sprint velocity charts, detailed technical...
@@ -1705,4 +1711,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 562 articles (302 blog + 260 news) + 8 core pages._
+_Total: 564 articles (303 blog + 261 news) + 8 core pages._

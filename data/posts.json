@@ -1,5 +1,25 @@
 [
     {
+        "id": "1781010059159",
+        "type": "blog",
+        "title": "Your Calendar is a Product. Start Managing It.",
+        "category": "Deep Insights",
+        "date": "2026-06-09",
+        "author": "David Sterling",
+        "excerpt": "It’s 9 AM on Monday. You open your calendar and see it. A wall of back-to-back meetings scheduled by other people. A 30-minute “quick sync” that will...",
+        "contentFile": "blog-1781010059159.md"
+    },
+    {
+        "id": "1781010032068",
+        "type": "news",
+        "title": "The Hand-Wired Intelligence",
+        "category": "Tech Radar",
+        "date": "2026-06-09",
+        "author": "Alex Mercer",
+        "excerpt": "The demo was flawless. In a conference room six months ago, the AI-powered “insights generator” ingested a sales report and produced a crisp, three-pa...",
+        "contentFile": "news-1781010032068.md"
+    },
+    {
         "id": "1780923661930",
         "type": "blog",
         "title": "Reporting Up vs. Reporting Out: A PM’s Guide to Two Different Audiences",
