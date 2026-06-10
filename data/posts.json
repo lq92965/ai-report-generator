@@ -1,5 +1,25 @@
 [
     {
+        "id": "1781096463745",
+        "type": "blog",
+        "title": "You Lost the Room. Here's How to Get it Back.",
+        "category": "Deep Insights",
+        "date": "2026-06-10",
+        "author": "Michael Chen",
+        "excerpt": "The Q3 roadmap presentation is going smoothly. You’re on slide six, speaking to the customer retention epic. Then the VP of Sales uncrosses his arms,...",
+        "contentFile": "blog-1781096463745.md"
+    },
+    {
+        "id": "1781096435993",
+        "type": "news",
+        "title": "The AI Is Eating Its Own Tail",
+        "category": "Tech Radar",
+        "date": "2026-06-10",
+        "author": "Alex Mercer",
+        "excerpt": "A programmer in Berlin is scraping a forum for cooking recipes. A few years ago, the data was gold: messy, authentic...",
+        "contentFile": "news-1781096435993.md"
+    },
+    {
         "id": "1781010059159",
         "type": "blog",
         "title": "Your Calendar is a Product. Start Managing It.",

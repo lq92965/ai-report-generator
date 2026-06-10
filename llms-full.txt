@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Lost the Room. Here's How to Get it Back.](https://goreportify.com/article-pages/blog-1781096463745.html)
+  - Type: Deep Insights | Date: 2026-06-10 | Author: Michael Chen
+  - The Q3 roadmap presentation is going smoothly. You’re on slide six, speaking to the customer retention epic. Then the VP of Sales uncrosses his arms,...
+- [The AI Is Eating Its Own Tail](https://goreportify.com/article-pages/news-1781096435993.html)
+  - Type: Tech Radar | Date: 2026-06-10 | Author: Alex Mercer
+  - A programmer in Berlin is scraping a forum for cooking recipes. A few years ago, the data was gold: messy, authentic...
 - [Your Calendar is a Product. Start Managing It.](https://goreportify.com/article-pages/blog-1781010059159.html)
   - Type: Deep Insights | Date: 2026-06-09 | Author: David Sterling
   - It’s 9 AM on Monday. You open your calendar and see it. A wall of back-to-back meetings scheduled by other people. A 30-minute “quick sync” that will...
@@ -1711,4 +1717,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 564 articles (303 blog + 261 news) + 8 core pages._
+_Total: 566 articles (304 blog + 262 news) + 8 core pages._
