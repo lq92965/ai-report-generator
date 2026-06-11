@@ -1,5 +1,25 @@
 [
     {
+        "id": "1781182861303",
+        "type": "blog",
+        "title": "Your Big Meeting is Doomed. Have the Pre-Meeting First.",
+        "category": "Deep Insights",
+        "date": "2026-06-11",
+        "author": "Jessica Tran",
+        "excerpt": "You’ve been there. You spent two weeks on the deck. The data is solid, the user quotes are compelling, and the proposed roadmap makes perfect sense. Y...",
+        "contentFile": "blog-1781182861303.md"
+    },
+    {
+        "id": "1781182835196",
+        "type": "news",
+        "title": "We Trapped the Genie in a Text Box",
+        "category": "Tech Radar",
+        "date": "2026-06-11",
+        "author": "Olivia Thorne",
+        "excerpt": "The icon is almost always the same: a little spark, a friendly robot, a stylized brain. It lives in the corner of your screen, a quiet tenant in compl...",
+        "contentFile": "news-1781182835196.md"
+    },
+    {
         "id": "1781096463745",
         "type": "blog",
         "title": "You Lost the Room. Here's How to Get it Back.",
