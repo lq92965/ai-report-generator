@@ -1,5 +1,25 @@
 [
     {
+        "id": "1781269257012",
+        "type": "blog",
+        "title": "Stop 'Socializing' Your Idea. Start Pressure-Testing It.",
+        "category": "Deep Insights",
+        "date": "2026-06-12",
+        "author": "Alex Mercer",
+        "excerpt": "You have a new idea. It’s a good one. You draft a quick doc and start making the rounds on Slack. \"Just wanted to socialize this concept,\" you write....",
+        "contentFile": "blog-1781269257012.md"
+    },
+    {
+        "id": "1781269231705",
+        "type": "news",
+        "title": "The Prompt Is the New Spaghetti Code",
+        "category": "Tech Radar",
+        "date": "2026-06-12",
+        "author": "Olivia Thorne",
+        "excerpt": "The demo was perfect. A slick new feature, powered by the latest model, that summarized long regulatory documents for compliance officers. The product...",
+        "contentFile": "news-1781269231705.md"
+    },
+    {
         "id": "1781182861303",
         "type": "blog",
         "title": "Your Big Meeting is Doomed. Have the Pre-Meeting First.",

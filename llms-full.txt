@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Stop 'Socializing' Your Idea. Start Pressure-Testing It.](https://goreportify.com/article-pages/blog-1781269257012.html)
+  - Type: Deep Insights | Date: 2026-06-12 | Author: Alex Mercer
+  - You have a new idea. It’s a good one. You draft a quick doc and start making the rounds on Slack. "Just wanted to socialize this concept," you write....
+- [The Prompt Is the New Spaghetti Code](https://goreportify.com/article-pages/news-1781269231705.html)
+  - Type: Tech Radar | Date: 2026-06-12 | Author: Olivia Thorne
+  - The demo was perfect. A slick new feature, powered by the latest model, that summarized long regulatory documents for compliance officers. The product...
 - [Your Big Meeting is Doomed. Have the Pre-Meeting First.](https://goreportify.com/article-pages/blog-1781182861303.html)
   - Type: Deep Insights | Date: 2026-06-11 | Author: Jessica Tran
   - You’ve been there. You spent two weeks on the deck. The data is solid, the user quotes are compelling, and the proposed roadmap makes perfect sense. Y...
@@ -1723,4 +1729,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 568 articles (305 blog + 263 news) + 8 core pages._
+_Total: 570 articles (306 blog + 264 news) + 8 core pages._
