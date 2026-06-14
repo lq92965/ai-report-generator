@@ -1,5 +1,25 @@
 [
     {
+        "id": "1781442061935",
+        "type": "blog",
+        "title": "You Made a Decision in a Meeting. It Doesn't Count.",
+        "category": "Deep Insights",
+        "date": "2026-06-14",
+        "author": "Jessica Tran",
+        "excerpt": "You close your laptop, feeling that rare wave of product manager relief. The debate is over. The VP of Engineering nodded, the lead designer said, “Ma...",
+        "contentFile": "blog-1781442061935.md"
+    },
+    {
+        "id": "1781442036983",
+        "type": "news",
+        "title": "The AI Is Already Inside the Building",
+        "category": "Tech Radar",
+        "date": "2026-06-14",
+        "author": "Emily Rostova",
+        "excerpt": "The chief executive talks a good game on the quarterly earnings call. He mentions their new multi-year, seven-figure deal with a major cloud provider....",
+        "contentFile": "news-1781442036983.md"
+    },
+    {
         "id": "1781269257012",
         "type": "blog",
         "title": "Stop 'Socializing' Your Idea. Start Pressure-Testing It.",

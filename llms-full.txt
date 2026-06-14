@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Made a Decision in a Meeting. It Doesn't Count.](https://goreportify.com/article-pages/blog-1781442061935.html)
+  - Type: Deep Insights | Date: 2026-06-14 | Author: Jessica Tran
+  - You close your laptop, feeling that rare wave of product manager relief. The debate is over. The VP of Engineering nodded, the lead designer said, “Ma...
+- [The AI Is Already Inside the Building](https://goreportify.com/article-pages/news-1781442036983.html)
+  - Type: Tech Radar | Date: 2026-06-14 | Author: Emily Rostova
+  - The chief executive talks a good game on the quarterly earnings call. He mentions their new multi-year, seven-figure deal with a major cloud provider....
 - [Stop 'Socializing' Your Idea. Start Pressure-Testing It.](https://goreportify.com/article-pages/blog-1781269257012.html)
   - Type: Deep Insights | Date: 2026-06-12 | Author: Alex Mercer
   - You have a new idea. It’s a good one. You draft a quick doc and start making the rounds on Slack. "Just wanted to socialize this concept," you write....
@@ -1729,4 +1735,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 570 articles (306 blog + 264 news) + 8 core pages._
+_Total: 572 articles (307 blog + 265 news) + 8 core pages._
