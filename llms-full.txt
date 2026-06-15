@@ -15,6 +15,14 @@
 
 ## All Articles
 
+- [The Hallway Ambush: How to Field a VP’s “Quick Question” Without Derailing Your Team](https://goreportify.com/article-pages/blog-1781528462386.html)
+  - Type: Deep Insights | Date: 2026-06-15 | Author: Olivia Thorne
+  - You’re grabbing a coffee. The VP of Sales corners you by the espresso machine. “Hey, got a second? Just a quick question.”
+
+Your internal alarms shoul...
+- [The Bill Comes Due at Inference](https://goreportify.com/article-pages/news-1781528438794.html)
+  - Type: Tech Radar | Date: 2026-06-15 | Author: Alex Mercer
+  - The product manager is staring at a dashboard, but it isn't showing user engagement or conversion rates. It’s a cloud billing console, and the line ch...
 - [You Made a Decision in a Meeting. It Doesn't Count.](https://goreportify.com/article-pages/blog-1781442061935.html)
   - Type: Deep Insights | Date: 2026-06-14 | Author: Jessica Tran
   - You close your laptop, feeling that rare wave of product manager relief. The debate is over. The VP of Engineering nodded, the lead designer said, “Ma...
@@ -1735,4 +1743,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 572 articles (307 blog + 265 news) + 8 core pages._
+_Total: 574 articles (308 blog + 266 news) + 8 core pages._

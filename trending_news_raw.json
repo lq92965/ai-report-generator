@@ -1,32 +1,32 @@
 [
   {
-    "title": "The Birth and Death of JavaScript (2014)",
-    "link": "https://www.destroyallsoftware.com/talks/the-birth-and-death-of-javascript",
-    "pubDate": "Sun, 14 Jun 2026 12:38:31 +0000",
-    "snippet": "Article URL: https://www.destroyallsoftware.com/talks/the-birth-and-death-of-javascript\nComments URL: https://news.ycombinator.com/item?id=48526661\nPoints: 8\n# Comments: 2"
+    "title": "Salesforce to Acquire Fin (formerly Intercom) for $3.6BN",
+    "link": "https://www.salesforce.com/news/press-releases/2026/06/15/salesforce-signs-definitive-agreement-to-acquire-fin/?bc=HL",
+    "pubDate": "Mon, 15 Jun 2026 12:08:59 +0000",
+    "snippet": "Article URL: https://www.salesforce.com/news/press-releases/2026/06/15/salesforce-signs-definitive-agreement-to-acquire-fin/?bc=HL\nComments URL: https://news.ycombinator.com/item?id=48540126\nPoints: 13\n# Comments: 1"
   },
   {
-    "title": "Don't trust large context windows",
-    "link": "https://garrit.xyz/posts/2026-05-06-dont-trust-large-context-windows",
-    "pubDate": "Sun, 14 Jun 2026 06:07:09 +0000",
-    "snippet": "Article URL: https://garrit.xyz/posts/2026-05-06-dont-trust-large-context-windows\nComments URL: https://news.ycombinator.com/item?id=48524620\nPoints: 151\n# Comments: 107"
+    "title": "A satellite just learned to find things on its own — here’s what that means",
+    "link": "https://techcrunch.com/2026/06/15/a-satellite-just-learned-to-find-things-on-its-own-heres-what-that-means/",
+    "pubDate": "Mon, 15 Jun 2026 12:00:00 +0000",
+    "snippet": "In April, for the first time ever, an Earth observation satellite found what it was looking for, all on its own."
   },
   {
-    "title": "Tribblix: The retro Illumos distribution",
-    "link": "http://tribblix.org/",
-    "pubDate": "Sun, 14 Jun 2026 05:23:12 +0000",
-    "snippet": "Article URL: http://tribblix.org/\nComments URL: https://news.ycombinator.com/item?id=48524434\nPoints: 53\n# Comments: 20"
+    "title": "Anthropic's Safety Superpower",
+    "link": "https://stratechery.com/2026/anthropics-safety-superpower/",
+    "pubDate": "Mon, 15 Jun 2026 10:06:35 +0000",
+    "snippet": "Article URL: https://stratechery.com/2026/anthropics-safety-superpower/\nComments URL: https://news.ycombinator.com/item?id=48539078\nPoints: 100\n# Comments: 67"
   },
   {
-    "title": "As Anthropic suspends access to new models, India debates its AI future",
-    "link": "https://techcrunch.com/2026/06/13/as-anthropic-suspends-access-to-new-models-india-debates-its-ai-future/",
-    "pubDate": "Sun, 14 Jun 2026 03:00:00 +0000",
-    "snippet": "Tech leaders debate whether the Anthropic episode is a wake-up call for India’s AI ambitions."
+    "title": "Show HN: I wrote a C++ ray tracer from scratch without AI",
+    "link": "https://github.com/themartiano/luz",
+    "pubDate": "Mon, 15 Jun 2026 09:34:10 +0000",
+    "snippet": "Article URL: https://github.com/themartiano/luz\nComments URL: https://news.ycombinator.com/item?id=48538833\nPoints: 31\n# Comments: 9"
   },
   {
-    "title": "Meta reportedly moves to unwind $2B Manus deal after Beijing’s demand",
-    "link": "https://techcrunch.com/2026/06/13/meta-reportedly-moves-to-unwind-2b-manus-deal-after-beijings-demand/",
-    "pubDate": "Sun, 14 Jun 2026 00:03:49 +0000",
-    "snippet": "Meta starts dismantling its $2 billion Manus acquisition after Beijing ordered the deal reversed."
+    "title": "The AI layoff wave is becoming a powder keg",
+    "link": "https://techcrunch.com/2026/06/15/the-ai-layoff-wave-is-becoming-a-powder-keg/",
+    "pubDate": "Mon, 15 Jun 2026 07:25:41 +0000",
+    "snippet": "What makes this combustible: at the very moment that tens of thousands of workers are being shown the door, a small cohort of AI insiders is becoming wealthy on a scale that's hard to comprehend."
   }
 ]

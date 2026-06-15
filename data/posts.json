@@ -1,5 +1,25 @@
 [
     {
+        "id": "1781528462386",
+        "type": "blog",
+        "title": "The Hallway Ambush: How to Field a VP’s “Quick Question” Without Derailing Your Team",
+        "category": "Deep Insights",
+        "date": "2026-06-15",
+        "author": "Olivia Thorne",
+        "excerpt": "You’re grabbing a coffee. The VP of Sales corners you by the espresso machine. “Hey, got a second? Just a quick question.”\n\nYour internal alarms shoul...",
+        "contentFile": "blog-1781528462386.md"
+    },
+    {
+        "id": "1781528438794",
+        "type": "news",
+        "title": "The Bill Comes Due at Inference",
+        "category": "Tech Radar",
+        "date": "2026-06-15",
+        "author": "Alex Mercer",
+        "excerpt": "The product manager is staring at a dashboard, but it isn't showing user engagement or conversion rates. It’s a cloud billing console, and the line ch...",
+        "contentFile": "news-1781528438794.md"
+    },
+    {
         "id": "1781442061935",
         "type": "blog",
         "title": "You Made a Decision in a Meeting. It Doesn't Count.",
