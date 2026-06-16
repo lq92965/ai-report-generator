@@ -1,5 +1,15 @@
 [
     {
+        "id": "1781614862067",
+        "type": "blog",
+        "title": "You Don't Have a Dependency Problem. You Have a Currency Problem.",
+        "category": "Deep Insights",
+        "date": "2026-06-16",
+        "author": "Alex Mercer",
+        "excerpt": "You’re staring at a Gantt chart. A red line connects your critical feature to a box owned by the Platform team. It’s been \"blocked\" for three weeks. Y...",
+        "contentFile": "blog-1781614862067.md"
+    },
+    {
         "id": "1781528462386",
         "type": "blog",
         "title": "The Hallway Ambush: How to Field a VP’s “Quick Question” Without Derailing Your Team",

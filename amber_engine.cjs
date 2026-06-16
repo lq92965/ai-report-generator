@@ -461,6 +461,27 @@ gtag('config', 'G-3PX3FEY6F6');
     const jsonldScript = $('script[type="application/ld+json"]');
     const jsonld = {
         "@context": "https://schema.org",
+        "@type": articleType,
+        "headline": postData.title,
+        "description": postData.excerpt,
+        "datePublished": postData.dateStr,
+        "author": {
+            "@type": "Person",
+            "name": postData.author
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Reportify AI",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.goreportify.com/logo-3d.png.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": articleUrl
+        },
+        "image": "https://goreportify.com/images/og-default.png"
     };
     if (jsonldScript.length) {
         jsonldScript.attr('type', 'application/ld+json');
