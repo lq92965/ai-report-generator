@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You're Shielding Your Team. You Should Be Arming Them.](https://goreportify.com/article-pages/blog-1781701271561.html)
+  - Type: Deep Insights | Date: 2026-06-17 | Author: Alex Mercer
+  - The sales director corners you by the coffee machine. "Quick question," she says, "Can we get the enterprise SSO feature moved up? Got a huge deal on...
+- [Your Org Chart Was Not Built for This](https://goreportify.com/article-pages/news-1781701240448.html)
+  - Type: Tech Radar | Date: 2026-06-17 | Author: Jessica Tran
+  - The mandate comes down from the thirty-thousand-foot view, landing in a calendar invite like a meteorite. "AI Integration Strategy Session." The VP of...
 - [You Don't Have a Dependency Problem. You Have a Currency Problem.](https://goreportify.com/article-pages/blog-1781614862067.html)
   - Type: Deep Insights | Date: 2026-06-16 | Author: Alex Mercer
   - You’re staring at a Gantt chart. A red line connects your critical feature to a box owned by the Platform team. It’s been "blocked" for three weeks. Y...
@@ -1746,4 +1752,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 575 articles (309 blog + 266 news) + 8 core pages._
+_Total: 577 articles (310 blog + 267 news) + 8 core pages._

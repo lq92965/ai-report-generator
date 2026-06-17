@@ -1,5 +1,25 @@
 [
     {
+        "id": "1781701271561",
+        "type": "blog",
+        "title": "You're Shielding Your Team. You Should Be Arming Them.",
+        "category": "Deep Insights",
+        "date": "2026-06-17",
+        "author": "Alex Mercer",
+        "excerpt": "The sales director corners you by the coffee machine. \"Quick question,\" she says, \"Can we get the enterprise SSO feature moved up? Got a huge deal on...",
+        "contentFile": "blog-1781701271561.md"
+    },
+    {
+        "id": "1781701240448",
+        "type": "news",
+        "title": "Your Org Chart Was Not Built for This",
+        "category": "Tech Radar",
+        "date": "2026-06-17",
+        "author": "Jessica Tran",
+        "excerpt": "The mandate comes down from the thirty-thousand-foot view, landing in a calendar invite like a meteorite. \"AI Integration Strategy Session.\" The VP of...",
+        "contentFile": "news-1781701240448.md"
+    },
+    {
         "id": "1781614862067",
         "type": "blog",
         "title": "You Don't Have a Dependency Problem. You Have a Currency Problem.",
