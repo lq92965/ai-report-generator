@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Project is Late. The Worst Thing You Can Say is 'We're Working On It.']]></title>
+    <link>https://goreportify.com/article-pages/blog-1781787671203.html</link>
+    <description><![CDATA[The VP of Sales pings you on Slack. "Quick check on Project Atlas. Still good for the EOM launch?" Your stomach sinks. You know it’s not. The final in...]]></description>
+    <pubDate>Thu, 18 Jun 2026 13:01:11 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Scaffolding Is Made of People]]></title>
+    <link>https://goreportify.com/article-pages/news-1781787642181.html</link>
+    <description><![CDATA[The alert fires in a private Slack channel at 2:17 PM. It’s not a server crash or a database overload. It’s a single customer ID, flagged by a confide...]]></description>
+    <pubDate>Thu, 18 Jun 2026 13:00:42 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You're Shielding Your Team. You Should Be Arming Them.]]></title>
     <link>https://goreportify.com/article-pages/blog-1781701271561.html</link>
     <description><![CDATA[The sales director corners you by the coffee machine. "Quick question," she says, "Can we get the enterprise SSO feature moved up? Got a huge deal on...]]></description>
@@ -295,18 +307,6 @@ Your stomach sin...]]></description>
     <link>https://goreportify.com/article-pages/blog-1779109259999.html</link>
     <description><![CDATA[It’s Tuesday afternoon and your calendar reminder goes off: “Weekly Report Due.” You feel a familiar dread as you open a dozen tabs—Jira, Slack, Figma...]]></description>
     <pubDate>Mon, 18 May 2026 13:00:59 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Noise Machine and Its Ghosts]]></title>
-    <link>https://goreportify.com/article-pages/news-1779109233181.html</link>
-    <description><![CDATA[A security mailing list for the world’s most critical open-source project is now “almost unmanageable.” Not because of a coordinated human attack, but...]]></description>
-    <pubDate>Mon, 18 May 2026 13:00:33 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your PM Time is Too Valuable for Manual Reports]]></title>
-    <link>https://goreportify.com/article-pages/blog-1778936451517.html</link>
-    <description><![CDATA[It’s 4 PM on a Friday. You should be clearing the path for next week’s sprint or digging into user feedback, but instead, you’re hunting through Slack...]]></description>
-    <pubDate>Sat, 16 May 2026 13:00:51 GMT</pubDate>
   </item>
 </channel>
 </rss>

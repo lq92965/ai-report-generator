@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Project is Late. The Worst Thing You Can Say is 'We're Working On It.'](https://goreportify.com/article-pages/blog-1781787671203.html)
+  - Type: Deep Insights | Date: 2026-06-18 | Author: David Sterling
+  - The VP of Sales pings you on Slack. "Quick check on Project Atlas. Still good for the EOM launch?" Your stomach sinks. You know it’s not. The final in...
+- [The Scaffolding Is Made of People](https://goreportify.com/article-pages/news-1781787642181.html)
+  - Type: Tech Radar | Date: 2026-06-18 | Author: David Sterling
+  - The alert fires in a private Slack channel at 2:17 PM. It’s not a server crash or a database overload. It’s a single customer ID, flagged by a confide...
 - [You're Shielding Your Team. You Should Be Arming Them.](https://goreportify.com/article-pages/blog-1781701271561.html)
   - Type: Deep Insights | Date: 2026-06-17 | Author: Alex Mercer
   - The sales director corners you by the coffee machine. "Quick question," she says, "Can we get the enterprise SSO feature moved up? Got a huge deal on...
@@ -1752,4 +1758,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 577 articles (310 blog + 267 news) + 8 core pages._
+_Total: 579 articles (311 blog + 268 news) + 8 core pages._
