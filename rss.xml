@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Don't Need Another Dashboard. You Need a Narrative.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1781874065779.html</link>
+    <description><![CDATA[You’re ten minutes into your big quarterly review. The slide is up. It’s a beautiful dashboard, packed with charts from Looker and Amplitude. Daily ac...]]></description>
+    <pubDate>Fri, 19 Jun 2026 13:01:05 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Unversioned Dependency]]></title>
+    <link>https://goreportify.com/article-pages/news-1781874037179.html</link>
+    <description><![CDATA[The bug report landed at 9:17 AM. A senior engineer on the customer support summarization team saw it first. The AI-powered tool, which usually produc...]]></description>
+    <pubDate>Fri, 19 Jun 2026 13:00:37 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Project is Late. The Worst Thing You Can Say is 'We're Working On It.']]></title>
     <link>https://goreportify.com/article-pages/blog-1781787671203.html</link>
     <description><![CDATA[The VP of Sales pings you on Slack. "Quick check on Project Atlas. Still good for the EOM launch?" Your stomach sinks. You know it’s not. The final in...]]></description>
@@ -295,18 +307,6 @@ Your stomach sin...]]></description>
     <link>https://goreportify.com/article-pages/blog-1779195670431.html</link>
     <description><![CDATA[It’s 4 PM on a Friday. You have a dozen tabs open: Jira, Slack, Google Docs, Figma. Your task is to synthesize a week of chaotic progress into a clean...]]></description>
     <pubDate>Tue, 19 May 2026 13:01:10 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Earthly Cost of Digital Gods]]></title>
-    <link>https://goreportify.com/article-pages/news-1779195636097.html</link>
-    <description><![CDATA[We love to talk about colonizing Venus. It’s the ultimate tech-bro fantasy: terraforming a hellscape into a paradise, a triumph of engineering over ho...]]></description>
-    <pubDate>Tue, 19 May 2026 13:00:36 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Write a Weekly Report That Builds Stakeholder Trust]]></title>
-    <link>https://goreportify.com/article-pages/blog-1779109259999.html</link>
-    <description><![CDATA[It’s Tuesday afternoon and your calendar reminder goes off: “Weekly Report Due.” You feel a familiar dread as you open a dozen tabs—Jira, Slack, Figma...]]></description>
-    <pubDate>Mon, 18 May 2026 13:00:59 GMT</pubDate>
   </item>
 </channel>
 </rss>

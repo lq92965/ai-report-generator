@@ -1,5 +1,25 @@
 [
     {
+        "id": "1781874065779",
+        "type": "blog",
+        "title": "You Don't Need Another Dashboard. You Need a Narrative.",
+        "category": "Deep Insights",
+        "date": "2026-06-19",
+        "author": "Alex Mercer",
+        "excerpt": "You’re ten minutes into your big quarterly review. The slide is up. It’s a beautiful dashboard, packed with charts from Looker and Amplitude. Daily ac...",
+        "contentFile": "blog-1781874065779.md"
+    },
+    {
+        "id": "1781874037179",
+        "type": "news",
+        "title": "The Unversioned Dependency",
+        "category": "Tech Radar",
+        "date": "2026-06-19",
+        "author": "Alex Mercer",
+        "excerpt": "The bug report landed at 9:17 AM. A senior engineer on the customer support summarization team saw it first. The AI-powered tool, which usually produc...",
+        "contentFile": "news-1781874037179.md"
+    },
+    {
         "id": "1781787671203",
         "type": "blog",
         "title": "Your Project is Late. The Worst Thing You Can Say is 'We're Working On It.'",

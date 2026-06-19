@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Don't Need Another Dashboard. You Need a Narrative.](https://goreportify.com/article-pages/blog-1781874065779.html)
+  - Type: Deep Insights | Date: 2026-06-19 | Author: Alex Mercer
+  - You’re ten minutes into your big quarterly review. The slide is up. It’s a beautiful dashboard, packed with charts from Looker and Amplitude. Daily ac...
+- [The Unversioned Dependency](https://goreportify.com/article-pages/news-1781874037179.html)
+  - Type: Tech Radar | Date: 2026-06-19 | Author: Alex Mercer
+  - The bug report landed at 9:17 AM. A senior engineer on the customer support summarization team saw it first. The AI-powered tool, which usually produc...
 - [Your Project is Late. The Worst Thing You Can Say is 'We're Working On It.'](https://goreportify.com/article-pages/blog-1781787671203.html)
   - Type: Deep Insights | Date: 2026-06-18 | Author: David Sterling
   - The VP of Sales pings you on Slack. "Quick check on Project Atlas. Still good for the EOM launch?" Your stomach sinks. You know it’s not. The final in...
@@ -1758,4 +1764,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 579 articles (311 blog + 268 news) + 8 core pages._
+_Total: 581 articles (312 blog + 269 news) + 8 core pages._
