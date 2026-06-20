@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[I Scraped My Competitor's Help Docs. The AI Found Their Entire Strategy.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1781960491082.html</link>
+    <description><![CDATA[I spent a Tuesday afternoon staring at our main competitor’s marketing site. It was a sea of optimistic jargon: "seamless integration," "next-generati...]]></description>
+    <pubDate>Sat, 20 Jun 2026 13:01:31 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[We Gave the Intern the Root Password]]></title>
+    <link>https://goreportify.com/article-pages/news-1781960466733.html</link>
+    <description><![CDATA[The Slack channel for the deployment was quiet. Too quiet. A senior engineer stared at a stream of logs, watching an AI agent—the company’s shiny new...]]></description>
+    <pubDate>Sat, 20 Jun 2026 13:01:06 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Don't Need Another Dashboard. You Need a Narrative.]]></title>
     <link>https://goreportify.com/article-pages/blog-1781874065779.html</link>
     <description><![CDATA[You’re ten minutes into your big quarterly review. The slide is up. It’s a beautiful dashboard, packed with charts from Looker and Amplitude. Daily ac...]]></description>
@@ -295,18 +307,6 @@ Your stomach sin...]]></description>
     <link>https://goreportify.com/article-pages/blog-1779282071024.html</link>
     <description><![CDATA[It’s Monday morning. You open your laptop to a firehose. There’s the engineering update in the dev-updates Slack channel, a long email thread from mar...]]></description>
     <pubDate>Wed, 20 May 2026 13:01:11 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Next Phase of Chicken Adoption]]></title>
-    <link>https://goreportify.com/article-pages/news-1779282039697.html</link>
-    <description><![CDATA[You search for a simple chicken recipe. Instead of a page from a trusted food blogger or a legacy cooking site, the top results are a slurry of AI-gen...]]></description>
-    <pubDate>Wed, 20 May 2026 13:00:39 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Automated Report Writing: Your Strategic Advantage]]></title>
-    <link>https://goreportify.com/article-pages/blog-1779195670431.html</link>
-    <description><![CDATA[It’s 4 PM on a Friday. You have a dozen tabs open: Jira, Slack, Google Docs, Figma. Your task is to synthesize a week of chaotic progress into a clean...]]></description>
-    <pubDate>Tue, 19 May 2026 13:01:10 GMT</pubDate>
   </item>
 </channel>
 </rss>

@@ -1,5 +1,25 @@
 [
     {
+        "id": "1781960491082",
+        "type": "blog",
+        "title": "I Scraped My Competitor's Help Docs. The AI Found Their Entire Strategy.",
+        "category": "Deep Insights",
+        "date": "2026-06-20",
+        "author": "Michael Chen",
+        "excerpt": "I spent a Tuesday afternoon staring at our main competitor’s marketing site. It was a sea of optimistic jargon: \"seamless integration,\" \"next-generati...",
+        "contentFile": "blog-1781960491082.md"
+    },
+    {
+        "id": "1781960466733",
+        "type": "news",
+        "title": "We Gave the Intern the Root Password",
+        "category": "Tech Radar",
+        "date": "2026-06-20",
+        "author": "Marcus Webb",
+        "excerpt": "The Slack channel for the deployment was quiet. Too quiet. A senior engineer stared at a stream of logs, watching an AI agent—the company’s shiny new...",
+        "contentFile": "news-1781960466733.md"
+    },
+    {
         "id": "1781874065779",
         "type": "blog",
         "title": "You Don't Need Another Dashboard. You Need a Narrative.",
