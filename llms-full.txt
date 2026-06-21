@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Feed Your AI the Sales Calls. Find the Real Objections.](https://goreportify.com/article-pages/blog-1782046868103.html)
+  - Type: Deep Insights | Date: 2026-06-21 | Author: Michael Chen
+  - You’re in the Q3 planning meeting. The Head of Sales is pounding the table for a new integration. “We lost the Acme deal because we don’t have it,” sh...
+- [Model Becomes a Competitive Battleground](https://goreportify.com/article-pages/news-1782046839894.html)
+  - Type: Tech Radar | Date: 2026-06-21 | Author: Olivia Thorne
+  - The feature shipped in a six-week sprint. A small team at a B2B software company wired up a large language model to summarize customer support chats....
 - [I Scraped My Competitor's Help Docs. The AI Found Their Entire Strategy.](https://goreportify.com/article-pages/blog-1781960491082.html)
   - Type: Deep Insights | Date: 2026-06-20 | Author: Michael Chen
   - I spent a Tuesday afternoon staring at our main competitor’s marketing site. It was a sea of optimistic jargon: "seamless integration," "next-generati...
@@ -1770,4 +1776,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 583 articles (313 blog + 270 news) + 8 core pages._
+_Total: 585 articles (314 blog + 271 news) + 8 core pages._

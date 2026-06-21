@@ -1,5 +1,25 @@
 [
     {
+        "id": "1782046868103",
+        "type": "blog",
+        "title": "Feed Your AI the Sales Calls. Find the Real Objections.",
+        "category": "Deep Insights",
+        "date": "2026-06-21",
+        "author": "Michael Chen",
+        "excerpt": "You’re in the Q3 planning meeting. The Head of Sales is pounding the table for a new integration. “We lost the Acme deal because we don’t have it,” sh...",
+        "contentFile": "blog-1782046868103.md"
+    },
+    {
+        "id": "1782046839894",
+        "type": "news",
+        "title": "Model Becomes a Competitive Battleground",
+        "category": "Tech Radar",
+        "date": "2026-06-21",
+        "author": "Olivia Thorne",
+        "excerpt": "The feature shipped in a six-week sprint. A small team at a B2B software company wired up a large language model to summarize customer support chats....",
+        "contentFile": "news-1782046839894.md"
+    },
+    {
         "id": "1781960491082",
         "type": "blog",
         "title": "I Scraped My Competitor's Help Docs. The AI Found Their Entire Strategy.",

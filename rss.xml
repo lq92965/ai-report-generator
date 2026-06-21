@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Feed Your AI the Sales Calls. Find the Real Objections.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1782046868103.html</link>
+    <description><![CDATA[You’re in the Q3 planning meeting. The Head of Sales is pounding the table for a new integration. “We lost the Acme deal because we don’t have it,” sh...]]></description>
+    <pubDate>Sun, 21 Jun 2026 13:01:08 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Model Becomes a Competitive Battleground]]></title>
+    <link>https://goreportify.com/article-pages/news-1782046839894.html</link>
+    <description><![CDATA[The feature shipped in a six-week sprint. A small team at a B2B software company wired up a large language model to summarize customer support chats....]]></description>
+    <pubDate>Sun, 21 Jun 2026 13:00:39 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[I Scraped My Competitor's Help Docs. The AI Found Their Entire Strategy.]]></title>
     <link>https://goreportify.com/article-pages/blog-1781960491082.html</link>
     <description><![CDATA[I spent a Tuesday afternoon staring at our main competitor’s marketing site. It was a sea of optimistic jargon: "seamless integration," "next-generati...]]></description>
@@ -295,18 +307,6 @@ Your stomach sin...]]></description>
     <link>https://goreportify.com/article-pages/blog-1779800458382.html</link>
     <description><![CDATA[It’s Monday morning. You’re in the weekly leadership review, and the project status slide comes up. It’s a sea of reassuring green dots. One project,...]]></description>
     <pubDate>Tue, 26 May 2026 13:00:58 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Next Phase of Model Adoption]]></title>
-    <link>https://goreportify.com/article-pages/news-1779800428214.html</link>
-    <description><![CDATA[A mid-level engineer at a regional insurance firm is watching his dashboard turn yellow. The model he deployed six months ago, the one that flags pote...]]></description>
-    <pubDate>Tue, 26 May 2026 13:00:28 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your AI Assistant Should Read Your Reports, Not Write Them]]></title>
-    <link>https://goreportify.com/article-pages/blog-1779282071024.html</link>
-    <description><![CDATA[It’s Monday morning. You open your laptop to a firehose. There’s the engineering update in the dev-updates Slack channel, a long email thread from mar...]]></description>
-    <pubDate>Wed, 20 May 2026 13:01:11 GMT</pubDate>
   </item>
 </channel>
 </rss>
