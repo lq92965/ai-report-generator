@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Data Scientist Doesn't Speak Product. Translate for Them.](https://goreportify.com/article-pages/blog-1782133324398.html)
+  - Type: Deep Insights | Date: 2026-06-22 | Author: Sarah Jenkins
+  - You ask for an analysis of user engagement. Two weeks later, your data scientist presents a beautiful, statistically significant, and utterly useless...
+- [The Shadow Fleet of AI Agents](https://goreportify.com/article-pages/news-1782133294934.html)
+  - Type: Tech Radar | Date: 2026-06-22 | Author: Alex Mercer
+  - A product manager in Boston expenses a $20 monthly subscription to a third-party AI diagramming tool, filing it under "software." In London, a junior...
 - [Feed Your AI the Sales Calls. Find the Real Objections.](https://goreportify.com/article-pages/blog-1782046868103.html)
   - Type: Deep Insights | Date: 2026-06-21 | Author: Michael Chen
   - You’re in the Q3 planning meeting. The Head of Sales is pounding the table for a new integration. “We lost the Acme deal because we don’t have it,” sh...
@@ -1776,4 +1782,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 585 articles (314 blog + 271 news) + 8 core pages._
+_Total: 587 articles (315 blog + 272 news) + 8 core pages._

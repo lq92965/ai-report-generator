@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Data Scientist Doesn't Speak Product. Translate for Them.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1782133324398.html</link>
+    <description><![CDATA[You ask for an analysis of user engagement. Two weeks later, your data scientist presents a beautiful, statistically significant, and utterly useless...]]></description>
+    <pubDate>Mon, 22 Jun 2026 13:02:04 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Shadow Fleet of AI Agents]]></title>
+    <link>https://goreportify.com/article-pages/news-1782133294934.html</link>
+    <description><![CDATA[A product manager in Boston expenses a $20 monthly subscription to a third-party AI diagramming tool, filing it under "software." In London, a junior...]]></description>
+    <pubDate>Mon, 22 Jun 2026 13:01:34 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Feed Your AI the Sales Calls. Find the Real Objections.]]></title>
     <link>https://goreportify.com/article-pages/blog-1782046868103.html</link>
     <description><![CDATA[You’re in the Q3 planning meeting. The Head of Sales is pounding the table for a new integration. “We lost the Acme deal because we don’t have it,” sh...]]></description>
@@ -295,18 +307,6 @@ Your stomach sin...]]></description>
     <link>https://goreportify.com/article-pages/blog-1779886864239.html</link>
     <description><![CDATA[It’s Tuesday morning. You hit send on your weekly project status report. It’s packed with data: user engagement is up 3%, sprint velocity is steady at...]]></description>
     <pubDate>Wed, 27 May 2026 13:01:04 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Building on Borrowed Intelligence]]></title>
-    <link>https://goreportify.com/article-pages/news-1779886831199.html</link>
-    <description><![CDATA[The scene repeats itself in thousands of startups every night. A founder, lit by the blue glow of a monitor, isn’t checking sales figures or user enga...]]></description>
-    <pubDate>Wed, 27 May 2026 13:00:31 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your RAG Status Report is a Lie]]></title>
-    <link>https://goreportify.com/article-pages/blog-1779800458382.html</link>
-    <description><![CDATA[It’s Monday morning. You’re in the weekly leadership review, and the project status slide comes up. It’s a sea of reassuring green dots. One project,...]]></description>
-    <pubDate>Tue, 26 May 2026 13:00:58 GMT</pubDate>
   </item>
 </channel>
 </rss>

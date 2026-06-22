@@ -1,5 +1,25 @@
 [
     {
+        "id": "1782133324398",
+        "type": "blog",
+        "title": "Your Data Scientist Doesn't Speak Product. Translate for Them.",
+        "category": "Deep Insights",
+        "date": "2026-06-22",
+        "author": "Sarah Jenkins",
+        "excerpt": "You ask for an analysis of user engagement. Two weeks later, your data scientist presents a beautiful, statistically significant, and utterly useless...",
+        "contentFile": "blog-1782133324398.md"
+    },
+    {
+        "id": "1782133294934",
+        "type": "news",
+        "title": "The Shadow Fleet of AI Agents",
+        "category": "Tech Radar",
+        "date": "2026-06-22",
+        "author": "Alex Mercer",
+        "excerpt": "A product manager in Boston expenses a $20 monthly subscription to a third-party AI diagramming tool, filing it under \"software.\" In London, a junior...",
+        "contentFile": "news-1782133294934.md"
+    },
+    {
         "id": "1782046868103",
         "type": "blog",
         "title": "Feed Your AI the Sales Calls. Find the Real Objections.",
