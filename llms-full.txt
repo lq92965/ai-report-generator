@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [I Fed an AI Our Competitor's Job Postings. It Revealed Their Next Move](https://goreportify.com/article-pages/blog-1782219670542.html)
+  - Type: Deep Insights | Date: 2026-06-23 | Author: Michael Chen
+  - The quarterly strategy meeting was next week, and my "Competitor Update" slide was embarrassingly thin. I had the usual stuff: a press release about a...
+- [The Glitch Is Now the Policy](https://goreportify.com/article-pages/news-1782219638581.html)
+  - Type: Tech Radar | Date: 2026-06-23 | Author: Emily Rostova
+  - A product manager at an e-commerce giant sees it first. He’s staring at the returns dashboard, at a number that has been creeping up for two quarters:...
 - [Your Data Scientist Doesn't Speak Product. Translate for Them.](https://goreportify.com/article-pages/blog-1782133324398.html)
   - Type: Deep Insights | Date: 2026-06-22 | Author: Sarah Jenkins
   - You ask for an analysis of user engagement. Two weeks later, your data scientist presents a beautiful, statistically significant, and utterly useless...
@@ -1782,4 +1788,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 587 articles (315 blog + 272 news) + 8 core pages._
+_Total: 589 articles (316 blog + 273 news) + 8 core pages._

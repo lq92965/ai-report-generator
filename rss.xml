@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[I Fed an AI Our Competitor's Job Postings. It Revealed Their Next Move]]></title>
+    <link>https://goreportify.com/article-pages/blog-1782219670542.html</link>
+    <description><![CDATA[The quarterly strategy meeting was next week, and my "Competitor Update" slide was embarrassingly thin. I had the usual stuff: a press release about a...]]></description>
+    <pubDate>Tue, 23 Jun 2026 13:01:10 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Glitch Is Now the Policy]]></title>
+    <link>https://goreportify.com/article-pages/news-1782219638581.html</link>
+    <description><![CDATA[A product manager at an e-commerce giant sees it first. He’s staring at the returns dashboard, at a number that has been creeping up for two quarters:...]]></description>
+    <pubDate>Tue, 23 Jun 2026 13:00:38 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Data Scientist Doesn't Speak Product. Translate for Them.]]></title>
     <link>https://goreportify.com/article-pages/blog-1782133324398.html</link>
     <description><![CDATA[You ask for an analysis of user engagement. Two weeks later, your data scientist presents a beautiful, statistically significant, and utterly useless...]]></description>
@@ -295,18 +307,6 @@ Your stomach sin...]]></description>
     <link>https://goreportify.com/article-pages/blog-1779973258752.html</link>
     <description><![CDATA[The cursor blinks. A fresh Google Doc, pristine and intimidating. You have to write the Product Requirements Document for the next big feature. You’ve...]]></description>
     <pubDate>Thu, 28 May 2026 13:00:58 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Reckoning in the Code]]></title>
-    <link>https://goreportify.com/article-pages/news-1779973231873.html</link>
-    <description><![CDATA[The demo looked fantastic. In a conference room on the 27th floor, the Chief Technology Officer showed a slide, then a video: the company’s staid ente...]]></description>
-    <pubDate>Thu, 28 May 2026 13:00:31 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Report Failed the "So What?" Test]]></title>
-    <link>https://goreportify.com/article-pages/blog-1779886864239.html</link>
-    <description><![CDATA[It’s Tuesday morning. You hit send on your weekly project status report. It’s packed with data: user engagement is up 3%, sprint velocity is steady at...]]></description>
-    <pubDate>Wed, 27 May 2026 13:01:04 GMT</pubDate>
   </item>
 </channel>
 </rss>
