@@ -1,5 +1,25 @@
 [
     {
+        "id": "1782306061504",
+        "type": "blog",
+        "title": "Your Team's Blockers Aren't Technical. They're Political.",
+        "category": "Deep Insights",
+        "date": "2026-06-24",
+        "author": "Emily Rostova",
+        "excerpt": "The engineer’s Slack status turns red: \"Blocked.\" You jump into the Jira ticket. You expect to see a missing API key, a confusing spec, a tricky bit o...",
+        "contentFile": "blog-1782306061504.md"
+    },
+    {
+        "id": "1782306031802",
+        "type": "news",
+        "title": "Everyone Is Building on the Same Fault Line",
+        "category": "Tech Radar",
+        "date": "2026-06-24",
+        "author": "Alex Mercer",
+        "excerpt": "The pitch deck glowed on the conference room screen. A twenty-something founder, full of conviction, walked the venture partners through his app. When...",
+        "contentFile": "news-1782306031802.md"
+    },
+    {
         "id": "1782219670542",
         "type": "blog",
         "title": "I Fed an AI Our Competitor's Job Postings. It Revealed Their Next Move",

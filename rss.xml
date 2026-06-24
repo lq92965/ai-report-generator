@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Team's Blockers Aren't Technical. They're Political.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1782306061504.html</link>
+    <description><![CDATA[The engineer’s Slack status turns red: "Blocked." You jump into the Jira ticket. You expect to see a missing API key, a confusing spec, a tricky bit o...]]></description>
+    <pubDate>Wed, 24 Jun 2026 13:01:01 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Everyone Is Building on the Same Fault Line]]></title>
+    <link>https://goreportify.com/article-pages/news-1782306031802.html</link>
+    <description><![CDATA[The pitch deck glowed on the conference room screen. A twenty-something founder, full of conviction, walked the venture partners through his app. When...]]></description>
+    <pubDate>Wed, 24 Jun 2026 13:00:31 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[I Fed an AI Our Competitor's Job Postings. It Revealed Their Next Move]]></title>
     <link>https://goreportify.com/article-pages/blog-1782219670542.html</link>
     <description><![CDATA[The quarterly strategy meeting was next week, and my "Competitor Update" slide was embarrassingly thin. I had the usual stuff: a press release about a...]]></description>
@@ -295,18 +307,6 @@ Your stomach sin...]]></description>
     <link>https://goreportify.com/article-pages/blog-1780059667490.html</link>
     <description><![CDATA[You stare at the screen. The AI-generated user story is a mess of generic business jargon. It’s technically correct, but completely useless. It has no...]]></description>
     <pubDate>Fri, 29 May 2026 13:01:07 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Two Churches of Artificial Intelligence]]></title>
-    <link>https://goreportify.com/article-pages/news-1780059634187.html</link>
-    <description><![CDATA[The demonstration is always clean. A developer types a few lines of Python, makes an API call to a San Francisco server, and a perfectly formed block...]]></description>
-    <pubDate>Fri, 29 May 2026 13:00:34 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Let an AI Write Your First PRD Draft]]></title>
-    <link>https://goreportify.com/article-pages/blog-1779973258752.html</link>
-    <description><![CDATA[The cursor blinks. A fresh Google Doc, pristine and intimidating. You have to write the Product Requirements Document for the next big feature. You’ve...]]></description>
-    <pubDate>Thu, 28 May 2026 13:00:58 GMT</pubDate>
   </item>
 </channel>
 </rss>
