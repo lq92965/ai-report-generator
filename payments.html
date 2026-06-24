@@ -1,307 +1,308 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#2563eb">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
-    <title>Payment history - Reportify AI</title>
-    <!-- 与其它账户子页一致：顶栏用了 Tailwind 工具类，需加载 Tailwind，否则 flex / max-w-[60%] 等不生效 -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css?v=2026.17">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="mobile-patch.css?v=2026.7">
-    <script src="mobile-patch.js?v=2026.7"></script>
-    <style>
-        /* 主区横向铺满视口，避免 App / 窄屏里出现「中间一条白、两侧深色」的错觉 */
-        section.payments-page.generator-section {
-            width: 100%;
-            max-width: 100%;
-            box-sizing: border-box;
-        }
-        .payments-wrap { width: 100%; max-width: min(960px, 100%); margin: 0 auto; padding: 0 20px 48px; box-sizing: border-box; }
-        .payments-table-wrap { overflow-x: auto; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.04); }
-        .pay-mobile-only { display: none !important; }
-        @media (min-width: 769px) {
-            .pay-mobile-only { display: none !important; }
-            .pay-desktop-only { display: table-cell !important; }
-        }
-        @media (max-width: 768px) {
-            .pay-desktop-only { display: none !important; }
-            .pay-mobile-only { display: table-cell !important; }
-        }
-        .pay-mobile-card {
-            background: #fff;
-            border: 1px solid #eef2f6;
-            border-radius: 12px;
-            padding: 14px 14px 12px;
-            margin: 0 0 12px 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            box-sizing: border-box;
-            max-width: 100%;
-        }
-        .pay-row:last-child .pay-mobile-card { margin-bottom: 0; }
-        .pay-mobile-line1 {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 6px 8px;
-            font-size: 0.7rem;
-            line-height: 1.35;
-            color: #94a3b8;
-            margin-bottom: 10px;
-        }
-        .pay-mobile-meta { color: #94a3b8; font-weight: 500; }
-        .pay-mobile-dot { opacity: 0.7; }
-        .pay-mobile-order {
-            font-family: ui-monospace, 'Cascadia Code', monospace;
-            word-break: break-all;
-            flex: 1 1 auto;
-            min-width: 0;
-            color: #94a3b8;
-        }
-        .pay-copy-icon-btn {
-            flex-shrink: 0;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-            padding: 0;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            background: #f8fafc;
-            color: #64748b;
-            cursor: pointer;
-        }
-        .pay-copy-icon-btn:active { background: #f1f5f9; }
-        .pay-mobile-line2 {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 10px 14px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 8px;
-        }
-        .pay-mobile-plan { flex: 1 1 140px; min-width: 0; }
-        .pay-mobile-amount { color: #0f172a; font-variant-numeric: tabular-nums; }
-        .pay-mobile-status .pay-badge { font-size: 0.72rem; }
-        .pay-mobile-line3 { margin-top: 2px; }
-        .pay-mobile-help {
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: #2563eb;
-            text-decoration: none;
-        }
-        .pay-mobile-help:hover, .pay-mobile-help:focus-visible { text-decoration: underline; color: #1d4ed8; }
-        .payments-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-        .payments-table th { text-align: left; padding: 12px 14px; background: #f8fafc; color: #475569; font-weight: 600; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
-        .payments-table td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; vertical-align: top; word-wrap: break-word; overflow-wrap: break-word; }
-        .payments-table tr:last-child td { border-bottom: none; }
-        .mono-small { font-family: ui-monospace, 'Cascadia Code', monospace; font-size: 0.75rem; word-break: break-all; max-width: 220px; }
-        .payments-pagination {
-            display: none;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 16px;
-            padding: 12px;
-            font-size: 0.875rem;
-            color: #475569;
-        }
-        .payments-pagination.is-visible { display: flex; }
-        @media (max-width: 768px) {
-            .payments-pagination.is-visible { font-size: 0.72rem; gap: 8px; padding: 10px 6px; }
-            .payments-pagination.is-visible button { padding: 6px 10px; font-size: 0.72rem; }
-        }
-        .payments-pagination button {
-            padding: 8px 16px;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            background: #fff;
-            color: #334155;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        .payments-pagination button:disabled { opacity: 0.45; cursor: not-allowed; }
-        .payments-pagination button:not(:disabled):active { background: #f1f5f9; }
-        /* App / 窄屏：卡片式多行记录，无需横向滑动（与 History 列表风格接近） */
-        @media (max-width: 768px) {
-            .payments-wrap { padding-left: 10px; padding-right: 10px; max-width: 100%; }
-            .payments-table-wrap {
-                overflow-x: hidden !important;
-                background: transparent;
-                border: none;
-                box-shadow: none;
-            }
-            .payments-table {
-                width: 100%;
-                font-size: 0.875rem;
-                border-collapse: separate;
-                border-spacing: 0;
-            }
-            .payments-table thead { display: none; }
-            .payments-table tbody { display: block; }
-            .payments-table tr.pay-row { display: block; }
-            .payments-table tr.pay-row td.pay-mobile-only {
-                display: block !important;
-                padding: 0;
-                border: none;
-            }
-            .payments-table td { border-bottom: none; }
-        }
-        .pay-badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
-        .pay-ok { background: #ecfdf5; color: #047857; }
-        .pay-pending { background: #fffbeb; color: #b45309; }
-        .payments-note { margin-top: 24px; padding: 16px; background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 10px; color: #0369a1; font-size: 0.875rem; line-height: 1.5; }
-        .payments-note a { color: #2563eb; font-weight: 600; }
-        .pay-appeal-link { color: #2563eb; font-weight: 600; text-decoration: none; display: inline-block; margin-right: 8px; }
-        .pay-appeal-link:hover { text-decoration: underline; }
-        .pay-copy-btn { font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; border: 1px solid #e2e8f0; background: #fff; color: #475569; cursor: pointer; }
-        .pay-copy-btn:hover { background: #f8fafc; }
-        .pay-actions-cell { white-space: nowrap; }
-    </style>
-
-    <!-- Open Graph / Social -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.goreportify.com/payments.html" />
-    <meta property="og:title" content="Payment history - Reportify AI" />
-    <meta property="og:description" content="Reportify AI - AI-powered report generation" />
-    <meta property="og:image" content="https://www.goreportify.com/images/og-default.png" />
-    <meta property="og:site_name" content="Reportify AI" />
-    <meta property="og:locale" content="en_US" />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Payment history - Reportify AI" />
-    <meta name="twitter:description" content="Reportify AI - AI-powered report generation" />
-    <meta name="twitter:image" content="https://www.goreportify.com/images/og-default.png" />
-
-    <!-- Canonical -->
-    <link rel="canonical" href="https://www.goreportify.com/payments.html" />
-
-
-    
-
-
-    <meta name="description" content="Payment history and billing management for Reportify AI." />
-        <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PX3FEY6F6"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-3PX3FEY6F6');
-    </script>
-</head>
-<body class="has-app-nav" style="background-color: #f8fafc;">
-    <header class="main-header account-header pwa-app-header">
-        <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
-            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
-                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
-            </div>
-            <nav class="main-nav pwa-desktop-nav" id="pwa-collapse-nav">
-                <ul>
-                    <li><a href="index.html#features">Features</a></li>
-                    <li><a href="index.html#pricing">Pricing</a></li>
-                    <li><a href="generate.html">Generator</a></li>
-                    <li><a href="news.html">News</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff!important;padding:6px 14px;border-radius:8px;font-weight:600;font-size:0.9rem"><i class="fab fa-google-play" style="font-size:1rem"></i>App</a></li>
-                </ul>
-            </nav>
-            <div class="pwa-header-actions">
-                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite">
-                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
-                </a>
-                <div id="auth-container" class="header-actions"></div>
-            </div>
-        </div>
-    </header>
-
-    <section class="generator-section payments-page" style="min-height: 70vh; padding: 28px 0 0;">
-        <div class="payments-wrap">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
-                <div>
-                    <h2 class="section-title" style="margin: 0 0 6px; font-weight: 700; color: #1e293b;">Payment history</h2>
-                    <p style="margin: 0; color: #64748b; font-size: 0.95rem;">PayPal and verified Google Play subscriptions linked to your account.</p>
-                </div>
-                <button type="button" id="payments-refresh" style="padding: 8px 16px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; color: #64748b; font-weight: 600;">
-                    <i class="fas fa-sync-alt"></i> Refresh
-                </button>
-            </div>
-
-            <p id="payments-error" style="display: none; color: #b91c1c; margin-bottom: 12px; font-weight: 500;"></p>
-
-            <div id="payments-empty" style="display: none; text-align: center; padding: 48px 20px; color: #94a3b8; background: #fff; border: 1px dashed #e2e8f0; border-radius: 12px;">
-                <i class="fas fa-receipt" style="font-size: 2rem; margin-bottom: 12px; opacity: 0.6;"></i>
-                <p style="margin: 0; font-size: 1rem;">No payments recorded yet.</p>
-                <p style="margin: 8px 0 0; font-size: 0.9rem;">After you complete a purchase, it will appear here.</p>
-            </div>
-
-            <div id="payments-table-wrap" class="payments-table-wrap">
-                <table class="payments-table" aria-label="Payment history">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Plan</th>
-                            <th>Amount</th>
-                            <th>Status</th>
-                            <th>Order ID</th>
-                            <th>Help</th>
-                        </tr>
-                    </thead>
-                    <tbody id="payments-tbody"></tbody>
-                </table>
-            </div>
-
-            <div id="payments-pagination" class="payments-pagination" aria-label="Payment history pagination"></div>
-
-            <div class="payments-note">
-                <strong>Questions or wrong charge?</strong>
-                On desktop, use <strong>Contact + prefill</strong> in the table. On mobile, use <strong>Help — payment issue</strong> on each card or the copy icon next to the Order ID.
-                You can also open <a href="contact.html?topic=Billing">Contact Support (Billing)</a> directly.
-            </div>
-        </div>
-    </section>
-
-    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
-        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
-        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
-        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
-        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
-        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
-    </nav>
-
-    <footer class="main-footer site-footer-rich" role="contentinfo">
-        <div class="container site-footer-inner">
-            <div class="site-footer-social">
-                <a href="https://discord.gg/UtNfS8kH" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
-                <a href="https://www.reddit.com/user/Automatic_Pitch5117" target="_blank" rel="noopener noreferrer" title="Reddit" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://google.com" target="_blank" rel="noopener noreferrer" title="Google" aria-label="Google"><i class="fa-brands fa-google"></i></a>
-            </div>
-            <div class="site-footer-legal">
-                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:#059669;font-weight:600;text-decoration:none;font-size:0.9rem;transition:color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'"><i class="fab fa-google-play" style="font-size:1.2rem"></i> Download App</a>
-                <a href="faq.html" style="color: #059669; font-weight: 600; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'">FAQ</a>
-                <a href="terms.html">Terms of Service</a>
-                <a href="privacy.html">Privacy Policy</a>
-            </div>
-            <p class="site-footer-copy">&copy; 2026 Beijing Cricket Information Technology Co., Ltd. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <script src="pwa-nav.js"></script>
-    <script src="script.js?v=2026.20"></script>
-    <script src="payments.js?v=2026.18"></script>
-</body>
-</html>
+     1|<!DOCTYPE html>
+     2|<html lang="en">
+     3|<head>
+     4|    <meta charset="UTF-8">
+     5|    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+     6|    <meta name="theme-color" content="#2563eb">
+     7|    <meta name="apple-mobile-web-app-capable" content="yes">
+     8|    <link rel="manifest" href="manifest.json">
+     9|    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    10|    <title>Payment history - Reportify AI</title>
+    11|    <!-- 与其它账户子页一致：顶栏用了 Tailwind 工具类，需加载 Tailwind，否则 flex / max-w-[60%] 等不生效 -->
+    12|    <script src="https://cdn.tailwindcss.com"></script>
+    13|    <link rel="stylesheet" href="style.css?v=2026.17">
+    14|    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    15|    <link rel="stylesheet" href="mobile-patch.css?v=2026.7">
+    16|    <script src="mobile-patch.js?v=2026.7"></script>
+    17|    <style>
+    18|        /* 主区横向铺满视口，避免 App / 窄屏里出现「中间一条白、两侧深色」的错觉 */
+    19|        section.payments-page.generator-section {
+    20|            width: 100%;
+    21|            max-width: 100%;
+    22|            box-sizing: border-box;
+    23|        }
+    24|        .payments-wrap { width: 100%; max-width: min(960px, 100%); margin: 0 auto; padding: 0 20px 48px; box-sizing: border-box; }
+    25|        .payments-table-wrap { overflow-x: auto; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.04); }
+    26|        .pay-mobile-only { display: none !important; }
+    27|        @media (min-width: 769px) {
+    28|            .pay-mobile-only { display: none !important; }
+    29|            .pay-desktop-only { display: table-cell !important; }
+    30|        }
+    31|        @media (max-width: 768px) {
+    32|            .pay-desktop-only { display: none !important; }
+    33|            .pay-mobile-only { display: table-cell !important; }
+    34|        }
+    35|        .pay-mobile-card {
+    36|            background: #fff;
+    37|            border: 1px solid #eef2f6;
+    38|            border-radius: 12px;
+    39|            padding: 14px 14px 12px;
+    40|            margin: 0 0 12px 0;
+    41|            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    42|            box-sizing: border-box;
+    43|            max-width: 100%;
+    44|        }
+    45|        .pay-row:last-child .pay-mobile-card { margin-bottom: 0; }
+    46|        .pay-mobile-line1 {
+    47|            display: flex;
+    48|            flex-wrap: wrap;
+    49|            align-items: center;
+    50|            gap: 6px 8px;
+    51|            font-size: 0.7rem;
+    52|            line-height: 1.35;
+    53|            color: #94a3b8;
+    54|            margin-bottom: 10px;
+    55|        }
+    56|        .pay-mobile-meta { color: #94a3b8; font-weight: 500; }
+    57|        .pay-mobile-dot { opacity: 0.7; }
+    58|        .pay-mobile-order {
+    59|            font-family: ui-monospace, 'Cascadia Code', monospace;
+    60|            word-break: break-all;
+    61|            flex: 1 1 auto;
+    62|            min-width: 0;
+    63|            color: #94a3b8;
+    64|        }
+    65|        .pay-copy-icon-btn {
+    66|            flex-shrink: 0;
+    67|            display: inline-flex;
+    68|            align-items: center;
+    69|            justify-content: center;
+    70|            width: 28px;
+    71|            height: 28px;
+    72|            padding: 0;
+    73|            border: 1px solid #e2e8f0;
+    74|            border-radius: 8px;
+    75|            background: #f8fafc;
+    76|            color: #64748b;
+    77|            cursor: pointer;
+    78|        }
+    79|        .pay-copy-icon-btn:active { background: #f1f5f9; }
+    80|        .pay-mobile-line2 {
+    81|            display: flex;
+    82|            flex-wrap: wrap;
+    83|            align-items: center;
+    84|            gap: 10px 14px;
+    85|            font-size: 0.95rem;
+    86|            font-weight: 600;
+    87|            color: #1e293b;
+    88|            margin-bottom: 8px;
+    89|        }
+    90|        .pay-mobile-plan { flex: 1 1 140px; min-width: 0; }
+    91|        .pay-mobile-amount { color: #0f172a; font-variant-numeric: tabular-nums; }
+    92|        .pay-mobile-status .pay-badge { font-size: 0.72rem; }
+    93|        .pay-mobile-line3 { margin-top: 2px; }
+    94|        .pay-mobile-help {
+    95|            font-size: 0.78rem;
+    96|            font-weight: 600;
+    97|            color: #2563eb;
+    98|            text-decoration: none;
+    99|        }
+   100|        .pay-mobile-help:hover, .pay-mobile-help:focus-visible { text-decoration: underline; color: #1d4ed8; }
+   101|        .payments-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+   102|        .payments-table th { text-align: left; padding: 12px 14px; background: #f8fafc; color: #475569; font-weight: 600; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
+   103|        .payments-table td { padding: 12px 14px; border-bottom: 1px solid #f1f5f9; color: #334155; vertical-align: top; word-wrap: break-word; overflow-wrap: break-word; }
+   104|        .payments-table tr:last-child td { border-bottom: none; }
+   105|        .mono-small { font-family: ui-monospace, 'Cascadia Code', monospace; font-size: 0.75rem; word-break: break-all; max-width: 220px; }
+   106|        .payments-pagination {
+   107|            display: none;
+   108|            align-items: center;
+   109|            justify-content: center;
+   110|            flex-wrap: wrap;
+   111|            gap: 12px;
+   112|            margin-top: 16px;
+   113|            padding: 12px;
+   114|            font-size: 0.875rem;
+   115|            color: #475569;
+   116|        }
+   117|        .payments-pagination.is-visible { display: flex; }
+   118|        @media (max-width: 768px) {
+   119|            .payments-pagination.is-visible { font-size: 0.72rem; gap: 8px; padding: 10px 6px; }
+   120|            .payments-pagination.is-visible button { padding: 6px 10px; font-size: 0.72rem; }
+   121|        }
+   122|        .payments-pagination button {
+   123|            padding: 8px 16px;
+   124|            border: 1px solid #e2e8f0;
+   125|            border-radius: 8px;
+   126|            background: #fff;
+   127|            color: #334155;
+   128|            font-weight: 600;
+   129|            cursor: pointer;
+   130|        }
+   131|        .payments-pagination button:disabled { opacity: 0.45; cursor: not-allowed; }
+   132|        .payments-pagination button:not(:disabled):active { background: #f1f5f9; }
+   133|        /* App / 窄屏：卡片式多行记录，无需横向滑动（与 History 列表风格接近） */
+   134|        @media (max-width: 768px) {
+   135|            .payments-wrap { padding-left: 10px; padding-right: 10px; max-width: 100%; }
+   136|            .payments-table-wrap {
+   137|                overflow-x: hidden !important;
+   138|                background: transparent;
+   139|                border: none;
+   140|                box-shadow: none;
+   141|            }
+   142|            .payments-table {
+   143|                width: 100%;
+   144|                font-size: 0.875rem;
+   145|                border-collapse: separate;
+   146|                border-spacing: 0;
+   147|            }
+   148|            .payments-table thead { display: none; }
+   149|            .payments-table tbody { display: block; }
+   150|            .payments-table tr.pay-row { display: block; }
+   151|            .payments-table tr.pay-row td.pay-mobile-only {
+   152|                display: block !important;
+   153|                padding: 0;
+   154|                border: none;
+   155|            }
+   156|            .payments-table td { border-bottom: none; }
+   157|        }
+   158|        .pay-badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
+   159|        .pay-ok { background: #ecfdf5; color: #047857; }
+   160|        .pay-pending { background: #fffbeb; color: #b45309; }
+   161|        .payments-note { margin-top: 24px; padding: 16px; background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 10px; color: #0369a1; font-size: 0.875rem; line-height: 1.5; }
+   162|        .payments-note a { color: #2563eb; font-weight: 600; }
+   163|        .pay-appeal-link { color: #2563eb; font-weight: 600; text-decoration: none; display: inline-block; margin-right: 8px; }
+   164|        .pay-appeal-link:hover { text-decoration: underline; }
+   165|        .pay-copy-btn { font-size: 0.75rem; padding: 4px 10px; border-radius: 6px; border: 1px solid #e2e8f0; background: #fff; color: #475569; cursor: pointer; }
+   166|        .pay-copy-btn:hover { background: #f8fafc; }
+   167|        .pay-actions-cell { white-space: nowrap; }
+   168|    </style>
+   169|
+   170|    <!-- Open Graph / Social -->
+   171|    <meta property="og:type" content="website" />
+   172|    <meta property="og:url" content="https://www.goreportify.com/payments.html" />
+   173|    <meta property="og:title" content="Payment history - Reportify AI" />
+   174|    <meta property="og:description" content="Reportify AI - AI-powered report generation" />
+   175|    <meta property="og:image" content="https://www.goreportify.com/images/og-default.png" />
+   176|    <meta property="og:site_name" content="Reportify AI" />
+   177|    <meta property="og:locale" content="en_US" />
+   178|
+   179|    <!-- Twitter Card -->
+   180|    <meta name="twitter:card" content="summary_large_image" />
+   181|    <meta name="twitter:title" content="Payment history - Reportify AI" />
+   182|    <meta name="twitter:description" content="Reportify AI - AI-powered report generation" />
+   183|    <meta name="twitter:image" content="https://www.goreportify.com/images/og-default.png" />
+   184|
+   185|    <!-- Canonical -->
+   186|    <link rel="canonical" href="https://www.goreportify.com/payments.html" />
+   187|
+   188|
+   189|    
+   190|
+   191|
+   192|    <meta name="description" content="Payment history and billing management for Reportify AI." />
+   193|        <!-- Google Analytics -->
+   194|    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PX3FEY6F6"></script>
+   195|    <script>
+   196|        window.dataLayer = window.dataLayer || [];
+   197|        function gtag(){dataLayer.push(arguments);}
+   198|        gtag('js', new Date());
+   199|        gtag('config', 'G-3PX3FEY6F6');
+   200|    </script>
+   201|</head>
+   202|<body class="has-app-nav" style="background-color: #f8fafc;">
+   203|    <header class="main-header account-header pwa-app-header">
+   204|        <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
+   205|            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
+   206|                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
+   207|            </div>
+   208|            <nav class="main-nav pwa-desktop-nav" id="pwa-collapse-nav">
+   209|                <ul>
+   210|                    <li><a href="index.html#features">Features</a></li>
+   211|                    <li><a href="index.html#pricing">Pricing</a></li>
+   212|                    <li><a href="generate.html">Generator</a></li>
+   213|                    <li><a href="news.html">News</a></li>
+   214|                    <li><a href="blog.html">Blog</a></li>
+   215|                    <li><a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff!important;padding:6px 14px;border-radius:8px;font-weight:600;font-size:0.9rem"><i class="fab fa-google-play" style="font-size:1rem"></i>App</a></li>
+   216|                </ul>
+   217|            </nav>
+   218|            <div class="pwa-header-actions">
+   219|                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite">
+   220|                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
+   221|                </a>
+   222|                <div id="auth-container" class="header-actions"></div>
+   223|            </div>
+   224|        </div>
+   225|    </header>
+   226|
+   227|    <section class="generator-section payments-page" style="min-height: 70vh; padding: 28px 0 0;">
+   228|        <div class="payments-wrap">
+   229|            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+   230|                <div>
+   231|                    <h2 class="section-title" style="margin: 0 0 6px; font-weight: 700; color: #1e293b;">Payment history</h2>
+   232|                    <p style="margin: 0; color: #64748b; font-size: 0.95rem;">PayPal and verified Google Play subscriptions linked to your account.</p>
+   233|                </div>
+   234|                <button type="button" id="payments-refresh" style="padding: 8px 16px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; color: #64748b; font-weight: 600;">
+   235|                    <i class="fas fa-sync-alt"></i> Refresh
+   236|                </button>
+   237|            </div>
+   238|
+   239|            <p id="payments-error" style="display: none; color: #b91c1c; margin-bottom: 12px; font-weight: 500;"></p>
+   240|
+   241|            <div id="payments-empty" style="display: none; text-align: center; padding: 48px 20px; color: #94a3b8; background: #fff; border: 1px dashed #e2e8f0; border-radius: 12px;">
+   242|                <i class="fas fa-receipt" style="font-size: 2rem; margin-bottom: 12px; opacity: 0.6;"></i>
+   243|                <p style="margin: 0; font-size: 1rem;">No payments recorded yet.</p>
+   244|                <p style="margin: 8px 0 0; font-size: 0.9rem;">After you complete a purchase, it will appear here.</p>
+   245|            </div>
+   246|
+   247|            <div id="payments-table-wrap" class="payments-table-wrap">
+   248|                <table class="payments-table" aria-label="Payment history">
+   249|                    <thead>
+   250|                        <tr>
+   251|                            <th>Date</th>
+   252|                            <th>Plan</th>
+   253|                            <th>Amount</th>
+   254|                            <th>Status</th>
+   255|                            <th>Order ID</th>
+   256|                            <th>Help</th>
+   257|                        </tr>
+   258|                    </thead>
+   259|                    <tbody id="payments-tbody"></tbody>
+   260|                </table>
+   261|            </div>
+   262|
+   263|            <div id="payments-pagination" class="payments-pagination" aria-label="Payment history pagination"></div>
+   264|
+   265|            <div class="payments-note">
+   266|                <strong>Questions or wrong charge?</strong>
+   267|                On desktop, use <strong>Contact + prefill</strong> in the table. On mobile, use <strong>Help — payment issue</strong> on each card or the copy icon next to the Order ID.
+   268|                You can also open <a href="contact.html?topic=Billing">Contact Support (Billing)</a> directly.
+   269|            </div>
+   270|        </div>
+   271|    </section>
+   272|
+   273|    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
+   274|        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
+   275|        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
+   276|        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
+   277|        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
+   278|        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
+   279|    </nav>
+   280|
+   281|    <footer class="main-footer site-footer-rich" role="contentinfo">
+   282|        <div class="container site-footer-inner">
+   283|            <div class="site-footer-social">
+   284|                <a href="https://discord.gg/UtNfS8kH" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+   285|                <a href="https://www.reddit.com/user/Automatic_Pitch5117" target="_blank" rel="noopener noreferrer" title="Reddit" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
+   286|                <a href="https://x.com/reportifyai" target="_blank" rel="noopener noreferrer" title="Twitter" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+   287|                <a href="https://linkedin.com/company/reportifyai" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+   288|                <a href="https://youtube.com/@reportifyai" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+   289|                <a href="https://facebook.com/reportifyai" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+   290|                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener noreferrer" title="Google" aria-label="Google"><i class="fa-brands fa-google"></i></a>
+   291|            </div>
+   292|            <div class="site-footer-legal">
+   293|                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:#059669;font-weight:600;text-decoration:none;font-size:0.9rem;transition:color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'"><i class="fab fa-google-play" style="font-size:1.2rem"></i> Download App</a>
+   294|                <a href="faq.html" style="color: #059669; font-weight: 600; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'">FAQ</a>
+   295|                <a href="terms.html">Terms of Service</a>
+   296|                <a href="privacy.html">Privacy Policy</a>
+   297|            </div>
+   298|            <p class="site-footer-copy">&copy; 2026 Beijing Cricket Information Technology Co., Ltd. All Rights Reserved.</p>
+   299|        </div>
+   300|    </footer>
+   301|
+   302|    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+   303|    <script src="pwa-nav.js"></script>
+   304|    <script src="script.js?v=2026.20"></script>
+   305|    <script src="payments.js?v=2026.18"></script>
+   306|</body>
+   307|</html>
+   308|

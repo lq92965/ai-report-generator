@@ -1,333 +1,334 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#2563eb">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
-    <title>My Account - Reportify AI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=2026.12">
-    <style>
-        .account-hub .container { max-width: 1200px !important; width: 95% !important; margin: 0 auto !important; padding: 24px var(--app-header-pad-x-mobile, 20px) !important; }
-        @media (min-width: 768px) {
-            .account-hub .container { padding: 40px 15px !important; }
-        }
-        .final-grid-container { display: flex !important; flex-wrap: wrap !important; gap: 16px !important; margin-top: 24px !important; width: 100% !important; justify-content: flex-start !important; }
-        @media (min-width: 768px) {
-            .final-grid-container { gap: 25px !important; margin-top: 40px !important; }
-        }
-        .final-card {
-            flex: 1 1 280px !important; max-width: 100% !important;
-            background: white !important; padding: 18px !important; border-radius: 12px !important;
-            border: 1px solid #e5e7eb !important; box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important;
-            text-decoration: none !important; color: inherit !important; transition: all 0.2s ease !important;
-            display: flex !important; flex-direction: column !important; justify-content: center !important; min-height: 140px !important;
-        }
-        .final-card:hover { transform: translateY(-5px) !important; border-color: #2563eb !important; box-shadow: 0 12px 24px rgba(37, 99, 235, 0.1) !important; }
-        .final-card h3 { margin: 0 0 8px 0 !important; font-size: 1.05rem !important; font-weight: 700 !important; color: #111827 !important; display: flex !important; align-items: center !important; gap: 10px !important; }
-        @media (min-width: 768px) {
-            .final-card { padding: 30px !important; border-radius: 16px !important; }
-            .final-card h3 { font-size: 1.25rem !important; }
-        }
-        .final-card p { margin: 0 !important; color: #6b7280 !important; font-size: 0.875rem !important; line-height: 1.5 !important; }
-        .final-card i { font-size: 1.2em; }
-        .avatar-section { text-align: center !important; margin-bottom: 28px !important; }
-        @media (min-width: 768px) {
-            .avatar-section { margin-bottom: 50px !important; }
-        }
-    </style>
-    <link rel="stylesheet" href="mobile-patch.css?v=2026.13">
-    <script src="mobile-patch.js?v=2026.13"></script>
-
-    <!-- Open Graph / Social -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.goreportify.com/account.html" />
-    <meta property="og:title" content="My Account - Reportify AI" />
-    <meta property="og:description" content="Manage your Reportify AI account, subscription, and preferences." />
-    <meta property="og:image" content="https://www.goreportify.com/images/og-default.png" />
-    <meta property="og:site_name" content="Reportify AI" />
-    <meta property="og:locale" content="en_US" />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="My Account - Reportify AI" />
-    <meta name="twitter:description" content="Manage your Reportify AI account, subscription, and preferences." />
-    <meta name="twitter:image" content="https://www.goreportify.com/images/og-default.png" />
-
-    <!-- Canonical -->
-    <link rel="canonical" href="https://www.goreportify.com/account.html" />
-
-
-    
-
-
-    <meta name="description" content="Manage your Reportify AI account settings and preferences." />
-        <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PX3FEY6F6"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-3PX3FEY6F6');
-    </script>
-</head>
-<body class="font-sans antialiased has-app-nav bg-gray-50 text-gray-800 flex flex-col min-h-screen">
-
-    <header class="main-header pwa-app-header">
-        <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
-            <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-                <img src="logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
-                <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
-            </a>
-            <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
-                <ul>
-                    <li><a href="index.html#features">Features</a></li>
-                    <li><a href="index.html#pricing">Pricing</a></li>
-                    <li><a href="generate.html">Generator</a></li>
-                    <li><a href="news.html">News</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff!important;padding:6px 14px;border-radius:8px;font-weight:600;font-size:0.9rem"><i class="fab fa-google-play" style="font-size:1rem"></i>App</a></li>
-                </ul>
-            </nav>
-            <div class="pwa-header-actions">
-                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite">
-                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
-                </a>
-                <div id="auth-container" class="header-actions"></div>
-            </div>
-        </div>
-    </header>
-
-    <main class="flex-grow">
-        <section class="generator-section account-hub">
-            <div class="container">
-                <div class="avatar-section">
-                    <h1 class="text-xl sm:text-2xl md:text-3xl" style="margin-bottom: 8px; color: #111; font-weight: 800;">My Account</h1>
-                    <p class="text-sm sm:text-base" style="color: #666;">Manage your profile, security, subscription, and history.</p>
-                    <div style="margin-top: 30px; display: flex; justify-content: center;">
-                        <img id="account-hub-avatar"
-                             src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4="
-                             alt="Profile"
-                             style="width: 120px !important; height: 120px !important; border-radius: 50% !important; object-fit: cover !important; border: 4px solid #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
-                    </div>
-                </div>
-
-                <div class="final-grid-container">
-                    <a href="profile.html" class="final-card account-protected-link">
-                        <h3><i class="fas fa-user-edit" style="color:#3b82f6;"></i> Profile</h3>
-                        <p>Update your display name and avatar.</p>
-                    </a>
-                    <a href="security.html" class="final-card account-protected-link">
-                        <h3><i class="fas fa-shield-alt" style="color:#10b981;"></i> Security</h3>
-                        <p>Change your login password.</p>
-                    </a>
-                    <a href="subscription.html" class="final-card account-protected-link">
-                        <h3><i class="fas fa-credit-card" style="color:#8b5cf6;"></i> Subscription</h3>
-                        <p>Manage your membership plan.</p>
-                    </a>
-                    <a href="payments.html" class="final-card account-protected-link">
-                        <h3><i class="fas fa-receipt" style="color:#0d9488;"></i> Payment history</h3>
-                        <p>View amounts, dates, and plan for each successful checkout.</p>
-                    </a>
-                    <a href="usage.html" class="final-card account-protected-link">
-                        <h3><i class="fas fa-chart-line" style="color:#f59e0b;"></i> Usage</h3>
-                        <p>Check your monthly limits.</p>
-                    </a>
-                    <a href="history.html" class="final-card account-protected-link">
-                        <h3><i class="fas fa-history" style="color:#ef4444;"></i> History</h3>
-                        <p>View and export your generated reports.</p>
-                    </a>
-                    <a href="contact.html" class="final-card account-protected-link">
-                        <h3><i class="fas fa-envelope" style="color:#0ea5e9;"></i> Contact Support</h3>
-                        <p>Send us a message or feedback.</p>
-                    </a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
-        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
-        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
-        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
-        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
-        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
-    </nav>
-
-    <footer class="main-footer site-footer-rich mt-auto" role="contentinfo">
-        <div class="container site-footer-inner">
-            <div class="site-footer-social">
-                <a href="https://discord.gg/UtNfS8kH" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
-                <a href="https://www.reddit.com/user/Automatic_Pitch5117" target="_blank" rel="noopener noreferrer" title="Reddit" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://google.com" target="_blank" rel="noopener noreferrer" title="Google" aria-label="Google"><i class="fa-brands fa-google"></i></a>
-            </div>
-            <div class="site-footer-legal">
-                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:#059669;font-weight:600;text-decoration:none;font-size:0.9rem;transition:color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'"><i class="fab fa-google-play" style="font-size:1.2rem"></i> Download App</a>
-                <a href="faq.html" style="color: #059669; font-weight: 600; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'">FAQ</a>
-                <a href="terms.html">Terms of Service</a>
-                <a href="privacy.html">Privacy Policy</a>
-            </div>
-            <p class="site-footer-copy">&copy; 2026 Beijing Cricket Information Technology Co., Ltd. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <div id="auth-modal-overlay" class="hidden fixed inset-0 z-[10000] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300">
-    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden transform scale-100 transition-transform duration-300 relative mx-4">
-        <button onclick="window.closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition z-10 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
-            <i class="fas fa-times text-xl"></i>
-        </button>
-        <div class="flex border-b border-gray-200 bg-gray-50">
-            <button class="tab-link active flex-1 py-4 text-sm font-bold text-gray-500 hover:text-blue-600 transition border-b-2 border-transparent" data-tab="login" onclick="window.openModal('login')">Login</button>
-            <button class="tab-link flex-1 py-4 text-sm font-bold text-gray-500 hover:text-blue-600 transition border-b-2 border-transparent" data-tab="signup" onclick="window.openModal('signup')">Sign Up</button>
-        </div>
-        <div class="p-8">
-            <div class="mb-6">
-                <button onclick="window.location.href='https://api.goreportify.com/auth/google'" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-3 rounded-lg transition shadow-sm group">
-                    <i class="fab fa-google text-red-500 text-xl group-hover:scale-110 transition-transform"></i>
-                    <span>Continue with Google</span>
-                </button>
-                <div class="relative mt-6">
-                    <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200"></div></div>
-                    <div class="relative flex justify-center text-xs uppercase font-bold tracking-wider"><span class="bg-white px-2 text-gray-400">Or</span></div>
-                </div>
-            </div>
-            <div id="login" class="tab-content hidden">
-                <form id="login-form" class="space-y-5">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-600 uppercase mb-2">Email Address</label>
-                        <input type="email" id="login-email" placeholder="name@company.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <label class="block text-xs font-bold text-gray-600 uppercase">Password</label>
-                            <a href="#" class="text-xs text-blue-600 hover:underline font-medium" onclick="if(typeof openForgotModal==='function'){openForgotModal();}return false;">Forgot?</a>
-                        </div>
-                        <div class="relative">
-                            <input type="password" id="login-password" placeholder="Enter password" class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
-                            <button type="button" class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-blue-600 transition-colors toggle-password">
-                                <i class="fas fa-eye text-lg"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition transform active:scale-95">Log In</button>
-                </form>
-            </div>
-            <div id="signup" class="tab-content hidden">
-                <form id="signup-form" class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Full Name</label>
-                        <input type="text" id="signup-name" placeholder="e.g. John Doe" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
-                        <p id="name-feedback" class="text-xs mt-1 text-red-500 hidden font-medium"></p>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Email</label>
-                        <div class="flex gap-2">
-                            <input type="email" id="signup-email" placeholder="name@company.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white flex-1" required>
-                            <button type="button" id="btn-send-signup-code" class="bg-gray-100 hover:bg-gray-200 text-blue-600 font-bold px-4 py-3 rounded-lg border border-gray-300 transition-colors whitespace-nowrap disabled:opacity-50">Send Code</button>
-                        </div>
-                        <p id="email-feedback" class="text-xs mt-1 text-red-500 hidden font-medium"></p>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Verification Code</label>
-                        <input type="text" id="signup-code" placeholder="Enter 6-digit code" maxlength="6" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white font-mono tracking-widest text-center" required>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Password</label>
-                        <div class="relative">
-                            <input type="password" id="signup-password" placeholder="8+ chars" class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
-                            <button type="button" class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-blue-600 transition-colors toggle-password">
-                                <i class="fas fa-eye text-lg"></i>
-                            </button>
-                        </div>
-                        <div id="signup-pwd-feedback" class="mt-2 hidden"></div>
-                    </div>
-                    <button type="submit" id="btn-signup-submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">Create Account</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    </div>
-
-    <div id="message-modal" class="hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300 p-4">
-        <div class="bg-white w-full max-w-6xl h-[85vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-gray-100 transform transition-all scale-100">
-            <div class="bg-gradient-to-r from-blue-700 to-blue-600 px-8 py-5 flex justify-between items-center text-white shadow-md flex-shrink-0">
-                <div>
-                    <h3 class="font-bold text-xl tracking-wide flex items-center gap-3"><i class="fas fa-clipboard-list"></i> Feedback History</h3>
-                    <p class="text-blue-100 text-xs mt-1">View your inquiries and our responses below.</p>
-                </div>
-                <button onclick="closeMessageCenter()" class="bg-white/10 hover:bg-white/20 rounded-full p-2 w-10 h-10 flex items-center justify-center transition backdrop-blur-md cursor-pointer">
-                    <i class="fas fa-times text-lg"></i>
-                </button>
-            </div>
-            <div id="msg-list-container" class="flex-1 p-8 overflow-y-auto bg-slate-50 space-y-6">
-                <div class="flex flex-col items-center justify-center h-full text-gray-400 gap-3">
-                    <i class="fas fa-spinner fa-spin text-3xl text-blue-500"></i>
-                    <span class="text-sm font-medium">Loading records...</span>
-                </div>
-            </div>
-            <div class="p-4 border-t border-gray-100 bg-white text-center text-xs text-gray-400 flex-shrink-0">
-                For new inquiries, use Contact Support on the Account page.
-            </div>
-        </div>
-    </div>
-
-    <button onclick="openMessageCenter()" class="fixed bottom-24 right-6 md:bottom-8 md:right-8 bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 md:w-16 md:h-16 rounded-full shadow-2xl z-[9990] flex items-center justify-center transition-transform hover:scale-110 group cursor-pointer" title="My Messages">
-        <i class="fas fa-bell text-xl md:text-2xl group-hover:animate-pulse"></i>
-        <span id="notif-badge" class="hidden absolute top-0 right-0 h-5 w-5">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-5 w-5 bg-red-600 border-2 border-white"></span>
-        </span>
-    </button>
-
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <script src="pwa-nav.js"></script>
-    <script src="script.js?v=2026.20"></script>
-
-    <div id="forgot-password-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 z-[9999] flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden relative p-8">
-            <button onclick="closeForgotModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-            <div class="text-center mb-6">
-                <h3 class="text-2xl font-bold text-gray-800">Reset Password</h3>
-                <p id="forgot-subtitle" class="text-sm text-gray-500 mt-2">Enter your registered email address.</p>
-            </div>
-            <form id="step1-form" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                    <input type="email" id="reset-email" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
-                </div>
-                <button type="submit" id="btn-send-code" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg">Send Verification Code</button>
-            </form>
-            <form id="step2-form" class="space-y-4 hidden mt-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">6-Digit Code</label>
-                    <input type="text" id="reset-code" required maxlength="6" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-center tracking-[0.5em] text-xl font-mono">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
-                    <div class="relative">
-                        <input type="password" id="reset-new-password" required minlength="8" class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white">
-                        <button type="button" class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-blue-600 transition-colors toggle-password">
-                            <i class="fas fa-eye text-lg"></i>
-                        </button>
-                    </div>
-                    <div id="reset-pwd-feedback" class="mt-2 hidden"></div>
-                </div>
-                <button type="submit" id="btn-reset-pwd" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg">Confirm Reset</button>
-            </form>
-            <div class="mt-6 pt-6 border-t border-gray-100 text-center text-sm text-gray-500">
-                Remembered it? <a href="#" onclick="closeForgotModal()" class="text-blue-600 font-semibold">Back to Login</a>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+     1|<!DOCTYPE html>
+     2|<html lang="en">
+     3|<head>
+     4|    <meta charset="UTF-8">
+     5|    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+     6|    <meta name="theme-color" content="#2563eb">
+     7|    <meta name="apple-mobile-web-app-capable" content="yes">
+     8|    <link rel="manifest" href="manifest.json">
+     9|    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    10|    <title>My Account - Reportify AI</title>
+    11|    <script src="https://cdn.tailwindcss.com"></script>
+    12|    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    13|    <link rel="stylesheet" href="style.css?v=2026.12">
+    14|    <style>
+    15|        .account-hub .container { max-width: 1200px !important; width: 95% !important; margin: 0 auto !important; padding: 24px var(--app-header-pad-x-mobile, 20px) !important; }
+    16|        @media (min-width: 768px) {
+    17|            .account-hub .container { padding: 40px 15px !important; }
+    18|        }
+    19|        .final-grid-container { display: flex !important; flex-wrap: wrap !important; gap: 16px !important; margin-top: 24px !important; width: 100% !important; justify-content: flex-start !important; }
+    20|        @media (min-width: 768px) {
+    21|            .final-grid-container { gap: 25px !important; margin-top: 40px !important; }
+    22|        }
+    23|        .final-card {
+    24|            flex: 1 1 280px !important; max-width: 100% !important;
+    25|            background: white !important; padding: 18px !important; border-radius: 12px !important;
+    26|            border: 1px solid #e5e7eb !important; box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important;
+    27|            text-decoration: none !important; color: inherit !important; transition: all 0.2s ease !important;
+    28|            display: flex !important; flex-direction: column !important; justify-content: center !important; min-height: 140px !important;
+    29|        }
+    30|        .final-card:hover { transform: translateY(-5px) !important; border-color: #2563eb !important; box-shadow: 0 12px 24px rgba(37, 99, 235, 0.1) !important; }
+    31|        .final-card h3 { margin: 0 0 8px 0 !important; font-size: 1.05rem !important; font-weight: 700 !important; color: #111827 !important; display: flex !important; align-items: center !important; gap: 10px !important; }
+    32|        @media (min-width: 768px) {
+    33|            .final-card { padding: 30px !important; border-radius: 16px !important; }
+    34|            .final-card h3 { font-size: 1.25rem !important; }
+    35|        }
+    36|        .final-card p { margin: 0 !important; color: #6b7280 !important; font-size: 0.875rem !important; line-height: 1.5 !important; }
+    37|        .final-card i { font-size: 1.2em; }
+    38|        .avatar-section { text-align: center !important; margin-bottom: 28px !important; }
+    39|        @media (min-width: 768px) {
+    40|            .avatar-section { margin-bottom: 50px !important; }
+    41|        }
+    42|    </style>
+    43|    <link rel="stylesheet" href="mobile-patch.css?v=2026.13">
+    44|    <script src="mobile-patch.js?v=2026.13"></script>
+    45|
+    46|    <!-- Open Graph / Social -->
+    47|    <meta property="og:type" content="website" />
+    48|    <meta property="og:url" content="https://www.goreportify.com/account.html" />
+    49|    <meta property="og:title" content="My Account - Reportify AI" />
+    50|    <meta property="og:description" content="Manage your Reportify AI account, subscription, and preferences." />
+    51|    <meta property="og:image" content="https://www.goreportify.com/images/og-default.png" />
+    52|    <meta property="og:site_name" content="Reportify AI" />
+    53|    <meta property="og:locale" content="en_US" />
+    54|
+    55|    <!-- Twitter Card -->
+    56|    <meta name="twitter:card" content="summary_large_image" />
+    57|    <meta name="twitter:title" content="My Account - Reportify AI" />
+    58|    <meta name="twitter:description" content="Manage your Reportify AI account, subscription, and preferences." />
+    59|    <meta name="twitter:image" content="https://www.goreportify.com/images/og-default.png" />
+    60|
+    61|    <!-- Canonical -->
+    62|    <link rel="canonical" href="https://www.goreportify.com/account.html" />
+    63|
+    64|
+    65|    
+    66|
+    67|
+    68|    <meta name="description" content="Manage your Reportify AI account settings and preferences." />
+    69|        <!-- Google Analytics -->
+    70|    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PX3FEY6F6"></script>
+    71|    <script>
+    72|        window.dataLayer = window.dataLayer || [];
+    73|        function gtag(){dataLayer.push(arguments);}
+    74|        gtag('js', new Date());
+    75|        gtag('config', 'G-3PX3FEY6F6');
+    76|    </script>
+    77|</head>
+    78|<body class="font-sans antialiased has-app-nav bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+    79|
+    80|    <header class="main-header pwa-app-header">
+    81|        <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
+    82|            <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+    83|                <img src="logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+    84|                <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
+    85|            </a>
+    86|            <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
+    87|                <ul>
+    88|                    <li><a href="index.html#features">Features</a></li>
+    89|                    <li><a href="index.html#pricing">Pricing</a></li>
+    90|                    <li><a href="generate.html">Generator</a></li>
+    91|                    <li><a href="news.html">News</a></li>
+    92|                    <li><a href="blog.html">Blog</a></li>
+    93|                    <li><a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff!important;padding:6px 14px;border-radius:8px;font-weight:600;font-size:0.9rem"><i class="fab fa-google-play" style="font-size:1rem"></i>App</a></li>
+    94|                </ul>
+    95|            </nav>
+    96|            <div class="pwa-header-actions">
+    97|                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite">
+    98|                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
+    99|                </a>
+   100|                <div id="auth-container" class="header-actions"></div>
+   101|            </div>
+   102|        </div>
+   103|    </header>
+   104|
+   105|    <main class="flex-grow">
+   106|        <section class="generator-section account-hub">
+   107|            <div class="container">
+   108|                <div class="avatar-section">
+   109|                    <h1 class="text-xl sm:text-2xl md:text-3xl" style="margin-bottom: 8px; color: #111; font-weight: 800;">My Account</h1>
+   110|                    <p class="text-sm sm:text-base" style="color: #666;">Manage your profile, security, subscription, and history.</p>
+   111|                    <div style="margin-top: 30px; display: flex; justify-content: center;">
+   112|                        <img id="account-hub-avatar"
+   113|                             src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2UzZTNlMyI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSI0IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTEyIDE0Yy02LjEgMC04IDQtOCA0djJoMTZ2LTJzLTEuOS00LTgtNHoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4="
+   114|                             alt="Profile"
+   115|                             style="width: 120px !important; height: 120px !important; border-radius: 50% !important; object-fit: cover !important; border: 4px solid #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+   116|                    </div>
+   117|                </div>
+   118|
+   119|                <div class="final-grid-container">
+   120|                    <a href="profile.html" class="final-card account-protected-link">
+   121|                        <h3><i class="fas fa-user-edit" style="color:#3b82f6;"></i> Profile</h3>
+   122|                        <p>Update your display name and avatar.</p>
+   123|                    </a>
+   124|                    <a href="security.html" class="final-card account-protected-link">
+   125|                        <h3><i class="fas fa-shield-alt" style="color:#10b981;"></i> Security</h3>
+   126|                        <p>Change your login password.</p>
+   127|                    </a>
+   128|                    <a href="subscription.html" class="final-card account-protected-link">
+   129|                        <h3><i class="fas fa-credit-card" style="color:#8b5cf6;"></i> Subscription</h3>
+   130|                        <p>Manage your membership plan.</p>
+   131|                    </a>
+   132|                    <a href="payments.html" class="final-card account-protected-link">
+   133|                        <h3><i class="fas fa-receipt" style="color:#0d9488;"></i> Payment history</h3>
+   134|                        <p>View amounts, dates, and plan for each successful checkout.</p>
+   135|                    </a>
+   136|                    <a href="usage.html" class="final-card account-protected-link">
+   137|                        <h3><i class="fas fa-chart-line" style="color:#f59e0b;"></i> Usage</h3>
+   138|                        <p>Check your monthly limits.</p>
+   139|                    </a>
+   140|                    <a href="history.html" class="final-card account-protected-link">
+   141|                        <h3><i class="fas fa-history" style="color:#ef4444;"></i> History</h3>
+   142|                        <p>View and export your generated reports.</p>
+   143|                    </a>
+   144|                    <a href="contact.html" class="final-card account-protected-link">
+   145|                        <h3><i class="fas fa-envelope" style="color:#0ea5e9;"></i> Contact Support</h3>
+   146|                        <p>Send us a message or feedback.</p>
+   147|                    </a>
+   148|                </div>
+   149|            </div>
+   150|        </section>
+   151|    </main>
+   152|
+   153|    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
+   154|        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
+   155|        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
+   156|        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
+   157|        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
+   158|        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
+   159|    </nav>
+   160|
+   161|    <footer class="main-footer site-footer-rich mt-auto" role="contentinfo">
+   162|        <div class="container site-footer-inner">
+   163|            <div class="site-footer-social">
+   164|                <a href="https://discord.gg/UtNfS8kH" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+   165|                <a href="https://www.reddit.com/user/Automatic_Pitch5117" target="_blank" rel="noopener noreferrer" title="Reddit" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
+   166|                <a href="https://x.com/reportifyai" target="_blank" rel="noopener noreferrer" title="Twitter" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+   167|                <a href="https://linkedin.com/company/reportifyai" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+   168|                <a href="https://youtube.com/@reportifyai" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+   169|                <a href="https://facebook.com/reportifyai" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+   170|                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener noreferrer" title="Google" aria-label="Google"><i class="fa-brands fa-google"></i></a>
+   171|            </div>
+   172|            <div class="site-footer-legal">
+   173|                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:#059669;font-weight:600;text-decoration:none;font-size:0.9rem;transition:color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'"><i class="fab fa-google-play" style="font-size:1.2rem"></i> Download App</a>
+   174|                <a href="faq.html" style="color: #059669; font-weight: 600; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'">FAQ</a>
+   175|                <a href="terms.html">Terms of Service</a>
+   176|                <a href="privacy.html">Privacy Policy</a>
+   177|            </div>
+   178|            <p class="site-footer-copy">&copy; 2026 Beijing Cricket Information Technology Co., Ltd. All Rights Reserved.</p>
+   179|        </div>
+   180|    </footer>
+   181|
+   182|    <div id="auth-modal-overlay" class="hidden fixed inset-0 z-[10000] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300">
+   183|    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden transform scale-100 transition-transform duration-300 relative mx-4">
+   184|        <button onclick="window.closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition z-10 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
+   185|            <i class="fas fa-times text-xl"></i>
+   186|        </button>
+   187|        <div class="flex border-b border-gray-200 bg-gray-50">
+   188|            <button class="tab-link active flex-1 py-4 text-sm font-bold text-gray-500 hover:text-blue-600 transition border-b-2 border-transparent" data-tab="login" onclick="window.openModal('login')">Login</button>
+   189|            <button class="tab-link flex-1 py-4 text-sm font-bold text-gray-500 hover:text-blue-600 transition border-b-2 border-transparent" data-tab="signup" onclick="window.openModal('signup')">Sign Up</button>
+   190|        </div>
+   191|        <div class="p-8">
+   192|            <div class="mb-6">
+   193|                <button onclick="window.location.href='https://api.goreportify.com/auth/google'" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-3 rounded-lg transition shadow-sm group">
+   194|                    <i class="fab fa-google text-red-500 text-xl group-hover:scale-110 transition-transform"></i>
+   195|                    <span>Continue with Google</span>
+   196|                </button>
+   197|                <div class="relative mt-6">
+   198|                    <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200"></div></div>
+   199|                    <div class="relative flex justify-center text-xs uppercase font-bold tracking-wider"><span class="bg-white px-2 text-gray-400">Or</span></div>
+   200|                </div>
+   201|            </div>
+   202|            <div id="login" class="tab-content hidden">
+   203|                <form id="login-form" class="space-y-5">
+   204|                    <div>
+   205|                        <label class="block text-xs font-bold text-gray-600 uppercase mb-2">Email Address</label>
+   206|                        <input type="email" id="login-email" placeholder="name@company.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
+   207|                    </div>
+   208|                    <div>
+   209|                        <div class="flex justify-between items-center mb-2">
+   210|                            <label class="block text-xs font-bold text-gray-600 uppercase">Password</label>
+   211|                            <a href="#" class="text-xs text-blue-600 hover:underline font-medium" onclick="if(typeof openForgotModal==='function'){openForgotModal();}return false;">Forgot?</a>
+   212|                        </div>
+   213|                        <div class="relative">
+   214|                            <input type="password" id="login-password" placeholder="Enter password" class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
+   215|                            <button type="button" class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-blue-600 transition-colors toggle-password">
+   216|                                <i class="fas fa-eye text-lg"></i>
+   217|                            </button>
+   218|                        </div>
+   219|                    </div>
+   220|                    <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition transform active:scale-95">Log In</button>
+   221|                </form>
+   222|            </div>
+   223|            <div id="signup" class="tab-content hidden">
+   224|                <form id="signup-form" class="space-y-4">
+   225|                    <div>
+   226|                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Full Name</label>
+   227|                        <input type="text" id="signup-name" placeholder="e.g. John Doe" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
+   228|                        <p id="name-feedback" class="text-xs mt-1 text-red-500 hidden font-medium"></p>
+   229|                    </div>
+   230|                    <div>
+   231|                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Email</label>
+   232|                        <div class="flex gap-2">
+   233|                            <input type="email" id="signup-email" placeholder="name@company.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white flex-1" required>
+   234|                            <button type="button" id="btn-send-signup-code" class="bg-gray-100 hover:bg-gray-200 text-blue-600 font-bold px-4 py-3 rounded-lg border border-gray-300 transition-colors whitespace-nowrap disabled:opacity-50">Send Code</button>
+   235|                        </div>
+   236|                        <p id="email-feedback" class="text-xs mt-1 text-red-500 hidden font-medium"></p>
+   237|                    </div>
+   238|                    <div>
+   239|                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Verification Code</label>
+   240|                        <input type="text" id="signup-code" placeholder="Enter 6-digit code" maxlength="6" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white font-mono tracking-widest text-center" required>
+   241|                    </div>
+   242|                    <div>
+   243|                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Password</label>
+   244|                        <div class="relative">
+   245|                            <input type="password" id="signup-password" placeholder="8+ chars" class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
+   246|                            <button type="button" class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-blue-600 transition-colors toggle-password">
+   247|                                <i class="fas fa-eye text-lg"></i>
+   248|                            </button>
+   249|                        </div>
+   250|                        <div id="signup-pwd-feedback" class="mt-2 hidden"></div>
+   251|                    </div>
+   252|                    <button type="submit" id="btn-signup-submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">Create Account</button>
+   253|                </form>
+   254|            </div>
+   255|        </div>
+   256|    </div>
+   257|    </div>
+   258|
+   259|    <div id="message-modal" class="hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300 p-4">
+   260|        <div class="bg-white w-full max-w-6xl h-[85vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-gray-100 transform transition-all scale-100">
+   261|            <div class="bg-gradient-to-r from-blue-700 to-blue-600 px-8 py-5 flex justify-between items-center text-white shadow-md flex-shrink-0">
+   262|                <div>
+   263|                    <h3 class="font-bold text-xl tracking-wide flex items-center gap-3"><i class="fas fa-clipboard-list"></i> Feedback History</h3>
+   264|                    <p class="text-blue-100 text-xs mt-1">View your inquiries and our responses below.</p>
+   265|                </div>
+   266|                <button onclick="closeMessageCenter()" class="bg-white/10 hover:bg-white/20 rounded-full p-2 w-10 h-10 flex items-center justify-center transition backdrop-blur-md cursor-pointer">
+   267|                    <i class="fas fa-times text-lg"></i>
+   268|                </button>
+   269|            </div>
+   270|            <div id="msg-list-container" class="flex-1 p-8 overflow-y-auto bg-slate-50 space-y-6">
+   271|                <div class="flex flex-col items-center justify-center h-full text-gray-400 gap-3">
+   272|                    <i class="fas fa-spinner fa-spin text-3xl text-blue-500"></i>
+   273|                    <span class="text-sm font-medium">Loading records...</span>
+   274|                </div>
+   275|            </div>
+   276|            <div class="p-4 border-t border-gray-100 bg-white text-center text-xs text-gray-400 flex-shrink-0">
+   277|                For new inquiries, use Contact Support on the Account page.
+   278|            </div>
+   279|        </div>
+   280|    </div>
+   281|
+   282|    <button onclick="openMessageCenter()" class="fixed bottom-24 right-6 md:bottom-8 md:right-8 bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 md:w-16 md:h-16 rounded-full shadow-2xl z-[9990] flex items-center justify-center transition-transform hover:scale-110 group cursor-pointer" title="My Messages">
+   283|        <i class="fas fa-bell text-xl md:text-2xl group-hover:animate-pulse"></i>
+   284|        <span id="notif-badge" class="hidden absolute top-0 right-0 h-5 w-5">
+   285|            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+   286|            <span class="relative inline-flex rounded-full h-5 w-5 bg-red-600 border-2 border-white"></span>
+   287|        </span>
+   288|    </button>
+   289|
+   290|    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+   291|    <script src="pwa-nav.js"></script>
+   292|    <script src="script.js?v=2026.20"></script>
+   293|
+   294|    <div id="forgot-password-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 z-[9999] flex items-center justify-center p-4">
+   295|        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden relative p-8">
+   296|            <button onclick="closeForgotModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+   297|                <i class="fas fa-times text-xl"></i>
+   298|            </button>
+   299|            <div class="text-center mb-6">
+   300|                <h3 class="text-2xl font-bold text-gray-800">Reset Password</h3>
+   301|                <p id="forgot-subtitle" class="text-sm text-gray-500 mt-2">Enter your registered email address.</p>
+   302|            </div>
+   303|            <form id="step1-form" class="space-y-4">
+   304|                <div>
+   305|                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+   306|                    <input type="email" id="reset-email" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+   307|                </div>
+   308|                <button type="submit" id="btn-send-code" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg">Send Verification Code</button>
+   309|            </form>
+   310|            <form id="step2-form" class="space-y-4 hidden mt-4">
+   311|                <div>
+   312|                    <label class="block text-sm font-medium text-gray-700 mb-1">6-Digit Code</label>
+   313|                    <input type="text" id="reset-code" required maxlength="6" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-center tracking-[0.5em] text-xl font-mono">
+   314|                </div>
+   315|                <div>
+   316|                    <label class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+   317|                    <div class="relative">
+   318|                        <input type="password" id="reset-new-password" required minlength="8" class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white">
+   319|                        <button type="button" class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-blue-600 transition-colors toggle-password">
+   320|                            <i class="fas fa-eye text-lg"></i>
+   321|                        </button>
+   322|                    </div>
+   323|                    <div id="reset-pwd-feedback" class="mt-2 hidden"></div>
+   324|                </div>
+   325|                <button type="submit" id="btn-reset-pwd" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg">Confirm Reset</button>
+   326|            </form>
+   327|            <div class="mt-6 pt-6 border-t border-gray-100 text-center text-sm text-gray-500">
+   328|                Remembered it? <a href="#" onclick="closeForgotModal()" class="text-blue-600 font-semibold">Back to Login</a>
+   329|            </div>
+   330|        </div>
+   331|    </div>
+   332|</body>
+   333|</html>
+   334|

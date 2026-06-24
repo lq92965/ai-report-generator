@@ -1,151 +1,152 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#2563eb">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
-    <title>History - Reportify AI</title>
-    <link rel="stylesheet" href="style.css?v=2026.12">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="mobile-patch.css?v=2026.6">
-    <script src="mobile-patch.js?v=2026.6"></script>
-
-    <!-- Open Graph / Social -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.goreportify.com/history.html" />
-    <meta property="og:title" content="History - Reportify AI" />
-    <meta property="og:description" content="Reportify AI - AI-powered report generation" />
-    <meta property="og:image" content="https://www.goreportify.com/images/og-default.png" />
-    <meta property="og:site_name" content="Reportify AI" />
-    <meta property="og:locale" content="en_US" />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="History - Reportify AI" />
-    <meta name="twitter:description" content="Reportify AI - AI-powered report generation" />
-    <meta name="twitter:image" content="https://www.goreportify.com/images/og-default.png" />
-
-    <!-- Canonical -->
-    <link rel="canonical" href="https://www.goreportify.com/history.html" />
-
-
-    
-
-
-    <meta name="description" content="View your report generation history and past AI-generated reports." />
-        <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PX3FEY6F6"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-3PX3FEY6F6');
-    </script>
-</head>
-<body class="has-app-nav" style="background-color: #f8fafc;">
-    <header class="main-header account-header pwa-app-header">
-        <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
-            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
-                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
-            </div>
-            <nav class="main-nav pwa-desktop-nav" id="pwa-collapse-nav">
-                <ul>
-                    <li><a href="index.html#features">Features</a></li>
-                    <li><a href="index.html#pricing">Pricing</a></li>
-                    <li><a href="generate.html">Generator</a></li>
-                    <li><a href="news.html">News</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff!important;padding:6px 14px;border-radius:8px;font-weight:600;font-size:0.9rem"><i class="fab fa-google-play" style="font-size:1rem"></i>App</a></li>
-                </ul>
-            </nav>
-            <div class="pwa-header-actions">
-                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite">
-                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
-                </a>
-                <div id="auth-container" class="header-actions"></div>
-            </div>
-        </div>
-    </header>
-
-<section class="generator-section" style="min-height: 80vh; padding: 40px 0;">
-        <div class="container" style="width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 20px;">
-            <div style="margin-bottom: 30px; text-align: left;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h2 class="section-title" style="margin: 0; font-weight: 600; color: #1e293b;">History & Reports</h2>
-                    <button onclick="loadHistoryData()" style="padding: 8px 15px; background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; color: #64748b;">
-                        <i class="fas fa-sync-alt"></i> Refresh
-                    </button>
-                </div>
-            </div>
-            <div id="history-container" style="width: 100%;"></div>
-        </div>
-    </section>
-
-    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
-        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
-        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
-        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
-        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
-        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
-    </nav>
-
-    <footer class="main-footer site-footer-rich" role="contentinfo">
-        <div class="container site-footer-inner">
-            <div class="site-footer-social">
-                <a href="https://discord.gg/UtNfS8kH" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
-                <a href="https://www.reddit.com/user/Automatic_Pitch5117" target="_blank" rel="noopener noreferrer" title="Reddit" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://google.com" target="_blank" rel="noopener noreferrer" title="Google" aria-label="Google"><i class="fa-brands fa-google"></i></a>
-            </div>
-            <div class="site-footer-legal">
-                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:#059669;font-weight:600;text-decoration:none;font-size:0.9rem;transition:color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'"><i class="fab fa-google-play" style="font-size:1.2rem"></i> Download App</a>
-                <a href="faq.html" style="color: #059669; font-weight: 600; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'">FAQ</a>
-                <a href="terms.html">Terms of Service</a>
-                <a href="privacy.html">Privacy Policy</a>
-            </div>
-            <p class="site-footer-copy">&copy; 2026 Beijing Cricket Information Technology Co., Ltd. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <script src="vendor/docx.umd.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-    <div id="report-view-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
-        <div style="background: white; width: 90%; max-width: 800px; max-height: 85vh; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); display: flex; flex-direction: column; overflow: hidden; animation: fadeIn 0.3s ease;">
-            
-            <div style="padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; background: #f9fafb;">
-                <h3 id="modal-title" style="margin: 0; font-size: 1.2rem; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Report Details</h3>
-                <button type="button" onclick="closeViewModal()" style="background: none; border: none; font-size: 24px; color: #999; cursor: pointer; padding: 0 10px;">&times;</button>
-            </div>
-
-            <div id="modal-body" style="padding: 30px; overflow-y: auto; line-height: 1.8; color: #374151; font-size: 15px;">
-                </div>
-
-            <div style="padding: 15px 20px; border-top: 1px solid #eee; text-align: right; background: white;">
-                <button type="button" onclick="closeViewModal()" style="padding: 8px 20px; background: #f3f4f6; color: #555; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; margin-right: 10px;">Close</button>
-                <button type="button" id="modal-copy-btn" style="padding: 8px 20px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer;">Copy Text</button>
-            </div>
-        </div>
-    </div>
-
-    <style>
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        /* 让生成的 Markdown 内容好看一点 */
-        #modal-body h1, #modal-body h2, #modal-body h3 { margin-top: 1.5em; margin-bottom: 0.5em; color: #111; }
-        #modal-body ul, #modal-body ol { padding-left: 20px; }
-        #modal-body p { margin-bottom: 1em; }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
-    
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <script src="pwa-nav.js"></script>
-    <script src="script.js?v=2026.29"></script>
-</body>
-</html>
+     1|<!DOCTYPE html>
+     2|<html lang="en">
+     3|<head>
+     4|    <meta charset="UTF-8">
+     5|    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+     6|    <meta name="theme-color" content="#2563eb">
+     7|    <meta name="apple-mobile-web-app-capable" content="yes">
+     8|    <link rel="manifest" href="manifest.json">
+     9|    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    10|    <title>History - Reportify AI</title>
+    11|    <link rel="stylesheet" href="style.css?v=2026.12">
+    12|    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    13|    <link rel="stylesheet" href="mobile-patch.css?v=2026.6">
+    14|    <script src="mobile-patch.js?v=2026.6"></script>
+    15|
+    16|    <!-- Open Graph / Social -->
+    17|    <meta property="og:type" content="website" />
+    18|    <meta property="og:url" content="https://www.goreportify.com/history.html" />
+    19|    <meta property="og:title" content="History - Reportify AI" />
+    20|    <meta property="og:description" content="Reportify AI - AI-powered report generation" />
+    21|    <meta property="og:image" content="https://www.goreportify.com/images/og-default.png" />
+    22|    <meta property="og:site_name" content="Reportify AI" />
+    23|    <meta property="og:locale" content="en_US" />
+    24|
+    25|    <!-- Twitter Card -->
+    26|    <meta name="twitter:card" content="summary_large_image" />
+    27|    <meta name="twitter:title" content="History - Reportify AI" />
+    28|    <meta name="twitter:description" content="Reportify AI - AI-powered report generation" />
+    29|    <meta name="twitter:image" content="https://www.goreportify.com/images/og-default.png" />
+    30|
+    31|    <!-- Canonical -->
+    32|    <link rel="canonical" href="https://www.goreportify.com/history.html" />
+    33|
+    34|
+    35|    
+    36|
+    37|
+    38|    <meta name="description" content="View your report generation history and past AI-generated reports." />
+    39|        <!-- Google Analytics -->
+    40|    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PX3FEY6F6"></script>
+    41|    <script>
+    42|        window.dataLayer = window.dataLayer || [];
+    43|        function gtag(){dataLayer.push(arguments);}
+    44|        gtag('js', new Date());
+    45|        gtag('config', 'G-3PX3FEY6F6');
+    46|    </script>
+    47|</head>
+    48|<body class="has-app-nav" style="background-color: #f8fafc;">
+    49|    <header class="main-header account-header pwa-app-header">
+    50|        <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
+    51|            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
+    52|                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
+    53|            </div>
+    54|            <nav class="main-nav pwa-desktop-nav" id="pwa-collapse-nav">
+    55|                <ul>
+    56|                    <li><a href="index.html#features">Features</a></li>
+    57|                    <li><a href="index.html#pricing">Pricing</a></li>
+    58|                    <li><a href="generate.html">Generator</a></li>
+    59|                    <li><a href="news.html">News</a></li>
+    60|                    <li><a href="blog.html">Blog</a></li>
+    61|                    <li><a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff!important;padding:6px 14px;border-radius:8px;font-weight:600;font-size:0.9rem"><i class="fab fa-google-play" style="font-size:1rem"></i>App</a></li>
+    62|                </ul>
+    63|            </nav>
+    64|            <div class="pwa-header-actions">
+    65|                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite">
+    66|                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
+    67|                </a>
+    68|                <div id="auth-container" class="header-actions"></div>
+    69|            </div>
+    70|        </div>
+    71|    </header>
+    72|
+    73|<section class="generator-section" style="min-height: 80vh; padding: 40px 0;">
+    74|        <div class="container" style="width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 20px;">
+    75|            <div style="margin-bottom: 30px; text-align: left;">
+    76|                <div style="display: flex; justify-content: space-between; align-items: center;">
+    77|                    <h2 class="section-title" style="margin: 0; font-weight: 600; color: #1e293b;">History & Reports</h2>
+    78|                    <button onclick="loadHistoryData()" style="padding: 8px 15px; background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; color: #64748b;">
+    79|                        <i class="fas fa-sync-alt"></i> Refresh
+    80|                    </button>
+    81|                </div>
+    82|            </div>
+    83|            <div id="history-container" style="width: 100%;"></div>
+    84|        </div>
+    85|    </section>
+    86|
+    87|    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
+    88|        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
+    89|        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
+    90|        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
+    91|        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
+    92|        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
+    93|    </nav>
+    94|
+    95|    <footer class="main-footer site-footer-rich" role="contentinfo">
+    96|        <div class="container site-footer-inner">
+    97|            <div class="site-footer-social">
+    98|                <a href="https://discord.gg/UtNfS8kH" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+    99|                <a href="https://www.reddit.com/user/Automatic_Pitch5117" target="_blank" rel="noopener noreferrer" title="Reddit" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
+   100|                <a href="https://x.com/reportifyai" target="_blank" rel="noopener noreferrer" title="Twitter" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+   101|                <a href="https://linkedin.com/company/reportifyai" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+   102|                <a href="https://youtube.com/@reportifyai" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+   103|                <a href="https://facebook.com/reportifyai" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+   104|                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener noreferrer" title="Google" aria-label="Google"><i class="fa-brands fa-google"></i></a>
+   105|            </div>
+   106|            <div class="site-footer-legal">
+   107|                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:#059669;font-weight:600;text-decoration:none;font-size:0.9rem;transition:color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'"><i class="fab fa-google-play" style="font-size:1.2rem"></i> Download App</a>
+   108|                <a href="faq.html" style="color: #059669; font-weight: 600; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'">FAQ</a>
+   109|                <a href="terms.html">Terms of Service</a>
+   110|                <a href="privacy.html">Privacy Policy</a>
+   111|            </div>
+   112|            <p class="site-footer-copy">&copy; 2026 Beijing Cricket Information Technology Co., Ltd. All Rights Reserved.</p>
+   113|        </div>
+   114|    </footer>
+   115|
+   116|    <script src="vendor/docx.umd.js"></script>
+   117|    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+   118|    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+   119|
+   120|    <div id="report-view-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+   121|        <div style="background: white; width: 90%; max-width: 800px; max-height: 85vh; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); display: flex; flex-direction: column; overflow: hidden; animation: fadeIn 0.3s ease;">
+   122|            
+   123|            <div style="padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; background: #f9fafb;">
+   124|                <h3 id="modal-title" style="margin: 0; font-size: 1.2rem; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Report Details</h3>
+   125|                <button type="button" onclick="closeViewModal()" style="background: none; border: none; font-size: 24px; color: #999; cursor: pointer; padding: 0 10px;">&times;</button>
+   126|            </div>
+   127|
+   128|            <div id="modal-body" style="padding: 30px; overflow-y: auto; line-height: 1.8; color: #374151; font-size: 15px;">
+   129|                </div>
+   130|
+   131|            <div style="padding: 15px 20px; border-top: 1px solid #eee; text-align: right; background: white;">
+   132|                <button type="button" onclick="closeViewModal()" style="padding: 8px 20px; background: #f3f4f6; color: #555; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; margin-right: 10px;">Close</button>
+   133|                <button type="button" id="modal-copy-btn" style="padding: 8px 20px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer;">Copy Text</button>
+   134|            </div>
+   135|        </div>
+   136|    </div>
+   137|
+   138|    <style>
+   139|        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+   140|        /* 让生成的 Markdown 内容好看一点 */
+   141|        #modal-body h1, #modal-body h2, #modal-body h3 { margin-top: 1.5em; margin-bottom: 0.5em; color: #111; }
+   142|        #modal-body ul, #modal-body ol { padding-left: 20px; }
+   143|        #modal-body p { margin-bottom: 1em; }
+   144|    </style>
+   145|    <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+   146|    
+   147|    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+   148|    <script src="pwa-nav.js"></script>
+   149|    <script src="script.js?v=2026.29"></script>
+   150|</body>
+   151|</html>
+   152|

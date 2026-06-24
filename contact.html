@@ -1,309 +1,310 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#2563eb">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
-    <title>Contact Support - Reportify AI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=2026.13">
-    <style>
-        .account-hub .container { max-width: 1200px !important; width: 95% !important; margin: 0 auto !important; padding: 40px 15px !important; }
-        .final-grid-container { display: flex !important; flex-wrap: wrap !important; gap: 25px !important; margin-top: 40px !important; width: 100% !important; justify-content: flex-start !important; }
-        .final-card {
-            flex: 1 1 280px !important; max-width: 100% !important;
-            background: white !important; padding: 30px !important; border-radius: 16px !important;
-            border: 1px solid #e5e7eb !important; box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important;
-            text-decoration: none !important; color: inherit !important; transition: all 0.2s ease !important;
-            display: flex !important; flex-direction: column !important; justify-content: center !important; min-height: 140px !important;
-        }
-        .final-card:hover { transform: translateY(-5px) !important; border-color: #2563eb !important; box-shadow: 0 12px 24px rgba(37, 99, 235, 0.1) !important; }
-        .final-card h3 { margin: 0 0 10px 0 !important; font-size: 1.25rem !important; font-weight: 700 !important; color: #111827 !important; display: flex !important; align-items: center !important; gap: 12px !important; }
-        .final-card p { margin: 0 !important; color: #6b7280 !important; font-size: 0.95rem !important; line-height: 1.5 !important; }
-        .final-card i { font-size: 1.2em; }
-        .avatar-section { text-align: center !important; margin-bottom: 50px !important; }
-    </style>
-    <link rel="stylesheet" href="mobile-patch.css">
-    <script src="mobile-patch.js"></script>
-
-    <!-- Open Graph / Social -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.goreportify.com/contact.html" />
-    <meta property="og:title" content="Contact Support - Reportify AI" />
-    <meta property="og:description" content="Get help with Reportify AI. Contact our support team for assistance with reports, billing, or account issues." />
-    <meta property="og:image" content="https://www.goreportify.com/images/og-default.png" />
-    <meta property="og:site_name" content="Reportify AI" />
-    <meta property="og:locale" content="en_US" />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Contact Support - Reportify AI" />
-    <meta name="twitter:description" content="Get help with Reportify AI. Contact our support team for assistance with reports, billing, or account issues." />
-    <meta name="twitter:image" content="https://www.goreportify.com/images/og-default.png" />
-
-    <!-- Canonical -->
-    <link rel="canonical" href="https://www.goreportify.com/contact.html" />
-
-
-    
-
-
-    <meta name="description" content="Get in touch with the Reportify AI team. We are here to help with any questions or feedback." />
-        <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PX3FEY6F6"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-3PX3FEY6F6');
-    </script>
-</head>
-<body class="font-sans antialiased has-app-nav text-gray-800 flex flex-col min-h-screen">
-    <script>
-        if (!localStorage.getItem('token')) {
-            window.location.replace('account.html');
-        }
-    </script>
-
-    <header class="main-header account-header pwa-app-header">
-        <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
-            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
-                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
-            </div>
-            <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
-                <ul>
-                    <li><a href="index.html#features">Features</a></li>
-                    <li><a href="index.html#pricing">Pricing</a></li>
-                    <li><a href="generate.html">Generator</a></li>
-                    <li><a href="news.html">News</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff!important;padding:6px 14px;border-radius:8px;font-weight:600;font-size:0.9rem"><i class="fab fa-google-play" style="font-size:1rem"></i>App</a></li>
-                </ul>
-            </nav>
-            <div class="pwa-header-actions">
-                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite">
-                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
-                </a>
-                <div id="auth-container" class="header-actions"></div>
-            </div>
-        </div>
-    </header>
-
-    <!-- main 整段同色背景，避免「白区块只有表单高度、下面透出灰底」在视窗中间出现一条横分色 -->
-    <main class="flex flex-1 flex-col min-h-0 bg-white">
-        <section id="contact-us" class="flex flex-1 flex-col py-12 border-t border-gray-200 w-full">
-            <div class="container contact-page-shell" style="max-width: 560px; margin: 0 auto; padding: 0 20px;">
-                <h1 class="section-title" style="text-align: center; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 800; color: #0f172a;">Contact Support</h1>
-                <p style="text-align: center; color: #64748b; margin-top: 8px; font-size: 1rem;">We typically reply within 1–2 business days.</p>
-                <form id="contact-form" class="mt-10 space-y-4">
-                    <div>
-                        <label for="name" class="block text-sm font-semibold text-gray-700 mb-1">Name</label>
-                        <input type="text" id="name" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white">
-                    </div>
-                    <div>
-                        <label for="email" class="block text-sm font-semibold text-gray-700 mb-1">Email</label>
-                        <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white">
-                    </div>
-                    <div>
-                        <label for="contact-type" class="block text-sm font-semibold text-gray-700 mb-1">Topic</label>
-                        <select id="contact-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white">
-                            <option value="General">General</option>
-                            <option value="Billing">Billing</option>
-                            <option value="Technical">Technical</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="message" class="block text-sm font-semibold text-gray-700 mb-1">Message</label>
-                        <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white resize-y"></textarea>
-                    </div>
-                    <button type="submit" class="w-full py-3 rounded-xl font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-md transition">Send message</button>
-                </form>
-            </div>
-        </section>
-    </main>
-
-    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
-        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
-        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
-        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
-        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
-        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
-    </nav>
-
-    <footer class="main-footer site-footer-rich mt-auto" role="contentinfo">
-        <div class="container site-footer-inner">
-            <div class="site-footer-social">
-                <a href="https://discord.gg/UtNfS8kH" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
-                <a href="https://www.reddit.com/user/Automatic_Pitch5117" target="_blank" rel="noopener noreferrer" title="Reddit" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://google.com" target="_blank" rel="noopener noreferrer" title="Google" aria-label="Google"><i class="fa-brands fa-google"></i></a>
-            </div>
-            <div class="site-footer-legal">
-                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:#059669;font-weight:600;text-decoration:none;font-size:0.9rem;transition:color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'"><i class="fab fa-google-play" style="font-size:1.2rem"></i> Download App</a>
-                <a href="faq.html" style="color: #059669; font-weight: 600; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'">FAQ</a>
-                <a href="terms.html">Terms of Service</a>
-                <a href="privacy.html">Privacy Policy</a>
-            </div>
-            <p class="site-footer-copy">&copy; 2026 Beijing Cricket Information Technology Co., Ltd. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <div id="auth-modal-overlay" class="hidden fixed inset-0 z-[10000] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300">
-    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden transform scale-100 transition-transform duration-300 relative mx-4">
-        <button onclick="window.closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition z-10 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
-            <i class="fas fa-times text-xl"></i>
-        </button>
-        <div class="flex border-b border-gray-200 bg-gray-50">
-            <button class="tab-link active flex-1 py-4 text-sm font-bold text-gray-500 hover:text-blue-600 transition border-b-2 border-transparent" data-tab="login" onclick="window.openModal('login')">Login</button>
-            <button class="tab-link flex-1 py-4 text-sm font-bold text-gray-500 hover:text-blue-600 transition border-b-2 border-transparent" data-tab="signup" onclick="window.openModal('signup')">Sign Up</button>
-        </div>
-        <div class="p-8">
-            <div class="mb-6">
-                <button onclick="window.location.href='https://api.goreportify.com/auth/google'" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-3 rounded-lg transition shadow-sm group">
-                    <i class="fab fa-google text-red-500 text-xl group-hover:scale-110 transition-transform"></i>
-                    <span>Continue with Google</span>
-                </button>
-                <div class="relative mt-6">
-                    <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200"></div></div>
-                    <div class="relative flex justify-center text-xs uppercase font-bold tracking-wider"><span class="bg-white px-2 text-gray-400">Or</span></div>
-                </div>
-            </div>
-            <div id="login" class="tab-content hidden">
-                <form id="login-form" class="space-y-5">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-600 uppercase mb-2">Email Address</label>
-                        <input type="email" id="login-email" placeholder="name@company.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <label class="block text-xs font-bold text-gray-600 uppercase">Password</label>
-                            <a href="#" class="text-xs text-blue-600 hover:underline font-medium" onclick="if(typeof openForgotModal==='function'){openForgotModal();}return false;">Forgot?</a>
-                        </div>
-                        <div class="relative">
-                            <input type="password" id="login-password" placeholder="Enter password" class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
-                            <button type="button" class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-blue-600 transition-colors toggle-password">
-                                <i class="fas fa-eye text-lg"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition transform active:scale-95">Log In</button>
-                </form>
-            </div>
-            <div id="signup" class="tab-content hidden">
-                <form id="signup-form" class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Full Name</label>
-                        <input type="text" id="signup-name" placeholder="e.g. John Doe" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
-                        <p id="name-feedback" class="text-xs mt-1 text-red-500 hidden font-medium"></p>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Email</label>
-                        <div class="flex gap-2">
-                            <input type="email" id="signup-email" placeholder="name@company.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white flex-1" required>
-                            <button type="button" id="btn-send-signup-code" class="bg-gray-100 hover:bg-gray-200 text-blue-600 font-bold px-4 py-3 rounded-lg border border-gray-300 transition-colors whitespace-nowrap disabled:opacity-50">Send Code</button>
-                        </div>
-                        <p id="email-feedback" class="text-xs mt-1 text-red-500 hidden font-medium"></p>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Verification Code</label>
-                        <input type="text" id="signup-code" placeholder="Enter 6-digit code" maxlength="6" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white font-mono tracking-widest text-center" required>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Password</label>
-                        <div class="relative">
-                            <input type="password" id="signup-password" placeholder="8+ chars" class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
-                            <button type="button" class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-blue-600 transition-colors toggle-password">
-                                <i class="fas fa-eye text-lg"></i>
-                            </button>
-                        </div>
-                        <div id="signup-pwd-feedback" class="mt-2 hidden"></div>
-                    </div>
-                    <button type="submit" id="btn-signup-submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">Create Account</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    </div>
-
-    <div id="message-modal" class="hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300 p-4">
-        <div class="bg-white w-full max-w-6xl h-[85vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-gray-100 transform transition-all scale-100">
-            <div class="bg-gradient-to-r from-blue-700 to-blue-600 px-8 py-5 flex justify-between items-center text-white shadow-md flex-shrink-0">
-                <div>
-                    <h3 class="font-bold text-xl tracking-wide flex items-center gap-3"><i class="fas fa-clipboard-list"></i> Feedback History</h3>
-                    <p class="text-blue-100 text-xs mt-1">View your inquiries and our responses below.</p>
-                </div>
-                <button onclick="closeMessageCenter()" class="bg-white/10 hover:bg-white/20 rounded-full p-2 w-10 h-10 flex items-center justify-center transition backdrop-blur-md cursor-pointer">
-                    <i class="fas fa-times text-lg"></i>
-                </button>
-            </div>
-            <div id="msg-list-container" class="flex-1 p-8 overflow-y-auto bg-slate-50 space-y-6">
-                <div class="flex flex-col items-center justify-center h-full text-gray-400 gap-3">
-                    <i class="fas fa-spinner fa-spin text-3xl text-blue-500"></i>
-                    <span class="text-sm font-medium">Loading records...</span>
-                </div>
-            </div>
-            <div class="p-4 border-t border-gray-100 bg-white text-center text-xs text-gray-400 flex-shrink-0">
-                For new inquiries, use Contact Support (Mine).
-            </div>
-        </div>
-    </div>
-
-    <button onclick="openMessageCenter()" class="fixed bottom-24 right-6 md:bottom-8 md:right-8 bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 md:w-16 md:h-16 rounded-full shadow-2xl z-[9990] flex items-center justify-center transition-transform hover:scale-110 group cursor-pointer" title="My Messages">
-        <i class="fas fa-bell text-xl md:text-2xl group-hover:animate-pulse"></i>
-        <span id="notif-badge" class="hidden absolute top-0 right-0 h-5 w-5">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-5 w-5 bg-red-600 border-2 border-white"></span>
-        </span>
-    </button>
-
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <script src="pwa-nav.js"></script>
-    <script src="script.js?v=2026.1"></script>
-
-    <div id="forgot-password-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 z-[9999] flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden relative p-8">
-            <button onclick="closeForgotModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-            <div class="text-center mb-6">
-                <h3 class="text-2xl font-bold text-gray-800">Reset Password</h3>
-                <p id="forgot-subtitle" class="text-sm text-gray-500 mt-2">Enter your registered email address.</p>
-            </div>
-            <form id="step1-form" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                    <input type="email" id="reset-email" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
-                </div>
-                <button type="submit" id="btn-send-code" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg">Send Verification Code</button>
-            </form>
-            <form id="step2-form" class="space-y-4 hidden mt-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">6-Digit Code</label>
-                    <input type="text" id="reset-code" required maxlength="6" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-center tracking-[0.5em] text-xl font-mono">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
-                    <div class="relative">
-                        <input type="password" id="reset-new-password" required minlength="8" class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white">
-                        <button type="button" class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-blue-600 transition-colors toggle-password">
-                            <i class="fas fa-eye text-lg"></i>
-                        </button>
-                    </div>
-                    <div id="reset-pwd-feedback" class="mt-2 hidden"></div>
-                </div>
-                <button type="submit" id="btn-reset-pwd" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg">Confirm Reset</button>
-            </form>
-            <div class="mt-6 pt-6 border-t border-gray-100 text-center text-sm text-gray-500">
-                Remembered it? <a href="#" onclick="closeForgotModal()" class="text-blue-600 font-semibold">Back to Login</a>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+     1|<!DOCTYPE html>
+     2|<html lang="en">
+     3|<head>
+     4|    <meta charset="UTF-8">
+     5|    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+     6|    <meta name="theme-color" content="#2563eb">
+     7|    <meta name="apple-mobile-web-app-capable" content="yes">
+     8|    <link rel="manifest" href="manifest.json">
+     9|    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    10|    <title>Contact Support - Reportify AI</title>
+    11|    <script src="https://cdn.tailwindcss.com"></script>
+    12|    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    13|    <link rel="stylesheet" href="style.css?v=2026.13">
+    14|    <style>
+    15|        .account-hub .container { max-width: 1200px !important; width: 95% !important; margin: 0 auto !important; padding: 40px 15px !important; }
+    16|        .final-grid-container { display: flex !important; flex-wrap: wrap !important; gap: 25px !important; margin-top: 40px !important; width: 100% !important; justify-content: flex-start !important; }
+    17|        .final-card {
+    18|            flex: 1 1 280px !important; max-width: 100% !important;
+    19|            background: white !important; padding: 30px !important; border-radius: 16px !important;
+    20|            border: 1px solid #e5e7eb !important; box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important;
+    21|            text-decoration: none !important; color: inherit !important; transition: all 0.2s ease !important;
+    22|            display: flex !important; flex-direction: column !important; justify-content: center !important; min-height: 140px !important;
+    23|        }
+    24|        .final-card:hover { transform: translateY(-5px) !important; border-color: #2563eb !important; box-shadow: 0 12px 24px rgba(37, 99, 235, 0.1) !important; }
+    25|        .final-card h3 { margin: 0 0 10px 0 !important; font-size: 1.25rem !important; font-weight: 700 !important; color: #111827 !important; display: flex !important; align-items: center !important; gap: 12px !important; }
+    26|        .final-card p { margin: 0 !important; color: #6b7280 !important; font-size: 0.95rem !important; line-height: 1.5 !important; }
+    27|        .final-card i { font-size: 1.2em; }
+    28|        .avatar-section { text-align: center !important; margin-bottom: 50px !important; }
+    29|    </style>
+    30|    <link rel="stylesheet" href="mobile-patch.css">
+    31|    <script src="mobile-patch.js"></script>
+    32|
+    33|    <!-- Open Graph / Social -->
+    34|    <meta property="og:type" content="website" />
+    35|    <meta property="og:url" content="https://www.goreportify.com/contact.html" />
+    36|    <meta property="og:title" content="Contact Support - Reportify AI" />
+    37|    <meta property="og:description" content="Get help with Reportify AI. Contact our support team for assistance with reports, billing, or account issues." />
+    38|    <meta property="og:image" content="https://www.goreportify.com/images/og-default.png" />
+    39|    <meta property="og:site_name" content="Reportify AI" />
+    40|    <meta property="og:locale" content="en_US" />
+    41|
+    42|    <!-- Twitter Card -->
+    43|    <meta name="twitter:card" content="summary_large_image" />
+    44|    <meta name="twitter:title" content="Contact Support - Reportify AI" />
+    45|    <meta name="twitter:description" content="Get help with Reportify AI. Contact our support team for assistance with reports, billing, or account issues." />
+    46|    <meta name="twitter:image" content="https://www.goreportify.com/images/og-default.png" />
+    47|
+    48|    <!-- Canonical -->
+    49|    <link rel="canonical" href="https://www.goreportify.com/contact.html" />
+    50|
+    51|
+    52|    
+    53|
+    54|
+    55|    <meta name="description" content="Get in touch with the Reportify AI team. We are here to help with any questions or feedback." />
+    56|        <!-- Google Analytics -->
+    57|    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PX3FEY6F6"></script>
+    58|    <script>
+    59|        window.dataLayer = window.dataLayer || [];
+    60|        function gtag(){dataLayer.push(arguments);}
+    61|        gtag('js', new Date());
+    62|        gtag('config', 'G-3PX3FEY6F6');
+    63|    </script>
+    64|</head>
+    65|<body class="font-sans antialiased has-app-nav text-gray-800 flex flex-col min-h-screen">
+    66|    <script>
+    67|        if (!localStorage.getItem('token')) {
+    68|            window.location.replace('account.html');
+    69|        }
+    70|    </script>
+    71|
+    72|    <header class="main-header account-header pwa-app-header">
+    73|        <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
+    74|            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
+    75|                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
+    76|            </div>
+    77|            <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
+    78|                <ul>
+    79|                    <li><a href="index.html#features">Features</a></li>
+    80|                    <li><a href="index.html#pricing">Pricing</a></li>
+    81|                    <li><a href="generate.html">Generator</a></li>
+    82|                    <li><a href="news.html">News</a></li>
+    83|                    <li><a href="blog.html">Blog</a></li>
+    84|                    <li><a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff!important;padding:6px 14px;border-radius:8px;font-weight:600;font-size:0.9rem"><i class="fab fa-google-play" style="font-size:1rem"></i>App</a></li>
+    85|                </ul>
+    86|            </nav>
+    87|            <div class="pwa-header-actions">
+    88|                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite">
+    89|                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
+    90|                </a>
+    91|                <div id="auth-container" class="header-actions"></div>
+    92|            </div>
+    93|        </div>
+    94|    </header>
+    95|
+    96|    <!-- main 整段同色背景，避免「白区块只有表单高度、下面透出灰底」在视窗中间出现一条横分色 -->
+    97|    <main class="flex flex-1 flex-col min-h-0 bg-white">
+    98|        <section id="contact-us" class="flex flex-1 flex-col py-12 border-t border-gray-200 w-full">
+    99|            <div class="container contact-page-shell" style="max-width: 560px; margin: 0 auto; padding: 0 20px;">
+   100|                <h1 class="section-title" style="text-align: center; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 800; color: #0f172a;">Contact Support</h1>
+   101|                <p style="text-align: center; color: #64748b; margin-top: 8px; font-size: 1rem;">We typically reply within 1–2 business days.</p>
+   102|                <form id="contact-form" class="mt-10 space-y-4">
+   103|                    <div>
+   104|                        <label for="name" class="block text-sm font-semibold text-gray-700 mb-1">Name</label>
+   105|                        <input type="text" id="name" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+   106|                    </div>
+   107|                    <div>
+   108|                        <label for="email" class="block text-sm font-semibold text-gray-700 mb-1">Email</label>
+   109|                        <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+   110|                    </div>
+   111|                    <div>
+   112|                        <label for="contact-type" class="block text-sm font-semibold text-gray-700 mb-1">Topic</label>
+   113|                        <select id="contact-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+   114|                            <option value="General">General</option>
+   115|                            <option value="Billing">Billing</option>
+   116|                            <option value="Technical">Technical</option>
+   117|                        </select>
+   118|                    </div>
+   119|                    <div>
+   120|                        <label for="message" class="block text-sm font-semibold text-gray-700 mb-1">Message</label>
+   121|                        <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white resize-y"></textarea>
+   122|                    </div>
+   123|                    <button type="submit" class="w-full py-3 rounded-xl font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-md transition">Send message</button>
+   124|                </form>
+   125|            </div>
+   126|        </section>
+   127|    </main>
+   128|
+   129|    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
+   130|        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
+   131|        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
+   132|        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
+   133|        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
+   134|        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
+   135|    </nav>
+   136|
+   137|    <footer class="main-footer site-footer-rich mt-auto" role="contentinfo">
+   138|        <div class="container site-footer-inner">
+   139|            <div class="site-footer-social">
+   140|                <a href="https://discord.gg/UtNfS8kH" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+   141|                <a href="https://www.reddit.com/user/Automatic_Pitch5117" target="_blank" rel="noopener noreferrer" title="Reddit" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
+   142|                <a href="https://x.com/reportifyai" target="_blank" rel="noopener noreferrer" title="Twitter" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+   143|                <a href="https://linkedin.com/company/reportifyai" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+   144|                <a href="https://youtube.com/@reportifyai" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+   145|                <a href="https://facebook.com/reportifyai" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+   146|                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener noreferrer" title="Google" aria-label="Google"><i class="fa-brands fa-google"></i></a>
+   147|            </div>
+   148|            <div class="site-footer-legal">
+   149|                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:#059669;font-weight:600;text-decoration:none;font-size:0.9rem;transition:color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'"><i class="fab fa-google-play" style="font-size:1.2rem"></i> Download App</a>
+   150|                <a href="faq.html" style="color: #059669; font-weight: 600; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'">FAQ</a>
+   151|                <a href="terms.html">Terms of Service</a>
+   152|                <a href="privacy.html">Privacy Policy</a>
+   153|            </div>
+   154|            <p class="site-footer-copy">&copy; 2026 Beijing Cricket Information Technology Co., Ltd. All Rights Reserved.</p>
+   155|        </div>
+   156|    </footer>
+   157|
+   158|    <div id="auth-modal-overlay" class="hidden fixed inset-0 z-[10000] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300">
+   159|    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden transform scale-100 transition-transform duration-300 relative mx-4">
+   160|        <button onclick="window.closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition z-10 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
+   161|            <i class="fas fa-times text-xl"></i>
+   162|        </button>
+   163|        <div class="flex border-b border-gray-200 bg-gray-50">
+   164|            <button class="tab-link active flex-1 py-4 text-sm font-bold text-gray-500 hover:text-blue-600 transition border-b-2 border-transparent" data-tab="login" onclick="window.openModal('login')">Login</button>
+   165|            <button class="tab-link flex-1 py-4 text-sm font-bold text-gray-500 hover:text-blue-600 transition border-b-2 border-transparent" data-tab="signup" onclick="window.openModal('signup')">Sign Up</button>
+   166|        </div>
+   167|        <div class="p-8">
+   168|            <div class="mb-6">
+   169|                <button onclick="window.location.href='https://api.goreportify.com/auth/google'" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-3 rounded-lg transition shadow-sm group">
+   170|                    <i class="fab fa-google text-red-500 text-xl group-hover:scale-110 transition-transform"></i>
+   171|                    <span>Continue with Google</span>
+   172|                </button>
+   173|                <div class="relative mt-6">
+   174|                    <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200"></div></div>
+   175|                    <div class="relative flex justify-center text-xs uppercase font-bold tracking-wider"><span class="bg-white px-2 text-gray-400">Or</span></div>
+   176|                </div>
+   177|            </div>
+   178|            <div id="login" class="tab-content hidden">
+   179|                <form id="login-form" class="space-y-5">
+   180|                    <div>
+   181|                        <label class="block text-xs font-bold text-gray-600 uppercase mb-2">Email Address</label>
+   182|                        <input type="email" id="login-email" placeholder="name@company.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
+   183|                    </div>
+   184|                    <div>
+   185|                        <div class="flex justify-between items-center mb-2">
+   186|                            <label class="block text-xs font-bold text-gray-600 uppercase">Password</label>
+   187|                            <a href="#" class="text-xs text-blue-600 hover:underline font-medium" onclick="if(typeof openForgotModal==='function'){openForgotModal();}return false;">Forgot?</a>
+   188|                        </div>
+   189|                        <div class="relative">
+   190|                            <input type="password" id="login-password" placeholder="Enter password" class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
+   191|                            <button type="button" class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-blue-600 transition-colors toggle-password">
+   192|                                <i class="fas fa-eye text-lg"></i>
+   193|                            </button>
+   194|                        </div>
+   195|                    </div>
+   196|                    <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition transform active:scale-95">Log In</button>
+   197|                </form>
+   198|            </div>
+   199|            <div id="signup" class="tab-content hidden">
+   200|                <form id="signup-form" class="space-y-4">
+   201|                    <div>
+   202|                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Full Name</label>
+   203|                        <input type="text" id="signup-name" placeholder="e.g. John Doe" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
+   204|                        <p id="name-feedback" class="text-xs mt-1 text-red-500 hidden font-medium"></p>
+   205|                    </div>
+   206|                    <div>
+   207|                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Email</label>
+   208|                        <div class="flex gap-2">
+   209|                            <input type="email" id="signup-email" placeholder="name@company.com" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white flex-1" required>
+   210|                            <button type="button" id="btn-send-signup-code" class="bg-gray-100 hover:bg-gray-200 text-blue-600 font-bold px-4 py-3 rounded-lg border border-gray-300 transition-colors whitespace-nowrap disabled:opacity-50">Send Code</button>
+   211|                        </div>
+   212|                        <p id="email-feedback" class="text-xs mt-1 text-red-500 hidden font-medium"></p>
+   213|                    </div>
+   214|                    <div>
+   215|                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Verification Code</label>
+   216|                        <input type="text" id="signup-code" placeholder="Enter 6-digit code" maxlength="6" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white font-mono tracking-widest text-center" required>
+   217|                    </div>
+   218|                    <div>
+   219|                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Password</label>
+   220|                        <div class="relative">
+   221|                            <input type="password" id="signup-password" placeholder="8+ chars" class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white" required>
+   222|                            <button type="button" class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-blue-600 transition-colors toggle-password">
+   223|                                <i class="fas fa-eye text-lg"></i>
+   224|                            </button>
+   225|                        </div>
+   226|                        <div id="signup-pwd-feedback" class="mt-2 hidden"></div>
+   227|                    </div>
+   228|                    <button type="submit" id="btn-signup-submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">Create Account</button>
+   229|                </form>
+   230|            </div>
+   231|        </div>
+   232|    </div>
+   233|    </div>
+   234|
+   235|    <div id="message-modal" class="hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300 p-4">
+   236|        <div class="bg-white w-full max-w-6xl h-[85vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-gray-100 transform transition-all scale-100">
+   237|            <div class="bg-gradient-to-r from-blue-700 to-blue-600 px-8 py-5 flex justify-between items-center text-white shadow-md flex-shrink-0">
+   238|                <div>
+   239|                    <h3 class="font-bold text-xl tracking-wide flex items-center gap-3"><i class="fas fa-clipboard-list"></i> Feedback History</h3>
+   240|                    <p class="text-blue-100 text-xs mt-1">View your inquiries and our responses below.</p>
+   241|                </div>
+   242|                <button onclick="closeMessageCenter()" class="bg-white/10 hover:bg-white/20 rounded-full p-2 w-10 h-10 flex items-center justify-center transition backdrop-blur-md cursor-pointer">
+   243|                    <i class="fas fa-times text-lg"></i>
+   244|                </button>
+   245|            </div>
+   246|            <div id="msg-list-container" class="flex-1 p-8 overflow-y-auto bg-slate-50 space-y-6">
+   247|                <div class="flex flex-col items-center justify-center h-full text-gray-400 gap-3">
+   248|                    <i class="fas fa-spinner fa-spin text-3xl text-blue-500"></i>
+   249|                    <span class="text-sm font-medium">Loading records...</span>
+   250|                </div>
+   251|            </div>
+   252|            <div class="p-4 border-t border-gray-100 bg-white text-center text-xs text-gray-400 flex-shrink-0">
+   253|                For new inquiries, use Contact Support (Mine).
+   254|            </div>
+   255|        </div>
+   256|    </div>
+   257|
+   258|    <button onclick="openMessageCenter()" class="fixed bottom-24 right-6 md:bottom-8 md:right-8 bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 md:w-16 md:h-16 rounded-full shadow-2xl z-[9990] flex items-center justify-center transition-transform hover:scale-110 group cursor-pointer" title="My Messages">
+   259|        <i class="fas fa-bell text-xl md:text-2xl group-hover:animate-pulse"></i>
+   260|        <span id="notif-badge" class="hidden absolute top-0 right-0 h-5 w-5">
+   261|            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+   262|            <span class="relative inline-flex rounded-full h-5 w-5 bg-red-600 border-2 border-white"></span>
+   263|        </span>
+   264|    </button>
+   265|
+   266|    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+   267|    <script src="pwa-nav.js"></script>
+   268|    <script src="script.js?v=2026.1"></script>
+   269|
+   270|    <div id="forgot-password-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 z-[9999] flex items-center justify-center p-4">
+   271|        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden relative p-8">
+   272|            <button onclick="closeForgotModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+   273|                <i class="fas fa-times text-xl"></i>
+   274|            </button>
+   275|            <div class="text-center mb-6">
+   276|                <h3 class="text-2xl font-bold text-gray-800">Reset Password</h3>
+   277|                <p id="forgot-subtitle" class="text-sm text-gray-500 mt-2">Enter your registered email address.</p>
+   278|            </div>
+   279|            <form id="step1-form" class="space-y-4">
+   280|                <div>
+   281|                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+   282|                    <input type="email" id="reset-email" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+   283|                </div>
+   284|                <button type="submit" id="btn-send-code" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg">Send Verification Code</button>
+   285|            </form>
+   286|            <form id="step2-form" class="space-y-4 hidden mt-4">
+   287|                <div>
+   288|                    <label class="block text-sm font-medium text-gray-700 mb-1">6-Digit Code</label>
+   289|                    <input type="text" id="reset-code" required maxlength="6" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-center tracking-[0.5em] text-xl font-mono">
+   290|                </div>
+   291|                <div>
+   292|                    <label class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+   293|                    <div class="relative">
+   294|                        <input type="password" id="reset-new-password" required minlength="8" class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition bg-gray-50 focus:bg-white">
+   295|                        <button type="button" class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-blue-600 transition-colors toggle-password">
+   296|                            <i class="fas fa-eye text-lg"></i>
+   297|                        </button>
+   298|                    </div>
+   299|                    <div id="reset-pwd-feedback" class="mt-2 hidden"></div>
+   300|                </div>
+   301|                <button type="submit" id="btn-reset-pwd" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg">Confirm Reset</button>
+   302|            </form>
+   303|            <div class="mt-6 pt-6 border-t border-gray-100 text-center text-sm text-gray-500">
+   304|                Remembered it? <a href="#" onclick="closeForgotModal()" class="text-blue-600 font-semibold">Back to Login</a>
+   305|            </div>
+   306|        </div>
+   307|    </div>
+   308|</body>
+   309|</html>
+   310|

@@ -1,484 +1,485 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#2563eb">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
-    <title>Reportify AI - Frequently Asked Questions</title>
-    <meta name="description" content="Find answers to common questions about AI report generation, pricing, export formats, and how Reportify AI works.">
-    <meta name="robots" content="index, follow">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=3.4-ios">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="mobile-patch.css?v=2026.16">
-    <script src="mobile-patch.js?v=2026.16"></script>
-
-    <!-- Open Graph / Social -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.goreportify.com/faq.html" />
-    <meta property="og:title" content="FAQ - Frequently Asked Questions - Reportify AI" />
-    <meta property="og:description" content="Find answers to common questions about Reportify AI — pricing, report generation, export formats, languages, and more." />
-    <meta property="og:image" content="https://www.goreportify.com/images/og-default.png" />
-    <meta property="og:site_name" content="Reportify AI" />
-    <meta property="og:locale" content="en_US" />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="FAQ - Frequently Asked Questions - Reportify AI" />
-    <meta name="twitter:description" content="Find answers to common questions about Reportify AI." />
-    <meta name="twitter:image" content="https://www.goreportify.com/images/og-default.png" />
-
-    <!-- Canonical -->
-    <link rel="canonical" href="https://www.goreportify.com/faq.html" />
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PX3FEY6F6"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-3PX3FEY6F6');
-    </script>
-
-    <style>
-        .faq-accordion summary::-webkit-details-marker { display: none; }
-        .faq-accordion summary { list-style: none; cursor: pointer; }
-        .faq-accordion[open] .faq-icon { transform: rotate(45deg); }
-        .faq-icon { transition: transform 0.3s ease; }
-        .faq-search:focus { box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
-    </style>
-
-    <!-- Structured Data (JSON-LD) for FAQ + BreadcrumbList -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@graph": [
-            {
-                "@type": "BreadcrumbList",
-                "@id": "https://www.goreportify.com/faq.html#breadcrumb",
-                "itemListElement": [
-                    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.goreportify.com/" },
-                    { "@type": "ListItem", "position": 2, "name": "FAQ", "item": "https://www.goreportify.com/faq.html" }
-                ]
-            },
-            {
-                "@type": "FAQPage",
-                "@id": "https://www.goreportify.com/faq.html#faq",
-                "mainEntity": [
-                    {
-                        "@type": "Question",
-                        "name": "What is Reportify AI?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Reportify AI is an AI-powered report generator that transforms your raw meeting notes, chat logs, and quick thoughts into professional Word documents, PPT decks, and email summaries in 30 seconds. It uses our proprietary RIE (Reportify Intelligence Engine) to understand context and structure your content logically."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "How do I get started?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Just visit the generate page on our website or download the Android app. No credit card required. You can start with a 7-day Elite Trial for free, no sign-up needed to try the generator."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "Is there a mobile app?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Yes! Reportify AI is available on Google Play. The app syncs with your web account, so you can generate and access reports anywhere, anytime."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "Do I need an account?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "You can try the report generator without an account. To save, export, and access your reports across devices, you need to sign up (Google login or email). It's free and takes 30 seconds."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "What types of reports can I generate?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "You can generate Daily and Weekly work reports, Meeting summaries, Project status updates, Executive summaries, and more. Simply choose the report type, detail level, and tone."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "How does the RIE Engine work?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "RIE (Reportify Intelligence Engine) uses advanced AI to analyze your raw input and automatically organizes it into logical sections with professional headings, bullet points, and executive summaries."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "What output formats are supported?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Reportify AI supports four export formats: Word (.doc) for formal documentation, PPT for presentation-ready slide decks, Email for stakeholder summaries, and Markdown for developers and note-takers."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "What languages does Reportify AI support?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Currently, Reportify AI supports English, Chinese (Simplified), Japanese, Korean, Spanish, German, French, and Portuguese. More languages coming soon."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "How long does it take to generate a report?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Most reports generate in under 30 seconds. Brief mode is nearly instant, while Detailed mode takes a few extra seconds for comprehensive analysis."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "What plans are available?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "We offer three plans: Elite Trial (Free for 7 days, full access to RIE 3.0 flagship engine and PPT generation), Basic ($9.90/month, RIE 2.5 engine, 45 reports monthly), and Professional ($19.90/month, unlimited generation, full-scene PPT, strategic depth analysis)."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "Is there a free trial?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Yes! You get a 7-day Elite Trial completely free with full access to the RIE 3.0 flagship engine, PPT generation, and automated reporting. No credit card required."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "Is my data secure?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Yes. Reportify AI uses encryption in transit. Your report content is not shared with third parties, and you can request data deletion at any time."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "How do I contact support?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "You can reach us through the Contact page. Professional plan users receive priority support. You can also join our Discord community for quick help and discussions."
-                        }
-                    }
-                ]
-            }
-        ]
-    }
-    </script>
-
-</head>
-<body class="has-app-nav font-sans antialiased bg-gray-50 text-gray-800 flex flex-col min-h-screen">
-
-    <header class="main-header pwa-app-header">
-        <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
-            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
-                <a id="pwa-header-logo" href="index.html" class="logo flex items-center gap-2 no-underline" style="text-decoration: none;">
-                    <img src="logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain;">
-                    <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
-                </a>
-            </div>
-            <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
-                <ul class="flex gap-6 font-medium text-gray-600">
-                    <li><a href="index.html#features" class="hover:text-blue-600 transition">Features</a></li>
-                    <li><a href="index.html#pricing" class="hover:text-blue-600 transition">Pricing</a></li>
-                    <li><a href="index.html#generator" class="hover:text-blue-600 transition">Generator</a></li>
-                    <li><a href="news.html" class="hover:text-blue-600 transition">News</a></li>
-                    <li><a href="blog.html" class="hover:text-blue-600 transition">Blog</a></li>
-                    <li><a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff!important;padding:6px 14px;border-radius:8px;font-weight:600;font-size:0.9rem"><i class="fab fa-google-play" style="font-size:1rem"></i>App</a></li>
-                </ul>
-            </nav>
-            <div class="pwa-header-actions">
-                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite">
-                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
-                </a>
-                <div id="auth-container" class="flex items-center gap-4 header-actions"></div>
-            </div>
-        </div>
-    </header>
-
-    <main class="flex-grow pt-4 pb-20">
-        <div class="max-w-4xl mx-auto px-6">
-            <!-- Header -->
-            <div class="text-center mb-10 md:mb-14">
-                <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900 mb-3 tracking-tight">Frequently Asked Questions</h1>
-                <p class="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">Everything you need to know about Reportify AI. Can't find what you're looking for? <a href="contact.html" class="text-blue-600 font-semibold hover:underline">Contact us</a>.</p>
-            </div>
-
-            <!-- Search -->
-            <div class="relative max-w-lg mx-auto mb-10">
-                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                <input type="text" id="faq-search" class="faq-search w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-blue-400 transition bg-white" placeholder="Search questions..." oninput="filterFAQs(this.value)">
-            </div>
-
-            <!-- FAQ Categories -->
-            <div class="space-y-10">
-
-                <!-- Category: Getting Started -->
-                <section data-faq-category="getting-started">
-                    <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                        <i class="fas fa-rocket text-blue-600"></i> Getting Started
-                    </h2>
-                    <div class="space-y-3">
-                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
-                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
-                                <span>What is Reportify AI?</span>
-                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
-                            </summary>
-                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                                Reportify AI is an AI-powered report generator that transforms your raw meeting notes, chat logs, and quick thoughts into professional Word documents, PPT decks, and email summaries in 30 seconds. It uses our proprietary RIE (Reportify Intelligence Engine) to understand context and structure your content logically.
-                            </div>
-                        </details>
-
-                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
-                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
-                                <span>How do I get started?</span>
-                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
-                            </summary>
-                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                                Just visit <a href="generate.html" class="text-blue-600 font-semibold hover:underline">generate.html</a> on our website or download the <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" class="text-blue-600 font-semibold hover:underline">Android app</a> — no credit card required. You can start with a 7-day Elite Trial for free, no sign-up needed to try the generator.
-                            </div>
-                        </details>
-
-                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
-                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
-                                <span>Is there a mobile app?</span>
-                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
-                            </summary>
-                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                                Yes! Reportify AI is available on <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" class="text-blue-600 font-semibold hover:underline">Google Play</a>. The app syncs with your web account, so you can generate and access reports anywhere, anytime.
-                            </div>
-                        </details>
-
-                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
-                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
-                                <span>Do I need an account?</span>
-                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
-                            </summary>
-                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                                You can try the report generator without an account. To save, export, and access your reports across devices, you'll need to sign up (Google login or email). It's free and takes 30 seconds.
-                            </div>
-                        </details>
-                    </div>
-                </section>
-
-                <!-- Category: Report Generation -->
-                <section data-faq-category="reports">
-                    <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                        <i class="fas fa-file-alt text-blue-600"></i> Report Generation
-                    </h2>
-                    <div class="space-y-3">
-                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
-                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
-                                <span>What types of reports can I generate?</span>
-                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
-                            </summary>
-                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                                You can generate: Daily/Weekly work reports, Meeting summaries, Project status updates, Executive summaries, and more. Simply choose the report type, detail level, and tone — Reportify AI handles the rest.
-                            </div>
-                        </details>
-
-                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
-                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
-                                <span>How does the RIE Engine work?</span>
-                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
-                            </summary>
-                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                                RIE (Reportify Intelligence Engine) uses advanced AI to analyze your raw input — meeting notes, bullet points, or free-form text — and automatically organizes it into logical sections with professional headings, bullet points, and executive summaries. It understands context, hierarchy, and the flow of professional communication.
-                            </div>
-                        </details>
-
-                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
-                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
-                                <span>What output formats are supported?</span>
-                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
-                            </summary>
-                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                                Reportify AI supports four export formats: <strong>Word (.doc)</strong> for formal documentation, <strong>PPT</strong> for presentation-ready slide decks, <strong>Email</strong> for stakeholder summaries, and <strong>Markdown</strong> for developers and note-takers.
-                            </div>
-                        </details>
-
-                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
-                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
-                                <span>What languages does Reportify AI support?</span>
-                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
-                            </summary>
-                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                                Currently, Reportify AI supports English, Chinese (Simplified), Japanese, Korean, Spanish, German, French, and Portuguese. More languages coming soon.
-                            </div>
-                        </details>
-
-                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
-                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
-                                <span>How long does it take to generate a report?</span>
-                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
-                            </summary>
-                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                                Most reports generate in under 30 seconds. The speed depends on the detail level you select — "Brief" mode is nearly instant, while "Detailed" mode takes a few extra seconds for comprehensive analysis.
-                            </div>
-                        </details>
-                    </div>
-                </section>
-
-                <!-- Category: Pricing & Plans -->
-                <section data-faq-category="pricing">
-                    <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                        <i class="fas fa-tag text-blue-600"></i> Pricing & Plans
-                    </h2>
-                    <div class="space-y-3">
-                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
-                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
-                                <span>What plans are available?</span>
-                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
-                            </summary>
-                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                                We offer three plans:<br>
-                                <strong>Elite Trial</strong> — Free for 7 days, full access to RIE 3.0 flagship engine and PPT generation.<br>
-                                <strong>Basic</strong> — $9.90/month, RIE 2.5 efficiency engine, 45 reports monthly, Word & Email export.<br>
-                                <strong>Professional</strong> — $19.90/month, RIE 3.0 flagship engine, unlimited generation, full-scene PPT, strategic depth analysis, and priority support.
-                            </div>
-                        </details>
-
-                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
-                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
-                                <span>Is there a free trial?</span>
-                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
-                            </summary>
-                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                                Yes! You get a 7-day Elite Trial completely free. This gives you full access to the RIE 3.0 flagship engine, PPT generation, and automated reporting. No credit card required to start.
-                            </div>
-                        </details>
-                    </div>
-                </section>
-
-                <!-- Category: Technical -->
-                <section data-faq-category="technical">
-                    <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                        <i class="fas fa-cog text-blue-600"></i> Technical & Support
-                    </h2>
-                    <div class="space-y-3">
-                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
-                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
-                                <span>Is my data secure?</span>
-                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
-                            </summary>
-                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                                Yes. Reportify AI uses encryption in transit. We take data privacy seriously — your report content is not shared with third parties, and you can request data deletion at any time. See our <a href="privacy.html" class="text-blue-600 font-semibold hover:underline">Privacy Policy</a> for details.
-                            </div>
-                        </details>
-
-                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
-                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
-                                <span>How do I contact support?</span>
-                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
-                            </summary>
-                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                                You can reach us through the <a href="contact.html" class="text-blue-600 font-semibold hover:underline">Contact page</a>. Professional plan users receive priority support. You can also join our <a href="https://discord.gg/UtNfS8kH" target="_blank" class="text-blue-600 font-semibold hover:underline">Discord community</a> for quick help and discussions.
-                            </div>
-                        </details>
-                    </div>
-                </section>
-
-            </div>
-
-            <!-- Still have questions -->
-            <div class="mt-12 text-center bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-8 text-white shadow-xl">
-                <h3 class="text-xl font-bold mb-3">Still have questions?</h3>
-                <p class="text-blue-100 mb-6 max-w-lg mx-auto">We're here to help. Reach out to us and we'll get back to you within 24 hours.</p>
-                <a href="contact.html" class="inline-block bg-white text-blue-600 px-8 py-3 rounded-xl font-bold shadow-md hover:bg-gray-50 transition transform hover:-translate-y-1">Contact Us</a>
-            </div>
-        </div>
-    </main>
-
-    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
-        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
-        <a href="index.html#generator" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
-        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
-        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
-        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
-    </nav>
-
-    <footer class="main-footer mt-auto" style="padding: 30px 0; background: #f8fafc; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 0.85rem; text-align: center;">
-        <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-            <div class="flex gap-6 mb-2 mt-2">
-                <a href="https://discord.gg/UtNfS8kH" target="_blank" class="text-[#64748b] hover:text-[#5865F2] hover:-translate-y-1 transition-all duration-300 text-xl" title="Join our Discord"><i class="fa-brands fa-discord"></i></a>
-                <a href="https://www.reddit.com/user/Automatic_Pitch5117" target="_blank" class="text-[#64748b] hover:text-[#FF4500] hover:-translate-y-1 transition-all duration-300 text-xl" title="Follow on Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
-                <a href="https://twitter.com" target="_blank" class="text-[#64748b] hover:text-[#1DA1F2] hover:-translate-y-1 transition-all duration-300 text-xl" title="Follow on Twitter"><i class="fa-brands fa-twitter"></i></a>
-                <a href="https://linkedin.com" target="_blank" class="text-[#64748b] hover:text-[#0077b5] hover:-translate-y-1 transition-all duration-300 text-xl" title="Follow on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="https://youtube.com" target="_blank" class="text-[#64748b] hover:text-[#FF0000] hover:-translate-y-1 transition-all duration-300 text-xl" title="Subscribe on YouTube"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://facebook.com" target="_blank" class="text-[#64748b] hover:text-[#1877F2] hover:-translate-y-1 transition-all duration-300 text-xl" title="Follow on Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://google.com" target="_blank" class="text-[#64748b] hover:text-[#EA4335] hover:-translate-y-1 transition-all duration-300 text-xl" title="Find us on Google"><i class="fa-brands fa-google"></i></a>
-            </div>
-            <div style="display: flex; gap: 20px; margin-bottom: 5px;">
-                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:#059669;font-weight:600;text-decoration:none;font-size:0.9rem;transition:color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'"><i class="fab fa-google-play" style="font-size:1.2rem"></i> Download App</a>
-                <a href="faq.html" style="color: #059669; font-weight: 600; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'">FAQ</a>
-                <a href="terms.html" style="color: #64748b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#2563eb'" onmouseout="this.style.color='#64748b'">Terms of Service</a>
-                <a href="privacy.html" style="color: #64748b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#2563eb'" onmouseout="this.style.color='#64748b'">Privacy Policy</a>
-            </div>
-            <p style="margin: 0;">&copy; 2026 Beijing Cricket Information Technology Co., Ltd. All Rights Reserved.</p>
-       </div>
-    </footer>
-    
-    <script>
-        // FAQ Search filter
-        function filterFAQs(query) {
-            const q = query.toLowerCase().trim();
-            const details = document.querySelectorAll('.faq-accordion');
-            const sections = document.querySelectorAll('[data-faq-category]');
-            
-            if (!q) {
-                details.forEach(d => { d.style.display = ''; });
-                sections.forEach(s => { s.style.display = ''; });
-                return;
-            }
-            
-            sections.forEach(section => {
-                let hasVisible = false;
-                const items = section.querySelectorAll('.faq-accordion');
-                items.forEach(item => {
-                    const text = item.textContent.toLowerCase();
-                    if (text.includes(q)) {
-                        item.style.display = '';
-                        hasVisible = true;
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-                section.style.display = hasVisible ? '' : 'none';
-            });
-        }
-
-        // Smooth open/close for accordion
-        document.querySelectorAll('.faq-accordion').forEach(detail => {
-            detail.addEventListener('toggle', function() {
-                if (this.open) {
-                    // Close others in same category
-                    const parent = this.closest('[data-faq-category]');
-                    if (parent) {
-                        parent.querySelectorAll('.faq-accordion[open]').forEach(other => {
-                            if (other !== this) other.removeAttribute('open');
-                        });
-                    }
-                }
-            });
-        });
-    </script>
-
-    <script src="script.js?v=2026.16"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>lucide.createIcons();</script>
-</body>
-</html>
+     1|<!DOCTYPE html>
+     2|<html lang="en">
+     3|<head>
+     4|    <meta charset="UTF-8">
+     5|    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+     6|    <meta name="theme-color" content="#2563eb">
+     7|    <meta name="apple-mobile-web-app-capable" content="yes">
+     8|    <link rel="manifest" href="manifest.json">
+     9|    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    10|    <title>Reportify AI - Frequently Asked Questions</title>
+    11|    <meta name="description" content="Find answers to common questions about AI report generation, pricing, export formats, and how Reportify AI works.">
+    12|    <meta name="robots" content="index, follow">
+    13|    
+    14|    <script src="https://cdn.tailwindcss.com"></script>
+    15|    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    16|    <link rel="stylesheet" href="style.css?v=3.4-ios">
+    17|    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    18|    <link rel="stylesheet" href="mobile-patch.css?v=2026.16">
+    19|    <script src="mobile-patch.js?v=2026.16"></script>
+    20|
+    21|    <!-- Open Graph / Social -->
+    22|    <meta property="og:type" content="website" />
+    23|    <meta property="og:url" content="https://www.goreportify.com/faq.html" />
+    24|    <meta property="og:title" content="FAQ - Frequently Asked Questions - Reportify AI" />
+    25|    <meta property="og:description" content="Find answers to common questions about Reportify AI — pricing, report generation, export formats, languages, and more." />
+    26|    <meta property="og:image" content="https://www.goreportify.com/images/og-default.png" />
+    27|    <meta property="og:site_name" content="Reportify AI" />
+    28|    <meta property="og:locale" content="en_US" />
+    29|
+    30|    <!-- Twitter Card -->
+    31|    <meta name="twitter:card" content="summary_large_image" />
+    32|    <meta name="twitter:title" content="FAQ - Frequently Asked Questions - Reportify AI" />
+    33|    <meta name="twitter:description" content="Find answers to common questions about Reportify AI." />
+    34|    <meta name="twitter:image" content="https://www.goreportify.com/images/og-default.png" />
+    35|
+    36|    <!-- Canonical -->
+    37|    <link rel="canonical" href="https://www.goreportify.com/faq.html" />
+    38|
+    39|    <!-- Google Analytics -->
+    40|    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PX3FEY6F6"></script>
+    41|    <script>
+    42|        window.dataLayer = window.dataLayer || [];
+    43|        function gtag(){dataLayer.push(arguments);}
+    44|        gtag('js', new Date());
+    45|        gtag('config', 'G-3PX3FEY6F6');
+    46|    </script>
+    47|
+    48|    <style>
+    49|        .faq-accordion summary::-webkit-details-marker { display: none; }
+    50|        .faq-accordion summary { list-style: none; cursor: pointer; }
+    51|        .faq-accordion[open] .faq-icon { transform: rotate(45deg); }
+    52|        .faq-icon { transition: transform 0.3s ease; }
+    53|        .faq-search:focus { box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
+    54|    </style>
+    55|
+    56|    <!-- Structured Data (JSON-LD) for FAQ + BreadcrumbList -->
+    57|    <script type="application/ld+json">
+    58|    {
+    59|        "@context": "https://schema.org",
+    60|        "@graph": [
+    61|            {
+    62|                "@type": "BreadcrumbList",
+    63|                "@id": "https://www.goreportify.com/faq.html#breadcrumb",
+    64|                "itemListElement": [
+    65|                    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.goreportify.com/" },
+    66|                    { "@type": "ListItem", "position": 2, "name": "FAQ", "item": "https://www.goreportify.com/faq.html" }
+    67|                ]
+    68|            },
+    69|            {
+    70|                "@type": "FAQPage",
+    71|                "@id": "https://www.goreportify.com/faq.html#faq",
+    72|                "mainEntity": [
+    73|                    {
+    74|                        "@type": "Question",
+    75|                        "name": "What is Reportify AI?",
+    76|                        "acceptedAnswer": {
+    77|                            "@type": "Answer",
+    78|                            "text": "Reportify AI is an AI-powered report generator that transforms your raw meeting notes, chat logs, and quick thoughts into professional Word documents, PPT decks, and email summaries in 30 seconds. It uses our proprietary RIE (Reportify Intelligence Engine) to understand context and structure your content logically."
+    79|                        }
+    80|                    },
+    81|                    {
+    82|                        "@type": "Question",
+    83|                        "name": "How do I get started?",
+    84|                        "acceptedAnswer": {
+    85|                            "@type": "Answer",
+    86|                            "text": "Just visit the generate page on our website or download the Android app. No credit card required. You can start with a 7-day Elite Trial for free, no sign-up needed to try the generator."
+    87|                        }
+    88|                    },
+    89|                    {
+    90|                        "@type": "Question",
+    91|                        "name": "Is there a mobile app?",
+    92|                        "acceptedAnswer": {
+    93|                            "@type": "Answer",
+    94|                            "text": "Yes! Reportify AI is available on Google Play. The app syncs with your web account, so you can generate and access reports anywhere, anytime."
+    95|                        }
+    96|                    },
+    97|                    {
+    98|                        "@type": "Question",
+    99|                        "name": "Do I need an account?",
+   100|                        "acceptedAnswer": {
+   101|                            "@type": "Answer",
+   102|                            "text": "You can try the report generator without an account. To save, export, and access your reports across devices, you need to sign up (Google login or email). It's free and takes 30 seconds."
+   103|                        }
+   104|                    },
+   105|                    {
+   106|                        "@type": "Question",
+   107|                        "name": "What types of reports can I generate?",
+   108|                        "acceptedAnswer": {
+   109|                            "@type": "Answer",
+   110|                            "text": "You can generate Daily and Weekly work reports, Meeting summaries, Project status updates, Executive summaries, and more. Simply choose the report type, detail level, and tone."
+   111|                        }
+   112|                    },
+   113|                    {
+   114|                        "@type": "Question",
+   115|                        "name": "How does the RIE Engine work?",
+   116|                        "acceptedAnswer": {
+   117|                            "@type": "Answer",
+   118|                            "text": "RIE (Reportify Intelligence Engine) uses advanced AI to analyze your raw input and automatically organizes it into logical sections with professional headings, bullet points, and executive summaries."
+   119|                        }
+   120|                    },
+   121|                    {
+   122|                        "@type": "Question",
+   123|                        "name": "What output formats are supported?",
+   124|                        "acceptedAnswer": {
+   125|                            "@type": "Answer",
+   126|                            "text": "Reportify AI supports four export formats: Word (.doc) for formal documentation, PPT for presentation-ready slide decks, Email for stakeholder summaries, and Markdown for developers and note-takers."
+   127|                        }
+   128|                    },
+   129|                    {
+   130|                        "@type": "Question",
+   131|                        "name": "What languages does Reportify AI support?",
+   132|                        "acceptedAnswer": {
+   133|                            "@type": "Answer",
+   134|                            "text": "Currently, Reportify AI supports English, Chinese (Simplified), Japanese, Korean, Spanish, German, French, and Portuguese. More languages coming soon."
+   135|                        }
+   136|                    },
+   137|                    {
+   138|                        "@type": "Question",
+   139|                        "name": "How long does it take to generate a report?",
+   140|                        "acceptedAnswer": {
+   141|                            "@type": "Answer",
+   142|                            "text": "Most reports generate in under 30 seconds. Brief mode is nearly instant, while Detailed mode takes a few extra seconds for comprehensive analysis."
+   143|                        }
+   144|                    },
+   145|                    {
+   146|                        "@type": "Question",
+   147|                        "name": "What plans are available?",
+   148|                        "acceptedAnswer": {
+   149|                            "@type": "Answer",
+   150|                            "text": "We offer three plans: Elite Trial (Free for 7 days, full access to RIE 3.0 flagship engine and PPT generation), Basic ($9.90/month, RIE 2.5 engine, 45 reports monthly), and Professional ($19.90/month, unlimited generation, full-scene PPT, strategic depth analysis)."
+   151|                        }
+   152|                    },
+   153|                    {
+   154|                        "@type": "Question",
+   155|                        "name": "Is there a free trial?",
+   156|                        "acceptedAnswer": {
+   157|                            "@type": "Answer",
+   158|                            "text": "Yes! You get a 7-day Elite Trial completely free with full access to the RIE 3.0 flagship engine, PPT generation, and automated reporting. No credit card required."
+   159|                        }
+   160|                    },
+   161|                    {
+   162|                        "@type": "Question",
+   163|                        "name": "Is my data secure?",
+   164|                        "acceptedAnswer": {
+   165|                            "@type": "Answer",
+   166|                            "text": "Yes. Reportify AI uses encryption in transit. Your report content is not shared with third parties, and you can request data deletion at any time."
+   167|                        }
+   168|                    },
+   169|                    {
+   170|                        "@type": "Question",
+   171|                        "name": "How do I contact support?",
+   172|                        "acceptedAnswer": {
+   173|                            "@type": "Answer",
+   174|                            "text": "You can reach us through the Contact page. Professional plan users receive priority support. You can also join our Discord community for quick help and discussions."
+   175|                        }
+   176|                    }
+   177|                ]
+   178|            }
+   179|        ]
+   180|    }
+   181|    </script>
+   182|
+   183|</head>
+   184|<body class="has-app-nav font-sans antialiased bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+   185|
+   186|    <header class="main-header pwa-app-header">
+   187|        <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
+   188|            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
+   189|                <a id="pwa-header-logo" href="index.html" class="logo flex items-center gap-2 no-underline" style="text-decoration: none;">
+   190|                    <img src="logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain;">
+   191|                    <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
+   192|                </a>
+   193|            </div>
+   194|            <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
+   195|                <ul class="flex gap-6 font-medium text-gray-600">
+   196|                    <li><a href="index.html#features" class="hover:text-blue-600 transition">Features</a></li>
+   197|                    <li><a href="index.html#pricing" class="hover:text-blue-600 transition">Pricing</a></li>
+   198|                    <li><a href="index.html#generator" class="hover:text-blue-600 transition">Generator</a></li>
+   199|                    <li><a href="news.html" class="hover:text-blue-600 transition">News</a></li>
+   200|                    <li><a href="blog.html" class="hover:text-blue-600 transition">Blog</a></li>
+   201|                    <li><a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff!important;padding:6px 14px;border-radius:8px;font-weight:600;font-size:0.9rem"><i class="fab fa-google-play" style="font-size:1rem"></i>App</a></li>
+   202|                </ul>
+   203|            </nav>
+   204|            <div class="pwa-header-actions">
+   205|                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite">
+   206|                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
+   207|                </a>
+   208|                <div id="auth-container" class="flex items-center gap-4 header-actions"></div>
+   209|            </div>
+   210|        </div>
+   211|    </header>
+   212|
+   213|    <main class="flex-grow pt-4 pb-20">
+   214|        <div class="max-w-4xl mx-auto px-6">
+   215|            <!-- Header -->
+   216|            <div class="text-center mb-10 md:mb-14">
+   217|                <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900 mb-3 tracking-tight">Frequently Asked Questions</h1>
+   218|                <p class="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">Everything you need to know about Reportify AI. Can't find what you're looking for? <a href="contact.html" class="text-blue-600 font-semibold hover:underline">Contact us</a>.</p>
+   219|            </div>
+   220|
+   221|            <!-- Search -->
+   222|            <div class="relative max-w-lg mx-auto mb-10">
+   223|                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+   224|                <input type="text" id="faq-search" class="faq-search w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-blue-400 transition bg-white" placeholder="Search questions..." oninput="filterFAQs(this.value)">
+   225|            </div>
+   226|
+   227|            <!-- FAQ Categories -->
+   228|            <div class="space-y-10">
+   229|
+   230|                <!-- Category: Getting Started -->
+   231|                <section data-faq-category="getting-started">
+   232|                    <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+   233|                        <i class="fas fa-rocket text-blue-600"></i> Getting Started
+   234|                    </h2>
+   235|                    <div class="space-y-3">
+   236|                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
+   237|                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
+   238|                                <span>What is Reportify AI?</span>
+   239|                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
+   240|                            </summary>
+   241|                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+   242|                                Reportify AI is an AI-powered report generator that transforms your raw meeting notes, chat logs, and quick thoughts into professional Word documents, PPT decks, and email summaries in 30 seconds. It uses our proprietary RIE (Reportify Intelligence Engine) to understand context and structure your content logically.
+   243|                            </div>
+   244|                        </details>
+   245|
+   246|                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
+   247|                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
+   248|                                <span>How do I get started?</span>
+   249|                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
+   250|                            </summary>
+   251|                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+   252|                                Just visit <a href="generate.html" class="text-blue-600 font-semibold hover:underline">generate.html</a> on our website or download the <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" class="text-blue-600 font-semibold hover:underline">Android app</a> — no credit card required. You can start with a 7-day Elite Trial for free, no sign-up needed to try the generator.
+   253|                            </div>
+   254|                        </details>
+   255|
+   256|                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
+   257|                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
+   258|                                <span>Is there a mobile app?</span>
+   259|                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
+   260|                            </summary>
+   261|                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+   262|                                Yes! Reportify AI is available on <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" class="text-blue-600 font-semibold hover:underline">Google Play</a>. The app syncs with your web account, so you can generate and access reports anywhere, anytime.
+   263|                            </div>
+   264|                        </details>
+   265|
+   266|                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
+   267|                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
+   268|                                <span>Do I need an account?</span>
+   269|                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
+   270|                            </summary>
+   271|                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+   272|                                You can try the report generator without an account. To save, export, and access your reports across devices, you'll need to sign up (Google login or email). It's free and takes 30 seconds.
+   273|                            </div>
+   274|                        </details>
+   275|                    </div>
+   276|                </section>
+   277|
+   278|                <!-- Category: Report Generation -->
+   279|                <section data-faq-category="reports">
+   280|                    <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+   281|                        <i class="fas fa-file-alt text-blue-600"></i> Report Generation
+   282|                    </h2>
+   283|                    <div class="space-y-3">
+   284|                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
+   285|                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
+   286|                                <span>What types of reports can I generate?</span>
+   287|                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
+   288|                            </summary>
+   289|                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+   290|                                You can generate: Daily/Weekly work reports, Meeting summaries, Project status updates, Executive summaries, and more. Simply choose the report type, detail level, and tone — Reportify AI handles the rest.
+   291|                            </div>
+   292|                        </details>
+   293|
+   294|                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
+   295|                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
+   296|                                <span>How does the RIE Engine work?</span>
+   297|                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
+   298|                            </summary>
+   299|                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+   300|                                RIE (Reportify Intelligence Engine) uses advanced AI to analyze your raw input — meeting notes, bullet points, or free-form text — and automatically organizes it into logical sections with professional headings, bullet points, and executive summaries. It understands context, hierarchy, and the flow of professional communication.
+   301|                            </div>
+   302|                        </details>
+   303|
+   304|                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
+   305|                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
+   306|                                <span>What output formats are supported?</span>
+   307|                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
+   308|                            </summary>
+   309|                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+   310|                                Reportify AI supports four export formats: <strong>Word (.doc)</strong> for formal documentation, <strong>PPT</strong> for presentation-ready slide decks, <strong>Email</strong> for stakeholder summaries, and <strong>Markdown</strong> for developers and note-takers.
+   311|                            </div>
+   312|                        </details>
+   313|
+   314|                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
+   315|                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
+   316|                                <span>What languages does Reportify AI support?</span>
+   317|                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
+   318|                            </summary>
+   319|                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+   320|                                Currently, Reportify AI supports English, Chinese (Simplified), Japanese, Korean, Spanish, German, French, and Portuguese. More languages coming soon.
+   321|                            </div>
+   322|                        </details>
+   323|
+   324|                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
+   325|                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
+   326|                                <span>How long does it take to generate a report?</span>
+   327|                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
+   328|                            </summary>
+   329|                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+   330|                                Most reports generate in under 30 seconds. The speed depends on the detail level you select — "Brief" mode is nearly instant, while "Detailed" mode takes a few extra seconds for comprehensive analysis.
+   331|                            </div>
+   332|                        </details>
+   333|                    </div>
+   334|                </section>
+   335|
+   336|                <!-- Category: Pricing & Plans -->
+   337|                <section data-faq-category="pricing">
+   338|                    <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+   339|                        <i class="fas fa-tag text-blue-600"></i> Pricing & Plans
+   340|                    </h2>
+   341|                    <div class="space-y-3">
+   342|                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
+   343|                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
+   344|                                <span>What plans are available?</span>
+   345|                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
+   346|                            </summary>
+   347|                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+   348|                                We offer three plans:<br>
+   349|                                <strong>Elite Trial</strong> — Free for 7 days, full access to RIE 3.0 flagship engine and PPT generation.<br>
+   350|                                <strong>Basic</strong> — $9.90/month, RIE 2.5 efficiency engine, 45 reports monthly, Word & Email export.<br>
+   351|                                <strong>Professional</strong> — $19.90/month, RIE 3.0 flagship engine, unlimited generation, full-scene PPT, strategic depth analysis, and priority support.
+   352|                            </div>
+   353|                        </details>
+   354|
+   355|                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
+   356|                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
+   357|                                <span>Is there a free trial?</span>
+   358|                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
+   359|                            </summary>
+   360|                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+   361|                                Yes! You get a 7-day Elite Trial completely free. This gives you full access to the RIE 3.0 flagship engine, PPT generation, and automated reporting. No credit card required to start.
+   362|                            </div>
+   363|                        </details>
+   364|                    </div>
+   365|                </section>
+   366|
+   367|                <!-- Category: Technical -->
+   368|                <section data-faq-category="technical">
+   369|                    <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+   370|                        <i class="fas fa-cog text-blue-600"></i> Technical & Support
+   371|                    </h2>
+   372|                    <div class="space-y-3">
+   373|                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
+   374|                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
+   375|                                <span>Is my data secure?</span>
+   376|                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
+   377|                            </summary>
+   378|                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+   379|                                Yes. Reportify AI uses encryption in transit. We take data privacy seriously — your report content is not shared with third parties, and you can request data deletion at any time. See our <a href="privacy.html" class="text-blue-600 font-semibold hover:underline">Privacy Policy</a> for details.
+   380|                            </div>
+   381|                        </details>
+   382|
+   383|                        <details class="faq-accordion bg-white rounded-xl border border-gray-200 overflow-hidden transition hover:border-blue-200">
+   384|                            <summary class="px-5 py-4 flex items-center justify-between gap-4 font-medium text-gray-800">
+   385|                                <span>How do I contact support?</span>
+   386|                                <i class="faq-icon fas fa-plus-circle text-blue-500 text-lg flex-shrink-0"></i>
+   387|                            </summary>
+   388|                            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+   389|                                You can reach us through the <a href="contact.html" class="text-blue-600 font-semibold hover:underline">Contact page</a>. Professional plan users receive priority support. You can also join our <a href="https://discord.gg/UtNfS8kH" target="_blank" class="text-blue-600 font-semibold hover:underline">Discord community</a> for quick help and discussions.
+   390|                            </div>
+   391|                        </details>
+   392|                    </div>
+   393|                </section>
+   394|
+   395|            </div>
+   396|
+   397|            <!-- Still have questions -->
+   398|            <div class="mt-12 text-center bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-8 text-white shadow-xl">
+   399|                <h3 class="text-xl font-bold mb-3">Still have questions?</h3>
+   400|                <p class="text-blue-100 mb-6 max-w-lg mx-auto">We're here to help. Reach out to us and we'll get back to you within 24 hours.</p>
+   401|                <a href="contact.html" class="inline-block bg-white text-blue-600 px-8 py-3 rounded-xl font-bold shadow-md hover:bg-gray-50 transition transform hover:-translate-y-1">Contact Us</a>
+   402|            </div>
+   403|        </div>
+   404|    </main>
+   405|
+   406|    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
+   407|        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
+   408|        <a href="index.html#generator" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
+   409|        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
+   410|        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
+   411|        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
+   412|    </nav>
+   413|
+   414|    <footer class="main-footer mt-auto" style="padding: 30px 0; background: #f8fafc; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 0.85rem; text-align: center;">
+   415|        <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+   416|            <div class="flex gap-6 mb-2 mt-2">
+   417|                <a href="https://discord.gg/UtNfS8kH" target="_blank" class="text-[#64748b] hover:text-[#5865F2] hover:-translate-y-1 transition-all duration-300 text-xl" title="Join our Discord"><i class="fa-brands fa-discord"></i></a>
+   418|                <a href="https://www.reddit.com/user/Automatic_Pitch5117" target="_blank" class="text-[#64748b] hover:text-[#FF4500] hover:-translate-y-1 transition-all duration-300 text-xl" title="Follow on Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
+   419|                <a href="https://x.com/reportifyai" target="_blank" class="text-[#64748b] hover:text-[#1DA1F2] hover:-translate-y-1 transition-all duration-300 text-xl" title="Follow on Twitter"><i class="fa-brands fa-twitter"></i></a>
+   420|                <a href="https://linkedin.com/company/reportifyai" target="_blank" class="text-[#64748b] hover:text-[#0077b5] hover:-translate-y-1 transition-all duration-300 text-xl" title="Follow on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+   421|                <a href="https://youtube.com/@reportifyai" target="_blank" class="text-[#64748b] hover:text-[#FF0000] hover:-translate-y-1 transition-all duration-300 text-xl" title="Subscribe on YouTube"><i class="fa-brands fa-youtube"></i></a>
+   422|                <a href="https://facebook.com/reportifyai" target="_blank" class="text-[#64748b] hover:text-[#1877F2] hover:-translate-y-1 transition-all duration-300 text-xl" title="Follow on Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+   423|                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" class="text-[#64748b] hover:text-[#EA4335] hover:-translate-y-1 transition-all duration-300 text-xl" title="Find us on Google"><i class="fa-brands fa-google"></i></a>
+   424|            </div>
+   425|            <div style="display: flex; gap: 20px; margin-bottom: 5px;">
+   426|                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:#059669;font-weight:600;text-decoration:none;font-size:0.9rem;transition:color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'"><i class="fab fa-google-play" style="font-size:1.2rem"></i> Download App</a>
+   427|                <a href="faq.html" style="color: #059669; font-weight: 600; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'">FAQ</a>
+   428|                <a href="terms.html" style="color: #64748b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#2563eb'" onmouseout="this.style.color='#64748b'">Terms of Service</a>
+   429|                <a href="privacy.html" style="color: #64748b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#2563eb'" onmouseout="this.style.color='#64748b'">Privacy Policy</a>
+   430|            </div>
+   431|            <p style="margin: 0;">&copy; 2026 Beijing Cricket Information Technology Co., Ltd. All Rights Reserved.</p>
+   432|       </div>
+   433|    </footer>
+   434|    
+   435|    <script>
+   436|        // FAQ Search filter
+   437|        function filterFAQs(query) {
+   438|            const q = query.toLowerCase().trim();
+   439|            const details = document.querySelectorAll('.faq-accordion');
+   440|            const sections = document.querySelectorAll('[data-faq-category]');
+   441|            
+   442|            if (!q) {
+   443|                details.forEach(d => { d.style.display = ''; });
+   444|                sections.forEach(s => { s.style.display = ''; });
+   445|                return;
+   446|            }
+   447|            
+   448|            sections.forEach(section => {
+   449|                let hasVisible = false;
+   450|                const items = section.querySelectorAll('.faq-accordion');
+   451|                items.forEach(item => {
+   452|                    const text = item.textContent.toLowerCase();
+   453|                    if (text.includes(q)) {
+   454|                        item.style.display = '';
+   455|                        hasVisible = true;
+   456|                    } else {
+   457|                        item.style.display = 'none';
+   458|                    }
+   459|                });
+   460|                section.style.display = hasVisible ? '' : 'none';
+   461|            });
+   462|        }
+   463|
+   464|        // Smooth open/close for accordion
+   465|        document.querySelectorAll('.faq-accordion').forEach(detail => {
+   466|            detail.addEventListener('toggle', function() {
+   467|                if (this.open) {
+   468|                    // Close others in same category
+   469|                    const parent = this.closest('[data-faq-category]');
+   470|                    if (parent) {
+   471|                        parent.querySelectorAll('.faq-accordion[open]').forEach(other => {
+   472|                            if (other !== this) other.removeAttribute('open');
+   473|                        });
+   474|                    }
+   475|                }
+   476|            });
+   477|        });
+   478|    </script>
+   479|
+   480|    <script src="script.js?v=2026.16"></script>
+   481|    <script src="https://unpkg.com/lucide@latest"></script>
+   482|    <script>lucide.createIcons();</script>
+   483|</body>
+   484|</html>
+   485|

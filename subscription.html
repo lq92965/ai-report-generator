@@ -1,193 +1,194 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="color-scheme" content="light">
-    <meta name="theme-color" content="#ffffff">
-    <link rel="manifest" href="manifest.json">
-    <title>Upgrade Plan - Reportify AI</title>
-    <link rel="stylesheet" href="style.css?v=2026.12">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://www.paypal.com/sdk/js?client-id=AVnSKKHaiFxJKn4HMqGyKeXBhxZ1W-Qs3w7PSP8maz3c2O8jGg_o_nLHt7IUJQjwKHQBZyIVKaJuUPBc&currency=USD"></script>
-    <link rel="stylesheet" href="mobile-patch.css">
-    <script src="mobile-patch.js"></script>
-
-    <!-- Open Graph / Social -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.goreportify.com/subscription.html" />
-    <meta property="og:title" content="Upgrade Plan - Reportify AI" />
-    <meta property="og:description" content="Reportify AI - AI-powered report generation" />
-    <meta property="og:image" content="https://www.goreportify.com/images/og-default.png" />
-    <meta property="og:site_name" content="Reportify AI" />
-    <meta property="og:locale" content="en_US" />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Upgrade Plan - Reportify AI" />
-    <meta name="twitter:description" content="Reportify AI - AI-powered report generation" />
-    <meta name="twitter:image" content="https://www.goreportify.com/images/og-default.png" />
-
-    <!-- Canonical -->
-    <link rel="canonical" href="https://www.goreportify.com/subscription.html" />
-
-
-    
-
-
-    <meta name="description" content="Manage your Reportify AI subscription plan and billing." />
-        <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PX3FEY6F6"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-3PX3FEY6F6');
-    </script>
-</head>
-<body class="has-app-nav" style="background-color: #f8f9fa;">
-
-    <header class="main-header account-header pwa-app-header">
-        <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
-            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
-                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
-            </div>
-            <nav class="main-nav pwa-desktop-nav" id="pwa-collapse-nav">
-                <ul>
-                    <li><a href="index.html#features">Features</a></li>
-                    <li><a href="index.html#pricing">Pricing</a></li>
-                    <li><a href="generate.html">Generator</a></li>
-                    <li><a href="news.html">News</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff!important;padding:6px 14px;border-radius:8px;font-weight:600;font-size:0.9rem"><i class="fab fa-google-play" style="font-size:1rem"></i>App</a></li>
-                </ul>
-            </nav>
-            <div class="pwa-header-actions" style="display: flex; align-items: center; margin-left: auto;">
-                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite" style="margin-right: 12px;">
-                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
-                </a>
-                <div id="auth-container" class="header-actions"></div>
-            </div>
-        </div>
-    </header>
-
-    <section id="pricing" class="pricing-section" style="padding: 2rem 0;">
-        <div class="container" style="max-width: 1200px; margin: 0 auto 40px; text-align: center; padding: 0 20px;">
-            <h1 style="font-size: 2.5rem; color: #333; margin-bottom: 10px;">Choose Your Plan</h1>
-            <p style="color: #666; font-size: 1rem; margin-bottom: 2rem;">
-                Unlock the full potential of AI reporting.
-            </p>
-            <span style="font-size: 0.9rem; background: #eef; padding: 6px 12px; border-radius: 20px; color: #555;">
-                Current Plan: <span id="current-plan-badge" style="font-weight:bold; color:#007bff">LOADING...</span>
-            </span>
-        </div>
-
-        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pricing-grid pb-8" style="display: grid;">
-                
-                <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer hover:shadow-lg relative flex flex-col justify-between" data-plan="free">
-                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs px-3 py-1 rounded-bl-lg font-bold uppercase tracking-wider">7-Day Elite Pass</div>
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Elite Trial</h3>
-                        <div class="text-3xl font-extrabold text-gray-900 mb-6">$0<span class="text-sm font-normal text-gray-500">/ 7 days</span></div>
-                        <ul class="space-y-4 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0;">
-                            <li class="flex items-start gap-2"><i class="fas fa-bolt text-blue-600 mt-1"></i> <span><strong>RIE 3.0 Flagship Engine</strong><br><small class="text-gray-400">Full Power Access</small></span></li>
-                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> <strong>One-Click PPT</strong> Presentation</li>
-                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Word & Email Multi-Export</li>
-                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> <strong>Automate</strong> Daily/Weekly Reports</li>
-                        </ul>
-                    </div>
-                    <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-blue-600 text-white hover:bg-blue-700 shadow-md choose-plan-btn text-sm mt-4 flex justify-center items-center" data-plan="free">Start Elite Experience</button>
-                </div>
-
-                <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer hover:shadow-lg relative flex flex-col justify-between" data-plan="basic">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Basic</h3>
-                        <div class="text-3xl font-extrabold text-gray-900 mb-6">$9.90<span class="text-sm font-normal text-gray-500">/ mo</span></div>
-                        <ul class="space-y-4 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0;">
-                            <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> <strong>RIE 2.5 Efficiency Engine</strong></li>
-                            <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> <strong>45 Reports</strong> Monthly Credits</li>
-                            <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> Word & Email Professional Export</li>
-                            <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> <strong>Standard Office</strong> Logic Analysis</li>
-                        </ul>
-                    </div>
-                    <div class="flex flex-col gap-3 mt-4">
-                        <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-white text-blue-600 border border-blue-200 hover:bg-gray-50 shadow-sm choose-plan-btn text-sm flex justify-center items-center" data-plan="basic" onclick="window.isYearlyBilling = false">Pay Monthly ($9.90)</button>
-                        <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-blue-600 text-white hover:bg-blue-700 shadow-md choose-plan-btn text-sm flex justify-center items-center" data-plan="basic" onclick="window.isYearlyBilling = true">Pay Annually ($99) <span class="bg-yellow-400 text-yellow-900 px-2 py-0.5 rounded-full ml-2 text-xs font-black">Save 16%</span></button>
-                    </div>
-                </div>
-
-                <div class="pricing-card overflow-visible border-blue-600 border-2 ring-4 ring-blue-500/20 shadow-xl transform scale-105 rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer relative flex flex-col justify-between z-10" data-plan="pro">
-                    <div class="absolute top-0 right-0 transform translate-x-2 -translate-y-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md uppercase tracking-wider">Recommended</div>
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">Professional</h3>
-                        <div class="text-3xl font-extrabold text-gray-900 mb-6">$19.90<span class="text-sm font-normal text-gray-500">/ mo</span></div>
-                        <ul class="space-y-4 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0;">
-                            <li class="flex items-start gap-2"><i class="fas fa-crown text-blue-600 mt-1"></i> <span><strong>RIE 3.0 Flagship Engine</strong><br><small class="text-gray-400">Unlimited Generation</small></span></li>
-                            <li class="flex items-center gap-2"><i class="fas fa-magic text-blue-600"></i> <strong>Full-Scene PPT</strong> Generation</li>
-                            <li class="flex items-center gap-2"><i class="fas fa-brain text-blue-600"></i> Strategic Depth Logic Analysis</li>
-                            <li class="flex items-center gap-2"><i class="fas fa-star text-blue-600"></i> Exclusive Templates & Priority</li>
-                        </ul>
-                    </div>
-                    <div class="flex flex-col gap-3 mt-4">
-                        <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-white text-blue-600 border border-blue-200 hover:bg-gray-50 shadow-sm choose-plan-btn text-sm flex justify-center items-center" data-plan="pro" onclick="window.isYearlyBilling = false">Pay Monthly ($19.90)</button>
-                        <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-blue-600 text-white hover:bg-blue-700 shadow-md choose-plan-btn text-sm flex justify-center items-center" data-plan="pro" onclick="window.isYearlyBilling = true">Pay Annually ($199) <span class="bg-yellow-400 text-yellow-900 px-2 py-0.5 rounded-full ml-2 text-xs font-black">Save 16%</span></button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-        
-    <div style="text-align: center; margin: 40px 0; color: #999; font-size: 0.8rem;">
-        <p><i class="fab fa-paypal"></i> Secure one-time payment via PayPal. No automatic renewals.</p>
-    </div>
-
-    <div id="payment-modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
-        <div style="background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 450px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
-            <span id="close-payment-btn" style="position: absolute; top: 10px; right: 15px; font-size: 28px; cursor: pointer; color: #666;">&times;</span>
-            
-            <h3 style="text-align: center; margin-bottom: 5px; color: #333;">Complete Your Purchase</h3>
-            <p id="payment-plan-name" style="text-align: center; color: #007bff; font-weight: bold; margin-bottom: 25px; font-size: 1.1rem;">Plan Name</p>
-            
-            <div id="paypal-button-container"></div>
-        </div>
-    </div>
-
-    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
-        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
-        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
-        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
-        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
-        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
-    </nav>
-
-    <footer class="main-footer site-footer-rich" role="contentinfo">
-        <div class="container site-footer-inner">
-            <div class="site-footer-social">
-                <a href="https://discord.gg/UtNfS8kH" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
-                <a href="https://www.reddit.com/user/Automatic_Pitch5117" target="_blank" rel="noopener noreferrer" title="Reddit" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://google.com" target="_blank" rel="noopener noreferrer" title="Google" aria-label="Google"><i class="fa-brands fa-google"></i></a>
-            </div>
-            <div class="site-footer-legal">
-                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:#059669;font-weight:600;text-decoration:none;font-size:0.9rem;transition:color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'"><i class="fab fa-google-play" style="font-size:1.2rem"></i> Download App</a>
-                <a href="faq.html" style="color: #059669; font-weight: 600; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'">FAQ</a>
-                <a href="terms.html">Terms of Service</a>
-                <a href="privacy.html">Privacy Policy</a>
-            </div>
-            <p class="site-footer-copy">&copy; 2026 Beijing Cricket Information Technology Co., Ltd. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <script src="pwa-nav.js"></script>
-    <script src="google-play-iap.js?v=1"></script>
-    <script src="script.js?v=2026.20"></script>
-
-</body>
-</html>
+     1|<!DOCTYPE html>
+     2|<html lang="en">
+     3|<head>
+     4|    <meta charset="UTF-8">
+     5|    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+     6|    <meta name="color-scheme" content="light">
+     7|    <meta name="theme-color" content="#ffffff">
+     8|    <link rel="manifest" href="manifest.json">
+     9|    <title>Upgrade Plan - Reportify AI</title>
+    10|    <link rel="stylesheet" href="style.css?v=2026.12">
+    11|    <script src="https://cdn.tailwindcss.com"></script>
+    12|    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    13|    <script src="https://www.paypal.com/sdk/js?client-id=AVnSKKHaiFxJKn4HMqGyKeXBhxZ1W-Qs3w7PSP8maz3c2O8jGg_o_nLHt7IUJQjwKHQBZyIVKaJuUPBc&currency=USD"></script>
+    14|    <link rel="stylesheet" href="mobile-patch.css">
+    15|    <script src="mobile-patch.js"></script>
+    16|
+    17|    <!-- Open Graph / Social -->
+    18|    <meta property="og:type" content="website" />
+    19|    <meta property="og:url" content="https://www.goreportify.com/subscription.html" />
+    20|    <meta property="og:title" content="Upgrade Plan - Reportify AI" />
+    21|    <meta property="og:description" content="Reportify AI - AI-powered report generation" />
+    22|    <meta property="og:image" content="https://www.goreportify.com/images/og-default.png" />
+    23|    <meta property="og:site_name" content="Reportify AI" />
+    24|    <meta property="og:locale" content="en_US" />
+    25|
+    26|    <!-- Twitter Card -->
+    27|    <meta name="twitter:card" content="summary_large_image" />
+    28|    <meta name="twitter:title" content="Upgrade Plan - Reportify AI" />
+    29|    <meta name="twitter:description" content="Reportify AI - AI-powered report generation" />
+    30|    <meta name="twitter:image" content="https://www.goreportify.com/images/og-default.png" />
+    31|
+    32|    <!-- Canonical -->
+    33|    <link rel="canonical" href="https://www.goreportify.com/subscription.html" />
+    34|
+    35|
+    36|    
+    37|
+    38|
+    39|    <meta name="description" content="Manage your Reportify AI subscription plan and billing." />
+    40|        <!-- Google Analytics -->
+    41|    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PX3FEY6F6"></script>
+    42|    <script>
+    43|        window.dataLayer = window.dataLayer || [];
+    44|        function gtag(){dataLayer.push(arguments);}
+    45|        gtag('js', new Date());
+    46|        gtag('config', 'G-3PX3FEY6F6');
+    47|    </script>
+    48|</head>
+    49|<body class="has-app-nav" style="background-color: #f8f9fa;">
+    50|
+    51|    <header class="main-header account-header pwa-app-header">
+    52|        <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
+    53|            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
+    54|                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
+    55|            </div>
+    56|            <nav class="main-nav pwa-desktop-nav" id="pwa-collapse-nav">
+    57|                <ul>
+    58|                    <li><a href="index.html#features">Features</a></li>
+    59|                    <li><a href="index.html#pricing">Pricing</a></li>
+    60|                    <li><a href="generate.html">Generator</a></li>
+    61|                    <li><a href="news.html">News</a></li>
+    62|                    <li><a href="blog.html">Blog</a></li>
+    63|                    <li><a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff!important;padding:6px 14px;border-radius:8px;font-weight:600;font-size:0.9rem"><i class="fab fa-google-play" style="font-size:1rem"></i>App</a></li>
+    64|                </ul>
+    65|            </nav>
+    66|            <div class="pwa-header-actions" style="display: flex; align-items: center; margin-left: auto;">
+    67|                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite" style="margin-right: 12px;">
+    68|                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
+    69|                </a>
+    70|                <div id="auth-container" class="header-actions"></div>
+    71|            </div>
+    72|        </div>
+    73|    </header>
+    74|
+    75|    <section id="pricing" class="pricing-section" style="padding: 2rem 0;">
+    76|        <div class="container" style="max-width: 1200px; margin: 0 auto 40px; text-align: center; padding: 0 20px;">
+    77|            <h1 style="font-size: 2.5rem; color: #333; margin-bottom: 10px;">Choose Your Plan</h1>
+    78|            <p style="color: #666; font-size: 1rem; margin-bottom: 2rem;">
+    79|                Unlock the full potential of AI reporting.
+    80|            </p>
+    81|            <span style="font-size: 0.9rem; background: #eef; padding: 6px 12px; border-radius: 20px; color: #555;">
+    82|                Current Plan: <span id="current-plan-badge" style="font-weight:bold; color:#007bff">LOADING...</span>
+    83|            </span>
+    84|        </div>
+    85|
+    86|        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+    87|            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pricing-grid pb-8" style="display: grid;">
+    88|                
+    89|                <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer hover:shadow-lg relative flex flex-col justify-between" data-plan="free">
+    90|                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs px-3 py-1 rounded-bl-lg font-bold uppercase tracking-wider">7-Day Elite Pass</div>
+    91|                    <div>
+    92|                        <h3 class="text-xl font-bold text-gray-800 mb-2">Elite Trial</h3>
+    93|                        <div class="text-3xl font-extrabold text-gray-900 mb-6">$0<span class="text-sm font-normal text-gray-500">/ 7 days</span></div>
+    94|                        <ul class="space-y-4 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0;">
+    95|                            <li class="flex items-start gap-2"><i class="fas fa-bolt text-blue-600 mt-1"></i> <span><strong>RIE 3.0 Flagship Engine</strong><br><small class="text-gray-400">Full Power Access</small></span></li>
+    96|                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> <strong>One-Click PPT</strong> Presentation</li>
+    97|                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Word & Email Multi-Export</li>
+    98|                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> <strong>Automate</strong> Daily/Weekly Reports</li>
+    99|                        </ul>
+   100|                    </div>
+   101|                    <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-blue-600 text-white hover:bg-blue-700 shadow-md choose-plan-btn text-sm mt-4 flex justify-center items-center" data-plan="free">Start Elite Experience</button>
+   102|                </div>
+   103|
+   104|                <div class="pricing-card border border-gray-200 shadow-sm rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer hover:shadow-lg relative flex flex-col justify-between" data-plan="basic">
+   105|                    <div>
+   106|                        <h3 class="text-xl font-bold text-gray-800 mb-2">Basic</h3>
+   107|                        <div class="text-3xl font-extrabold text-gray-900 mb-6">$9.90<span class="text-sm font-normal text-gray-500">/ mo</span></div>
+   108|                        <ul class="space-y-4 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0;">
+   109|                            <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> <strong>RIE 2.5 Efficiency Engine</strong></li>
+   110|                            <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> <strong>45 Reports</strong> Monthly Credits</li>
+   111|                            <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> Word & Email Professional Export</li>
+   112|                            <li class="flex items-center gap-2"><i class="fas fa-check text-blue-500"></i> <strong>Standard Office</strong> Logic Analysis</li>
+   113|                        </ul>
+   114|                    </div>
+   115|                    <div class="flex flex-col gap-3 mt-4">
+   116|                        <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-white text-blue-600 border border-blue-200 hover:bg-gray-50 shadow-sm choose-plan-btn text-sm flex justify-center items-center" data-plan="basic" onclick="window.isYearlyBilling = false">Pay Monthly ($9.90)</button>
+   117|                        <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-blue-600 text-white hover:bg-blue-700 shadow-md choose-plan-btn text-sm flex justify-center items-center" data-plan="basic" onclick="window.isYearlyBilling = true">Pay Annually ($99) <span class="bg-yellow-400 text-yellow-900 px-2 py-0.5 rounded-full ml-2 text-xs font-black">Save 16%</span></button>
+   118|                    </div>
+   119|                </div>
+   120|
+   121|                <div class="pricing-card overflow-visible border-blue-600 border-2 ring-4 ring-blue-500/20 shadow-xl transform scale-105 rounded-2xl p-8 bg-white transition-all duration-300 cursor-pointer relative flex flex-col justify-between z-10" data-plan="pro">
+   122|                    <div class="absolute top-0 right-0 transform translate-x-2 -translate-y-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md uppercase tracking-wider">Recommended</div>
+   123|                    <div>
+   124|                        <h3 class="text-xl font-bold text-gray-800 mb-2">Professional</h3>
+   125|                        <div class="text-3xl font-extrabold text-gray-900 mb-6">$19.90<span class="text-sm font-normal text-gray-500">/ mo</span></div>
+   126|                        <ul class="space-y-4 mb-8 text-sm text-gray-600" style="list-style: none; padding: 0;">
+   127|                            <li class="flex items-start gap-2"><i class="fas fa-crown text-blue-600 mt-1"></i> <span><strong>RIE 3.0 Flagship Engine</strong><br><small class="text-gray-400">Unlimited Generation</small></span></li>
+   128|                            <li class="flex items-center gap-2"><i class="fas fa-magic text-blue-600"></i> <strong>Full-Scene PPT</strong> Generation</li>
+   129|                            <li class="flex items-center gap-2"><i class="fas fa-brain text-blue-600"></i> Strategic Depth Logic Analysis</li>
+   130|                            <li class="flex items-center gap-2"><i class="fas fa-star text-blue-600"></i> Exclusive Templates & Priority</li>
+   131|                        </ul>
+   132|                    </div>
+   133|                    <div class="flex flex-col gap-3 mt-4">
+   134|                        <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-white text-blue-600 border border-blue-200 hover:bg-gray-50 shadow-sm choose-plan-btn text-sm flex justify-center items-center" data-plan="pro" onclick="window.isYearlyBilling = false">Pay Monthly ($19.90)</button>
+   135|                        <button class="w-full py-3 rounded-xl font-bold transition-all duration-200 bg-blue-600 text-white hover:bg-blue-700 shadow-md choose-plan-btn text-sm flex justify-center items-center" data-plan="pro" onclick="window.isYearlyBilling = true">Pay Annually ($199) <span class="bg-yellow-400 text-yellow-900 px-2 py-0.5 rounded-full ml-2 text-xs font-black">Save 16%</span></button>
+   136|                    </div>
+   137|                </div>
+   138|
+   139|            </div>
+   140|        </div>
+   141|    </section>
+   142|        
+   143|    <div style="text-align: center; margin: 40px 0; color: #999; font-size: 0.8rem;">
+   144|        <p><i class="fab fa-paypal"></i> Secure one-time payment via PayPal. No automatic renewals.</p>
+   145|    </div>
+   146|
+   147|    <div id="payment-modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+   148|        <div style="background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 450px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+   149|            <span id="close-payment-btn" style="position: absolute; top: 10px; right: 15px; font-size: 28px; cursor: pointer; color: #666;">&times;</span>
+   150|            
+   151|            <h3 style="text-align: center; margin-bottom: 5px; color: #333;">Complete Your Purchase</h3>
+   152|            <p id="payment-plan-name" style="text-align: center; color: #007bff; font-weight: bold; margin-bottom: 25px; font-size: 1.1rem;">Plan Name</p>
+   153|            
+   154|            <div id="paypal-button-container"></div>
+   155|        </div>
+   156|    </div>
+   157|
+   158|    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
+   159|        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
+   160|        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
+   161|        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
+   162|        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
+   163|        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
+   164|    </nav>
+   165|
+   166|    <footer class="main-footer site-footer-rich" role="contentinfo">
+   167|        <div class="container site-footer-inner">
+   168|            <div class="site-footer-social">
+   169|                <a href="https://discord.gg/UtNfS8kH" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+   170|                <a href="https://www.reddit.com/user/Automatic_Pitch5117" target="_blank" rel="noopener noreferrer" title="Reddit" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
+   171|                <a href="https://x.com/reportifyai" target="_blank" rel="noopener noreferrer" title="Twitter" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+   172|                <a href="https://linkedin.com/company/reportifyai" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+   173|                <a href="https://youtube.com/@reportifyai" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+   174|                <a href="https://facebook.com/reportifyai" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+   175|                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener noreferrer" title="Google" aria-label="Google"><i class="fa-brands fa-google"></i></a>
+   176|            </div>
+   177|            <div class="site-footer-legal">
+   178|                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:#059669;font-weight:600;text-decoration:none;font-size:0.9rem;transition:color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'"><i class="fab fa-google-play" style="font-size:1.2rem"></i> Download App</a>
+   179|                <a href="faq.html" style="color: #059669; font-weight: 600; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'">FAQ</a>
+   180|                <a href="terms.html">Terms of Service</a>
+   181|                <a href="privacy.html">Privacy Policy</a>
+   182|            </div>
+   183|            <p class="site-footer-copy">&copy; 2026 Beijing Cricket Information Technology Co., Ltd. All Rights Reserved.</p>
+   184|        </div>
+   185|    </footer>
+   186|
+   187|    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+   188|    <script src="pwa-nav.js"></script>
+   189|    <script src="google-play-iap.js?v=1"></script>
+   190|    <script src="script.js?v=2026.20"></script>
+   191|
+   192|</body>
+   193|</html>
+   194|

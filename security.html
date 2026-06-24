@@ -1,162 +1,163 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Security Settings - Reportify AI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css?v=2026.12">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="mobile-patch.css">
-    <script src="mobile-patch.js"></script>
-
-    <!-- Open Graph / Social -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.goreportify.com/security.html" />
-    <meta property="og:title" content="Security Settings - Reportify AI" />
-    <meta property="og:description" content="Manage your Reportify AI security settings, password, and authentication." />
-    <meta property="og:image" content="https://www.goreportify.com/images/og-default.png" />
-    <meta property="og:site_name" content="Reportify AI" />
-    <meta property="og:locale" content="en_US" />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Security Settings - Reportify AI" />
-    <meta name="twitter:description" content="Manage your Reportify AI security settings, password, and authentication." />
-    <meta name="twitter:image" content="https://www.goreportify.com/images/og-default.png" />
-
-    <!-- Canonical -->
-    <link rel="canonical" href="https://www.goreportify.com/security.html" />
-
-
-    
-
-
-    <meta name="description" content="Security settings and authentication management for your Reportify AI account." />
-        <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PX3FEY6F6"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-3PX3FEY6F6');
-    </script>
-</head>
-<body class="has-app-nav" style="background-color: #f8f9fa;">
-    <header class="main-header account-header pwa-app-header">
-        <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
-            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
-                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
-            </div>
-            <nav class="main-nav pwa-desktop-nav" id="pwa-collapse-nav">
-                <ul>
-                    <li><a href="index.html#features">Features</a></li>
-                    <li><a href="index.html#pricing">Pricing</a></li>
-                    <li><a href="generate.html">Generator</a></li>
-                    <li><a href="news.html">News</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff!important;padding:6px 14px;border-radius:8px;font-weight:600;font-size:0.9rem"><i class="fab fa-google-play" style="font-size:1rem"></i>App</a></li>
-                </ul>
-            </nav>
-            <div class="pwa-header-actions" style="display: flex; align-items: center; margin-left: auto;">
-                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite" style="margin-right: 12px;">
-                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
-                </a>
-                <div id="auth-container" class="header-actions"></div>
-            </div>
-        </div>
-    </header>
-
-    <section class="generator-section" style="padding-top: 2rem; padding-bottom: 3rem;">
-        <div class="container">
-            <h2 class="section-title" style="margin-bottom: 1.75rem;">Security</h2>
-
-            <div class="account-container security-page-card account-profile-form-wide">
-                <div class="account-profile-form">
-                    <h3 style="font-size: 1.35rem; margin-bottom: 1.25rem;">Change Password</h3>
-                    <form id="change-password-form" onsubmit="return false;">
-                        <div class="input-wrapper">
-                            <label for="old-password">Current Password</label>
-                            <div style="position: relative;">
-                                <input type="password" id="old-password" required style="width: 100%; padding-right: 40px; box-sizing: border-box;">
-                                <button type="button" class="toggle-password" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #9ca3af; cursor: pointer; padding: 0;">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="input-wrapper">
-                            <label for="new-password">New Password</label>
-                            <div style="position: relative;">
-                                <input type="password" id="new-password" required minlength="8" style="width: 100%; padding-right: 40px; box-sizing: border-box;">
-                                <button type="button" class="toggle-password" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #9ca3af; cursor: pointer; padding: 0;">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                            
-                            <div id="security-password-strength-box" class="mt-2 text-xs hidden" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-top: 10px;">
-                                <div id="sec-req-length" class="flex items-center text-gray-500 mb-1"><i class="far fa-circle mr-2 w-4"></i> 8+ chars</div>
-                                <div id="sec-req-upper" class="flex items-center text-gray-500 mb-1"><i class="far fa-circle mr-2 w-4"></i> Uppercase</div>
-                                <div id="sec-req-number" class="flex items-center text-gray-500 mb-1"><i class="far fa-circle mr-2 w-4"></i> Number</div>
-                                <div id="sec-req-special" class="flex items-center text-gray-500"><i class="far fa-circle mr-2 w-4"></i> Symbol</div>
-                            </div>
-                            <div id="security-pwd-feedback" style="display: none; margin-top: 8px;"></div>
-                        </div>
-                        <div class="input-wrapper">
-                            <label for="confirm-password">Confirm New Password</label>
-                            <div style="position: relative;">
-                                <input type="password" id="confirm-password" required style="width: 100%; padding-right: 40px; box-sizing: border-box;">
-                                <button type="button" class="toggle-password" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #9ca3af; cursor: pointer; padding: 0;">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary" style="margin-top: 0.5rem;">Update Password</button>
-                        <p id="password-status" class="status-message"></p>
-                    </form>
-                    
-                    <hr class="section-divider"> 
-                    
-                    <div class="danger-zone">
-                        <h3>Danger Zone</h3>
-                        <p>Once you delete your account, there is no going back. Please be certain.</p>
-                        <button type="button" id="delete-account-btn" class="btn btn-danger">Delete My Account</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
-        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
-        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
-        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
-        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
-        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
-    </nav>
-
-    <footer class="main-footer site-footer-rich" role="contentinfo">
-        <div class="container site-footer-inner">
-            <div class="site-footer-social">
-                <a href="https://discord.gg/UtNfS8kH" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
-                <a href="https://www.reddit.com/user/Automatic_Pitch5117" target="_blank" rel="noopener noreferrer" title="Reddit" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://google.com" target="_blank" rel="noopener noreferrer" title="Google" aria-label="Google"><i class="fa-brands fa-google"></i></a>
-            </div>
-            <div class="site-footer-legal">
-                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:#059669;font-weight:600;text-decoration:none;font-size:0.9rem;transition:color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'"><i class="fab fa-google-play" style="font-size:1.2rem"></i> Download App</a>
-                <a href="faq.html" style="color: #059669; font-weight: 600; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'">FAQ</a>
-                <a href="terms.html">Terms of Service</a>
-                <a href="privacy.html">Privacy Policy</a>
-            </div>
-            <p class="site-footer-copy">&copy; 2026 Beijing Cricket Information Technology Co., Ltd. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <script src="pwa-nav.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
+     1|<!DOCTYPE html>
+     2|<html lang="en">
+     3|<head>
+     4|    <meta charset="UTF-8">
+     5|    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+     6|    <title>Security Settings - Reportify AI</title>
+     7|    <script src="https://cdn.tailwindcss.com"></script>
+     8|    <link rel="stylesheet" href="style.css?v=2026.12">
+     9|    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    10|    <link rel="stylesheet" href="mobile-patch.css">
+    11|    <script src="mobile-patch.js"></script>
+    12|
+    13|    <!-- Open Graph / Social -->
+    14|    <meta property="og:type" content="website" />
+    15|    <meta property="og:url" content="https://www.goreportify.com/security.html" />
+    16|    <meta property="og:title" content="Security Settings - Reportify AI" />
+    17|    <meta property="og:description" content="Manage your Reportify AI security settings, password, and authentication." />
+    18|    <meta property="og:image" content="https://www.goreportify.com/images/og-default.png" />
+    19|    <meta property="og:site_name" content="Reportify AI" />
+    20|    <meta property="og:locale" content="en_US" />
+    21|
+    22|    <!-- Twitter Card -->
+    23|    <meta name="twitter:card" content="summary_large_image" />
+    24|    <meta name="twitter:title" content="Security Settings - Reportify AI" />
+    25|    <meta name="twitter:description" content="Manage your Reportify AI security settings, password, and authentication." />
+    26|    <meta name="twitter:image" content="https://www.goreportify.com/images/og-default.png" />
+    27|
+    28|    <!-- Canonical -->
+    29|    <link rel="canonical" href="https://www.goreportify.com/security.html" />
+    30|
+    31|
+    32|    
+    33|
+    34|
+    35|    <meta name="description" content="Security settings and authentication management for your Reportify AI account." />
+    36|        <!-- Google Analytics -->
+    37|    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3PX3FEY6F6"></script>
+    38|    <script>
+    39|        window.dataLayer = window.dataLayer || [];
+    40|        function gtag(){dataLayer.push(arguments);}
+    41|        gtag('js', new Date());
+    42|        gtag('config', 'G-3PX3FEY6F6');
+    43|    </script>
+    44|</head>
+    45|<body class="has-app-nav" style="background-color: #f8f9fa;">
+    46|    <header class="main-header account-header pwa-app-header">
+    47|        <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
+    48|            <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
+    49|                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
+    50|            </div>
+    51|            <nav class="main-nav pwa-desktop-nav" id="pwa-collapse-nav">
+    52|                <ul>
+    53|                    <li><a href="index.html#features">Features</a></li>
+    54|                    <li><a href="index.html#pricing">Pricing</a></li>
+    55|                    <li><a href="generate.html">Generator</a></li>
+    56|                    <li><a href="news.html">News</a></li>
+    57|                    <li><a href="blog.html">Blog</a></li>
+    58|                    <li><a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff!important;padding:6px 14px;border-radius:8px;font-weight:600;font-size:0.9rem"><i class="fab fa-google-play" style="font-size:1rem"></i>App</a></li>
+    59|                </ul>
+    60|            </nav>
+    61|            <div class="pwa-header-actions" style="display: flex; align-items: center; margin-left: auto;">
+    62|                <a href="usage.html#share-area" class="pwa-invite-icon-btn" title="Invite" aria-label="Invite" style="margin-right: 12px;">
+    63|                    <span class="pwa-invite-lucide"><i data-lucide="gift"></i></span>
+    64|                </a>
+    65|                <div id="auth-container" class="header-actions"></div>
+    66|            </div>
+    67|        </div>
+    68|    </header>
+    69|
+    70|    <section class="generator-section" style="padding-top: 2rem; padding-bottom: 3rem;">
+    71|        <div class="container">
+    72|            <h2 class="section-title" style="margin-bottom: 1.75rem;">Security</h2>
+    73|
+    74|            <div class="account-container security-page-card account-profile-form-wide">
+    75|                <div class="account-profile-form">
+    76|                    <h3 style="font-size: 1.35rem; margin-bottom: 1.25rem;">Change Password</h3>
+    77|                    <form id="change-password-form" onsubmit="return false;">
+    78|                        <div class="input-wrapper">
+    79|                            <label for="old-password">Current Password</label>
+    80|                            <div style="position: relative;">
+    81|                                <input type="password" id="old-password" required style="width: 100%; padding-right: 40px; box-sizing: border-box;">
+    82|                                <button type="button" class="toggle-password" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #9ca3af; cursor: pointer; padding: 0;">
+    83|                                    <i class="fas fa-eye"></i>
+    84|                                </button>
+    85|                            </div>
+    86|                        </div>
+    87|                        <div class="input-wrapper">
+    88|                            <label for="new-password">New Password</label>
+    89|                            <div style="position: relative;">
+    90|                                <input type="password" id="new-password" required minlength="8" style="width: 100%; padding-right: 40px; box-sizing: border-box;">
+    91|                                <button type="button" class="toggle-password" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #9ca3af; cursor: pointer; padding: 0;">
+    92|                                    <i class="fas fa-eye"></i>
+    93|                                </button>
+    94|                            </div>
+    95|                            
+    96|                            <div id="security-password-strength-box" class="mt-2 text-xs hidden" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-top: 10px;">
+    97|                                <div id="sec-req-length" class="flex items-center text-gray-500 mb-1"><i class="far fa-circle mr-2 w-4"></i> 8+ chars</div>
+    98|                                <div id="sec-req-upper" class="flex items-center text-gray-500 mb-1"><i class="far fa-circle mr-2 w-4"></i> Uppercase</div>
+    99|                                <div id="sec-req-number" class="flex items-center text-gray-500 mb-1"><i class="far fa-circle mr-2 w-4"></i> Number</div>
+   100|                                <div id="sec-req-special" class="flex items-center text-gray-500"><i class="far fa-circle mr-2 w-4"></i> Symbol</div>
+   101|                            </div>
+   102|                            <div id="security-pwd-feedback" style="display: none; margin-top: 8px;"></div>
+   103|                        </div>
+   104|                        <div class="input-wrapper">
+   105|                            <label for="confirm-password">Confirm New Password</label>
+   106|                            <div style="position: relative;">
+   107|                                <input type="password" id="confirm-password" required style="width: 100%; padding-right: 40px; box-sizing: border-box;">
+   108|                                <button type="button" class="toggle-password" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #9ca3af; cursor: pointer; padding: 0;">
+   109|                                    <i class="fas fa-eye"></i>
+   110|                                </button>
+   111|                            </div>
+   112|                        </div>
+   113|                        <button type="submit" class="btn btn-primary" style="margin-top: 0.5rem;">Update Password</button>
+   114|                        <p id="password-status" class="status-message"></p>
+   115|                    </form>
+   116|                    
+   117|                    <hr class="section-divider"> 
+   118|                    
+   119|                    <div class="danger-zone">
+   120|                        <h3>Danger Zone</h3>
+   121|                        <p>Once you delete your account, there is no going back. Please be certain.</p>
+   122|                        <button type="button" id="delete-account-btn" class="btn btn-danger">Delete My Account</button>
+   123|                    </div>
+   124|                </div>
+   125|            </div>
+   126|        </div>
+   127|    </section>
+   128|
+   129|    <nav id="app-bottom-nav" class="app-bottom-nav" aria-label="Main navigation">
+   130|        <a href="index.html" class="app-nav-item" data-nav="home"><span class="app-nav-icon"><i data-lucide="home"></i></span><span class="app-nav-label">Home</span></a>
+   131|        <a href="generate.html" class="app-nav-item" data-nav="generate"><span class="app-nav-icon"><i data-lucide="sparkles"></i></span><span class="app-nav-label">Generate</span></a>
+   132|        <a href="news.html" class="app-nav-item" data-nav="news"><span class="app-nav-icon"><i data-lucide="newspaper"></i></span><span class="app-nav-label">News</span></a>
+   133|        <a href="blog.html" class="app-nav-item" data-nav="blog"><span class="app-nav-icon"><i data-lucide="book-open"></i></span><span class="app-nav-label">Blog</span></a>
+   134|        <a href="account.html" class="app-nav-item" data-nav="mine"><span class="app-nav-icon"><i data-lucide="circle-user"></i></span><span class="app-nav-label">Mine</span></a>
+   135|    </nav>
+   136|
+   137|    <footer class="main-footer site-footer-rich" role="contentinfo">
+   138|        <div class="container site-footer-inner">
+   139|            <div class="site-footer-social">
+   140|                <a href="https://discord.gg/UtNfS8kH" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+   141|                <a href="https://www.reddit.com/user/Automatic_Pitch5117" target="_blank" rel="noopener noreferrer" title="Reddit" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
+   142|                <a href="https://x.com/reportifyai" target="_blank" rel="noopener noreferrer" title="Twitter" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+   143|                <a href="https://linkedin.com/company/reportifyai" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+   144|                <a href="https://youtube.com/@reportifyai" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+   145|                <a href="https://facebook.com/reportifyai" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+   146|                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener noreferrer" title="Google" aria-label="Google"><i class="fa-brands fa-google"></i></a>
+   147|            </div>
+   148|            <div class="site-footer-legal">
+   149|                <a href="https://play.google.com/store/apps/details?id=com.crickettechnology.reportifyai" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:#059669;font-weight:600;text-decoration:none;font-size:0.9rem;transition:color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'"><i class="fab fa-google-play" style="font-size:1.2rem"></i> Download App</a>
+   150|                <a href="faq.html" style="color: #059669; font-weight: 600; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#047857'" onmouseout="this.style.color='#059669'">FAQ</a>
+   151|                <a href="terms.html">Terms of Service</a>
+   152|                <a href="privacy.html">Privacy Policy</a>
+   153|            </div>
+   154|            <p class="site-footer-copy">&copy; 2026 Beijing Cricket Information Technology Co., Ltd. All Rights Reserved.</p>
+   155|        </div>
+   156|    </footer>
+   157|
+   158|    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+   159|    <script src="pwa-nav.js"></script>
+   160|    <script src="script.js"></script>
+   161|</body>
+   162|</html>
+   163|
