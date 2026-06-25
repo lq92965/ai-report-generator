@@ -1,5 +1,15 @@
 [
     {
+        "id": "1782392429309",
+        "type": "news",
+        "title": "What Changes Now in Could Markets",
+        "category": "Tech Radar",
+        "date": "2026-06-25",
+        "author": "Sarah Jenkins",
+        "excerpt": "The product team pops the champagne. Their new AI-powered \"copilot\" for insurance underwriters is live. It ingests claim reports, flags potential frau...",
+        "contentFile": "news-1782392429309.md"
+    },
+    {
         "id": "1782306061504",
         "type": "blog",
         "title": "Your Team's Blockers Aren't Technical. They're Political.",

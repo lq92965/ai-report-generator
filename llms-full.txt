@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [What Changes Now in Could Markets](https://goreportify.com/article-pages/news-1782392429309.html)
+  - Type: Tech Radar | Date: 2026-06-25 | Author: Sarah Jenkins
+  - The product team pops the champagne. Their new AI-powered "copilot" for insurance underwriters is live. It ingests claim reports, flags potential frau...
 - [Your Team's Blockers Aren't Technical. They're Political.](https://goreportify.com/article-pages/blog-1782306061504.html)
   - Type: Deep Insights | Date: 2026-06-24 | Author: Emily Rostova
   - The engineer’s Slack status turns red: "Blocked." You jump into the Jira ticket. You expect to see a missing API key, a confusing spec, a tricky bit o...
@@ -1794,4 +1797,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 591 articles (317 blog + 274 news) + 8 core pages._
+_Total: 592 articles (317 blog + 275 news) + 8 core pages._
