@@ -1,5 +1,15 @@
 [
     {
+        "id": "1782478829712",
+        "type": "news",
+        "title": "What Changes Now in Simple Markets",
+        "category": "Tech Radar",
+        "date": "2026-06-26",
+        "author": "Sarah Jenkins",
+        "excerpt": "A developer you know ran a script last week. It was a simple web scraper, the kind of thing they’d written a hundred times. For five years, it pulled...",
+        "contentFile": "news-1782478829712.md"
+    },
+    {
         "id": "1782392429309",
         "type": "news",
         "title": "What Changes Now in Could Markets",

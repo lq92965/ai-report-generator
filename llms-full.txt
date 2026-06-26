@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [What Changes Now in Simple Markets](https://goreportify.com/article-pages/news-1782478829712.html)
+  - Type: Tech Radar | Date: 2026-06-26 | Author: Sarah Jenkins
+  - A developer you know ran a script last week. It was a simple web scraper, the kind of thing they’d written a hundred times. For five years, it pulled...
 - [What Changes Now in Could Markets](https://goreportify.com/article-pages/news-1782392429309.html)
   - Type: Tech Radar | Date: 2026-06-25 | Author: Sarah Jenkins
   - The product team pops the champagne. Their new AI-powered "copilot" for insurance underwriters is live. It ingests claim reports, flags potential frau...
@@ -1797,4 +1800,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 592 articles (317 blog + 275 news) + 8 core pages._
+_Total: 593 articles (317 blog + 276 news) + 8 core pages._
