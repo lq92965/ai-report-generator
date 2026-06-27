@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [They're Arguing About Your Data, Not Your Recommendation](https://goreportify.com/article-pages/blog-1782565254903.html)
+  - Type: Deep Insights | Date: 2026-06-27 | Author: Emily Rostova
+  - The chart is on the screen. It’s a beautiful chart. Clean lines, clear labels. The data is undeniable, pulled directly from the production database an...
+- [The Lawsuit Is Already in the Latent Space](https://goreportify.com/article-pages/news-1782565227595.html)
+  - Type: Tech Radar | Date: 2026-06-27 | Author: Alex Mercer
+  - The General Counsel cleared her throat. In the glass-walled conference room, the VP of Engineering shifted in his chair. The question was simple, the...
 - [What Changes Now in Simple Markets](https://goreportify.com/article-pages/news-1782478829712.html)
   - Type: Tech Radar | Date: 2026-06-26 | Author: Sarah Jenkins
   - A developer you know ran a script last week. It was a simple web scraper, the kind of thing they’d written a hundred times. For five years, it pulled...
@@ -1800,4 +1806,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 593 articles (317 blog + 276 news) + 8 core pages._
+_Total: 595 articles (318 blog + 277 news) + 8 core pages._

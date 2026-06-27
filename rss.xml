@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[They're Arguing About Your Data, Not Your Recommendation]]></title>
+    <link>https://goreportify.com/article-pages/blog-1782565254903.html</link>
+    <description><![CDATA[The chart is on the screen. It’s a beautiful chart. Clean lines, clear labels. The data is undeniable, pulled directly from the production database an...]]></description>
+    <pubDate>Sat, 27 Jun 2026 13:00:54 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Lawsuit Is Already in the Latent Space]]></title>
+    <link>https://goreportify.com/article-pages/news-1782565227595.html</link>
+    <description><![CDATA[The General Counsel cleared her throat. In the glass-walled conference room, the VP of Engineering shifted in his chair. The question was simple, the...]]></description>
+    <pubDate>Sat, 27 Jun 2026 13:00:27 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[What Changes Now in Simple Markets]]></title>
     <link>https://goreportify.com/article-pages/news-1782478829712.html</link>
     <description><![CDATA[A developer you know ran a script last week. It was a simple web scraper, the kind of thing they’d written a hundred times. For five years, it pulled...]]></description>
@@ -295,18 +307,6 @@ Your stomach sin...]]></description>
     <link>https://goreportify.com/article-pages/blog-1780232466096.html</link>
     <description><![CDATA[It’s Tuesday morning. You’re in the weekly leadership sync. The VP of Sales clears his throat and asks, "So, what’s the latest on Project Chimera? Are...]]></description>
     <pubDate>Sun, 31 May 2026 13:01:06 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[An Economy Built on Someone Else's API]]></title>
-    <link>https://goreportify.com/article-pages/news-1780232439413.html</link>
-    <description><![CDATA[The pitch deck glows on the conference room screen. A founder, sharp and confident, walks the venture capitalists through the architecture. He doesn’t...]]></description>
-    <pubDate>Sun, 31 May 2026 13:00:39 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[My Report Went Into a Black Hole. Now What?]]></title>
-    <link>https://goreportify.com/article-pages/blog-1780146058641.html</link>
-    <description><![CDATA[You spent two hours on it. You polished the metrics, clarified the risks, and even found the perfect GIF for the team shout-out. You hit "send" on the...]]></description>
-    <pubDate>Sat, 30 May 2026 13:00:58 GMT</pubDate>
   </item>
 </channel>
 </rss>
