@@ -1,5 +1,25 @@
 [
     {
+        "id": "1782651655746",
+        "type": "blog",
+        "title": "Your 'Quick Sync' is a Trojan Horse",
+        "category": "Deep Insights",
+        "date": "2026-06-28",
+        "author": "Michael Chen",
+        "excerpt": "It’s 2:15 PM. You’re finally deep into the user flow for the new checkout experience. The whiteboard is a mess of boxes and arrows, but it’s starting...",
+        "contentFile": "blog-1782651655746.md"
+    },
+    {
+        "id": "1782651627288",
+        "type": "news",
+        "title": "The New Bureaucracy Is an API Call",
+        "category": "Tech Radar",
+        "date": "2026-06-28",
+        "author": "Alex Mercer",
+        "excerpt": "A product manager stares at a support ticket. The company’s new AI-powered “summarizer” is spitting out nonsense—polite, grammatically correct nonsens...",
+        "contentFile": "news-1782651627288.md"
+    },
+    {
         "id": "1782565254903",
         "type": "blog",
         "title": "They're Arguing About Your Data, Not Your Recommendation",
