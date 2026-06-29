@@ -1,5 +1,25 @@
 [
     {
+        "id": "1782738060559",
+        "type": "blog",
+        "title": "Your Launch Isn't Ready. Your GTM Team Just Hasn't Told You Yet.",
+        "category": "Deep Insights",
+        "date": "2026-06-29",
+        "author": "Alex Mercer",
+        "excerpt": "You’re staring at the launch readiness dashboard. Everything is green. Engineering velocity is stable, the final QA pass is clean, and the feature fla...",
+        "contentFile": "blog-1782738060559.md"
+    },
+    {
+        "id": "1782738028887",
+        "type": "news",
+        "title": "The Black Box on the Witness Stand",
+        "category": "Tech Radar",
+        "date": "2026-06-29",
+        "author": "Sarah Jenkins",
+        "excerpt": "The General Counsel cleared her throat, staring at the Head of AI. The conference room table, usually a stage for triumphant product demos, felt like...",
+        "contentFile": "news-1782738028887.md"
+    },
+    {
         "id": "1782651655746",
         "type": "blog",
         "title": "Your 'Quick Sync' is a Trojan Horse",
