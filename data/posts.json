@@ -1,5 +1,25 @@
 [
     {
+        "id": "1782824462130",
+        "type": "blog",
+        "title": "Your Slack Channel is a Leaky Funnel",
+        "category": "Deep Insights",
+        "date": "2026-06-30",
+        "author": "Marcus Webb",
+        "excerpt": "You’re scrolling. Up, up, up through an endless stream of custom emojis, GIF reactions, and @-mentions. You know the decision was made sometime Tuesda...",
+        "contentFile": "blog-1782824462130.md"
+    },
+    {
+        "id": "1782824432504",
+        "type": "news",
+        "title": "Expertise Becomes a Competitive Battleground",
+        "category": "Tech Radar",
+        "date": "2026-06-30",
+        "author": "Marcus Webb",
+        "excerpt": "The job title on her LinkedIn profile hasn’t changed: Senior Graphic Designer. For a decade, that meant something. It meant client meetings and concep...",
+        "contentFile": "news-1782824432504.md"
+    },
+    {
         "id": "1782738060559",
         "type": "blog",
         "title": "Your Launch Isn't Ready. Your GTM Team Just Hasn't Told You Yet.",
