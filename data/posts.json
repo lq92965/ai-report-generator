@@ -1,5 +1,15 @@
 [
     {
+        "id": "1782910831351",
+        "type": "news",
+        "title": "The Corporation Rejects the Implant",
+        "category": "Tech Radar",
+        "date": "2026-07-01",
+        "author": "David Sterling",
+        "excerpt": "The demo was flawless. In a shared conference room, the product manager showed the legal department how the new AI assistant could summarize depositio...",
+        "contentFile": "news-1782910831351.md"
+    },
+    {
         "id": "1782824462130",
         "type": "blog",
         "title": "Your Slack Channel is a Leaky Funnel",

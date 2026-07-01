@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [The Corporation Rejects the Implant](https://goreportify.com/article-pages/news-1782910831351.html)
+  - Type: Tech Radar | Date: 2026-07-01 | Author: David Sterling
+  - The demo was flawless. In a shared conference room, the product manager showed the legal department how the new AI assistant could summarize depositio...
 - [Your Slack Channel is a Leaky Funnel](https://goreportify.com/article-pages/blog-1782824462130.html)
   - Type: Deep Insights | Date: 2026-06-30 | Author: Marcus Webb
   - You’re scrolling. Up, up, up through an endless stream of custom emojis, GIF reactions, and @-mentions. You know the decision was made sometime Tuesda...
@@ -1824,4 +1827,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 601 articles (321 blog + 280 news) + 8 core pages._
+_Total: 602 articles (321 blog + 281 news) + 8 core pages._
