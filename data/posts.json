@@ -1,5 +1,25 @@
 [
     {
+        "id": "1782997252762",
+        "type": "blog",
+        "title": "Your Productivity Stack is Killing Your Productivity",
+        "category": "Deep Insights",
+        "date": "2026-07-02",
+        "author": "Alex Mercer",
+        "excerpt": "You have seven tabs open. One is the Jira ticket for the feature. Another is the Coda doc with the original spec. A third is the Figma file with the f...",
+        "contentFile": "blog-1782997252762.md"
+    },
+    {
+        "id": "1782997227393",
+        "type": "news",
+        "title": "The Million-Token Mirage",
+        "category": "Tech Radar",
+        "date": "2026-07-02",
+        "author": "Sarah Jenkins",
+        "excerpt": "The demo is flawless. A junior analyst uploads a year's worth of quarterly earnings reports—a mountain of PDFs—into a single chat window. \"Summarize t...",
+        "contentFile": "news-1782997227393.md"
+    },
+    {
         "id": "1782910831351",
         "type": "news",
         "title": "The Corporation Rejects the Implant",

@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Productivity Stack is Killing Your Productivity](https://goreportify.com/article-pages/blog-1782997252762.html)
+  - Type: Deep Insights | Date: 2026-07-02 | Author: Alex Mercer
+  - You have seven tabs open. One is the Jira ticket for the feature. Another is the Coda doc with the original spec. A third is the Figma file with the f...
+- [The Million-Token Mirage](https://goreportify.com/article-pages/news-1782997227393.html)
+  - Type: Tech Radar | Date: 2026-07-02 | Author: Sarah Jenkins
+  - The demo is flawless. A junior analyst uploads a year's worth of quarterly earnings reports—a mountain of PDFs—into a single chat window. "Summarize t...
 - [The Corporation Rejects the Implant](https://goreportify.com/article-pages/news-1782910831351.html)
   - Type: Tech Radar | Date: 2026-07-01 | Author: David Sterling
   - The demo was flawless. In a shared conference room, the product manager showed the legal department how the new AI assistant could summarize depositio...
@@ -1827,4 +1833,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 602 articles (321 blog + 281 news) + 8 core pages._
+_Total: 604 articles (322 blog + 282 news) + 8 core pages._

@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Productivity Stack is Killing Your Productivity]]></title>
+    <link>https://goreportify.com/article-pages/blog-1782997252762.html</link>
+    <description><![CDATA[You have seven tabs open. One is the Jira ticket for the feature. Another is the Coda doc with the original spec. A third is the Figma file with the f...]]></description>
+    <pubDate>Thu, 02 Jul 2026 13:00:52 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Million-Token Mirage]]></title>
+    <link>https://goreportify.com/article-pages/news-1782997227393.html</link>
+    <description><![CDATA[The demo is flawless. A junior analyst uploads a year's worth of quarterly earnings reports—a mountain of PDFs—into a single chat window. "Summarize t...]]></description>
+    <pubDate>Thu, 02 Jul 2026 13:00:27 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The Corporation Rejects the Implant]]></title>
     <link>https://goreportify.com/article-pages/news-1782910831351.html</link>
     <description><![CDATA[The demo was flawless. In a shared conference room, the product manager showed the legal department how the new AI assistant could summarize depositio...]]></description>
@@ -293,18 +305,6 @@ Your internal alarms shoul...]]></description>
     <link>https://goreportify.com/article-pages/news-1780664429986.html</link>
     <description><![CDATA[The demo is always slick. A chatbot writes a flawless sonnet, a summary of a dense legal document appears in a flash, a line of code autocompletes wit...]]></description>
     <pubDate>Fri, 05 Jun 2026 13:00:29 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The One-Pager Is Your Most Important Product. Don't Ship a Bad One.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1780578069770.html</link>
-    <description><![CDATA[You’ve seen it happen. The PM shares their screen. Up comes a wall of text—a "one-pager" that's actually three pages of dense paragraphs, vague...]]></description>
-    <pubDate>Thu, 04 Jun 2026 13:01:09 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your AI Feature Has an Expiration Date]]></title>
-    <link>https://goreportify.com/article-pages/news-1780578038613.html</link>
-    <description><![CDATA[It’s 2:17 AM on a Tuesday, and a senior engineer’s phone buzzes. The on-call alert isn’t for a server outage or a database crash. It’s for the “intell...]]></description>
-    <pubDate>Thu, 04 Jun 2026 13:00:38 GMT</pubDate>
   </item>
 </channel>
 </rss>
