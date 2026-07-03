@@ -1,5 +1,25 @@
 [
     {
+        "id": "1783083665256",
+        "type": "blog",
+        "title": "You Sent the Pre-Read. No One Read It. Now What?",
+        "category": "Deep Insights",
+        "date": "2026-07-03",
+        "author": "Alex Mercer",
+        "excerpt": "You start the meeting with a familiar, hopeful question. “Any questions on the pre-read I sent out?”\n\nSilence.\n\nA few people stare at their monitors,...",
+        "contentFile": "blog-1783083665256.md"
+    },
+    {
+        "id": "1783083636059",
+        "type": "news",
+        "title": "The Coming Monoculture Crash",
+        "category": "Tech Radar",
+        "date": "2026-07-03",
+        "author": "Alex Mercer",
+        "excerpt": "A product manager in Boston sketches a flowchart for a new customer service bot. A startup founder in Berlin pitches a novel legal document summarizer...",
+        "contentFile": "news-1783083636059.md"
+    },
+    {
         "id": "1782997252762",
         "type": "blog",
         "title": "Your Productivity Stack is Killing Your Productivity",

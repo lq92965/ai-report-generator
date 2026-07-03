@@ -5,6 +5,22 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Sent the Pre-Read. No One Read It. Now What?]]></title>
+    <link>https://goreportify.com/article-pages/blog-1783083665256.html</link>
+    <description><![CDATA[You start the meeting with a familiar, hopeful question. “Any questions on the pre-read I sent out?”
+
+Silence.
+
+A few people stare at their monitors,...]]></description>
+    <pubDate>Fri, 03 Jul 2026 13:01:05 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Coming Monoculture Crash]]></title>
+    <link>https://goreportify.com/article-pages/news-1783083636059.html</link>
+    <description><![CDATA[A product manager in Boston sketches a flowchart for a new customer service bot. A startup founder in Berlin pitches a novel legal document summarizer...]]></description>
+    <pubDate>Fri, 03 Jul 2026 13:00:36 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Productivity Stack is Killing Your Productivity]]></title>
     <link>https://goreportify.com/article-pages/blog-1782997252762.html</link>
     <description><![CDATA[You have seven tabs open. One is the Jira ticket for the feature. Another is the Coda doc with the original spec. A third is the Figma file with the f...]]></description>
@@ -293,18 +309,6 @@ Your internal alarms shoul...]]></description>
     <link>https://goreportify.com/article-pages/news-1780750833474.html</link>
     <description><![CDATA[The engineering team celebrated with pizza and warm beer. For three months, they had lived in a world of curated datasets and hyperparameter tuning, p...]]></description>
     <pubDate>Sat, 06 Jun 2026 13:00:33 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Stop Saying 'Technical Debt'. Frame It As a Product Risk.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1780664461107.html</link>
-    <description><![CDATA[You’re in the Q3 planning meeting. Everything is going fine until an engineering lead clears their throat. "We need to address our technical debt. We...]]></description>
-    <pubDate>Fri, 05 Jun 2026 13:01:01 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Ghost in the Machine Is a Person]]></title>
-    <link>https://goreportify.com/article-pages/news-1780664429986.html</link>
-    <description><![CDATA[The demo is always slick. A chatbot writes a flawless sonnet, a summary of a dense legal document appears in a flash, a line of code autocompletes wit...]]></description>
-    <pubDate>Fri, 05 Jun 2026 13:00:29 GMT</pubDate>
   </item>
 </channel>
 </rss>
