@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [The Empty Throne of the CTO](https://goreportify.com/article-pages/news-1783170027478.html)
+  - Type: Tech Radar | Date: 2026-07-04 | Author: Michael Chen
+  - The CEO turns to the CTO. The numbers on the dashboard are red. Customer satisfaction scores for the new AI-powered feature have cratered overnight. "...
 - [You Sent the Pre-Read. No One Read It. Now What?](https://goreportify.com/article-pages/blog-1783083665256.html)
   - Type: Deep Insights | Date: 2026-07-03 | Author: Alex Mercer
   - You start the meeting with a familiar, hopeful question. “Any questions on the pre-read I sent out?”
@@ -1843,4 +1846,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 606 articles (323 blog + 283 news) + 8 core pages._
+_Total: 607 articles (323 blog + 284 news) + 8 core pages._

@@ -1,5 +1,15 @@
 [
     {
+        "id": "1783170027478",
+        "type": "news",
+        "title": "The Empty Throne of the CTO",
+        "category": "Tech Radar",
+        "date": "2026-07-04",
+        "author": "Michael Chen",
+        "excerpt": "The CEO turns to the CTO. The numbers on the dashboard are red. Customer satisfaction scores for the new AI-powered feature have cratered overnight. \"...",
+        "contentFile": "news-1783170027478.md"
+    },
+    {
         "id": "1783083665256",
         "type": "blog",
         "title": "You Sent the Pre-Read. No One Read It. Now What?",

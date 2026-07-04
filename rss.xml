@@ -5,6 +5,12 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[The Empty Throne of the CTO]]></title>
+    <link>https://goreportify.com/article-pages/news-1783170027478.html</link>
+    <description><![CDATA[The CEO turns to the CTO. The numbers on the dashboard are red. Customer satisfaction scores for the new AI-powered feature have cratered overnight. "...]]></description>
+    <pubDate>Sat, 04 Jul 2026 13:00:27 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Sent the Pre-Read. No One Read It. Now What?]]></title>
     <link>https://goreportify.com/article-pages/blog-1783083665256.html</link>
     <description><![CDATA[You start the meeting with a familiar, hopeful question. “Any questions on the pre-read I sent out?”
@@ -303,12 +309,6 @@ Your internal alarms shoul...]]></description>
     <link>https://goreportify.com/article-pages/blog-1780750857365.html</link>
     <description><![CDATA[The VP of Sales catches you on Slack. "Quick question," the message begins, and your stomach tightens. "Could we add a button to the dashboard that ex...]]></description>
     <pubDate>Sat, 06 Jun 2026 13:00:57 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Fine-Tuning Treadmill]]></title>
-    <link>https://goreportify.com/article-pages/news-1780750833474.html</link>
-    <description><![CDATA[The engineering team celebrated with pizza and warm beer. For three months, they had lived in a world of curated datasets and hyperparameter tuning, p...]]></description>
-    <pubDate>Sat, 06 Jun 2026 13:00:33 GMT</pubDate>
   </item>
 </channel>
 </rss>
