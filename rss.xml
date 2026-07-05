@@ -5,6 +5,12 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Moat Is a Data Pipeline]]></title>
+    <link>https://goreportify.com/article-pages/news-1783256433567.html</link>
+    <description><![CDATA[The product manager finishes the demo, beaming. On screen, the new foundational model from a vendor that just raised another billion dollars flawlessl...]]></description>
+    <pubDate>Sun, 05 Jul 2026 13:00:33 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The Empty Throne of the CTO]]></title>
     <link>https://goreportify.com/article-pages/news-1783170027478.html</link>
     <description><![CDATA[The CEO turns to the CTO. The numbers on the dashboard are red. Customer satisfaction scores for the new AI-powered feature have cratered overnight. "...]]></description>
@@ -303,12 +309,6 @@ Your internal alarms shoul...]]></description>
     <link>https://goreportify.com/article-pages/news-1780837234971.html</link>
     <description><![CDATA[The demo was perfect. In a glass-walled conference room, the startup’s AI-powered logistics tool ingested a messy pile of shipping manifests and, in s...]]></description>
     <pubDate>Sun, 07 Jun 2026 13:00:34 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The 'No' Is Not Enough: Give Them a Better 'Yes' Instead]]></title>
-    <link>https://goreportify.com/article-pages/blog-1780750857365.html</link>
-    <description><![CDATA[The VP of Sales catches you on Slack. "Quick question," the message begins, and your stomach tightens. "Could we add a button to the dashboard that ex...]]></description>
-    <pubDate>Sat, 06 Jun 2026 13:00:57 GMT</pubDate>
   </item>
 </channel>
 </rss>

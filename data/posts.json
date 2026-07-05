@@ -1,5 +1,15 @@
 [
     {
+        "id": "1783256433567",
+        "type": "news",
+        "title": "Your Moat Is a Data Pipeline",
+        "category": "Tech Radar",
+        "date": "2026-07-05",
+        "author": "Marcus Webb",
+        "excerpt": "The product manager finishes the demo, beaming. On screen, the new foundational model from a vendor that just raised another billion dollars flawlessl...",
+        "contentFile": "news-1783256433567.md"
+    },
+    {
         "id": "1783170027478",
         "type": "news",
         "title": "The Empty Throne of the CTO",
