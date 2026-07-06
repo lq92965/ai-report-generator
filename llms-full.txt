@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [The Vendor Lock-in Is in the Vectors](https://goreportify.com/article-pages/news-1783342824602.html)
+  - Type: Tech Radar | Date: 2026-07-06 | Author: Emily Rostova
+  - The decision seemed obvious. In a conference room with a whiteboard full of cost-per-token calculations, the engineering lead makes the case: switch t...
 - [Your Moat Is a Data Pipeline](https://goreportify.com/article-pages/news-1783256433567.html)
   - Type: Tech Radar | Date: 2026-07-05 | Author: Marcus Webb
   - The product manager finishes the demo, beaming. On screen, the new foundational model from a vendor that just raised another billion dollars flawlessl...
@@ -1849,4 +1852,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 608 articles (323 blog + 285 news) + 8 core pages._
+_Total: 609 articles (323 blog + 286 news) + 8 core pages._

@@ -1,5 +1,15 @@
 [
     {
+        "id": "1783342824602",
+        "type": "news",
+        "title": "The Vendor Lock-in Is in the Vectors",
+        "category": "Tech Radar",
+        "date": "2026-07-06",
+        "author": "Emily Rostova",
+        "excerpt": "The decision seemed obvious. In a conference room with a whiteboard full of cost-per-token calculations, the engineering lead makes the case: switch t...",
+        "contentFile": "news-1783342824602.md"
+    },
+    {
         "id": "1783256433567",
         "type": "news",
         "title": "Your Moat Is a Data Pipeline",
