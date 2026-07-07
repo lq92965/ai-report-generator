@@ -1,5 +1,25 @@
 [
     {
+        "id": "1783429258502",
+        "type": "blog",
+        "title": "The AI Built Your Roadmap. Now You Have to Defend It.",
+        "category": "Deep Insights",
+        "date": "2026-07-07",
+        "author": "Sarah Jenkins",
+        "excerpt": "You did it. You fed everything into the AI. A hundred user interview transcripts, the last six months of support tickets, three competitor teardowns,...",
+        "contentFile": "blog-1783429258502.md"
+    },
+    {
+        "id": "1783429228706",
+        "type": "news",
+        "title": "This Isn't the Open Source You Were Promised",
+        "category": "Tech Radar",
+        "date": "2026-07-07",
+        "author": "Sarah Jenkins",
+        "excerpt": "A senior engineer at a mid-sized analytics firm pulls the latest Llama 3 weights to a local server. The terminal progress bar fills up. For the first...",
+        "contentFile": "news-1783429228706.md"
+    },
+    {
         "id": "1783342824602",
         "type": "news",
         "title": "The Vendor Lock-in Is in the Vectors",

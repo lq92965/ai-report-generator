@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[The AI Built Your Roadmap. Now You Have to Defend It.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1783429258502.html</link>
+    <description><![CDATA[You did it. You fed everything into the AI. A hundred user interview transcripts, the last six months of support tickets, three competitor teardowns,...]]></description>
+    <pubDate>Tue, 07 Jul 2026 13:00:58 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[This Isn't the Open Source You Were Promised]]></title>
+    <link>https://goreportify.com/article-pages/news-1783429228706.html</link>
+    <description><![CDATA[A senior engineer at a mid-sized analytics firm pulls the latest Llama 3 weights to a local server. The terminal progress bar fills up. For the first...]]></description>
+    <pubDate>Tue, 07 Jul 2026 13:00:28 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The Vendor Lock-in Is in the Vectors]]></title>
     <link>https://goreportify.com/article-pages/news-1783342824602.html</link>
     <description><![CDATA[The decision seemed obvious. In a conference room with a whiteboard full of cost-per-token calculations, the engineering lead makes the case: switch t...]]></description>
@@ -297,18 +309,6 @@ Your internal alarms shoul...]]></description>
     <link>https://goreportify.com/article-pages/blog-1780923661930.html</link>
     <description><![CDATA[I once watched a junior PM send his weekly project update. It was a beautiful, comprehensive email. It had sprint velocity charts, detailed technical...]]></description>
     <pubDate>Mon, 08 Jun 2026 13:01:01 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[From Magic Trick to Maintenance Ticket]]></title>
-    <link>https://goreportify.com/article-pages/news-1780923633983.html</link>
-    <description><![CDATA[The demo starts. On screen, a conversational agent digests a year's worth of sales transcripts and, in seconds, produces a strategic plan for entering...]]></description>
-    <pubDate>Mon, 08 Jun 2026 13:00:33 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Skip-Level Meeting Isn't a Status Update. It's a Strategy Session]]></title>
-    <link>https://goreportify.com/article-pages/blog-1780837260569.html</link>
-    <description><![CDATA[You have 30 minutes on the calendar with your manager’s boss. You spend an hour prepping, polishing a list of your project’s recent wins, key metrics,...]]></description>
-    <pubDate>Sun, 07 Jun 2026 13:01:00 GMT</pubDate>
   </item>
 </channel>
 </rss>

@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [The AI Built Your Roadmap. Now You Have to Defend It.](https://goreportify.com/article-pages/blog-1783429258502.html)
+  - Type: Deep Insights | Date: 2026-07-07 | Author: Sarah Jenkins
+  - You did it. You fed everything into the AI. A hundred user interview transcripts, the last six months of support tickets, three competitor teardowns,...
+- [This Isn't the Open Source You Were Promised](https://goreportify.com/article-pages/news-1783429228706.html)
+  - Type: Tech Radar | Date: 2026-07-07 | Author: Sarah Jenkins
+  - A senior engineer at a mid-sized analytics firm pulls the latest Llama 3 weights to a local server. The terminal progress bar fills up. For the first...
 - [The Vendor Lock-in Is in the Vectors](https://goreportify.com/article-pages/news-1783342824602.html)
   - Type: Tech Radar | Date: 2026-07-06 | Author: Emily Rostova
   - The decision seemed obvious. In a conference room with a whiteboard full of cost-per-token calculations, the engineering lead makes the case: switch t...
@@ -1852,4 +1858,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 609 articles (323 blog + 286 news) + 8 core pages._
+_Total: 611 articles (324 blog + 287 news) + 8 core pages._
