@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Engineers Aren't Reading Your PRD. They're Reading Your JIRA Ticket.](https://goreportify.com/article-pages/blog-1783515662318.html)
+  - Type: Deep Insights | Date: 2026-07-08 | Author: Olivia Thorne
+  - It’s demo day. The feature you’ve been championing for a month is up on the big screen. The engineer clicks through the flow, and everything works. Th...
+- [Your Chatbot Is One Schema Change Away From Amnesia](https://goreportify.com/article-pages/news-1783515633368.html)
+  - Type: Tech Radar | Date: 2026-07-08 | Author: Sarah Jenkins
+  - It’s 9:17 AM on a Tuesday. The internal help desk bot, hailed three months ago in a company-wide email as the future of employee onboarding, is tellin...
 - [The AI Built Your Roadmap. Now You Have to Defend It.](https://goreportify.com/article-pages/blog-1783429258502.html)
   - Type: Deep Insights | Date: 2026-07-07 | Author: Sarah Jenkins
   - You did it. You fed everything into the AI. A hundred user interview transcripts, the last six months of support tickets, three competitor teardowns,...
@@ -1858,4 +1864,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 611 articles (324 blog + 287 news) + 8 core pages._
+_Total: 613 articles (325 blog + 288 news) + 8 core pages._

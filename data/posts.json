@@ -1,5 +1,25 @@
 [
     {
+        "id": "1783515662318",
+        "type": "blog",
+        "title": "Your Engineers Aren't Reading Your PRD. They're Reading Your JIRA Ticket.",
+        "category": "Deep Insights",
+        "date": "2026-07-08",
+        "author": "Olivia Thorne",
+        "excerpt": "It’s demo day. The feature you’ve been championing for a month is up on the big screen. The engineer clicks through the flow, and everything works. Th...",
+        "contentFile": "blog-1783515662318.md"
+    },
+    {
+        "id": "1783515633368",
+        "type": "news",
+        "title": "Your Chatbot Is One Schema Change Away From Amnesia",
+        "category": "Tech Radar",
+        "date": "2026-07-08",
+        "author": "Sarah Jenkins",
+        "excerpt": "It’s 9:17 AM on a Tuesday. The internal help desk bot, hailed three months ago in a company-wide email as the future of employee onboarding, is tellin...",
+        "contentFile": "news-1783515633368.md"
+    },
+    {
         "id": "1783429258502",
         "type": "blog",
         "title": "The AI Built Your Roadmap. Now You Have to Defend It.",

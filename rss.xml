@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Engineers Aren't Reading Your PRD. They're Reading Your JIRA Ticket.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1783515662318.html</link>
+    <description><![CDATA[It’s demo day. The feature you’ve been championing for a month is up on the big screen. The engineer clicks through the flow, and everything works. Th...]]></description>
+    <pubDate>Wed, 08 Jul 2026 13:01:02 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Your Chatbot Is One Schema Change Away From Amnesia]]></title>
+    <link>https://goreportify.com/article-pages/news-1783515633368.html</link>
+    <description><![CDATA[It’s 9:17 AM on a Tuesday. The internal help desk bot, hailed three months ago in a company-wide email as the future of employee onboarding, is tellin...]]></description>
+    <pubDate>Wed, 08 Jul 2026 13:00:33 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The AI Built Your Roadmap. Now You Have to Defend It.]]></title>
     <link>https://goreportify.com/article-pages/blog-1783429258502.html</link>
     <description><![CDATA[You did it. You fed everything into the AI. A hundred user interview transcripts, the last six months of support tickets, three competitor teardowns,...]]></description>
@@ -297,18 +309,6 @@ Your internal alarms shoul...]]></description>
     <link>https://goreportify.com/article-pages/blog-1781010059159.html</link>
     <description><![CDATA[It’s 9 AM on Monday. You open your calendar and see it. A wall of back-to-back meetings scheduled by other people. A 30-minute “quick sync” that will...]]></description>
     <pubDate>Tue, 09 Jun 2026 13:00:59 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Hand-Wired Intelligence]]></title>
-    <link>https://goreportify.com/article-pages/news-1781010032068.html</link>
-    <description><![CDATA[The demo was flawless. In a conference room six months ago, the AI-powered “insights generator” ingested a sales report and produced a crisp, three-pa...]]></description>
-    <pubDate>Tue, 09 Jun 2026 13:00:32 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Reporting Up vs. Reporting Out: A PM’s Guide to Two Different Audiences]]></title>
-    <link>https://goreportify.com/article-pages/blog-1780923661930.html</link>
-    <description><![CDATA[I once watched a junior PM send his weekly project update. It was a beautiful, comprehensive email. It had sprint velocity charts, detailed technical...]]></description>
-    <pubDate>Mon, 08 Jun 2026 13:01:01 GMT</pubDate>
   </item>
 </channel>
 </rss>
