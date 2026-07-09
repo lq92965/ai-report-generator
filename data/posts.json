@@ -1,5 +1,15 @@
 [
     {
+        "id": "1783602054936",
+        "type": "blog",
+        "title": "You Didn't Announce the Failure. Now You Own the Fallout.",
+        "category": "Deep Insights",
+        "date": "2026-07-09",
+        "author": "Alex Mercer",
+        "excerpt": "The VP of Sales cleared his throat. \"Hey, just wondering what the final uplift was on that 'Quick Reorder' button we launched last quarter? My team is...",
+        "contentFile": "blog-1783602054936.md"
+    },
+    {
         "id": "1783515662318",
         "type": "blog",
         "title": "Your Engineers Aren't Reading Your PRD. They're Reading Your JIRA Ticket.",

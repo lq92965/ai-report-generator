@@ -5,6 +5,12 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Didn't Announce the Failure. Now You Own the Fallout.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1783602054936.html</link>
+    <description><![CDATA[The VP of Sales cleared his throat. "Hey, just wondering what the final uplift was on that 'Quick Reorder' button we launched last quarter? My team is...]]></description>
+    <pubDate>Thu, 09 Jul 2026 13:00:54 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Engineers Aren't Reading Your PRD. They're Reading Your JIRA Ticket.]]></title>
     <link>https://goreportify.com/article-pages/blog-1783515662318.html</link>
     <description><![CDATA[It’s demo day. The feature you’ve been championing for a month is up on the big screen. The engineer clicks through the flow, and everything works. Th...]]></description>
@@ -303,12 +309,6 @@ Your internal alarms shoul...]]></description>
     <link>https://goreportify.com/article-pages/news-1781096435993.html</link>
     <description><![CDATA[A programmer in Berlin is scraping a forum for cooking recipes. A few years ago, the data was gold: messy, authentic...]]></description>
     <pubDate>Wed, 10 Jun 2026 13:00:35 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Calendar is a Product. Start Managing It.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1781010059159.html</link>
-    <description><![CDATA[It’s 9 AM on Monday. You open your calendar and see it. A wall of back-to-back meetings scheduled by other people. A 30-minute “quick sync” that will...]]></description>
-    <pubDate>Tue, 09 Jun 2026 13:00:59 GMT</pubDate>
   </item>
 </channel>
 </rss>
