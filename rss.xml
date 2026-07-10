@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[I Taught an AI to Be My Junior PM. Here's the Training Plan]]></title>
+    <link>https://goreportify.com/article-pages/blog-1783688457189.html</link>
+    <description><![CDATA[You have ten minutes before your next meeting. You open a document filled with raw customer support tickets, intending to find a few key themes. An ho...]]></description>
+    <pubDate>Fri, 10 Jul 2026 13:00:57 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Regression Test Is a Vibe Check]]></title>
+    <link>https://goreportify.com/article-pages/news-1783688427275.html</link>
+    <description><![CDATA[The team gathered around the monitor, watching the new chatbot logic handle a difficult customer query. The response was perfect—empathetic, accurate,...]]></description>
+    <pubDate>Fri, 10 Jul 2026 13:00:27 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Didn't Announce the Failure. Now You Own the Fallout.]]></title>
     <link>https://goreportify.com/article-pages/blog-1783602054936.html</link>
     <description><![CDATA[The VP of Sales cleared his throat. "Hey, just wondering what the final uplift was on that 'Quick Reorder' button we launched last quarter? My team is...]]></description>
@@ -297,18 +309,6 @@ Your internal alarms shoul...]]></description>
     <link>https://goreportify.com/article-pages/news-1781182835196.html</link>
     <description><![CDATA[The icon is almost always the same: a little spark, a friendly robot, a stylized brain. It lives in the corner of your screen, a quiet tenant in compl...]]></description>
     <pubDate>Thu, 11 Jun 2026 13:00:35 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Lost the Room. Here's How to Get it Back.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1781096463745.html</link>
-    <description><![CDATA[The Q3 roadmap presentation is going smoothly. You’re on slide six, speaking to the customer retention epic. Then the VP of Sales uncrosses his arms,...]]></description>
-    <pubDate>Wed, 10 Jun 2026 13:01:03 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The AI Is Eating Its Own Tail]]></title>
-    <link>https://goreportify.com/article-pages/news-1781096435993.html</link>
-    <description><![CDATA[A programmer in Berlin is scraping a forum for cooking recipes. A few years ago, the data was gold: messy, authentic...]]></description>
-    <pubDate>Wed, 10 Jun 2026 13:00:35 GMT</pubDate>
   </item>
 </channel>
 </rss>

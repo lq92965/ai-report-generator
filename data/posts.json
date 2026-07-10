@@ -1,5 +1,25 @@
 [
     {
+        "id": "1783688457189",
+        "type": "blog",
+        "title": "I Taught an AI to Be My Junior PM. Here's the Training Plan",
+        "category": "Deep Insights",
+        "date": "2026-07-10",
+        "author": "Olivia Thorne",
+        "excerpt": "You have ten minutes before your next meeting. You open a document filled with raw customer support tickets, intending to find a few key themes. An ho...",
+        "contentFile": "blog-1783688457189.md"
+    },
+    {
+        "id": "1783688427275",
+        "type": "news",
+        "title": "The Regression Test Is a Vibe Check",
+        "category": "Tech Radar",
+        "date": "2026-07-10",
+        "author": "Jessica Tran",
+        "excerpt": "The team gathered around the monitor, watching the new chatbot logic handle a difficult customer query. The response was perfect—empathetic, accurate,...",
+        "contentFile": "news-1783688427275.md"
+    },
+    {
         "id": "1783602054936",
         "type": "blog",
         "title": "You Didn't Announce the Failure. Now You Own the Fallout.",

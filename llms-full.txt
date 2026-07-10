@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [I Taught an AI to Be My Junior PM. Here's the Training Plan](https://goreportify.com/article-pages/blog-1783688457189.html)
+  - Type: Deep Insights | Date: 2026-07-10 | Author: Olivia Thorne
+  - You have ten minutes before your next meeting. You open a document filled with raw customer support tickets, intending to find a few key themes. An ho...
+- [The Regression Test Is a Vibe Check](https://goreportify.com/article-pages/news-1783688427275.html)
+  - Type: Tech Radar | Date: 2026-07-10 | Author: Jessica Tran
+  - The team gathered around the monitor, watching the new chatbot logic handle a difficult customer query. The response was perfect—empathetic, accurate,...
 - [You Didn't Announce the Failure. Now You Own the Fallout.](https://goreportify.com/article-pages/blog-1783602054936.html)
   - Type: Deep Insights | Date: 2026-07-09 | Author: Alex Mercer
   - The VP of Sales cleared his throat. "Hey, just wondering what the final uplift was on that 'Quick Reorder' button we launched last quarter? My team is...
@@ -1867,4 +1873,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 614 articles (326 blog + 288 news) + 8 core pages._
+_Total: 616 articles (327 blog + 289 news) + 8 core pages._
