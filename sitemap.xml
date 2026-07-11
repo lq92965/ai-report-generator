@@ -36,6 +36,16 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://goreportify.com/article-pages/blog-1783774855070.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://goreportify.com/article-pages/news-1783774831158.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://goreportify.com/article-pages/blog-1783688457189.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -272,16 +282,6 @@
   </url>
   <url>
     <loc>https://goreportify.com/article-pages/news-1781269231705.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://goreportify.com/article-pages/blog-1781182861303.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://goreportify.com/article-pages/news-1781182835196.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

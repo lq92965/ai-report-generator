@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Product Org Has 5 Teams and 5 Different Status Reports. That's a Bug.](https://goreportify.com/article-pages/blog-1783774855070.html)
+  - Type: Deep Insights | Date: 2026-07-11 | Author: Olivia Thorne
+  - It’s Tuesday morning. You’re the Director of Product, and you’ve asked your five PMs for their weekly updates. The first one arrives as a long, narrat...
+- [The New Attack Vector Is a Sentence](https://goreportify.com/article-pages/news-1783774831158.html)
+  - Type: Tech Radar | Date: 2026-07-11 | Author: Alex Mercer
+  - A developer, somewhere past midnight, wires the new AI assistant to the company’s internal inventory API. The goal is simple: let customers ask "Is th...
 - [I Taught an AI to Be My Junior PM. Here's the Training Plan](https://goreportify.com/article-pages/blog-1783688457189.html)
   - Type: Deep Insights | Date: 2026-07-10 | Author: Olivia Thorne
   - You have ten minutes before your next meeting. You open a document filled with raw customer support tickets, intending to find a few key themes. An ho...
@@ -1873,4 +1879,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 616 articles (327 blog + 289 news) + 8 core pages._
+_Total: 618 articles (328 blog + 290 news) + 8 core pages._

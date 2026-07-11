@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Product Org Has 5 Teams and 5 Different Status Reports. That's a Bug.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1783774855070.html</link>
+    <description><![CDATA[It’s Tuesday morning. You’re the Director of Product, and you’ve asked your five PMs for their weekly updates. The first one arrives as a long, narrat...]]></description>
+    <pubDate>Sat, 11 Jul 2026 13:00:55 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The New Attack Vector Is a Sentence]]></title>
+    <link>https://goreportify.com/article-pages/news-1783774831158.html</link>
+    <description><![CDATA[A developer, somewhere past midnight, wires the new AI assistant to the company’s internal inventory API. The goal is simple: let customers ask "Is th...]]></description>
+    <pubDate>Sat, 11 Jul 2026 13:00:31 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[I Taught an AI to Be My Junior PM. Here's the Training Plan]]></title>
     <link>https://goreportify.com/article-pages/blog-1783688457189.html</link>
     <description><![CDATA[You have ten minutes before your next meeting. You open a document filled with raw customer support tickets, intending to find a few key themes. An ho...]]></description>
@@ -297,18 +309,6 @@ Your internal alarms shoul...]]></description>
     <link>https://goreportify.com/article-pages/news-1781269231705.html</link>
     <description><![CDATA[The demo was perfect. A slick new feature, powered by the latest model, that summarized long regulatory documents for compliance officers. The product...]]></description>
     <pubDate>Fri, 12 Jun 2026 13:00:31 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Big Meeting is Doomed. Have the Pre-Meeting First.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1781182861303.html</link>
-    <description><![CDATA[You’ve been there. You spent two weeks on the deck. The data is solid, the user quotes are compelling, and the proposed roadmap makes perfect sense. Y...]]></description>
-    <pubDate>Thu, 11 Jun 2026 13:01:01 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[We Trapped the Genie in a Text Box]]></title>
-    <link>https://goreportify.com/article-pages/news-1781182835196.html</link>
-    <description><![CDATA[The icon is almost always the same: a little spark, a friendly robot, a stylized brain. It lives in the corner of your screen, a quiet tenant in compl...]]></description>
-    <pubDate>Thu, 11 Jun 2026 13:00:35 GMT</pubDate>
   </item>
 </channel>
 </rss>

@@ -1,5 +1,25 @@
 [
     {
+        "id": "1783774855070",
+        "type": "blog",
+        "title": "Your Product Org Has 5 Teams and 5 Different Status Reports. That's a Bug.",
+        "category": "Deep Insights",
+        "date": "2026-07-11",
+        "author": "Olivia Thorne",
+        "excerpt": "It’s Tuesday morning. You’re the Director of Product, and you’ve asked your five PMs for their weekly updates. The first one arrives as a long, narrat...",
+        "contentFile": "blog-1783774855070.md"
+    },
+    {
+        "id": "1783774831158",
+        "type": "news",
+        "title": "The New Attack Vector Is a Sentence",
+        "category": "Tech Radar",
+        "date": "2026-07-11",
+        "author": "Alex Mercer",
+        "excerpt": "A developer, somewhere past midnight, wires the new AI assistant to the company’s internal inventory API. The goal is simple: let customers ask \"Is th...",
+        "contentFile": "news-1783774831158.md"
+    },
+    {
         "id": "1783688457189",
         "type": "blog",
         "title": "I Taught an AI to Be My Junior PM. Here's the Training Plan",
