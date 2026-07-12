@@ -1,5 +1,25 @@
 [
     {
+        "id": "1783861250646",
+        "type": "blog",
+        "title": "Your Designer is a Partner, Not a Pixel-Pusher. Brief Them That Way.",
+        "category": "Deep Insights",
+        "date": "2026-07-12",
+        "author": "Sarah Jenkins",
+        "excerpt": "You open the Figma link. Your designer has delivered exactly what you asked for. The dropdown is there, the table has the right columns, and the butto...",
+        "contentFile": "blog-1783861250646.md"
+    },
+    {
+        "id": "1783861222426",
+        "type": "news",
+        "title": "The Source of Truth Is Now a Liability",
+        "category": "Tech Radar",
+        "date": "2026-07-12",
+        "author": "Olivia Thorne",
+        "excerpt": "The support bot was doing its job perfectly. A customer, frustrated with a billing error, asked for the company’s refund policy. The bot, wired direct...",
+        "contentFile": "news-1783861222426.md"
+    },
+    {
         "id": "1783774855070",
         "type": "blog",
         "title": "Your Product Org Has 5 Teams and 5 Different Status Reports. That's a Bug.",

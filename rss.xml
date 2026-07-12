@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Designer is a Partner, Not a Pixel-Pusher. Brief Them That Way.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1783861250646.html</link>
+    <description><![CDATA[You open the Figma link. Your designer has delivered exactly what you asked for. The dropdown is there, the table has the right columns, and the butto...]]></description>
+    <pubDate>Sun, 12 Jul 2026 13:00:50 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Source of Truth Is Now a Liability]]></title>
+    <link>https://goreportify.com/article-pages/news-1783861222426.html</link>
+    <description><![CDATA[The support bot was doing its job perfectly. A customer, frustrated with a billing error, asked for the company’s refund policy. The bot, wired direct...]]></description>
+    <pubDate>Sun, 12 Jul 2026 13:00:22 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Product Org Has 5 Teams and 5 Different Status Reports. That's a Bug.]]></title>
     <link>https://goreportify.com/article-pages/blog-1783774855070.html</link>
     <description><![CDATA[It’s Tuesday morning. You’re the Director of Product, and you’ve asked your five PMs for their weekly updates. The first one arrives as a long, narrat...]]></description>
@@ -297,18 +309,6 @@ Your internal alarms shoul...]]></description>
     <link>https://goreportify.com/article-pages/news-1781442036983.html</link>
     <description><![CDATA[The chief executive talks a good game on the quarterly earnings call. He mentions their new multi-year, seven-figure deal with a major cloud provider....]]></description>
     <pubDate>Sun, 14 Jun 2026 13:00:36 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Stop 'Socializing' Your Idea. Start Pressure-Testing It.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1781269257012.html</link>
-    <description><![CDATA[You have a new idea. It’s a good one. You draft a quick doc and start making the rounds on Slack. "Just wanted to socialize this concept," you write....]]></description>
-    <pubDate>Fri, 12 Jun 2026 13:00:57 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Prompt Is the New Spaghetti Code]]></title>
-    <link>https://goreportify.com/article-pages/news-1781269231705.html</link>
-    <description><![CDATA[The demo was perfect. A slick new feature, powered by the latest model, that summarized long regulatory documents for compliance officers. The product...]]></description>
-    <pubDate>Fri, 12 Jun 2026 13:00:31 GMT</pubDate>
   </item>
 </channel>
 </rss>

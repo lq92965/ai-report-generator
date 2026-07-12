@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Designer is a Partner, Not a Pixel-Pusher. Brief Them That Way.](https://goreportify.com/article-pages/blog-1783861250646.html)
+  - Type: Deep Insights | Date: 2026-07-12 | Author: Sarah Jenkins
+  - You open the Figma link. Your designer has delivered exactly what you asked for. The dropdown is there, the table has the right columns, and the butto...
+- [The Source of Truth Is Now a Liability](https://goreportify.com/article-pages/news-1783861222426.html)
+  - Type: Tech Radar | Date: 2026-07-12 | Author: Olivia Thorne
+  - The support bot was doing its job perfectly. A customer, frustrated with a billing error, asked for the company’s refund policy. The bot, wired direct...
 - [Your Product Org Has 5 Teams and 5 Different Status Reports. That's a Bug.](https://goreportify.com/article-pages/blog-1783774855070.html)
   - Type: Deep Insights | Date: 2026-07-11 | Author: Olivia Thorne
   - It’s Tuesday morning. You’re the Director of Product, and you’ve asked your five PMs for their weekly updates. The first one arrives as a long, narrat...
@@ -1879,4 +1885,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 618 articles (328 blog + 290 news) + 8 core pages._
+_Total: 620 articles (329 blog + 291 news) + 8 core pages._
