@@ -1,5 +1,15 @@
 [
     {
+        "id": "1783947635696",
+        "type": "news",
+        "title": "The Internal Firewall Is Melting",
+        "category": "Tech Radar",
+        "date": "2026-07-13",
+        "author": "Michael Chen",
+        "excerpt": "The product manager asked the new internal chatbot, “What’s the hold-up on Project Chimera?” The response was instant, comprehensive, and chilling. It...",
+        "contentFile": "news-1783947635696.md"
+    },
+    {
         "id": "1783861250646",
         "type": "blog",
         "title": "Your Designer is a Partner, Not a Pixel-Pusher. Brief Them That Way.",
