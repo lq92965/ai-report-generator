@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Meeting Notes Are Just Transcription. You Need a Capture System.](https://goreportify.com/article-pages/blog-1784034061493.html)
+  - Type: Deep Insights | Date: 2026-07-14 | Author: Jessica Tran
+  - You just walked out of a 60-minute stakeholder sync. You have a three-page Google Doc to prove it. It’s a faithful, line-by-line transcript of the con...
+- [The Next Phase of Legal Adoption](https://goreportify.com/article-pages/news-1784034031388.html)
+  - Type: Tech Radar | Date: 2026-07-14 | Author: Sarah Jenkins
+  - The summons from the legal department arrives not as a formal email, but as a casual, terrifying Slack message. It’s a Thursday afternoon. The lead de...
 - [The Internal Firewall Is Melting](https://goreportify.com/article-pages/news-1783947635696.html)
   - Type: Tech Radar | Date: 2026-07-13 | Author: Michael Chen
   - The product manager asked the new internal chatbot, “What’s the hold-up on Project Chimera?” The response was instant, comprehensive, and chilling. It...
@@ -1888,4 +1894,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 621 articles (329 blog + 292 news) + 8 core pages._
+_Total: 623 articles (330 blog + 293 news) + 8 core pages._

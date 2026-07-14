@@ -1,5 +1,25 @@
 [
     {
+        "id": "1784034061493",
+        "type": "blog",
+        "title": "Your Meeting Notes Are Just Transcription. You Need a Capture System.",
+        "category": "Deep Insights",
+        "date": "2026-07-14",
+        "author": "Jessica Tran",
+        "excerpt": "You just walked out of a 60-minute stakeholder sync. You have a three-page Google Doc to prove it. It’s a faithful, line-by-line transcript of the con...",
+        "contentFile": "blog-1784034061493.md"
+    },
+    {
+        "id": "1784034031388",
+        "type": "news",
+        "title": "The Next Phase of Legal Adoption",
+        "category": "Tech Radar",
+        "date": "2026-07-14",
+        "author": "Sarah Jenkins",
+        "excerpt": "The summons from the legal department arrives not as a formal email, but as a casual, terrifying Slack message. It’s a Thursday afternoon. The lead de...",
+        "contentFile": "news-1784034031388.md"
+    },
+    {
         "id": "1783947635696",
         "type": "news",
         "title": "The Internal Firewall Is Melting",
