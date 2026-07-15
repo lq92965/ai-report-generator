@@ -1,5 +1,25 @@
 [
     {
+        "id": "1784120467424",
+        "type": "blog",
+        "title": "You Closed the JIRA Ticket. You Didn't Close the Loop.",
+        "category": "Deep Insights",
+        "date": "2026-07-15",
+        "author": "Sarah Jenkins",
+        "excerpt": "The engineering lead drags the ticket into the \"Done\" column. A little puff of digital confetti might as well have gone off. You archive the Slack cha...",
+        "contentFile": "blog-1784120467424.md"
+    },
+    {
+        "id": "1784120437319",
+        "type": "news",
+        "title": "The Poisoned Dataset Has No Antidote",
+        "category": "Tech Radar",
+        "date": "2026-07-15",
+        "author": "Alex Mercer",
+        "excerpt": "The Slack notification lights up a screen at 2 AM. An engineer on the data governance team, deep in a log file, has just found it. Buried in the terab...",
+        "contentFile": "news-1784120437319.md"
+    },
+    {
         "id": "1784034061493",
         "type": "blog",
         "title": "Your Meeting Notes Are Just Transcription. You Need a Capture System.",

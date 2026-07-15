@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Closed the JIRA Ticket. You Didn't Close the Loop.](https://goreportify.com/article-pages/blog-1784120467424.html)
+  - Type: Deep Insights | Date: 2026-07-15 | Author: Sarah Jenkins
+  - The engineering lead drags the ticket into the "Done" column. A little puff of digital confetti might as well have gone off. You archive the Slack cha...
+- [The Poisoned Dataset Has No Antidote](https://goreportify.com/article-pages/news-1784120437319.html)
+  - Type: Tech Radar | Date: 2026-07-15 | Author: Alex Mercer
+  - The Slack notification lights up a screen at 2 AM. An engineer on the data governance team, deep in a log file, has just found it. Buried in the terab...
 - [Your Meeting Notes Are Just Transcription. You Need a Capture System.](https://goreportify.com/article-pages/blog-1784034061493.html)
   - Type: Deep Insights | Date: 2026-07-14 | Author: Jessica Tran
   - You just walked out of a 60-minute stakeholder sync. You have a three-page Google Doc to prove it. It’s a faithful, line-by-line transcript of the con...
@@ -1894,4 +1900,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 623 articles (330 blog + 293 news) + 8 core pages._
+_Total: 625 articles (331 blog + 294 news) + 8 core pages._

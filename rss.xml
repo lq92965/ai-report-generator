@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Closed the JIRA Ticket. You Didn't Close the Loop.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1784120467424.html</link>
+    <description><![CDATA[The engineering lead drags the ticket into the "Done" column. A little puff of digital confetti might as well have gone off. You archive the Slack cha...]]></description>
+    <pubDate>Wed, 15 Jul 2026 13:01:07 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Poisoned Dataset Has No Antidote]]></title>
+    <link>https://goreportify.com/article-pages/news-1784120437319.html</link>
+    <description><![CDATA[The Slack notification lights up a screen at 2 AM. An engineer on the data governance team, deep in a log file, has just found it. Buried in the terab...]]></description>
+    <pubDate>Wed, 15 Jul 2026 13:00:37 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Meeting Notes Are Just Transcription. You Need a Capture System.]]></title>
     <link>https://goreportify.com/article-pages/blog-1784034061493.html</link>
     <description><![CDATA[You just walked out of a 60-minute stakeholder sync. You have a three-page Google Doc to prove it. It’s a faithful, line-by-line transcript of the con...]]></description>
@@ -295,20 +307,6 @@ A few people stare at their monitors,...]]></description>
     <link>https://goreportify.com/article-pages/news-1781701240448.html</link>
     <description><![CDATA[The mandate comes down from the thirty-thousand-foot view, landing in a calendar invite like a meteorite. "AI Integration Strategy Session." The VP of...]]></description>
     <pubDate>Wed, 17 Jun 2026 13:00:40 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Don't Have a Dependency Problem. You Have a Currency Problem.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1781614862067.html</link>
-    <description><![CDATA[You’re staring at a Gantt chart. A red line connects your critical feature to a box owned by the Platform team. It’s been "blocked" for three weeks. Y...]]></description>
-    <pubDate>Tue, 16 Jun 2026 13:01:02 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Hallway Ambush: How to Field a VP’s “Quick Question” Without Derailing Your Team]]></title>
-    <link>https://goreportify.com/article-pages/blog-1781528462386.html</link>
-    <description><![CDATA[You’re grabbing a coffee. The VP of Sales corners you by the espresso machine. “Hey, got a second? Just a quick question.”
-
-Your internal alarms shoul...]]></description>
-    <pubDate>Mon, 15 Jun 2026 13:01:02 GMT</pubDate>
   </item>
 </channel>
 </rss>
