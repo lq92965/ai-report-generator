@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [That Slack DM Isn't a Question. It's an Unplanned Ticket.](https://goreportify.com/article-pages/blog-1784206862371.html)
+  - Type: Deep Insights | Date: 2026-07-16 | Author: Alex Mercer
+  - You’re 45 minutes into a deep-work session, finally untangling the dependencies for next quarter’s big feature. The flow state is real. Then, the noti...
+- [We Pointed the LLM at the Production Database](https://goreportify.com/article-pages/news-1784206832493.html)
+  - Type: Tech Radar | Date: 2026-07-16 | Author: Michael Chen
+  - It starts in a conference room that smells of stale coffee and whiteboard markers. The product manager, glowing from a keynote video, sketches a box o...
 - [You Closed the JIRA Ticket. You Didn't Close the Loop.](https://goreportify.com/article-pages/blog-1784120467424.html)
   - Type: Deep Insights | Date: 2026-07-15 | Author: Sarah Jenkins
   - The engineering lead drags the ticket into the "Done" column. A little puff of digital confetti might as well have gone off. You archive the Slack cha...
@@ -1900,4 +1906,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 625 articles (331 blog + 294 news) + 8 core pages._
+_Total: 627 articles (332 blog + 295 news) + 8 core pages._

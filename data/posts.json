@@ -1,5 +1,25 @@
 [
     {
+        "id": "1784206862371",
+        "type": "blog",
+        "title": "That Slack DM Isn't a Question. It's an Unplanned Ticket.",
+        "category": "Deep Insights",
+        "date": "2026-07-16",
+        "author": "Alex Mercer",
+        "excerpt": "You’re 45 minutes into a deep-work session, finally untangling the dependencies for next quarter’s big feature. The flow state is real. Then, the noti...",
+        "contentFile": "blog-1784206862371.md"
+    },
+    {
+        "id": "1784206832493",
+        "type": "news",
+        "title": "We Pointed the LLM at the Production Database",
+        "category": "Tech Radar",
+        "date": "2026-07-16",
+        "author": "Michael Chen",
+        "excerpt": "It starts in a conference room that smells of stale coffee and whiteboard markers. The product manager, glowing from a keynote video, sketches a box o...",
+        "contentFile": "news-1784206832493.md"
+    },
+    {
         "id": "1784120467424",
         "type": "blog",
         "title": "You Closed the JIRA Ticket. You Didn't Close the Loop.",

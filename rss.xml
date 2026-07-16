@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[That Slack DM Isn't a Question. It's an Unplanned Ticket.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1784206862371.html</link>
+    <description><![CDATA[You’re 45 minutes into a deep-work session, finally untangling the dependencies for next quarter’s big feature. The flow state is real. Then, the noti...]]></description>
+    <pubDate>Thu, 16 Jul 2026 13:01:02 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[We Pointed the LLM at the Production Database]]></title>
+    <link>https://goreportify.com/article-pages/news-1784206832493.html</link>
+    <description><![CDATA[It starts in a conference room that smells of stale coffee and whiteboard markers. The product manager, glowing from a keynote video, sketches a box o...]]></description>
+    <pubDate>Thu, 16 Jul 2026 13:00:32 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Closed the JIRA Ticket. You Didn't Close the Loop.]]></title>
     <link>https://goreportify.com/article-pages/blog-1784120467424.html</link>
     <description><![CDATA[The engineering lead drags the ticket into the "Done" column. A little puff of digital confetti might as well have gone off. You archive the Slack cha...]]></description>
@@ -295,18 +307,6 @@ A few people stare at their monitors,...]]></description>
     <link>https://goreportify.com/article-pages/news-1781787642181.html</link>
     <description><![CDATA[The alert fires in a private Slack channel at 2:17 PM. It’s not a server crash or a database overload. It’s a single customer ID, flagged by a confide...]]></description>
     <pubDate>Thu, 18 Jun 2026 13:00:42 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You're Shielding Your Team. You Should Be Arming Them.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1781701271561.html</link>
-    <description><![CDATA[The sales director corners you by the coffee machine. "Quick question," she says, "Can we get the enterprise SSO feature moved up? Got a huge deal on...]]></description>
-    <pubDate>Wed, 17 Jun 2026 13:01:11 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Org Chart Was Not Built for This]]></title>
-    <link>https://goreportify.com/article-pages/news-1781701240448.html</link>
-    <description><![CDATA[The mandate comes down from the thirty-thousand-foot view, landing in a calendar invite like a meteorite. "AI Integration Strategy Session." The VP of...]]></description>
-    <pubDate>Wed, 17 Jun 2026 13:00:40 GMT</pubDate>
   </item>
 </channel>
 </rss>
