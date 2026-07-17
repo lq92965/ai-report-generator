@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Don't Have a Time Management Problem. You Have an Attention Management Problem.](https://goreportify.com/article-pages/blog-1784293263353.html)
+  - Type: Deep Insights | Date: 2026-07-17 | Author: Marcus Webb
+  - Your calendar is a fortress of color-coded blocks. You have a to-do list app synced across three devices. You block out "focus time" that gets ignored...
+- [The Unmaintainable Code Has Been Written](https://goreportify.com/article-pages/news-1784293233772.html)
+  - Type: Tech Radar | Date: 2026-07-17 | Author: Jessica Tran
+  - A senior engineer stares at a pull request. The code works. The tests pass. But it’s fundamentally illegible. The logic is a series of nested list com...
 - [That Slack DM Isn't a Question. It's an Unplanned Ticket.](https://goreportify.com/article-pages/blog-1784206862371.html)
   - Type: Deep Insights | Date: 2026-07-16 | Author: Alex Mercer
   - You’re 45 minutes into a deep-work session, finally untangling the dependencies for next quarter’s big feature. The flow state is real. Then, the noti...
@@ -1906,4 +1912,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 627 articles (332 blog + 295 news) + 8 core pages._
+_Total: 629 articles (333 blog + 296 news) + 8 core pages._

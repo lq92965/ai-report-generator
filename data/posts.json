@@ -1,5 +1,25 @@
 [
     {
+        "id": "1784293263353",
+        "type": "blog",
+        "title": "You Don't Have a Time Management Problem. You Have an Attention Management Problem.",
+        "category": "Deep Insights",
+        "date": "2026-07-17",
+        "author": "Marcus Webb",
+        "excerpt": "Your calendar is a fortress of color-coded blocks. You have a to-do list app synced across three devices. You block out \"focus time\" that gets ignored...",
+        "contentFile": "blog-1784293263353.md"
+    },
+    {
+        "id": "1784293233772",
+        "type": "news",
+        "title": "The Unmaintainable Code Has Been Written",
+        "category": "Tech Radar",
+        "date": "2026-07-17",
+        "author": "Jessica Tran",
+        "excerpt": "A senior engineer stares at a pull request. The code works. The tests pass. But it’s fundamentally illegible. The logic is a series of nested list com...",
+        "contentFile": "news-1784293233772.md"
+    },
+    {
         "id": "1784206862371",
         "type": "blog",
         "title": "That Slack DM Isn't a Question. It's an Unplanned Ticket.",

@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Don't Have a Time Management Problem. You Have an Attention Management Problem.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1784293263353.html</link>
+    <description><![CDATA[Your calendar is a fortress of color-coded blocks. You have a to-do list app synced across three devices. You block out "focus time" that gets ignored...]]></description>
+    <pubDate>Fri, 17 Jul 2026 13:01:03 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Unmaintainable Code Has Been Written]]></title>
+    <link>https://goreportify.com/article-pages/news-1784293233772.html</link>
+    <description><![CDATA[A senior engineer stares at a pull request. The code works. The tests pass. But it’s fundamentally illegible. The logic is a series of nested list com...]]></description>
+    <pubDate>Fri, 17 Jul 2026 13:00:33 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[That Slack DM Isn't a Question. It's an Unplanned Ticket.]]></title>
     <link>https://goreportify.com/article-pages/blog-1784206862371.html</link>
     <description><![CDATA[You’re 45 minutes into a deep-work session, finally untangling the dependencies for next quarter’s big feature. The flow state is real. Then, the noti...]]></description>
@@ -295,18 +307,6 @@ A few people stare at their monitors,...]]></description>
     <link>https://goreportify.com/article-pages/news-1781874037179.html</link>
     <description><![CDATA[The bug report landed at 9:17 AM. A senior engineer on the customer support summarization team saw it first. The AI-powered tool, which usually produc...]]></description>
     <pubDate>Fri, 19 Jun 2026 13:00:37 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Project is Late. The Worst Thing You Can Say is 'We're Working On It.']]></title>
-    <link>https://goreportify.com/article-pages/blog-1781787671203.html</link>
-    <description><![CDATA[The VP of Sales pings you on Slack. "Quick check on Project Atlas. Still good for the EOM launch?" Your stomach sinks. You know it’s not. The final in...]]></description>
-    <pubDate>Thu, 18 Jun 2026 13:01:11 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Scaffolding Is Made of People]]></title>
-    <link>https://goreportify.com/article-pages/news-1781787642181.html</link>
-    <description><![CDATA[The alert fires in a private Slack channel at 2:17 PM. It’s not a server crash or a database overload. It’s a single customer ID, flagged by a confide...]]></description>
-    <pubDate>Thu, 18 Jun 2026 13:00:42 GMT</pubDate>
   </item>
 </channel>
 </rss>
