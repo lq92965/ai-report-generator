@@ -1,32 +1,32 @@
 [
   {
-    "title": "Apple targets dozens of OpenAI employees with legal letters",
-    "link": "https://www.ft.com/content/1b8c9d52-88a9-426b-ba47-f1811f859166",
-    "pubDate": "Fri, 17 Jul 2026 12:02:39 +0000",
-    "snippet": "Article URL: https://www.ft.com/content/1b8c9d52-88a9-426b-ba47-f1811f859166\nComments URL: https://news.ycombinator.com/item?id=48946303\nPoints: 17\n# Comments: 7"
+    "title": "What AI did to stackoverflow in a graph",
+    "link": "https://data.stackexchange.com/stackoverflow/query/1953768#graph",
+    "pubDate": "Sat, 18 Jul 2026 11:12:46 +0000",
+    "snippet": "Article URL: https://data.stackexchange.com/stackoverflow/query/1953768#graph\nComments URL: https://news.ycombinator.com/item?id=48956949\nPoints: 79\n# Comments: 90"
   },
   {
-    "title": "Why the first GPU financiers are turning to inference chips in a $400 million deal",
-    "link": "https://techcrunch.com/2026/07/17/why-the-first-gpu-financiers-are-turning-to-inference-chips-in-a-400-million-deal/",
-    "pubDate": "Fri, 17 Jul 2026 12:00:00 +0000",
-    "snippet": "A $400 million chip-backed loan points to the next wave of AI infrastructure deals."
+    "title": "Why do AI company logos look like buttholes? (2025)",
+    "link": "https://velvetshark.com/ai-company-logos-that-look-like-buttholes",
+    "pubDate": "Sat, 18 Jul 2026 11:06:50 +0000",
+    "snippet": "Article URL: https://velvetshark.com/ai-company-logos-that-look-like-buttholes\nComments URL: https://news.ycombinator.com/item?id=48956924\nPoints: 261\n# Comments: 80"
   },
   {
-    "title": "Blatant AI slop just won a 25k USD DeepMind Kaggle Grand Prize",
-    "link": "https://www.kaggle.com/competitions/kaggle-measuring-agi/discussion/724918#3498423",
-    "pubDate": "Fri, 17 Jul 2026 11:30:00 +0000",
-    "snippet": "Article URL: https://www.kaggle.com/competitions/kaggle-measuring-agi/discussion/724918#3498423\nComments URL: https://news.ycombinator.com/item?id=48946010\nPoints: 165\n# Comments: 74"
+    "title": "Fable 5 vs. GPT-5.6 Sol on an NP-Hard Problem: Does /goal help?",
+    "link": "https://charlesazam.com/blog/fable-5-gpt-5-6-sol-goal/",
+    "pubDate": "Sat, 18 Jul 2026 11:00:29 +0000",
+    "snippet": "Article URL: https://charlesazam.com/blog/fable-5-gpt-5-6-sol-goal/\nComments URL: https://news.ycombinator.com/item?id=48956879\nPoints: 27\n# Comments: 13"
   },
   {
-    "title": "Ask HN: Any AWS billing issues known? Amazon forecast of 3 billion dollars",
-    "link": "https://news.ycombinator.com/item?id=48945681",
-    "pubDate": "Fri, 17 Jul 2026 10:45:21 +0000",
-    "snippet": "I receive an AWS Budgets alert that my budget is exceeding the alert threshold. Threshold is 5$. Forecasted amount is listed as $3,005,575,870.47. (Yepp, right, that’s 3 billion dollars.) I haven't even used AWS actively in the last year, but AWS console lists the amount as stated above. No feedback from AWS support yet, but the support AI chat bot says: \"Die perfekt gleichmäßigen Tageskosten seit dem 1. Juli deuten stark auf einen Abrechnungs- oder Messfehler hin.\" (\"The perfectly consistent daily costs since July 1 strongly suggest a billing or metering error.\") Bot created a support ticket (or at least told me so). Anyone else seeing something like this?\nAlready disabled all AWS IAM roles and deleted all other AWS resources I know of. AWS login not hacked as far as I can tell. But owing Amazon 3 billion dollars is a bit of a concern.\nAny ideas?\nComments URL: https://news.ycombinator.com/item?id=48945681\nPoints: 50\n# Comments: 28"
+    "title": "Neil Rimer thinks the AI money is coming back out",
+    "link": "https://techcrunch.com/2026/07/17/neil-rimer-thinks-the-ai-money-is-coming-back-out/",
+    "pubDate": "Sat, 18 Jul 2026 04:47:25 +0000",
+    "snippet": "Neil Rimer, the venture capitalist who co-founded Index Ventures, predicts the historic wealth AI is generating in Silicon Valley will have to be redistributed, voluntarily or involuntarily."
   },
   {
-    "title": "San Francisco mayor pushes for tougher rules after the Waymo traffic fiasco",
-    "link": "https://techcrunch.com/2026/07/16/san-francisco-mayor-pushes-for-tougher-rules-after-the-waymo-traffic-fiasco/",
-    "pubDate": "Thu, 16 Jul 2026 23:25:22 +0000",
-    "snippet": "In the wake of a massive hours-long gridlock event, San Francisco mayor Daniel Lurie has told state regulators it's time to put more requirements on robotaxi operators like Waymo."
+    "title": "Applications close in 48 hours — here’s everything Australian founders need to know about Stripe x Startup Battlefield",
+    "link": "https://techcrunch.com/2026/07/17/applications-close-in-48-hours-heres-everything-australian-founders-need-to-know-about-stripe-x-startup-battlefield/",
+    "pubDate": "Fri, 17 Jul 2026 23:08:00 +0000",
+    "snippet": "The window is almost shut. On August 19, eight startups will take the stage at Stripe Tour Sydney in front of investors, global press, and the Australian tech community. One startup walks away with automatic entry into TechCrunch Disrupt in San Francisco — no application, no further competition, a guaranteed spot on the world’s most […]"
   }
 ]

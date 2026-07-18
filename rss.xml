@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[The 'Parking Lot' is Where Good Ideas Go to Die]]></title>
+    <link>https://goreportify.com/article-pages/blog-1784379653725.html</link>
+    <description><![CDATA[The scene is familiar. You're ten minutes into a critical design review. The team is finally getting into a groove, debating the merits of a new check...]]></description>
+    <pubDate>Sat, 18 Jul 2026 13:00:53 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Auditor Is at the Gates]]></title>
+    <link>https://goreportify.com/article-pages/news-1784379625936.html</link>
+    <description><![CDATA[The demo went perfectly. In a conference room that smelled of cold pizza and whiteboard markers, the AI flawlessly summarized a dense stack of regulat...]]></description>
+    <pubDate>Sat, 18 Jul 2026 13:00:25 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Don't Have a Time Management Problem. You Have an Attention Management Problem.]]></title>
     <link>https://goreportify.com/article-pages/blog-1784293263353.html</link>
     <description><![CDATA[Your calendar is a fortress of color-coded blocks. You have a to-do list app synced across three devices. You block out "focus time" that gets ignored...]]></description>
@@ -295,18 +307,6 @@ A few people stare at their monitors,...]]></description>
     <link>https://goreportify.com/article-pages/news-1781960466733.html</link>
     <description><![CDATA[The Slack channel for the deployment was quiet. Too quiet. A senior engineer stared at a stream of logs, watching an AI agent—the company’s shiny new...]]></description>
     <pubDate>Sat, 20 Jun 2026 13:01:06 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Don't Need Another Dashboard. You Need a Narrative.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1781874065779.html</link>
-    <description><![CDATA[You’re ten minutes into your big quarterly review. The slide is up. It’s a beautiful dashboard, packed with charts from Looker and Amplitude. Daily ac...]]></description>
-    <pubDate>Fri, 19 Jun 2026 13:01:05 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Unversioned Dependency]]></title>
-    <link>https://goreportify.com/article-pages/news-1781874037179.html</link>
-    <description><![CDATA[The bug report landed at 9:17 AM. A senior engineer on the customer support summarization team saw it first. The AI-powered tool, which usually produc...]]></description>
-    <pubDate>Fri, 19 Jun 2026 13:00:37 GMT</pubDate>
   </item>
 </channel>
 </rss>

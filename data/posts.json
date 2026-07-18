@@ -1,5 +1,25 @@
 [
     {
+        "id": "1784379653725",
+        "type": "blog",
+        "title": "The 'Parking Lot' is Where Good Ideas Go to Die",
+        "category": "Deep Insights",
+        "date": "2026-07-18",
+        "author": "Emily Rostova",
+        "excerpt": "The scene is familiar. You're ten minutes into a critical design review. The team is finally getting into a groove, debating the merits of a new check...",
+        "contentFile": "blog-1784379653725.md"
+    },
+    {
+        "id": "1784379625936",
+        "type": "news",
+        "title": "The Auditor Is at the Gates",
+        "category": "Tech Radar",
+        "date": "2026-07-18",
+        "author": "Michael Chen",
+        "excerpt": "The demo went perfectly. In a conference room that smelled of cold pizza and whiteboard markers, the AI flawlessly summarized a dense stack of regulat...",
+        "contentFile": "news-1784379625936.md"
+    },
+    {
         "id": "1784293263353",
         "type": "blog",
         "title": "You Don't Have a Time Management Problem. You Have an Attention Management Problem.",

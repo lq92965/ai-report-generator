@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [The 'Parking Lot' is Where Good Ideas Go to Die](https://goreportify.com/article-pages/blog-1784379653725.html)
+  - Type: Deep Insights | Date: 2026-07-18 | Author: Emily Rostova
+  - The scene is familiar. You're ten minutes into a critical design review. The team is finally getting into a groove, debating the merits of a new check...
+- [The Auditor Is at the Gates](https://goreportify.com/article-pages/news-1784379625936.html)
+  - Type: Tech Radar | Date: 2026-07-18 | Author: Michael Chen
+  - The demo went perfectly. In a conference room that smelled of cold pizza and whiteboard markers, the AI flawlessly summarized a dense stack of regulat...
 - [You Don't Have a Time Management Problem. You Have an Attention Management Problem.](https://goreportify.com/article-pages/blog-1784293263353.html)
   - Type: Deep Insights | Date: 2026-07-17 | Author: Marcus Webb
   - Your calendar is a fortress of color-coded blocks. You have a to-do list app synced across three devices. You block out "focus time" that gets ignored...
@@ -1912,4 +1918,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 629 articles (333 blog + 296 news) + 8 core pages._
+_Total: 631 articles (334 blog + 297 news) + 8 core pages._
