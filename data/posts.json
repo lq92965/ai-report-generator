@@ -1,5 +1,25 @@
 [
     {
+        "id": "1784552459658",
+        "type": "blog",
+        "title": "Stop Answering the Question. Start Answering the Concern.",
+        "category": "Deep Insights",
+        "date": "2026-07-20",
+        "author": "Emily Rostova",
+        "excerpt": "You just finished your presentation. Ten crisp minutes laying out the Q3 strategy for the new checkout flow. The deck was clean, the data was solid, a...",
+        "contentFile": "blog-1784552459658.md"
+    },
+    {
+        "id": "1784552429686",
+        "type": "news",
+        "title": "The Bill of Materials for Your AI Is Blank",
+        "category": "Tech Radar",
+        "date": "2026-07-20",
+        "author": "Jessica Tran",
+        "excerpt": "The Chief Information Security Officer stared at the product manager. The request was to approve the launch of a new AI-powered feature that summarize...",
+        "contentFile": "news-1784552429686.md"
+    },
+    {
         "id": "1784466056280",
         "type": "blog",
         "title": "Your AI-Generated User Story Is Missing a Soul",
