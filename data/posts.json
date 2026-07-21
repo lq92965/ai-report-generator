@@ -1,5 +1,15 @@
 [
     {
+        "id": "1784638826972",
+        "type": "news",
+        "title": "The Depreciation Schedule Is a Coin Flip",
+        "category": "Tech Radar",
+        "date": "2026-07-21",
+        "author": "Emily Rostova",
+        "excerpt": "The CFO points to a line item in the quarterly forecast. “This new personalization model,” she says, tapping the screen. “We spent two million on the...",
+        "contentFile": "news-1784638826972.md"
+    },
+    {
         "id": "1784552459658",
         "type": "blog",
         "title": "Stop Answering the Question. Start Answering the Concern.",

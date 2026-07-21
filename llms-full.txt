@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [The Depreciation Schedule Is a Coin Flip](https://goreportify.com/article-pages/news-1784638826972.html)
+  - Type: Tech Radar | Date: 2026-07-21 | Author: Emily Rostova
+  - The CFO points to a line item in the quarterly forecast. “This new personalization model,” she says, tapping the screen. “We spent two million on the...
 - [Stop Answering the Question. Start Answering the Concern.](https://goreportify.com/article-pages/blog-1784552459658.html)
   - Type: Deep Insights | Date: 2026-07-20 | Author: Emily Rostova
   - You just finished your presentation. Ten crisp minutes laying out the Q3 strategy for the new checkout flow. The deck was clean, the data was solid, a...
@@ -1930,4 +1933,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 635 articles (336 blog + 299 news) + 8 core pages._
+_Total: 636 articles (336 blog + 300 news) + 8 core pages._

@@ -1,32 +1,32 @@
 [
   {
-    "title": "Hugging Face confirms breach affected internal datasets and credentials, urges users to take action",
-    "link": "https://techcrunch.com/2026/07/20/hugging-face-confirms-breach-affected-internal-datasets-and-credentials-urges-users-to-take-action/",
-    "pubDate": "Mon, 20 Jul 2026 12:39:28 +0000",
-    "snippet": "Hugging Face is urging users to rotate any access tokens stored on the platform and review account activity."
+    "title": "New US homeownership measure puts people first",
+    "link": "https://www.minneapolisfed.org/article/2026/new-homeownership-measure-puts-people-first",
+    "pubDate": "Tue, 21 Jul 2026 12:03:14 +0000",
+    "snippet": "Article URL: https://www.minneapolisfed.org/article/2026/new-homeownership-measure-puts-people-first\nComments URL: https://news.ycombinator.com/item?id=48991139\nPoints: 34\n# Comments: 18"
   },
   {
-    "title": "StrictlyVC returns to New York City September 10 to celebrate a huge year for the city’s startup community ",
-    "link": "https://techcrunch.com/2026/07/20/strictlyvc-returns-to-new-york-city-september-10-to-celebrate-a-huge-year-for-the-citys-startup-community/",
-    "pubDate": "Mon, 20 Jul 2026 12:30:00 +0000",
-    "snippet": "For the first time since 2024, StrictlyVC is coming back to New York City — and we're bringing the kind of access you’d expect from an under-wraps event to the whole startup, VC, and dealmaking community."
+    "title": "Gritt exits stealth with $34 million for robots to build solar plants—then, everything else",
+    "link": "https://techcrunch.com/2026/07/21/gritt-exits-stealth-with-34-million-for-robots-to-build-solar-plants-then-everything-else/",
+    "pubDate": "Tue, 21 Jul 2026 10:00:00 +0000",
+    "snippet": "Gritt is coming out of stealth with $34 million and plan to automate the hardest tasks on construction sites."
   },
   {
-    "title": "The EU is about to sell our most sensitive data to the US for visa-free travel",
-    "link": "https://edri.org/our-work/the-eu-is-about-to-sell-our-most-sensitive-data-to-the-us-for-visa-free-travel/",
-    "pubDate": "Mon, 20 Jul 2026 12:14:08 +0000",
-    "snippet": "Article URL: https://edri.org/our-work/the-eu-is-about-to-sell-our-most-sensitive-data-to-the-us-for-visa-free-travel/\nComments URL: https://news.ycombinator.com/item?id=48977711\nPoints: 52\n# Comments: 17"
+    "title": "Qwen-Image-3.0: Rich Content, Authentic Details, Deep Knowledge",
+    "link": "https://qwen.ai/blog?id=qwen-image-3.0",
+    "pubDate": "Tue, 21 Jul 2026 08:44:23 +0000",
+    "snippet": "Article URL: https://qwen.ai/blog?id=qwen-image-3.0\nComments URL: https://news.ycombinator.com/item?id=48989701\nPoints: 241\n# Comments: 112"
   },
   {
-    "title": "Airport Simulator",
-    "link": "https://airport.apunen.com/",
-    "pubDate": "Mon, 20 Jul 2026 10:30:40 +0000",
-    "snippet": "Article URL: https://airport.apunen.com/\nComments URL: https://news.ycombinator.com/item?id=48976846\nPoints: 84\n# Comments: 29"
+    "title": "Show HN: Ex Situ – Open-source spatial index of displaced cultural artifacts",
+    "link": "https://exsitu.app/map",
+    "pubDate": "Tue, 21 Jul 2026 04:48:32 +0000",
+    "snippet": "Hi, I designed and developed a spatial index that maps museum artefacts as connecting arcs/hyperlinks from their origin site to institutional location/sources. The Index specifically looks at western/euro-american institutions and maps their collection categorised by them under Islamic art, Asian/African art, ethnological collections, Middle East, South America etc.\nStarted as my MA thesis in 2022, kept building since, mostly solo with a little funding. Fully open source, self-hosted, AGPL-3.0, Next.js + Deck.gl on the frontend, Strapi backend, Python ETL pulling from museum open-access APIs. Currently indexing over 100k artifacts from all over the world, across 8 collections (Met, V&A, SMB Berlin). Recently added an md export so researchers can download provenance data for a filtered set of artifacts.\nThe infrastructure is conceptualized as an indexer, not a hoster. Even images are kept as URLs pointing to the source institutions. It's connective tissue between archives that were never designed to speak to each other, with an origin-first search UI concept. The data model is on purpose flat, to avoid encoding problematic taxonomies, and routes researchers directly to the source giving responsibility to the source institutions rather than duplicating institutional data. It indexes the relationship between origin sites and destination collections.\nComing from a design background, taking this project from prototype to production app has been incredibly rewarding, but honestly it’s getting a little bit overwhelming to scale alone. I would love community’s feedback on performance scaling, any code contributions, data pipelines for missing museum apis or general feedback.\nRepo: https://github.com/hburakyel/ex-situ\nLive: https://exsitu.app\nComments URL: https://news.ycombinator.com/item?id=48988158\nPoints: 40\n# Comments: 26"
   },
   {
-    "title": "Airbus Takes Flight from AWS",
-    "link": "https://www.theregister.com/columnists/2026/07/20/airbus-takes-flight-from-aws-what-happens-next-is-critical/5274109",
-    "pubDate": "Mon, 20 Jul 2026 10:12:22 +0000",
-    "snippet": "Article URL: https://www.theregister.com/columnists/2026/07/20/airbus-takes-flight-from-aws-what-happens-next-is-critical/5274109\nComments URL: https://news.ycombinator.com/item?id=48976682\nPoints: 116\n# Comments: 74"
+    "title": "Anthropic’s landmark $1.5B copyright settlement is approved",
+    "link": "https://techcrunch.com/2026/07/20/anthropics-landmark-1-5b-copyright-settlement-is-approved/",
+    "pubDate": "Tue, 21 Jul 2026 00:12:24 +0000",
+    "snippet": "The final approval settles one case, but it doesn't resolve the broader issue of using copyrighted works to train AI models."
   }
 ]
