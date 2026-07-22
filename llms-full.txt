@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Fed Your Company's Secrets to a Public AI. Now What?](https://goreportify.com/article-pages/blog-1784725260506.html)
+  - Type: Deep Insights | Date: 2026-07-22 | Author: Alex Mercer
+  - It happened at 10 PM on a Tuesday. You were stuck on a press release for a stealth feature. On a whim, you opened a public AI chatbot, pasted in the e...
+- [The Delete Key Is a Placebo](https://goreportify.com/article-pages/news-1784725230094.html)
+  - Type: Tech Radar | Date: 2026-07-22 | Author: Olivia Thorne
+  - The ticket arrives in the engineer’s queue on a Tuesday morning. It’s from legal, citing a GDPR Article 17 request. A user in Germany wants to be forg...
 - [The Depreciation Schedule Is a Coin Flip](https://goreportify.com/article-pages/news-1784638826972.html)
   - Type: Tech Radar | Date: 2026-07-21 | Author: Emily Rostova
   - The CFO points to a line item in the quarterly forecast. “This new personalization model,” she says, tapping the screen. “We spent two million on the...
@@ -1933,4 +1939,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 636 articles (336 blog + 300 news) + 8 core pages._
+_Total: 638 articles (337 blog + 301 news) + 8 core pages._

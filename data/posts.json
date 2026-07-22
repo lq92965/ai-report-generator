@@ -1,5 +1,25 @@
 [
     {
+        "id": "1784725260506",
+        "type": "blog",
+        "title": "You Fed Your Company's Secrets to a Public AI. Now What?",
+        "category": "Deep Insights",
+        "date": "2026-07-22",
+        "author": "Alex Mercer",
+        "excerpt": "It happened at 10 PM on a Tuesday. You were stuck on a press release for a stealth feature. On a whim, you opened a public AI chatbot, pasted in the e...",
+        "contentFile": "blog-1784725260506.md"
+    },
+    {
+        "id": "1784725230094",
+        "type": "news",
+        "title": "The Delete Key Is a Placebo",
+        "category": "Tech Radar",
+        "date": "2026-07-22",
+        "author": "Olivia Thorne",
+        "excerpt": "The ticket arrives in the engineer’s queue on a Tuesday morning. It’s from legal, citing a GDPR Article 17 request. A user in Germany wants to be forg...",
+        "contentFile": "news-1784725230094.md"
+    },
+    {
         "id": "1784638826972",
         "type": "news",
         "title": "The Depreciation Schedule Is a Coin Flip",

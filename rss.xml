@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Fed Your Company's Secrets to a Public AI. Now What?]]></title>
+    <link>https://goreportify.com/article-pages/blog-1784725260506.html</link>
+    <description><![CDATA[It happened at 10 PM on a Tuesday. You were stuck on a press release for a stealth feature. On a whim, you opened a public AI chatbot, pasted in the e...]]></description>
+    <pubDate>Wed, 22 Jul 2026 13:01:00 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Delete Key Is a Placebo]]></title>
+    <link>https://goreportify.com/article-pages/news-1784725230094.html</link>
+    <description><![CDATA[The ticket arrives in the engineer’s queue on a Tuesday morning. It’s from legal, citing a GDPR Article 17 request. A user in Germany wants to be forg...]]></description>
+    <pubDate>Wed, 22 Jul 2026 13:00:30 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The Depreciation Schedule Is a Coin Flip]]></title>
     <link>https://goreportify.com/article-pages/news-1784638826972.html</link>
     <description><![CDATA[The CFO points to a line item in the quarterly forecast. “This new personalization model,” she says, tapping the screen. “We spent two million on the...]]></description>
@@ -295,18 +307,6 @@ A few people stare at their monitors,...]]></description>
     <link>https://goreportify.com/article-pages/blog-1782219670542.html</link>
     <description><![CDATA[The quarterly strategy meeting was next week, and my "Competitor Update" slide was embarrassingly thin. I had the usual stuff: a press release about a...]]></description>
     <pubDate>Tue, 23 Jun 2026 13:01:10 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Glitch Is Now the Policy]]></title>
-    <link>https://goreportify.com/article-pages/news-1782219638581.html</link>
-    <description><![CDATA[A product manager at an e-commerce giant sees it first. He’s staring at the returns dashboard, at a number that has been creeping up for two quarters:...]]></description>
-    <pubDate>Tue, 23 Jun 2026 13:00:38 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Data Scientist Doesn't Speak Product. Translate for Them.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1782133324398.html</link>
-    <description><![CDATA[You ask for an analysis of user engagement. Two weeks later, your data scientist presents a beautiful, statistically significant, and utterly useless...]]></description>
-    <pubDate>Mon, 22 Jun 2026 13:02:04 GMT</pubDate>
   </item>
 </channel>
 </rss>

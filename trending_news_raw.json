@@ -1,32 +1,32 @@
 [
   {
-    "title": "New US homeownership measure puts people first",
-    "link": "https://www.minneapolisfed.org/article/2026/new-homeownership-measure-puts-people-first",
-    "pubDate": "Tue, 21 Jul 2026 12:03:14 +0000",
-    "snippet": "Article URL: https://www.minneapolisfed.org/article/2026/new-homeownership-measure-puts-people-first\nComments URL: https://news.ycombinator.com/item?id=48991139\nPoints: 34\n# Comments: 18"
+    "title": "OpenAI says its AI went rogue and launched 'unprecedented' cyber-attack",
+    "link": "https://www.bbc.com/news/articles/c3ek3gvdnj3o",
+    "pubDate": "Wed, 22 Jul 2026 12:03:32 +0000",
+    "snippet": "Article URL: https://www.bbc.com/news/articles/c3ek3gvdnj3o\nComments URL: https://news.ycombinator.com/item?id=49005398\nPoints: 32\n# Comments: 26"
   },
   {
-    "title": "Gritt exits stealth with $34 million for robots to build solar plants—then, everything else",
-    "link": "https://techcrunch.com/2026/07/21/gritt-exits-stealth-with-34-million-for-robots-to-build-solar-plants-then-everything-else/",
-    "pubDate": "Tue, 21 Jul 2026 10:00:00 +0000",
-    "snippet": "Gritt is coming out of stealth with $34 million and plan to automate the hardest tasks on construction sites."
+    "title": "OverpAId – Fire your CEO. Hire the future",
+    "link": "https://overpaid.lol",
+    "pubDate": "Wed, 22 Jul 2026 10:49:04 +0000",
+    "snippet": "Article URL: https://overpaid.lol\nComments URL: https://news.ycombinator.com/item?id=49004663\nPoints: 179\n# Comments: 78"
   },
   {
-    "title": "Qwen-Image-3.0: Rich Content, Authentic Details, Deep Knowledge",
-    "link": "https://qwen.ai/blog?id=qwen-image-3.0",
-    "pubDate": "Tue, 21 Jul 2026 08:44:23 +0000",
-    "snippet": "Article URL: https://qwen.ai/blog?id=qwen-image-3.0\nComments URL: https://news.ycombinator.com/item?id=48989701\nPoints: 241\n# Comments: 112"
+    "title": "Glow emerges from stealth at $1.2B valuation to challenge endpoint security in the AI era",
+    "link": "https://techcrunch.com/2026/07/22/glow-emerges-from-stealth-at-1-2b-valuation-to-challenge-endpoint-security-in-the-ai-era/",
+    "pubDate": "Wed, 22 Jul 2026 10:00:00 +0000",
+    "snippet": "Glow is targeting a new class of endpoint risks created by the rapid adoption of AI agents and developer tools inside enterprises."
   },
   {
-    "title": "Show HN: Ex Situ – Open-source spatial index of displaced cultural artifacts",
-    "link": "https://exsitu.app/map",
-    "pubDate": "Tue, 21 Jul 2026 04:48:32 +0000",
-    "snippet": "Hi, I designed and developed a spatial index that maps museum artefacts as connecting arcs/hyperlinks from their origin site to institutional location/sources. The Index specifically looks at western/euro-american institutions and maps their collection categorised by them under Islamic art, Asian/African art, ethnological collections, Middle East, South America etc.\nStarted as my MA thesis in 2022, kept building since, mostly solo with a little funding. Fully open source, self-hosted, AGPL-3.0, Next.js + Deck.gl on the frontend, Strapi backend, Python ETL pulling from museum open-access APIs. Currently indexing over 100k artifacts from all over the world, across 8 collections (Met, V&A, SMB Berlin). Recently added an md export so researchers can download provenance data for a filtered set of artifacts.\nThe infrastructure is conceptualized as an indexer, not a hoster. Even images are kept as URLs pointing to the source institutions. It's connective tissue between archives that were never designed to speak to each other, with an origin-first search UI concept. The data model is on purpose flat, to avoid encoding problematic taxonomies, and routes researchers directly to the source giving responsibility to the source institutions rather than duplicating institutional data. It indexes the relationship between origin sites and destination collections.\nComing from a design background, taking this project from prototype to production app has been incredibly rewarding, but honestly it’s getting a little bit overwhelming to scale alone. I would love community’s feedback on performance scaling, any code contributions, data pipelines for missing museum apis or general feedback.\nRepo: https://github.com/hburakyel/ex-situ\nLive: https://exsitu.app\nComments URL: https://news.ycombinator.com/item?id=48988158\nPoints: 40\n# Comments: 26"
+    "title": "Synthesia’s AI training platform is moving beyond videos into live coaching",
+    "link": "https://techcrunch.com/2026/07/22/synthesias-ai-training-platform-is-moving-beyond-videos-into-live-coaching/",
+    "pubDate": "Wed, 22 Jul 2026 08:00:00 +0000",
+    "snippet": "Synthesia launched AI Roleplay Sessions, an interactive enterprise training platform where employees practice workplace conversations with AI avatars that provide feedback, scoring, and analytics to help companies measure training effectiveness."
   },
   {
-    "title": "Anthropic’s landmark $1.5B copyright settlement is approved",
-    "link": "https://techcrunch.com/2026/07/20/anthropics-landmark-1-5b-copyright-settlement-is-approved/",
-    "pubDate": "Tue, 21 Jul 2026 00:12:24 +0000",
-    "snippet": "The final approval settles one case, but it doesn't resolve the broader issue of using copyrighted works to train AI models."
+    "title": "Show HN: A new kind of FPS aim trainer",
+    "link": "https://openaim.pramit.gg/",
+    "pubDate": "Wed, 22 Jul 2026 05:39:31 +0000",
+    "snippet": "I played a lot of Valorant and got mad, so I made an aim trainer that analyzes your raw crosshair movement to explore your raw motor and perceptual weaknesses instead of scoring scenarios.\nIt also chooses sens and difficulty as part of the tasks, and makes playlists that are optimal difficulty for you to learn and progress faster!\nComments URL: https://news.ycombinator.com/item?id=49002276\nPoints: 64\n# Comments: 31"
   }
 ]
