@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Product Demo is a Feature Tour, Not a Value Story]]></title>
+    <link>https://goreportify.com/article-pages/blog-1784898065279.html</link>
+    <description><![CDATA[The room is quiet except for the sound of your clicks. You’re walking the executive team through the new dashboard. "And here," you say, pointing your...]]></description>
+    <pubDate>Fri, 24 Jul 2026 13:01:05 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Solution Was Scoped for a Vacuum]]></title>
+    <link>https://goreportify.com/article-pages/news-1784898035362.html</link>
+    <description><![CDATA[The demo was flawless. On the big screen, the vendor’s AI ingested a clean spreadsheet and, in seconds, produced a dashboard of brilliant insights. Qu...]]></description>
+    <pubDate>Fri, 24 Jul 2026 13:00:35 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Report is All Lagging Indicators. Show Them What's Next.]]></title>
     <link>https://goreportify.com/article-pages/blog-1784811661312.html</link>
     <description><![CDATA[You’re ten minutes into the quarterly business review. Your slide is up. It’s a beautiful dashboard, full of green metrics. Uptime is 99.998%. Story p...]]></description>
@@ -295,18 +307,6 @@ A few people stare at their monitors,...]]></description>
     <link>https://goreportify.com/article-pages/news-1782392429309.html</link>
     <description><![CDATA[The product team pops the champagne. Their new AI-powered "copilot" for insurance underwriters is live. It ingests claim reports, flags potential frau...]]></description>
     <pubDate>Thu, 25 Jun 2026 13:00:29 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Team's Blockers Aren't Technical. They're Political.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1782306061504.html</link>
-    <description><![CDATA[The engineer’s Slack status turns red: "Blocked." You jump into the Jira ticket. You expect to see a missing API key, a confusing spec, a tricky bit o...]]></description>
-    <pubDate>Wed, 24 Jun 2026 13:01:01 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Everyone Is Building on the Same Fault Line]]></title>
-    <link>https://goreportify.com/article-pages/news-1782306031802.html</link>
-    <description><![CDATA[The pitch deck glowed on the conference room screen. A twenty-something founder, full of conviction, walked the venture partners through his app. When...]]></description>
-    <pubDate>Wed, 24 Jun 2026 13:00:31 GMT</pubDate>
   </item>
 </channel>
 </rss>

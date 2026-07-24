@@ -1,5 +1,25 @@
 [
     {
+        "id": "1784898065279",
+        "type": "blog",
+        "title": "Your Product Demo is a Feature Tour, Not a Value Story",
+        "category": "Deep Insights",
+        "date": "2026-07-24",
+        "author": "Alex Mercer",
+        "excerpt": "The room is quiet except for the sound of your clicks. You’re walking the executive team through the new dashboard. \"And here,\" you say, pointing your...",
+        "contentFile": "blog-1784898065279.md"
+    },
+    {
+        "id": "1784898035362",
+        "type": "news",
+        "title": "The Solution Was Scoped for a Vacuum",
+        "category": "Tech Radar",
+        "date": "2026-07-24",
+        "author": "Alex Mercer",
+        "excerpt": "The demo was flawless. On the big screen, the vendor’s AI ingested a clean spreadsheet and, in seconds, produced a dashboard of brilliant insights. Qu...",
+        "contentFile": "news-1784898035362.md"
+    },
+    {
         "id": "1784811661312",
         "type": "blog",
         "title": "Your Report is All Lagging Indicators. Show Them What's Next.",
