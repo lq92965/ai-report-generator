@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [The AI Gave You a Number. You Forgot to Ask How.](https://goreportify.com/article-pages/blog-1784984448325.html)
+  - Type: Deep Insights | Date: 2026-07-25 | Author: Michael Chen
+  - The chart looked great. Clean lines, a confident upward trend, and a big, bold number: “32% increase in engagement.” You pasted it from the AI analyti...
 - [Your Product Demo is a Feature Tour, Not a Value Story](https://goreportify.com/article-pages/blog-1784898065279.html)
   - Type: Deep Insights | Date: 2026-07-24 | Author: Alex Mercer
   - The room is quiet except for the sound of your clicks. You’re walking the executive team through the new dashboard. "And here," you say, pointing your...
@@ -1948,4 +1951,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 641 articles (339 blog + 302 news) + 8 core pages._
+_Total: 642 articles (340 blog + 302 news) + 8 core pages._
