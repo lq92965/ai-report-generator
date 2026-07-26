@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [You Said 'We're 80% Confident.' They Heard 'It's Done.'](https://goreportify.com/article-pages/blog-1785070848577.html)
+  - Type: Deep Insights | Date: 2026-07-26 | Author: Alex Mercer
+  - You’re in the Q3 planning meeting. The slide is up, showing your team’s top priority. A VP from sales points to the biggest feature on the list. "What...
 - [The AI Gave You a Number. You Forgot to Ask How.](https://goreportify.com/article-pages/blog-1784984448325.html)
   - Type: Deep Insights | Date: 2026-07-25 | Author: Michael Chen
   - The chart looked great. Clean lines, a confident upward trend, and a big, bold number: “32% increase in engagement.” You pasted it from the AI analyti...
@@ -1951,4 +1954,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 642 articles (340 blog + 302 news) + 8 core pages._
+_Total: 643 articles (341 blog + 302 news) + 8 core pages._

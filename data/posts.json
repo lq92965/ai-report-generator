@@ -1,5 +1,15 @@
 [
     {
+        "id": "1785070848577",
+        "type": "blog",
+        "title": "You Said 'We're 80% Confident.' They Heard 'It's Done.'",
+        "category": "Deep Insights",
+        "date": "2026-07-26",
+        "author": "Alex Mercer",
+        "excerpt": "You’re in the Q3 planning meeting. The slide is up, showing your team’s top priority. A VP from sales points to the biggest feature on the list. \"What...",
+        "contentFile": "blog-1785070848577.md"
+    },
+    {
         "id": "1784984448325",
         "type": "blog",
         "title": "The AI Gave You a Number. You Forgot to Ask How.",
