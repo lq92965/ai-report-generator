@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your AI Can Transcribe the Interview. It Can't Feel the User's Pain.](https://goreportify.com/article-pages/blog-1785157266821.html)
+  - Type: Deep Insights | Date: 2026-07-27 | Author: Jessica Tran
+  - You just finished a fantastic user interview. The customer, a senior analyst named Sarah, sighed before describing the clunky workaround she uses to e...
+- [Prompt Becomes a Competitive Battleground](https://goreportify.com/article-pages/news-1785157234598.html)
+  - Type: Tech Radar | Date: 2026-07-27 | Author: Sarah Jenkins
+  - The emergency call came from the CFO’s assistant. A crucial AI-generated market analysis, the one that justified the entire department’s budget, was s...
 - [You Said 'We're 80% Confident.' They Heard 'It's Done.'](https://goreportify.com/article-pages/blog-1785070848577.html)
   - Type: Deep Insights | Date: 2026-07-26 | Author: Alex Mercer
   - You’re in the Q3 planning meeting. The slide is up, showing your team’s top priority. A VP from sales points to the biggest feature on the list. "What...
@@ -1954,4 +1960,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 643 articles (341 blog + 302 news) + 8 core pages._
+_Total: 645 articles (342 blog + 303 news) + 8 core pages._
