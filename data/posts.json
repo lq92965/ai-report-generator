@@ -1,5 +1,25 @@
 [
     {
+        "id": "1785243660763",
+        "type": "blog",
+        "title": "You Dumped 100 Gong Calls Into ChatGPT. You Got Garbage Out.",
+        "category": "Deep Insights",
+        "date": "2026-07-28",
+        "author": "Michael Chen",
+        "excerpt": "The folder on your desktop is mocking you. It contains transcripts from the last 50 user interviews and sales calls. Buried inside is the key to next...",
+        "contentFile": "blog-1785243660763.md"
+    },
+    {
+        "id": "1785243630378",
+        "type": "news",
+        "title": "The Chain of Command Is a Call Stack",
+        "category": "Tech Radar",
+        "date": "2026-07-28",
+        "author": "Alex Mercer",
+        "excerpt": "The director of engineering loves the new bot. Every Monday at 9:01 AM, it drops a crisp summary of last week’s progress into the leadership channel....",
+        "contentFile": "news-1785243630378.md"
+    },
+    {
         "id": "1785157266821",
         "type": "blog",
         "title": "Your AI Can Transcribe the Interview. It Can't Feel the User's Pain.",

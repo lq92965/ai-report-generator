@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Dumped 100 Gong Calls Into ChatGPT. You Got Garbage Out.](https://goreportify.com/article-pages/blog-1785243660763.html)
+  - Type: Deep Insights | Date: 2026-07-28 | Author: Michael Chen
+  - The folder on your desktop is mocking you. It contains transcripts from the last 50 user interviews and sales calls. Buried inside is the key to next...
+- [The Chain of Command Is a Call Stack](https://goreportify.com/article-pages/news-1785243630378.html)
+  - Type: Tech Radar | Date: 2026-07-28 | Author: Alex Mercer
+  - The director of engineering loves the new bot. Every Monday at 9:01 AM, it drops a crisp summary of last week’s progress into the leadership channel....
 - [Your AI Can Transcribe the Interview. It Can't Feel the User's Pain.](https://goreportify.com/article-pages/blog-1785157266821.html)
   - Type: Deep Insights | Date: 2026-07-27 | Author: Jessica Tran
   - You just finished a fantastic user interview. The customer, a senior analyst named Sarah, sighed before describing the clunky workaround she uses to e...
@@ -1960,4 +1966,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 645 articles (342 blog + 303 news) + 8 core pages._
+_Total: 647 articles (343 blog + 304 news) + 8 core pages._
