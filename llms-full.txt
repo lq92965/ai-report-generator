@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Spend Monday Morning Copy-Pasting. That's Not Product Management.](https://goreportify.com/article-pages/blog-1785330055863.html)
+  - Type: Deep Insights | Date: 2026-07-29 | Author: Michael Chen
+  - It’s 9:23 AM on Monday. You have 14 browser tabs open. One is your JIRA board, filtered for last week’s completed stories. Another is Amplitude, showi...
+- [The Next Phase of Execution Adoption](https://goreportify.com/article-pages/news-1785330029659.html)
+  - Type: Tech Radar | Date: 2026-07-29 | Author: David Sterling
+  - ...
 - [You Dumped 100 Gong Calls Into ChatGPT. You Got Garbage Out.](https://goreportify.com/article-pages/blog-1785243660763.html)
   - Type: Deep Insights | Date: 2026-07-28 | Author: Michael Chen
   - The folder on your desktop is mocking you. It contains transcripts from the last 50 user interviews and sales calls. Buried inside is the key to next...
@@ -1966,4 +1972,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 647 articles (343 blog + 304 news) + 8 core pages._
+_Total: 649 articles (344 blog + 305 news) + 8 core pages._
