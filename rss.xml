@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your AI Prompt Is a Product Spec. Write It That Way.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1785416466612.html</link>
+    <description><![CDATA[You asked the AI to “write user stories for the new dashboard.” You got back three paragraphs of generic nonsense that sounded like a marketing brochu...]]></description>
+    <pubDate>Thu, 30 Jul 2026 13:01:06 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Rollback Plan Is a Prayer]]></title>
+    <link>https://goreportify.com/article-pages/news-1785416436415.html</link>
+    <description><![CDATA[The deployment finished at 4:15 PM on a Thursday. A new AI-powered checkout assistant, designed to upsell related products with uncanny precision. The...]]></description>
+    <pubDate>Thu, 30 Jul 2026 13:00:36 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Spend Monday Morning Copy-Pasting. That's Not Product Management.]]></title>
     <link>https://goreportify.com/article-pages/blog-1785330055863.html</link>
     <description><![CDATA[It’s 9:23 AM on Monday. You have 14 browser tabs open. One is your JIRA board, filtered for last week’s completed stories. Another is Amplitude, showi...]]></description>
@@ -295,18 +307,6 @@ A few people stare at their monitors,...]]></description>
     <link>https://goreportify.com/article-pages/news-1782910831351.html</link>
     <description><![CDATA[The demo was flawless. In a shared conference room, the product manager showed the legal department how the new AI assistant could summarize depositio...]]></description>
     <pubDate>Wed, 01 Jul 2026 13:00:31 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Slack Channel is a Leaky Funnel]]></title>
-    <link>https://goreportify.com/article-pages/blog-1782824462130.html</link>
-    <description><![CDATA[You’re scrolling. Up, up, up through an endless stream of custom emojis, GIF reactions, and @-mentions. You know the decision was made sometime Tuesda...]]></description>
-    <pubDate>Tue, 30 Jun 2026 13:01:02 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Expertise Becomes a Competitive Battleground]]></title>
-    <link>https://goreportify.com/article-pages/news-1782824432504.html</link>
-    <description><![CDATA[The job title on her LinkedIn profile hasn’t changed: Senior Graphic Designer. For a decade, that meant something. It meant client meetings and concep...]]></description>
-    <pubDate>Tue, 30 Jun 2026 13:00:32 GMT</pubDate>
   </item>
 </channel>
 </rss>

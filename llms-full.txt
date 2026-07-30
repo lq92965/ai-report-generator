@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your AI Prompt Is a Product Spec. Write It That Way.](https://goreportify.com/article-pages/blog-1785416466612.html)
+  - Type: Deep Insights | Date: 2026-07-30 | Author: Jessica Tran
+  - You asked the AI to “write user stories for the new dashboard.” You got back three paragraphs of generic nonsense that sounded like a marketing brochu...
+- [The Rollback Plan Is a Prayer](https://goreportify.com/article-pages/news-1785416436415.html)
+  - Type: Tech Radar | Date: 2026-07-30 | Author: David Sterling
+  - The deployment finished at 4:15 PM on a Thursday. A new AI-powered checkout assistant, designed to upsell related products with uncanny precision. The...
 - [You Spend Monday Morning Copy-Pasting. That's Not Product Management.](https://goreportify.com/article-pages/blog-1785330055863.html)
   - Type: Deep Insights | Date: 2026-07-29 | Author: Michael Chen
   - It’s 9:23 AM on Monday. You have 14 browser tabs open. One is your JIRA board, filtered for last week’s completed stories. Another is Amplitude, showi...
@@ -1972,4 +1978,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 649 articles (344 blog + 305 news) + 8 core pages._
+_Total: 651 articles (345 blog + 306 news) + 8 core pages._
