@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Announced the Decision. You Forgot to Sell the Trade-Off.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1785502855130.html</link>
+    <description><![CDATA[It’s Thursday afternoon. On Monday, you sent the crisp, confident email announcing the pivot. The team is no longer building the slick new onboarding...]]></description>
+    <pubDate>Fri, 31 Jul 2026 13:00:55 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Next Phase of Index Adoption]]></title>
+    <link>https://goreportify.com/article-pages/news-1785502827466.html</link>
+    <description><![CDATA[Six months ago, the internal Q&A bot was the hero of the all-hands meeting. It could quote the exact clause from the new security policy and spit out...]]></description>
+    <pubDate>Fri, 31 Jul 2026 13:00:27 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your AI Prompt Is a Product Spec. Write It That Way.]]></title>
     <link>https://goreportify.com/article-pages/blog-1785416466612.html</link>
     <description><![CDATA[You asked the AI to “write user stories for the new dashboard.” You got back three paragraphs of generic nonsense that sounded like a marketing brochu...]]></description>
@@ -295,18 +307,6 @@ A few people stare at their monitors,...]]></description>
     <link>https://goreportify.com/article-pages/blog-1782997252762.html</link>
     <description><![CDATA[You have seven tabs open. One is the Jira ticket for the feature. Another is the Coda doc with the original spec. A third is the Figma file with the f...]]></description>
     <pubDate>Thu, 02 Jul 2026 13:00:52 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Million-Token Mirage]]></title>
-    <link>https://goreportify.com/article-pages/news-1782997227393.html</link>
-    <description><![CDATA[The demo is flawless. A junior analyst uploads a year's worth of quarterly earnings reports—a mountain of PDFs—into a single chat window. "Summarize t...]]></description>
-    <pubDate>Thu, 02 Jul 2026 13:00:27 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Corporation Rejects the Implant]]></title>
-    <link>https://goreportify.com/article-pages/news-1782910831351.html</link>
-    <description><![CDATA[The demo was flawless. In a shared conference room, the product manager showed the legal department how the new AI assistant could summarize depositio...]]></description>
-    <pubDate>Wed, 01 Jul 2026 13:00:31 GMT</pubDate>
   </item>
 </channel>
 </rss>

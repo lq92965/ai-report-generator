@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Announced the Decision. You Forgot to Sell the Trade-Off.](https://goreportify.com/article-pages/blog-1785502855130.html)
+  - Type: Deep Insights | Date: 2026-07-31 | Author: Sarah Jenkins
+  - It’s Thursday afternoon. On Monday, you sent the crisp, confident email announcing the pivot. The team is no longer building the slick new onboarding...
+- [The Next Phase of Index Adoption](https://goreportify.com/article-pages/news-1785502827466.html)
+  - Type: Tech Radar | Date: 2026-07-31 | Author: Olivia Thorne
+  - Six months ago, the internal Q&A bot was the hero of the all-hands meeting. It could quote the exact clause from the new security policy and spit out...
 - [Your AI Prompt Is a Product Spec. Write It That Way.](https://goreportify.com/article-pages/blog-1785416466612.html)
   - Type: Deep Insights | Date: 2026-07-30 | Author: Jessica Tran
   - You asked the AI to “write user stories for the new dashboard.” You got back three paragraphs of generic nonsense that sounded like a marketing brochu...
@@ -1978,4 +1984,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 651 articles (345 blog + 306 news) + 8 core pages._
+_Total: 653 articles (346 blog + 307 news) + 8 core pages._
