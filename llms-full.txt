@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Lost an Hour to a 5-Minute Question. That's a Context-Switching Tax.](https://goreportify.com/article-pages/blog-1785589253217.html)
+  - Type: Deep Insights | Date: 2026-08-01 | Author: Emily Rostova
+  - It’s 2:00 PM. You finally have a 90-minute block on your calendar labeled “Q3 Strategy.” You’ve silenced your phone. You’re deep in a spreadsheet, mod...
+- [The Human in the Loop Is a Liability Shield](https://goreportify.com/article-pages/news-1785589226733.html)
+  - Type: Tech Radar | Date: 2026-08-01 | Author: Sarah Jenkins
+  - The insurance adjuster on the witness stand can’t explain his decision. Not really. He’s pointing to a screen capture from Guidewire, at a little gree...
 - [You Announced the Decision. You Forgot to Sell the Trade-Off.](https://goreportify.com/article-pages/blog-1785502855130.html)
   - Type: Deep Insights | Date: 2026-07-31 | Author: Sarah Jenkins
   - It’s Thursday afternoon. On Monday, you sent the crisp, confident email announcing the pivot. The team is no longer building the slick new onboarding...
@@ -1984,4 +1990,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 653 articles (346 blog + 307 news) + 8 core pages._
+_Total: 655 articles (347 blog + 308 news) + 8 core pages._
