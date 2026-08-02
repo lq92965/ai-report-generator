@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You’re Not the Hub. You’re the Bottleneck.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1785675651780.html</link>
+    <description><![CDATA[The Slack notification pops up. It’s a sales director asking for the ETA on a feature. You fire back a quick answer. Another one from marketing, wonde...]]></description>
+    <pubDate>Sun, 02 Aug 2026 13:00:51 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Latency Was a Feature]]></title>
+    <link>https://goreportify.com/article-pages/news-1785675628065.html</link>
+    <description><![CDATA[The first sign of trouble was the alert storm. At 2:17 AM, a newly deployed AI agent in the logistics division began re-routing shipments. Its directi...]]></description>
+    <pubDate>Sun, 02 Aug 2026 13:00:28 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Lost an Hour to a 5-Minute Question. That's a Context-Switching Tax.]]></title>
     <link>https://goreportify.com/article-pages/blog-1785589253217.html</link>
     <description><![CDATA[It’s 2:00 PM. You finally have a 90-minute block on your calendar labeled “Q3 Strategy.” You’ve silenced your phone. You’re deep in a spreadsheet, mod...]]></description>
@@ -291,22 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1783256433567.html</link>
     <description><![CDATA[The product manager finishes the demo, beaming. On screen, the new foundational model from a vendor that just raised another billion dollars flawlessl...]]></description>
     <pubDate>Sun, 05 Jul 2026 13:00:33 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Empty Throne of the CTO]]></title>
-    <link>https://goreportify.com/article-pages/news-1783170027478.html</link>
-    <description><![CDATA[The CEO turns to the CTO. The numbers on the dashboard are red. Customer satisfaction scores for the new AI-powered feature have cratered overnight. "...]]></description>
-    <pubDate>Sat, 04 Jul 2026 13:00:27 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Sent the Pre-Read. No One Read It. Now What?]]></title>
-    <link>https://goreportify.com/article-pages/blog-1783083665256.html</link>
-    <description><![CDATA[You start the meeting with a familiar, hopeful question. “Any questions on the pre-read I sent out?”
-
-Silence.
-
-A few people stare at their monitors,...]]></description>
-    <pubDate>Fri, 03 Jul 2026 13:01:05 GMT</pubDate>
   </item>
 </channel>
 </rss>

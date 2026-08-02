@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You’re Not the Hub. You’re the Bottleneck.](https://goreportify.com/article-pages/blog-1785675651780.html)
+  - Type: Deep Insights | Date: 2026-08-02 | Author: Marcus Webb
+  - The Slack notification pops up. It’s a sales director asking for the ETA on a feature. You fire back a quick answer. Another one from marketing, wonde...
+- [The Latency Was a Feature](https://goreportify.com/article-pages/news-1785675628065.html)
+  - Type: Tech Radar | Date: 2026-08-02 | Author: David Sterling
+  - The first sign of trouble was the alert storm. At 2:17 AM, a newly deployed AI agent in the logistics division began re-routing shipments. Its directi...
 - [You Lost an Hour to a 5-Minute Question. That's a Context-Switching Tax.](https://goreportify.com/article-pages/blog-1785589253217.html)
   - Type: Deep Insights | Date: 2026-08-01 | Author: Emily Rostova
   - It’s 2:00 PM. You finally have a 90-minute block on your calendar labeled “Q3 Strategy.” You’ve silenced your phone. You’re deep in a spreadsheet, mod...
@@ -1990,4 +1996,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 655 articles (347 blog + 308 news) + 8 core pages._
+_Total: 657 articles (348 blog + 309 news) + 8 core pages._
