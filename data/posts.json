@@ -1,5 +1,25 @@
 [
     {
+        "id": "1785762056979",
+        "type": "blog",
+        "title": "You Pasted the AI's Answer into Slack. Now No One Trusts You.",
+        "category": "Deep Insights",
+        "date": "2026-08-03",
+        "author": "Emily Rostova",
+        "excerpt": "The question drops into the team’s public Slack channel at 3:15 PM. It’s from your tech lead. \"Hey, quick gut check—for the new notification service,...",
+        "contentFile": "blog-1785762056979.md"
+    },
+    {
+        "id": "1785762031022",
+        "type": "news",
+        "title": "The Audit Trail Ends at a Temperature Setting",
+        "category": "Tech Radar",
+        "date": "2026-08-03",
+        "author": "Michael Chen",
+        "excerpt": "The loan application was flawless. Good credit, stable income, low debt. The denial came back from the automated underwriting system in milliseconds....",
+        "contentFile": "news-1785762031022.md"
+    },
+    {
         "id": "1785675651780",
         "type": "blog",
         "title": "You’re Not the Hub. You’re the Bottleneck.",
