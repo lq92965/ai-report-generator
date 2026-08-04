@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Asked for Feedback. You Got Opinions.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1785848456760.html</link>
+    <description><![CDATA[You’re in the design review. The Figma prototype is on the big screen. You’ve just walked everyone through the new onboarding flow, the culmination of...]]></description>
+    <pubDate>Tue, 04 Aug 2026 13:00:56 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The AI Doesn't Know How the Factory Works]]></title>
+    <link>https://goreportify.com/article-pages/news-1785848430143.html</link>
+    <description><![CDATA[The demo was flawless. A new AI-powered agent, built in six weeks, resolved a complex customer logistics query in seconds. On the video call, the VP o...]]></description>
+    <pubDate>Tue, 04 Aug 2026 13:00:30 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Pasted the AI's Answer into Slack. Now No One Trusts You.]]></title>
     <link>https://goreportify.com/article-pages/blog-1785762056979.html</link>
     <description><![CDATA[The question drops into the team’s public Slack channel at 3:15 PM. It’s from your tech lead. "Hey, quick gut check—for the new notification service,...]]></description>
@@ -291,18 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1783515633368.html</link>
     <description><![CDATA[It’s 9:17 AM on a Tuesday. The internal help desk bot, hailed three months ago in a company-wide email as the future of employee onboarding, is tellin...]]></description>
     <pubDate>Wed, 08 Jul 2026 13:00:33 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The AI Built Your Roadmap. Now You Have to Defend It.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1783429258502.html</link>
-    <description><![CDATA[You did it. You fed everything into the AI. A hundred user interview transcripts, the last six months of support tickets, three competitor teardowns,...]]></description>
-    <pubDate>Tue, 07 Jul 2026 13:00:58 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[This Isn't the Open Source You Were Promised]]></title>
-    <link>https://goreportify.com/article-pages/news-1783429228706.html</link>
-    <description><![CDATA[A senior engineer at a mid-sized analytics firm pulls the latest Llama 3 weights to a local server. The terminal progress bar fills up. For the first...]]></description>
-    <pubDate>Tue, 07 Jul 2026 13:00:28 GMT</pubDate>
   </item>
 </channel>
 </rss>

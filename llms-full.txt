@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Asked for Feedback. You Got Opinions.](https://goreportify.com/article-pages/blog-1785848456760.html)
+  - Type: Deep Insights | Date: 2026-08-04 | Author: David Sterling
+  - You’re in the design review. The Figma prototype is on the big screen. You’ve just walked everyone through the new onboarding flow, the culmination of...
+- [The AI Doesn't Know How the Factory Works](https://goreportify.com/article-pages/news-1785848430143.html)
+  - Type: Tech Radar | Date: 2026-08-04 | Author: Michael Chen
+  - The demo was flawless. A new AI-powered agent, built in six weeks, resolved a complex customer logistics query in seconds. On the video call, the VP o...
 - [You Pasted the AI's Answer into Slack. Now No One Trusts You.](https://goreportify.com/article-pages/blog-1785762056979.html)
   - Type: Deep Insights | Date: 2026-08-03 | Author: Emily Rostova
   - The question drops into the team’s public Slack channel at 3:15 PM. It’s from your tech lead. "Hey, quick gut check—for the new notification service,...
@@ -2002,4 +2008,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 659 articles (349 blog + 310 news) + 8 core pages._
+_Total: 661 articles (350 blog + 311 news) + 8 core pages._
