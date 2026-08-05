@@ -1,5 +1,25 @@
 [
     {
+        "id": "1785934855200",
+        "type": "blog",
+        "title": "Your Calendar is Full of 'Quick Questions.' That's Your Shadow Backlog.",
+        "category": "Deep Insights",
+        "date": "2026-08-05",
+        "author": "Olivia Thorne",
+        "excerpt": "It’s 10 AM. You’ve blocked your calendar to finally write that PRD. You open your document. A Slack notification slides in. \"Quick question,\" says an...",
+        "contentFile": "blog-1785934855200.md"
+    },
+    {
+        "id": "1785934828714",
+        "type": "news",
+        "title": "The Compliance Debt Is Compounding",
+        "category": "Tech Radar",
+        "date": "2026-08-05",
+        "author": "Emily Rostova",
+        "excerpt": "The VP of Product cuts the meeting short. \"We'll circle back on the data provenance for the fine-tuning set in Q3,\" she says, looking at the legal cou...",
+        "contentFile": "news-1785934828714.md"
+    },
+    {
         "id": "1785848456760",
         "type": "blog",
         "title": "You Asked for Feedback. You Got Opinions.",

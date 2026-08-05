@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Calendar is Full of 'Quick Questions.' That's Your Shadow Backlog.](https://goreportify.com/article-pages/blog-1785934855200.html)
+  - Type: Deep Insights | Date: 2026-08-05 | Author: Olivia Thorne
+  - It’s 10 AM. You’ve blocked your calendar to finally write that PRD. You open your document. A Slack notification slides in. "Quick question," says an...
+- [The Compliance Debt Is Compounding](https://goreportify.com/article-pages/news-1785934828714.html)
+  - Type: Tech Radar | Date: 2026-08-05 | Author: Emily Rostova
+  - The VP of Product cuts the meeting short. "We'll circle back on the data provenance for the fine-tuning set in Q3," she says, looking at the legal cou...
 - [You Asked for Feedback. You Got Opinions.](https://goreportify.com/article-pages/blog-1785848456760.html)
   - Type: Deep Insights | Date: 2026-08-04 | Author: David Sterling
   - You’re in the design review. The Figma prototype is on the big screen. You’ve just walked everyone through the new onboarding flow, the culmination of...
@@ -2008,4 +2014,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 661 articles (350 blog + 311 news) + 8 core pages._
+_Total: 663 articles (351 blog + 312 news) + 8 core pages._

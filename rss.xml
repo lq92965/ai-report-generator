@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Calendar is Full of 'Quick Questions.' That's Your Shadow Backlog.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1785934855200.html</link>
+    <description><![CDATA[It’s 10 AM. You’ve blocked your calendar to finally write that PRD. You open your document. A Slack notification slides in. "Quick question," says an...]]></description>
+    <pubDate>Wed, 05 Aug 2026 13:00:55 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Compliance Debt Is Compounding]]></title>
+    <link>https://goreportify.com/article-pages/news-1785934828714.html</link>
+    <description><![CDATA[The VP of Product cuts the meeting short. "We'll circle back on the data provenance for the fine-tuning set in Q3," she says, looking at the legal cou...]]></description>
+    <pubDate>Wed, 05 Aug 2026 13:00:28 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Asked for Feedback. You Got Opinions.]]></title>
     <link>https://goreportify.com/article-pages/blog-1785848456760.html</link>
     <description><![CDATA[You’re in the design review. The Figma prototype is on the big screen. You’ve just walked everyone through the new onboarding flow, the culmination of...]]></description>
@@ -291,18 +303,6 @@
     <link>https://goreportify.com/article-pages/blog-1783602054936.html</link>
     <description><![CDATA[The VP of Sales cleared his throat. "Hey, just wondering what the final uplift was on that 'Quick Reorder' button we launched last quarter? My team is...]]></description>
     <pubDate>Thu, 09 Jul 2026 13:00:54 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Engineers Aren't Reading Your PRD. They're Reading Your JIRA Ticket.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1783515662318.html</link>
-    <description><![CDATA[It’s demo day. The feature you’ve been championing for a month is up on the big screen. The engineer clicks through the flow, and everything works. Th...]]></description>
-    <pubDate>Wed, 08 Jul 2026 13:01:02 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Chatbot Is One Schema Change Away From Amnesia]]></title>
-    <link>https://goreportify.com/article-pages/news-1783515633368.html</link>
-    <description><![CDATA[It’s 9:17 AM on a Tuesday. The internal help desk bot, hailed three months ago in a company-wide email as the future of employee onboarding, is tellin...]]></description>
-    <pubDate>Wed, 08 Jul 2026 13:00:33 GMT</pubDate>
   </item>
 </channel>
 </rss>
