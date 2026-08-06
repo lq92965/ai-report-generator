@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Status Report is Green. Your Project is on Fire.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1786021258222.html</link>
+    <description><![CDATA[It’s Tuesday morning. Your CEO is scrolling through the company’s project dashboard. Your project, “Phoenix,” is a neat, reassuring green circle. All...]]></description>
+    <pubDate>Thu, 06 Aug 2026 13:00:58 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Expiration Date Is Baked Into the Model]]></title>
+    <link>https://goreportify.com/article-pages/news-1786021233098.html</link>
+    <description><![CDATA[The logistics model was perfect. For six months, it optimized delivery routes for a national CPG brand, shaving millions from fuel costs. Then, last T...]]></description>
+    <pubDate>Thu, 06 Aug 2026 13:00:33 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Calendar is Full of 'Quick Questions.' That's Your Shadow Backlog.]]></title>
     <link>https://goreportify.com/article-pages/blog-1785934855200.html</link>
     <description><![CDATA[It’s 10 AM. You’ve blocked your calendar to finally write that PRD. You open your document. A Slack notification slides in. "Quick question," says an...]]></description>
@@ -291,18 +303,6 @@
     <link>https://goreportify.com/article-pages/blog-1783688457189.html</link>
     <description><![CDATA[You have ten minutes before your next meeting. You open a document filled with raw customer support tickets, intending to find a few key themes. An ho...]]></description>
     <pubDate>Fri, 10 Jul 2026 13:00:57 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Regression Test Is a Vibe Check]]></title>
-    <link>https://goreportify.com/article-pages/news-1783688427275.html</link>
-    <description><![CDATA[The team gathered around the monitor, watching the new chatbot logic handle a difficult customer query. The response was perfect—empathetic, accurate,...]]></description>
-    <pubDate>Fri, 10 Jul 2026 13:00:27 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Didn't Announce the Failure. Now You Own the Fallout.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1783602054936.html</link>
-    <description><![CDATA[The VP of Sales cleared his throat. "Hey, just wondering what the final uplift was on that 'Quick Reorder' button we launched last quarter? My team is...]]></description>
-    <pubDate>Thu, 09 Jul 2026 13:00:54 GMT</pubDate>
   </item>
 </channel>
 </rss>

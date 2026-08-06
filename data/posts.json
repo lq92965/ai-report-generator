@@ -1,5 +1,25 @@
 [
     {
+        "id": "1786021258222",
+        "type": "blog",
+        "title": "Your Status Report is Green. Your Project is on Fire.",
+        "category": "Deep Insights",
+        "date": "2026-08-06",
+        "author": "Alex Mercer",
+        "excerpt": "It’s Tuesday morning. Your CEO is scrolling through the company’s project dashboard. Your project, “Phoenix,” is a neat, reassuring green circle. All...",
+        "contentFile": "blog-1786021258222.md"
+    },
+    {
+        "id": "1786021233098",
+        "type": "news",
+        "title": "The Expiration Date Is Baked Into the Model",
+        "category": "Tech Radar",
+        "date": "2026-08-06",
+        "author": "Alex Mercer",
+        "excerpt": "The logistics model was perfect. For six months, it optimized delivery routes for a national CPG brand, shaving millions from fuel costs. Then, last T...",
+        "contentFile": "news-1786021233098.md"
+    },
+    {
         "id": "1785934855200",
         "type": "blog",
         "title": "Your Calendar is Full of 'Quick Questions.' That's Your Shadow Backlog.",
