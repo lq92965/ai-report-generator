@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Single Source of Truth is You. That's the Problem.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1786107658663.html</link>
+    <description><![CDATA[An engineer Slacks you a "quick question" about an edge case. You know the answer. You think you wrote it down. You open the Confluence spec. It’s not...]]></description>
+    <pubDate>Fri, 07 Aug 2026 13:00:58 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Warranty Doesn't Cover Reality Drift]]></title>
+    <link>https://goreportify.com/article-pages/news-1786107632964.html</link>
+    <description><![CDATA[The dashboard was green for six months. The new AI-driven demand forecasting system, purchased for a seven-figure sum, was a success. It ingested sale...]]></description>
+    <pubDate>Fri, 07 Aug 2026 13:00:32 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Status Report is Green. Your Project is on Fire.]]></title>
     <link>https://goreportify.com/article-pages/blog-1786021258222.html</link>
     <description><![CDATA[It’s Tuesday morning. Your CEO is scrolling through the company’s project dashboard. Your project, “Phoenix,” is a neat, reassuring green circle. All...]]></description>
@@ -291,18 +303,6 @@
     <link>https://goreportify.com/article-pages/blog-1783774855070.html</link>
     <description><![CDATA[It’s Tuesday morning. You’re the Director of Product, and you’ve asked your five PMs for their weekly updates. The first one arrives as a long, narrat...]]></description>
     <pubDate>Sat, 11 Jul 2026 13:00:55 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The New Attack Vector Is a Sentence]]></title>
-    <link>https://goreportify.com/article-pages/news-1783774831158.html</link>
-    <description><![CDATA[A developer, somewhere past midnight, wires the new AI assistant to the company’s internal inventory API. The goal is simple: let customers ask "Is th...]]></description>
-    <pubDate>Sat, 11 Jul 2026 13:00:31 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[I Taught an AI to Be My Junior PM. Here's the Training Plan]]></title>
-    <link>https://goreportify.com/article-pages/blog-1783688457189.html</link>
-    <description><![CDATA[You have ten minutes before your next meeting. You open a document filled with raw customer support tickets, intending to find a few key themes. An ho...]]></description>
-    <pubDate>Fri, 10 Jul 2026 13:00:57 GMT</pubDate>
   </item>
 </channel>
 </rss>

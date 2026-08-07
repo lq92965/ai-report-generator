@@ -1,5 +1,25 @@
 [
     {
+        "id": "1786107658663",
+        "type": "blog",
+        "title": "Your Single Source of Truth is You. That's the Problem.",
+        "category": "Deep Insights",
+        "date": "2026-08-07",
+        "author": "Alex Mercer",
+        "excerpt": "An engineer Slacks you a \"quick question\" about an edge case. You know the answer. You think you wrote it down. You open the Confluence spec. It’s not...",
+        "contentFile": "blog-1786107658663.md"
+    },
+    {
+        "id": "1786107632964",
+        "type": "news",
+        "title": "The Warranty Doesn't Cover Reality Drift",
+        "category": "Tech Radar",
+        "date": "2026-08-07",
+        "author": "Michael Chen",
+        "excerpt": "The dashboard was green for six months. The new AI-driven demand forecasting system, purchased for a seven-figure sum, was a success. It ingested sale...",
+        "contentFile": "news-1786107632964.md"
+    },
+    {
         "id": "1786021258222",
         "type": "blog",
         "title": "Your Status Report is Green. Your Project is on Fire.",

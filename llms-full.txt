@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Single Source of Truth is You. That's the Problem.](https://goreportify.com/article-pages/blog-1786107658663.html)
+  - Type: Deep Insights | Date: 2026-08-07 | Author: Alex Mercer
+  - An engineer Slacks you a "quick question" about an edge case. You know the answer. You think you wrote it down. You open the Confluence spec. It’s not...
+- [The Warranty Doesn't Cover Reality Drift](https://goreportify.com/article-pages/news-1786107632964.html)
+  - Type: Tech Radar | Date: 2026-08-07 | Author: Michael Chen
+  - The dashboard was green for six months. The new AI-driven demand forecasting system, purchased for a seven-figure sum, was a success. It ingested sale...
 - [Your Status Report is Green. Your Project is on Fire.](https://goreportify.com/article-pages/blog-1786021258222.html)
   - Type: Deep Insights | Date: 2026-08-06 | Author: Alex Mercer
   - It’s Tuesday morning. Your CEO is scrolling through the company’s project dashboard. Your project, “Phoenix,” is a neat, reassuring green circle. All...
@@ -2020,4 +2026,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 665 articles (352 blog + 313 news) + 8 core pages._
+_Total: 667 articles (353 blog + 314 news) + 8 core pages._

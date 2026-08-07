@@ -1,32 +1,32 @@
 [
   {
-    "title": "Google Maps adds agentic features, including food ordering and hotel bookings",
-    "link": "https://techcrunch.com/2026/08/06/google-maps-adds-agentic-features-including-food-ordering-and-hotel-bookings/",
-    "pubDate": "Thu, 06 Aug 2026 12:30:00 +0000",
-    "snippet": "The launch of these new features reflects Google’s ambitions to transform Google Maps from a navigation tool into an assistant that's capable of helping users complete real-world tasks."
+    "title": "The founder’s guide to TechCrunch Disrupt 2026: Everything you need to know",
+    "link": "https://techcrunch.com/2026/08/07/the-founders-guide-to-techcrunch-disrupt-2026-everything-you-need-to-know/",
+    "pubDate": "Fri, 07 Aug 2026 12:30:00 +0000",
+    "snippet": "TechCrunch Disrupt 2026 is built around one question: How do you build an enduring company in the AI era? Our programming and speaker lineup reflect that."
   },
   {
-    "title": "Omilia raises $67M to scale its customer support platform",
-    "link": "https://techcrunch.com/2026/08/06/omilia-raises-67m-to-scale-its-customer-support-platform/",
-    "pubDate": "Thu, 06 Aug 2026 12:00:00 +0000",
-    "snippet": "The Series B is the company's second fundraise since it last raised capital in 2020. In that time, it has increased its ARR by 10x to $60 million."
+    "title": "New Mexico court orders Meta to pay additional $567M in child safety case",
+    "link": "https://techcrunch.com/2026/08/07/new-mexico-court-orders-meta-to-pay-additional-567m-in-child-safety-case/",
+    "pubDate": "Fri, 07 Aug 2026 11:40:37 +0000",
+    "snippet": "Meta's total fine has raked up to $942 million in this case"
   },
   {
-    "title": "Show HN: Skyline Co-op is like SimTower, but built around democratic socialism",
-    "link": "https://intergalacticrobots.app/skyline-coop/",
-    "pubDate": "Thu, 06 Aug 2026 11:37:43 +0000",
-    "snippet": "I've been rebuilding old games with Claude. While creating a modern take on SimTower and having election news on TV in the background, I had the idea to build the economy of the game around democratic socialism instead of capitalism.\nInstead of a real estate tycoon, you are an elected steward of the building, held responsible by the Assembly. Homes are allocated off a waitlist, dues are set on a sliding scale, and you face outside pressures from neighboring capitalist landlords.\nThe crown jewel is attracting a large grant to establish an observatory at the top of your tower, attracting scientists. To get there, you must make sure the people are fed, housed, healthy, and entertained. If the Assembly doesn't have confidence in your abilities, you get voted out.\nIt kinda works, and the potential failures in the game are pretty unique. I'd be interested to hear HN's take. An entire SimCity clone based on a different economy like this could be fun.\nComments URL: https://news.ycombinator.com/item?id=49195297\nPoints: 10\n# Comments: 8"
+    "title": "Bulldozers Plow Through Big Bend National Park, Sparking Fury in Texas",
+    "link": "https://www.newsweek.com/bulldozers-plow-through-big-bend-national-park-sparking-fury-in-texas-12295668",
+    "pubDate": "Fri, 07 Aug 2026 10:33:00 +0000",
+    "snippet": "Article URL: https://www.newsweek.com/bulldozers-plow-through-big-bend-national-park-sparking-fury-in-texas-12295668\nComments URL: https://news.ycombinator.com/item?id=49208341\nPoints: 16\n# Comments: 0"
   },
   {
-    "title": "Mario Meets Pareto",
-    "link": "https://www.mayerowitz.io/blog/mario-meets-pareto",
-    "pubDate": "Thu, 06 Aug 2026 11:24:53 +0000",
-    "snippet": "Article URL: https://www.mayerowitz.io/blog/mario-meets-pareto\nComments URL: https://news.ycombinator.com/item?id=49195231\nPoints: 28\n# Comments: 3"
+    "title": "US strikes $1.2B deal to pay German firm to halt offshore wind projects",
+    "link": "https://www.bbc.com/news/articles/c1e1vg0gjl5o",
+    "pubDate": "Fri, 07 Aug 2026 10:28:55 +0000",
+    "snippet": "Article URL: https://www.bbc.com/news/articles/c1e1vg0gjl5o\nComments URL: https://news.ycombinator.com/item?id=49208314\nPoints: 357\n# Comments: 320"
   },
   {
-    "title": "What I love about Django",
-    "link": "https://buttondown.com/blog/what-i-love-about-django",
-    "pubDate": "Thu, 06 Aug 2026 07:34:06 +0000",
-    "snippet": "Article URL: https://buttondown.com/blog/what-i-love-about-django\nComments URL: https://news.ycombinator.com/item?id=49193673\nPoints: 104\n# Comments: 86"
+    "title": "Show HN: Certo – An open source platform to deliver Open Badges",
+    "link": "https://github.com/schroedinger-Hat/certo",
+    "pubDate": "Fri, 07 Aug 2026 09:10:30 +0000",
+    "snippet": "Certo is open-source infrastructure for issuing, managing, verifying, and exchanging digital credentials.\nIt implements Open Badges 3.0[1] and W3C Verifiable Credentials[2] which are the open standards that make credentials portable, machine-verifiable, and vendor-independent.\nIt is designed to be:\n- Self-hosted: run it inside your own infrastructure, air-gapped network, or sovereign cloud\n- Standards-compliant: credentials it issues work with any OB3/VC-compatible system\n- API-first: everything the UI can do, the API can do\n- Exportable: your data is always yours, in open formats\n- Extensible: a small, stable core with a plugin interface for everything else\nA demo is available at https://certo.schroedinger-hat.org/ which we're using for Schrödinger Hat[3] conferences, workshops, partner communities.\nI'll be around if you have any questions. Feel free to give a feedback on the project.\n[1] https://www.imsglobal.org/spec/ob/v3p0\n[2] https://www.w3.org/TR/vc-data-model/\n[3] https://schroedinger-hat.org/\nComments URL: https://news.ycombinator.com/item?id=49207793\nPoints: 6\n# Comments: 0"
   }
 ]
