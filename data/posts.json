@@ -1,5 +1,25 @@
 [
     {
+        "id": "1786194051598",
+        "type": "blog",
+        "title": "You Answered 50 PRD Comments. You Made Zero Decisions.",
+        "category": "Deep Insights",
+        "date": "2026-08-08",
+        "author": "Emily Rostova",
+        "excerpt": "You open the PRD. The little notification bell in the corner shows 27 new comments. Your stomach sinks. You spend the next hour weaving through thread...",
+        "contentFile": "blog-1786194051598.md"
+    },
+    {
+        "id": "1786194027032",
+        "type": "news",
+        "title": "The Specification Is Now a Chat History",
+        "category": "Tech Radar",
+        "date": "2026-08-08",
+        "author": "Emily Rostova",
+        "excerpt": "A junior developer is asked to fix a bug in the new AI-powered pricing engine. The feature is simple enough: loyal customers should see slightly bette...",
+        "contentFile": "news-1786194027032.md"
+    },
+    {
         "id": "1786107658663",
         "type": "blog",
         "title": "Your Single Source of Truth is You. That's the Problem.",

@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Answered 50 PRD Comments. You Made Zero Decisions.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1786194051598.html</link>
+    <description><![CDATA[You open the PRD. The little notification bell in the corner shows 27 new comments. Your stomach sinks. You spend the next hour weaving through thread...]]></description>
+    <pubDate>Sat, 08 Aug 2026 13:00:51 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Specification Is Now a Chat History]]></title>
+    <link>https://goreportify.com/article-pages/news-1786194027032.html</link>
+    <description><![CDATA[A junior developer is asked to fix a bug in the new AI-powered pricing engine. The feature is simple enough: loyal customers should see slightly bette...]]></description>
+    <pubDate>Sat, 08 Aug 2026 13:00:27 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Single Source of Truth is You. That's the Problem.]]></title>
     <link>https://goreportify.com/article-pages/blog-1786107658663.html</link>
     <description><![CDATA[An engineer Slacks you a "quick question" about an edge case. You know the answer. You think you wrote it down. You open the Confluence spec. It’s not...]]></description>
@@ -291,18 +303,6 @@
     <link>https://goreportify.com/article-pages/blog-1783861250646.html</link>
     <description><![CDATA[You open the Figma link. Your designer has delivered exactly what you asked for. The dropdown is there, the table has the right columns, and the butto...]]></description>
     <pubDate>Sun, 12 Jul 2026 13:00:50 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Source of Truth Is Now a Liability]]></title>
-    <link>https://goreportify.com/article-pages/news-1783861222426.html</link>
-    <description><![CDATA[The support bot was doing its job perfectly. A customer, frustrated with a billing error, asked for the company’s refund policy. The bot, wired direct...]]></description>
-    <pubDate>Sun, 12 Jul 2026 13:00:22 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Product Org Has 5 Teams and 5 Different Status Reports. That's a Bug.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1783774855070.html</link>
-    <description><![CDATA[It’s Tuesday morning. You’re the Director of Product, and you’ve asked your five PMs for their weekly updates. The first one arrives as a long, narrat...]]></description>
-    <pubDate>Sat, 11 Jul 2026 13:00:55 GMT</pubDate>
   </item>
 </channel>
 </rss>
