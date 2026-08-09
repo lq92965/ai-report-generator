@@ -5,6 +5,12 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Cleared Your Inbox. You Shipped Nothing.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1786280452425.html</link>
+    <description><![CDATA[It’s 6 PM. Your inbox is empty. Every Slack notification is gone. You’ve been a blur of efficiency, responding, unblocking, and clarifying for eight s...]]></description>
+    <pubDate>Sun, 09 Aug 2026 13:00:52 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Answered 50 PRD Comments. You Made Zero Decisions.]]></title>
     <link>https://goreportify.com/article-pages/blog-1786194051598.html</link>
     <description><![CDATA[You open the PRD. The little notification bell in the corner shows 27 new comments. Your stomach sinks. You spend the next hour weaving through thread...]]></description>
@@ -297,12 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1783947635696.html</link>
     <description><![CDATA[The product manager asked the new internal chatbot, “What’s the hold-up on Project Chimera?” The response was instant, comprehensive, and chilling. It...]]></description>
     <pubDate>Mon, 13 Jul 2026 13:00:35 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Designer is a Partner, Not a Pixel-Pusher. Brief Them That Way.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1783861250646.html</link>
-    <description><![CDATA[You open the Figma link. Your designer has delivered exactly what you asked for. The dropdown is there, the table has the right columns, and the butto...]]></description>
-    <pubDate>Sun, 12 Jul 2026 13:00:50 GMT</pubDate>
   </item>
 </channel>
 </rss>

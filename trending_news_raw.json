@@ -1,32 +1,32 @@
 [
   {
-    "title": "The CPU is back: Rethinking the CPU-GPU split for LLM inference",
-    "link": "https://www.redhat.com/en/blog/cpu-back-rethinking-cpu-gpu-split-llm-inference",
-    "pubDate": "Sat, 08 Aug 2026 12:16:03 +0000",
-    "snippet": "Article URL: https://www.redhat.com/en/blog/cpu-back-rethinking-cpu-gpu-split-llm-inference\nComments URL: https://news.ycombinator.com/item?id=49221089\nPoints: 7\n# Comments: 0"
+    "title": "Show HN: DeepSeek-V4 Latent Reasoning – moving \"thinking\" into latent space",
+    "link": "https://blog.n.ichol.ai/packaging-latent-reasoning-as-a-real-model",
+    "pubDate": "Sun, 09 Aug 2026 11:46:28 +0000",
+    "snippet": "Article URL: https://blog.n.ichol.ai/packaging-latent-reasoning-as-a-real-model\nComments URL: https://news.ycombinator.com/item?id=49230550\nPoints: 6\n# Comments: 3"
   },
   {
-    "title": "Now we have a timeline of the OpenAI accidental attack against Hugging Face",
-    "link": "https://simonwillison.net/2026/Aug/7/openai-timeline/",
-    "pubDate": "Sat, 08 Aug 2026 10:57:44 +0000",
-    "snippet": "Article URL: https://simonwillison.net/2026/Aug/7/openai-timeline/\nComments URL: https://news.ycombinator.com/item?id=49220609\nPoints: 49\n# Comments: 69"
+    "title": "Reviving a four year old reMarkable 2",
+    "link": "https://oskrim.github.io/hardware/2026/08/09/remarkable-over-ssh.html",
+    "pubDate": "Sun, 09 Aug 2026 11:39:25 +0000",
+    "snippet": "Article URL: https://oskrim.github.io/hardware/2026/08/09/remarkable-over-ssh.html\nComments URL: https://news.ycombinator.com/item?id=49230514\nPoints: 17\n# Comments: 7"
   },
   {
-    "title": "Apple Introduces Leasing Program for iPhones and Other Devices",
-    "link": "https://www.nytimes.com/2026/07/28/technology/apple-leasing-program.html",
-    "pubDate": "Sat, 08 Aug 2026 10:16:01 +0000",
-    "snippet": "Article URL: https://www.nytimes.com/2026/07/28/technology/apple-leasing-program.html\nComments URL: https://news.ycombinator.com/item?id=49220390\nPoints: 17\n# Comments: 30"
+    "title": "Everything You Do Is Being Recorded",
+    "link": "https://www.theatlantic.com/technology/2026/05/ai-wearable-surveillance-countermeasures/687203/",
+    "pubDate": "Sun, 09 Aug 2026 11:30:48 +0000",
+    "snippet": "Article URL: https://www.theatlantic.com/technology/2026/05/ai-wearable-surveillance-countermeasures/687203/\nComments URL: https://news.ycombinator.com/item?id=49230477\nPoints: 44\n# Comments: 22"
   },
   {
-    "title": "OpenAI says it slowed Astra model development over security concerns",
-    "link": "https://techcrunch.com/2026/08/07/openai-says-it-slowed-astra-model-development-over-security-concerns/",
-    "pubDate": "Fri, 07 Aug 2026 22:48:24 +0000",
-    "snippet": "OpenAI said this model, which is still in development, reached its \"critical cybersecurity threshold,\" meaning it could independently identify and carry out cyberattacks against traditionally well-protected real-world systems."
+    "title": "Planned Amazon data center could become the biggest climate polluter in the U.S.",
+    "link": "https://techcrunch.com/2026/08/08/planned-amazon-data-center-could-become-the-biggest-climate-polluter-in-the-u-s/",
+    "pubDate": "Sat, 08 Aug 2026 21:24:02 +0000",
+    "snippet": "As part of a planned Texas data center, Amazon is investing in an on-site power plant that could reportedly become the largest source of climate pollution in the United States."
   },
   {
-    "title": "After Rippling blew millions on AI in months, it built an employee ROI tool",
-    "link": "https://techcrunch.com/2026/08/07/after-rippling-blew-millions-on-ai-in-months-it-built-an-employee-roi-tool/",
-    "pubDate": "Fri, 07 Aug 2026 21:30:11 +0000",
-    "snippet": "After its own AI usage wake-up call, Rippling this week unveiled AI Spend Console, a product that tracks individual and team employee AI spending."
+    "title": "OpenAI acquires presentation startup NextSlide",
+    "link": "https://techcrunch.com/2026/08/08/openai-acquires-presentation-startup-nextslide/",
+    "pubDate": "Sat, 08 Aug 2026 19:41:13 +0000",
+    "snippet": "NextSlide says its team members are now working on ChatGPT."
   }
 ]

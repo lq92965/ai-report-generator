@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [You Cleared Your Inbox. You Shipped Nothing.](https://goreportify.com/article-pages/blog-1786280452425.html)
+  - Type: Deep Insights | Date: 2026-08-09 | Author: Sarah Jenkins
+  - It’s 6 PM. Your inbox is empty. Every Slack notification is gone. You’ve been a blur of efficiency, responding, unblocking, and clarifying for eight s...
 - [You Answered 50 PRD Comments. You Made Zero Decisions.](https://goreportify.com/article-pages/blog-1786194051598.html)
   - Type: Deep Insights | Date: 2026-08-08 | Author: Emily Rostova
   - You open the PRD. The little notification bell in the corner shows 27 new comments. Your stomach sinks. You spend the next hour weaving through thread...
@@ -2032,4 +2035,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 669 articles (354 blog + 315 news) + 8 core pages._
+_Total: 670 articles (355 blog + 315 news) + 8 core pages._
