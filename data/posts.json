@@ -1,5 +1,25 @@
 [
     {
+        "id": "1786366876367",
+        "type": "blog",
+        "title": "You Used AI to 'Validate' Your Idea. You Just Confirmed Your Own Bias.",
+        "category": "Deep Insights",
+        "date": "2026-08-10",
+        "author": "Jessica Tran",
+        "excerpt": "You have a flash of inspiration on your morning commute. A new feature. It’s elegant, it’s clever, and you’re sure users will love it. The old way to...",
+        "contentFile": "blog-1786366876367.md"
+    },
+    {
+        "id": "1786366832228",
+        "type": "news",
+        "title": "The Duct Tape Is Now Structural",
+        "category": "Tech Radar",
+        "date": "2026-08-10",
+        "author": "Sarah Jenkins",
+        "excerpt": "The emergency call came in at 2 AM. The new AI-powered customer support bot—the one featured in the last all-hands meeting—was telling customers their...",
+        "contentFile": "news-1786366832228.md"
+    },
+    {
         "id": "1786280452425",
         "type": "blog",
         "title": "You Cleared Your Inbox. You Shipped Nothing.",

@@ -144,7 +144,7 @@ async function weeklyReport() {
   if (failures.length > 0) {
     console.log(`\n  ⚠️ ${failures.length} 次异常:`);
     for (const f of failures) {
-      console.log(`    ${f.timestamp ? new Date(f.timestamp).toISOString().slice(0, 10) : '?'} — ${f.name} (value: ${f.value ?? f.status})`);
+      console.log(`    ${f.timestamp ? new Date(f.timestamp).toISOString().slice(0, 10) : '?'} — ${f.name} (got ${f.status})`);
     }
   }
 

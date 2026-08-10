@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Used AI to 'Validate' Your Idea. You Just Confirmed Your Own Bias.](https://goreportify.com/article-pages/blog-1786366876367.html)
+  - Type: Deep Insights | Date: 2026-08-10 | Author: Jessica Tran
+  - You have a flash of inspiration on your morning commute. A new feature. It’s elegant, it’s clever, and you’re sure users will love it. The old way to...
+- [The Duct Tape Is Now Structural](https://goreportify.com/article-pages/news-1786366832228.html)
+  - Type: Tech Radar | Date: 2026-08-10 | Author: Sarah Jenkins
+  - The emergency call came in at 2 AM. The new AI-powered customer support bot—the one featured in the last all-hands meeting—was telling customers their...
 - [You Cleared Your Inbox. You Shipped Nothing.](https://goreportify.com/article-pages/blog-1786280452425.html)
   - Type: Deep Insights | Date: 2026-08-09 | Author: Sarah Jenkins
   - It’s 6 PM. Your inbox is empty. Every Slack notification is gone. You’ve been a blur of efficiency, responding, unblocking, and clarifying for eight s...
@@ -2035,4 +2041,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 670 articles (355 blog + 315 news) + 8 core pages._
+_Total: 672 articles (356 blog + 316 news) + 8 core pages._

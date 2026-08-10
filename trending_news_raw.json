@@ -1,32 +1,32 @@
 [
   {
-    "title": "Show HN: DeepSeek-V4 Latent Reasoning – moving \"thinking\" into latent space",
-    "link": "https://blog.n.ichol.ai/packaging-latent-reasoning-as-a-real-model",
-    "pubDate": "Sun, 09 Aug 2026 11:46:28 +0000",
-    "snippet": "Article URL: https://blog.n.ichol.ai/packaging-latent-reasoning-as-a-real-model\nComments URL: https://news.ycombinator.com/item?id=49230550\nPoints: 6\n# Comments: 3"
+    "title": "DeepSeek costs OpenCode Go user $1.14/day; dual DGX breaks even in 24 years",
+    "link": "https://twitter.com/thdxr/status/2086599224674681242",
+    "pubDate": "Mon, 10 Aug 2026 12:24:48 +0000",
+    "snippet": "Article URL: https://twitter.com/thdxr/status/2086599224674681242\nComments URL: https://news.ycombinator.com/item?id=49242728\nPoints: 10\n# Comments: 2"
   },
   {
-    "title": "Reviving a four year old reMarkable 2",
-    "link": "https://oskrim.github.io/hardware/2026/08/09/remarkable-over-ssh.html",
-    "pubDate": "Sun, 09 Aug 2026 11:39:25 +0000",
-    "snippet": "Article URL: https://oskrim.github.io/hardware/2026/08/09/remarkable-over-ssh.html\nComments URL: https://news.ycombinator.com/item?id=49230514\nPoints: 17\n# Comments: 7"
+    "title": "Squeak/Smalltalk 6.1 Release Notes",
+    "link": "https://squeak.org/release_notes/6.1/",
+    "pubDate": "Mon, 10 Aug 2026 12:15:53 +0000",
+    "snippet": "Article URL: https://squeak.org/release_notes/6.1/\nComments URL: https://news.ycombinator.com/item?id=49242653\nPoints: 5\n# Comments: 0"
   },
   {
-    "title": "Everything You Do Is Being Recorded",
-    "link": "https://www.theatlantic.com/technology/2026/05/ai-wearable-surveillance-countermeasures/687203/",
-    "pubDate": "Sun, 09 Aug 2026 11:30:48 +0000",
-    "snippet": "Article URL: https://www.theatlantic.com/technology/2026/05/ai-wearable-surveillance-countermeasures/687203/\nComments URL: https://news.ycombinator.com/item?id=49230477\nPoints: 44\n# Comments: 22"
+    "title": "Discovered Materials is playing AI whack-a-mole to hunt cooler chips",
+    "link": "https://techcrunch.com/2026/08/10/discovered-materials-is-playing-ai-whack-a-mole-to-hunt-cooler-chips/",
+    "pubDate": "Mon, 10 Aug 2026 12:00:00 +0000",
+    "snippet": "Discovered Materials raised $9 million to fund the hunt for more novel materials to build more efficient chips."
   },
   {
-    "title": "Planned Amazon data center could become the biggest climate polluter in the U.S.",
-    "link": "https://techcrunch.com/2026/08/08/planned-amazon-data-center-could-become-the-biggest-climate-polluter-in-the-u-s/",
-    "pubDate": "Sat, 08 Aug 2026 21:24:02 +0000",
-    "snippet": "As part of a planned Texas data center, Amazon is investing in an on-site power plant that could reportedly become the largest source of climate pollution in the United States."
+    "title": "Google Play adds Venmo as a payment option",
+    "link": "https://techcrunch.com/2026/08/10/google-play-adds-venmo-as-a-payment-option/",
+    "pubDate": "Mon, 10 Aug 2026 12:00:00 +0000",
+    "snippet": "The ability to add Venmo to Google Play comes as people are spending more money on apps and games."
   },
   {
-    "title": "OpenAI acquires presentation startup NextSlide",
-    "link": "https://techcrunch.com/2026/08/08/openai-acquires-presentation-startup-nextslide/",
-    "pubDate": "Sat, 08 Aug 2026 19:41:13 +0000",
-    "snippet": "NextSlide says its team members are now working on ChatGPT."
+    "title": "Tail-call optimization in C is relatively recent",
+    "link": "https://lwn.net/Articles/1034703/",
+    "pubDate": "Mon, 10 Aug 2026 11:34:40 +0000",
+    "snippet": "Article URL: https://lwn.net/Articles/1034703/\nComments URL: https://news.ycombinator.com/item?id=49242297\nPoints: 25\n# Comments: 10"
   }
 ]
