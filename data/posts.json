@@ -1,5 +1,25 @@
 [
     {
+        "id": "1786453262053",
+        "type": "blog",
+        "title": "Your North Star Metric Went Up. Your User Experience Tanked.",
+        "category": "Deep Insights",
+        "date": "2026-08-11",
+        "author": "Olivia Thorne",
+        "excerpt": "The exec dashboard is glowing. Your North Star Metric, the one you live and die by, is up 12% this quarter. The chart is a beautiful, clean line slopi...",
+        "contentFile": "blog-1786453262053.md"
+    },
+    {
+        "id": "1786453234501",
+        "type": "news",
+        "title": "The Security Patch Is a Re-Prompt",
+        "category": "Tech Radar",
+        "date": "2026-08-11",
+        "author": "David Sterling",
+        "excerpt": "The red alert flashes on a CISO’s dashboard. Not a SQL injection, not a cross-site scripting vulnerability, but something stranger. The company’s new...",
+        "contentFile": "news-1786453234501.md"
+    },
+    {
         "id": "1786366876367",
         "type": "blog",
         "title": "You Used AI to 'Validate' Your Idea. You Just Confirmed Your Own Bias.",

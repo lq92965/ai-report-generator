@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your North Star Metric Went Up. Your User Experience Tanked.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1786453262053.html</link>
+    <description><![CDATA[The exec dashboard is glowing. Your North Star Metric, the one you live and die by, is up 12% this quarter. The chart is a beautiful, clean line slopi...]]></description>
+    <pubDate>Tue, 11 Aug 2026 13:01:02 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Security Patch Is a Re-Prompt]]></title>
+    <link>https://goreportify.com/article-pages/news-1786453234501.html</link>
+    <description><![CDATA[The red alert flashes on a CISO’s dashboard. Not a SQL injection, not a cross-site scripting vulnerability, but something stranger. The company’s new...]]></description>
+    <pubDate>Tue, 11 Aug 2026 13:00:34 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Used AI to 'Validate' Your Idea. You Just Confirmed Your Own Bias.]]></title>
     <link>https://goreportify.com/article-pages/blog-1786366876367.html</link>
     <description><![CDATA[You have a flash of inspiration on your morning commute. A new feature. It’s elegant, it’s clever, and you’re sure users will love it. The old way to...]]></description>
@@ -291,18 +303,6 @@
     <link>https://goreportify.com/article-pages/blog-1784120467424.html</link>
     <description><![CDATA[The engineering lead drags the ticket into the "Done" column. A little puff of digital confetti might as well have gone off. You archive the Slack cha...]]></description>
     <pubDate>Wed, 15 Jul 2026 13:01:07 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Poisoned Dataset Has No Antidote]]></title>
-    <link>https://goreportify.com/article-pages/news-1784120437319.html</link>
-    <description><![CDATA[The Slack notification lights up a screen at 2 AM. An engineer on the data governance team, deep in a log file, has just found it. Buried in the terab...]]></description>
-    <pubDate>Wed, 15 Jul 2026 13:00:37 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Meeting Notes Are Just Transcription. You Need a Capture System.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1784034061493.html</link>
-    <description><![CDATA[You just walked out of a 60-minute stakeholder sync. You have a three-page Google Doc to prove it. It’s a faithful, line-by-line transcript of the con...]]></description>
-    <pubDate>Tue, 14 Jul 2026 13:01:01 GMT</pubDate>
   </item>
 </channel>
 </rss>
