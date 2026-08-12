@@ -5,6 +5,12 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Got a Mandate, Not a Mission.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1786539651935.html</link>
+    <description><![CDATA[The VP catches you in the hallway. "We need to add a dark mode. Our biggest competitor just launched one. I want it in the next release." You nod, smi...]]></description>
+    <pubDate>Wed, 12 Aug 2026 13:00:51 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your North Star Metric Went Up. Your User Experience Tanked.]]></title>
     <link>https://goreportify.com/article-pages/blog-1786453262053.html</link>
     <description><![CDATA[The exec dashboard is glowing. Your North Star Metric, the one you live and die by, is up 12% this quarter. The chart is a beautiful, clean line slopi...]]></description>
@@ -297,12 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1784206832493.html</link>
     <description><![CDATA[It starts in a conference room that smells of stale coffee and whiteboard markers. The product manager, glowing from a keynote video, sketches a box o...]]></description>
     <pubDate>Thu, 16 Jul 2026 13:00:32 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Closed the JIRA Ticket. You Didn't Close the Loop.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1784120467424.html</link>
-    <description><![CDATA[The engineering lead drags the ticket into the "Done" column. A little puff of digital confetti might as well have gone off. You archive the Slack cha...]]></description>
-    <pubDate>Wed, 15 Jul 2026 13:01:07 GMT</pubDate>
   </item>
 </channel>
 </rss>

@@ -1,5 +1,15 @@
 [
     {
+        "id": "1786539651935",
+        "type": "blog",
+        "title": "You Got a Mandate, Not a Mission.",
+        "category": "Deep Insights",
+        "date": "2026-08-12",
+        "author": "Michael Chen",
+        "excerpt": "The VP catches you in the hallway. \"We need to add a dark mode. Our biggest competitor just launched one. I want it in the next release.\" You nod, smi...",
+        "contentFile": "blog-1786539651935.md"
+    },
+    {
         "id": "1786453262053",
         "type": "blog",
         "title": "Your North Star Metric Went Up. Your User Experience Tanked.",

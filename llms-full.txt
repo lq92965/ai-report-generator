@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [You Got a Mandate, Not a Mission.](https://goreportify.com/article-pages/blog-1786539651935.html)
+  - Type: Deep Insights | Date: 2026-08-12 | Author: Michael Chen
+  - The VP catches you in the hallway. "We need to add a dark mode. Our biggest competitor just launched one. I want it in the next release." You nod, smi...
 - [Your North Star Metric Went Up. Your User Experience Tanked.](https://goreportify.com/article-pages/blog-1786453262053.html)
   - Type: Deep Insights | Date: 2026-08-11 | Author: Olivia Thorne
   - The exec dashboard is glowing. Your North Star Metric, the one you live and die by, is up 12% this quarter. The chart is a beautiful, clean line slopi...
@@ -2047,4 +2050,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 674 articles (357 blog + 317 news) + 8 core pages._
+_Total: 675 articles (358 blog + 317 news) + 8 core pages._
