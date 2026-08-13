@@ -1,5 +1,25 @@
 [
     {
+        "id": "1786626056234",
+        "type": "blog",
+        "title": "Your Weekly Report is a Changelog. Make it a Value Log.",
+        "category": "Deep Insights",
+        "date": "2026-08-13",
+        "author": "Olivia Thorne",
+        "excerpt": "It’s 4:30 PM on a Friday. Your calendar reminder pops up: \"Send weekly update.\" You open Jira, filter for tickets closed this week, and copy-paste the...",
+        "contentFile": "blog-1786626056234.md"
+    },
+    {
+        "id": "1786626029223",
+        "type": "news",
+        "title": "The Meter Is Always Running",
+        "category": "Tech Radar",
+        "date": "2026-08-13",
+        "author": "Michael Chen",
+        "excerpt": "The team popped champagne the week the user graph went vertical. Their AI-powered summarization feature was a hit, spreading through Slack channels an...",
+        "contentFile": "news-1786626029223.md"
+    },
+    {
         "id": "1786539651935",
         "type": "blog",
         "title": "You Got a Mandate, Not a Mission.",

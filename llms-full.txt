@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Weekly Report is a Changelog. Make it a Value Log.](https://goreportify.com/article-pages/blog-1786626056234.html)
+  - Type: Deep Insights | Date: 2026-08-13 | Author: Olivia Thorne
+  - It’s 4:30 PM on a Friday. Your calendar reminder pops up: "Send weekly update." You open Jira, filter for tickets closed this week, and copy-paste the...
+- [The Meter Is Always Running](https://goreportify.com/article-pages/news-1786626029223.html)
+  - Type: Tech Radar | Date: 2026-08-13 | Author: Michael Chen
+  - The team popped champagne the week the user graph went vertical. Their AI-powered summarization feature was a hit, spreading through Slack channels an...
 - [You Got a Mandate, Not a Mission.](https://goreportify.com/article-pages/blog-1786539651935.html)
   - Type: Deep Insights | Date: 2026-08-12 | Author: Michael Chen
   - The VP catches you in the hallway. "We need to add a dark mode. Our biggest competitor just launched one. I want it in the next release." You nod, smi...
@@ -2050,4 +2056,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 675 articles (358 blog + 317 news) + 8 core pages._
+_Total: 677 articles (359 blog + 318 news) + 8 core pages._

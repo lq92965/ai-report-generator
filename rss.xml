@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Weekly Report is a Changelog. Make it a Value Log.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1786626056234.html</link>
+    <description><![CDATA[It’s 4:30 PM on a Friday. Your calendar reminder pops up: "Send weekly update." You open Jira, filter for tickets closed this week, and copy-paste the...]]></description>
+    <pubDate>Thu, 13 Aug 2026 13:00:56 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Meter Is Always Running]]></title>
+    <link>https://goreportify.com/article-pages/news-1786626029223.html</link>
+    <description><![CDATA[The team popped champagne the week the user graph went vertical. Their AI-powered summarization feature was a hit, spreading through Slack channels an...]]></description>
+    <pubDate>Thu, 13 Aug 2026 13:00:29 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Got a Mandate, Not a Mission.]]></title>
     <link>https://goreportify.com/article-pages/blog-1786539651935.html</link>
     <description><![CDATA[The VP catches you in the hallway. "We need to add a dark mode. Our biggest competitor just launched one. I want it in the next release." You nod, smi...]]></description>
@@ -291,18 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1784293233772.html</link>
     <description><![CDATA[A senior engineer stares at a pull request. The code works. The tests pass. But it’s fundamentally illegible. The logic is a series of nested list com...]]></description>
     <pubDate>Fri, 17 Jul 2026 13:00:33 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[That Slack DM Isn't a Question. It's an Unplanned Ticket.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1784206862371.html</link>
-    <description><![CDATA[You’re 45 minutes into a deep-work session, finally untangling the dependencies for next quarter’s big feature. The flow state is real. Then, the noti...]]></description>
-    <pubDate>Thu, 16 Jul 2026 13:01:02 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[We Pointed the LLM at the Production Database]]></title>
-    <link>https://goreportify.com/article-pages/news-1784206832493.html</link>
-    <description><![CDATA[It starts in a conference room that smells of stale coffee and whiteboard markers. The product manager, glowing from a keynote video, sketches a box o...]]></description>
-    <pubDate>Thu, 16 Jul 2026 13:00:32 GMT</pubDate>
   </item>
 </channel>
 </rss>
