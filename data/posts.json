@@ -1,5 +1,25 @@
 [
     {
+        "id": "1786712455253",
+        "type": "blog",
+        "title": "I Fed Our Competitor's G2 Reviews to an AI. It Wrote Their Next PRD.",
+        "category": "Deep Insights",
+        "date": "2026-08-14",
+        "author": "Alex Mercer",
+        "excerpt": "You have a new mandate: \"Get a better handle on the competition.\" So you open up G2, Capterra, and a dozen browser tabs. You start copying and pasting...",
+        "contentFile": "blog-1786712455253.md"
+    },
+    {
+        "id": "1786712427498",
+        "type": "news",
+        "title": "The Bug Report Is Now a Philosophical Question",
+        "category": "Tech Radar",
+        "date": "2026-08-14",
+        "author": "David Sterling",
+        "excerpt": "The bug ticket lands in the queue with a thud. JIRA-ID: PROD-7481. Title: \"AI assistant advised customer to pay their invoice in seashells.\" The senio...",
+        "contentFile": "news-1786712427498.md"
+    },
+    {
         "id": "1786626056234",
         "type": "blog",
         "title": "Your Weekly Report is a Changelog. Make it a Value Log.",

@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[I Fed Our Competitor's G2 Reviews to an AI. It Wrote Their Next PRD.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1786712455253.html</link>
+    <description><![CDATA[You have a new mandate: "Get a better handle on the competition." So you open up G2, Capterra, and a dozen browser tabs. You start copying and pasting...]]></description>
+    <pubDate>Fri, 14 Aug 2026 13:00:55 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Bug Report Is Now a Philosophical Question]]></title>
+    <link>https://goreportify.com/article-pages/news-1786712427498.html</link>
+    <description><![CDATA[The bug ticket lands in the queue with a thud. JIRA-ID: PROD-7481. Title: "AI assistant advised customer to pay their invoice in seashells." The senio...]]></description>
+    <pubDate>Fri, 14 Aug 2026 13:00:27 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Weekly Report is a Changelog. Make it a Value Log.]]></title>
     <link>https://goreportify.com/article-pages/blog-1786626056234.html</link>
     <description><![CDATA[It’s 4:30 PM on a Friday. Your calendar reminder pops up: "Send weekly update." You open Jira, filter for tickets closed this week, and copy-paste the...]]></description>
@@ -291,18 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1784379625936.html</link>
     <description><![CDATA[The demo went perfectly. In a conference room that smelled of cold pizza and whiteboard markers, the AI flawlessly summarized a dense stack of regulat...]]></description>
     <pubDate>Sat, 18 Jul 2026 13:00:25 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Don't Have a Time Management Problem. You Have an Attention Management Problem.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1784293263353.html</link>
-    <description><![CDATA[Your calendar is a fortress of color-coded blocks. You have a to-do list app synced across three devices. You block out "focus time" that gets ignored...]]></description>
-    <pubDate>Fri, 17 Jul 2026 13:01:03 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Unmaintainable Code Has Been Written]]></title>
-    <link>https://goreportify.com/article-pages/news-1784293233772.html</link>
-    <description><![CDATA[A senior engineer stares at a pull request. The code works. The tests pass. But it’s fundamentally illegible. The logic is a series of nested list com...]]></description>
-    <pubDate>Fri, 17 Jul 2026 13:00:33 GMT</pubDate>
   </item>
 </channel>
 </rss>

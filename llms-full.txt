@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [I Fed Our Competitor's G2 Reviews to an AI. It Wrote Their Next PRD.](https://goreportify.com/article-pages/blog-1786712455253.html)
+  - Type: Deep Insights | Date: 2026-08-14 | Author: Alex Mercer
+  - You have a new mandate: "Get a better handle on the competition." So you open up G2, Capterra, and a dozen browser tabs. You start copying and pasting...
+- [The Bug Report Is Now a Philosophical Question](https://goreportify.com/article-pages/news-1786712427498.html)
+  - Type: Tech Radar | Date: 2026-08-14 | Author: David Sterling
+  - The bug ticket lands in the queue with a thud. JIRA-ID: PROD-7481. Title: "AI assistant advised customer to pay their invoice in seashells." The senio...
 - [Your Weekly Report is a Changelog. Make it a Value Log.](https://goreportify.com/article-pages/blog-1786626056234.html)
   - Type: Deep Insights | Date: 2026-08-13 | Author: Olivia Thorne
   - It’s 4:30 PM on a Friday. Your calendar reminder pops up: "Send weekly update." You open Jira, filter for tickets closed this week, and copy-paste the...
@@ -2056,4 +2062,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 677 articles (359 blog + 318 news) + 8 core pages._
+_Total: 679 articles (360 blog + 319 news) + 8 core pages._
