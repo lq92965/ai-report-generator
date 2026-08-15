@@ -1,5 +1,25 @@
 [
     {
+        "id": "1786798852211",
+        "type": "blog",
+        "title": "The Exec Asked a 'Simple Question.' It Derailed Your Sprint.",
+        "category": "Deep Insights",
+        "date": "2026-08-15",
+        "author": "Emily Rostova",
+        "excerpt": "The demo is going perfectly. Your engineer is walking through the new feature, the stakeholders are nodding, and you’re mentally drafting the launch a...",
+        "contentFile": "blog-1786798852211.md"
+    },
+    {
+        "id": "1786798827246",
+        "type": "news",
+        "title": "The Archive Is Now Executable",
+        "category": "Tech Radar",
+        "date": "2026-08-15",
+        "author": "Michael Chen",
+        "excerpt": "The call came from legal. A new sales rep, eager to close a Q3 deal, had used the company’s new internal chatbot to confirm discounting authority. \"Ca...",
+        "contentFile": "news-1786798827246.md"
+    },
+    {
         "id": "1786712455253",
         "type": "blog",
         "title": "I Fed Our Competitor's G2 Reviews to an AI. It Wrote Their Next PRD.",

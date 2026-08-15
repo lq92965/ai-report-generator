@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [The Exec Asked a 'Simple Question.' It Derailed Your Sprint.](https://goreportify.com/article-pages/blog-1786798852211.html)
+  - Type: Deep Insights | Date: 2026-08-15 | Author: Emily Rostova
+  - The demo is going perfectly. Your engineer is walking through the new feature, the stakeholders are nodding, and you’re mentally drafting the launch a...
+- [The Archive Is Now Executable](https://goreportify.com/article-pages/news-1786798827246.html)
+  - Type: Tech Radar | Date: 2026-08-15 | Author: Michael Chen
+  - The call came from legal. A new sales rep, eager to close a Q3 deal, had used the company’s new internal chatbot to confirm discounting authority. "Ca...
 - [I Fed Our Competitor's G2 Reviews to an AI. It Wrote Their Next PRD.](https://goreportify.com/article-pages/blog-1786712455253.html)
   - Type: Deep Insights | Date: 2026-08-14 | Author: Alex Mercer
   - You have a new mandate: "Get a better handle on the competition." So you open up G2, Capterra, and a dozen browser tabs. You start copying and pasting...
@@ -2062,4 +2068,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 679 articles (360 blog + 319 news) + 8 core pages._
+_Total: 681 articles (361 blog + 320 news) + 8 core pages._
