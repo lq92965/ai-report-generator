@@ -1,5 +1,25 @@
 [
     {
+        "id": "1786885252417",
+        "type": "blog",
+        "title": "Your JIRA Ticket Is a Vague Wish. It Needs to Be a Precise Contract.",
+        "category": "Deep Insights",
+        "date": "2026-08-16",
+        "author": "Alex Mercer",
+        "excerpt": "It’s sprint planning. You drag the ticket into the current sprint. An engineer squints at the screen, reads the title—\"Implement new export functional...",
+        "contentFile": "blog-1786885252417.md"
+    },
+    {
+        "id": "1786885228207",
+        "type": "news",
+        "title": "The Dependency Is a Moving Target",
+        "category": "Tech Radar",
+        "date": "2026-08-16",
+        "author": "Jessica Tran",
+        "excerpt": "The alert...",
+        "contentFile": "news-1786885228207.md"
+    },
+    {
         "id": "1786798852211",
         "type": "blog",
         "title": "The Exec Asked a 'Simple Question.' It Derailed Your Sprint.",

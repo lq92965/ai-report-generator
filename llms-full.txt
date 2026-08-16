@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your JIRA Ticket Is a Vague Wish. It Needs to Be a Precise Contract.](https://goreportify.com/article-pages/blog-1786885252417.html)
+  - Type: Deep Insights | Date: 2026-08-16 | Author: Alex Mercer
+  - It’s sprint planning. You drag the ticket into the current sprint. An engineer squints at the screen, reads the title—"Implement new export functional...
+- [The Dependency Is a Moving Target](https://goreportify.com/article-pages/news-1786885228207.html)
+  - Type: Tech Radar | Date: 2026-08-16 | Author: Jessica Tran
+  - The alert...
 - [The Exec Asked a 'Simple Question.' It Derailed Your Sprint.](https://goreportify.com/article-pages/blog-1786798852211.html)
   - Type: Deep Insights | Date: 2026-08-15 | Author: Emily Rostova
   - The demo is going perfectly. Your engineer is walking through the new feature, the stakeholders are nodding, and you’re mentally drafting the launch a...
@@ -2068,4 +2074,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 681 articles (361 blog + 320 news) + 8 core pages._
+_Total: 683 articles (362 blog + 321 news) + 8 core pages._
