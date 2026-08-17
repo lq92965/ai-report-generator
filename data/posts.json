@@ -1,5 +1,25 @@
 [
     {
+        "id": "1786971662956",
+        "type": "blog",
+        "title": "You Asked 'Any Questions?' and Got Silence. That's a Red Flag.",
+        "category": "Deep Insights",
+        "date": "2026-08-17",
+        "author": "Marcus Webb",
+        "excerpt": "You just finished the demo. The slides were crisp, the prototype was smooth, and you nailed the talking points. You articulated the customer problem,...",
+        "contentFile": "blog-1786971662956.md"
+    },
+    {
+        "id": "1786971635044",
+        "type": "news",
+        "title": "The Compute Budget Is the New Headcount",
+        "category": "Tech Radar",
+        "date": "2026-08-17",
+        "author": "Alex Mercer",
+        "excerpt": "The finance chief stared at the projection, her finger tracing a line that shot up and to the right like a SpaceX launch. It wasn't headcount. It wasn...",
+        "contentFile": "news-1786971635044.md"
+    },
+    {
         "id": "1786885252417",
         "type": "blog",
         "title": "Your JIRA Ticket Is a Vague Wish. It Needs to Be a Precise Contract.",

@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Asked 'Any Questions?' and Got Silence. That's a Red Flag.](https://goreportify.com/article-pages/blog-1786971662956.html)
+  - Type: Deep Insights | Date: 2026-08-17 | Author: Marcus Webb
+  - You just finished the demo. The slides were crisp, the prototype was smooth, and you nailed the talking points. You articulated the customer problem,...
+- [The Compute Budget Is the New Headcount](https://goreportify.com/article-pages/news-1786971635044.html)
+  - Type: Tech Radar | Date: 2026-08-17 | Author: Alex Mercer
+  - The finance chief stared at the projection, her finger tracing a line that shot up and to the right like a SpaceX launch. It wasn't headcount. It wasn...
 - [Your JIRA Ticket Is a Vague Wish. It Needs to Be a Precise Contract.](https://goreportify.com/article-pages/blog-1786885252417.html)
   - Type: Deep Insights | Date: 2026-08-16 | Author: Alex Mercer
   - It’s sprint planning. You drag the ticket into the current sprint. An engineer squints at the screen, reads the title—"Implement new export functional...
@@ -2074,4 +2080,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 683 articles (362 blog + 321 news) + 8 core pages._
+_Total: 685 articles (363 blog + 322 news) + 8 core pages._
