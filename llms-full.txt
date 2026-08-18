@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [You Wrote a 10-Page Doc to Avoid a 10-Minute Meeting. Now You Have 100 Comments.](https://goreportify.com/article-pages/blog-1787058051996.html)
+  - Type: Deep Insights | Date: 2026-08-18 | Author: Olivia Thorne
+  - You hit "share" and feel a wave of productive relief. The strategy doc is done. All ten pages of it. It details the problem space, the competitive lan...
 - [You Asked 'Any Questions?' and Got Silence. That's a Red Flag.](https://goreportify.com/article-pages/blog-1786971662956.html)
   - Type: Deep Insights | Date: 2026-08-17 | Author: Marcus Webb
   - You just finished the demo. The slides were crisp, the prototype was smooth, and you nailed the talking points. You articulated the customer problem,...
@@ -2080,4 +2083,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 685 articles (363 blog + 322 news) + 8 core pages._
+_Total: 686 articles (364 blog + 322 news) + 8 core pages._
