@@ -15,6 +15,14 @@
 
 ## All Articles
 
+- [You Shipped the Feature. You Forgot to Ship the Narrative.](https://goreportify.com/article-pages/blog-1787144455454.html)
+  - Type: Deep Insights | Date: 2026-08-19 | Author: Emily Rostova
+  - The launch dashboard is green. Adoption is climbing. You close your laptop Friday afternoon feeling pretty good. Then Monday hits.
+
+A customer success...
+- [The Institutional Memory Is Hosted by a Third Party](https://goreportify.com/article-pages/news-1787144429118.html)
+  - Type: Tech Radar | Date: 2026-08-19 | Author: Michael Chen
+  - The alert came in at 2:17 AM. A core payment service was failing, but only for customers in the EU. Maria, the on-call engineer, stared at a block of...
 - [You Wrote a 10-Page Doc to Avoid a 10-Minute Meeting. Now You Have 100 Comments.](https://goreportify.com/article-pages/blog-1787058051996.html)
   - Type: Deep Insights | Date: 2026-08-18 | Author: Olivia Thorne
   - You hit "share" and feel a wave of productive relief. The strategy doc is done. All ten pages of it. It details the problem space, the competitive lan...
@@ -2083,4 +2091,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 686 articles (364 blog + 322 news) + 8 core pages._
+_Total: 688 articles (365 blog + 323 news) + 8 core pages._

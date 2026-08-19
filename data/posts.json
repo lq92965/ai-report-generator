@@ -1,5 +1,25 @@
 [
     {
+        "id": "1787144455454",
+        "type": "blog",
+        "title": "You Shipped the Feature. You Forgot to Ship the Narrative.",
+        "category": "Deep Insights",
+        "date": "2026-08-19",
+        "author": "Emily Rostova",
+        "excerpt": "The launch dashboard is green. Adoption is climbing. You close your laptop Friday afternoon feeling pretty good. Then Monday hits.\n\nA customer success...",
+        "contentFile": "blog-1787144455454.md"
+    },
+    {
+        "id": "1787144429118",
+        "type": "news",
+        "title": "The Institutional Memory Is Hosted by a Third Party",
+        "category": "Tech Radar",
+        "date": "2026-08-19",
+        "author": "Michael Chen",
+        "excerpt": "The alert came in at 2:17 AM. A core payment service was failing, but only for customers in the EU. Maria, the on-call engineer, stared at a block of...",
+        "contentFile": "news-1787144429118.md"
+    },
+    {
         "id": "1787058051996",
         "type": "blog",
         "title": "You Wrote a 10-Page Doc to Avoid a 10-Minute Meeting. Now You Have 100 Comments.",

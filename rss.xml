@@ -5,6 +5,20 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Shipped the Feature. You Forgot to Ship the Narrative.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1787144455454.html</link>
+    <description><![CDATA[The launch dashboard is green. Adoption is climbing. You close your laptop Friday afternoon feeling pretty good. Then Monday hits.
+
+A customer success...]]></description>
+    <pubDate>Wed, 19 Aug 2026 13:00:55 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Institutional Memory Is Hosted by a Third Party]]></title>
+    <link>https://goreportify.com/article-pages/news-1787144429118.html</link>
+    <description><![CDATA[The alert came in at 2:17 AM. A core payment service was failing, but only for customers in the EU. Maria, the on-call engineer, stared at a block of...]]></description>
+    <pubDate>Wed, 19 Aug 2026 13:00:29 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Wrote a 10-Page Doc to Avoid a 10-Minute Meeting. Now You Have 100 Comments.]]></title>
     <link>https://goreportify.com/article-pages/blog-1787058051996.html</link>
     <description><![CDATA[You hit "share" and feel a wave of productive relief. The strategy doc is done. All ten pages of it. It details the problem space, the competitive lan...]]></description>
@@ -291,18 +305,6 @@
     <link>https://goreportify.com/article-pages/blog-1784811661312.html</link>
     <description><![CDATA[You’re ten minutes into the quarterly business review. Your slide is up. It’s a beautiful dashboard, full of green metrics. Uptime is 99.998%. Story p...]]></description>
     <pubDate>Thu, 23 Jul 2026 13:01:01 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Fed Your Company's Secrets to a Public AI. Now What?]]></title>
-    <link>https://goreportify.com/article-pages/blog-1784725260506.html</link>
-    <description><![CDATA[It happened at 10 PM on a Tuesday. You were stuck on a press release for a stealth feature. On a whim, you opened a public AI chatbot, pasted in the e...]]></description>
-    <pubDate>Wed, 22 Jul 2026 13:01:00 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Delete Key Is a Placebo]]></title>
-    <link>https://goreportify.com/article-pages/news-1784725230094.html</link>
-    <description><![CDATA[The ticket arrives in the engineer’s queue on a Tuesday morning. It’s from legal, citing a GDPR Article 17 request. A user in Germany wants to be forg...]]></description>
-    <pubDate>Wed, 22 Jul 2026 13:00:30 GMT</pubDate>
   </item>
 </channel>
 </rss>
