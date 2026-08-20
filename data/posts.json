@@ -1,5 +1,15 @@
 [
     {
+        "id": "1787230856593",
+        "type": "blog",
+        "title": "I Automated My Release Notes with an AI. Here's the Prompt",
+        "category": "Deep Insights",
+        "date": "2026-08-20",
+        "author": "Michael Chen",
+        "excerpt": "It’s 4:30 PM on a Friday. The release is out. Your engineering manager just sent the final list of merged pull requests to the releases channel. Now,...",
+        "contentFile": "blog-1787230856593.md"
+    },
+    {
         "id": "1787144455454",
         "type": "blog",
         "title": "You Shipped the Feature. You Forgot to Ship the Narrative.",

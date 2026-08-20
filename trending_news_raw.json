@@ -1,32 +1,32 @@
 [
   {
-    "title": "Geolocating a random island using geometry and CUDA programming",
-    "link": "https://yassa9.github.io/osint/gralhix-004/",
-    "pubDate": "Wed, 19 Aug 2026 12:19:52 +0000",
-    "snippet": "Article URL: https://yassa9.github.io/osint/gralhix-004/\nComments URL: https://news.ycombinator.com/item?id=49360545\nPoints: 11\n# Comments: 3"
+    "title": "US says hackers are targeting vulnerable water systems with the help of AI",
+    "link": "https://techcrunch.com/2026/08/20/us-says-hackers-are-targeting-vulnerable-water-systems-with-the-help-of-ai/",
+    "pubDate": "Thu, 20 Aug 2026 12:43:19 +0000",
+    "snippet": "Hackers are targeting internet-connected Siemens controllers used in water facilities around the United States."
   },
   {
-    "title": "AI isn’t close to curing cancer. This startup says it knows what it will take.",
-    "link": "https://techcrunch.com/2026/08/19/ai-isnt-close-to-curing-cancer-this-startup-says-it-knows-what-it-will-take/",
-    "pubDate": "Wed, 19 Aug 2026 12:00:00 +0000",
-    "snippet": "It's the data, stupid."
+    "title": "Meta AI’s new Mac app wants you to talk to your apps",
+    "link": "https://techcrunch.com/2026/08/20/meta-ais-new-mac-app-wants-you-to-talk-to-your-apps/",
+    "pubDate": "Thu, 20 Aug 2026 12:11:57 +0000",
+    "snippet": "Meta said its Muse Spark model is powering the dictation feature."
   },
   {
-    "title": "You can Venmo your college tuition, for some reason",
-    "link": "https://techcrunch.com/2026/08/19/you-can-venmo-your-college-tuition-for-some-reason/",
-    "pubDate": "Wed, 19 Aug 2026 12:00:00 +0000",
-    "snippet": "Kids these days don't know how good they have it."
+    "title": "Show HN: I trained a 125M model to autocomplete piano on-device",
+    "link": "https://simedw.com/2026/08/20/midi-autocomplete/",
+    "pubDate": "Thu, 20 Aug 2026 12:04:38 +0000",
+    "snippet": "I trained a 125M-parameter transformer to autocomplete piano performances in real time (~108 notes/sec on an iPhone 15).\nThe idea is basically GitHub Copilot or Tabnine, except instead of prompting it with code, you prompt it by playing a few notes on a MIDI piano. The model then continues what you played, entirely on-device.\nThe app is free if anyone wants to try it. Happy to answer questions about the model, training, Core ML, or the many things that didn't work.\nComments URL: https://news.ycombinator.com/item?id=49373456\nPoints: 33\n# Comments: 7"
   },
   {
-    "title": "GrapheneOS in 2027 available on high-end Motorola phones",
-    "link": "https://grapheneos.social/@GrapheneOS/117078064184215730",
-    "pubDate": "Wed, 19 Aug 2026 11:46:58 +0000",
-    "snippet": "Article URL: https://grapheneos.social/@GrapheneOS/117078064184215730\nComments URL: https://news.ycombinator.com/item?id=49360242\nPoints: 102\n# Comments: 22"
+    "title": "Proof of Human (YC S23) Is Hiring a Member of Technical Staff",
+    "link": "https://www.ycombinator.com/companies/proof-of-human/jobs/ZTZHEbb-member-of-technical-staff",
+    "pubDate": "Thu, 20 Aug 2026 12:00:23 +0000",
+    "snippet": "Article URL: https://www.ycombinator.com/companies/proof-of-human/jobs/ZTZHEbb-member-of-technical-staff\nComments URL: https://news.ycombinator.com/item?id=49373423\nPoints: 0\n# Comments: 0"
   },
   {
-    "title": "Air Theremin – a browser theremin you play by waving at your webcam",
-    "link": "https://theremin.bizibah.com/",
-    "pubDate": "Wed, 19 Aug 2026 10:15:00 +0000",
-    "snippet": "Article URL: https://theremin.bizibah.com/\nComments URL: https://news.ycombinator.com/item?id=49359425\nPoints: 74\n# Comments: 38"
+    "title": "Australia passes law to levy tech giants that fail to pay for local news",
+    "link": "https://www.reuters.com/legal/litigation/australia-passes-law-levy-tech-giants-that-fail-pay-local-news-2026-08-20/",
+    "pubDate": "Thu, 20 Aug 2026 11:23:43 +0000",
+    "snippet": "Article URL: https://www.reuters.com/legal/litigation/australia-passes-law-levy-tech-giants-that-fail-pay-local-news-2026-08-20/\nComments URL: https://news.ycombinator.com/item?id=49373123\nPoints: 15\n# Comments: 3"
   }
 ]

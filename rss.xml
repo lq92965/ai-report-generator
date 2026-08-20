@@ -5,6 +5,12 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[I Automated My Release Notes with an AI. Here's the Prompt]]></title>
+    <link>https://goreportify.com/article-pages/blog-1787230856593.html</link>
+    <description><![CDATA[It’s 4:30 PM on a Friday. The release is out. Your engineering manager just sent the final list of merged pull requests to the releases channel. Now,...]]></description>
+    <pubDate>Thu, 20 Aug 2026 13:00:56 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Shipped the Feature. You Forgot to Ship the Narrative.]]></title>
     <link>https://goreportify.com/article-pages/blog-1787144455454.html</link>
     <description><![CDATA[The launch dashboard is green. Adoption is climbing. You close your laptop Friday afternoon feeling pretty good. Then Monday hits.
@@ -299,12 +305,6 @@ A customer success...]]></description>
     <link>https://goreportify.com/article-pages/news-1784898035362.html</link>
     <description><![CDATA[The demo was flawless. On the big screen, the vendor’s AI ingested a clean spreadsheet and, in seconds, produced a dashboard of brilliant insights. Qu...]]></description>
     <pubDate>Fri, 24 Jul 2026 13:00:35 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Report is All Lagging Indicators. Show Them What's Next.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1784811661312.html</link>
-    <description><![CDATA[You’re ten minutes into the quarterly business review. Your slide is up. It’s a beautiful dashboard, full of green metrics. Uptime is 99.998%. Story p...]]></description>
-    <pubDate>Thu, 23 Jul 2026 13:01:01 GMT</pubDate>
   </item>
 </channel>
 </rss>

@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [I Automated My Release Notes with an AI. Here's the Prompt](https://goreportify.com/article-pages/blog-1787230856593.html)
+  - Type: Deep Insights | Date: 2026-08-20 | Author: Michael Chen
+  - It’s 4:30 PM on a Friday. The release is out. Your engineering manager just sent the final list of merged pull requests to the releases channel. Now,...
 - [You Shipped the Feature. You Forgot to Ship the Narrative.](https://goreportify.com/article-pages/blog-1787144455454.html)
   - Type: Deep Insights | Date: 2026-08-19 | Author: Emily Rostova
   - The launch dashboard is green. Adoption is climbing. You close your laptop Friday afternoon feeling pretty good. Then Monday hits.
@@ -2091,4 +2094,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 688 articles (365 blog + 323 news) + 8 core pages._
+_Total: 689 articles (366 blog + 323 news) + 8 core pages._
