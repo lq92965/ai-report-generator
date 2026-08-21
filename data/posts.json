@@ -1,5 +1,25 @@
 [
     {
+        "id": "1787317257192",
+        "type": "blog",
+        "title": "You Sent Three Different Status Updates. Now You Have Three Different Versions of Reality",
+        "category": "Deep Insights",
+        "date": "2026-08-21",
+        "author": "Alex Mercer",
+        "excerpt": "It’s 4 PM on a Friday. You hit send on three different messages.\n\nFirst, the executive summary email. High-level, green lights, confidence radiating f...",
+        "contentFile": "blog-1787317257192.md"
+    },
+    {
+        "id": "1787317229204",
+        "type": "news",
+        "title": "The Map Is Redrawing the Territory",
+        "category": "Tech Radar",
+        "date": "2026-08-21",
+        "author": "Olivia Thorne",
+        "excerpt": "A historian friend spent last Tuesday searching for records of a minor 19th-century shipping dispute. The first page of results offered five confident...",
+        "contentFile": "news-1787317229204.md"
+    },
+    {
         "id": "1787230856593",
         "type": "blog",
         "title": "I Automated My Release Notes with an AI. Here's the Prompt",

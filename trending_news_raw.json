@@ -1,32 +1,32 @@
 [
   {
-    "title": "US says hackers are targeting vulnerable water systems with the help of AI",
-    "link": "https://techcrunch.com/2026/08/20/us-says-hackers-are-targeting-vulnerable-water-systems-with-the-help-of-ai/",
-    "pubDate": "Thu, 20 Aug 2026 12:43:19 +0000",
-    "snippet": "Hackers are targeting internet-connected Siemens controllers used in water facilities around the United States."
+    "title": "Felony charges for citizen deleting phone data at US Border",
+    "link": "https://www.nytimes.com/2026/08/21/us/politics/samuel-tunick-deleted-phone-felony.html",
+    "pubDate": "Fri, 21 Aug 2026 12:10:13 +0000",
+    "snippet": "Article URL: https://www.nytimes.com/2026/08/21/us/politics/samuel-tunick-deleted-phone-felony.html\nComments URL: https://news.ycombinator.com/item?id=49386895\nPoints: 27\n# Comments: 33"
   },
   {
-    "title": "Meta AI’s new Mac app wants you to talk to your apps",
-    "link": "https://techcrunch.com/2026/08/20/meta-ais-new-mac-app-wants-you-to-talk-to-your-apps/",
-    "pubDate": "Thu, 20 Aug 2026 12:11:57 +0000",
-    "snippet": "Meta said its Muse Spark model is powering the dictation feature."
+    "title": "TigerBeetle Core System Architecture: Deconstructing Performance Engineering",
+    "link": "https://ixuvo.com/blog/tigerbeetle-core-system-architecture-performance-engineering",
+    "pubDate": "Fri, 21 Aug 2026 11:43:38 +0000",
+    "snippet": "Article URL: https://ixuvo.com/blog/tigerbeetle-core-system-architecture-performance-engineering\nComments URL: https://news.ycombinator.com/item?id=49386659\nPoints: 41\n# Comments: 12"
   },
   {
-    "title": "Show HN: I trained a 125M model to autocomplete piano on-device",
-    "link": "https://simedw.com/2026/08/20/midi-autocomplete/",
-    "pubDate": "Thu, 20 Aug 2026 12:04:38 +0000",
-    "snippet": "I trained a 125M-parameter transformer to autocomplete piano performances in real time (~108 notes/sec on an iPhone 15).\nThe idea is basically GitHub Copilot or Tabnine, except instead of prompting it with code, you prompt it by playing a few notes on a MIDI piano. The model then continues what you played, entirely on-device.\nThe app is free if anyone wants to try it. Happy to answer questions about the model, training, Core ML, or the many things that didn't work.\nComments URL: https://news.ycombinator.com/item?id=49373456\nPoints: 33\n# Comments: 7"
+    "title": "Kino: A high-performance Ractor web server for Ruby 4.0",
+    "link": "https://github.com/yaroslav/kino",
+    "pubDate": "Fri, 21 Aug 2026 11:06:25 +0000",
+    "snippet": "Article URL: https://github.com/yaroslav/kino\nComments URL: https://news.ycombinator.com/item?id=49386383\nPoints: 17\n# Comments: 1"
   },
   {
-    "title": "Proof of Human (YC S23) Is Hiring a Member of Technical Staff",
-    "link": "https://www.ycombinator.com/companies/proof-of-human/jobs/ZTZHEbb-member-of-technical-staff",
-    "pubDate": "Thu, 20 Aug 2026 12:00:23 +0000",
-    "snippet": "Article URL: https://www.ycombinator.com/companies/proof-of-human/jobs/ZTZHEbb-member-of-technical-staff\nComments URL: https://news.ycombinator.com/item?id=49373423\nPoints: 0\n# Comments: 0"
+    "title": "Tesla, Uber, and Waymo all get the OK to operate thousands of robotaxis in Nevada",
+    "link": "https://techcrunch.com/2026/08/20/tesla-uber-and-waymo-all-get-the-ok-to-operate-thousands-of-robotaxis-in-nevada/",
+    "pubDate": "Fri, 21 Aug 2026 00:23:36 +0000",
+    "snippet": "Together, these permits would allow up to 8,000 robotaxis to be deployed over the next 12 months."
   },
   {
-    "title": "Australia passes law to levy tech giants that fail to pay for local news",
-    "link": "https://www.reuters.com/legal/litigation/australia-passes-law-levy-tech-giants-that-fail-pay-local-news-2026-08-20/",
-    "pubDate": "Thu, 20 Aug 2026 11:23:43 +0000",
-    "snippet": "Article URL: https://www.reuters.com/legal/litigation/australia-passes-law-levy-tech-giants-that-fail-pay-local-news-2026-08-20/\nComments URL: https://news.ycombinator.com/item?id=49373123\nPoints: 15\n# Comments: 3"
+    "title": "AI data startup Micro1 reaches $500M gross run rate amid AI training boom",
+    "link": "https://techcrunch.com/2026/08/20/ai-data-startup-micro1-reaches-500m-gross-run-rate-amid-ai-training-boom/",
+    "pubDate": "Fri, 21 Aug 2026 00:13:44 +0000",
+    "snippet": "Surging demand for AI training data is driving rapid growth for the startup and its rivals."
   }
 ]

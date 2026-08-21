@@ -5,6 +5,20 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Sent Three Different Status Updates. Now You Have Three Different Versions of Reality]]></title>
+    <link>https://goreportify.com/article-pages/blog-1787317257192.html</link>
+    <description><![CDATA[It’s 4 PM on a Friday. You hit send on three different messages.
+
+First, the executive summary email. High-level, green lights, confidence radiating f...]]></description>
+    <pubDate>Fri, 21 Aug 2026 13:00:57 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Map Is Redrawing the Territory]]></title>
+    <link>https://goreportify.com/article-pages/news-1787317229204.html</link>
+    <description><![CDATA[A historian friend spent last Tuesday searching for records of a minor 19th-century shipping dispute. The first page of results offered five confident...]]></description>
+    <pubDate>Fri, 21 Aug 2026 13:00:29 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[I Automated My Release Notes with an AI. Here's the Prompt]]></title>
     <link>https://goreportify.com/article-pages/blog-1787230856593.html</link>
     <description><![CDATA[It’s 4:30 PM on a Friday. The release is out. Your engineering manager just sent the final list of merged pull requests to the releases channel. Now,...]]></description>
@@ -293,18 +307,6 @@ A customer success...]]></description>
     <link>https://goreportify.com/article-pages/blog-1784984448325.html</link>
     <description><![CDATA[The chart looked great. Clean lines, a confident upward trend, and a big, bold number: “32% increase in engagement.” You pasted it from the AI analyti...]]></description>
     <pubDate>Sat, 25 Jul 2026 13:00:48 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Product Demo is a Feature Tour, Not a Value Story]]></title>
-    <link>https://goreportify.com/article-pages/blog-1784898065279.html</link>
-    <description><![CDATA[The room is quiet except for the sound of your clicks. You’re walking the executive team through the new dashboard. "And here," you say, pointing your...]]></description>
-    <pubDate>Fri, 24 Jul 2026 13:01:05 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Solution Was Scoped for a Vacuum]]></title>
-    <link>https://goreportify.com/article-pages/news-1784898035362.html</link>
-    <description><![CDATA[The demo was flawless. On the big screen, the vendor’s AI ingested a clean spreadsheet and, in seconds, produced a dashboard of brilliant insights. Qu...]]></description>
-    <pubDate>Fri, 24 Jul 2026 13:00:35 GMT</pubDate>
   </item>
 </channel>
 </rss>

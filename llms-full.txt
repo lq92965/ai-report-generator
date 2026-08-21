@@ -15,6 +15,14 @@
 
 ## All Articles
 
+- [You Sent Three Different Status Updates. Now You Have Three Different Versions of Reality](https://goreportify.com/article-pages/blog-1787317257192.html)
+  - Type: Deep Insights | Date: 2026-08-21 | Author: Alex Mercer
+  - It’s 4 PM on a Friday. You hit send on three different messages.
+
+First, the executive summary email. High-level, green lights, confidence radiating f...
+- [The Map Is Redrawing the Territory](https://goreportify.com/article-pages/news-1787317229204.html)
+  - Type: Tech Radar | Date: 2026-08-21 | Author: Olivia Thorne
+  - A historian friend spent last Tuesday searching for records of a minor 19th-century shipping dispute. The first page of results offered five confident...
 - [I Automated My Release Notes with an AI. Here's the Prompt](https://goreportify.com/article-pages/blog-1787230856593.html)
   - Type: Deep Insights | Date: 2026-08-20 | Author: Michael Chen
   - It’s 4:30 PM on a Friday. The release is out. Your engineering manager just sent the final list of merged pull requests to the releases channel. Now,...
@@ -2094,4 +2102,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 689 articles (366 blog + 323 news) + 8 core pages._
+_Total: 691 articles (367 blog + 324 news) + 8 core pages._
