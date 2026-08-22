@@ -1,5 +1,25 @@
 [
     {
+        "id": "1787403651842",
+        "type": "blog",
+        "title": "Your AI Can't Find the 'Why' in Your User Feedback. Here's How to Teach It.",
+        "category": "Deep Insights",
+        "date": "2026-08-22",
+        "author": "Olivia Thorne",
+        "excerpt": "You just dumped 20 user interview transcripts into your favorite AI tool. You typed the magic words: \"Summarize the key themes from this feedback.\" Te...",
+        "contentFile": "blog-1787403651842.md"
+    },
+    {
+        "id": "1787403627593",
+        "type": "news",
+        "title": "The Knowledge Transfer Is a Séance",
+        "category": "Tech Radar",
+        "date": "2026-08-22",
+        "author": "Olivia Thorne",
+        "excerpt": "The glow of the monitor is the only light in the room. A junior engineer stares at a stack trace bubbling up from a service whose original author was...",
+        "contentFile": "news-1787403627593.md"
+    },
+    {
         "id": "1787317257192",
         "type": "blog",
         "title": "You Sent Three Different Status Updates. Now You Have Three Different Versions of Reality",

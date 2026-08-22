@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your AI Can't Find the 'Why' in Your User Feedback. Here's How to Teach It.](https://goreportify.com/article-pages/blog-1787403651842.html)
+  - Type: Deep Insights | Date: 2026-08-22 | Author: Olivia Thorne
+  - You just dumped 20 user interview transcripts into your favorite AI tool. You typed the magic words: "Summarize the key themes from this feedback." Te...
+- [The Knowledge Transfer Is a Séance](https://goreportify.com/article-pages/news-1787403627593.html)
+  - Type: Tech Radar | Date: 2026-08-22 | Author: Olivia Thorne
+  - The glow of the monitor is the only light in the room. A junior engineer stares at a stack trace bubbling up from a service whose original author was...
 - [You Sent Three Different Status Updates. Now You Have Three Different Versions of Reality](https://goreportify.com/article-pages/blog-1787317257192.html)
   - Type: Deep Insights | Date: 2026-08-21 | Author: Alex Mercer
   - It’s 4 PM on a Friday. You hit send on three different messages.
@@ -2102,4 +2108,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 691 articles (367 blog + 324 news) + 8 core pages._
+_Total: 693 articles (368 blog + 325 news) + 8 core pages._
