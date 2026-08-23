@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Wrote One Report for Three Audiences. None of Them Read It.](https://goreportify.com/article-pages/blog-1787490051067.html)
+  - Type: Deep Insights | Date: 2026-08-23 | Author: David Sterling
+  - It’s Tuesday morning. You spent the last hour of your Monday pulling data from Amplitude, grabbing screenshots from Figma, and summarizing JIRA ticket...
+- [The Down Payment Was Training. The Mortgage Is Inference.](https://goreportify.com/article-pages/news-1787490026826.html)
+  - Type: Tech Radar | Date: 2026-08-23 | Author: Michael Chen
+  - The finance chief stared at the quarterly cloud invoice, her mouse hovering over a single line item that cost more than the entire marketing departmen...
 - [Your AI Can't Find the 'Why' in Your User Feedback. Here's How to Teach It.](https://goreportify.com/article-pages/blog-1787403651842.html)
   - Type: Deep Insights | Date: 2026-08-22 | Author: Olivia Thorne
   - You just dumped 20 user interview transcripts into your favorite AI tool. You typed the magic words: "Summarize the key themes from this feedback." Te...
@@ -2108,4 +2114,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 693 articles (368 blog + 325 news) + 8 core pages._
+_Total: 695 articles (369 blog + 326 news) + 8 core pages._

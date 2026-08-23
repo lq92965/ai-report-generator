@@ -1,5 +1,25 @@
 [
     {
+        "id": "1787490051067",
+        "type": "blog",
+        "title": "You Wrote One Report for Three Audiences. None of Them Read It.",
+        "category": "Deep Insights",
+        "date": "2026-08-23",
+        "author": "David Sterling",
+        "excerpt": "It’s Tuesday morning. You spent the last hour of your Monday pulling data from Amplitude, grabbing screenshots from Figma, and summarizing JIRA ticket...",
+        "contentFile": "blog-1787490051067.md"
+    },
+    {
+        "id": "1787490026826",
+        "type": "news",
+        "title": "The Down Payment Was Training. The Mortgage Is Inference.",
+        "category": "Tech Radar",
+        "date": "2026-08-23",
+        "author": "Michael Chen",
+        "excerpt": "The finance chief stared at the quarterly cloud invoice, her mouse hovering over a single line item that cost more than the entire marketing departmen...",
+        "contentFile": "news-1787490026826.md"
+    },
+    {
         "id": "1787403651842",
         "type": "blog",
         "title": "Your AI Can't Find the 'Why' in Your User Feedback. Here's How to Teach It.",
