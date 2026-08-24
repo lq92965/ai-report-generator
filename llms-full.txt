@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Dashboard Answers 'What.' Your Report Needs to Answer 'So What?'](https://goreportify.com/article-pages/blog-1787576588297.html)
+  - Type: Deep Insights | Date: 2026-08-24 | Author: Olivia Thorne
+  - You pull up the dashboard in the weekly business review. All the key metrics are green. Daily active users are up 3%. The new feature’s adoption rate...
+- [The Five-Year Plan Lasts Five Weeks](https://goreportify.com/article-pages/news-1787576561604.html)
+  - Type: Tech Radar | Date: 2026-08-24 | Author: Alex Mercer
+  - The CIO is on slide 17 of the digital transformation roadmap. The five-year capital expenditure plan is mapped out in a confident Gantt chart, all the...
 - [You Wrote One Report for Three Audiences. None of Them Read It.](https://goreportify.com/article-pages/blog-1787490051067.html)
   - Type: Deep Insights | Date: 2026-08-23 | Author: David Sterling
   - It’s Tuesday morning. You spent the last hour of your Monday pulling data from Amplitude, grabbing screenshots from Figma, and summarizing JIRA ticket...
@@ -2114,4 +2120,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 695 articles (369 blog + 326 news) + 8 core pages._
+_Total: 697 articles (370 blog + 327 news) + 8 core pages._

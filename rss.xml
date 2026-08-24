@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Dashboard Answers 'What.' Your Report Needs to Answer 'So What?']]></title>
+    <link>https://goreportify.com/article-pages/blog-1787576588297.html</link>
+    <description><![CDATA[You pull up the dashboard in the weekly business review. All the key metrics are green. Daily active users are up 3%. The new feature’s adoption rate...]]></description>
+    <pubDate>Mon, 24 Aug 2026 13:03:08 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Five-Year Plan Lasts Five Weeks]]></title>
+    <link>https://goreportify.com/article-pages/news-1787576561604.html</link>
+    <description><![CDATA[The CIO is on slide 17 of the digital transformation roadmap. The five-year capital expenditure plan is mapped out in a confident Gantt chart, all the...]]></description>
+    <pubDate>Mon, 24 Aug 2026 13:02:41 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Wrote One Report for Three Audiences. None of Them Read It.]]></title>
     <link>https://goreportify.com/article-pages/blog-1787490051067.html</link>
     <description><![CDATA[It’s Tuesday morning. You spent the last hour of your Monday pulling data from Amplitude, grabbing screenshots from Figma, and summarizing JIRA ticket...]]></description>
@@ -295,18 +307,6 @@ A customer success...]]></description>
     <link>https://goreportify.com/article-pages/news-1785330029659.html</link>
     <description><![CDATA[...]]></description>
     <pubDate>Wed, 29 Jul 2026 13:00:29 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Dumped 100 Gong Calls Into ChatGPT. You Got Garbage Out.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1785243660763.html</link>
-    <description><![CDATA[The folder on your desktop is mocking you. It contains transcripts from the last 50 user interviews and sales calls. Buried inside is the key to next...]]></description>
-    <pubDate>Tue, 28 Jul 2026 13:01:00 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Chain of Command Is a Call Stack]]></title>
-    <link>https://goreportify.com/article-pages/news-1785243630378.html</link>
-    <description><![CDATA[The director of engineering loves the new bot. Every Monday at 9:01 AM, it drops a crisp summary of last week’s progress into the leadership channel....]]></description>
-    <pubDate>Tue, 28 Jul 2026 13:00:30 GMT</pubDate>
   </item>
 </channel>
 </rss>

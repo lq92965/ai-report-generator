@@ -1,5 +1,25 @@
 [
     {
+        "id": "1787576588297",
+        "type": "blog",
+        "title": "Your Dashboard Answers 'What.' Your Report Needs to Answer 'So What?'",
+        "category": "Deep Insights",
+        "date": "2026-08-24",
+        "author": "Olivia Thorne",
+        "excerpt": "You pull up the dashboard in the weekly business review. All the key metrics are green. Daily active users are up 3%. The new feature’s adoption rate...",
+        "contentFile": "blog-1787576588297.md"
+    },
+    {
+        "id": "1787576561604",
+        "type": "news",
+        "title": "The Five-Year Plan Lasts Five Weeks",
+        "category": "Tech Radar",
+        "date": "2026-08-24",
+        "author": "Alex Mercer",
+        "excerpt": "The CIO is on slide 17 of the digital transformation roadmap. The five-year capital expenditure plan is mapped out in a confident Gantt chart, all the...",
+        "contentFile": "news-1787576561604.md"
+    },
+    {
         "id": "1787490051067",
         "type": "blog",
         "title": "You Wrote One Report for Three Audiences. None of Them Read It.",
