@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Sent a Screenshot of a Dashboard. You Should Have Sent a Diagnosis.](https://goreportify.com/article-pages/blog-1787662859234.html)
+  - Type: Deep Insights | Date: 2026-08-25 | Author: Olivia Thorne
+  - It’s 9 AM on Monday. You filter your analytics dashboard for last week’s numbers, see a line going up and to the right, and take a screenshot. You pas...
+- [The Journeyman Is an Endangered Species](https://goreportify.com/article-pages/news-1787662833345.html)
+  - Type: Tech Radar | Date: 2026-08-25 | Author: Olivia Thorne
+  - A junior engineer hits a wall. The database migration script is failing with an obscure error. Five years ago, her manager would have pulled over a se...
 - [Your Dashboard Answers 'What.' Your Report Needs to Answer 'So What?'](https://goreportify.com/article-pages/blog-1787576588297.html)
   - Type: Deep Insights | Date: 2026-08-24 | Author: Olivia Thorne
   - You pull up the dashboard in the weekly business review. All the key metrics are green. Daily active users are up 3%. The new feature’s adoption rate...
@@ -2120,4 +2126,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 697 articles (370 blog + 327 news) + 8 core pages._
+_Total: 699 articles (371 blog + 328 news) + 8 core pages._

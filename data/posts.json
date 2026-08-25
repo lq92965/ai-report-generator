@@ -1,5 +1,25 @@
 [
     {
+        "id": "1787662859234",
+        "type": "blog",
+        "title": "You Sent a Screenshot of a Dashboard. You Should Have Sent a Diagnosis.",
+        "category": "Deep Insights",
+        "date": "2026-08-25",
+        "author": "Olivia Thorne",
+        "excerpt": "It’s 9 AM on Monday. You filter your analytics dashboard for last week’s numbers, see a line going up and to the right, and take a screenshot. You pas...",
+        "contentFile": "blog-1787662859234.md"
+    },
+    {
+        "id": "1787662833345",
+        "type": "news",
+        "title": "The Journeyman Is an Endangered Species",
+        "category": "Tech Radar",
+        "date": "2026-08-25",
+        "author": "Olivia Thorne",
+        "excerpt": "A junior engineer hits a wall. The database migration script is failing with an obscure error. Five years ago, her manager would have pulled over a se...",
+        "contentFile": "news-1787662833345.md"
+    },
+    {
         "id": "1787576588297",
         "type": "blog",
         "title": "Your Dashboard Answers 'What.' Your Report Needs to Answer 'So What?'",

@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Sent a Screenshot of a Dashboard. You Should Have Sent a Diagnosis.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1787662859234.html</link>
+    <description><![CDATA[It’s 9 AM on Monday. You filter your analytics dashboard for last week’s numbers, see a line going up and to the right, and take a screenshot. You pas...]]></description>
+    <pubDate>Tue, 25 Aug 2026 13:00:59 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Journeyman Is an Endangered Species]]></title>
+    <link>https://goreportify.com/article-pages/news-1787662833345.html</link>
+    <description><![CDATA[A junior engineer hits a wall. The database migration script is failing with an obscure error. Five years ago, her manager would have pulled over a se...]]></description>
+    <pubDate>Tue, 25 Aug 2026 13:00:33 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Dashboard Answers 'What.' Your Report Needs to Answer 'So What?']]></title>
     <link>https://goreportify.com/article-pages/blog-1787576588297.html</link>
     <description><![CDATA[You pull up the dashboard in the weekly business review. All the key metrics are green. Daily active users are up 3%. The new feature’s adoption rate...]]></description>
@@ -295,18 +307,6 @@ A customer success...]]></description>
     <link>https://goreportify.com/article-pages/news-1785416436415.html</link>
     <description><![CDATA[The deployment finished at 4:15 PM on a Thursday. A new AI-powered checkout assistant, designed to upsell related products with uncanny precision. The...]]></description>
     <pubDate>Thu, 30 Jul 2026 13:00:36 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Spend Monday Morning Copy-Pasting. That's Not Product Management.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1785330055863.html</link>
-    <description><![CDATA[It’s 9:23 AM on Monday. You have 14 browser tabs open. One is your JIRA board, filtered for last week’s completed stories. Another is Amplitude, showi...]]></description>
-    <pubDate>Wed, 29 Jul 2026 13:00:55 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Next Phase of Execution Adoption]]></title>
-    <link>https://goreportify.com/article-pages/news-1785330029659.html</link>
-    <description><![CDATA[...]]></description>
-    <pubDate>Wed, 29 Jul 2026 13:00:29 GMT</pubDate>
   </item>
 </channel>
 </rss>
