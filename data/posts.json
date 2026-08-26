@@ -1,5 +1,15 @@
 [
     {
+        "id": "1787749256996",
+        "type": "blog",
+        "title": "They Nodded in the Meeting. They Disagreed in the Sprint.",
+        "category": "Deep Insights",
+        "date": "2026-08-26",
+        "author": "Emily Rostova",
+        "excerpt": "You walk out of the kickoff meeting feeling a surge of momentum. The plan is solid. The VP of Engineering nodded. The marketing lead gave a thumbs-up....",
+        "contentFile": "blog-1787749256996.md"
+    },
+    {
         "id": "1787662859234",
         "type": "blog",
         "title": "You Sent a Screenshot of a Dashboard. You Should Have Sent a Diagnosis.",
