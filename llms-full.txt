@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Announcement Got 50 Emoji Reactions and Zero Understanding](https://goreportify.com/article-pages/blog-1787835659646.html)
+  - Type: Deep Insights | Date: 2026-08-27 | Author: David Sterling
+  - You hit send. The message lands in the main company Slack channel, polished and concise. It’s the big one—the announcement for Project Chimera, the fe...
+- [The Control Panel Is a Ouija Board](https://goreportify.com/article-pages/news-1787835630029.html)
+  - Type: Tech Radar | Date: 2026-08-27 | Author: Emily Rostova
+  - The performance dashboard is a sea of green. Latency is low, uptime is 99.99%, server load is nominal. Yet the new AI-powered fraud detection system j...
 - [They Nodded in the Meeting. They Disagreed in the Sprint.](https://goreportify.com/article-pages/blog-1787749256996.html)
   - Type: Deep Insights | Date: 2026-08-26 | Author: Emily Rostova
   - You walk out of the kickoff meeting feeling a surge of momentum. The plan is solid. The VP of Engineering nodded. The marketing lead gave a thumbs-up....
@@ -2129,4 +2135,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 700 articles (372 blog + 328 news) + 8 core pages._
+_Total: 702 articles (373 blog + 329 news) + 8 core pages._

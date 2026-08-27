@@ -1,5 +1,25 @@
 [
     {
+        "id": "1787835659646",
+        "type": "blog",
+        "title": "Your Announcement Got 50 Emoji Reactions and Zero Understanding",
+        "category": "Deep Insights",
+        "date": "2026-08-27",
+        "author": "David Sterling",
+        "excerpt": "You hit send. The message lands in the main company Slack channel, polished and concise. It’s the big one—the announcement for Project Chimera, the fe...",
+        "contentFile": "blog-1787835659646.md"
+    },
+    {
+        "id": "1787835630029",
+        "type": "news",
+        "title": "The Control Panel Is a Ouija Board",
+        "category": "Tech Radar",
+        "date": "2026-08-27",
+        "author": "Emily Rostova",
+        "excerpt": "The performance dashboard is a sea of green. Latency is low, uptime is 99.99%, server load is nominal. Yet the new AI-powered fraud detection system j...",
+        "contentFile": "news-1787835630029.md"
+    },
+    {
         "id": "1787749256996",
         "type": "blog",
         "title": "They Nodded in the Meeting. They Disagreed in the Sprint.",
