@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [You Buried the Lead on Page 5. Your Execs Never Got There.](https://goreportify.com/article-pages/blog-1787922058338.html)
+  - Type: Deep Insights | Date: 2026-08-28 | Author: Michael Chen
+  - It’s Tuesday morning. You hit send on the weekly performance report. You spent hours pulling data, crafting charts, and writing up careful, nuanced an...
 - [Your Announcement Got 50 Emoji Reactions and Zero Understanding](https://goreportify.com/article-pages/blog-1787835659646.html)
   - Type: Deep Insights | Date: 2026-08-27 | Author: David Sterling
   - You hit send. The message lands in the main company Slack channel, polished and concise. It’s the big one—the announcement for Project Chimera, the fe...
@@ -2135,4 +2138,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 702 articles (373 blog + 329 news) + 8 core pages._
+_Total: 703 articles (374 blog + 329 news) + 8 core pages._
