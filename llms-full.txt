@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [The Exfiltration Vector Is a Friendly Chatbot](https://goreportify.com/article-pages/news-1788008426555.html)
+  - Type: Tech Radar | Date: 2026-08-29 | Author: Jessica Tran
+  - It starts with an act of frustrated initiative. A product manager, tired of waiting for an integration that will never get prioritized, spends her Sun...
 - [You Buried the Lead on Page 5. Your Execs Never Got There.](https://goreportify.com/article-pages/blog-1787922058338.html)
   - Type: Deep Insights | Date: 2026-08-28 | Author: Michael Chen
   - It’s Tuesday morning. You hit send on the weekly performance report. You spent hours pulling data, crafting charts, and writing up careful, nuanced an...
@@ -2138,4 +2141,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 703 articles (374 blog + 329 news) + 8 core pages._
+_Total: 704 articles (374 blog + 330 news) + 8 core pages._
