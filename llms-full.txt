@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [The Debugger Is an Exorcist](https://goreportify.com/article-pages/news-1788094829543.html)
+  - Type: Tech Radar | Date: 2026-08-30 | Author: Michael Chen
+  - The bug was in the routing algorithm. Or at least, that’s where it was supposed to be. For three days, a senior engineer at a logistics startup watche...
 - [The Exfiltration Vector Is a Friendly Chatbot](https://goreportify.com/article-pages/news-1788008426555.html)
   - Type: Tech Radar | Date: 2026-08-29 | Author: Jessica Tran
   - It starts with an act of frustrated initiative. A product manager, tired of waiting for an integration that will never get prioritized, spends her Sun...
@@ -2141,4 +2144,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 704 articles (374 blog + 330 news) + 8 core pages._
+_Total: 705 articles (374 blog + 331 news) + 8 core pages._

@@ -5,6 +5,12 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[The Debugger Is an Exorcist]]></title>
+    <link>https://goreportify.com/article-pages/news-1788094829543.html</link>
+    <description><![CDATA[The bug was in the routing algorithm. Or at least, that’s where it was supposed to be. For three days, a senior engineer at a logistics startup watche...]]></description>
+    <pubDate>Sun, 30 Aug 2026 13:00:29 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The Exfiltration Vector Is a Friendly Chatbot]]></title>
     <link>https://goreportify.com/article-pages/news-1788008426555.html</link>
     <description><![CDATA[It starts with an act of frustrated initiative. A product manager, tired of waiting for an integration that will never get prioritized, spends her Sun...]]></description>
@@ -301,12 +307,6 @@ A customer success...]]></description>
     <link>https://goreportify.com/article-pages/news-1785675628065.html</link>
     <description><![CDATA[The first sign of trouble was the alert storm. At 2:17 AM, a newly deployed AI agent in the logistics division began re-routing shipments. Its directi...]]></description>
     <pubDate>Sun, 02 Aug 2026 13:00:28 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Lost an Hour to a 5-Minute Question. That's a Context-Switching Tax.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1785589253217.html</link>
-    <description><![CDATA[It’s 2:00 PM. You finally have a 90-minute block on your calendar labeled “Q3 Strategy.” You’ve silenced your phone. You’re deep in a spreadsheet, mod...]]></description>
-    <pubDate>Sat, 01 Aug 2026 13:00:53 GMT</pubDate>
   </item>
 </channel>
 </rss>

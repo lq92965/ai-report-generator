@@ -1,5 +1,15 @@
 [
     {
+        "id": "1788094829543",
+        "type": "news",
+        "title": "The Debugger Is an Exorcist",
+        "category": "Tech Radar",
+        "date": "2026-08-30",
+        "author": "Michael Chen",
+        "excerpt": "The bug was in the routing algorithm. Or at least, that’s where it was supposed to be. For three days, a senior engineer at a logistics startup watche...",
+        "contentFile": "news-1788094829543.md"
+    },
+    {
         "id": "1788008426555",
         "type": "news",
         "title": "The Exfiltration Vector Is a Friendly Chatbot",
