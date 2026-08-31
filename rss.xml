@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[The AI Wrote Your Strategy. Now You Can't Defend It.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1788181259227.html</link>
+    <description><![CDATA[You’re in the quarterly business review. Your new strategy doc is on the big screen, looking sharp. Clean formatting, confident headings, a SWOT analy...]]></description>
+    <pubDate>Mon, 31 Aug 2026 13:00:59 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Ghost in the Machine Is a Gig Worker]]></title>
+    <link>https://goreportify.com/article-pages/news-1788181230391.html</link>
+    <description><![CDATA[The demo was flawless. On screen, the new AI legal assistant ingested a 70-page contract and, seconds later, produced a bulleted list of liabilities a...]]></description>
+    <pubDate>Mon, 31 Aug 2026 13:00:30 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The Debugger Is an Exorcist]]></title>
     <link>https://goreportify.com/article-pages/news-1788094829543.html</link>
     <description><![CDATA[The bug was in the routing algorithm. Or at least, that’s where it was supposed to be. For three days, a senior engineer at a logistics startup watche...]]></description>
@@ -295,18 +307,6 @@ A customer success...]]></description>
     <link>https://goreportify.com/article-pages/news-1785762031022.html</link>
     <description><![CDATA[The loan application was flawless. Good credit, stable income, low debt. The denial came back from the automated underwriting system in milliseconds....]]></description>
     <pubDate>Mon, 03 Aug 2026 13:00:31 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You’re Not the Hub. You’re the Bottleneck.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1785675651780.html</link>
-    <description><![CDATA[The Slack notification pops up. It’s a sales director asking for the ETA on a feature. You fire back a quick answer. Another one from marketing, wonde...]]></description>
-    <pubDate>Sun, 02 Aug 2026 13:00:51 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Latency Was a Feature]]></title>
-    <link>https://goreportify.com/article-pages/news-1785675628065.html</link>
-    <description><![CDATA[The first sign of trouble was the alert storm. At 2:17 AM, a newly deployed AI agent in the logistics division began re-routing shipments. Its directi...]]></description>
-    <pubDate>Sun, 02 Aug 2026 13:00:28 GMT</pubDate>
   </item>
 </channel>
 </rss>

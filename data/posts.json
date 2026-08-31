@@ -1,5 +1,25 @@
 [
     {
+        "id": "1788181259227",
+        "type": "blog",
+        "title": "The AI Wrote Your Strategy. Now You Can't Defend It.",
+        "category": "Deep Insights",
+        "date": "2026-08-31",
+        "author": "Jessica Tran",
+        "excerpt": "You’re in the quarterly business review. Your new strategy doc is on the big screen, looking sharp. Clean formatting, confident headings, a SWOT analy...",
+        "contentFile": "blog-1788181259227.md"
+    },
+    {
+        "id": "1788181230391",
+        "type": "news",
+        "title": "The Ghost in the Machine Is a Gig Worker",
+        "category": "Tech Radar",
+        "date": "2026-08-31",
+        "author": "Sarah Jenkins",
+        "excerpt": "The demo was flawless. On screen, the new AI legal assistant ingested a 70-page contract and, seconds later, produced a bulleted list of liabilities a...",
+        "contentFile": "news-1788181230391.md"
+    },
+    {
         "id": "1788094829543",
         "type": "news",
         "title": "The Debugger Is an Exorcist",
