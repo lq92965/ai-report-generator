@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [You Pitched a Solution. You Should Have Pitched the Problem.](https://goreportify.com/article-pages/blog-1788267691190.html)
+  - Type: Deep Insights | Date: 2026-09-01 | Author: Michael Chen
+  - It’s Tuesday afternoon. You’re in the Q3 planning review, five slides into your deck. You click to the slide with the beautiful mockups. This is it—th...
 - [The AI Wrote Your Strategy. Now You Can't Defend It.](https://goreportify.com/article-pages/blog-1788181259227.html)
   - Type: Deep Insights | Date: 2026-08-31 | Author: Jessica Tran
   - You’re in the quarterly business review. Your new strategy doc is on the big screen, looking sharp. Clean formatting, confident headings, a SWOT analy...
@@ -2150,4 +2153,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 707 articles (375 blog + 332 news) + 8 core pages._
+_Total: 708 articles (376 blog + 332 news) + 8 core pages._
