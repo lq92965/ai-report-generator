@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Facilitated a Great Brainstorm. Nobody Owns the Next Step.](https://goreportify.com/article-pages/blog-1788354067517.html)
+  - Type: Deep Insights | Date: 2026-09-02 | Author: Emily Rostova
+  - The energy in the room was electric. The whiteboard was a beautiful chaos of pink, blue, and yellow sticky notes. Your designer sketched a wireframe o...
+- [The Fallback Is an Empty Room](https://goreportify.com/article-pages/news-1788354037479.html)
+  - Type: Tech Radar | Date: 2026-09-02 | Author: Sarah Jenkins
+  - The alert blinked on the dashboard at 2:17 AM. A tier-one customer’s entire shipment, thousands of units of custom-milled components, was frozen at a...
 - [You Pitched a Solution. You Should Have Pitched the Problem.](https://goreportify.com/article-pages/blog-1788267691190.html)
   - Type: Deep Insights | Date: 2026-09-01 | Author: Michael Chen
   - It’s Tuesday afternoon. You’re in the Q3 planning review, five slides into your deck. You click to the slide with the beautiful mockups. This is it—th...
@@ -2153,4 +2159,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 708 articles (376 blog + 332 news) + 8 core pages._
+_Total: 710 articles (377 blog + 333 news) + 8 core pages._

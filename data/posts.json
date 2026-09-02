@@ -1,5 +1,25 @@
 [
     {
+        "id": "1788354067517",
+        "type": "blog",
+        "title": "You Facilitated a Great Brainstorm. Nobody Owns the Next Step.",
+        "category": "Deep Insights",
+        "date": "2026-09-02",
+        "author": "Emily Rostova",
+        "excerpt": "The energy in the room was electric. The whiteboard was a beautiful chaos of pink, blue, and yellow sticky notes. Your designer sketched a wireframe o...",
+        "contentFile": "blog-1788354067517.md"
+    },
+    {
+        "id": "1788354037479",
+        "type": "news",
+        "title": "The Fallback Is an Empty Room",
+        "category": "Tech Radar",
+        "date": "2026-09-02",
+        "author": "Sarah Jenkins",
+        "excerpt": "The alert blinked on the dashboard at 2:17 AM. A tier-one customer’s entire shipment, thousands of units of custom-milled components, was frozen at a...",
+        "contentFile": "news-1788354037479.md"
+    },
+    {
         "id": "1788267691190",
         "type": "blog",
         "title": "You Pitched a Solution. You Should Have Pitched the Problem.",
