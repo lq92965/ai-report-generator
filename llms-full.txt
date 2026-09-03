@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [You Said 'We'll Fast-Follow.' They Heard 'It's Coming Next Sprint.'](https://goreportify.com/article-pages/blog-1788440473099.html)
+  - Type: Deep Insights | Date: 2026-09-03 | Author: Emily Rostova
+  - The quarterly roadmap review was going smoothly. Too smoothly. Then the VP of Sales shared his screen. "This is a must-have for our biggest enterprise...
 - [You Facilitated a Great Brainstorm. Nobody Owns the Next Step.](https://goreportify.com/article-pages/blog-1788354067517.html)
   - Type: Deep Insights | Date: 2026-09-02 | Author: Emily Rostova
   - The energy in the room was electric. The whiteboard was a beautiful chaos of pink, blue, and yellow sticky notes. Your designer sketched a wireframe o...
@@ -2159,4 +2162,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 710 articles (377 blog + 333 news) + 8 core pages._
+_Total: 711 articles (378 blog + 333 news) + 8 core pages._

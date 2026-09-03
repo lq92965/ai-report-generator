@@ -1,5 +1,15 @@
 [
     {
+        "id": "1788440473099",
+        "type": "blog",
+        "title": "You Said 'We'll Fast-Follow.' They Heard 'It's Coming Next Sprint.'",
+        "category": "Deep Insights",
+        "date": "2026-09-03",
+        "author": "Emily Rostova",
+        "excerpt": "The quarterly roadmap review was going smoothly. Too smoothly. Then the VP of Sales shared his screen. \"This is a must-have for our biggest enterprise...",
+        "contentFile": "blog-1788440473099.md"
+    },
+    {
         "id": "1788354067517",
         "type": "blog",
         "title": "You Facilitated a Great Brainstorm. Nobody Owns the Next Step.",
