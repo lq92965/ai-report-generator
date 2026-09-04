@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Status Update is an Event. It Should Be a Destination.](https://goreportify.com/article-pages/blog-1788526859545.html)
+  - Type: Deep Insights | Date: 2026-09-04 | Author: Marcus Webb
+  - It’s 9:17 AM on Monday. You have three browser tabs open: a JIRA board showing last week’s completed stories, a Looker dashboard with the latest adopt...
+- [The Real AI Stack Is on a Personal Credit Card](https://goreportify.com/article-pages/news-1788526828761.html)
+  - Type: Tech Radar | Date: 2026-09-04 | Author: Sarah Jenkins
+  - The CIO is presenting a slide deck in a glass-walled conference room. The deck details the company’s multi-million dollar AI strategy, centered on a h...
 - [You Said 'We'll Fast-Follow.' They Heard 'It's Coming Next Sprint.'](https://goreportify.com/article-pages/blog-1788440473099.html)
   - Type: Deep Insights | Date: 2026-09-03 | Author: Emily Rostova
   - The quarterly roadmap review was going smoothly. Too smoothly. Then the VP of Sales shared his screen. "This is a must-have for our biggest enterprise...
@@ -2162,4 +2168,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 711 articles (378 blog + 333 news) + 8 core pages._
+_Total: 713 articles (379 blog + 334 news) + 8 core pages._

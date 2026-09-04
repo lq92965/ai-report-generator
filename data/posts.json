@@ -1,5 +1,25 @@
 [
     {
+        "id": "1788526859545",
+        "type": "blog",
+        "title": "Your Status Update is an Event. It Should Be a Destination.",
+        "category": "Deep Insights",
+        "date": "2026-09-04",
+        "author": "Marcus Webb",
+        "excerpt": "It’s 9:17 AM on Monday. You have three browser tabs open: a JIRA board showing last week’s completed stories, a Looker dashboard with the latest adopt...",
+        "contentFile": "blog-1788526859545.md"
+    },
+    {
+        "id": "1788526828761",
+        "type": "news",
+        "title": "The Real AI Stack Is on a Personal Credit Card",
+        "category": "Tech Radar",
+        "date": "2026-09-04",
+        "author": "Sarah Jenkins",
+        "excerpt": "The CIO is presenting a slide deck in a glass-walled conference room. The deck details the company’s multi-million dollar AI strategy, centered on a h...",
+        "contentFile": "news-1788526828761.md"
+    },
+    {
         "id": "1788440473099",
         "type": "blog",
         "title": "You Said 'We'll Fast-Follow.' They Heard 'It's Coming Next Sprint.'",

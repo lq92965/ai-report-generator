@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Status Update is an Event. It Should Be a Destination.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1788526859545.html</link>
+    <description><![CDATA[It’s 9:17 AM on Monday. You have three browser tabs open: a JIRA board showing last week’s completed stories, a Looker dashboard with the latest adopt...]]></description>
+    <pubDate>Fri, 04 Sep 2026 13:00:59 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Real AI Stack Is on a Personal Credit Card]]></title>
+    <link>https://goreportify.com/article-pages/news-1788526828761.html</link>
+    <description><![CDATA[The CIO is presenting a slide deck in a glass-walled conference room. The deck details the company’s multi-million dollar AI strategy, centered on a h...]]></description>
+    <pubDate>Fri, 04 Sep 2026 13:00:28 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Said 'We'll Fast-Follow.' They Heard 'It's Coming Next Sprint.']]></title>
     <link>https://goreportify.com/article-pages/blog-1788440473099.html</link>
     <description><![CDATA[The quarterly roadmap review was going smoothly. Too smoothly. Then the VP of Sales shared his screen. "This is a must-have for our biggest enterprise...]]></description>
@@ -295,18 +307,6 @@ A customer success...]]></description>
     <link>https://goreportify.com/article-pages/news-1786021233098.html</link>
     <description><![CDATA[The logistics model was perfect. For six months, it optimized delivery routes for a national CPG brand, shaving millions from fuel costs. Then, last T...]]></description>
     <pubDate>Thu, 06 Aug 2026 13:00:33 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Calendar is Full of 'Quick Questions.' That's Your Shadow Backlog.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1785934855200.html</link>
-    <description><![CDATA[It’s 10 AM. You’ve blocked your calendar to finally write that PRD. You open your document. A Slack notification slides in. "Quick question," says an...]]></description>
-    <pubDate>Wed, 05 Aug 2026 13:00:55 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Compliance Debt Is Compounding]]></title>
-    <link>https://goreportify.com/article-pages/news-1785934828714.html</link>
-    <description><![CDATA[The VP of Product cuts the meeting short. "We'll circle back on the data provenance for the fine-tuning set in Q3," she says, looking at the legal cou...]]></description>
-    <pubDate>Wed, 05 Aug 2026 13:00:28 GMT</pubDate>
   </item>
 </channel>
 </rss>
