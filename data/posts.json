@@ -1,5 +1,15 @@
 [
     {
+        "id": "1788613250033",
+        "type": "blog",
+        "title": "Your One-Pager Is a Brain Dump. It Needs to Be a Decision Memo.",
+        "category": "Deep Insights",
+        "date": "2026-09-05",
+        "author": "Sarah Jenkins",
+        "excerpt": "You hit “share” on the Google Doc and post the link in Slack. “Team, here’s the one-pager on the new onboarding flow. Would love your feedback!”\n\nYou...",
+        "contentFile": "blog-1788613250033.md"
+    },
+    {
         "id": "1788526859545",
         "type": "blog",
         "title": "Your Status Update is an Event. It Should Be a Destination.",

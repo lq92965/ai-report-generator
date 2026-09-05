@@ -15,6 +15,11 @@
 
 ## All Articles
 
+- [Your One-Pager Is a Brain Dump. It Needs to Be a Decision Memo.](https://goreportify.com/article-pages/blog-1788613250033.html)
+  - Type: Deep Insights | Date: 2026-09-05 | Author: Sarah Jenkins
+  - You hit “share” on the Google Doc and post the link in Slack. “Team, here’s the one-pager on the new onboarding flow. Would love your feedback!”
+
+You...
 - [Your Status Update is an Event. It Should Be a Destination.](https://goreportify.com/article-pages/blog-1788526859545.html)
   - Type: Deep Insights | Date: 2026-09-04 | Author: Marcus Webb
   - It’s 9:17 AM on Monday. You have three browser tabs open: a JIRA board showing last week’s completed stories, a Looker dashboard with the latest adopt...
@@ -2168,4 +2173,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 713 articles (379 blog + 334 news) + 8 core pages._
+_Total: 714 articles (380 blog + 334 news) + 8 core pages._
