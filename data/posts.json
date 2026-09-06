@@ -1,5 +1,25 @@
 [
     {
+        "id": "1788699660870",
+        "type": "blog",
+        "title": "The Decision Was in Slack. The Rationale Was in a Doc. The Update Was in an Email.",
+        "category": "Deep Insights",
+        "date": "2026-09-06",
+        "author": "Olivia Thorne",
+        "excerpt": "A new engineer just joined your team. On day three, she DMs you a simple question: “Hey, can you point me to the doc on why we chose this specific pay...",
+        "contentFile": "blog-1788699660870.md"
+    },
+    {
+        "id": "1788699633863",
+        "type": "news",
+        "title": "The Version Number Is a Lie",
+        "category": "Tech Radar",
+        "date": "2026-09-06",
+        "author": "Michael Chen",
+        "excerpt": "The on-call engineer wakes up to a hundred alerts. The company’s flagship product, an AI-powered contract analysis tool, is suddenly spitting out nons...",
+        "contentFile": "news-1788699633863.md"
+    },
+    {
         "id": "1788613250033",
         "type": "blog",
         "title": "Your One-Pager Is a Brain Dump. It Needs to Be a Decision Memo.",
