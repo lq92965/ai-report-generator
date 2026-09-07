@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Aligned with Everyone 1:1. Now Nobody Agrees in the Room.](https://goreportify.com/article-pages/blog-1788786057982.html)
+  - Type: Deep Insights | Date: 2026-09-07 | Author: David Sterling
+  - The big meeting starts. You feel confident. You spent the last three days doing the "PM shuffle," a series of 1:1s to pre-align everyone on your new f...
+- [The Real Trojan Horse Is a Pickle File](https://goreportify.com/article-pages/news-1788786029088.html)
+  - Type: Tech Radar | Date: 2026-09-07 | Author: Emily Rostova
+  - It’s 11 PM on a Tuesday. A developer, fueled by lukewarm coffee and the pressure of a looming deadline, isn't wrestling with algorithms. She’s scrolli...
 - [The Decision Was in Slack. The Rationale Was in a Doc. The Update Was in an Email.](https://goreportify.com/article-pages/blog-1788699660870.html)
   - Type: Deep Insights | Date: 2026-09-06 | Author: Olivia Thorne
   - A new engineer just joined your team. On day three, she DMs you a simple question: “Hey, can you point me to the doc on why we chose this specific pay...
@@ -2179,4 +2185,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 716 articles (381 blog + 335 news) + 8 core pages._
+_Total: 718 articles (382 blog + 336 news) + 8 core pages._

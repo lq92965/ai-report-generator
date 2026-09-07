@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Aligned with Everyone 1:1. Now Nobody Agrees in the Room.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1788786057982.html</link>
+    <description><![CDATA[The big meeting starts. You feel confident. You spent the last three days doing the "PM shuffle," a series of 1:1s to pre-align everyone on your new f...]]></description>
+    <pubDate>Mon, 07 Sep 2026 13:00:57 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Real Trojan Horse Is a Pickle File]]></title>
+    <link>https://goreportify.com/article-pages/news-1788786029088.html</link>
+    <description><![CDATA[It’s 11 PM on a Tuesday. A developer, fueled by lukewarm coffee and the pressure of a looming deadline, isn't wrestling with algorithms. She’s scrolli...]]></description>
+    <pubDate>Mon, 07 Sep 2026 13:00:29 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The Decision Was in Slack. The Rationale Was in a Doc. The Update Was in an Email.]]></title>
     <link>https://goreportify.com/article-pages/blog-1788699660870.html</link>
     <description><![CDATA[A new engineer just joined your team. On day three, she DMs you a simple question: “Hey, can you point me to the doc on why we chose this specific pay...]]></description>
@@ -297,18 +309,6 @@ A customer success...]]></description>
     <link>https://goreportify.com/article-pages/blog-1786194051598.html</link>
     <description><![CDATA[You open the PRD. The little notification bell in the corner shows 27 new comments. Your stomach sinks. You spend the next hour weaving through thread...]]></description>
     <pubDate>Sat, 08 Aug 2026 13:00:51 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Specification Is Now a Chat History]]></title>
-    <link>https://goreportify.com/article-pages/news-1786194027032.html</link>
-    <description><![CDATA[A junior developer is asked to fix a bug in the new AI-powered pricing engine. The feature is simple enough: loyal customers should see slightly bette...]]></description>
-    <pubDate>Sat, 08 Aug 2026 13:00:27 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Single Source of Truth is You. That's the Problem.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1786107658663.html</link>
-    <description><![CDATA[An engineer Slacks you a "quick question" about an edge case. You know the answer. You think you wrote it down. You open the Confluence spec. It’s not...]]></description>
-    <pubDate>Fri, 07 Aug 2026 13:00:58 GMT</pubDate>
   </item>
 </channel>
 </rss>
