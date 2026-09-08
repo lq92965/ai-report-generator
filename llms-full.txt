@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Gave Everyone a ChatGPT Plus Seat. Now You Have 50 Different Workflows.](https://goreportify.com/article-pages/blog-1788872465882.html)
+  - Type: Deep Insights | Date: 2026-09-08 | Author: Alex Mercer
+  - The email from the CTO landed with a triumphant thud: "To accelerate innovation, we've provisioned a ChatGPT Enterprise seat for every employee!" The...
+- [The Stack Trace Ends in a Black Box](https://goreportify.com/article-pages/news-1788872436009.html)
+  - Type: Tech Radar | Date: 2026-09-08 | Author: Olivia Thorne
+  - The pager alert screams at 2:17 AM. A senior engineer at a fintech startup squints at the dashboard. Revenue from a core automated system has flatline...
 - [You Aligned with Everyone 1:1. Now Nobody Agrees in the Room.](https://goreportify.com/article-pages/blog-1788786057982.html)
   - Type: Deep Insights | Date: 2026-09-07 | Author: David Sterling
   - The big meeting starts. You feel confident. You spent the last three days doing the "PM shuffle," a series of 1:1s to pre-align everyone on your new f...
@@ -2185,4 +2191,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 718 articles (382 blog + 336 news) + 8 core pages._
+_Total: 720 articles (383 blog + 337 news) + 8 core pages._

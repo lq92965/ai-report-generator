@@ -1,32 +1,32 @@
 [
   {
-    "title": "Smartphone makers don't bother to comply with EU repairability requirements",
-    "link": "https://www.theregister.com/personal-tech/2026/09/07/smartphone-makers-dont-bother-to-comply-with-eu-repairability-requirements/5294532",
-    "pubDate": "Mon, 07 Sep 2026 11:46:37 +0000",
-    "snippet": "Article URL: https://www.theregister.com/personal-tech/2026/09/07/smartphone-makers-dont-bother-to-comply-with-eu-repairability-requirements/5294532\nComments URL: https://news.ycombinator.com/item?id=49597189\nPoints: 61\n# Comments: 15"
+    "title": "PISA 2025 Students' reading and mathematics performance declined across the OECD",
+    "link": "https://www.oecd.org/en/about/news/press-releases/2026/09/pisa-2025-students-reading-and-mathematics-performance-declined-sharply-across-the-oecd.html",
+    "pubDate": "Tue, 08 Sep 2026 11:13:03 +0000",
+    "snippet": "Article URL: https://www.oecd.org/en/about/news/press-releases/2026/09/pisa-2025-students-reading-and-mathematics-performance-declined-sharply-across-the-oecd.html\nComments URL: https://news.ycombinator.com/item?id=49608697\nPoints: 26\n# Comments: 16"
   },
   {
-    "title": "Apparently CodePen 2.0 sends data to their servers as you type",
-    "link": "https://news.ycombinator.com/item?id=49596976",
-    "pubDate": "Mon, 07 Sep 2026 11:22:40 +0000",
-    "snippet": "They send all typed into editor input to codepen.dev almost immediately (you would see in 1-2 sec after you typed your secret that it appears in respective Network/Response tab) even before one saved it. I tested this with a unique marker: after typing it into index.html, CodePen ran a build with \"save:false\", and the marker then appeared verbatim in the HTML served from the generated \"*.codepen.dev preview\". Thus, if you ever entered some secrets in there by mistake consider them compromized even if you did not publish/save the pen\nComments URL: https://news.ycombinator.com/item?id=49596976\nPoints: 36\n# Comments: 14"
+    "title": "Why getting your hands dirty is good for you",
+    "link": "https://www.bbc.com/future/article/20260904-how-getting-your-hands-dirty-boosts-your-health-within-weeks",
+    "pubDate": "Tue, 08 Sep 2026 09:48:24 +0000",
+    "snippet": "Article URL: https://www.bbc.com/future/article/20260904-how-getting-your-hands-dirty-boosts-your-health-within-weeks\nComments URL: https://news.ycombinator.com/item?id=49608023\nPoints: 84\n# Comments: 57"
   },
   {
-    "title": "VMware migration reduces Tottenham Hotspur's licensing fees by 85 percent",
-    "link": "https://arstechnica.com/information-technology/2026/09/vmware-migration-reduces-tottenham-hotspurs-licensing-fees-by-85-percent/",
-    "pubDate": "Mon, 07 Sep 2026 11:01:06 +0000",
-    "snippet": "Article URL: https://arstechnica.com/information-technology/2026/09/vmware-migration-reduces-tottenham-hotspurs-licensing-fees-by-85-percent/\nComments URL: https://news.ycombinator.com/item?id=49596797\nPoints: 17\n# Comments: 4"
+    "title": "Antiquated HTML Snippets and Artefacts",
+    "link": "https://vale.rocks/posts/html-relics",
+    "pubDate": "Tue, 08 Sep 2026 09:43:14 +0000",
+    "snippet": "Article URL: https://vale.rocks/posts/html-relics\nComments URL: https://news.ycombinator.com/item?id=49607991\nPoints: 89\n# Comments: 23"
   },
   {
-    "title": "Phil Schiller’s App Store exit reportedly driven by wariness over future plans",
-    "link": "https://techcrunch.com/2026/09/06/phil-schillers-app-store-exit-reportedly-driven-by-wariness-over-future-plans/",
-    "pubDate": "Sun, 06 Sep 2026 21:41:06 +0000",
-    "snippet": "Schiller reportedly had reservations about new CEO John Ternus' goal of bringing in more recurring revenue from the App Store."
+    "title": "Stoke Space raises another billion to rival SpaceX at re-flying rockets",
+    "link": "https://techcrunch.com/2026/09/08/stoke-space-raises-another-billion-to-rival-spacex-at-re-flying-rockets/",
+    "pubDate": "Tue, 08 Sep 2026 09:00:00 +0000",
+    "snippet": "Stoke has \"completed the initial closing\" of a $1B Series E round intended to help it reach orbit and prepare a new, larger rocket for operations."
   },
   {
-    "title": "Authors push back as publishers and agents make claims on Anthropic settlement",
-    "link": "https://techcrunch.com/2026/09/06/authors-push-back-as-publishers-and-agents-seek-share-of-anthropic-settlement/",
-    "pubDate": "Sun, 06 Sep 2026 20:47:37 +0000",
-    "snippet": "Authors say publishers seem to be claiming more than their fair share of settlement payments."
+    "title": "Eric Wu’s newest company, out of stealth since May, is going after construction’s labor crunch",
+    "link": "https://techcrunch.com/2026/09/07/eric-wus-newest-company-out-of-stealth-since-may-is-going-after-constructions-labor-crunch/",
+    "pubDate": "Tue, 08 Sep 2026 02:16:39 +0000",
+    "snippet": "Eric Wu, who built and ran Opendoor before stepping away in 2022, has had his new company, NavigateAI, out of stealth since May — building AI copilots that give construction workers real-time, hands-free guidance through smartphones and Meta's AI glasses, backed by $25 million from Elad Gil, Khosla Ventures, and Lennar to tackle a labor shortage severe enough that data center projects alone now need 4,000 to 5,000 workers apiece."
   }
 ]
