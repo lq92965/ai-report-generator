@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Roadmap Is a List of Features. It Needs to Be a Bet on the Future.](https://goreportify.com/article-pages/blog-1788958859027.html)
+  - Type: Deep Insights | Date: 2026-09-09 | Author: Sarah Jenkins
+  - You click to the next slide. It’s a beautiful Gantt chart, a rainbow of dependencies stretching across the next two quarters. You’ve spent weeks negot...
+- [The System Prompt Is the New Kernel Panic](https://goreportify.com/article-pages/news-1788958830178.html)
+  - Type: Tech Radar | Date: 2026-09-09 | Author: David Sterling
+  - A developer on the customer automation team pushes a final commit before the weekend. The change is tiny: a single-line tweak to the system prompt for...
 - [You Gave Everyone a ChatGPT Plus Seat. Now You Have 50 Different Workflows.](https://goreportify.com/article-pages/blog-1788872465882.html)
   - Type: Deep Insights | Date: 2026-09-08 | Author: Alex Mercer
   - The email from the CTO landed with a triumphant thud: "To accelerate innovation, we've provisioned a ChatGPT Enterprise seat for every employee!" The...
@@ -2191,4 +2197,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 720 articles (383 blog + 337 news) + 8 core pages._
+_Total: 722 articles (384 blog + 338 news) + 8 core pages._

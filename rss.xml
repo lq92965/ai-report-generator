@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Roadmap Is a List of Features. It Needs to Be a Bet on the Future.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1788958859027.html</link>
+    <description><![CDATA[You click to the next slide. It’s a beautiful Gantt chart, a rainbow of dependencies stretching across the next two quarters. You’ve spent weeks negot...]]></description>
+    <pubDate>Wed, 09 Sep 2026 13:00:59 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The System Prompt Is the New Kernel Panic]]></title>
+    <link>https://goreportify.com/article-pages/news-1788958830178.html</link>
+    <description><![CDATA[A developer on the customer automation team pushes a final commit before the weekend. The change is tiny: a single-line tweak to the system prompt for...]]></description>
+    <pubDate>Wed, 09 Sep 2026 13:00:30 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Gave Everyone a ChatGPT Plus Seat. Now You Have 50 Different Workflows.]]></title>
     <link>https://goreportify.com/article-pages/blog-1788872465882.html</link>
     <description><![CDATA[The email from the CTO landed with a triumphant thud: "To accelerate innovation, we've provisioned a ChatGPT Enterprise seat for every employee!" The...]]></description>
@@ -297,18 +309,6 @@ A customer success...]]></description>
     <link>https://goreportify.com/article-pages/news-1786453234501.html</link>
     <description><![CDATA[The red alert flashes on a CISO’s dashboard. Not a SQL injection, not a cross-site scripting vulnerability, but something stranger. The company’s new...]]></description>
     <pubDate>Tue, 11 Aug 2026 13:00:34 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Used AI to 'Validate' Your Idea. You Just Confirmed Your Own Bias.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1786366876367.html</link>
-    <description><![CDATA[You have a flash of inspiration on your morning commute. A new feature. It’s elegant, it’s clever, and you’re sure users will love it. The old way to...]]></description>
-    <pubDate>Mon, 10 Aug 2026 13:01:16 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Duct Tape Is Now Structural]]></title>
-    <link>https://goreportify.com/article-pages/news-1786366832228.html</link>
-    <description><![CDATA[The emergency call came in at 2 AM. The new AI-powered customer support bot—the one featured in the last all-hands meeting—was telling customers their...]]></description>
-    <pubDate>Mon, 10 Aug 2026 13:00:32 GMT</pubDate>
   </item>
 </channel>
 </rss>

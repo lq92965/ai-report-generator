@@ -1,5 +1,25 @@
 [
     {
+        "id": "1788958859027",
+        "type": "blog",
+        "title": "Your Roadmap Is a List of Features. It Needs to Be a Bet on the Future.",
+        "category": "Deep Insights",
+        "date": "2026-09-09",
+        "author": "Sarah Jenkins",
+        "excerpt": "You click to the next slide. It’s a beautiful Gantt chart, a rainbow of dependencies stretching across the next two quarters. You’ve spent weeks negot...",
+        "contentFile": "blog-1788958859027.md"
+    },
+    {
+        "id": "1788958830178",
+        "type": "news",
+        "title": "The System Prompt Is the New Kernel Panic",
+        "category": "Tech Radar",
+        "date": "2026-09-09",
+        "author": "David Sterling",
+        "excerpt": "A developer on the customer automation team pushes a final commit before the weekend. The change is tiny: a single-line tweak to the system prompt for...",
+        "contentFile": "news-1788958830178.md"
+    },
+    {
         "id": "1788872465882",
         "type": "blog",
         "title": "You Gave Everyone a ChatGPT Plus Seat. Now You Have 50 Different Workflows.",
