@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Asked 'What Do You Think?'. You Should Have Asked 'What's the Biggest Risk?'](https://goreportify.com/article-pages/blog-1789045263691.html)
+  - Type: Deep Insights | Date: 2026-09-10 | Author: Marcus Webb
+  - You hit "Share." The doc is a thing of beauty. A tight problem statement, crisp user stories, a logical flow. You drop the link in Slack with a cheerf...
+- [The Technical Debt Is Now Semantic](https://goreportify.com/article-pages/news-1789045233289.html)
+  - Type: Tech Radar | Date: 2026-09-10 | Author: Michael Chen
+  - An alert fires at 2:17 AM. The new AI-powered customer service bot is telling users they can get refunds on non-refundable airline tickets. An enginee...
 - [Your Roadmap Is a List of Features. It Needs to Be a Bet on the Future.](https://goreportify.com/article-pages/blog-1788958859027.html)
   - Type: Deep Insights | Date: 2026-09-09 | Author: Sarah Jenkins
   - You click to the next slide. It’s a beautiful Gantt chart, a rainbow of dependencies stretching across the next two quarters. You’ve spent weeks negot...
@@ -2197,4 +2203,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 722 articles (384 blog + 338 news) + 8 core pages._
+_Total: 724 articles (385 blog + 339 news) + 8 core pages._
