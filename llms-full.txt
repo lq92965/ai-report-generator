@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Weekly Report Takes All Monday. It Should Take 15 Minutes.](https://goreportify.com/article-pages/blog-1789131660398.html)
+  - Type: Deep Insights | Date: 2026-09-11 | Author: Marcus Webb
+  - It’s 9:17 AM on Monday. You have a blank Google Doc open, titled “Product Update: Wk 34.” Your real work hasn’t started yet. First, you have to pay th...
+- [Model Becomes a Competitive Battleground 9/11-1](https://goreportify.com/article-pages/news-1789131630528.html)
+  - Type: Tech Radar | Date: 2026-09-11 | Author: Jessica Tran
+  - The team celebrated the launch at the morning stand-up. The new feature, a smart summarizer for legal documents, went live without a hitch. The code w...
 - [You Asked 'What Do You Think?'. You Should Have Asked 'What's the Biggest Risk?'](https://goreportify.com/article-pages/blog-1789045263691.html)
   - Type: Deep Insights | Date: 2026-09-10 | Author: Marcus Webb
   - You hit "Share." The doc is a thing of beauty. A tight problem statement, crisp user stories, a logical flow. You drop the link in Slack with a cheerf...
@@ -2203,4 +2209,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 724 articles (385 blog + 339 news) + 8 core pages._
+_Total: 726 articles (386 blog + 340 news) + 8 core pages._

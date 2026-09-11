@@ -1,5 +1,25 @@
 [
     {
+        "id": "1789131660398",
+        "type": "blog",
+        "title": "Your Weekly Report Takes All Monday. It Should Take 15 Minutes.",
+        "category": "Deep Insights",
+        "date": "2026-09-11",
+        "author": "Marcus Webb",
+        "excerpt": "It’s 9:17 AM on Monday. You have a blank Google Doc open, titled “Product Update: Wk 34.” Your real work hasn’t started yet. First, you have to pay th...",
+        "contentFile": "blog-1789131660398.md"
+    },
+    {
+        "id": "1789131630528",
+        "type": "news",
+        "title": "Model Becomes a Competitive Battleground 9/11-1",
+        "category": "Tech Radar",
+        "date": "2026-09-11",
+        "author": "Jessica Tran",
+        "excerpt": "The team celebrated the launch at the morning stand-up. The new feature, a smart summarizer for legal documents, went live without a hitch. The code w...",
+        "contentFile": "news-1789131630528.md"
+    },
+    {
         "id": "1789045263691",
         "type": "blog",
         "title": "You Asked 'What Do You Think?'. You Should Have Asked 'What's the Biggest Risk?'",

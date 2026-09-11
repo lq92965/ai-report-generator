@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Weekly Report Takes All Monday. It Should Take 15 Minutes.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1789131660398.html</link>
+    <description><![CDATA[It’s 9:17 AM on Monday. You have a blank Google Doc open, titled “Product Update: Wk 34.” Your real work hasn’t started yet. First, you have to pay th...]]></description>
+    <pubDate>Fri, 11 Sep 2026 13:01:00 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Model Becomes a Competitive Battleground 9/11-1]]></title>
+    <link>https://goreportify.com/article-pages/news-1789131630528.html</link>
+    <description><![CDATA[The team celebrated the launch at the morning stand-up. The new feature, a smart summarizer for legal documents, went live without a hitch. The code w...]]></description>
+    <pubDate>Fri, 11 Sep 2026 13:00:30 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Asked 'What Do You Think?'. You Should Have Asked 'What's the Biggest Risk?']]></title>
     <link>https://goreportify.com/article-pages/blog-1789045263691.html</link>
     <description><![CDATA[You hit "Share." The doc is a thing of beauty. A tight problem statement, crisp user stories, a logical flow. You drop the link in Slack with a cheerf...]]></description>
@@ -297,18 +309,6 @@ A customer success...]]></description>
     <link>https://goreportify.com/article-pages/blog-1786626056234.html</link>
     <description><![CDATA[It’s 4:30 PM on a Friday. Your calendar reminder pops up: "Send weekly update." You open Jira, filter for tickets closed this week, and copy-paste the...]]></description>
     <pubDate>Thu, 13 Aug 2026 13:00:56 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Meter Is Always Running]]></title>
-    <link>https://goreportify.com/article-pages/news-1786626029223.html</link>
-    <description><![CDATA[The team popped champagne the week the user graph went vertical. Their AI-powered summarization feature was a hit, spreading through Slack channels an...]]></description>
-    <pubDate>Thu, 13 Aug 2026 13:00:29 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Got a Mandate, Not a Mission.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1786539651935.html</link>
-    <description><![CDATA[The VP catches you in the hallway. "We need to add a dark mode. Our biggest competitor just launched one. I want it in the next release." You nod, smi...]]></description>
-    <pubDate>Wed, 12 Aug 2026 13:00:51 GMT</pubDate>
   </item>
 </channel>
 </rss>
