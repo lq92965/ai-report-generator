@@ -1,32 +1,32 @@
 [
   {
-    "title": "Remember Hong Kong",
-    "link": "https://www.thenextmove.org/p/remember-hong-kong",
-    "pubDate": "Fri, 11 Sep 2026 12:34:25 +0000",
-    "snippet": "Article URL: https://www.thenextmove.org/p/remember-hong-kong\nComments URL: https://news.ycombinator.com/item?id=49657361\nPoints: 6\n# Comments: 2"
+    "title": "Show HN: Liniora – Ever thought about replacing your project manager?",
+    "link": "https://liniora.com",
+    "pubDate": "Sat, 12 Sep 2026 12:15:12 +0000",
+    "snippet": "Hi HN, the title could be a little bit aggressive sorry for that... Basically i am Computer engineer graduated recently but i was and still working remotely for approx. 3 years with the same foreign company in EU. and i noticed that we are always somehow lose the context of a ticket -- even though we are using the popular project management systems -- so i decided why not build something that can fix our context loosing problems and with some improvements. here i created Liniora. an AI powered project management system. basically the core idea is to link the tools that we use to gather information about tickets in one place. i integrated Google meet for the meetings transcripts so you do your meeting it automatically got registered and indexed. You discuss about a bug in Slack thread so you mention @Liniora app and it will handle the bug context and create a ticket for you. We have the version control also connected so you create a ticket with ability of creating a separate branch with one-click for both Gitlab and Github. you have as well the Pull request controlled in our place inside the app. lets suppose you have a ticket and you created a branch called 'USER-325-create-login-form' then you merged to staging or production ? it will be automatically flagged with staging/production badge so you know what tickets are done. there are a lot of interesting features i wanted to describe but i will just let you guys discover and i will be very happy about your feedback. Thanks\nComments URL: https://news.ycombinator.com/item?id=49671542\nPoints: 5\n# Comments: 2"
   },
   {
-    "title": "Moonshot serves Claude instead of Kimi and collects exchanges for model training",
-    "link": "https://twitter.com/DavidAgranovich/status/2098168522862215449",
-    "pubDate": "Fri, 11 Sep 2026 11:36:24 +0000",
-    "snippet": "Article URL: https://twitter.com/DavidAgranovich/status/2098168522862215449\nComments URL: https://news.ycombinator.com/item?id=49656698\nPoints: 13\n# Comments: 1"
+    "title": "Fuck it, make it anyway",
+    "link": "https://www.joelotter.com/posts/2026/09/make-it-anyway/",
+    "pubDate": "Sat, 12 Sep 2026 11:42:32 +0000",
+    "snippet": "Article URL: https://www.joelotter.com/posts/2026/09/make-it-anyway/\nComments URL: https://news.ycombinator.com/item?id=49671329\nPoints: 98\n# Comments: 56"
   },
   {
-    "title": "Instagram's head says engagement falls by half without the algorithm",
-    "link": "https://thenextweb.com/news/mosseri-instagram-algorithm-opt-out-engagement-australia",
-    "pubDate": "Fri, 11 Sep 2026 11:24:10 +0000",
-    "snippet": "Article URL: https://thenextweb.com/news/mosseri-instagram-algorithm-opt-out-engagement-australia\nComments URL: https://news.ycombinator.com/item?id=49656564\nPoints: 46\n# Comments: 50"
+    "title": "Crypto farm in Mexican mountains puts spotlight on cartel funding",
+    "link": "https://www.reuters.com/world/americas/hidden-crypto-farm-mexican-mountains-puts-spotlight-cartel-funding-2026-09-12/",
+    "pubDate": "Sat, 12 Sep 2026 11:37:22 +0000",
+    "snippet": "Article URL: https://www.reuters.com/world/americas/hidden-crypto-farm-mexican-mountains-puts-spotlight-cartel-funding-2026-09-12/\nComments URL: https://news.ycombinator.com/item?id=49671296\nPoints: 13\n# Comments: 0"
   },
   {
-    "title": "Thrive Capital led VCs into pro sports ownership; Collaborative Fund just upped that play",
-    "link": "https://techcrunch.com/2026/09/10/thrive-capital-showed-vcs-the-way-into-pro-sports-ownership-collaborative-fund-is-now-trying-its-own-version-of-the-same-play/",
-    "pubDate": "Thu, 10 Sep 2026 22:30:00 +0000",
-    "snippet": "Collaborative Fund just bought into D.C. United and its stadium, with  firm founder Craig Shapiro pitching it as a way to showcase for the firm's startups."
+    "title": "Mecka AI nears $500M valuation in Sequoia-led deal amid rush for robot training data",
+    "link": "https://techcrunch.com/2026/09/11/mecka-ai-nears-500m-valuation-in-sequoia-led-deal-amid-rush-for-robot-training-data/",
+    "pubDate": "Fri, 11 Sep 2026 22:58:17 +0000",
+    "snippet": "The round for the two-year-old startup is coming together months after Mecka announced its Series A."
   },
   {
-    "title": "Jensen Huang explains why Nvidia will grow an astounding 70% next year",
-    "link": "https://techcrunch.com/2026/09/10/jensen-huang-explains-why-nvidia-will-grow-an-astounding-70-next-year/",
-    "pubDate": "Thu, 10 Sep 2026 21:51:59 +0000",
-    "snippet": "Nvidia has its finger in every pie, and sees another year of plenty in its future, Jensen Huang says. But, he insists, its deals are not circular."
+    "title": "Khosla Ventures is opening a New York office this fall — its first outpost outside Sand Hill Road",
+    "link": "https://techcrunch.com/2026/09/11/khosla-ventures-is-opening-a-new-york-office-this-fall-its-first-outpost-outside-sand-hill-road/",
+    "pubDate": "Fri, 11 Sep 2026 21:19:05 +0000",
+    "snippet": "\"It's actually allegedly being built out now,\" said Rabois, who has clearly dealt with a missed construction timeline or two."
   }
 ]

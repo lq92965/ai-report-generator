@@ -1,5 +1,25 @@
 [
     {
+        "id": "1789218087995",
+        "type": "blog",
+        "title": "You Dropped the PRD in Slack. Now You Have a Week of Clarification Calls.",
+        "category": "Deep Insights",
+        "date": "2026-09-12",
+        "author": "Olivia Thorne",
+        "excerpt": "It’s 9:15 AM on Monday. You’re feeling good. You spent all last week wrestling with a complex feature, and on Friday evening, you finally birthed the...",
+        "contentFile": "blog-1789218087995.md"
+    },
+    {
+        "id": "1789218061855",
+        "type": "news",
+        "title": "The Disaster Recovery Plan Is Another API Key",
+        "category": "Tech Radar",
+        "date": "2026-09-12",
+        "author": "Olivia Thorne",
+        "excerpt": "The dashboards turned red just after 3 a.m. It wasn't a server outage or a database connection pool exhausting itself. It was subtler. The user-facing...",
+        "contentFile": "news-1789218061855.md"
+    },
+    {
         "id": "1789131660398",
         "type": "blog",
         "title": "Your Weekly Report Takes All Monday. It Should Take 15 Minutes.",

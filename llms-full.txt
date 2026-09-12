@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Dropped the PRD in Slack. Now You Have a Week of Clarification Calls.](https://goreportify.com/article-pages/blog-1789218087995.html)
+  - Type: Deep Insights | Date: 2026-09-12 | Author: Olivia Thorne
+  - It’s 9:15 AM on Monday. You’re feeling good. You spent all last week wrestling with a complex feature, and on Friday evening, you finally birthed the...
+- [The Disaster Recovery Plan Is Another API Key](https://goreportify.com/article-pages/news-1789218061855.html)
+  - Type: Tech Radar | Date: 2026-09-12 | Author: Olivia Thorne
+  - The dashboards turned red just after 3 a.m. It wasn't a server outage or a database connection pool exhausting itself. It was subtler. The user-facing...
 - [Your Weekly Report Takes All Monday. It Should Take 15 Minutes.](https://goreportify.com/article-pages/blog-1789131660398.html)
   - Type: Deep Insights | Date: 2026-09-11 | Author: Marcus Webb
   - It’s 9:17 AM on Monday. You have a blank Google Doc open, titled “Product Update: Wk 34.” Your real work hasn’t started yet. First, you have to pay th...
@@ -2209,4 +2215,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 726 articles (386 blog + 340 news) + 8 core pages._
+_Total: 728 articles (387 blog + 341 news) + 8 core pages._

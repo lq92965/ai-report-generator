@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Dropped the PRD in Slack. Now You Have a Week of Clarification Calls.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1789218087995.html</link>
+    <description><![CDATA[It’s 9:15 AM on Monday. You’re feeling good. You spent all last week wrestling with a complex feature, and on Friday evening, you finally birthed the...]]></description>
+    <pubDate>Sat, 12 Sep 2026 13:01:27 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Disaster Recovery Plan Is Another API Key]]></title>
+    <link>https://goreportify.com/article-pages/news-1789218061855.html</link>
+    <description><![CDATA[The dashboards turned red just after 3 a.m. It wasn't a server outage or a database connection pool exhausting itself. It was subtler. The user-facing...]]></description>
+    <pubDate>Sat, 12 Sep 2026 13:01:01 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Weekly Report Takes All Monday. It Should Take 15 Minutes.]]></title>
     <link>https://goreportify.com/article-pages/blog-1789131660398.html</link>
     <description><![CDATA[It’s 9:17 AM on Monday. You have a blank Google Doc open, titled “Product Update: Wk 34.” Your real work hasn’t started yet. First, you have to pay th...]]></description>
@@ -297,18 +309,6 @@ A customer success...]]></description>
     <link>https://goreportify.com/article-pages/blog-1786712455253.html</link>
     <description><![CDATA[You have a new mandate: "Get a better handle on the competition." So you open up G2, Capterra, and a dozen browser tabs. You start copying and pasting...]]></description>
     <pubDate>Fri, 14 Aug 2026 13:00:55 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Bug Report Is Now a Philosophical Question]]></title>
-    <link>https://goreportify.com/article-pages/news-1786712427498.html</link>
-    <description><![CDATA[The bug ticket lands in the queue with a thud. JIRA-ID: PROD-7481. Title: "AI assistant advised customer to pay their invoice in seashells." The senio...]]></description>
-    <pubDate>Fri, 14 Aug 2026 13:00:27 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Weekly Report is a Changelog. Make it a Value Log.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1786626056234.html</link>
-    <description><![CDATA[It’s 4:30 PM on a Friday. Your calendar reminder pops up: "Send weekly update." You open Jira, filter for tickets closed this week, and copy-paste the...]]></description>
-    <pubDate>Thu, 13 Aug 2026 13:00:56 GMT</pubDate>
   </item>
 </channel>
 </rss>
