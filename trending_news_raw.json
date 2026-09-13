@@ -1,32 +1,32 @@
 [
   {
-    "title": "Show HN: Liniora – Ever thought about replacing your project manager?",
-    "link": "https://liniora.com",
-    "pubDate": "Sat, 12 Sep 2026 12:15:12 +0000",
-    "snippet": "Hi HN, the title could be a little bit aggressive sorry for that... Basically i am Computer engineer graduated recently but i was and still working remotely for approx. 3 years with the same foreign company in EU. and i noticed that we are always somehow lose the context of a ticket -- even though we are using the popular project management systems -- so i decided why not build something that can fix our context loosing problems and with some improvements. here i created Liniora. an AI powered project management system. basically the core idea is to link the tools that we use to gather information about tickets in one place. i integrated Google meet for the meetings transcripts so you do your meeting it automatically got registered and indexed. You discuss about a bug in Slack thread so you mention @Liniora app and it will handle the bug context and create a ticket for you. We have the version control also connected so you create a ticket with ability of creating a separate branch with one-click for both Gitlab and Github. you have as well the Pull request controlled in our place inside the app. lets suppose you have a ticket and you created a branch called 'USER-325-create-login-form' then you merged to staging or production ? it will be automatically flagged with staging/production badge so you know what tickets are done. there are a lot of interesting features i wanted to describe but i will just let you guys discover and i will be very happy about your feedback. Thanks\nComments URL: https://news.ycombinator.com/item?id=49671542\nPoints: 5\n# Comments: 2"
+    "title": "Matt Mullenweg reportedly returns as Automattic CEO 2 days after getting booted",
+    "link": "https://www.theverge.com/tech/994087/matt-mullenweg-automattic-ceo-return",
+    "pubDate": "Sun, 13 Sep 2026 12:30:28 +0000",
+    "snippet": "Article URL: https://www.theverge.com/tech/994087/matt-mullenweg-automattic-ceo-return\nComments URL: https://news.ycombinator.com/item?id=49683265\nPoints: 5\n# Comments: 3"
   },
   {
-    "title": "Fuck it, make it anyway",
-    "link": "https://www.joelotter.com/posts/2026/09/make-it-anyway/",
-    "pubDate": "Sat, 12 Sep 2026 11:42:32 +0000",
-    "snippet": "Article URL: https://www.joelotter.com/posts/2026/09/make-it-anyway/\nComments URL: https://news.ycombinator.com/item?id=49671329\nPoints: 98\n# Comments: 56"
+    "title": "'Fingerprints' inside the Sun could reveal if it once swallowed a planet",
+    "link": "https://ras.ac.uk/news-and-press/research-highlights/fingerprints-inside-sun-could-reveal-if-it-once-swallowed-planet",
+    "pubDate": "Sun, 13 Sep 2026 12:01:52 +0000",
+    "snippet": "Article URL: https://ras.ac.uk/news-and-press/research-highlights/fingerprints-inside-sun-could-reveal-if-it-once-swallowed-planet\nComments URL: https://news.ycombinator.com/item?id=49683033\nPoints: 11\n# Comments: 5"
   },
   {
-    "title": "Crypto farm in Mexican mountains puts spotlight on cartel funding",
-    "link": "https://www.reuters.com/world/americas/hidden-crypto-farm-mexican-mountains-puts-spotlight-cartel-funding-2026-09-12/",
-    "pubDate": "Sat, 12 Sep 2026 11:37:22 +0000",
-    "snippet": "Article URL: https://www.reuters.com/world/americas/hidden-crypto-farm-mexican-mountains-puts-spotlight-cartel-funding-2026-09-12/\nComments URL: https://news.ycombinator.com/item?id=49671296\nPoints: 13\n# Comments: 0"
+    "title": "Nvidia dismisses \"circular financing\", says every $1 it invests brings back $100",
+    "link": "https://invezz.com/news/2026/09/11/nvidia-says-every-1-it-invests-brings-back-100-so-why-does-the-stock-keep-falling/",
+    "pubDate": "Sun, 13 Sep 2026 10:29:18 +0000",
+    "snippet": "Article URL: https://invezz.com/news/2026/09/11/nvidia-says-every-1-it-invests-brings-back-100-so-why-does-the-stock-keep-falling/\nComments URL: https://news.ycombinator.com/item?id=49682319\nPoints: 85\n# Comments: 97"
   },
   {
-    "title": "Mecka AI nears $500M valuation in Sequoia-led deal amid rush for robot training data",
-    "link": "https://techcrunch.com/2026/09/11/mecka-ai-nears-500m-valuation-in-sequoia-led-deal-amid-rush-for-robot-training-data/",
-    "pubDate": "Fri, 11 Sep 2026 22:58:17 +0000",
-    "snippet": "The round for the two-year-old startup is coming together months after Mecka announced its Series A."
+    "title": "Automattic confirms Mullenweg has returned as CEO after attempted ouster by board",
+    "link": "https://techcrunch.com/2026/09/12/automattic-confirms-mullenweg-has-returned-as-ceo-after-attempted-ouster-by-board/",
+    "pubDate": "Sat, 12 Sep 2026 23:25:38 +0000",
+    "snippet": "Automattic says Mullenweg is back as \"chairman and CEO of Automattic, with full support of the board.\""
   },
   {
-    "title": "Khosla Ventures is opening a New York office this fall — its first outpost outside Sand Hill Road",
-    "link": "https://techcrunch.com/2026/09/11/khosla-ventures-is-opening-a-new-york-office-this-fall-its-first-outpost-outside-sand-hill-road/",
-    "pubDate": "Fri, 11 Sep 2026 21:19:05 +0000",
-    "snippet": "\"It's actually allegedly being built out now,\" said Rabois, who has clearly dealt with a missed construction timeline or two."
+    "title": "OpenAI’s Sam Altman says it would be ‘ill-advised’ to go public in 2026",
+    "link": "https://techcrunch.com/2026/09/12/openais-sam-altman-says-it-would-be-ill-advised-to-go-public-in-2026/",
+    "pubDate": "Sat, 12 Sep 2026 20:19:16 +0000",
+    "snippet": "While OpenAI has filed confidentially for an IPO, the company will not be going public this year, according to CEO Sam Altman."
   }
 ]

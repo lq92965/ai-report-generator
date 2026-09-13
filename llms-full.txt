@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Walked Them Through the Deck. They Derailed You on Slide 2.](https://goreportify.com/article-pages/blog-1789304457799.html)
+  - Type: Deep Insights | Date: 2026-09-13 | Author: Emily Rostova
+  - It’s Tuesday morning. You’re in the QBR, presenting your product line’s performance. You spent the better part of Monday pulling data, triple-checking...
+- [The Service-Level Agreement Is a Pinky Swear](https://goreportify.com/article-pages/news-1789304429945.html)
+  - Type: Tech Radar | Date: 2026-09-13 | Author: Michael Chen
+  - The alerts started firing at 9:17 AM on a Tuesday. At a mid-market insurance firm, a new automated claims analysis tool, the CTO’s pet project, was su...
 - [You Dropped the PRD in Slack. Now You Have a Week of Clarification Calls.](https://goreportify.com/article-pages/blog-1789218087995.html)
   - Type: Deep Insights | Date: 2026-09-12 | Author: Olivia Thorne
   - It’s 9:15 AM on Monday. You’re feeling good. You spent all last week wrestling with a complex feature, and on Friday evening, you finally birthed the...
@@ -2215,4 +2221,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 728 articles (387 blog + 341 news) + 8 core pages._
+_Total: 730 articles (388 blog + 342 news) + 8 core pages._

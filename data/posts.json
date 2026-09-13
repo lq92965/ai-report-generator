@@ -1,5 +1,25 @@
 [
     {
+        "id": "1789304457799",
+        "type": "blog",
+        "title": "You Walked Them Through the Deck. They Derailed You on Slide 2.",
+        "category": "Deep Insights",
+        "date": "2026-09-13",
+        "author": "Emily Rostova",
+        "excerpt": "It’s Tuesday morning. You’re in the QBR, presenting your product line’s performance. You spent the better part of Monday pulling data, triple-checking...",
+        "contentFile": "blog-1789304457799.md"
+    },
+    {
+        "id": "1789304429945",
+        "type": "news",
+        "title": "The Service-Level Agreement Is a Pinky Swear",
+        "category": "Tech Radar",
+        "date": "2026-09-13",
+        "author": "Michael Chen",
+        "excerpt": "The alerts started firing at 9:17 AM on a Tuesday. At a mid-market insurance firm, a new automated claims analysis tool, the CTO’s pet project, was su...",
+        "contentFile": "news-1789304429945.md"
+    },
+    {
         "id": "1789218087995",
         "type": "blog",
         "title": "You Dropped the PRD in Slack. Now You Have a Week of Clarification Calls.",
