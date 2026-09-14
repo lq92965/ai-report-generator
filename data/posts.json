@@ -1,5 +1,25 @@
 [
     {
+        "id": "1789390858755",
+        "type": "blog",
+        "title": "Your Stakeholders Have a Backchannel. You Need an Intake Valve.",
+        "category": "Deep Insights",
+        "date": "2026-09-14",
+        "author": "Emily Rostova",
+        "excerpt": "The Slack notification pops up. It’s the VP of Sales. \"Hey, quick question...\" You know it's never a quick question. Three messages later, you’re look...",
+        "contentFile": "blog-1789390858755.md"
+    },
+    {
+        "id": "1789390828283",
+        "type": "news",
+        "title": "The Unit Test Is Now a Vibe Check",
+        "category": "Tech Radar",
+        "date": "2026-09-14",
+        "author": "Marcus Webb",
+        "excerpt": "The pull request looked simple enough. A new feature that used a large language model to summarize customer support tickets. The...",
+        "contentFile": "news-1789390828283.md"
+    },
+    {
         "id": "1789304457799",
         "type": "blog",
         "title": "You Walked Them Through the Deck. They Derailed You on Slide 2.",

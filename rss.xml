@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Stakeholders Have a Backchannel. You Need an Intake Valve.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1789390858755.html</link>
+    <description><![CDATA[The Slack notification pops up. It’s the VP of Sales. "Hey, quick question..." You know it's never a quick question. Three messages later, you’re look...]]></description>
+    <pubDate>Mon, 14 Sep 2026 13:00:58 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Unit Test Is Now a Vibe Check]]></title>
+    <link>https://goreportify.com/article-pages/news-1789390828283.html</link>
+    <description><![CDATA[The pull request looked simple enough. A new feature that used a large language model to summarize customer support tickets. The...]]></description>
+    <pubDate>Mon, 14 Sep 2026 13:00:28 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Walked Them Through the Deck. They Derailed You on Slide 2.]]></title>
     <link>https://goreportify.com/article-pages/blog-1789304457799.html</link>
     <description><![CDATA[It’s Tuesday morning. You’re in the QBR, presenting your product line’s performance. You spent the better part of Monday pulling data, triple-checking...]]></description>
@@ -297,18 +309,6 @@ A customer success...]]></description>
     <link>https://goreportify.com/article-pages/blog-1786885252417.html</link>
     <description><![CDATA[It’s sprint planning. You drag the ticket into the current sprint. An engineer squints at the screen, reads the title—"Implement new export functional...]]></description>
     <pubDate>Sun, 16 Aug 2026 13:00:52 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Dependency Is a Moving Target]]></title>
-    <link>https://goreportify.com/article-pages/news-1786885228207.html</link>
-    <description><![CDATA[The alert...]]></description>
-    <pubDate>Sun, 16 Aug 2026 13:00:28 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Exec Asked a 'Simple Question.' It Derailed Your Sprint.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1786798852211.html</link>
-    <description><![CDATA[The demo is going perfectly. Your engineer is walking through the new feature, the stakeholders are nodding, and you’re mentally drafting the launch a...]]></description>
-    <pubDate>Sat, 15 Aug 2026 13:00:52 GMT</pubDate>
   </item>
 </channel>
 </rss>
