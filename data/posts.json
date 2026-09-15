@@ -1,5 +1,25 @@
 [
     {
+        "id": "1789477324988",
+        "type": "blog",
+        "title": "You Made the Decision in a DM. Now You Have to Explain It 10 Times.",
+        "category": "Deep Insights",
+        "date": "2026-09-15",
+        "author": "Jessica Tran",
+        "excerpt": "It felt so efficient. Your lead engineer pinged you on Slack with a question about an edge case. You hashed it out in a few messages, made a call, and...",
+        "contentFile": "blog-1789477324988.md"
+    },
+    {
+        "id": "1789477295152",
+        "type": "news",
+        "title": "The Retrieval Is a Frame Job",
+        "category": "Tech Radar",
+        "date": "2026-09-15",
+        "author": "David Sterling",
+        "excerpt": "The demo was flawless. A chatbot, backed by the latest large language model, digesting the company’...",
+        "contentFile": "news-1789477295152.md"
+    },
+    {
         "id": "1789390858755",
         "type": "blog",
         "title": "Your Stakeholders Have a Backchannel. You Need an Intake Valve.",

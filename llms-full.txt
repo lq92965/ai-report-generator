@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Made the Decision in a DM. Now You Have to Explain It 10 Times.](https://goreportify.com/article-pages/blog-1789477324988.html)
+  - Type: Deep Insights | Date: 2026-09-15 | Author: Jessica Tran
+  - It felt so efficient. Your lead engineer pinged you on Slack with a question about an edge case. You hashed it out in a few messages, made a call, and...
+- [The Retrieval Is a Frame Job](https://goreportify.com/article-pages/news-1789477295152.html)
+  - Type: Tech Radar | Date: 2026-09-15 | Author: David Sterling
+  - The demo was flawless. A chatbot, backed by the latest large language model, digesting the company’...
 - [Your Stakeholders Have a Backchannel. You Need an Intake Valve.](https://goreportify.com/article-pages/blog-1789390858755.html)
   - Type: Deep Insights | Date: 2026-09-14 | Author: Emily Rostova
   - The Slack notification pops up. It’s the VP of Sales. "Hey, quick question..." You know it's never a quick question. Three messages later, you’re look...
@@ -2227,4 +2233,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 732 articles (389 blog + 343 news) + 8 core pages._
+_Total: 734 articles (390 blog + 344 news) + 8 core pages._
