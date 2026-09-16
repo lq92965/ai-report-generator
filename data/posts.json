@@ -1,5 +1,25 @@
 [
     {
+        "id": "1789563727871",
+        "type": "blog",
+        "title": "You Presented the PRD at Kickoff. You Should Have Pressure-Tested the Problem.",
+        "category": "Deep Insights",
+        "date": "2026-09-16",
+        "author": "Alex Mercer",
+        "excerpt": "It’s 10 AM on a Tuesday. You’re sharing your screen, walking the engineering team through a PRD you spent two weeks perfecting. You’ve got the user st...",
+        "contentFile": "blog-1789563727871.md"
+    },
+    {
+        "id": "1789563697546",
+        "type": "news",
+        "title": "The Root Password Is an Adjective",
+        "category": "Tech Radar",
+        "date": "2026-09-16",
+        "author": "Alex Mercer",
+        "excerpt": "There used to be a ceremony to it. To get the production database credentials, you had to open a ticket, justify the need, and wait for an approval th...",
+        "contentFile": "news-1789563697546.md"
+    },
+    {
         "id": "1789477324988",
         "type": "blog",
         "title": "You Made the Decision in a DM. Now You Have to Explain It 10 Times.",

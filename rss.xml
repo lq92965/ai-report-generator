@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Presented the PRD at Kickoff. You Should Have Pressure-Tested the Problem.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1789563727871.html</link>
+    <description><![CDATA[It’s 10 AM on a Tuesday. You’re sharing your screen, walking the engineering team through a PRD you spent two weeks perfecting. You’ve got the user st...]]></description>
+    <pubDate>Wed, 16 Sep 2026 13:02:07 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Root Password Is an Adjective]]></title>
+    <link>https://goreportify.com/article-pages/news-1789563697546.html</link>
+    <description><![CDATA[There used to be a ceremony to it. To get the production database credentials, you had to open a ticket, justify the need, and wait for an approval th...]]></description>
+    <pubDate>Wed, 16 Sep 2026 13:01:37 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Made the Decision in a DM. Now You Have to Explain It 10 Times.]]></title>
     <link>https://goreportify.com/article-pages/blog-1789477324988.html</link>
     <description><![CDATA[It felt so efficient. Your lead engineer pinged you on Slack with a question about an edge case. You hashed it out in a few messages, made a call, and...]]></description>
@@ -297,18 +309,6 @@ A customer success...]]></description>
     <link>https://goreportify.com/article-pages/news-1787144429118.html</link>
     <description><![CDATA[The alert came in at 2:17 AM. A core payment service was failing, but only for customers in the EU. Maria, the on-call engineer, stared at a block of...]]></description>
     <pubDate>Wed, 19 Aug 2026 13:00:29 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Wrote a 10-Page Doc to Avoid a 10-Minute Meeting. Now You Have 100 Comments.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1787058051996.html</link>
-    <description><![CDATA[You hit "share" and feel a wave of productive relief. The strategy doc is done. All ten pages of it. It details the problem space, the competitive lan...]]></description>
-    <pubDate>Tue, 18 Aug 2026 13:00:51 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Asked 'Any Questions?' and Got Silence. That's a Red Flag.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1786971662956.html</link>
-    <description><![CDATA[You just finished the demo. The slides were crisp, the prototype was smooth, and you nailed the talking points. You articulated the customer problem,...]]></description>
-    <pubDate>Mon, 17 Aug 2026 13:01:02 GMT</pubDate>
   </item>
 </channel>
 </rss>

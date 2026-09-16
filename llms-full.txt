@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Presented the PRD at Kickoff. You Should Have Pressure-Tested the Problem.](https://goreportify.com/article-pages/blog-1789563727871.html)
+  - Type: Deep Insights | Date: 2026-09-16 | Author: Alex Mercer
+  - It’s 10 AM on a Tuesday. You’re sharing your screen, walking the engineering team through a PRD you spent two weeks perfecting. You’ve got the user st...
+- [The Root Password Is an Adjective](https://goreportify.com/article-pages/news-1789563697546.html)
+  - Type: Tech Radar | Date: 2026-09-16 | Author: Alex Mercer
+  - There used to be a ceremony to it. To get the production database credentials, you had to open a ticket, justify the need, and wait for an approval th...
 - [You Made the Decision in a DM. Now You Have to Explain It 10 Times.](https://goreportify.com/article-pages/blog-1789477324988.html)
   - Type: Deep Insights | Date: 2026-09-15 | Author: Jessica Tran
   - It felt so efficient. Your lead engineer pinged you on Slack with a question about an edge case. You hashed it out in a few messages, made a call, and...
@@ -2233,4 +2239,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 734 articles (390 blog + 344 news) + 8 core pages._
+_Total: 736 articles (391 blog + 345 news) + 8 core pages._
