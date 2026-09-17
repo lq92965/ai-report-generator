@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Attended 8 Meetings. You Made 1 Decision.](https://goreportify.com/article-pages/blog-1789650065430.html)
+  - Type: Deep Insights | Date: 2026-09-17 | Author: Marcus Webb
+  - It’s 6 PM. Your laptop is covered in fingerprints, your coffee is cold, and your calendar looks like a game of Tetris you lost. You were in back-to-ba...
+- [The API Contract Is Now a Negotiation](https://goreportify.com/article-pages/news-1789650032561.html)
+  - Type: Tech Radar | Date: 2026-09-17 | Author: Sarah Jenkins
+  - The alert fired at 2:17 AM. Not a crash, not a 503, but a spike in parsing errors from the customer onboarding service. A junior engineer, bleary-eyed...
 - [You Presented the PRD at Kickoff. You Should Have Pressure-Tested the Problem.](https://goreportify.com/article-pages/blog-1789563727871.html)
   - Type: Deep Insights | Date: 2026-09-16 | Author: Alex Mercer
   - It’s 10 AM on a Tuesday. You’re sharing your screen, walking the engineering team through a PRD you spent two weeks perfecting. You’ve got the user st...
@@ -2239,4 +2245,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 736 articles (391 blog + 345 news) + 8 core pages._
+_Total: 738 articles (392 blog + 346 news) + 8 core pages._

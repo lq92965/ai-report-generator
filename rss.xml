@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Attended 8 Meetings. You Made 1 Decision.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1789650065430.html</link>
+    <description><![CDATA[It’s 6 PM. Your laptop is covered in fingerprints, your coffee is cold, and your calendar looks like a game of Tetris you lost. You were in back-to-ba...]]></description>
+    <pubDate>Thu, 17 Sep 2026 13:01:05 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The API Contract Is Now a Negotiation]]></title>
+    <link>https://goreportify.com/article-pages/news-1789650032561.html</link>
+    <description><![CDATA[The alert fired at 2:17 AM. Not a crash, not a 503, but a spike in parsing errors from the customer onboarding service. A junior engineer, bleary-eyed...]]></description>
+    <pubDate>Thu, 17 Sep 2026 13:00:32 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Presented the PRD at Kickoff. You Should Have Pressure-Tested the Problem.]]></title>
     <link>https://goreportify.com/article-pages/blog-1789563727871.html</link>
     <description><![CDATA[It’s 10 AM on a Tuesday. You’re sharing your screen, walking the engineering team through a PRD you spent two weeks perfecting. You’ve got the user st...]]></description>
@@ -295,20 +307,6 @@ First, the executive summary email. High-level, green lights, confidence radiati
     <link>https://goreportify.com/article-pages/blog-1787230856593.html</link>
     <description><![CDATA[It’s 4:30 PM on a Friday. The release is out. Your engineering manager just sent the final list of merged pull requests to the releases channel. Now,...]]></description>
     <pubDate>Thu, 20 Aug 2026 13:00:56 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Shipped the Feature. You Forgot to Ship the Narrative.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1787144455454.html</link>
-    <description><![CDATA[The launch dashboard is green. Adoption is climbing. You close your laptop Friday afternoon feeling pretty good. Then Monday hits.
-
-A customer success...]]></description>
-    <pubDate>Wed, 19 Aug 2026 13:00:55 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Institutional Memory Is Hosted by a Third Party]]></title>
-    <link>https://goreportify.com/article-pages/news-1787144429118.html</link>
-    <description><![CDATA[The alert came in at 2:17 AM. A core payment service was failing, but only for customers in the EU. Maria, the on-call engineer, stared at a block of...]]></description>
-    <pubDate>Wed, 19 Aug 2026 13:00:29 GMT</pubDate>
   </item>
 </channel>
 </rss>
