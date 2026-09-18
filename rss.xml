@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Gave Sales a Date. Now You're Building Their Feature.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1789736459174.html</link>
+    <description><![CDATA[It started in a Slack DM. The VP of Sales pings you: “Hey, quick question. Acme Corp is about to sign, but they’re asking about the new dashboard. Can...]]></description>
+    <pubDate>Fri, 18 Sep 2026 13:00:59 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Localhost Is a Metered Service]]></title>
+    <link>https://goreportify.com/article-pages/news-1789736428767.html</link>
+    <description><![CDATA[The muscle memory is twenty years deep. You clone the repo, run the installer, and type docker-compose up. The fans on your laptop spin. Code compiles...]]></description>
+    <pubDate>Fri, 18 Sep 2026 13:00:28 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Attended 8 Meetings. You Made 1 Decision.]]></title>
     <link>https://goreportify.com/article-pages/blog-1789650065430.html</link>
     <description><![CDATA[It’s 6 PM. Your laptop is covered in fingerprints, your coffee is cold, and your calendar looks like a game of Tetris you lost. You were in back-to-ba...]]></description>
@@ -295,18 +307,6 @@ You...]]></description>
 
 First, the executive summary email. High-level, green lights, confidence radiating f...]]></description>
     <pubDate>Fri, 21 Aug 2026 13:00:57 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Map Is Redrawing the Territory]]></title>
-    <link>https://goreportify.com/article-pages/news-1787317229204.html</link>
-    <description><![CDATA[A historian friend spent last Tuesday searching for records of a minor 19th-century shipping dispute. The first page of results offered five confident...]]></description>
-    <pubDate>Fri, 21 Aug 2026 13:00:29 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[I Automated My Release Notes with an AI. Here's the Prompt]]></title>
-    <link>https://goreportify.com/article-pages/blog-1787230856593.html</link>
-    <description><![CDATA[It’s 4:30 PM on a Friday. The release is out. Your engineering manager just sent the final list of merged pull requests to the releases channel. Now,...]]></description>
-    <pubDate>Thu, 20 Aug 2026 13:00:56 GMT</pubDate>
   </item>
 </channel>
 </rss>

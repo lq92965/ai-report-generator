@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Gave Sales a Date. Now You're Building Their Feature.](https://goreportify.com/article-pages/blog-1789736459174.html)
+  - Type: Deep Insights | Date: 2026-09-18 | Author: Jessica Tran
+  - It started in a Slack DM. The VP of Sales pings you: “Hey, quick question. Acme Corp is about to sign, but they’re asking about the new dashboard. Can...
+- [The Localhost Is a Metered Service](https://goreportify.com/article-pages/news-1789736428767.html)
+  - Type: Tech Radar | Date: 2026-09-18 | Author: Olivia Thorne
+  - The muscle memory is twenty years deep. You clone the repo, run the installer, and type docker-compose up. The fans on your laptop spin. Code compiles...
 - [You Attended 8 Meetings. You Made 1 Decision.](https://goreportify.com/article-pages/blog-1789650065430.html)
   - Type: Deep Insights | Date: 2026-09-17 | Author: Marcus Webb
   - It’s 6 PM. Your laptop is covered in fingerprints, your coffee is cold, and your calendar looks like a game of Tetris you lost. You were in back-to-ba...
@@ -2245,4 +2251,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 738 articles (392 blog + 346 news) + 8 core pages._
+_Total: 740 articles (393 blog + 347 news) + 8 core pages._

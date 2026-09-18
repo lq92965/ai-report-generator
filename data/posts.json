@@ -1,5 +1,25 @@
 [
     {
+        "id": "1789736459174",
+        "type": "blog",
+        "title": "You Gave Sales a Date. Now You're Building Their Feature.",
+        "category": "Deep Insights",
+        "date": "2026-09-18",
+        "author": "Jessica Tran",
+        "excerpt": "It started in a Slack DM. The VP of Sales pings you: “Hey, quick question. Acme Corp is about to sign, but they’re asking about the new dashboard. Can...",
+        "contentFile": "blog-1789736459174.md"
+    },
+    {
+        "id": "1789736428767",
+        "type": "news",
+        "title": "The Localhost Is a Metered Service",
+        "category": "Tech Radar",
+        "date": "2026-09-18",
+        "author": "Olivia Thorne",
+        "excerpt": "The muscle memory is twenty years deep. You clone the repo, run the installer, and type docker-compose up. The fans on your laptop spin. Code compiles...",
+        "contentFile": "news-1789736428767.md"
+    },
+    {
         "id": "1789650065430",
         "type": "blog",
         "title": "You Attended 8 Meetings. You Made 1 Decision.",
