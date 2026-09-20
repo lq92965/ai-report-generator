@@ -20,7 +20,7 @@ xml_parts.append('        xmlns:news="http://www.google.com/schemas/sitemap-news
 
 for n in news:
     article_id = f"{n['type']}-{n['id']}"
-    url = f"https://www.goreportify.com/article-pages/{article_id}.html"
+    url = f"https://goreportify.com/article-pages/{article_id}.html"
     pub_date = n['date']
     title = n['title'].replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;').replace("'", '&apos;')
     

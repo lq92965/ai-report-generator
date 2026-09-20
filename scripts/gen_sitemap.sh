@@ -16,7 +16,7 @@ add_url() {
     local priority="$3"
     cat >> "$OUTPUT" << URL
   <url>
-    <loc>https://www.goreportify.com/${url}</loc>
+    <loc>https://goreportify.com/${url}</loc>
     <changefreq>${freq}</changefreq>
     <priority>${priority}</priority>
   </url>
@@ -45,7 +45,7 @@ add_url "admin.html" monthly 0.3
 for f in $(ls article-pages/ | sort -rn); do
     cat >> "$OUTPUT" << URL
   <url>
-    <loc>https://www.goreportify.com/article-pages/${f}</loc>
+    <loc>https://goreportify.com/article-pages/${f}</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
