@@ -30,4 +30,5 @@ Thumbs.db
 .env.*.local
 
 android/
-www/
+www/.env*
+.env.bak*

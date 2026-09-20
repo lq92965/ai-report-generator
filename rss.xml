@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Fixing Reporting Workflows with Better Execution]]></title>
+    <link>https://goreportify.com/article-pages/blog-1789909252571.html</link>
+    <description><![CDATA[...]]></description>
+    <pubDate>Sun, 20 Sep 2026 13:00:52 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Source of Truth Is Now an Echo Chamber]]></title>
+    <link>https://goreportify.com/article-pages/news-1789909226488.html</link>
+    <description><![CDATA[A support engineer types a query into the company’s new internal chatbot. "What's the rollback procedure for a failed deployment of microservice ares-...]]></description>
+    <pubDate>Sun, 20 Sep 2026 13:00:26 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Gave Sales a Date. Now You're Building Their Feature.]]></title>
     <link>https://goreportify.com/article-pages/blog-1789736459174.html</link>
     <description><![CDATA[It started in a Slack DM. The VP of Sales pings you: “Hey, quick question. Acme Corp is about to sign, but they’re asking about the new dashboard. Can...]]></description>
@@ -293,20 +305,6 @@ You...]]></description>
     <link>https://goreportify.com/article-pages/blog-1787403651842.html</link>
     <description><![CDATA[You just dumped 20 user interview transcripts into your favorite AI tool. You typed the magic words: "Summarize the key themes from this feedback." Te...]]></description>
     <pubDate>Sat, 22 Aug 2026 13:00:51 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Knowledge Transfer Is a Séance]]></title>
-    <link>https://goreportify.com/article-pages/news-1787403627593.html</link>
-    <description><![CDATA[The glow of the monitor is the only light in the room. A junior engineer stares at a stack trace bubbling up from a service whose original author was...]]></description>
-    <pubDate>Sat, 22 Aug 2026 13:00:27 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Sent Three Different Status Updates. Now You Have Three Different Versions of Reality]]></title>
-    <link>https://goreportify.com/article-pages/blog-1787317257192.html</link>
-    <description><![CDATA[It’s 4 PM on a Friday. You hit send on three different messages.
-
-First, the executive summary email. High-level, green lights, confidence radiating f...]]></description>
-    <pubDate>Fri, 21 Aug 2026 13:00:57 GMT</pubDate>
   </item>
 </channel>
 </rss>

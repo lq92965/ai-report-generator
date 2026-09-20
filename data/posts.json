@@ -1,5 +1,25 @@
 [
     {
+        "id": "1789909252571",
+        "type": "blog",
+        "title": "Fixing Reporting Workflows with Better Execution",
+        "category": "Deep Insights",
+        "date": "2026-09-20",
+        "author": "Sarah Jenkins",
+        "excerpt": "...",
+        "contentFile": "blog-1789909252571.md"
+    },
+    {
+        "id": "1789909226488",
+        "type": "news",
+        "title": "The Source of Truth Is Now an Echo Chamber",
+        "category": "Tech Radar",
+        "date": "2026-09-20",
+        "author": "Marcus Webb",
+        "excerpt": "A support engineer types a query into the company’s new internal chatbot. \"What's the rollback procedure for a failed deployment of microservice ares-...",
+        "contentFile": "news-1789909226488.md"
+    },
+    {
         "id": "1789736459174",
         "type": "blog",
         "title": "You Gave Sales a Date. Now You're Building Their Feature.",

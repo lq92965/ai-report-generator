@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Fixing Reporting Workflows with Better Execution](https://goreportify.com/article-pages/blog-1789909252571.html)
+  - Type: Deep Insights | Date: 2026-09-20 | Author: Sarah Jenkins
+  - ...
+- [The Source of Truth Is Now an Echo Chamber](https://goreportify.com/article-pages/news-1789909226488.html)
+  - Type: Tech Radar | Date: 2026-09-20 | Author: Marcus Webb
+  - A support engineer types a query into the company’s new internal chatbot. "What's the rollback procedure for a failed deployment of microservice ares-...
 - [You Gave Sales a Date. Now You're Building Their Feature.](https://goreportify.com/article-pages/blog-1789736459174.html)
   - Type: Deep Insights | Date: 2026-09-18 | Author: Jessica Tran
   - It started in a Slack DM. The VP of Sales pings you: “Hey, quick question. Acme Corp is about to sign, but they’re asking about the new dashboard. Can...
@@ -2251,4 +2257,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 740 articles (393 blog + 347 news) + 8 core pages._
+_Total: 742 articles (394 blog + 348 news) + 8 core pages._
