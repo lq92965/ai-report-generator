@@ -91,7 +91,7 @@ async function main() {
   console.log('');
 
   const apiPosts = await fetchArray('https://api.goreportify.com/api/posts-json');
-  const webPosts = await fetchArray('https://www.goreportify.com/data/posts.json');
+  const webPosts = await fetchArray('https://goreportify.com/data/posts.json');
 
   console.log('[Remote feeds]');
   if (apiPosts === null) {

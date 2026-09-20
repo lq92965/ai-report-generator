@@ -34,11 +34,11 @@
 
 ## Core Pages
 
-- Home: https://www.goreportify.com/
-- Generate Report: https://www.goreportify.com/generate.html
-- Pricing: https://www.goreportify.com/index.html#pricing
-- Blog: https://www.goreportify.com/blog.html
-- News: https://www.goreportify.com/news.html
+- Home: https://goreportify.com/
+- Generate Report: https://goreportify.com/generate.html
+- Pricing: https://goreportify.com/index.html#pricing
+- Blog: https://goreportify.com/blog.html
+- News: https://goreportify.com/news.html
 
 ## Features
 
@@ -131,8 +131,8 @@ const breadcrumbJson = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.goreportify.com/" },
-        { "@type": "ListItem", "position": 2, "name": sectionName, "item": `https://www.goreportify.com/${postData.type}.html` },
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://goreportify.com/" },
+        { "@type": "ListItem", "position": 2, "name": sectionName, "item": `https://goreportify.com/${postData.type}.html` },
         { "@type": "ListItem", "position": 3, "name": postData.title, "item": articleUrl }
     ]
 };

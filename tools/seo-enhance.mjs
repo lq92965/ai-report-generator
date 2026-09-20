@@ -22,7 +22,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
-const SITE_URL = 'https://www.goreportify.com';
+const SITE_URL = 'https://goreportify.com';
 const OG_IMAGE = `${SITE_URL}/images/og-default.png`;
 
 // ============================================================

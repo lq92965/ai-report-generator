@@ -1387,9 +1387,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         showToast("🎁 Welcome! Register now to claim your +5 Free Reports bonus!", "success");
         setTimeout(() => openModal('signup'), 1500); // 自动打开注册框
         window.history.replaceState({}, document.title, window.location.pathname);
-    } else if (modalAction && document.getElementById('auth-modal-overlay')) {
-        openModal(modalAction);
-        window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (modalAction) {
+        let tries = 0;
+        const tryOpen = () => {
+            if (document.getElementById('auth-modal-overlay')) {
+                openModal(modalAction);
+                window.history.replaceState({}, document.title, window.location.pathname);
+            } else if (tries++ < 20) {
+                setTimeout(tryOpen, 150);
+            }
+        };
+        tryOpen();
     }
 }); // 初始化结束
 
@@ -1410,6 +1418,25 @@ function finalizeLoginUiAfterToken() {
     if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
         lucide.createIcons();
     }
+
+    // Resume checkout: if the user clicked a paid plan before logging in, send them
+    // back to the subscription page with the plan preselected and auto-open PayPal.
+    try {
+        const pendingPlan = localStorage.getItem('pendingPlan');
+        if (pendingPlan) {
+            localStorage.removeItem('pendingPlan');
+            const wasYearly = localStorage.getItem('pendingPlanYearly') === '1';
+            localStorage.removeItem('pendingPlanYearly');
+            localStorage.setItem('resumePlan', pendingPlan);
+            localStorage.setItem('resumePlanYearly', wasYearly ? '1' : '0');
+            setTimeout(() => {
+                const target = (typeof HOME_REL === 'string' && HOME_REL)
+                    ? HOME_REL.replace('index.html', 'subscription.html')
+                    : 'subscription.html';
+                window.location.href = target + '?resume=' + encodeURIComponent(pendingPlan);
+            }, 600);
+        }
+    } catch (e) {}
 }
 
 /** Capacitor: bridge page → com.crickettechnology.reportifyai://oauth?bridge=… → exchange JWT via /api/oauth/bridge-token */
@@ -1623,6 +1650,12 @@ function setupAuthUI() {
                 await loadAccountPageAvatar();
                 if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
                     lucide.createIcons();
+                }
+                // Resume pending checkout (parity with Google OAuth path).
+                // If the user clicked a paid plan before logging in, send them
+                // back to subscription.html with the plan preselected.
+                if (typeof finalizeLoginUiAfterToken === 'function') {
+                    finalizeLoginUiAfterToken();
                 }
             } catch (err) {
                 showToast(err.message, "error");
@@ -3307,6 +3340,11 @@ function setupPayment() {
 
             // --- 逻辑 B: 付费版 (Basic / Pro) ---
             if (!token) {
+                // Remember the plan the user intended so we can resume checkout after login.
+                try {
+                    localStorage.setItem('pendingPlan', planType);
+                    localStorage.setItem('pendingPlanYearly', window.isYearlyBilling ? '1' : '0');
+                } catch (e) {}
                 showToast('Please login to upgrade.', 'info');
                 window.openModal('login');
                 return;
@@ -3460,6 +3498,23 @@ function setupPayment() {
 
     // subscription.html shows a "Current Plan" badge.
     refreshSubscriptionPlanBadge();
+
+    // If we returned here after login with an intended plan, auto-select it and start checkout.
+    try {
+        const resumePlan = localStorage.getItem('resumePlan');
+        if (resumePlan) {
+            localStorage.removeItem('resumePlan');
+            const resumeYearly = localStorage.getItem('resumePlanYearly') === '1';
+            localStorage.removeItem('resumePlanYearly');
+            setTimeout(() => {
+                const targetBtn = document.querySelector(`.choose-plan-btn[data-plan="${resumePlan}"]`);
+                if (targetBtn) {
+                    window.isYearlyBilling = resumeYearly;
+                    targetBtn.click();
+                }
+            }, 800);
+        }
+    } catch (e) {}
 }
 
 // --- 模块 H: 联系表单 ---

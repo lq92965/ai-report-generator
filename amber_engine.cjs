@@ -474,7 +474,7 @@ gtag('config', 'G-3PX3FEY6F6');
             "name": "Reportify AI",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://www.goreportify.com/logo-3d.png.png"
+                "url": "https://goreportify.com/logo-3d.png.png"
             }
         },
         "mainEntityOfPage": {

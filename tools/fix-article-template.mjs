@@ -14,13 +14,13 @@ let html = fs.readFileSync(filePath, 'utf8');
 
 // 找到第一组 OG 标签的结尾（第一个 </head> 之前的那一组 canonical）
 // 结构：第一组 canonical 结尾在 line 55，空一行 line 57，然后第二组开始
-// 我们删掉从 "    <!-- Open Graph / Social -->\n\n" (第二个) 到 "    <!-- Canonical -->\n    <link rel=\"canonical\" href=\"https://www.goreportify.com/article.html\" />\n\n</head>"
+// 我们删掉从 "    <!-- Open Graph / Social -->\n\n" (第二个) 到 "    <!-- Canonical -->\n    <link rel=\"canonical\" href=\"https://goreportify.com/article.html\" />\n\n</head>"
 
-// 更精准：找到第一个 "    <!-- Canonical -->\n    <link rel=\"canonical\" href=\"https://www.goreportify.com/article.html\" />\n\n    <!-- Open Graph / Social -->"
+// 更精准：找到第一个 "    <!-- Canonical -->\n    <link rel=\"canonical\" href=\"https://goreportify.com/article.html\" />\n\n    <!-- Open Graph / Social -->"
 // 然后删到 "</head>" 之前
 
-const dupStart = '    <!-- Canonical -->\n    <link rel="canonical" href="https://www.goreportify.com/article.html" />\n\n    <!-- Open Graph / Social -->';
-const dupEnd = '    <!-- Canonical -->\n    <link rel="canonical" href="https://www.goreportify.com/article.html" />\n\n</head>';
+const dupStart = '    <!-- Canonical -->\n    <link rel="canonical" href="https://goreportify.com/article.html" />\n\n    <!-- Open Graph / Social -->';
+const dupEnd = '    <!-- Canonical -->\n    <link rel="canonical" href="https://goreportify.com/article.html" />\n\n</head>';
 
 if (html.includes(dupStart)) {
     // 从第二个 OG 开始到 </head> 之前  

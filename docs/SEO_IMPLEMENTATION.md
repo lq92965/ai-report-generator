@@ -35,13 +35,13 @@ SEO 优化直接实现在 `amber_engine.cjs` 中，每次生成新文章（blog/
 ## 2. Sitemap
 
 在 `publishAndSEO()` 中自动生成 `sitemap.xml`，包含：
-- `https://www.goreportify.com/` (priority 1.0)
-- `https://www.goreportify.com/blog.html` (0.9)
-- `https://www.goreportify.com/news.html` (0.9)
-- `https://www.goreportify.com/generate.html` (0.8)
-- `https://www.goreportify.com/contact.html` (0.5)
-- `https://www.goreportify.com/privacy.html` (0.3)
-- `https://www.goreportify.com/terms.html` (0.3)
+- `https://goreportify.com/` (priority 1.0)
+- `https://goreportify.com/blog.html` (0.9)
+- `https://goreportify.com/news.html` (0.9)
+- `https://goreportify.com/generate.html` (0.8)
+- `https://goreportify.com/contact.html` (0.5)
+- `https://goreportify.com/privacy.html` (0.3)
+- `https://goreportify.com/terms.html` (0.3)
 - 每篇文章独立页面 (0.7)
 
 位置: `amber_engine.cjs` → `publishAndSEO()` 函数 (约第 539 行)

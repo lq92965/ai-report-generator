@@ -8,37 +8,37 @@ const cfg = {
   'index.html': {
     t: 'Reportify AI - AI Report Generator',
     d: 'Generate professional reports in seconds with Reportify AI. AI-powered daily, weekly, and executive report generator for modern teams.',
-    c: 'https://www.goreportify.com/',
+    c: 'https://goreportify.com/',
     tp: 'website',
     kw: 'AI report generator, weekly report tool, automated report writing',
     j: {"@context":"https://schema.org","@graph":[
-      {"@type":"Organization","@id":"https://www.goreportify.com/#organization","name":"Reportify AI","url":"https://www.goreportify.com","logo":{"@type":"ImageObject","url":"https://www.goreportify.com/logo-3d.png.png"},"description":"AI-powered report generation platform for modern teams."},
-      {"@type":"WebSite","@id":"https://www.goreportify.com/#website","url":"https://www.goreportify.com","name":"Reportify AI","description":"Generate professional reports in seconds with AI","publisher":{"@id":"https://www.goreportify.com/#organization"}},
-      {"@type":"SoftwareApplication","@id":"https://www.goreportify.com/#software","name":"Reportify AI","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"AI-powered daily, weekly, and executive report generator."}
+      {"@type":"Organization","@id":"https://goreportify.com/#organization","name":"Reportify AI","url":"https://goreportify.com","logo":{"@type":"ImageObject","url":"https://goreportify.com/logo-3d.png.png"},"description":"AI-powered report generation platform for modern teams."},
+      {"@type":"WebSite","@id":"https://goreportify.com/#website","url":"https://goreportify.com","name":"Reportify AI","description":"Generate professional reports in seconds with AI","publisher":{"@id":"https://goreportify.com/#organization"}},
+      {"@type":"SoftwareApplication","@id":"https://goreportify.com/#software","name":"Reportify AI","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"AI-powered daily, weekly, and executive report generator."}
     ]}
   },
-  'blog.html': {t:'Deep Insights - Reportify AI Blog',d:'Expert insights on AI, productivity, and modern report writing. Learn how AI can transform your workflow.',c:'https://www.goreportify.com/blog.html',tp:'blog',j:{"@context":"https://schema.org","@type":"Blog","@id":"https://www.goreportify.com/blog.html#blog","name":"Deep Insights - Reportify AI Blog","description":"Expert insights on AI, productivity, and modern report writing.","publisher":{"@type":"Organization","name":"Reportify AI","url":"https://www.goreportify.com"}}},
-  'news.html': {t:'Global Tech Radar - Reportify AI',d:'Stay updated with the latest tech news and AI industry trends. Curated tech radar by Reportify AI.',c:'https://www.goreportify.com/news.html',tp:'website',j:{"@context":"https://schema.org","@type":"CollectionPage","@id":"https://www.goreportify.com/news.html#page","name":"Global Tech Radar - Reportify AI","description":"Curated tech news and AI industry trends.","publisher":{"@type":"Organization","name":"Reportify AI","url":"https://www.goreportify.com"}}},
-  'generate.html': {t:'Generate Report - Reportify AI',d:'Create professional AI-powered reports instantly. Choose from daily, weekly, or executive report templates.',c:'https://www.goreportify.com/generate.html',tp:'website',j:null},
-  'usage.html': {t:'Usage & Limits - Reportify AI',d:'Track your Reportify AI usage, manage credits, and view report generation history.',c:'https://www.goreportify.com/usage.html',tp:'website',j:null},
-  'account.html': {t:'Account - Reportify AI',d:'Manage your Reportify AI account settings and preferences.',c:'https://www.goreportify.com/account.html',tp:'website',j:null},
-  'profile.html': {t:'Profile - Reportify AI',d:'Edit your Reportify AI profile and personal information.',c:'https://www.goreportify.com/profile.html',tp:'website',j:null},
-  'subscription.html': {t:'Subscription - Reportify AI',d:'Manage your Reportify AI subscription plan and billing.',c:'https://www.goreportify.com/subscription.html',tp:'website',j:null},
-  'payments.html': {t:'Payments - Reportify AI',d:'Payment history and billing management for Reportify AI.',c:'https://www.goreportify.com/payments.html',tp:'website',j:null},
-  'security.html': {t:'Security - Reportify AI',d:'Security settings and authentication management for your Reportify AI account.',c:'https://www.goreportify.com/security.html',tp:'website',j:null},
-'privacy.html': {t:'Privacy Policy - Reportify AI',d:'Read the Reportify AI privacy policy. Learn how we collect, use, and protect your data.',c:'https://www.goreportify.com/privacy.html',tp:'website',j:null},
-  'terms.html': {t:'Terms of Service - Reportify AI',d:'Read the Reportify AI terms of service and conditions of use.',c:'https://www.goreportify.com/terms.html',tp:'website',j:null},
-  'contact.html': {t:'Contact Us - Reportify AI',d:'Get in touch with the Reportify AI team. We are here to help with any questions or feedback.',c:'https://www.goreportify.com/contact.html',tp:'website',j:null},
-  'history.html': {t:'Report History - Reportify AI',d:'View your report generation history and past AI-generated reports.',c:'https://www.goreportify.com/history.html',tp:'website',j:null},
-  'admin.html': {t:'Admin - Reportify AI',d:'Reportify AI administration panel.',c:'https://www.goreportify.com/admin.html',tp:'website',j:null},
-  'templates.html': {t:'Report Templates - Reportify AI',d:'Browse report templates for daily, weekly, monthly, and executive reports powered by Reportify AI.',c:'https://www.goreportify.com/templates.html',tp:'website',j:null},
-  'oauth-native-bridge.html': {t:'Sign In - Reportify AI',d:'Sign in to your Reportify AI account to generate AI-powered reports.',c:'https://www.goreportify.com/oauth-native-bridge.html',tp:'website',j:null}
+  'blog.html': {t:'Deep Insights - Reportify AI Blog',d:'Expert insights on AI, productivity, and modern report writing. Learn how AI can transform your workflow.',c:'https://goreportify.com/blog.html',tp:'blog',j:{"@context":"https://schema.org","@type":"Blog","@id":"https://goreportify.com/blog.html#blog","name":"Deep Insights - Reportify AI Blog","description":"Expert insights on AI, productivity, and modern report writing.","publisher":{"@type":"Organization","name":"Reportify AI","url":"https://goreportify.com"}}},
+  'news.html': {t:'Global Tech Radar - Reportify AI',d:'Stay updated with the latest tech news and AI industry trends. Curated tech radar by Reportify AI.',c:'https://goreportify.com/news.html',tp:'website',j:{"@context":"https://schema.org","@type":"CollectionPage","@id":"https://goreportify.com/news.html#page","name":"Global Tech Radar - Reportify AI","description":"Curated tech news and AI industry trends.","publisher":{"@type":"Organization","name":"Reportify AI","url":"https://goreportify.com"}}},
+  'generate.html': {t:'Generate Report - Reportify AI',d:'Create professional AI-powered reports instantly. Choose from daily, weekly, or executive report templates.',c:'https://goreportify.com/generate.html',tp:'website',j:null},
+  'usage.html': {t:'Usage & Limits - Reportify AI',d:'Track your Reportify AI usage, manage credits, and view report generation history.',c:'https://goreportify.com/usage.html',tp:'website',j:null},
+  'account.html': {t:'Account - Reportify AI',d:'Manage your Reportify AI account settings and preferences.',c:'https://goreportify.com/account.html',tp:'website',j:null},
+  'profile.html': {t:'Profile - Reportify AI',d:'Edit your Reportify AI profile and personal information.',c:'https://goreportify.com/profile.html',tp:'website',j:null},
+  'subscription.html': {t:'Subscription - Reportify AI',d:'Manage your Reportify AI subscription plan and billing.',c:'https://goreportify.com/subscription.html',tp:'website',j:null},
+  'payments.html': {t:'Payments - Reportify AI',d:'Payment history and billing management for Reportify AI.',c:'https://goreportify.com/payments.html',tp:'website',j:null},
+  'security.html': {t:'Security - Reportify AI',d:'Security settings and authentication management for your Reportify AI account.',c:'https://goreportify.com/security.html',tp:'website',j:null},
+'privacy.html': {t:'Privacy Policy - Reportify AI',d:'Read the Reportify AI privacy policy. Learn how we collect, use, and protect your data.',c:'https://goreportify.com/privacy.html',tp:'website',j:null},
+  'terms.html': {t:'Terms of Service - Reportify AI',d:'Read the Reportify AI terms of service and conditions of use.',c:'https://goreportify.com/terms.html',tp:'website',j:null},
+  'contact.html': {t:'Contact Us - Reportify AI',d:'Get in touch with the Reportify AI team. We are here to help with any questions or feedback.',c:'https://goreportify.com/contact.html',tp:'website',j:null},
+  'history.html': {t:'Report History - Reportify AI',d:'View your report generation history and past AI-generated reports.',c:'https://goreportify.com/history.html',tp:'website',j:null},
+  'admin.html': {t:'Admin - Reportify AI',d:'Reportify AI administration panel.',c:'https://goreportify.com/admin.html',tp:'website',j:null},
+  'templates.html': {t:'Report Templates - Reportify AI',d:'Browse report templates for daily, weekly, monthly, and executive reports powered by Reportify AI.',c:'https://goreportify.com/templates.html',tp:'website',j:null},
+  'oauth-native-bridge.html': {t:'Sign In - Reportify AI',d:'Sign in to your Reportify AI account to generate AI-powered reports.',c:'https://goreportify.com/oauth-native-bridge.html',tp:'website',j:null}
 };
 
 function esc(s){return String(s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/&/g,'&amp;')}
 function inj(html,f){
   const p=cfg[f];if(!p)return{html,mod:false,ch:[]};
-  let mod=false,ch=[];const sn='Reportify AI',iu='https://www.goreportify.com/images/og-default.png',pu=p.c,da=esc(p.d||'');
+  let mod=false,ch=[];const sn='Reportify AI',iu='https://goreportify.com/images/og-default.png',pu=p.c,da=esc(p.d||'');
   const hi=html.indexOf('</head>');if(hi===-1)return{html,mod:false,ch:[]};
   const bh=html.slice(0,hi),ah=html.slice(hi);
   const h={};h.ds=/name=["']description["']/.test(bh);h.kw=/name=["']keywords["']/.test(bh);h.og=/property=["']og:title["']/.test(bh);
