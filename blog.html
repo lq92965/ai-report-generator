@@ -75,8 +75,7 @@
                     <img src="logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain;">
                     <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
                 </a>
-                <a id="blog-home-btn" href="index.html" class="home-btn" title="Back to Home" aria-label="Back to Home"><i class="fas fa-home"></i><span class="home-btn-text">Home</span></a>
-                <a id="blog-list-back" href="blog.html" class="unified-back-btn hidden" aria-hidden="true"><span class="back-arrow">←</span><span class="back-text">Previous Page</span></a>
+                <!-- 顶栏只保留 Logo + 主导航；返回键统一放在正文左上角（见 #list-back-wrap） -->
             </div>
             <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
                 <ul class="flex gap-6 font-medium text-gray-600">
@@ -99,6 +98,11 @@
 
     <main class="flex-grow pt-4 pb-20">
         <div class="max-w-6xl mx-auto px-6">
+            <!-- 返回键：正文左上角（顶栏只留 Logo + 导航）。仅在第 2 页及以后显示，
+                 文案为 "Previous Page"，指向上一页列表。 -->
+            <div id="list-back-wrap" class="mb-4 hidden">
+                <a id="blog-list-back" href="blog.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Previous Page</span></a>
+            </div>
             <div class="text-center mb-8 md:mb-16">
                 <h1 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-2 tracking-tight">Deep Insights</h1>
                 <p class="text-xs sm:text-sm text-gray-600 max-w-2xl mx-auto leading-relaxed">Elevate your strategic thinking with masterclasses in productivity, PM workflows, and AI-driven growth.</p>
@@ -293,20 +297,19 @@
                 if (currentPage > totalPages) currentPage = totalPages;
 
                 function syncBlogListBack() {
-                    const logo = document.getElementById('pwa-header-logo');
+                    // 顶栏 Logo 始终保留（不再随翻页隐藏）；返回键只控制正文里的包装层
+                    const wrap = document.getElementById('list-back-wrap');
                     const a = document.getElementById('blog-list-back');
-                    if (!logo || !a) return;
+                    if (!wrap || !a) return;
                     const p = parseInt(urlParams.get('p'), 10) || 1;
                     if (p <= 1) {
-                        logo.classList.remove('hidden');
-                        logo.setAttribute('aria-hidden', 'false');
-                        a.classList.add('hidden');
+                        // 第一页：不需要「上一页」，隐藏
+                        wrap.classList.add('hidden');
                         a.setAttribute('aria-hidden', 'true');
                         return;
                     }
-                    logo.classList.add('hidden');
-                    logo.setAttribute('aria-hidden', 'true');
-                    a.classList.remove('hidden');
+                    // 第 2 页及以后：显示上一页入口
+                    wrap.classList.remove('hidden');
                     a.setAttribute('aria-hidden', 'false');
                     const prev = p - 1;
                     a.setAttribute('href', prev === 1 ? 'blog.html' : 'blog.html?p=' + encodeURIComponent(String(prev)));

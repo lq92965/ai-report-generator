@@ -51,7 +51,11 @@
     <header class="main-header account-header pwa-app-header">
         <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
             <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
-                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
+                <!-- 顶栏与其他页保持一致：保留 Logo；返回键移至正文左上角 -->
+                <a id="pwa-header-logo" href="index.html" class="logo flex items-center gap-2 no-underline" style="text-decoration: none;">
+                    <img src="logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain;">
+                    <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
+                </a>
             </div>
             <nav class="main-nav pwa-desktop-nav" id="pwa-collapse-nav">
                 <ul>
@@ -73,6 +77,10 @@
     </header>
 
     <section id="pricing" class="pricing-section" style="padding: 2rem 0;">
+        <!-- 返回键：正文左上角（顶栏只留 Logo + 导航）；与本页标题同宽居中 -->
+        <div style="max-width: 1200px; margin: 0 auto 4px; padding: 0 20px;">
+            <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
+        </div>
         <div class="container" style="max-width: 1200px; margin: 0 auto 40px; text-align: center; padding: 0 20px;">
             <h1 style="font-size: 2.5rem; color: #333; margin-bottom: 10px;">Choose Your Plan</h1>
             <p style="color: #666; font-size: 1rem; margin-bottom: 2rem;">

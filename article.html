@@ -81,8 +81,7 @@
                     <img src="logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain;">
                     <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
                 </a>
-                <a id="article-home-btn" href="index.html" class="home-btn" title="Back to Home" aria-label="Back to Home"><i class="fas fa-home"></i><span class="home-btn-text">Home</span></a>
-                <a href="blog.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Blog</span></a>
+                <!-- 返回键已移至正文左上角（见 #article-back-wrap），顶栏只保留 Logo + 主导航 -->
             </div>
             <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
                 <ul class="flex gap-6 font-medium text-gray-600">
@@ -105,7 +104,13 @@
 <main class="flex-grow py-4">
         <article class="max-w-4xl mx-auto px-6">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-8">
-            
+
+            <!-- 返回键：统一放在正文左上角（顶栏只留 Logo + 导航）。
+                 文案由 JS 按文章类型切换为 Back to Blog / Back to News。 -->
+            <div id="article-back-wrap" class="mb-5">
+                <a id="article-back-btn" href="blog.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Blog</span></a>
+            </div>
+
             <div id="article-header" class="mb-10 pb-8 border-b border-gray-100">
                 <div class="text-center text-gray-400 py-10"><i class="fas fa-spinner fa-spin text-2xl"></i></div>
             </div>
@@ -352,18 +357,18 @@
                     link.setAttribute('href', canonical);
                 })();
 
-                const backBtn = document.querySelector('.unified-back-btn');
+                const backBtn = document.getElementById('article-back-btn');
                 if (backBtn) {
                     const listPage = post.type === 'news' ? 'news.html' : 'blog.html';
                     const sectionName = post.type === 'news' ? 'News' : 'Blog';
                     const lp = parseInt(urlParams.get('lp'), 10) || 1;
                     if (lp <= 1) {
                         backBtn.setAttribute('href', listPage);
-                        backBtn.innerHTML = `<span class="back-arrow">←</span><span class="back-text">Back to ${sectionName}</span>`;
                     } else {
+                        // 从列表第 N 页进来的，返回该页而不是回到第 1 页
                         backBtn.setAttribute('href', `${listPage}?p=${encodeURIComponent(String(lp))}`);
-                        backBtn.innerHTML = `<span class="back-arrow">←</span><span class="back-text">Previous Page</span>`;
                     }
+                    backBtn.innerHTML = `<span class="back-arrow">←</span><span class="back-text">Back to ${sectionName}</span>`;
                 }
 
                 // 渲染精美的分类、时间、大标题和作者头部

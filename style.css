@@ -2815,3 +2815,43 @@ body.has-app-nav .fixed.bottom-8 {
 @media (prefers-reduced-motion: reduce) {
     .sk-line { animation: none; }
 }
+
+/* ============================================================
+   正文区返回键 (back link in page body)
+   背景：返回键已从顶栏移至正文左上角，且需在桌面端同样生效。
+   mobile-patch.css 里的 .unified-back-btn 基础样式只作用于 <=768px，
+   这里补齐桌面端（以及统一）的样式，避免桌面端出现默认大号蓝链接。
+   ============================================================ */
+.unified-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 400;
+    text-decoration: none;
+    padding: 4px 0;
+    margin: 0 0 12px 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    line-height: 1.4;
+    transition: color .15s ease;
+}
+.unified-back-btn:hover,
+.unified-back-btn:visited {
+    color: #4b5563;
+    text-decoration: none;
+}
+.unified-back-btn .back-arrow {
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1;
+}
+.unified-back-btn .back-text {
+    font-size: inherit;
+}
+/* 顶栏内若仍有返回键（如 account 相关页），保持不撑高顶栏 */
+header.main-header.pwa-app-header .pwa-header-leading .unified-back-btn {
+    margin-bottom: 0;
+}
