@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="style.css?v=3.5">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="mobile-patch.css?v=2026.17">
-    <script src="mobile-patch.js?v=2026.13"></script>
+    <script src="mobile-patch.js?v=2026.17"></script>
 
     <!-- Open Graph / Social -->
     <meta property="og:type" content="website" />
@@ -98,8 +98,11 @@
 
     <main class="flex-grow pt-4 pb-20">
         <div class="max-w-6xl mx-auto px-6">
-            <!-- 返回键：正文左上角（顶栏只留 Logo + 导航）。仅在第 2 页及以后显示，
-                 文案为 "Previous Page"，指向上一页列表。 -->
+            <!-- 返回键：正文左上角（顶栏只留 Logo + 导航） -->
+            <div class="mb-4 text-left">
+                <a href="index.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Home</span></a>
+            </div>
+            <!-- 分页返回键：仅在第 2 页及以后显示，文案为 "Previous Page"，指向上一页列表。 -->
             <div id="list-back-wrap" class="mb-4 hidden">
                 <a id="blog-list-back" href="blog.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Previous Page</span></a>
             </div>

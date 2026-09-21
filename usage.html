@@ -131,7 +131,7 @@
 
     </style>
     <link rel="stylesheet" href="mobile-patch.css?v=2026.17">
-    <script src="mobile-patch.js?v=2026.13"></script>
+    <script src="mobile-patch.js?v=2026.17"></script>
 
     <!-- Open Graph / Social -->
     <meta property="og:type" content="website" />
@@ -291,11 +291,11 @@
             <div class="site-footer-social">
                 <a href="https://discord.gg/UtNfS8kH" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
                 <a href="https://www.reddit.com/user/Automatic_Pitch5117" target="_blank" rel="noopener noreferrer" title="Reddit" aria-label="Reddit"><i class="fa-brands fa-reddit-alien"></i></a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://google.com" target="_blank" rel="noopener noreferrer" title="Google" aria-label="Google"><i class="fa-brands fa-google"></i></a>
+                <a href="https://x.com/reportifyai" target="_blank" rel="noopener noreferrer" title="X (Twitter)" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://linkedin.com/company/reportifyai" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://youtube.com/@reportifyai" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://facebook.com/reportifyai" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="index.html" target="_blank" rel="noopener noreferrer" title="Website" aria-label="Website"><i class="fa-solid fa-globe"></i></a>
             </div>
             <div class="site-footer-legal">
                 <a href="terms.html">Terms of Service</a>
@@ -413,6 +413,27 @@
                 document.getElementById('plan-name').textContent = "Error loading data";
             }
         });
+
+        // 🛡️ 兜底：若 8 秒内仍未拿到数据（接口挂起/网络问题），
+        // 避免页面永远停留在 "LOADING..." 状态。
+        setTimeout(function () {
+            const planEl = document.getElementById('plan-name');
+            if (planEl && /LOADING/i.test(planEl.textContent)) {
+                planEl.textContent = 'Unavailable';
+                planEl.style.color = '#94a3b8';
+                ['usage-used', 'usage-limit', 'stat-daysleft'].forEach(function (id) {
+                    const el = document.getElementById(id);
+                    if (el && /LOADING/i.test(el.textContent)) el.textContent = '—';
+                });
+                const rem = document.getElementById('stat-remaining');
+                if (rem && /LOADING/i.test(rem.textContent)) rem.textContent = '—';
+                const note = document.getElementById('usage-subscription-note');
+                if (note && !note.style.display) {
+                    note.textContent = 'Unable to load usage data right now. Please refresh the page.';
+                    note.style.display = 'block';
+                }
+            }
+        }, 8000);
 
         // 🟢 全能分享链接生成器
         function updateShareLinks(code) {

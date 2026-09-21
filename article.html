@@ -68,7 +68,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="mobile-patch.css?v=2026.17">
-    <script src="mobile-patch.js?v=2026.13"></script>
+    <script src="mobile-patch.js?v=2026.17"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 
 </head>
@@ -107,8 +107,9 @@
 
             <!-- 返回键：统一放在正文左上角（顶栏只留 Logo + 导航）。
                  文案由 JS 按文章类型切换为 Back to Blog / Back to News。 -->
-            <div id="article-back-wrap" class="mb-5">
+            <div id="article-back-wrap" class="mb-3 flex items-center gap-4 flex-wrap">
                 <a id="article-back-btn" href="blog.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Blog</span></a>
+                <a href="index.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Home</span></a>
             </div>
 
             <div id="article-header" class="mb-10 pb-8 border-b border-gray-100">
