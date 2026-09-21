@@ -392,6 +392,24 @@
 
                 // Markdown detail fallback: API -> public site -> bundled local
                 const file = String(post.contentFile || '');
+
+                // 立即插入加载骨架，避免「只有图片、没有文字」的空窗期。
+                // 正文 markdown 需要异步拉取（最长 ~9s），期间用户不应看到空白区域。
+                (function showSkeleton() {
+                    const mount = document.getElementById('article-content');
+                    if (!mount) return;
+                    mount.innerHTML = `
+                        <div class="animate-pulse space-y-4" aria-busy="true" aria-live="polite">
+                            <div class="h-4 bg-gray-200 rounded w-full"></div>
+                            <div class="h-4 bg-gray-200 rounded w-11/12"></div>
+                            <div class="h-4 bg-gray-200 rounded w-10/12"></div>
+                            <div class="h-4 bg-gray-200 rounded w-full"></div>
+                            <div class="h-4 bg-gray-200 rounded w-9/12"></div>
+                            <div class="h-4 bg-gray-200 rounded w-11/12"></div>
+                        </div>
+                    `;
+                })();
+
                 const bust = Date.now();
                 const mdCandidates = [
                     `https://api.goreportify.com/api/content/${encodeURIComponent(file)}?t=${bust}`,
@@ -482,7 +500,21 @@
                 });
             } catch (error) {
                 console.error(error);
-                document.getElementById('article-content').innerHTML = '<p class="text-center text-gray-500 py-10">Oops! The article you are looking for could not be loaded.</p>';
+                const mount = document.getElementById('article-content');
+                if (mount) {
+                    mount.innerHTML = `
+                        <div class="text-center py-12">
+                            <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+                                <i class="fas fa-file-circle-exclamation text-gray-400 text-xl"></i>
+                            </div>
+                            <p class="text-gray-700 font-bold mb-1">This article couldn't be loaded.</p>
+                            <p class="text-gray-500 text-sm mb-5">Check your connection and try again.</p>
+                            <button onclick="location.reload()" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2.5 rounded-lg transition">
+                                <i class="fas fa-rotate-right"></i> Retry
+                            </button>
+                        </div>
+                    `;
+                }
             }
         });
     </script>
