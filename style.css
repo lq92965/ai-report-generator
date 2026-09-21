@@ -2732,3 +2732,35 @@ body.has-app-nav .fixed.bottom-8 {
         display: block !important;
     }
 }
+
+/* --- home-btn (list pages) --- */
+.home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 10px;
+    padding: 5px 12px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #2563eb;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 999px;
+    text-decoration: none !important;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.home-btn:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+}
+.home-btn i {
+    font-size: 0.8125rem;
+    line-height: 1;
+}
+@media (max-width: 480px) {
+    .home-btn { padding: 5px 9px; margin-left: 6px; }
+    .home-btn .home-btn-text { display: none; }
+}

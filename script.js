@@ -100,7 +100,7 @@ window.reportifyFetchPostsJson = async function reportifyFetchPostsJson() {
     let lastErr = null;
     const settled = await Promise.allSettled(
         candidates.map(async (url) => {
-            const timeoutMs = /^data\//i.test(url) ? 700 : 1800;
+            const timeoutMs = /^data\//i.test(url) ? 4000 : 9000;
             const data = await fetchJsonWithTimeout(url, timeoutMs);
             return { url, data, catalogDate: latestPostsCatalogDate(data) };
         })
