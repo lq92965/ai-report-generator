@@ -443,6 +443,8 @@ html.pwa-nb-detail-layout body.has-app-nav main.flex-grow > article.max-w-4xl.mx
 
 /*
  * News/Blog 详情页首图：防止在 WebView / Tailwind prose 下被压扁。
+ * 注意：原先的 max-height:none 会让 1200px 宽的封面在手机上撑满整个首屏（~530px），
+ * 用户会误以为「文章只有图片没有文字」。改为给一个上限：既不会压扁，也不会霸屏。
  */
 #article-content img,
 #article-content figure.article-cover img,
@@ -450,18 +452,28 @@ html.pwa-nb-detail-layout body.has-app-nav main.flex-grow > article.max-w-4xl.mx
     width: 100% !important;
     max-width: 100% !important;
     height: auto !important;
-    max-height: none !important;
+    max-height: 300px !important;
     min-height: 0 !important;
-    object-fit: contain !important;
+    object-fit: cover !important;
     object-position: center center !important;
     display: block !important;
     flex-shrink: 0 !important;
 }
 
+@media (min-width: 768px) {
+    #article-content figure.article-cover img,
+    #article-content .article-cover-img {
+        max-height: 380px !important;
+    }
+}
+
 #article-content figure.article-cover {
-    margin: 0 0 1.75rem 0;
+    margin: 0 0 1.25rem 0;
     width: 100%;
     max-width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    line-height: 0;
 }
 
 /* Native app: 白/浅底 → 欢迎层 → 主界面（JS 中延迟挂载；首帧多为白屏） */

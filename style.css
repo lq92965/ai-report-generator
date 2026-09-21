@@ -2689,9 +2689,26 @@ body.has-app-nav .fixed.bottom-8 {
     display: block;
 }
 
+/* 封面图高度上限：未加限制时 1200px 宽的图在手机上可占满整个首屏（~530px），
+   用户以为"文章只有图片没有文字"。限制高度后首屏即可露出标题与正文首段。 */
+#article-content figure.article-cover img,
+#article-content .article-cover-img {
+    max-height: 300px;
+    object-fit: cover;
+}
+@media (min-width: 768px) {
+    #article-content figure.article-cover img,
+    #article-content .article-cover-img {
+        max-height: 380px;
+    }
+}
+
 #article-content figure.article-cover {
-    margin: 0 0 1.75rem 0;
+    margin: 0 0 1.25rem 0;
     width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    line-height: 0;
 }
 
 /* =============================================================================
@@ -2734,7 +2751,10 @@ body.has-app-nav .fixed.bottom-8 {
 }
 
 /* --- home-btn (list pages) --- */
-.home-btn {
+/* 注意：必须压过 `.main-header a`（0,1,1），否则文字被刷成 #333，
+   与浅蓝底 (#eff6ff) 对比不足，按钮在白色顶栏里几乎不可见。
+   原 `.home-btn` 只有 (0,1,0)，会被覆盖 —— 这里用 .home-btn.home-btn 提升到 (0,2,0)。 */
+.home-btn.home-btn {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -2742,7 +2762,7 @@ body.has-app-nav .fixed.bottom-8 {
     padding: 5px 12px;
     font-size: 0.8125rem;
     font-weight: 600;
-    color: #2563eb;
+    color: #2563eb !important;
     background: #eff6ff;
     border: 1px solid #bfdbfe;
     border-radius: 999px;
@@ -2751,16 +2771,47 @@ body.has-app-nav .fixed.bottom-8 {
     flex-shrink: 0;
     transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
-.home-btn:hover {
+.home-btn.home-btn:hover,
+.home-btn.home-btn:visited {
     background: #2563eb;
     border-color: #2563eb;
-    color: #ffffff;
+    color: #ffffff !important;
 }
-.home-btn i {
+.home-btn.home-btn i {
     font-size: 0.8125rem;
     line-height: 1;
 }
 @media (max-width: 480px) {
-    .home-btn { padding: 5px 9px; margin-left: 6px; }
-    .home-btn .home-btn-text { display: none; }
+    .home-btn.home-btn { padding: 5px 9px; margin-left: 6px; }
+    .home-btn.home-btn .home-btn-text { display: none; }
+}
+
+/* --- 列表页骨架屏 (blog/news) --- */
+/* 目的：异步拉取文章时用同构占位块替代 "Loading..." 文字，减少布局跳动与闪烁。 */
+.skeleton-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.sk-line {
+    height: 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #eef1f5 25%, #e2e7ee 37%, #eef1f5 63%);
+    background-size: 400% 100%;
+    animation: sk-shimmer 1.3s ease-in-out infinite;
+}
+.sk-badge { width: 38%; height: 10px; }
+.sk-title { width: 92%; height: 17px; margin-bottom: 8px; }
+.sk-text  { width: 100%; }
+.sk-btn   { width: 34%; height: 14px; margin-top: 16px; margin-bottom: 0; }
+.sk-short { width: 62%; }
+@keyframes sk-shimmer {
+    0%   { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .sk-line { animation: none; }
 }

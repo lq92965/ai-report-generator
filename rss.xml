@@ -8,169 +8,169 @@
     <title><![CDATA[Fixing Reporting Workflows with Better Execution]]></title>
     <link>https://goreportify.com/article-pages/blog-1789909252571.html</link>
     <description><![CDATA[...]]></description>
-    <pubDate>Sun, 20 Sep 2026 13:00:52 GMT</pubDate>
+    <pubDate>Sun, 20 Sep 2026 13:00:52 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Source of Truth Is Now an Echo Chamber]]></title>
     <link>https://goreportify.com/article-pages/news-1789909226488.html</link>
     <description><![CDATA[A support engineer types a query into the company’s new internal chatbot. "What's the rollback procedure for a failed deployment of microservice ares-...]]></description>
-    <pubDate>Sun, 20 Sep 2026 13:00:26 GMT</pubDate>
+    <pubDate>Sun, 20 Sep 2026 13:00:26 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[You Gave Sales a Date. Now You're Building Their Feature.]]></title>
     <link>https://goreportify.com/article-pages/blog-1789736459174.html</link>
     <description><![CDATA[It started in a Slack DM. The VP of Sales pings you: “Hey, quick question. Acme Corp is about to sign, but they’re asking about the new dashboard. Can...]]></description>
-    <pubDate>Fri, 18 Sep 2026 13:00:59 GMT</pubDate>
+    <pubDate>Fri, 18 Sep 2026 13:00:59 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Localhost Is a Metered Service]]></title>
     <link>https://goreportify.com/article-pages/news-1789736428767.html</link>
     <description><![CDATA[The muscle memory is twenty years deep. You clone the repo, run the installer, and type docker-compose up. The fans on your laptop spin. Code compiles...]]></description>
-    <pubDate>Fri, 18 Sep 2026 13:00:28 GMT</pubDate>
+    <pubDate>Fri, 18 Sep 2026 13:00:28 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[You Attended 8 Meetings. You Made 1 Decision.]]></title>
     <link>https://goreportify.com/article-pages/blog-1789650065430.html</link>
     <description><![CDATA[It’s 6 PM. Your laptop is covered in fingerprints, your coffee is cold, and your calendar looks like a game of Tetris you lost. You were in back-to-ba...]]></description>
-    <pubDate>Thu, 17 Sep 2026 13:01:05 GMT</pubDate>
+    <pubDate>Thu, 17 Sep 2026 13:01:05 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The API Contract Is Now a Negotiation]]></title>
     <link>https://goreportify.com/article-pages/news-1789650032561.html</link>
     <description><![CDATA[The alert fired at 2:17 AM. Not a crash, not a 503, but a spike in parsing errors from the customer onboarding service. A junior engineer, bleary-eyed...]]></description>
-    <pubDate>Thu, 17 Sep 2026 13:00:32 GMT</pubDate>
+    <pubDate>Thu, 17 Sep 2026 13:00:32 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[You Presented the PRD at Kickoff. You Should Have Pressure-Tested the Problem.]]></title>
     <link>https://goreportify.com/article-pages/blog-1789563727871.html</link>
     <description><![CDATA[It’s 10 AM on a Tuesday. You’re sharing your screen, walking the engineering team through a PRD you spent two weeks perfecting. You’ve got the user st...]]></description>
-    <pubDate>Wed, 16 Sep 2026 13:02:07 GMT</pubDate>
+    <pubDate>Wed, 16 Sep 2026 13:02:07 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Root Password Is an Adjective]]></title>
     <link>https://goreportify.com/article-pages/news-1789563697546.html</link>
     <description><![CDATA[There used to be a ceremony to it. To get the production database credentials, you had to open a ticket, justify the need, and wait for an approval th...]]></description>
-    <pubDate>Wed, 16 Sep 2026 13:01:37 GMT</pubDate>
+    <pubDate>Wed, 16 Sep 2026 13:01:37 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[You Made the Decision in a DM. Now You Have to Explain It 10 Times.]]></title>
     <link>https://goreportify.com/article-pages/blog-1789477324988.html</link>
     <description><![CDATA[It felt so efficient. Your lead engineer pinged you on Slack with a question about an edge case. You hashed it out in a few messages, made a call, and...]]></description>
-    <pubDate>Tue, 15 Sep 2026 13:02:04 GMT</pubDate>
+    <pubDate>Tue, 15 Sep 2026 13:02:04 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Retrieval Is a Frame Job]]></title>
     <link>https://goreportify.com/article-pages/news-1789477295152.html</link>
     <description><![CDATA[The demo was flawless. A chatbot, backed by the latest large language model, digesting the company’...]]></description>
-    <pubDate>Tue, 15 Sep 2026 13:01:35 GMT</pubDate>
+    <pubDate>Tue, 15 Sep 2026 13:01:35 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[Your Stakeholders Have a Backchannel. You Need an Intake Valve.]]></title>
     <link>https://goreportify.com/article-pages/blog-1789390858755.html</link>
     <description><![CDATA[The Slack notification pops up. It’s the VP of Sales. "Hey, quick question..." You know it's never a quick question. Three messages later, you’re look...]]></description>
-    <pubDate>Mon, 14 Sep 2026 13:00:58 GMT</pubDate>
+    <pubDate>Mon, 14 Sep 2026 13:00:58 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Unit Test Is Now a Vibe Check]]></title>
     <link>https://goreportify.com/article-pages/news-1789390828283.html</link>
     <description><![CDATA[The pull request looked simple enough. A new feature that used a large language model to summarize customer support tickets. The...]]></description>
-    <pubDate>Mon, 14 Sep 2026 13:00:28 GMT</pubDate>
+    <pubDate>Mon, 14 Sep 2026 13:00:28 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[You Walked Them Through the Deck. They Derailed You on Slide 2.]]></title>
     <link>https://goreportify.com/article-pages/blog-1789304457799.html</link>
     <description><![CDATA[It’s Tuesday morning. You’re in the QBR, presenting your product line’s performance. You spent the better part of Monday pulling data, triple-checking...]]></description>
-    <pubDate>Sun, 13 Sep 2026 13:00:57 GMT</pubDate>
+    <pubDate>Sun, 13 Sep 2026 13:00:57 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Service-Level Agreement Is a Pinky Swear]]></title>
     <link>https://goreportify.com/article-pages/news-1789304429945.html</link>
     <description><![CDATA[The alerts started firing at 9:17 AM on a Tuesday. At a mid-market insurance firm, a new automated claims analysis tool, the CTO’s pet project, was su...]]></description>
-    <pubDate>Sun, 13 Sep 2026 13:00:29 GMT</pubDate>
+    <pubDate>Sun, 13 Sep 2026 13:00:29 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[You Dropped the PRD in Slack. Now You Have a Week of Clarification Calls.]]></title>
     <link>https://goreportify.com/article-pages/blog-1789218087995.html</link>
     <description><![CDATA[It’s 9:15 AM on Monday. You’re feeling good. You spent all last week wrestling with a complex feature, and on Friday evening, you finally birthed the...]]></description>
-    <pubDate>Sat, 12 Sep 2026 13:01:27 GMT</pubDate>
+    <pubDate>Sat, 12 Sep 2026 13:01:27 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Disaster Recovery Plan Is Another API Key]]></title>
     <link>https://goreportify.com/article-pages/news-1789218061855.html</link>
     <description><![CDATA[The dashboards turned red just after 3 a.m. It wasn't a server outage or a database connection pool exhausting itself. It was subtler. The user-facing...]]></description>
-    <pubDate>Sat, 12 Sep 2026 13:01:01 GMT</pubDate>
+    <pubDate>Sat, 12 Sep 2026 13:01:01 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[Your Weekly Report Takes All Monday. It Should Take 15 Minutes.]]></title>
     <link>https://goreportify.com/article-pages/blog-1789131660398.html</link>
     <description><![CDATA[It’s 9:17 AM on Monday. You have a blank Google Doc open, titled “Product Update: Wk 34.” Your real work hasn’t started yet. First, you have to pay th...]]></description>
-    <pubDate>Fri, 11 Sep 2026 13:01:00 GMT</pubDate>
+    <pubDate>Fri, 11 Sep 2026 13:01:00 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[Model Becomes a Competitive Battleground 9/11-1]]></title>
     <link>https://goreportify.com/article-pages/news-1789131630528.html</link>
     <description><![CDATA[The team celebrated the launch at the morning stand-up. The new feature, a smart summarizer for legal documents, went live without a hitch. The code w...]]></description>
-    <pubDate>Fri, 11 Sep 2026 13:00:30 GMT</pubDate>
+    <pubDate>Fri, 11 Sep 2026 13:00:30 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[You Asked 'What Do You Think?'. You Should Have Asked 'What's the Biggest Risk?']]></title>
     <link>https://goreportify.com/article-pages/blog-1789045263691.html</link>
     <description><![CDATA[You hit "Share." The doc is a thing of beauty. A tight problem statement, crisp user stories, a logical flow. You drop the link in Slack with a cheerf...]]></description>
-    <pubDate>Thu, 10 Sep 2026 13:01:03 GMT</pubDate>
+    <pubDate>Thu, 10 Sep 2026 13:01:03 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Technical Debt Is Now Semantic]]></title>
     <link>https://goreportify.com/article-pages/news-1789045233289.html</link>
     <description><![CDATA[An alert fires at 2:17 AM. The new AI-powered customer service bot is telling users they can get refunds on non-refundable airline tickets. An enginee...]]></description>
-    <pubDate>Thu, 10 Sep 2026 13:00:33 GMT</pubDate>
+    <pubDate>Thu, 10 Sep 2026 13:00:33 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[Your Roadmap Is a List of Features. It Needs to Be a Bet on the Future.]]></title>
     <link>https://goreportify.com/article-pages/blog-1788958859027.html</link>
     <description><![CDATA[You click to the next slide. It’s a beautiful Gantt chart, a rainbow of dependencies stretching across the next two quarters. You’ve spent weeks negot...]]></description>
-    <pubDate>Wed, 09 Sep 2026 13:00:59 GMT</pubDate>
+    <pubDate>Wed, 09 Sep 2026 13:00:59 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The System Prompt Is the New Kernel Panic]]></title>
     <link>https://goreportify.com/article-pages/news-1788958830178.html</link>
     <description><![CDATA[A developer on the customer automation team pushes a final commit before the weekend. The change is tiny: a single-line tweak to the system prompt for...]]></description>
-    <pubDate>Wed, 09 Sep 2026 13:00:30 GMT</pubDate>
+    <pubDate>Wed, 09 Sep 2026 13:00:30 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[You Gave Everyone a ChatGPT Plus Seat. Now You Have 50 Different Workflows.]]></title>
     <link>https://goreportify.com/article-pages/blog-1788872465882.html</link>
     <description><![CDATA[The email from the CTO landed with a triumphant thud: "To accelerate innovation, we've provisioned a ChatGPT Enterprise seat for every employee!" The...]]></description>
-    <pubDate>Tue, 08 Sep 2026 13:01:05 GMT</pubDate>
+    <pubDate>Tue, 08 Sep 2026 13:01:05 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Stack Trace Ends in a Black Box]]></title>
     <link>https://goreportify.com/article-pages/news-1788872436009.html</link>
     <description><![CDATA[The pager alert screams at 2:17 AM. A senior engineer at a fintech startup squints at the dashboard. Revenue from a core automated system has flatline...]]></description>
-    <pubDate>Tue, 08 Sep 2026 13:00:36 GMT</pubDate>
+    <pubDate>Tue, 08 Sep 2026 13:00:36 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[You Aligned with Everyone 1:1. Now Nobody Agrees in the Room.]]></title>
     <link>https://goreportify.com/article-pages/blog-1788786057982.html</link>
     <description><![CDATA[The big meeting starts. You feel confident. You spent the last three days doing the "PM shuffle," a series of 1:1s to pre-align everyone on your new f...]]></description>
-    <pubDate>Mon, 07 Sep 2026 13:00:57 GMT</pubDate>
+    <pubDate>Mon, 07 Sep 2026 13:00:57 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Real Trojan Horse Is a Pickle File]]></title>
     <link>https://goreportify.com/article-pages/news-1788786029088.html</link>
     <description><![CDATA[It’s 11 PM on a Tuesday. A developer, fueled by lukewarm coffee and the pressure of a looming deadline, isn't wrestling with algorithms. She’s scrolli...]]></description>
-    <pubDate>Mon, 07 Sep 2026 13:00:29 GMT</pubDate>
+    <pubDate>Mon, 07 Sep 2026 13:00:29 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Decision Was in Slack. The Rationale Was in a Doc. The Update Was in an Email.]]></title>
     <link>https://goreportify.com/article-pages/blog-1788699660870.html</link>
     <description><![CDATA[A new engineer just joined your team. On day three, she DMs you a simple question: “Hey, can you point me to the doc on why we chose this specific pay...]]></description>
-    <pubDate>Sun, 06 Sep 2026 13:01:00 GMT</pubDate>
+    <pubDate>Sun, 06 Sep 2026 13:01:00 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Version Number Is a Lie]]></title>
     <link>https://goreportify.com/article-pages/news-1788699633863.html</link>
     <description><![CDATA[The on-call engineer wakes up to a hundred alerts. The company’s flagship product, an AI-powered contract analysis tool, is suddenly spitting out nons...]]></description>
-    <pubDate>Sun, 06 Sep 2026 13:00:33 GMT</pubDate>
+    <pubDate>Sun, 06 Sep 2026 13:00:33 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[Your One-Pager Is a Brain Dump. It Needs to Be a Decision Memo.]]></title>
@@ -178,133 +178,133 @@
     <description><![CDATA[You hit “share” on the Google Doc and post the link in Slack. “Team, here’s the one-pager on the new onboarding flow. Would love your feedback!”
 
 You...]]></description>
-    <pubDate>Sat, 05 Sep 2026 13:00:50 GMT</pubDate>
+    <pubDate>Sat, 05 Sep 2026 13:00:50 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[Your Status Update is an Event. It Should Be a Destination.]]></title>
     <link>https://goreportify.com/article-pages/blog-1788526859545.html</link>
     <description><![CDATA[It’s 9:17 AM on Monday. You have three browser tabs open: a JIRA board showing last week’s completed stories, a Looker dashboard with the latest adopt...]]></description>
-    <pubDate>Fri, 04 Sep 2026 13:00:59 GMT</pubDate>
+    <pubDate>Fri, 04 Sep 2026 13:00:59 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Real AI Stack Is on a Personal Credit Card]]></title>
     <link>https://goreportify.com/article-pages/news-1788526828761.html</link>
     <description><![CDATA[The CIO is presenting a slide deck in a glass-walled conference room. The deck details the company’s multi-million dollar AI strategy, centered on a h...]]></description>
-    <pubDate>Fri, 04 Sep 2026 13:00:28 GMT</pubDate>
+    <pubDate>Fri, 04 Sep 2026 13:00:28 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[You Said 'We'll Fast-Follow.' They Heard 'It's Coming Next Sprint.']]></title>
     <link>https://goreportify.com/article-pages/blog-1788440473099.html</link>
     <description><![CDATA[The quarterly roadmap review was going smoothly. Too smoothly. Then the VP of Sales shared his screen. "This is a must-have for our biggest enterprise...]]></description>
-    <pubDate>Thu, 03 Sep 2026 13:01:13 GMT</pubDate>
+    <pubDate>Thu, 03 Sep 2026 13:01:13 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[You Facilitated a Great Brainstorm. Nobody Owns the Next Step.]]></title>
     <link>https://goreportify.com/article-pages/blog-1788354067517.html</link>
     <description><![CDATA[The energy in the room was electric. The whiteboard was a beautiful chaos of pink, blue, and yellow sticky notes. Your designer sketched a wireframe o...]]></description>
-    <pubDate>Wed, 02 Sep 2026 13:01:07 GMT</pubDate>
+    <pubDate>Wed, 02 Sep 2026 13:01:07 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Fallback Is an Empty Room]]></title>
     <link>https://goreportify.com/article-pages/news-1788354037479.html</link>
     <description><![CDATA[The alert blinked on the dashboard at 2:17 AM. A tier-one customer’s entire shipment, thousands of units of custom-milled components, was frozen at a...]]></description>
-    <pubDate>Wed, 02 Sep 2026 13:00:37 GMT</pubDate>
+    <pubDate>Wed, 02 Sep 2026 13:00:37 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[You Pitched a Solution. You Should Have Pitched the Problem.]]></title>
     <link>https://goreportify.com/article-pages/blog-1788267691190.html</link>
     <description><![CDATA[It’s Tuesday afternoon. You’re in the Q3 planning review, five slides into your deck. You click to the slide with the beautiful mockups. This is it—th...]]></description>
-    <pubDate>Tue, 01 Sep 2026 13:01:31 GMT</pubDate>
+    <pubDate>Tue, 01 Sep 2026 13:01:31 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The AI Wrote Your Strategy. Now You Can't Defend It.]]></title>
     <link>https://goreportify.com/article-pages/blog-1788181259227.html</link>
     <description><![CDATA[You’re in the quarterly business review. Your new strategy doc is on the big screen, looking sharp. Clean formatting, confident headings, a SWOT analy...]]></description>
-    <pubDate>Mon, 31 Aug 2026 13:00:59 GMT</pubDate>
+    <pubDate>Mon, 31 Aug 2026 13:00:59 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Ghost in the Machine Is a Gig Worker]]></title>
     <link>https://goreportify.com/article-pages/news-1788181230391.html</link>
     <description><![CDATA[The demo was flawless. On screen, the new AI legal assistant ingested a 70-page contract and, seconds later, produced a bulleted list of liabilities a...]]></description>
-    <pubDate>Mon, 31 Aug 2026 13:00:30 GMT</pubDate>
+    <pubDate>Mon, 31 Aug 2026 13:00:30 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Debugger Is an Exorcist]]></title>
     <link>https://goreportify.com/article-pages/news-1788094829543.html</link>
     <description><![CDATA[The bug was in the routing algorithm. Or at least, that’s where it was supposed to be. For three days, a senior engineer at a logistics startup watche...]]></description>
-    <pubDate>Sun, 30 Aug 2026 13:00:29 GMT</pubDate>
+    <pubDate>Sun, 30 Aug 2026 13:00:29 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Exfiltration Vector Is a Friendly Chatbot]]></title>
     <link>https://goreportify.com/article-pages/news-1788008426555.html</link>
     <description><![CDATA[It starts with an act of frustrated initiative. A product manager, tired of waiting for an integration that will never get prioritized, spends her Sun...]]></description>
-    <pubDate>Sat, 29 Aug 2026 13:00:26 GMT</pubDate>
+    <pubDate>Sat, 29 Aug 2026 13:00:26 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[You Buried the Lead on Page 5. Your Execs Never Got There.]]></title>
     <link>https://goreportify.com/article-pages/blog-1787922058338.html</link>
     <description><![CDATA[It’s Tuesday morning. You hit send on the weekly performance report. You spent hours pulling data, crafting charts, and writing up careful, nuanced an...]]></description>
-    <pubDate>Fri, 28 Aug 2026 13:00:58 GMT</pubDate>
+    <pubDate>Fri, 28 Aug 2026 13:00:58 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[Your Announcement Got 50 Emoji Reactions and Zero Understanding]]></title>
     <link>https://goreportify.com/article-pages/blog-1787835659646.html</link>
     <description><![CDATA[You hit send. The message lands in the main company Slack channel, polished and concise. It’s the big one—the announcement for Project Chimera, the fe...]]></description>
-    <pubDate>Thu, 27 Aug 2026 13:00:59 GMT</pubDate>
+    <pubDate>Thu, 27 Aug 2026 13:00:59 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Control Panel Is a Ouija Board]]></title>
     <link>https://goreportify.com/article-pages/news-1787835630029.html</link>
     <description><![CDATA[The performance dashboard is a sea of green. Latency is low, uptime is 99.99%, server load is nominal. Yet the new AI-powered fraud detection system j...]]></description>
-    <pubDate>Thu, 27 Aug 2026 13:00:30 GMT</pubDate>
+    <pubDate>Thu, 27 Aug 2026 13:00:30 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[They Nodded in the Meeting. They Disagreed in the Sprint.]]></title>
     <link>https://goreportify.com/article-pages/blog-1787749256996.html</link>
     <description><![CDATA[You walk out of the kickoff meeting feeling a surge of momentum. The plan is solid. The VP of Engineering nodded. The marketing lead gave a thumbs-up....]]></description>
-    <pubDate>Wed, 26 Aug 2026 13:00:56 GMT</pubDate>
+    <pubDate>Wed, 26 Aug 2026 13:00:56 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[You Sent a Screenshot of a Dashboard. You Should Have Sent a Diagnosis.]]></title>
     <link>https://goreportify.com/article-pages/blog-1787662859234.html</link>
     <description><![CDATA[It’s 9 AM on Monday. You filter your analytics dashboard for last week’s numbers, see a line going up and to the right, and take a screenshot. You pas...]]></description>
-    <pubDate>Tue, 25 Aug 2026 13:00:59 GMT</pubDate>
+    <pubDate>Tue, 25 Aug 2026 13:00:59 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Journeyman Is an Endangered Species]]></title>
     <link>https://goreportify.com/article-pages/news-1787662833345.html</link>
     <description><![CDATA[A junior engineer hits a wall. The database migration script is failing with an obscure error. Five years ago, her manager would have pulled over a se...]]></description>
-    <pubDate>Tue, 25 Aug 2026 13:00:33 GMT</pubDate>
+    <pubDate>Tue, 25 Aug 2026 13:00:33 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[Your Dashboard Answers 'What.' Your Report Needs to Answer 'So What?']]></title>
     <link>https://goreportify.com/article-pages/blog-1787576588297.html</link>
     <description><![CDATA[You pull up the dashboard in the weekly business review. All the key metrics are green. Daily active users are up 3%. The new feature’s adoption rate...]]></description>
-    <pubDate>Mon, 24 Aug 2026 13:03:08 GMT</pubDate>
+    <pubDate>Mon, 24 Aug 2026 13:03:08 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Five-Year Plan Lasts Five Weeks]]></title>
     <link>https://goreportify.com/article-pages/news-1787576561604.html</link>
     <description><![CDATA[The CIO is on slide 17 of the digital transformation roadmap. The five-year capital expenditure plan is mapped out in a confident Gantt chart, all the...]]></description>
-    <pubDate>Mon, 24 Aug 2026 13:02:41 GMT</pubDate>
+    <pubDate>Mon, 24 Aug 2026 13:02:41 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[You Wrote One Report for Three Audiences. None of Them Read It.]]></title>
     <link>https://goreportify.com/article-pages/blog-1787490051067.html</link>
     <description><![CDATA[It’s Tuesday morning. You spent the last hour of your Monday pulling data from Amplitude, grabbing screenshots from Figma, and summarizing JIRA ticket...]]></description>
-    <pubDate>Sun, 23 Aug 2026 13:00:51 GMT</pubDate>
+    <pubDate>Sun, 23 Aug 2026 13:00:51 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[The Down Payment Was Training. The Mortgage Is Inference.]]></title>
     <link>https://goreportify.com/article-pages/news-1787490026826.html</link>
     <description><![CDATA[The finance chief stared at the quarterly cloud invoice, her mouse hovering over a single line item that cost more than the entire marketing departmen...]]></description>
-    <pubDate>Sun, 23 Aug 2026 13:00:26 GMT</pubDate>
+    <pubDate>Sun, 23 Aug 2026 13:00:26 +0000</pubDate>
   </item>
   <item>
     <title><![CDATA[Your AI Can't Find the 'Why' in Your User Feedback. Here's How to Teach It.]]></title>
     <link>https://goreportify.com/article-pages/blog-1787403651842.html</link>
     <description><![CDATA[You just dumped 20 user interview transcripts into your favorite AI tool. You typed the magic words: "Summarize the key themes from this feedback." Te...]]></description>
-    <pubDate>Sat, 22 Aug 2026 13:00:51 GMT</pubDate>
+    <pubDate>Sat, 22 Aug 2026 13:00:51 +0000</pubDate>
   </item>
 </channel>
 </rss>

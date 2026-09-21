@@ -149,14 +149,114 @@ function extractKeywordFromMarkdown(md) {
     return ranked.length ? ranked[0][0] : '';
 }
 
+/**
+ * Repair titles the LLM produced that were cut off mid-word, or that had an
+ * excerpt fragment bled into them ("Real Title · excerpt sentence.").
+ * Safe operations only — well-formed titles pass through untouched.
+ */
+const TITLE_REAL_SHORT = new Set([
+    'ai', 'ml', 'ui', 'ux', 'pm', 'vp', 'cto', 'ceo', 'cfo', 'coo', 'api', 'sdk', 'cli',
+    'it', 'is', 'us', 'we', 'no', 'so', 'do', 'be', 'to', 'of', 'in', 'on', 'at', 'by',
+    'or', 'up', 'an', 'as', 'if', 'my', 'he', 'id', 'me', 'ok', 'roi', 'kpi', 'llm',
+    'gpt', 'qa', 'seo', 'ii', 'iv', 'vs'
+]);
+
+// 英文高频词表 (wordfreq, zipf >= 2.0)，用于识别"词中被砍断"的碎片。
+// 懒加载 + 失败降级：词表不可用时退回纯启发式，绝不影响生成流程。
+let _enWords = null;
+function englishWordSet() {
+    if (_enWords !== null) return _enWords;
+    try {
+        _enWords = require('./data/wordfreq-en.cjs').wordSet();
+    } catch (e) {
+        console.warn('[Amber] ⚠️ 词表加载失败，标题检测降级为启发式:', e.message);
+        _enWords = new Set();
+    }
+    return _enWords;
+}
+
+// 去掉变音符号 (é -> e)，让 "Séance" 也能命中词表。
+function foldAccents(w) {
+    try {
+        return String(w).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    } catch (_) {
+        return String(w);
+    }
+}
+
+// 判断标题的最后一个词是否为"被截断的碎片"。
+// 规则：结尾是完整句读 (. ! ?) => 完整句子，放过；
+//       末词在英文词表内 => 真实单词，放过；
+//       否则 => 判定为碎片。
+function titleEndsTruncated(t) {
+    const m = String(t || '').match(/([A-Za-z\u00C0-\u024F][A-Za-z\u00C0-\u024F'\-]*)\s*([.,;:!?]*)\s*$/);
+    if (!m) return false;
+    const last = m[1];
+    const punct = m[2];
+    if (punct === '.' || punct === '!' || punct === '?') return false; // 完整句子
+    if (last.length <= 3 && last === last.toLowerCase()) return false;  // 短功能词 (in, of, the...)
+    const S = englishWordSet();
+    if (S.size === 0) return last.length <= 2;                          // 降级：保守判定
+    const key = foldAccents(last).toLowerCase();
+    // 带连字符的复合词：拆开看每一段，任一段是真实单词即视为完整
+    if (key.includes('-')) {
+        const parts = key.split('-').filter(Boolean);
+        const allReal = parts.length > 0 && parts.every(pp => S.has(pp) || TITLE_REAL_SHORT.has(pp) || pp.length <= 3);
+        if (allReal) return false;
+    }
+    if (S.has(last.toLowerCase()) || S.has(key)) return false;          // 真实单词
+    if (TITLE_REAL_SHORT.has(key)) return false;
+    // 结尾是连接词/介词 => 说明是完整短语的自然收尾，不是碎片
+    if (/^(?:to|for|of|in|on|at|by|with|and|or|from|as|is|are|the|a|an|that|it|its|your|our|their|this|these|those)$/.test(key)) return false;
+    return true;
+}
+
+function sanitizeTitle(raw) {
+    let t = String(raw || '').replace(/\s+/g, ' ').trim();
+    const original = t;
+
+    // 1) 正文串入：只保留 " · " / " | " 左侧的真实标题
+    if (/\s[·|]\s/.test(t)) t = t.split(/\s[·|]\s/)[0].trim();
+
+    // 2) 结尾省略号（及其后的全部内容）
+    t = t.replace(/\s*…[\s\S]*$/, '').trim();
+    t = t.replace(/\.\.\.+[\s\S]*$/, '').trim();
+
+    // 3) 词中被砍断：逐词回退，直到末词是一个完整单词为止
+    let guard = 0;
+    while (guard++ < 6 && titleEndsTruncated(t)) {
+        const words = t.split(' ');
+        if (words.length <= 2) break;   // 不能再砍了，交给下游 weak 判定
+        words.pop();
+        t = words.join(' ').trim();
+    }
+
+    // 4) 清理尾部的悬空连接词与标点（但保留句末句号/问号）
+    t = t.replace(/[\s,;:\-–—]+$/, '').trim();
+    t = t.replace(/\s+(?:for|to|of|in|on|at|by|with|and|or|from|as|is|are|the|a|an|that)$/i, '').trim();
+    t = t.replace(/[\s,;:\-–—]+$/, '').trim();
+
+    return t.length >= 8 ? t : original;
+}
+
 function diversifyTitle(type, title, contentMarkdown, existingTitles) {
     let t = String(title || '').replace(/·.*$/g, '').replace(/\s+/g, ' ').trim();
+    t = sanitizeTitle(t);
     const low = normalizeTitle(t);
     const stemMap = buildStemCount(existingTitles || []);
     const stem = titleStemWords(t, 4);
     const repeatedStem = stem && (stemMap.get(stem) || 0) >= 3;
     const banned = (TITLE_BANNED_PREFIXES[type] || []).some((p) => low.startsWith(p));
-    const weak = /…|\.\.\./.test(t) || t.length < 24;
+    const weak =
+        /…|\.\.\./.test(t) ||
+        t.length < 24 ||
+        // a final 1-2 char token that isn't a known short word => mid-word cut
+        (() => {
+            const w = t.split(' ');
+            if (w.length < 4) return false;
+            const last = w[w.length - 1].replace(/[^A-Za-z&]/g, '');
+            return last.length > 0 && last.length <= 2 && !TITLE_REAL_SHORT.has(last.toLowerCase());
+        })();
 
     if (!banned && !repeatedStem && !weak) return t;
 
@@ -393,6 +493,9 @@ ${titleBlock}${imgBlock} First line must be '# Title'. Output ONLY raw markdown.
 
         let titleMatch = rawMarkdown.match(/^#\s+(.+)$/m);
         let title = titleMatch ? titleMatch[1].trim() : `Reportify ${type.toUpperCase()} Insights`;
+        // Guard: the model sometimes wraps the H1 or trails an excerpt sentence
+        // into it. Repair before it ever reaches posts.json.
+        title = sanitizeTitle(title);
         let contentMarkdown = rawMarkdown.replace(/^#\s+(.+)$/m, '').trim();
 
         let postsExisting = [];
