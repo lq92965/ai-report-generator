@@ -435,9 +435,34 @@
                 }
                 const mdText = mdWinner.value;
 
+                // 去重 H1：标题已在 #article-header 渲染过一次，
+                // 而 markdown 正文通常也以 "# 标题" 开头 —— 直接解析会产生第二个 H1。
+                // 这里删掉正文里与 post.title 相同（或首行）的那个 H1，保持单 H1 结构。
+                function stripDuplicateLeadingH1(md, title) {
+                    var lines = String(md).split('\n');
+                    var norm = function (s) {
+                        return String(s).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+                    };
+                    var want = norm(title);
+                    for (var i = 0; i < lines.length; i++) {
+                        var line = lines[i].trim();
+                        if (!line) continue;                      // 跳过空行 / 封面 <figure> 之前不会命中
+                        if (line.indexOf('<') === 0) continue;    // 跳过封面等 HTML 块
+                        var m = line.match(/^#\s+(.*)$/);         // 只处理一级标题
+                        if (!m) break;                            // 遇到其它内容，停止查找
+                        var got = norm(m[1].replace(/[*_`]/g, ''));
+                        if (got === want || want.indexOf(got) === 0 || got.indexOf(want) === 0) {
+                            lines.splice(i, 1);
+                        }
+                        break;
+                    }
+                    return lines.join('\n');
+                }
+                const mdClean = stripDuplicateLeadingH1(mdText, post.title);
+
                 const ASSET_ORIGIN = 'https://goreportify.com';
                 const host = document.getElementById('article-content');
-                host.innerHTML = marked.parse(mdText);
+                host.innerHTML = marked.parse(mdClean);
                 host.querySelectorAll('img[src]').forEach(function (img) {
                     var s = img.getAttribute('src') || '';
                     if (/^https?:\/\//i.test(s)) {

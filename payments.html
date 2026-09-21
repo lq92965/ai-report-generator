@@ -203,7 +203,11 @@
     <header class="main-header account-header pwa-app-header">
         <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
             <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
-                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
+                <!-- 顶栏与其他页保持一致：保留 Logo；返回键移至正文左上角 -->
+                <a id="pwa-header-logo" href="index.html" class="logo flex items-center gap-2 no-underline" style="text-decoration: none;">
+                    <img src="logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain;">
+                    <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
+                </a>
             </div>
             <nav class="main-nav pwa-desktop-nav" id="pwa-collapse-nav">
                 <ul>
@@ -226,6 +230,10 @@
 
     <section class="generator-section payments-page" style="min-height: 70vh; padding: 28px 0 0;">
         <div class="payments-wrap">
+            <!-- 返回键：正文左上角（顶栏只留 Logo + 导航） -->
+            <div style="margin-bottom: 16px; text-align: left;">
+                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
+            </div>
             <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
                 <div>
                     <h2 class="section-title" style="margin: 0 0 6px; font-weight: 700; color: #1e293b;">Payment history</h2>

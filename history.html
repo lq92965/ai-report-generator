@@ -49,7 +49,11 @@
     <header class="main-header account-header pwa-app-header">
         <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
             <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
-                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
+                <!-- 顶栏与其他页保持一致：保留 Logo；返回键移至正文左上角 -->
+                <a id="pwa-header-logo" href="index.html" class="logo flex items-center gap-2 no-underline" style="text-decoration: none;">
+                    <img src="logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain;">
+                    <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
+                </a>
             </div>
             <nav class="main-nav pwa-desktop-nav" id="pwa-collapse-nav">
                 <ul>
@@ -72,6 +76,10 @@
 
 <section class="generator-section" style="min-height: 80vh; padding: 40px 0;">
         <div class="container" style="width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 20px;">
+                <!-- 返回键：正文左上角（顶栏只留 Logo + 导航） -->
+                <div style="margin-bottom: 16px; text-align: left;">
+                    <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
+                </div>
             <div style="margin-bottom: 30px; text-align: left;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h2 class="section-title" style="margin: 0; font-weight: 600; color: #1e293b;">History & Reports</h2>

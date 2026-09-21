@@ -72,7 +72,11 @@
     <header class="main-header account-header pwa-app-header">
         <div class="app-header-shell pwa-header-inner flex flex-row flex-nowrap items-center justify-between w-full gap-3 md:gap-6">
             <div class="pwa-header-leading flex items-center min-w-0 flex-shrink-0 max-w-[60%]">
-                <a href="account.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Account Hub</span></a>
+                <!-- 顶栏与其他页保持一致：保留 Logo；返回键移至正文左上角 -->
+                <a id="pwa-header-logo" href="index.html" class="logo flex items-center gap-2 no-underline" style="text-decoration: none;">
+                    <img src="logo-3d.png.png" alt="Reportify AI Logo" style="width: 40px; height: 40px; object-fit: contain;">
+                    <span style="font-size: 1.25rem; font-weight: 800; color: #1a1a1a; font-family: 'Inter', sans-serif;">Reportify AI</span>
+                </a>
             </div>
             <nav class="main-nav pwa-desktop-nav hidden md:block" id="pwa-collapse-nav">
                 <ul>
@@ -97,6 +101,10 @@
     <main class="flex flex-1 flex-col min-h-0 bg-white">
         <section id="contact-us" class="flex flex-1 flex-col py-12 border-t border-gray-200 w-full">
             <div class="container contact-page-shell" style="max-width: 560px; margin: 0 auto; padding: 0 20px;">
+                <!-- 返回键：正文左上角（顶栏只留 Logo + 导航） -->
+                <div style="margin-bottom: 16px; text-align: left;">
+                    <a href="index.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Home</span></a>
+                </div>
                 <h1 class="section-title" style="text-align: center; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 800; color: #0f172a;">Contact Support</h1>
                 <p style="text-align: center; color: #64748b; margin-top: 8px; font-size: 1rem;">We typically reply within 1–2 business days.</p>
                 <form id="contact-form" class="mt-10 space-y-4">
