@@ -98,8 +98,9 @@
 
     <main class="flex-grow pt-4 pb-20">
         <div class="max-w-6xl mx-auto px-6">
-            <!-- 返回键：正文左上角（顶栏只留 Logo + 导航） -->
-            <div class="mb-4 text-left">
+            <!-- 返回键：正文左上角（顶栏只留 Logo + 导航）。
+                 与「Previous Page」互斥显示，同一时间只出现一个返回键。 -->
+            <div id="list-home-wrap" class="mb-4 text-left">
                 <a href="index.html" class="unified-back-btn"><span class="back-arrow">←</span><span class="back-text">Back to Home</span></a>
             </div>
             <!-- 分页返回键：仅在第 2 页及以后显示，文案为 "Previous Page"，指向上一页列表。 -->
@@ -300,20 +301,25 @@
                 if (currentPage > totalPages) currentPage = totalPages;
 
                 function syncBlogListBack() {
-                    // 顶栏 Logo 始终保留（不再随翻页隐藏）；返回键只控制正文里的包装层
+                    // 顶栏 Logo 始终保留（不再随翻页隐藏）；返回键只控制正文里的包装层。
+                    // 同一时间只显示一个返回键：第 1 页显示「Back to Home」，
+                    // 第 2 页及以后改为「Previous Page」，避免两个返回键并排。
                     const wrap = document.getElementById('list-back-wrap');
                     const a = document.getElementById('blog-list-back');
+                    const homeWrap = document.getElementById('list-home-wrap');
                     if (!wrap || !a) return;
                     const p = parseInt(urlParams.get('p'), 10) || 1;
                     if (p <= 1) {
-                        // 第一页：不需要「上一页」，隐藏
+                        // 第一页：不需要「上一页」，隐藏该入口
                         wrap.classList.add('hidden');
                         a.setAttribute('aria-hidden', 'true');
+                        if (homeWrap) homeWrap.classList.remove('hidden');
                         return;
                     }
-                    // 第 2 页及以后：显示上一页入口
+                    // 第 2 页及以后：显示上一页入口，同时隐藏「Back to Home」
                     wrap.classList.remove('hidden');
                     a.setAttribute('aria-hidden', 'false');
+                    if (homeWrap) homeWrap.classList.add('hidden');
                     const prev = p - 1;
                     a.setAttribute('href', prev === 1 ? 'blog.html' : 'blog.html?p=' + encodeURIComponent(String(prev)));
                     a.innerHTML = '<span class="back-arrow">←</span><span class="back-text">Previous Page</span>';
