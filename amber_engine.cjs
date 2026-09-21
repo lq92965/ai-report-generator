@@ -222,6 +222,19 @@ function looksLikeCorruptedArticleMarkdown(md) {
     return hits >= 2;
 }
 
+function looksLikeStubArticleMarkdown(md) {
+    // A real article is several hundred words. Anything this short after stripping
+    // markdown/HTML is a cover image with no body — seen in production as 15+ stub
+    // posts where the model returned an empty/short response and it was published anyway.
+    const text = String(md || '')
+        .replace(/<[^>]*>/g, ' ')
+        .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+        .replace(/[#*`>_\-|\[\]()]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+    return text.split(' ').filter(Boolean).length < 120;
+}
+
 async function generateArticle(type) {
     const useGemini = (type === 'blog');
     let apiUrl = useGemini ? process.env.GEMINI_API_URL : process.env.DEEPSEEK_API_URL;
@@ -286,9 +299,12 @@ ${titleBlock}${imgBlock} First line must be '# Title'. Output ONLY raw markdown.
                     { role: 'user', content: userPrompt }
                 ],
                 temperature: 0.7,
-                max_tokens: 2500
+                // Reasoning models (gemini-2.5-pro / 3-flash-preview) spend part of this
+                // budget on thinking tokens. At 2500 the visible answer was truncated to
+                // nothing (finish_reason=length, empty content) -> stub articles.
+                max_tokens: 8000
             },
-            { headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' } }
+            { headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' }, timeout: 180000 }
         );
         const txt = extractModelText(response.data);
         if (!txt) {
@@ -312,6 +328,15 @@ ${titleBlock}${imgBlock} First line must be '# Title'. Output ONLY raw markdown.
                 apiKey = process.env.GEMINI_API_KEY;
                 aiModel = process.env.GEMINI_MODEL;
                 rawMarkdown = await callModel(apiUrl, apiKey, aiModel);
+            } else if (type === 'blog' && process.env.DEEPSEEK_API_URL && process.env.DEEPSEEK_API_KEY && process.env.DEEPSEEK_MODEL) {
+                // Blog 主链路是 Gemini；回退 DeepSeek，避免当天 blog 断更或写出空文章。
+                console.warn(`[Amber V8] ⚠️ Blog primary model failed, fallback to DeepSeek. reason=${firstErr.message}`);
+                apiUrl = process.env.DEEPSEEK_API_URL.endsWith('/v1/chat/completions')
+                    ? process.env.DEEPSEEK_API_URL
+                    : `${process.env.DEEPSEEK_API_URL.replace(/\/$/, '')}/v1/chat/completions`;
+                apiKey = process.env.DEEPSEEK_API_KEY;
+                aiModel = process.env.DEEPSEEK_MODEL;
+                rawMarkdown = await callModel(apiUrl, apiKey, aiModel);
             } else {
                 throw firstErr;
             }
@@ -327,6 +352,43 @@ ${titleBlock}${imgBlock} First line must be '# Title'. Output ONLY raw markdown.
             if (looksLikeCorruptedArticleMarkdown(rawMarkdown)) {
                 throw new Error('Corrupted markdown detected twice; abort publish to prevent bad content release.');
             }
+        }
+
+        // Stub guard: never publish a cover-image-only article. Retry once (with the
+        // fallback provider when available), then abort rather than ship an empty post.
+        if (looksLikeStubArticleMarkdown(rawMarkdown)) {
+            console.warn(`[Amber V8] ⚠️ ${type} output too short (likely empty body). Retrying once...`);
+            let retryMd = '';
+            try {
+                retryMd = await callModel(apiUrl, apiKey, aiModel);
+            } catch (retryErr) {
+                console.warn(`[Amber V8] ⚠️ ${type} stub retry on primary failed: ${retryErr.message}`);
+            }
+            if (looksLikeStubArticleMarkdown(retryMd)) {
+                const fb =
+                    type === 'blog'
+                        ? [process.env.DEEPSEEK_API_URL && process.env.DEEPSEEK_API_KEY && process.env.DEEPSEEK_MODEL,
+                           process.env.DEEPSEEK_API_URL.endsWith('/v1/chat/completions')
+                               ? process.env.DEEPSEEK_API_URL
+                               : `${process.env.DEEPSEEK_API_URL.replace(/\/$/, '')}/v1/chat/completions`,
+                           process.env.DEEPSEEK_API_KEY, process.env.DEEPSEEK_MODEL]
+                        : [process.env.GEMINI_API_URL && process.env.GEMINI_API_KEY && process.env.GEMINI_MODEL,
+                           process.env.GEMINI_API_URL, process.env.GEMINI_API_KEY, process.env.GEMINI_MODEL];
+                if (fb[0]) {
+                    console.warn(`[Amber V8] ⚠️ ${type} still stubbed; trying fallback provider...`);
+                    try {
+                        retryMd = await callModel(fb[1], fb[2], fb[3]);
+                    } catch (fbErr) {
+                        console.warn(`[Amber V8] ⚠️ ${type} fallback provider failed: ${fbErr.message}`);
+                    }
+                }
+            }
+            if (looksLikeStubArticleMarkdown(retryMd)) {
+                throw new Error(
+                    `${type} produced a stub/empty article after retries; aborting publish so an empty post is not released.`
+                );
+            }
+            rawMarkdown = retryMd;
         }
 
         let titleMatch = rawMarkdown.match(/^#\s+(.+)$/m);
