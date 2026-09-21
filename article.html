@@ -482,6 +482,14 @@
                 const host = document.getElementById('article-content');
                 host.innerHTML = marked.parse(mdClean);
                 host.querySelectorAll('img[src]').forEach(function (img) {
+                    // 补全缺失的 alt（SEO + 可访问性）。正文 markdown 里的图片
+                    // 大多是 ![](url) 形式，alt 为空；用文章标题兜底，避免
+                    // 全站 700+ 篇文章出现空白 alt。
+                    if (!img.getAttribute('alt')) {
+                        img.setAttribute('alt', String(post.title || 'Reportify AI article illustration'));
+                    }
+                    img.setAttribute('loading', 'lazy');
+                    img.setAttribute('decoding', 'async');
                     var s = img.getAttribute('src') || '';
                     if (/^https?:\/\//i.test(s)) {
                         img.setAttribute('referrerpolicy', 'no-referrer');
