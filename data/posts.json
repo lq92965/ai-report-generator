@@ -1,5 +1,25 @@
 [
     {
+        "id": "1790082060777",
+        "type": "blog",
+        "title": "You Brought a RICE Score. They Brought an Opinion.",
+        "category": "Deep Insights",
+        "date": "2026-09-22",
+        "author": "Jessica Tran",
+        "excerpt": "The spreadsheet was perfect. You spent hours on it. Every proposed feature was neatly scored on Reach, Impact, Confidence, and Effort. The final RICE...",
+        "contentFile": "blog-1790082060777.md"
+    },
+    {
+        "id": "1790082029681",
+        "type": "news",
+        "title": "The Staging Environment Is a Potemkin Village",
+        "category": "Tech Radar",
+        "date": "2026-09-22",
+        "author": "Olivia Thorne",
+        "excerpt": "The pull request was perfect. Unit tests passed, green checkmarks all the way down. In the staging environment—a supposedly exact, sterile replica of...",
+        "contentFile": "news-1790082029681.md"
+    },
+    {
         "id": "1789995788935",
         "type": "blog",
         "title": "You Socialized the Idea with Everyone. Now It's Design-by-Committee.",

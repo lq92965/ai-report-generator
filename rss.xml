@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Brought a RICE Score. They Brought an Opinion.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1790082060777.html</link>
+    <description><![CDATA[The spreadsheet was perfect. You spent hours on it. Every proposed feature was neatly scored on Reach, Impact, Confidence, and Effort. The final RICE...]]></description>
+    <pubDate>Tue, 22 Sep 2026 13:01:00 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Staging Environment Is a Potemkin Village]]></title>
+    <link>https://goreportify.com/article-pages/news-1790082029681.html</link>
+    <description><![CDATA[The pull request was perfect. Unit tests passed, green checkmarks all the way down. In the staging environment—a supposedly exact, sterile replica of...]]></description>
+    <pubDate>Tue, 22 Sep 2026 13:00:29 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Socialized the Idea with Everyone. Now It's Design-by-Committee.]]></title>
     <link>https://goreportify.com/article-pages/blog-1789995788935.html</link>
     <description><![CDATA[You had the idea on a Tuesday morning. It was elegant, simple, and solved a real customer problem. Your first step was to get buy-in. Smart.
@@ -295,18 +307,6 @@ You...]]></description>
     <link>https://goreportify.com/article-pages/blog-1787576588297.html</link>
     <description><![CDATA[You pull up the dashboard in the weekly business review. All the key metrics are green. Daily active users are up 3%. The new feature’s adoption rate...]]></description>
     <pubDate>Mon, 24 Aug 2026 13:03:08 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Five-Year Plan Lasts Five Weeks]]></title>
-    <link>https://goreportify.com/article-pages/news-1787576561604.html</link>
-    <description><![CDATA[The CIO is on slide 17 of the digital transformation roadmap. The five-year capital expenditure plan is mapped out in a confident Gantt chart, all the...]]></description>
-    <pubDate>Mon, 24 Aug 2026 13:02:41 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Wrote One Report for Three Audiences. None of Them Read It.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1787490051067.html</link>
-    <description><![CDATA[It’s Tuesday morning. You spent the last hour of your Monday pulling data from Amplitude, grabbing screenshots from Figma, and summarizing JIRA ticket...]]></description>
-    <pubDate>Sun, 23 Aug 2026 13:00:51 GMT</pubDate>
   </item>
 </channel>
 </rss>
