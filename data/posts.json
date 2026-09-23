@@ -1,5 +1,25 @@
 [
     {
+        "id": "1790154274448",
+        "type": "blog",
+        "title": "You Scheduled a Read-Out. You Should Have Scheduled a Workshop.",
+        "category": "Deep Insights",
+        "date": "2026-09-23",
+        "author": "Michael Chen",
+        "excerpt": "It’s 15 minutes into your meeting. You’re on slide 8 of 25. You’re sharing your screen, narrating bullet points about the Q3 strategy. You pause for a...",
+        "contentFile": "blog-1790154274448.md"
+    },
+    {
+        "id": "1790154242439",
+        "type": "news",
+        "title": "The Service Account Is Now a Persona",
+        "category": "Tech Radar",
+        "date": "2026-09-23",
+        "author": "Alex Mercer",
+        "excerpt": "The pull request looked simple enough. A few lines of YAML were deleted, replaced by a single paragraph of plain English. The old code defined an AWS...",
+        "contentFile": "news-1790154242439.md"
+    },
+    {
         "id": "1790082060777",
         "type": "blog",
         "title": "You Brought a RICE Score. They Brought an Opinion.",

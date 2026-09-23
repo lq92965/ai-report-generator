@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Scheduled a Read-Out. You Should Have Scheduled a Workshop.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1790154274448.html</link>
+    <description><![CDATA[It’s 15 minutes into your meeting. You’re on slide 8 of 25. You’re sharing your screen, narrating bullet points about the Q3 strategy. You pause for a...]]></description>
+    <pubDate>Wed, 23 Sep 2026 09:04:34 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Service Account Is Now a Persona]]></title>
+    <link>https://goreportify.com/article-pages/news-1790154242439.html</link>
+    <description><![CDATA[The pull request looked simple enough. A few lines of YAML were deleted, replaced by a single paragraph of plain English. The old code defined an AWS...]]></description>
+    <pubDate>Wed, 23 Sep 2026 09:04:02 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Brought a RICE Score. They Brought an Opinion.]]></title>
     <link>https://goreportify.com/article-pages/blog-1790082060777.html</link>
     <description><![CDATA[The spreadsheet was perfect. You spent hours on it. Every proposed feature was neatly scored on Reach, Impact, Confidence, and Effort. The final RICE...]]></description>
@@ -295,18 +307,6 @@ You...]]></description>
     <link>https://goreportify.com/article-pages/blog-1787662859234.html</link>
     <description><![CDATA[It’s 9 AM on Monday. You filter your analytics dashboard for last week’s numbers, see a line going up and to the right, and take a screenshot. You pas...]]></description>
     <pubDate>Tue, 25 Aug 2026 13:00:59 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Journeyman Is an Endangered Species]]></title>
-    <link>https://goreportify.com/article-pages/news-1787662833345.html</link>
-    <description><![CDATA[A junior engineer hits a wall. The database migration script is failing with an obscure error. Five years ago, her manager would have pulled over a se...]]></description>
-    <pubDate>Tue, 25 Aug 2026 13:00:33 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Dashboard Answers 'What.' Your Report Needs to Answer 'So What?']]></title>
-    <link>https://goreportify.com/article-pages/blog-1787576588297.html</link>
-    <description><![CDATA[You pull up the dashboard in the weekly business review. All the key metrics are green. Daily active users are up 3%. The new feature’s adoption rate...]]></description>
-    <pubDate>Mon, 24 Aug 2026 13:03:08 GMT</pubDate>
   </item>
 </channel>
 </rss>

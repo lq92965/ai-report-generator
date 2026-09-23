@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Scheduled a Read-Out. You Should Have Scheduled a Workshop.](https://goreportify.com/article-pages/blog-1790154274448.html)
+  - Type: Deep Insights | Date: 2026-09-23 | Author: Michael Chen
+  - It’s 15 minutes into your meeting. You’re on slide 8 of 25. You’re sharing your screen, narrating bullet points about the Q3 strategy. You pause for a...
+- [The Service Account Is Now a Persona](https://goreportify.com/article-pages/news-1790154242439.html)
+  - Type: Tech Radar | Date: 2026-09-23 | Author: Alex Mercer
+  - The pull request looked simple enough. A few lines of YAML were deleted, replaced by a single paragraph of plain English. The old code defined an AWS...
 - [You Brought a RICE Score. They Brought an Opinion.](https://goreportify.com/article-pages/blog-1790082060777.html)
   - Type: Deep Insights | Date: 2026-09-22 | Author: Jessica Tran
   - The spreadsheet was perfect. You spent hours on it. Every proposed feature was neatly scored on Reach, Impact, Confidence, and Effort. The final RICE...
@@ -2277,4 +2283,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 748 articles (397 blog + 351 news) + 8 core pages._
+_Total: 750 articles (398 blog + 352 news) + 8 core pages._
