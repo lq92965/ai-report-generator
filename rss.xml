@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Demoed the Feature. They Asked About the Button Color.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1790168614326.html</link>
+    <description><![CDATA[It’s demo day. Your team just finished a two-week sprint, wrestling with a messy third-party API and a dozen edge cases. You pull up the staging envir...]]></description>
+    <pubDate>Wed, 23 Sep 2026 13:03:34 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Pull Request Is a Found Object]]></title>
+    <link>https://goreportify.com/article-pages/news-1790168575867.html</link>
+    <description><![CDATA[The diff scrolls past, 400 lines of pristine, idiomatic Python. It refactors a messy data processing pipeline, introducing a functional style with cha...]]></description>
+    <pubDate>Wed, 23 Sep 2026 13:02:55 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Spent an Hour Prompting the AI. You Could Have Written the Doc in 15 Minutes.]]></title>
     <link>https://goreportify.com/article-pages/blog-1790168454926.html</link>
     <description><![CDATA[It’s 4 PM on a Tuesday. You need to write a one-pager outlining the new checkout analytics project. Simple enough. You have all the context in your he...]]></description>
@@ -295,18 +307,6 @@ You...]]></description>
     <link>https://goreportify.com/article-pages/blog-1787922058338.html</link>
     <description><![CDATA[It’s Tuesday morning. You hit send on the weekly performance report. You spent hours pulling data, crafting charts, and writing up careful, nuanced an...]]></description>
     <pubDate>Fri, 28 Aug 2026 13:00:58 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Announcement Got 50 Emoji Reactions and Zero Understanding]]></title>
-    <link>https://goreportify.com/article-pages/blog-1787835659646.html</link>
-    <description><![CDATA[You hit send. The message lands in the main company Slack channel, polished and concise. It’s the big one—the announcement for Project Chimera, the fe...]]></description>
-    <pubDate>Thu, 27 Aug 2026 13:00:59 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Control Panel Is a Ouija Board]]></title>
-    <link>https://goreportify.com/article-pages/news-1787835630029.html</link>
-    <description><![CDATA[The performance dashboard is a sea of green. Latency is low, uptime is 99.99%, server load is nominal. Yet the new AI-powered fraud detection system j...]]></description>
-    <pubDate>Thu, 27 Aug 2026 13:00:30 GMT</pubDate>
   </item>
 </channel>
 </rss>
