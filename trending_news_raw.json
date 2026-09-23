@@ -1,32 +1,32 @@
 [
   {
-    "title": "Jev in 25 Lines of Python",
-    "link": "https://www.nobodywho.ai/posts/jev-in-25-lines/",
-    "pubDate": "Wed, 23 Sep 2026 07:26:23 +0000",
-    "snippet": "Article URL: https://www.nobodywho.ai/posts/jev-in-25-lines/\nComments URL: https://news.ycombinator.com/item?id=49812769\nPoints: 79\n# Comments: 29"
+    "title": "Show HN: RxFilm Studio–Create and edit your product videos with AI agent",
+    "link": "https://filmstudio.rxlab.app",
+    "pubDate": "Wed, 23 Sep 2026 12:28:40 +0000",
+    "snippet": "Hi HN,\nI built RxFilm Studio, a video workspace that lets you create and revise videos with AI agent.\nThe reason I started this project is simple: I’ve noticed that many independent developers and small teams want to create marketing videos for their product, but producing these videos requires a lot of time and effort — from editing and visual effects to voiceovers and subtitles.\nSo I built Rxfilm Studio to simplify the entire video creation process. Start with an idea, a product website, images, or existing footage, and then generate a complete video with:\n- Story and structure\n- Editing and timeline\n- Visual and sound effects\n- Voiceovers, background music\n- Subtitles and translation\nGithub: https://github.com/rxtech-lab/film-workflow\nHere's a demo marketing video created using RxFilm Studio:\nhttps://youtu.be/9_M15fRdZQE\nWelcome to try it out and I would love to hear your feedback!\nComments URL: https://news.ycombinator.com/item?id=49815095\nPoints: 5\n# Comments: 1"
   },
   {
-    "title": "How often do you think about the 1893 World's Fair?",
-    "link": "https://www.thebirthofacapital.info/chicago-worlds-fair-tataria-ware-larsen/",
-    "pubDate": "Wed, 23 Sep 2026 05:32:51 +0000",
-    "snippet": "Article URL: https://www.thebirthofacapital.info/chicago-worlds-fair-tataria-ware-larsen/\nComments URL: https://news.ycombinator.com/item?id=49812023\nPoints: 9\n# Comments: 2"
+    "title": "Claude Code reads AGENTS.md only when telemetry is on",
+    "link": "https://blog.szypowi.cz/p/claude-code-reads-agents.md-only-when-telemetry-is-on/",
+    "pubDate": "Wed, 23 Sep 2026 12:15:33 +0000",
+    "snippet": "Article URL: https://blog.szypowi.cz/p/claude-code-reads-agents.md-only-when-telemetry-is-on/\nComments URL: https://news.ycombinator.com/item?id=49814947\nPoints: 57\n# Comments: 15"
   },
   {
-    "title": "‘We’re already fighting yesterday’s battle’: Greece’s prime minister gets candid about AI",
-    "link": "https://techcrunch.com/2026/09/22/were-already-fighting-yesterdays-battle-greeces-prime-minister-gets-candid-about-ai/",
-    "pubDate": "Wed, 23 Sep 2026 04:59:08 +0000",
-    "snippet": "Most leaders on a trade mission stick to the pitch, but when I interviewed Greek Prime Minister Kyriakos Mitsotakis this week, he also admitted that no government is ready for what AI is about to do."
+    "title": "Comma’s hands-off driving tech under investigation after 2 fatal crashes",
+    "link": "https://techcrunch.com/2026/09/23/commas-hands-off-driving-tech-under-investigation-after-2-fatal-crashes/",
+    "pubDate": "Wed, 23 Sep 2026 12:12:39 +0000",
+    "snippet": "The investigation involves at least some crashes where it appears drivers were using \"forked\" versions of Comma's software."
   },
   {
-    "title": "Grammarly will send unhinged messages to all your users if you try to cancel",
-    "link": "https://www.reddit.com/r/sysadmin/comments/1wjdpgx/psa_grammarly_will_send_unhinged_messages_to_all/",
-    "pubDate": "Wed, 23 Sep 2026 04:00:43 +0000",
-    "snippet": "Article URL: https://www.reddit.com/r/sysadmin/comments/1wjdpgx/psa_grammarly_will_send_unhinged_messages_to_all/\nComments URL: https://news.ycombinator.com/item?id=49811484\nPoints: 131\n# Comments: 35"
+    "title": "QuestDB (YC S20) Is Hiring a Sales Engineer",
+    "link": "https://questdb.com/careers/pre-sales-engineer-north-america/",
+    "pubDate": "Wed, 23 Sep 2026 12:01:04 +0000",
+    "snippet": "Article URL: https://questdb.com/careers/pre-sales-engineer-north-america/\nComments URL: https://news.ycombinator.com/item?id=49814780\nPoints: 0\n# Comments: 0"
   },
   {
-    "title": "Discord’s age verification era is upon us, despite community backlash",
-    "link": "https://techcrunch.com/2026/09/22/discords-age-verification-era-is-upon-us-despite-community-backlash/",
-    "pubDate": "Wed, 23 Sep 2026 03:31:12 +0000",
-    "snippet": "According to Discord, 90% of users will not have to verify their age."
+    "title": "Ema raises $77M as AI starts eating into enterprise software and services",
+    "link": "https://techcrunch.com/2026/09/23/ema-raises-77m-as-ai-starts-eating-into-enterprise-software-and-services/",
+    "pubDate": "Wed, 23 Sep 2026 12:00:00 +0000",
+    "snippet": "Ema has raised $140 million to date and has more than 50 enterprise customers, including Google and Microsoft."
   }
 ]

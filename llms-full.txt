@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Spent an Hour Prompting the AI. You Could Have Written the Doc in 15 Minutes.](https://goreportify.com/article-pages/blog-1790168454926.html)
+  - Type: Deep Insights | Date: 2026-09-23 | Author: Emily Rostova
+  - It’s 4 PM on a Tuesday. You need to write a one-pager outlining the new checkout analytics project. Simple enough. You have all the context in your he...
+- [The Ship Is Rigged for Silent Running](https://goreportify.com/article-pages/news-1790168425375.html)
+  - Type: Tech Radar | Date: 2026-09-23 | Author: Jessica Tran
+  - The pull request lands with a quiet thud. A junior engineer, three months out of a bootcamp, has just pushed their first significant feature. They wai...
 - [You Scheduled a Read-Out. You Should Have Scheduled a Workshop.](https://goreportify.com/article-pages/blog-1790154274448.html)
   - Type: Deep Insights | Date: 2026-09-23 | Author: Michael Chen
   - It’s 15 minutes into your meeting. You’re on slide 8 of 25. You’re sharing your screen, narrating bullet points about the Q3 strategy. You pause for a...
@@ -2283,4 +2289,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 750 articles (398 blog + 352 news) + 8 core pages._
+_Total: 752 articles (399 blog + 353 news) + 8 core pages._

@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Spent an Hour Prompting the AI. You Could Have Written the Doc in 15 Minutes.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1790168454926.html</link>
+    <description><![CDATA[It’s 4 PM on a Tuesday. You need to write a one-pager outlining the new checkout analytics project. Simple enough. You have all the context in your he...]]></description>
+    <pubDate>Wed, 23 Sep 2026 13:00:54 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Ship Is Rigged for Silent Running]]></title>
+    <link>https://goreportify.com/article-pages/news-1790168425375.html</link>
+    <description><![CDATA[The pull request lands with a quiet thud. A junior engineer, three months out of a bootcamp, has just pushed their first significant feature. They wai...]]></description>
+    <pubDate>Wed, 23 Sep 2026 13:00:25 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Scheduled a Read-Out. You Should Have Scheduled a Workshop.]]></title>
     <link>https://goreportify.com/article-pages/blog-1790154274448.html</link>
     <description><![CDATA[It’s 15 minutes into your meeting. You’re on slide 8 of 25. You’re sharing your screen, narrating bullet points about the Q3 strategy. You pause for a...]]></description>
@@ -295,18 +307,6 @@ You...]]></description>
     <link>https://goreportify.com/article-pages/news-1787835630029.html</link>
     <description><![CDATA[The performance dashboard is a sea of green. Latency is low, uptime is 99.99%, server load is nominal. Yet the new AI-powered fraud detection system j...]]></description>
     <pubDate>Thu, 27 Aug 2026 13:00:30 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[They Nodded in the Meeting. They Disagreed in the Sprint.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1787749256996.html</link>
-    <description><![CDATA[You walk out of the kickoff meeting feeling a surge of momentum. The plan is solid. The VP of Engineering nodded. The marketing lead gave a thumbs-up....]]></description>
-    <pubDate>Wed, 26 Aug 2026 13:00:56 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Sent a Screenshot of a Dashboard. You Should Have Sent a Diagnosis.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1787662859234.html</link>
-    <description><![CDATA[It’s 9 AM on Monday. You filter your analytics dashboard for last week’s numbers, see a line going up and to the right, and take a screenshot. You pas...]]></description>
-    <pubDate>Tue, 25 Aug 2026 13:00:59 GMT</pubDate>
   </item>
 </channel>
 </rss>

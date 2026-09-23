@@ -1,5 +1,25 @@
 [
     {
+        "id": "1790168454926",
+        "type": "blog",
+        "title": "You Spent an Hour Prompting the AI. You Could Have Written the Doc in 15 Minutes.",
+        "category": "Deep Insights",
+        "date": "2026-09-23",
+        "author": "Emily Rostova",
+        "excerpt": "It’s 4 PM on a Tuesday. You need to write a one-pager outlining the new checkout analytics project. Simple enough. You have all the context in your he...",
+        "contentFile": "blog-1790168454926.md"
+    },
+    {
+        "id": "1790168425375",
+        "type": "news",
+        "title": "The Ship Is Rigged for Silent Running",
+        "category": "Tech Radar",
+        "date": "2026-09-23",
+        "author": "Jessica Tran",
+        "excerpt": "The pull request lands with a quiet thud. A junior engineer, three months out of a bootcamp, has just pushed their first significant feature. They wai...",
+        "contentFile": "news-1790168425375.md"
+    },
+    {
         "id": "1790154274448",
         "type": "blog",
         "title": "You Scheduled a Read-Out. You Should Have Scheduled a Workshop.",
