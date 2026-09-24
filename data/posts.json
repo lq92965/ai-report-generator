@@ -1,5 +1,25 @@
 [
     {
+        "id": "1790254860233",
+        "type": "blog",
+        "title": "You Wrote a User Story. They Needed Acceptance Criteria.",
+        "category": "Deep Insights",
+        "date": "2026-09-24",
+        "author": "David Sterling",
+        "excerpt": "The JIRA ticket looked perfect. You’d spent an hour crafting the user story, channeling the customer’s voice, their hopes, their dreams for a better c...",
+        "contentFile": "blog-1790254860233.md"
+    },
+    {
+        "id": "1790254830715",
+        "type": "news",
+        "title": "The Cache Is Now Poisoned",
+        "category": "Tech Radar",
+        "date": "2026-09-24",
+        "author": "Olivia Thorne",
+        "excerpt": "You see it on a third-tier code forum first. The answer is immaculate, formatted with a confidence you haven't seen since the documentation for a VAX...",
+        "contentFile": "news-1790254830715.md"
+    },
+    {
         "id": "1790168614326",
         "type": "blog",
         "title": "You Demoed the Feature. They Asked About the Button Color.",

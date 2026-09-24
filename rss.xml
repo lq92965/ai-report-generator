@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Wrote a User Story. They Needed Acceptance Criteria.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1790254860233.html</link>
+    <description><![CDATA[The JIRA ticket looked perfect. You’d spent an hour crafting the user story, channeling the customer’s voice, their hopes, their dreams for a better c...]]></description>
+    <pubDate>Thu, 24 Sep 2026 13:01:00 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Cache Is Now Poisoned]]></title>
+    <link>https://goreportify.com/article-pages/news-1790254830715.html</link>
+    <description><![CDATA[You see it on a third-tier code forum first. The answer is immaculate, formatted with a confidence you haven't seen since the documentation for a VAX...]]></description>
+    <pubDate>Thu, 24 Sep 2026 13:00:30 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Demoed the Feature. They Asked About the Button Color.]]></title>
     <link>https://goreportify.com/article-pages/blog-1790168614326.html</link>
     <description><![CDATA[It’s demo day. Your team just finished a two-week sprint, wrestling with a messy third-party API and a dozen edge cases. You pull up the staging envir...]]></description>
@@ -295,18 +307,6 @@ You...]]></description>
     <link>https://goreportify.com/article-pages/news-1788094829543.html</link>
     <description><![CDATA[The bug was in the routing algorithm. Or at least, that’s where it was supposed to be. For three days, a senior engineer at a logistics startup watche...]]></description>
     <pubDate>Sun, 30 Aug 2026 13:00:29 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Exfiltration Vector Is a Friendly Chatbot]]></title>
-    <link>https://goreportify.com/article-pages/news-1788008426555.html</link>
-    <description><![CDATA[It starts with an act of frustrated initiative. A product manager, tired of waiting for an integration that will never get prioritized, spends her Sun...]]></description>
-    <pubDate>Sat, 29 Aug 2026 13:00:26 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Buried the Lead on Page 5. Your Execs Never Got There.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1787922058338.html</link>
-    <description><![CDATA[It’s Tuesday morning. You hit send on the weekly performance report. You spent hours pulling data, crafting charts, and writing up careful, nuanced an...]]></description>
-    <pubDate>Fri, 28 Aug 2026 13:00:58 GMT</pubDate>
   </item>
 </channel>
 </rss>
