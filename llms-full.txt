@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your AI Summarized 10 User Interviews. It Missed the Critical Insight.](https://goreportify.com/article-pages/blog-1790254898930.html)
+  - Type: Deep Insights | Date: 2026-09-24 | Author: Alex Mercer
+  - You just wrapped your tenth user interview in two days. Your brain is a soup of quotes, feature requests, and pain points. You export the transcripts,...
+- [The Memory Leak Is Now a Business Model](https://goreportify.com/article-pages/news-1790254857269.html)
+  - Type: Tech Radar | Date: 2026-09-24 | Author: Olivia Thorne
+  - The dashboard looked wrong. A young engineer, wired on a third cold brew, watched the GPU memory utilization graph for the new summarization feature....
 - [You Wrote a User Story. They Needed Acceptance Criteria.](https://goreportify.com/article-pages/blog-1790254860233.html)
   - Type: Deep Insights | Date: 2026-09-24 | Author: David Sterling
   - The JIRA ticket looked perfect. You’d spent an hour crafting the user story, channeling the customer’s voice, their hopes, their dreams for a better c...
@@ -2301,4 +2307,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 756 articles (401 blog + 355 news) + 8 core pages._
+_Total: 758 articles (402 blog + 356 news) + 8 core pages._

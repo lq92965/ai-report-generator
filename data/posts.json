@@ -1,5 +1,25 @@
 [
     {
+        "id": "1790254898930",
+        "type": "blog",
+        "title": "Your AI Summarized 10 User Interviews. It Missed the Critical Insight.",
+        "category": "Deep Insights",
+        "date": "2026-09-24",
+        "author": "Alex Mercer",
+        "excerpt": "You just wrapped your tenth user interview in two days. Your brain is a soup of quotes, feature requests, and pain points. You export the transcripts,...",
+        "contentFile": "blog-1790254898930.md"
+    },
+    {
+        "id": "1790254857269",
+        "type": "news",
+        "title": "The Memory Leak Is Now a Business Model",
+        "category": "Tech Radar",
+        "date": "2026-09-24",
+        "author": "Olivia Thorne",
+        "excerpt": "The dashboard looked wrong. A young engineer, wired on a third cold brew, watched the GPU memory utilization graph for the new summarization feature....",
+        "contentFile": "news-1790254857269.md"
+    },
+    {
         "id": "1790254860233",
         "type": "blog",
         "title": "You Wrote a User Story. They Needed Acceptance Criteria.",
