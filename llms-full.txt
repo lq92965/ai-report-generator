@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [You Got Buy-In on the Goal. You Forgot to Get Buy-In on the Trade-Offs.](https://goreportify.com/article-pages/blog-1790341293931.html)
+  - Type: Deep Insights | Date: 2026-09-25 | Author: David Sterling
+  - The exec team loved it. Your pitch for the new "AI-powered customer onboarding" was a home run. The CEO nodded along. The VP of Sales was already imag...
 - [You're Triaging Slack All Day. You Need a Communication Protocol.](https://goreportify.com/article-pages/blog-1790341275827.html)
   - Type: Deep Insights | Date: 2026-09-25 | Author: Sarah Jenkins
   - It’s 9:17 AM. You’ve been at your desk for less than an hour, but you’ve already been pulled in ten different directions. A designer DMs you a “quick...
@@ -2316,4 +2319,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 761 articles (403 blog + 358 news) + 8 core pages._
+_Total: 762 articles (404 blog + 358 news) + 8 core pages._
