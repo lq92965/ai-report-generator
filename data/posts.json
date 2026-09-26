@@ -1,5 +1,15 @@
 [
     {
+        "id": "1790427674431",
+        "type": "blog",
+        "title": "Your Meeting Had a Vague Agenda. Now It Has a Vague Outcome.",
+        "category": "Deep Insights",
+        "date": "2026-09-26",
+        "author": "Marcus Webb",
+        "excerpt": "The calendar invite was optimistic. \"Project Phoenix Sync.\" You click join. Ten faces pop up in their little boxes. The engineering lead kicks things...",
+        "contentFile": "blog-1790427674431.md"
+    },
+    {
         "id": "1790427661457",
         "type": "blog",
         "title": "You Closed 50 JIRA Tickets. You Didn't Move the Needle.",

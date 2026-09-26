@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [Your Meeting Had a Vague Agenda. Now It Has a Vague Outcome.](https://goreportify.com/article-pages/blog-1790427674431.html)
+  - Type: Deep Insights | Date: 2026-09-26 | Author: Marcus Webb
+  - The calendar invite was optimistic. "Project Phoenix Sync." You click join. Ten faces pop up in their little boxes. The engineering lead kicks things...
 - [You Closed 50 JIRA Tickets. You Didn't Move the Needle.](https://goreportify.com/article-pages/blog-1790427661457.html)
   - Type: Deep Insights | Date: 2026-09-26 | Author: Alex Mercer
   - The sprint ended on Friday. You look at the JIRA burndown chart, and it’s a perfect 45-degree slope to zero. Fifty tickets closed. The team hit its ve...
@@ -2328,4 +2331,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 765 articles (405 blog + 360 news) + 8 core pages._
+_Total: 766 articles (406 blog + 360 news) + 8 core pages._

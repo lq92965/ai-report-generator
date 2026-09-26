@@ -5,6 +5,12 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Meeting Had a Vague Agenda. Now It Has a Vague Outcome.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1790427674431.html</link>
+    <description><![CDATA[The calendar invite was optimistic. "Project Phoenix Sync." You click join. Ten faces pop up in their little boxes. The engineering lead kicks things...]]></description>
+    <pubDate>Sat, 26 Sep 2026 13:01:14 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Closed 50 JIRA Tickets. You Didn't Move the Needle.]]></title>
     <link>https://goreportify.com/article-pages/blog-1790427661457.html</link>
     <description><![CDATA[The sprint ended on Friday. You look at the JIRA burndown chart, and it’s a perfect 45-degree slope to zero. Fifty tickets closed. The team hit its ve...]]></description>
@@ -299,14 +305,6 @@ You book...]]></description>
     <link>https://goreportify.com/article-pages/news-1788699633863.html</link>
     <description><![CDATA[The on-call engineer wakes up to a hundred alerts. The company’s flagship product, an AI-powered contract analysis tool, is suddenly spitting out nons...]]></description>
     <pubDate>Sun, 06 Sep 2026 13:00:33 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your One-Pager Is a Brain Dump. It Needs to Be a Decision Memo.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1788613250033.html</link>
-    <description><![CDATA[You hit “share” on the Google Doc and post the link in Slack. “Team, here’s the one-pager on the new onboarding flow. Would love your feedback!”
-
-You...]]></description>
-    <pubDate>Sat, 05 Sep 2026 13:00:50 GMT</pubDate>
   </item>
 </channel>
 </rss>
