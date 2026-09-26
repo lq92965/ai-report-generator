@@ -1,5 +1,35 @@
 [
     {
+        "id": "1790427661457",
+        "type": "blog",
+        "title": "You Closed 50 JIRA Tickets. You Didn't Move the Needle.",
+        "category": "Deep Insights",
+        "date": "2026-09-26",
+        "author": "Alex Mercer",
+        "excerpt": "The sprint ended on Friday. You look at the JIRA burndown chart, and it’s a perfect 45-degree slope to zero. Fifty tickets closed. The team hit its ve...",
+        "contentFile": "blog-1790427661457.md"
+    },
+    {
+        "id": "1790427642039",
+        "type": "news",
+        "title": "The Sanity Check Is a Prayer",
+        "category": "Tech Radar",
+        "date": "2026-09-26",
+        "author": "Alex Mercer",
+        "excerpt": "A junior engineer stares at their screen, at the five lines of Python that are supposed to guard the company’s new AI-powered feature. The function is...",
+        "contentFile": "news-1790427642039.md"
+    },
+    {
+        "id": "1790427630408",
+        "type": "news",
+        "title": "The Benchmark Is Now a Press Release",
+        "category": "Tech Radar",
+        "date": "2026-09-26",
+        "author": "Jessica Tran",
+        "excerpt": "The Slack notification for the announcements channel lights up. There’s no new feature, no critical patch, no postmortem. It’s a screenshot of a Huggi...",
+        "contentFile": "news-1790427630408.md"
+    },
+    {
         "id": "1790341293931",
         "type": "blog",
         "title": "You Got Buy-In on the Goal. You Forgot to Get Buy-In on the Trade-Offs.",

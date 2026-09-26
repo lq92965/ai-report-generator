@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Closed 50 JIRA Tickets. You Didn't Move the Needle.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1790427661457.html</link>
+    <description><![CDATA[The sprint ended on Friday. You look at the JIRA burndown chart, and it’s a perfect 45-degree slope to zero. Fifty tickets closed. The team hit its ve...]]></description>
+    <pubDate>Sat, 26 Sep 2026 13:01:01 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Sanity Check Is a Prayer]]></title>
+    <link>https://goreportify.com/article-pages/news-1790427642039.html</link>
+    <description><![CDATA[A junior engineer stares at their screen, at the five lines of Python that are supposed to guard the company’s new AI-powered feature. The function is...]]></description>
+    <pubDate>Sat, 26 Sep 2026 13:00:42 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Benchmark Is Now a Press Release]]></title>
+    <link>https://goreportify.com/article-pages/news-1790427630408.html</link>
+    <description><![CDATA[The Slack notification for the announcements channel lights up. There’s no new feature, no critical patch, no postmortem. It’s a screenshot of a Huggi...]]></description>
+    <pubDate>Sat, 26 Sep 2026 13:00:30 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Got Buy-In on the Goal. You Forgot to Get Buy-In on the Trade-Offs.]]></title>
     <link>https://goreportify.com/article-pages/blog-1790341293931.html</link>
     <description><![CDATA[The exec team loved it. Your pitch for the new "AI-powered customer onboarding" was a home run. The CEO nodded along. The VP of Sales was already imag...]]></description>
@@ -289,24 +307,6 @@ You book...]]></description>
 
 You...]]></description>
     <pubDate>Sat, 05 Sep 2026 13:00:50 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Status Update is an Event. It Should Be a Destination.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1788526859545.html</link>
-    <description><![CDATA[It’s 9:17 AM on Monday. You have three browser tabs open: a JIRA board showing last week’s completed stories, a Looker dashboard with the latest adopt...]]></description>
-    <pubDate>Fri, 04 Sep 2026 13:00:59 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Real AI Stack Is on a Personal Credit Card]]></title>
-    <link>https://goreportify.com/article-pages/news-1788526828761.html</link>
-    <description><![CDATA[The CIO is presenting a slide deck in a glass-walled conference room. The deck details the company’s multi-million dollar AI strategy, centered on a h...]]></description>
-    <pubDate>Fri, 04 Sep 2026 13:00:28 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Said 'We'll Fast-Follow.' They Heard 'It's Coming Next Sprint.']]></title>
-    <link>https://goreportify.com/article-pages/blog-1788440473099.html</link>
-    <description><![CDATA[The quarterly roadmap review was going smoothly. Too smoothly. Then the VP of Sales shared his screen. "This is a must-have for our biggest enterprise...]]></description>
-    <pubDate>Thu, 03 Sep 2026 13:01:13 GMT</pubDate>
   </item>
 </channel>
 </rss>

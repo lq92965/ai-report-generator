@@ -15,6 +15,15 @@
 
 ## All Articles
 
+- [You Closed 50 JIRA Tickets. You Didn't Move the Needle.](https://goreportify.com/article-pages/blog-1790427661457.html)
+  - Type: Deep Insights | Date: 2026-09-26 | Author: Alex Mercer
+  - The sprint ended on Friday. You look at the JIRA burndown chart, and it’s a perfect 45-degree slope to zero. Fifty tickets closed. The team hit its ve...
+- [The Sanity Check Is a Prayer](https://goreportify.com/article-pages/news-1790427642039.html)
+  - Type: Tech Radar | Date: 2026-09-26 | Author: Alex Mercer
+  - A junior engineer stares at their screen, at the five lines of Python that are supposed to guard the company’s new AI-powered feature. The function is...
+- [The Benchmark Is Now a Press Release](https://goreportify.com/article-pages/news-1790427630408.html)
+  - Type: Tech Radar | Date: 2026-09-26 | Author: Jessica Tran
+  - The Slack notification for the announcements channel lights up. There’s no new feature, no critical patch, no postmortem. It’s a screenshot of a Huggi...
 - [You Got Buy-In on the Goal. You Forgot to Get Buy-In on the Trade-Offs.](https://goreportify.com/article-pages/blog-1790341293931.html)
   - Type: Deep Insights | Date: 2026-09-25 | Author: David Sterling
   - The exec team loved it. Your pitch for the new "AI-powered customer onboarding" was a home run. The CEO nodded along. The VP of Sales was already imag...
@@ -2319,4 +2328,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 762 articles (404 blog + 358 news) + 8 core pages._
+_Total: 765 articles (405 blog + 360 news) + 8 core pages._
