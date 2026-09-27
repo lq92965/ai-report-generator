@@ -1,5 +1,25 @@
 [
     {
+        "id": "1790514057347",
+        "type": "blog",
+        "title": "Your Meeting Notes Are a Transcript. They Need to Be a Decision Record.",
+        "category": "Deep Insights",
+        "date": "2026-09-27",
+        "author": "Alex Mercer",
+        "excerpt": "You’re scrolling through a Slack channel, your eyes glazing over. Three weeks ago, your team made a critical call on the new checkout flow. Now, the V...",
+        "contentFile": "blog-1790514057347.md"
+    },
+    {
+        "id": "1790514028914",
+        "type": "news",
+        "title": "The Legacy System Is Now a Protected Class",
+        "category": "Tech Radar",
+        "date": "2026-09-27",
+        "author": "Marcus Webb",
+        "excerpt": "The meeting was over before it began. A junior engineer, armed with immaculate slides showing a migration path from the old AS/400 monolith to a set o...",
+        "contentFile": "news-1790514028914.md"
+    },
+    {
         "id": "1790427674431",
         "type": "blog",
         "title": "Your Meeting Had a Vague Agenda. Now It Has a Vague Outcome.",

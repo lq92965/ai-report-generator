@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Meeting Notes Are a Transcript. They Need to Be a Decision Record.](https://goreportify.com/article-pages/blog-1790514057347.html)
+  - Type: Deep Insights | Date: 2026-09-27 | Author: Alex Mercer
+  - You’re scrolling through a Slack channel, your eyes glazing over. Three weeks ago, your team made a critical call on the new checkout flow. Now, the V...
+- [The Legacy System Is Now a Protected Class](https://goreportify.com/article-pages/news-1790514028914.html)
+  - Type: Tech Radar | Date: 2026-09-27 | Author: Marcus Webb
+  - The meeting was over before it began. A junior engineer, armed with immaculate slides showing a migration path from the old AS/400 monolith to a set o...
 - [Your Meeting Had a Vague Agenda. Now It Has a Vague Outcome.](https://goreportify.com/article-pages/blog-1790427674431.html)
   - Type: Deep Insights | Date: 2026-09-26 | Author: Marcus Webb
   - The calendar invite was optimistic. "Project Phoenix Sync." You click join. Ten faces pop up in their little boxes. The engineering lead kicks things...
@@ -2331,4 +2337,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 766 articles (406 blog + 360 news) + 8 core pages._
+_Total: 768 articles (407 blog + 361 news) + 8 core pages._

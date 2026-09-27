@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Meeting Notes Are a Transcript. They Need to Be a Decision Record.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1790514057347.html</link>
+    <description><![CDATA[You’re scrolling through a Slack channel, your eyes glazing over. Three weeks ago, your team made a critical call on the new checkout flow. Now, the V...]]></description>
+    <pubDate>Sun, 27 Sep 2026 13:00:57 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Legacy System Is Now a Protected Class]]></title>
+    <link>https://goreportify.com/article-pages/news-1790514028914.html</link>
+    <description><![CDATA[The meeting was over before it began. A junior engineer, armed with immaculate slides showing a migration path from the old AS/400 monolith to a set o...]]></description>
+    <pubDate>Sun, 27 Sep 2026 13:00:28 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Meeting Had a Vague Agenda. Now It Has a Vague Outcome.]]></title>
     <link>https://goreportify.com/article-pages/blog-1790427674431.html</link>
     <description><![CDATA[The calendar invite was optimistic. "Project Phoenix Sync." You click join. Ten faces pop up in their little boxes. The engineering lead kicks things...]]></description>
@@ -293,18 +305,6 @@ You book...]]></description>
     <link>https://goreportify.com/article-pages/news-1788786029088.html</link>
     <description><![CDATA[It’s 11 PM on a Tuesday. A developer, fueled by lukewarm coffee and the pressure of a looming deadline, isn't wrestling with algorithms. She’s scrolli...]]></description>
     <pubDate>Mon, 07 Sep 2026 13:00:29 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Decision Was in Slack. The Rationale Was in a Doc. The Update Was in an Email.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1788699660870.html</link>
-    <description><![CDATA[A new engineer just joined your team. On day three, she DMs you a simple question: “Hey, can you point me to the doc on why we chose this specific pay...]]></description>
-    <pubDate>Sun, 06 Sep 2026 13:01:00 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Version Number Is a Lie]]></title>
-    <link>https://goreportify.com/article-pages/news-1788699633863.html</link>
-    <description><![CDATA[The on-call engineer wakes up to a hundred alerts. The company’s flagship product, an AI-powered contract analysis tool, is suddenly spitting out nons...]]></description>
-    <pubDate>Sun, 06 Sep 2026 13:00:33 GMT</pubDate>
   </item>
 </channel>
 </rss>
