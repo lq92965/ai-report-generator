@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Asked for Feedback. You Got a Wishlist.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1790600465054.html</link>
+    <description><![CDATA[You just walked your team through the quarterly roadmap. It’s tight. The strategy is sound, the problem is clear, and the proposed solutions are backe...]]></description>
+    <pubDate>Mon, 28 Sep 2026 13:01:05 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Generation Loss Is Now Generational]]></title>
+    <link>https://goreportify.com/article-pages/news-1790600443741.html</link>
+    <description><![CDATA[You hit the wall on a tricky Kubernetes config. The official docs are dense. The first few search results look promising; they have code blocks and cl...]]></description>
+    <pubDate>Mon, 28 Sep 2026 13:00:43 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Author Field Is Now Blank]]></title>
+    <link>https://goreportify.com/article-pages/news-1790600428483.html</link>
+    <description><![CDATA[It’s 2 a.m. and a senior engineer is staring at a function. The function is clever. It uses a bitwise operation and a list comprehension in a way that...]]></description>
+    <pubDate>Mon, 28 Sep 2026 13:00:28 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Meeting Notes Are a Transcript. They Need to Be a Decision Record.]]></title>
     <link>https://goreportify.com/article-pages/blog-1790514057347.html</link>
     <description><![CDATA[You’re scrolling through a Slack channel, your eyes glazing over. Three weeks ago, your team made a critical call on the new checkout flow. Now, the V...]]></description>
@@ -287,24 +305,6 @@ You book...]]></description>
     <link>https://goreportify.com/article-pages/blog-1788872465882.html</link>
     <description><![CDATA[The email from the CTO landed with a triumphant thud: "To accelerate innovation, we've provisioned a ChatGPT Enterprise seat for every employee!" The...]]></description>
     <pubDate>Tue, 08 Sep 2026 13:01:05 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Stack Trace Ends in a Black Box]]></title>
-    <link>https://goreportify.com/article-pages/news-1788872436009.html</link>
-    <description><![CDATA[The pager alert screams at 2:17 AM. A senior engineer at a fintech startup squints at the dashboard. Revenue from a core automated system has flatline...]]></description>
-    <pubDate>Tue, 08 Sep 2026 13:00:36 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Aligned with Everyone 1:1. Now Nobody Agrees in the Room.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1788786057982.html</link>
-    <description><![CDATA[The big meeting starts. You feel confident. You spent the last three days doing the "PM shuffle," a series of 1:1s to pre-align everyone on your new f...]]></description>
-    <pubDate>Mon, 07 Sep 2026 13:00:57 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Real Trojan Horse Is a Pickle File]]></title>
-    <link>https://goreportify.com/article-pages/news-1788786029088.html</link>
-    <description><![CDATA[It’s 11 PM on a Tuesday. A developer, fueled by lukewarm coffee and the pressure of a looming deadline, isn't wrestling with algorithms. She’s scrolli...]]></description>
-    <pubDate>Mon, 07 Sep 2026 13:00:29 GMT</pubDate>
   </item>
 </channel>
 </rss>

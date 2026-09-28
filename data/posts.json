@@ -1,5 +1,35 @@
 [
     {
+        "id": "1790600465054",
+        "type": "blog",
+        "title": "You Asked for Feedback. You Got a Wishlist.",
+        "category": "Deep Insights",
+        "date": "2026-09-28",
+        "author": "David Sterling",
+        "excerpt": "You just walked your team through the quarterly roadmap. It’s tight. The strategy is sound, the problem is clear, and the proposed solutions are backe...",
+        "contentFile": "blog-1790600465054.md"
+    },
+    {
+        "id": "1790600443741",
+        "type": "news",
+        "title": "The Generation Loss Is Now Generational",
+        "category": "Tech Radar",
+        "date": "2026-09-28",
+        "author": "David Sterling",
+        "excerpt": "You hit the wall on a tricky Kubernetes config. The official docs are dense. The first few search results look promising; they have code blocks and cl...",
+        "contentFile": "news-1790600443741.md"
+    },
+    {
+        "id": "1790600428483",
+        "type": "news",
+        "title": "The Author Field Is Now Blank",
+        "category": "Tech Radar",
+        "date": "2026-09-28",
+        "author": "David Sterling",
+        "excerpt": "It’s 2 a.m. and a senior engineer is staring at a function. The function is clever. It uses a bitwise operation and a list comprehension in a way that...",
+        "contentFile": "news-1790600428483.md"
+    },
+    {
         "id": "1790514057347",
         "type": "blog",
         "title": "Your Meeting Notes Are a Transcript. They Need to Be a Decision Record.",

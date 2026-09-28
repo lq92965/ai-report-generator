@@ -15,6 +15,15 @@
 
 ## All Articles
 
+- [You Asked for Feedback. You Got a Wishlist.](https://goreportify.com/article-pages/blog-1790600465054.html)
+  - Type: Deep Insights | Date: 2026-09-28 | Author: David Sterling
+  - You just walked your team through the quarterly roadmap. It’s tight. The strategy is sound, the problem is clear, and the proposed solutions are backe...
+- [The Generation Loss Is Now Generational](https://goreportify.com/article-pages/news-1790600443741.html)
+  - Type: Tech Radar | Date: 2026-09-28 | Author: David Sterling
+  - You hit the wall on a tricky Kubernetes config. The official docs are dense. The first few search results look promising; they have code blocks and cl...
+- [The Author Field Is Now Blank](https://goreportify.com/article-pages/news-1790600428483.html)
+  - Type: Tech Radar | Date: 2026-09-28 | Author: David Sterling
+  - It’s 2 a.m. and a senior engineer is staring at a function. The function is clever. It uses a bitwise operation and a list comprehension in a way that...
 - [Your Meeting Notes Are a Transcript. They Need to Be a Decision Record.](https://goreportify.com/article-pages/blog-1790514057347.html)
   - Type: Deep Insights | Date: 2026-09-27 | Author: Alex Mercer
   - You’re scrolling through a Slack channel, your eyes glazing over. Three weeks ago, your team made a critical call on the new checkout flow. Now, the V...
@@ -2337,4 +2346,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 768 articles (407 blog + 361 news) + 8 core pages._
+_Total: 771 articles (408 blog + 363 news) + 8 core pages._
