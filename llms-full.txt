@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [That Ambiguous Sentence in Your PRD Just Cost You a Sprint](https://goreportify.com/article-pages/blog-1790600477714.html)
+  - Type: Deep Insights | Date: 2026-09-28 | Author: Michael Chen
+  - It’s demo day. The engineer pulls up the new data import feature. You watch as they upload a CSV file with a few errors in it. The spinner spins, then...
 - [You Asked for Feedback. You Got a Wishlist.](https://goreportify.com/article-pages/blog-1790600465054.html)
   - Type: Deep Insights | Date: 2026-09-28 | Author: David Sterling
   - You just walked your team through the quarterly roadmap. It’s tight. The strategy is sound, the problem is clear, and the proposed solutions are backe...
@@ -2346,4 +2349,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 771 articles (408 blog + 363 news) + 8 core pages._
+_Total: 772 articles (409 blog + 363 news) + 8 core pages._

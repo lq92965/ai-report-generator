@@ -1,5 +1,15 @@
 [
     {
+        "id": "1790600477714",
+        "type": "blog",
+        "title": "That Ambiguous Sentence in Your PRD Just Cost You a Sprint",
+        "category": "Deep Insights",
+        "date": "2026-09-28",
+        "author": "Michael Chen",
+        "excerpt": "It’s demo day. The engineer pulls up the new data import feature. You watch as they upload a CSV file with a few errors in it. The spinner spins, then...",
+        "contentFile": "blog-1790600477714.md"
+    },
+    {
         "id": "1790600465054",
         "type": "blog",
         "title": "You Asked for Feedback. You Got a Wishlist.",

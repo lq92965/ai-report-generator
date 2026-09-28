@@ -5,6 +5,12 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[That Ambiguous Sentence in Your PRD Just Cost You a Sprint]]></title>
+    <link>https://goreportify.com/article-pages/blog-1790600477714.html</link>
+    <description><![CDATA[It’s demo day. The engineer pulls up the new data import feature. You watch as they upload a CSV file with a few errors in it. The spinner spins, then...]]></description>
+    <pubDate>Mon, 28 Sep 2026 13:01:17 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Asked for Feedback. You Got a Wishlist.]]></title>
     <link>https://goreportify.com/article-pages/blog-1790600465054.html</link>
     <description><![CDATA[You just walked your team through the quarterly roadmap. It’s tight. The strategy is sound, the problem is clear, and the proposed solutions are backe...]]></description>
@@ -299,12 +305,6 @@ You book...]]></description>
     <link>https://goreportify.com/article-pages/news-1788958830178.html</link>
     <description><![CDATA[A developer on the customer automation team pushes a final commit before the weekend. The change is tiny: a single-line tweak to the system prompt for...]]></description>
     <pubDate>Wed, 09 Sep 2026 13:00:30 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Gave Everyone a ChatGPT Plus Seat. Now You Have 50 Different Workflows.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1788872465882.html</link>
-    <description><![CDATA[The email from the CTO landed with a triumphant thud: "To accelerate innovation, we've provisioned a ChatGPT Enterprise seat for every employee!" The...]]></description>
-    <pubDate>Tue, 08 Sep 2026 13:01:05 GMT</pubDate>
   </item>
 </channel>
 </rss>
