@@ -1,5 +1,35 @@
 [
     {
+        "id": "1790686869260",
+        "type": "blog",
+        "title": "You Sent the Update to the 'Leadership' Alias. Nobody Knew It Was for Them.",
+        "category": "Deep Insights",
+        "date": "2026-09-29",
+        "author": "Sarah Jenkins",
+        "excerpt": "It’s Tuesday morning. You hit send on the weekly progress update for Project Apollo. It’s a work of art. You’ve got the burndown chart, a list of comp...",
+        "contentFile": "blog-1790686869260.md"
+    },
+    {
+        "id": "1790686845811",
+        "type": "news",
+        "title": "What Changes Now in Building Markets",
+        "category": "Tech Radar",
+        "date": "2026-09-29",
+        "author": "Olivia Thorne",
+        "excerpt": "The founder’s slide deck was immaculate. In a conference room with borrowed air and rented chairs, he pointed to a box labeled \"Proprietary Data & Cus...",
+        "contentFile": "news-1790686845811.md"
+    },
+    {
+        "id": "1790686834310",
+        "type": "news",
+        "title": "The Default Setting Is Betrayal",
+        "category": "Tech Radar",
+        "date": "2026-09-29",
+        "author": "Marcus Webb",
+        "excerpt": "The bill arrives on the first of the month, an automated email with a five-figure number where you expected three. A junior engineer, proud of deployi...",
+        "contentFile": "news-1790686834310.md"
+    },
+    {
         "id": "1790600477714",
         "type": "blog",
         "title": "That Ambiguous Sentence in Your PRD Just Cost You a Sprint",

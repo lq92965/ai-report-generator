@@ -15,6 +15,15 @@
 
 ## All Articles
 
+- [You Sent the Update to the 'Leadership' Alias. Nobody Knew It Was for Them.](https://goreportify.com/article-pages/blog-1790686869260.html)
+  - Type: Deep Insights | Date: 2026-09-29 | Author: Sarah Jenkins
+  - It’s Tuesday morning. You hit send on the weekly progress update for Project Apollo. It’s a work of art. You’ve got the burndown chart, a list of comp...
+- [What Changes Now in Building Markets](https://goreportify.com/article-pages/news-1790686845811.html)
+  - Type: Tech Radar | Date: 2026-09-29 | Author: Olivia Thorne
+  - The founder’s slide deck was immaculate. In a conference room with borrowed air and rented chairs, he pointed to a box labeled "Proprietary Data & Cus...
+- [The Default Setting Is Betrayal](https://goreportify.com/article-pages/news-1790686834310.html)
+  - Type: Tech Radar | Date: 2026-09-29 | Author: Marcus Webb
+  - The bill arrives on the first of the month, an automated email with a five-figure number where you expected three. A junior engineer, proud of deployi...
 - [That Ambiguous Sentence in Your PRD Just Cost You a Sprint](https://goreportify.com/article-pages/blog-1790600477714.html)
   - Type: Deep Insights | Date: 2026-09-28 | Author: Michael Chen
   - It’s demo day. The engineer pulls up the new data import feature. You watch as they upload a CSV file with a few errors in it. The spinner spins, then...
@@ -2349,4 +2358,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 772 articles (409 blog + 363 news) + 8 core pages._
+_Total: 775 articles (410 blog + 365 news) + 8 core pages._

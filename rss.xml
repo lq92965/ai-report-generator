@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Sent the Update to the 'Leadership' Alias. Nobody Knew It Was for Them.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1790686869260.html</link>
+    <description><![CDATA[It’s Tuesday morning. You hit send on the weekly progress update for Project Apollo. It’s a work of art. You’ve got the burndown chart, a list of comp...]]></description>
+    <pubDate>Tue, 29 Sep 2026 13:01:09 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[What Changes Now in Building Markets]]></title>
+    <link>https://goreportify.com/article-pages/news-1790686845811.html</link>
+    <description><![CDATA[The founder’s slide deck was immaculate. In a conference room with borrowed air and rented chairs, he pointed to a box labeled "Proprietary Data & Cus...]]></description>
+    <pubDate>Tue, 29 Sep 2026 13:00:45 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Default Setting Is Betrayal]]></title>
+    <link>https://goreportify.com/article-pages/news-1790686834310.html</link>
+    <description><![CDATA[The bill arrives on the first of the month, an automated email with a five-figure number where you expected three. A junior engineer, proud of deployi...]]></description>
+    <pubDate>Tue, 29 Sep 2026 13:00:34 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[That Ambiguous Sentence in Your PRD Just Cost You a Sprint]]></title>
     <link>https://goreportify.com/article-pages/blog-1790600477714.html</link>
     <description><![CDATA[It’s demo day. The engineer pulls up the new data import feature. You watch as they upload a CSV file with a few errors in it. The spinner spins, then...]]></description>
@@ -287,24 +305,6 @@ You book...]]></description>
     <link>https://goreportify.com/article-pages/blog-1789045263691.html</link>
     <description><![CDATA[You hit "Share." The doc is a thing of beauty. A tight problem statement, crisp user stories, a logical flow. You drop the link in Slack with a cheerf...]]></description>
     <pubDate>Thu, 10 Sep 2026 13:01:03 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Technical Debt Is Now Semantic]]></title>
-    <link>https://goreportify.com/article-pages/news-1789045233289.html</link>
-    <description><![CDATA[An alert fires at 2:17 AM. The new AI-powered customer service bot is telling users they can get refunds on non-refundable airline tickets. An enginee...]]></description>
-    <pubDate>Thu, 10 Sep 2026 13:00:33 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Roadmap Is a List of Features. It Needs to Be a Bet on the Future.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1788958859027.html</link>
-    <description><![CDATA[You click to the next slide. It’s a beautiful Gantt chart, a rainbow of dependencies stretching across the next two quarters. You’ve spent weeks negot...]]></description>
-    <pubDate>Wed, 09 Sep 2026 13:00:59 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The System Prompt Is the New Kernel Panic]]></title>
-    <link>https://goreportify.com/article-pages/news-1788958830178.html</link>
-    <description><![CDATA[A developer on the customer automation team pushes a final commit before the weekend. The change is tiny: a single-line tweak to the system prompt for...]]></description>
-    <pubDate>Wed, 09 Sep 2026 13:00:30 GMT</pubDate>
   </item>
 </channel>
 </rss>
