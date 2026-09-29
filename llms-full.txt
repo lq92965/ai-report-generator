@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [You Asked for Async Feedback. Now You're Refereeing a Comment War](https://goreportify.com/article-pages/blog-1790686875839.html)
+  - Type: Deep Insights | Date: 2026-09-29 | Author: Emily Rostova
+  - You hit “Share” on the Google Doc and lean back. The PRD is crisp. The problem statement is tight. You shared it with engineering, design, marketing,...
 - [You Sent the Update to the 'Leadership' Alias. Nobody Knew It Was for Them.](https://goreportify.com/article-pages/blog-1790686869260.html)
   - Type: Deep Insights | Date: 2026-09-29 | Author: Sarah Jenkins
   - It’s Tuesday morning. You hit send on the weekly progress update for Project Apollo. It’s a work of art. You’ve got the burndown chart, a list of comp...
@@ -2358,4 +2361,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 775 articles (410 blog + 365 news) + 8 core pages._
+_Total: 776 articles (411 blog + 365 news) + 8 core pages._

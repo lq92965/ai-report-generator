@@ -1,5 +1,15 @@
 [
     {
+        "id": "1790686875839",
+        "type": "blog",
+        "title": "You Asked for Async Feedback. Now You're Refereeing a Comment War",
+        "category": "Deep Insights",
+        "date": "2026-09-29",
+        "author": "Emily Rostova",
+        "excerpt": "You hit “Share” on the Google Doc and lean back. The PRD is crisp. The problem statement is tight. You shared it with engineering, design, marketing,...",
+        "contentFile": "blog-1790686875839.md"
+    },
+    {
         "id": "1790686869260",
         "type": "blog",
         "title": "You Sent the Update to the 'Leadership' Alias. Nobody Knew It Was for Them.",
