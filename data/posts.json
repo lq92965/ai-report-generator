@@ -1,5 +1,25 @@
 [
     {
+        "id": "1790773281852",
+        "type": "blog",
+        "title": "Your AI Is Confidently Wrong. It Learned from Your Confluence Graveyard.",
+        "category": "Deep Insights",
+        "date": "2026-09-30",
+        "author": "Jessica Tran",
+        "excerpt": "The new PM on your team just used your shiny internal AI assistant. They asked a simple question: “What is our go-to-market strategy for Project Firef...",
+        "contentFile": "blog-1790773281852.md"
+    },
+    {
+        "id": "1790773241492",
+        "type": "news",
+        "title": "The Vendor Lock-in Is Now a Pre-existing Condition",
+        "category": "Tech Radar",
+        "date": "2026-09-30",
+        "author": "Emily Rostova",
+        "excerpt": "The project was supposed to take two weeks. Just move a small analytics service off the managed platform and onto a self-hosted instance. A simple cos...",
+        "contentFile": "news-1790773241492.md"
+    },
+    {
         "id": "1790686875839",
         "type": "blog",
         "title": "You Asked for Async Feedback. Now You're Refereeing a Comment War",

@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your AI Is Confidently Wrong. It Learned from Your Confluence Graveyard.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1790773281852.html</link>
+    <description><![CDATA[The new PM on your team just used your shiny internal AI assistant. They asked a simple question: “What is our go-to-market strategy for Project Firef...]]></description>
+    <pubDate>Wed, 30 Sep 2026 13:01:21 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Vendor Lock-in Is Now a Pre-existing Condition]]></title>
+    <link>https://goreportify.com/article-pages/news-1790773241492.html</link>
+    <description><![CDATA[The project was supposed to take two weeks. Just move a small analytics service off the managed platform and onto a self-hosted instance. A simple cos...]]></description>
+    <pubDate>Wed, 30 Sep 2026 13:00:41 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Asked for Async Feedback. Now You're Refereeing a Comment War]]></title>
     <link>https://goreportify.com/article-pages/blog-1790686875839.html</link>
     <description><![CDATA[You hit “Share” on the Google Doc and lean back. The PRD is crisp. The problem statement is tight. You shared it with engineering, design, marketing,...]]></description>
@@ -293,18 +305,6 @@ You book...]]></description>
     <link>https://goreportify.com/article-pages/news-1789218061855.html</link>
     <description><![CDATA[The dashboards turned red just after 3 a.m. It wasn't a server outage or a database connection pool exhausting itself. It was subtler. The user-facing...]]></description>
     <pubDate>Sat, 12 Sep 2026 13:01:01 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Weekly Report Takes All Monday. It Should Take 15 Minutes.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1789131660398.html</link>
-    <description><![CDATA[It’s 9:17 AM on Monday. You have a blank Google Doc open, titled “Product Update: Wk 34.” Your real work hasn’t started yet. First, you have to pay th...]]></description>
-    <pubDate>Fri, 11 Sep 2026 13:01:00 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Model Becomes a Competitive Battleground 9/11-1]]></title>
-    <link>https://goreportify.com/article-pages/news-1789131630528.html</link>
-    <description><![CDATA[The team celebrated the launch at the morning stand-up. The new feature, a smart summarizer for legal documents, went live without a hitch. The code w...]]></description>
-    <pubDate>Fri, 11 Sep 2026 13:00:30 GMT</pubDate>
   </item>
 </channel>
 </rss>

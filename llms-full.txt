@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your AI Is Confidently Wrong. It Learned from Your Confluence Graveyard.](https://goreportify.com/article-pages/blog-1790773281852.html)
+  - Type: Deep Insights | Date: 2026-09-30 | Author: Jessica Tran
+  - The new PM on your team just used your shiny internal AI assistant. They asked a simple question: “What is our go-to-market strategy for Project Firef...
+- [The Vendor Lock-in Is Now a Pre-existing Condition](https://goreportify.com/article-pages/news-1790773241492.html)
+  - Type: Tech Radar | Date: 2026-09-30 | Author: Emily Rostova
+  - The project was supposed to take two weeks. Just move a small analytics service off the managed platform and onto a self-hosted instance. A simple cos...
 - [You Asked for Async Feedback. Now You're Refereeing a Comment War](https://goreportify.com/article-pages/blog-1790686875839.html)
   - Type: Deep Insights | Date: 2026-09-29 | Author: Emily Rostova
   - You hit “Share” on the Google Doc and lean back. The PRD is crisp. The problem statement is tight. You shared it with engineering, design, marketing,...
@@ -2361,4 +2367,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 776 articles (411 blog + 365 news) + 8 core pages._
+_Total: 778 articles (412 blog + 366 news) + 8 core pages._
