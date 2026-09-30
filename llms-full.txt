@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Said 'This Is a High Priority.' So Were the Other Five Things.](https://goreportify.com/article-pages/blog-1790773406068.html)
+  - Type: Deep Insights | Date: 2026-09-30 | Author: Emily Rostova
+  - It’s Tuesday standup. You’re trying to inject some energy into the team. “Okay, team, leadership is really excited about the new reporting export. It’...
+- [The Audit Trail Is Now a Folk Tale](https://goreportify.com/article-pages/news-1790773367707.html)
+  - Type: Tech Radar | Date: 2026-09-30 | Author: Alex Mercer
+  - An alert fires at 2 AM. A customer's account was flagged for fraud, their assets frozen. The engineer on call digs in. They pull the logs. They see th...
 - [Your AI Is Confidently Wrong. It Learned from Your Confluence Graveyard.](https://goreportify.com/article-pages/blog-1790773281852.html)
   - Type: Deep Insights | Date: 2026-09-30 | Author: Jessica Tran
   - The new PM on your team just used your shiny internal AI assistant. They asked a simple question: “What is our go-to-market strategy for Project Firef...
@@ -2367,4 +2373,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 778 articles (412 blog + 366 news) + 8 core pages._
+_Total: 780 articles (413 blog + 367 news) + 8 core pages._

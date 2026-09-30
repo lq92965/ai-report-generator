@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Said 'This Is a High Priority.' So Were the Other Five Things.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1790773406068.html</link>
+    <description><![CDATA[It’s Tuesday standup. You’re trying to inject some energy into the team. “Okay, team, leadership is really excited about the new reporting export. It’...]]></description>
+    <pubDate>Wed, 30 Sep 2026 13:03:26 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Audit Trail Is Now a Folk Tale]]></title>
+    <link>https://goreportify.com/article-pages/news-1790773367707.html</link>
+    <description><![CDATA[An alert fires at 2 AM. A customer's account was flagged for fraud, their assets frozen. The engineer on call digs in. They pull the logs. They see th...]]></description>
+    <pubDate>Wed, 30 Sep 2026 13:02:47 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your AI Is Confidently Wrong. It Learned from Your Confluence Graveyard.]]></title>
     <link>https://goreportify.com/article-pages/blog-1790773281852.html</link>
     <description><![CDATA[The new PM on your team just used your shiny internal AI assistant. They asked a simple question: “What is our go-to-market strategy for Project Firef...]]></description>
@@ -293,18 +305,6 @@ You book...]]></description>
     <link>https://goreportify.com/article-pages/news-1789304429945.html</link>
     <description><![CDATA[The alerts started firing at 9:17 AM on a Tuesday. At a mid-market insurance firm, a new automated claims analysis tool, the CTO’s pet project, was su...]]></description>
     <pubDate>Sun, 13 Sep 2026 13:00:29 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Dropped the PRD in Slack. Now You Have a Week of Clarification Calls.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1789218087995.html</link>
-    <description><![CDATA[It’s 9:15 AM on Monday. You’re feeling good. You spent all last week wrestling with a complex feature, and on Friday evening, you finally birthed the...]]></description>
-    <pubDate>Sat, 12 Sep 2026 13:01:27 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Disaster Recovery Plan Is Another API Key]]></title>
-    <link>https://goreportify.com/article-pages/news-1789218061855.html</link>
-    <description><![CDATA[The dashboards turned red just after 3 a.m. It wasn't a server outage or a database connection pool exhausting itself. It was subtler. The user-facing...]]></description>
-    <pubDate>Sat, 12 Sep 2026 13:01:01 GMT</pubDate>
   </item>
 </channel>
 </rss>

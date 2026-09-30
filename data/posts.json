@@ -1,5 +1,25 @@
 [
     {
+        "id": "1790773406068",
+        "type": "blog",
+        "title": "You Said 'This Is a High Priority.' So Were the Other Five Things.",
+        "category": "Deep Insights",
+        "date": "2026-09-30",
+        "author": "Emily Rostova",
+        "excerpt": "It’s Tuesday standup. You’re trying to inject some energy into the team. “Okay, team, leadership is really excited about the new reporting export. It’...",
+        "contentFile": "blog-1790773406068.md"
+    },
+    {
+        "id": "1790773367707",
+        "type": "news",
+        "title": "The Audit Trail Is Now a Folk Tale",
+        "category": "Tech Radar",
+        "date": "2026-09-30",
+        "author": "Alex Mercer",
+        "excerpt": "An alert fires at 2 AM. A customer's account was flagged for fraud, their assets frozen. The engineer on call digs in. They pull the logs. They see th...",
+        "contentFile": "news-1790773367707.md"
+    },
+    {
         "id": "1790773281852",
         "type": "blog",
         "title": "Your AI Is Confidently Wrong. It Learned from Your Confluence Graveyard.",
