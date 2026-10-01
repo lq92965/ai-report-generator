@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Announced the Roadmap. Now You're Defending Every Feature](https://goreportify.com/article-pages/blog-1790859711145.html)
+  - Type: Deep Insights | Date: 2026-10-01 | Author: David Sterling
+  - You just finished walking through the Q3 roadmap. You feel good. The slides connect company goals to product themes to specific initiatives. It’s a lo...
+- [The Domain Expert Is Now a Prompt](https://goreportify.com/article-pages/news-1790859677723.html)
+  - Type: Tech Radar | Date: 2026-10-01 | Author: Emily Rostova
+  - It used to start with a walk. You’d leave your desk, cross the office, and stand awkwardly in the doorway of the one person who actually knew how the...
 - [You Built a Dashboard. Now You're a Full-Time Analyst.](https://goreportify.com/article-pages/blog-1790859673591.html)
   - Type: Deep Insights | Date: 2026-10-01 | Author: David Sterling
   - It was glorious. You hit ‘share’ on the new self-serve dashboard, posted the link in three Slack channels, and leaned back. The beautiful charts shimm...
@@ -2379,4 +2385,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 782 articles (414 blog + 368 news) + 8 core pages._
+_Total: 784 articles (415 blog + 369 news) + 8 core pages._

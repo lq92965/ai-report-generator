@@ -1,5 +1,25 @@
 [
     {
+        "id": "1790859711145",
+        "type": "blog",
+        "title": "You Announced the Roadmap. Now You're Defending Every Feature",
+        "category": "Deep Insights",
+        "date": "2026-10-01",
+        "author": "David Sterling",
+        "excerpt": "You just finished walking through the Q3 roadmap. You feel good. The slides connect company goals to product themes to specific initiatives. It’s a lo...",
+        "contentFile": "blog-1790859711145.md"
+    },
+    {
+        "id": "1790859677723",
+        "type": "news",
+        "title": "The Domain Expert Is Now a Prompt",
+        "category": "Tech Radar",
+        "date": "2026-10-01",
+        "author": "Emily Rostova",
+        "excerpt": "It used to start with a walk. You’d leave your desk, cross the office, and stand awkwardly in the doorway of the one person who actually knew how the...",
+        "contentFile": "news-1790859677723.md"
+    },
+    {
         "id": "1790859673591",
         "type": "blog",
         "title": "You Built a Dashboard. Now You're a Full-Time Analyst.",
