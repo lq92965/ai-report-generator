@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Built a Dashboard. Now You're a Full-Time Analyst.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1790859673591.html</link>
+    <description><![CDATA[It was glorious. You hit ‘share’ on the new self-serve dashboard, posted the link in three Slack channels, and leaned back. The beautiful charts shimm...]]></description>
+    <pubDate>Thu, 01 Oct 2026 13:01:13 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Bill of Materials Is a Rumor]]></title>
+    <link>https://goreportify.com/article-pages/news-1790859636781.html</link>
+    <description><![CDATA[The senior developer squints at the Jira ticket. The task is to integrate a new transcription model from a startup that’s barely a year old. He asks t...]]></description>
+    <pubDate>Thu, 01 Oct 2026 13:00:36 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Said 'This Is a High Priority.' So Were the Other Five Things.]]></title>
     <link>https://goreportify.com/article-pages/blog-1790773406068.html</link>
     <description><![CDATA[It’s Tuesday standup. You’re trying to inject some energy into the team. “Okay, team, leadership is really excited about the new reporting export. It’...]]></description>
@@ -293,18 +305,6 @@ You book...]]></description>
     <link>https://goreportify.com/article-pages/news-1789390828283.html</link>
     <description><![CDATA[The pull request looked simple enough. A new feature that used a large language model to summarize customer support tickets. The...]]></description>
     <pubDate>Mon, 14 Sep 2026 13:00:28 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Walked Them Through the Deck. They Derailed You on Slide 2.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1789304457799.html</link>
-    <description><![CDATA[It’s Tuesday morning. You’re in the QBR, presenting your product line’s performance. You spent the better part of Monday pulling data, triple-checking...]]></description>
-    <pubDate>Sun, 13 Sep 2026 13:00:57 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Service-Level Agreement Is a Pinky Swear]]></title>
-    <link>https://goreportify.com/article-pages/news-1789304429945.html</link>
-    <description><![CDATA[The alerts started firing at 9:17 AM on a Tuesday. At a mid-market insurance firm, a new automated claims analysis tool, the CTO’s pet project, was su...]]></description>
-    <pubDate>Sun, 13 Sep 2026 13:00:29 GMT</pubDate>
   </item>
 </channel>
 </rss>

@@ -1,5 +1,25 @@
 [
     {
+        "id": "1790859673591",
+        "type": "blog",
+        "title": "You Built a Dashboard. Now You're a Full-Time Analyst.",
+        "category": "Deep Insights",
+        "date": "2026-10-01",
+        "author": "David Sterling",
+        "excerpt": "It was glorious. You hit ‘share’ on the new self-serve dashboard, posted the link in three Slack channels, and leaned back. The beautiful charts shimm...",
+        "contentFile": "blog-1790859673591.md"
+    },
+    {
+        "id": "1790859636781",
+        "type": "news",
+        "title": "The Bill of Materials Is a Rumor",
+        "category": "Tech Radar",
+        "date": "2026-10-01",
+        "author": "Sarah Jenkins",
+        "excerpt": "The senior developer squints at the Jira ticket. The task is to integrate a new transcription model from a startup that’s barely a year old. He asks t...",
+        "contentFile": "news-1790859636781.md"
+    },
+    {
         "id": "1790773406068",
         "type": "blog",
         "title": "You Said 'This Is a High Priority.' So Were the Other Five Things.",

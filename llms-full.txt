@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Built a Dashboard. Now You're a Full-Time Analyst.](https://goreportify.com/article-pages/blog-1790859673591.html)
+  - Type: Deep Insights | Date: 2026-10-01 | Author: David Sterling
+  - It was glorious. You hit ‘share’ on the new self-serve dashboard, posted the link in three Slack channels, and leaned back. The beautiful charts shimm...
+- [The Bill of Materials Is a Rumor](https://goreportify.com/article-pages/news-1790859636781.html)
+  - Type: Tech Radar | Date: 2026-10-01 | Author: Sarah Jenkins
+  - The senior developer squints at the Jira ticket. The task is to integrate a new transcription model from a startup that’s barely a year old. He asks t...
 - [You Said 'This Is a High Priority.' So Were the Other Five Things.](https://goreportify.com/article-pages/blog-1790773406068.html)
   - Type: Deep Insights | Date: 2026-09-30 | Author: Emily Rostova
   - It’s Tuesday standup. You’re trying to inject some energy into the team. “Okay, team, leadership is really excited about the new reporting export. It’...
@@ -2373,4 +2379,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 780 articles (413 blog + 367 news) + 8 core pages._
+_Total: 782 articles (414 blog + 368 news) + 8 core pages._
