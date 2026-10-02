@@ -15,6 +15,15 @@
 
 ## All Articles
 
+- [The AI Wrote Your PRD. Now Engineering Is Asking You to Explain It.](https://goreportify.com/article-pages/blog-1790946067112.html)
+  - Type: Deep Insights | Date: 2026-10-02 | Author: David Sterling
+  - The kickoff meeting was going smoothly. You pasted the AI-generated Product Requirements Document into Confluence, and it looked perfect. The sections...
+- [The Exit Interview Is Now a Data Breach](https://goreportify.com/article-pages/news-1790946045734.html)
+  - Type: Tech Radar | Date: 2026-10-02 | Author: Emily Rostova
+  - Another engineer resigns. There’s the awkward conversation with their manager, the perfunctory HR meeting, the surrendering of a laptop. It’s a famili...
+- [The Feature Flag Is Now a Moral Compass](https://goreportify.com/article-pages/news-1790946037456.html)
+  - Type: Tech Radar | Date: 2026-10-02 | Author: Alex Mercer
+  - The question hangs in the Slack channel, stripped of all technical jargon. "Are we flipping enable-proactive-sentiment-analysis for the support chats?...
 - [You Announced the Roadmap. Now You're Defending Every Feature](https://goreportify.com/article-pages/blog-1790859711145.html)
   - Type: Deep Insights | Date: 2026-10-01 | Author: David Sterling
   - You just finished walking through the Q3 roadmap. You feel good. The slides connect company goals to product themes to specific initiatives. It’s a lo...
@@ -2385,4 +2394,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 784 articles (415 blog + 369 news) + 8 core pages._
+_Total: 787 articles (416 blog + 371 news) + 8 core pages._

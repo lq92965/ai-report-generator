@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[The AI Wrote Your PRD. Now Engineering Is Asking You to Explain It.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1790946067112.html</link>
+    <description><![CDATA[The kickoff meeting was going smoothly. You pasted the AI-generated Product Requirements Document into Confluence, and it looked perfect. The sections...]]></description>
+    <pubDate>Fri, 02 Oct 2026 13:01:07 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Exit Interview Is Now a Data Breach]]></title>
+    <link>https://goreportify.com/article-pages/news-1790946045734.html</link>
+    <description><![CDATA[Another engineer resigns. There’s the awkward conversation with their manager, the perfunctory HR meeting, the surrendering of a laptop. It’s a famili...]]></description>
+    <pubDate>Fri, 02 Oct 2026 13:00:45 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Feature Flag Is Now a Moral Compass]]></title>
+    <link>https://goreportify.com/article-pages/news-1790946037456.html</link>
+    <description><![CDATA[The question hangs in the Slack channel, stripped of all technical jargon. "Are we flipping enable-proactive-sentiment-analysis for the support chats?...]]></description>
+    <pubDate>Fri, 02 Oct 2026 13:00:37 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Announced the Roadmap. Now You're Defending Every Feature]]></title>
     <link>https://goreportify.com/article-pages/blog-1790859711145.html</link>
     <description><![CDATA[You just finished walking through the Q3 roadmap. You feel good. The slides connect company goals to product themes to specific initiatives. It’s a lo...]]></description>
@@ -287,24 +305,6 @@ You book...]]></description>
     <link>https://goreportify.com/article-pages/blog-1789563727871.html</link>
     <description><![CDATA[It’s 10 AM on a Tuesday. You’re sharing your screen, walking the engineering team through a PRD you spent two weeks perfecting. You’ve got the user st...]]></description>
     <pubDate>Wed, 16 Sep 2026 13:02:07 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Root Password Is an Adjective]]></title>
-    <link>https://goreportify.com/article-pages/news-1789563697546.html</link>
-    <description><![CDATA[There used to be a ceremony to it. To get the production database credentials, you had to open a ticket, justify the need, and wait for an approval th...]]></description>
-    <pubDate>Wed, 16 Sep 2026 13:01:37 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Made the Decision in a DM. Now You Have to Explain It 10 Times.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1789477324988.html</link>
-    <description><![CDATA[It felt so efficient. Your lead engineer pinged you on Slack with a question about an edge case. You hashed it out in a few messages, made a call, and...]]></description>
-    <pubDate>Tue, 15 Sep 2026 13:02:04 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Retrieval Is a Frame Job]]></title>
-    <link>https://goreportify.com/article-pages/news-1789477295152.html</link>
-    <description><![CDATA[The demo was flawless. A chatbot, backed by the latest large language model, digesting the company’...]]></description>
-    <pubDate>Tue, 15 Sep 2026 13:01:35 GMT</pubDate>
   </item>
 </channel>
 </rss>

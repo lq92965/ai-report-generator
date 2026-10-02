@@ -1,5 +1,35 @@
 [
     {
+        "id": "1790946067112",
+        "type": "blog",
+        "title": "The AI Wrote Your PRD. Now Engineering Is Asking You to Explain It.",
+        "category": "Deep Insights",
+        "date": "2026-10-02",
+        "author": "David Sterling",
+        "excerpt": "The kickoff meeting was going smoothly. You pasted the AI-generated Product Requirements Document into Confluence, and it looked perfect. The sections...",
+        "contentFile": "blog-1790946067112.md"
+    },
+    {
+        "id": "1790946045734",
+        "type": "news",
+        "title": "The Exit Interview Is Now a Data Breach",
+        "category": "Tech Radar",
+        "date": "2026-10-02",
+        "author": "Emily Rostova",
+        "excerpt": "Another engineer resigns. There’s the awkward conversation with their manager, the perfunctory HR meeting, the surrendering of a laptop. It’s a famili...",
+        "contentFile": "news-1790946045734.md"
+    },
+    {
+        "id": "1790946037456",
+        "type": "news",
+        "title": "The Feature Flag Is Now a Moral Compass",
+        "category": "Tech Radar",
+        "date": "2026-10-02",
+        "author": "Alex Mercer",
+        "excerpt": "The question hangs in the Slack channel, stripped of all technical jargon. \"Are we flipping enable-proactive-sentiment-analysis for the support chats?...",
+        "contentFile": "news-1790946037456.md"
+    },
+    {
         "id": "1790859711145",
         "type": "blog",
         "title": "You Announced the Roadmap. Now You're Defending Every Feature",
