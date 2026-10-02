@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [You Explained the Tech Debt. They Heard 'We're Not Shipping Features.'](https://goreportify.com/article-pages/blog-1790946075096.html)
+  - Type: Deep Insights | Date: 2026-10-02 | Author: David Sterling
+  - You’re in the quarterly planning meeting, walking through the roadmap. It’s going well until you get to the big one. “For Q3,” you say, “we need to pr...
 - [The AI Wrote Your PRD. Now Engineering Is Asking You to Explain It.](https://goreportify.com/article-pages/blog-1790946067112.html)
   - Type: Deep Insights | Date: 2026-10-02 | Author: David Sterling
   - The kickoff meeting was going smoothly. You pasted the AI-generated Product Requirements Document into Confluence, and it looked perfect. The sections...
@@ -2394,4 +2397,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 787 articles (416 blog + 371 news) + 8 core pages._
+_Total: 788 articles (417 blog + 371 news) + 8 core pages._

@@ -5,6 +5,12 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Explained the Tech Debt. They Heard 'We're Not Shipping Features.']]></title>
+    <link>https://goreportify.com/article-pages/blog-1790946075096.html</link>
+    <description><![CDATA[You’re in the quarterly planning meeting, walking through the roadmap. It’s going well until you get to the big one. “For Q3,” you say, “we need to pr...]]></description>
+    <pubDate>Fri, 02 Oct 2026 13:01:15 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The AI Wrote Your PRD. Now Engineering Is Asking You to Explain It.]]></title>
     <link>https://goreportify.com/article-pages/blog-1790946067112.html</link>
     <description><![CDATA[The kickoff meeting was going smoothly. You pasted the AI-generated Product Requirements Document into Confluence, and it looked perfect. The sections...]]></description>
@@ -299,12 +305,6 @@ You book...]]></description>
     <link>https://goreportify.com/article-pages/news-1789650032561.html</link>
     <description><![CDATA[The alert fired at 2:17 AM. Not a crash, not a 503, but a spike in parsing errors from the customer onboarding service. A junior engineer, bleary-eyed...]]></description>
     <pubDate>Thu, 17 Sep 2026 13:00:32 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Presented the PRD at Kickoff. You Should Have Pressure-Tested the Problem.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1789563727871.html</link>
-    <description><![CDATA[It’s 10 AM on a Tuesday. You’re sharing your screen, walking the engineering team through a PRD you spent two weeks perfecting. You’ve got the user st...]]></description>
-    <pubDate>Wed, 16 Sep 2026 13:02:07 GMT</pubDate>
   </item>
 </channel>
 </rss>

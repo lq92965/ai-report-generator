@@ -1,5 +1,15 @@
 [
     {
+        "id": "1790946075096",
+        "type": "blog",
+        "title": "You Explained the Tech Debt. They Heard 'We're Not Shipping Features.'",
+        "category": "Deep Insights",
+        "date": "2026-10-02",
+        "author": "David Sterling",
+        "excerpt": "You’re in the quarterly planning meeting, walking through the roadmap. It’s going well until you get to the big one. “For Q3,” you say, “we need to pr...",
+        "contentFile": "blog-1790946075096.md"
+    },
+    {
         "id": "1790946067112",
         "type": "blog",
         "title": "The AI Wrote Your PRD. Now Engineering Is Asking You to Explain It.",
