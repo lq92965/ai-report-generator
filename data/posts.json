@@ -1,5 +1,25 @@
 [
     {
+        "id": "1791032463178",
+        "type": "blog",
+        "title": "The Data Was Right. The Decision Was Already Made.",
+        "category": "Deep Insights",
+        "date": "2026-10-03",
+        "author": "David Sterling",
+        "excerpt": "You walk into the weekly leadership sync, deck loaded. For the past four days, you’ve been deep in the data, pulling logs, joining tables, and wrestli...",
+        "contentFile": "blog-1791032463178.md"
+    },
+    {
+        "id": "1791032428791",
+        "type": "news",
+        "title": "The Long-Term Support Is a Ghost Story",
+        "category": "Tech Radar",
+        "date": "2026-10-03",
+        "author": "Jessica Tran",
+        "excerpt": "The email arrives at 11:37 PM. It’s an automated notification about a critical dependency, some open-source library that props up half the company’s i...",
+        "contentFile": "news-1791032428791.md"
+    },
+    {
         "id": "1790946075096",
         "type": "blog",
         "title": "You Explained the Tech Debt. They Heard 'We're Not Shipping Features.'",

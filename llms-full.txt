@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [The Data Was Right. The Decision Was Already Made.](https://goreportify.com/article-pages/blog-1791032463178.html)
+  - Type: Deep Insights | Date: 2026-10-03 | Author: David Sterling
+  - You walk into the weekly leadership sync, deck loaded. For the past four days, you’ve been deep in the data, pulling logs, joining tables, and wrestli...
+- [The Long-Term Support Is a Ghost Story](https://goreportify.com/article-pages/news-1791032428791.html)
+  - Type: Tech Radar | Date: 2026-10-03 | Author: Jessica Tran
+  - The email arrives at 11:37 PM. It’s an automated notification about a critical dependency, some open-source library that props up half the company’s i...
 - [You Explained the Tech Debt. They Heard 'We're Not Shipping Features.'](https://goreportify.com/article-pages/blog-1790946075096.html)
   - Type: Deep Insights | Date: 2026-10-02 | Author: David Sterling
   - You’re in the quarterly planning meeting, walking through the roadmap. It’s going well until you get to the big one. “For Q3,” you say, “we need to pr...
@@ -2397,4 +2403,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 788 articles (417 blog + 371 news) + 8 core pages._
+_Total: 790 articles (418 blog + 372 news) + 8 core pages._

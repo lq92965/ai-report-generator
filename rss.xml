@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[The Data Was Right. The Decision Was Already Made.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1791032463178.html</link>
+    <description><![CDATA[You walk into the weekly leadership sync, deck loaded. For the past four days, you’ve been deep in the data, pulling logs, joining tables, and wrestli...]]></description>
+    <pubDate>Sat, 03 Oct 2026 13:01:03 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Long-Term Support Is a Ghost Story]]></title>
+    <link>https://goreportify.com/article-pages/news-1791032428791.html</link>
+    <description><![CDATA[The email arrives at 11:37 PM. It’s an automated notification about a critical dependency, some open-source library that props up half the company’s i...]]></description>
+    <pubDate>Sat, 03 Oct 2026 13:00:28 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Explained the Tech Debt. They Heard 'We're Not Shipping Features.']]></title>
     <link>https://goreportify.com/article-pages/blog-1790946075096.html</link>
     <description><![CDATA[You’re in the quarterly planning meeting, walking through the roadmap. It’s going well until you get to the big one. “For Q3,” you say, “we need to pr...]]></description>
@@ -293,18 +305,6 @@ You book...]]></description>
     <link>https://goreportify.com/article-pages/news-1789736428767.html</link>
     <description><![CDATA[The muscle memory is twenty years deep. You clone the repo, run the installer, and type docker-compose up. The fans on your laptop spin. Code compiles...]]></description>
     <pubDate>Fri, 18 Sep 2026 13:00:28 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Attended 8 Meetings. You Made 1 Decision.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1789650065430.html</link>
-    <description><![CDATA[It’s 6 PM. Your laptop is covered in fingerprints, your coffee is cold, and your calendar looks like a game of Tetris you lost. You were in back-to-ba...]]></description>
-    <pubDate>Thu, 17 Sep 2026 13:01:05 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The API Contract Is Now a Negotiation]]></title>
-    <link>https://goreportify.com/article-pages/news-1789650032561.html</link>
-    <description><![CDATA[The alert fired at 2:17 AM. Not a crash, not a 503, but a spike in parsing errors from the customer onboarding service. A junior engineer, bleary-eyed...]]></description>
-    <pubDate>Thu, 17 Sep 2026 13:00:32 GMT</pubDate>
   </item>
 </channel>
 </rss>
