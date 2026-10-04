@@ -1,5 +1,25 @@
 [
     {
+        "id": "1791118858872",
+        "type": "blog",
+        "title": "Your Calendar Is Full of 'Syncs'. Your Team Is Still Misaligned.",
+        "category": "Deep Insights",
+        "date": "2026-10-04",
+        "author": "Alex Mercer",
+        "excerpt": "It's 4 PM on a Tuesday. You’ve been in meetings since 9 AM. A design sync, an engineering stand-up, a stakeholder check-in, a marketing touch-base. Yo...",
+        "contentFile": "blog-1791118858872.md"
+    },
+    {
+        "id": "1791118829566",
+        "type": "news",
+        "title": "The Generated Code Is an Unsigned Confession",
+        "category": "Tech Radar",
+        "date": "2026-10-04",
+        "author": "Alex Mercer",
+        "excerpt": "It’s 1 a.m. and a junior developer is staring at thirty lines of Python. The code works. It correctly parses a complex data structure that was causing...",
+        "contentFile": "news-1791118829566.md"
+    },
+    {
         "id": "1791032463178",
         "type": "blog",
         "title": "The Data Was Right. The Decision Was Already Made.",

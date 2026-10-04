@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Calendar Is Full of 'Syncs'. Your Team Is Still Misaligned.](https://goreportify.com/article-pages/blog-1791118858872.html)
+  - Type: Deep Insights | Date: 2026-10-04 | Author: Alex Mercer
+  - It's 4 PM on a Tuesday. You’ve been in meetings since 9 AM. A design sync, an engineering stand-up, a stakeholder check-in, a marketing touch-base. Yo...
+- [The Generated Code Is an Unsigned Confession](https://goreportify.com/article-pages/news-1791118829566.html)
+  - Type: Tech Radar | Date: 2026-10-04 | Author: Alex Mercer
+  - It’s 1 a.m. and a junior developer is staring at thirty lines of Python. The code works. It correctly parses a complex data structure that was causing...
 - [The Data Was Right. The Decision Was Already Made.](https://goreportify.com/article-pages/blog-1791032463178.html)
   - Type: Deep Insights | Date: 2026-10-03 | Author: David Sterling
   - You walk into the weekly leadership sync, deck loaded. For the past four days, you’ve been deep in the data, pulling logs, joining tables, and wrestli...
@@ -2403,4 +2409,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 790 articles (418 blog + 372 news) + 8 core pages._
+_Total: 792 articles (419 blog + 373 news) + 8 core pages._

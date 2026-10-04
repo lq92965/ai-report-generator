@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Calendar Is Full of 'Syncs'. Your Team Is Still Misaligned.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1791118858872.html</link>
+    <description><![CDATA[It's 4 PM on a Tuesday. You’ve been in meetings since 9 AM. A design sync, an engineering stand-up, a stakeholder check-in, a marketing touch-base. Yo...]]></description>
+    <pubDate>Sun, 04 Oct 2026 13:00:58 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Generated Code Is an Unsigned Confession]]></title>
+    <link>https://goreportify.com/article-pages/news-1791118829566.html</link>
+    <description><![CDATA[It’s 1 a.m. and a junior developer is staring at thirty lines of Python. The code works. It correctly parses a complex data structure that was causing...]]></description>
+    <pubDate>Sun, 04 Oct 2026 13:00:29 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The Data Was Right. The Decision Was Already Made.]]></title>
     <link>https://goreportify.com/article-pages/blog-1791032463178.html</link>
     <description><![CDATA[You walk into the weekly leadership sync, deck loaded. For the past four days, you’ve been deep in the data, pulling logs, joining tables, and wrestli...]]></description>
@@ -293,18 +305,6 @@ You book...]]></description>
     <link>https://goreportify.com/article-pages/news-1789909226488.html</link>
     <description><![CDATA[A support engineer types a query into the company’s new internal chatbot. "What's the rollback procedure for a failed deployment of microservice ares-...]]></description>
     <pubDate>Sun, 20 Sep 2026 13:00:26 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Gave Sales a Date. Now You're Building Their Feature.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1789736459174.html</link>
-    <description><![CDATA[It started in a Slack DM. The VP of Sales pings you: “Hey, quick question. Acme Corp is about to sign, but they’re asking about the new dashboard. Can...]]></description>
-    <pubDate>Fri, 18 Sep 2026 13:00:59 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Localhost Is a Metered Service]]></title>
-    <link>https://goreportify.com/article-pages/news-1789736428767.html</link>
-    <description><![CDATA[The muscle memory is twenty years deep. You clone the repo, run the installer, and type docker-compose up. The fans on your laptop spin. Code compiles...]]></description>
-    <pubDate>Fri, 18 Sep 2026 13:00:28 GMT</pubDate>
   </item>
 </channel>
 </rss>
