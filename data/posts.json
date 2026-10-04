@@ -1,5 +1,25 @@
 [
     {
+        "id": "1791118929719",
+        "type": "blog",
+        "title": "Your Quick Slack Question Spawned a 3-Day Debate",
+        "category": "Deep Insights",
+        "date": "2026-10-04",
+        "author": "Jessica Tran",
+        "excerpt": "It started innocently enough. You dropped a screenshot into the main engineering channel with a casual, “Quick gut check: does this new checkout flow...",
+        "contentFile": "blog-1791118929719.md"
+    },
+    {
+        "id": "1791118898016",
+        "type": "news",
+        "title": "The Autoscaler Is a Blank Check",
+        "category": "Tech Radar",
+        "date": "2026-10-04",
+        "author": "Olivia Thorne",
+        "excerpt": "The alert fires at 3:17 AM. It’s not a PagerDuty scream about latency or a 500-error spike. It’s a quiet, automated email from the finance department’...",
+        "contentFile": "news-1791118898016.md"
+    },
+    {
         "id": "1791118858872",
         "type": "blog",
         "title": "Your Calendar Is Full of 'Syncs'. Your Team Is Still Misaligned.",

@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [Your Quick Slack Question Spawned a 3-Day Debate](https://goreportify.com/article-pages/blog-1791118929719.html)
+  - Type: Deep Insights | Date: 2026-10-04 | Author: Jessica Tran
+  - It started innocently enough. You dropped a screenshot into the main engineering channel with a casual, “Quick gut check: does this new checkout flow...
+- [The Autoscaler Is a Blank Check](https://goreportify.com/article-pages/news-1791118898016.html)
+  - Type: Tech Radar | Date: 2026-10-04 | Author: Olivia Thorne
+  - The alert fires at 3:17 AM. It’s not a PagerDuty scream about latency or a 500-error spike. It’s a quiet, automated email from the finance department’...
 - [Your Calendar Is Full of 'Syncs'. Your Team Is Still Misaligned.](https://goreportify.com/article-pages/blog-1791118858872.html)
   - Type: Deep Insights | Date: 2026-10-04 | Author: Alex Mercer
   - It's 4 PM on a Tuesday. You’ve been in meetings since 9 AM. A design sync, an engineering stand-up, a stakeholder check-in, a marketing touch-base. Yo...
@@ -2409,4 +2415,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 792 articles (419 blog + 373 news) + 8 core pages._
+_Total: 794 articles (420 blog + 374 news) + 8 core pages._

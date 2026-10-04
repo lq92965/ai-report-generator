@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Quick Slack Question Spawned a 3-Day Debate]]></title>
+    <link>https://goreportify.com/article-pages/blog-1791118929719.html</link>
+    <description><![CDATA[It started innocently enough. You dropped a screenshot into the main engineering channel with a casual, “Quick gut check: does this new checkout flow...]]></description>
+    <pubDate>Sun, 04 Oct 2026 13:02:09 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Autoscaler Is a Blank Check]]></title>
+    <link>https://goreportify.com/article-pages/news-1791118898016.html</link>
+    <description><![CDATA[The alert fires at 3:17 AM. It’s not a PagerDuty scream about latency or a 500-error spike. It’s a quiet, automated email from the finance department’...]]></description>
+    <pubDate>Sun, 04 Oct 2026 13:01:38 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Calendar Is Full of 'Syncs'. Your Team Is Still Misaligned.]]></title>
     <link>https://goreportify.com/article-pages/blog-1791118858872.html</link>
     <description><![CDATA[It's 4 PM on a Tuesday. You’ve been in meetings since 9 AM. A design sync, an engineering stand-up, a stakeholder check-in, a marketing touch-base. Yo...]]></description>
@@ -293,18 +305,6 @@ You book...]]></description>
     <link>https://goreportify.com/article-pages/news-1789995758193.html</link>
     <description><![CDATA[The pager screamed at 2:17 AM. A decade ago, this was a familiar ritual. You’d roll out of bed, squint at a dashboard bleeding red, and dive into the...]]></description>
     <pubDate>Mon, 21 Sep 2026 13:02:38 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Fixing Reporting Workflows with Better Execution]]></title>
-    <link>https://goreportify.com/article-pages/blog-1789909252571.html</link>
-    <description><![CDATA[Most reporting problems are not reporting problems. They are execution problems wearing a quarterly deck as a disguise. The dashboard is late again. The numbers do not match last w…]]></description>
-    <pubDate>Sun, 20 Sep 2026 13:00:52 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Source of Truth Is Now an Echo Chamber]]></title>
-    <link>https://goreportify.com/article-pages/news-1789909226488.html</link>
-    <description><![CDATA[A support engineer types a query into the company’s new internal chatbot. "What's the rollback procedure for a failed deployment of microservice ares-...]]></description>
-    <pubDate>Sun, 20 Sep 2026 13:00:26 GMT</pubDate>
   </item>
 </channel>
 </rss>
