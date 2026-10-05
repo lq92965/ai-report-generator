@@ -15,6 +15,15 @@
 
 ## All Articles
 
+- [The AI Generated Your User Persona. Now You're Building for a Robot.](https://goreportify.com/article-pages/blog-1791205280752.html)
+  - Type: Deep Insights | Date: 2026-10-05 | Author: Michael Chen
+  - You fed 20 user interview transcripts into the AI and asked for a primary user persona. Ten seconds later, it was done. "Meet 'Strategic Sarah,' a 32-...
+- [The `requirements.txt` Is a Chain Letter](https://goreportify.com/article-pages/news-1791205247346.html)
+  - Type: Tech Radar | Date: 2026-10-05 | Author: Alex Mercer
+  - It started with a 500-millisecond lag. A Microsoft developer, Andres Freund, noticed his SSH connections were fractionally slower than they should be....
+- [The Deprecation Notice Is a Footnote](https://goreportify.com/article-pages/news-1791205236526.html)
+  - Type: Tech Radar | Date: 2026-10-05 | Author: Michael Chen
+  - The alert fired at 3:17 AM. A cascade of failures lit up the dashboard, all stemming from a single, critical API endpoint. The service status page for...
 - [Your Quick Slack Question Spawned a 3-Day Debate](https://goreportify.com/article-pages/blog-1791118929719.html)
   - Type: Deep Insights | Date: 2026-10-04 | Author: Jessica Tran
   - It started innocently enough. You dropped a screenshot into the main engineering channel with a casual, “Quick gut check: does this new checkout flow...
@@ -2415,4 +2424,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 794 articles (420 blog + 374 news) + 8 core pages._
+_Total: 797 articles (421 blog + 376 news) + 8 core pages._

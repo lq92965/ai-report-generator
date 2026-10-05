@@ -1,5 +1,35 @@
 [
     {
+        "id": "1791205280752",
+        "type": "blog",
+        "title": "The AI Generated Your User Persona. Now You're Building for a Robot.",
+        "category": "Deep Insights",
+        "date": "2026-10-05",
+        "author": "Michael Chen",
+        "excerpt": "You fed 20 user interview transcripts into the AI and asked for a primary user persona. Ten seconds later, it was done. \"Meet 'Strategic Sarah,' a 32-...",
+        "contentFile": "blog-1791205280752.md"
+    },
+    {
+        "id": "1791205247346",
+        "type": "news",
+        "title": "The `requirements.txt` Is a Chain Letter",
+        "category": "Tech Radar",
+        "date": "2026-10-05",
+        "author": "Alex Mercer",
+        "excerpt": "It started with a 500-millisecond lag. A Microsoft developer, Andres Freund, noticed his SSH connections were fractionally slower than they should be....",
+        "contentFile": "news-1791205247346.md"
+    },
+    {
+        "id": "1791205236526",
+        "type": "news",
+        "title": "The Deprecation Notice Is a Footnote",
+        "category": "Tech Radar",
+        "date": "2026-10-05",
+        "author": "Michael Chen",
+        "excerpt": "The alert fired at 3:17 AM. A cascade of failures lit up the dashboard, all stemming from a single, critical API endpoint. The service status page for...",
+        "contentFile": "news-1791205236526.md"
+    },
+    {
         "id": "1791118929719",
         "type": "blog",
         "title": "Your Quick Slack Question Spawned a 3-Day Debate",

@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[The AI Generated Your User Persona. Now You're Building for a Robot.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1791205280752.html</link>
+    <description><![CDATA[You fed 20 user interview transcripts into the AI and asked for a primary user persona. Ten seconds later, it was done. "Meet 'Strategic Sarah,' a 32-...]]></description>
+    <pubDate>Mon, 05 Oct 2026 13:01:20 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The `requirements.txt` Is a Chain Letter]]></title>
+    <link>https://goreportify.com/article-pages/news-1791205247346.html</link>
+    <description><![CDATA[It started with a 500-millisecond lag. A Microsoft developer, Andres Freund, noticed his SSH connections were fractionally slower than they should be....]]></description>
+    <pubDate>Mon, 05 Oct 2026 13:00:47 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Deprecation Notice Is a Footnote]]></title>
+    <link>https://goreportify.com/article-pages/news-1791205236526.html</link>
+    <description><![CDATA[The alert fired at 3:17 AM. A cascade of failures lit up the dashboard, all stemming from a single, critical API endpoint. The service status page for...]]></description>
+    <pubDate>Mon, 05 Oct 2026 13:00:36 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Quick Slack Question Spawned a 3-Day Debate]]></title>
     <link>https://goreportify.com/article-pages/blog-1791118929719.html</link>
     <description><![CDATA[It started innocently enough. You dropped a screenshot into the main engineering channel with a casual, “Quick gut check: does this new checkout flow...]]></description>
@@ -285,26 +303,6 @@
     <link>https://goreportify.com/article-pages/blog-1790082060777.html</link>
     <description><![CDATA[The spreadsheet was perfect. You spent hours on it. Every proposed feature was neatly scored on Reach, Impact, Confidence, and Effort. The final RICE...]]></description>
     <pubDate>Tue, 22 Sep 2026 13:01:00 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Staging Environment Is a Potemkin Village]]></title>
-    <link>https://goreportify.com/article-pages/news-1790082029681.html</link>
-    <description><![CDATA[The pull request was perfect. Unit tests passed, green checkmarks all the way down. In the staging environment—a supposedly exact, sterile replica of...]]></description>
-    <pubDate>Tue, 22 Sep 2026 13:00:29 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Socialized the Idea with Everyone. Now It's Design-by-Committee.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1789995788935.html</link>
-    <description><![CDATA[You had the idea on a Tuesday morning. It was elegant, simple, and solved a real customer problem. Your first step was to get buy-in. Smart.
-
-You book...]]></description>
-    <pubDate>Mon, 21 Sep 2026 13:03:08 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Hotfix Is an Incantation]]></title>
-    <link>https://goreportify.com/article-pages/news-1789995758193.html</link>
-    <description><![CDATA[The pager screamed at 2:17 AM. A decade ago, this was a familiar ritual. You’d roll out of bed, squint at a dashboard bleeding red, and dive into the...]]></description>
-    <pubDate>Mon, 21 Sep 2026 13:02:38 GMT</pubDate>
   </item>
 </channel>
 </rss>
