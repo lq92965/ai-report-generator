@@ -5,6 +5,12 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Asked Stakeholders for Input. You Got a Scavenger Hunt.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1791205282879.html</link>
+    <description><![CDATA[It’s 4 PM on a Tuesday. You’re trying to lock down the requirements for the new billing page. You have a vague memory of the Head of Sales mentioning...]]></description>
+    <pubDate>Mon, 05 Oct 2026 13:01:22 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The AI Generated Your User Persona. Now You're Building for a Robot.]]></title>
     <link>https://goreportify.com/article-pages/blog-1791205280752.html</link>
     <description><![CDATA[You fed 20 user interview transcripts into the AI and asked for a primary user persona. Ten seconds later, it was done. "Meet 'Strategic Sarah,' a 32-...]]></description>
@@ -297,12 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1790154242439.html</link>
     <description><![CDATA[The pull request looked simple enough. A few lines of YAML were deleted, replaced by a single paragraph of plain English. The old code defined an AWS...]]></description>
     <pubDate>Wed, 23 Sep 2026 09:04:02 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Brought a RICE Score. They Brought an Opinion.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1790082060777.html</link>
-    <description><![CDATA[The spreadsheet was perfect. You spent hours on it. Every proposed feature was neatly scored on Reach, Impact, Confidence, and Effort. The final RICE...]]></description>
-    <pubDate>Tue, 22 Sep 2026 13:01:00 GMT</pubDate>
   </item>
 </channel>
 </rss>

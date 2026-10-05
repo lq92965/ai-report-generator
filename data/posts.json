@@ -1,5 +1,15 @@
 [
     {
+        "id": "1791205282879",
+        "type": "blog",
+        "title": "You Asked Stakeholders for Input. You Got a Scavenger Hunt.",
+        "category": "Deep Insights",
+        "date": "2026-10-05",
+        "author": "Alex Mercer",
+        "excerpt": "It’s 4 PM on a Tuesday. You’re trying to lock down the requirements for the new billing page. You have a vague memory of the Head of Sales mentioning...",
+        "contentFile": "blog-1791205282879.md"
+    },
+    {
         "id": "1791205280752",
         "type": "blog",
         "title": "The AI Generated Your User Persona. Now You're Building for a Robot.",

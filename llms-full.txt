@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [You Asked Stakeholders for Input. You Got a Scavenger Hunt.](https://goreportify.com/article-pages/blog-1791205282879.html)
+  - Type: Deep Insights | Date: 2026-10-05 | Author: Alex Mercer
+  - It’s 4 PM on a Tuesday. You’re trying to lock down the requirements for the new billing page. You have a vague memory of the Head of Sales mentioning...
 - [The AI Generated Your User Persona. Now You're Building for a Robot.](https://goreportify.com/article-pages/blog-1791205280752.html)
   - Type: Deep Insights | Date: 2026-10-05 | Author: Michael Chen
   - You fed 20 user interview transcripts into the AI and asked for a primary user persona. Ten seconds later, it was done. "Meet 'Strategic Sarah,' a 32-...
@@ -2424,4 +2427,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 797 articles (421 blog + 376 news) + 8 core pages._
+_Total: 798 articles (422 blog + 376 news) + 8 core pages._
