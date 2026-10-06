@@ -1,5 +1,25 @@
 [
     {
+        "id": "1791291672734",
+        "type": "blog",
+        "title": "Your Report Showed the Metrics. It Didn't Tell the Story.",
+        "category": "Deep Insights",
+        "date": "2026-10-06",
+        "author": "Michael Chen",
+        "excerpt": "You shared your screen. The dashboard glowed with green arrows pointing up. Engagement, up 7%. Daily active users, up 4%. Conversion for the new featu...",
+        "contentFile": "blog-1791291672734.md"
+    },
+    {
+        "id": "1791291638669",
+        "type": "news",
+        "title": "The Proof-of-Concept Is a Hostage Video",
+        "category": "Tech Radar",
+        "date": "2026-10-06",
+        "author": "David Sterling",
+        "excerpt": "The air in the conference room is thin. An engineer shares their screen, cursor trembling over a single text input box. The entire executive team is w...",
+        "contentFile": "news-1791291638669.md"
+    },
+    {
         "id": "1791205282879",
         "type": "blog",
         "title": "You Asked Stakeholders for Input. You Got a Scavenger Hunt.",

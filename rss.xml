@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Your Report Showed the Metrics. It Didn't Tell the Story.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1791291672734.html</link>
+    <description><![CDATA[You shared your screen. The dashboard glowed with green arrows pointing up. Engagement, up 7%. Daily active users, up 4%. Conversion for the new featu...]]></description>
+    <pubDate>Tue, 06 Oct 2026 13:01:12 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Proof-of-Concept Is a Hostage Video]]></title>
+    <link>https://goreportify.com/article-pages/news-1791291638669.html</link>
+    <description><![CDATA[The air in the conference room is thin. An engineer shares their screen, cursor trembling over a single text input box. The entire executive team is w...]]></description>
+    <pubDate>Tue, 06 Oct 2026 13:00:38 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Asked Stakeholders for Input. You Got a Scavenger Hunt.]]></title>
     <link>https://goreportify.com/article-pages/blog-1791205282879.html</link>
     <description><![CDATA[It’s 4 PM on a Tuesday. You’re trying to lock down the requirements for the new billing page. You have a vague memory of the Head of Sales mentioning...]]></description>
@@ -291,18 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1790168425375.html</link>
     <description><![CDATA[The pull request lands with a quiet thud. A junior engineer, three months out of a bootcamp, has just pushed their first significant feature. They wai...]]></description>
     <pubDate>Wed, 23 Sep 2026 13:00:25 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Scheduled a Read-Out. You Should Have Scheduled a Workshop.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1790154274448.html</link>
-    <description><![CDATA[It’s 15 minutes into your meeting. You’re on slide 8 of 25. You’re sharing your screen, narrating bullet points about the Q3 strategy. You pause for a...]]></description>
-    <pubDate>Wed, 23 Sep 2026 09:04:34 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Service Account Is Now a Persona]]></title>
-    <link>https://goreportify.com/article-pages/news-1790154242439.html</link>
-    <description><![CDATA[The pull request looked simple enough. A few lines of YAML were deleted, replaced by a single paragraph of plain English. The old code defined an AWS...]]></description>
-    <pubDate>Wed, 23 Sep 2026 09:04:02 GMT</pubDate>
   </item>
 </channel>
 </rss>
