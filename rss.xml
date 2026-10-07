@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Shared the 'Final' Deck. You Should Have Shared the Messy Doc.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1791378073990.html</link>
+    <description><![CDATA[You walk into the quarterly review. Your deck is clean, the narrative is tight, and the mockups are beautiful. You spent the last two weeks polishing...]]></description>
+    <pubDate>Wed, 07 Oct 2026 13:01:13 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Data Lake Is a Time Bomb]]></title>
+    <link>https://goreportify.com/article-pages/news-1791378043323.html</link>
+    <description><![CDATA[The dashboards glow with the soft, reassuring hum of accumulation. Petabytes ingested. Zettabytes under management. The data engineering team presents...]]></description>
+    <pubDate>Wed, 07 Oct 2026 13:00:43 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Cloud Service Is a Company Town]]></title>
+    <link>https://goreportify.com/article-pages/news-1791378030182.html</link>
+    <description><![CDATA[The email arrives on a Tuesday morning, not with the klaxon of a security alert, but with the quiet finality of an accounting memo. A service that was...]]></description>
+    <pubDate>Wed, 07 Oct 2026 13:00:30 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your Report Showed the Metrics. It Didn't Tell the Story.]]></title>
     <link>https://goreportify.com/article-pages/blog-1791291672734.html</link>
     <description><![CDATA[You shared your screen. The dashboard glowed with green arrows pointing up. Engagement, up 7%. Daily active users, up 4%. Conversion for the new featu...]]></description>
@@ -285,24 +303,6 @@
     <link>https://goreportify.com/article-pages/blog-1790168614326.html</link>
     <description><![CDATA[It’s demo day. Your team just finished a two-week sprint, wrestling with a messy third-party API and a dozen edge cases. You pull up the staging envir...]]></description>
     <pubDate>Wed, 23 Sep 2026 13:03:34 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Pull Request Is a Found Object]]></title>
-    <link>https://goreportify.com/article-pages/news-1790168575867.html</link>
-    <description><![CDATA[The diff scrolls past, 400 lines of pristine, idiomatic Python. It refactors a messy data processing pipeline, introducing a functional style with cha...]]></description>
-    <pubDate>Wed, 23 Sep 2026 13:02:55 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Spent an Hour Prompting the AI. You Could Have Written the Doc in 15 Minutes.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1790168454926.html</link>
-    <description><![CDATA[It’s 4 PM on a Tuesday. You need to write a one-pager outlining the new checkout analytics project. Simple enough. You have all the context in your he...]]></description>
-    <pubDate>Wed, 23 Sep 2026 13:00:54 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Ship Is Rigged for Silent Running]]></title>
-    <link>https://goreportify.com/article-pages/news-1790168425375.html</link>
-    <description><![CDATA[The pull request lands with a quiet thud. A junior engineer, three months out of a bootcamp, has just pushed their first significant feature. They wai...]]></description>
-    <pubDate>Wed, 23 Sep 2026 13:00:25 GMT</pubDate>
   </item>
 </channel>
 </rss>

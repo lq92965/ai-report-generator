@@ -1,5 +1,35 @@
 [
     {
+        "id": "1791378073990",
+        "type": "blog",
+        "title": "You Shared the 'Final' Deck. You Should Have Shared the Messy Doc.",
+        "category": "Deep Insights",
+        "date": "2026-10-07",
+        "author": "David Sterling",
+        "excerpt": "You walk into the quarterly review. Your deck is clean, the narrative is tight, and the mockups are beautiful. You spent the last two weeks polishing...",
+        "contentFile": "blog-1791378073990.md"
+    },
+    {
+        "id": "1791378043323",
+        "type": "news",
+        "title": "The Data Lake Is a Time Bomb",
+        "category": "Tech Radar",
+        "date": "2026-10-07",
+        "author": "Olivia Thorne",
+        "excerpt": "The dashboards glow with the soft, reassuring hum of accumulation. Petabytes ingested. Zettabytes under management. The data engineering team presents...",
+        "contentFile": "news-1791378043323.md"
+    },
+    {
+        "id": "1791378030182",
+        "type": "news",
+        "title": "The Cloud Service Is a Company Town",
+        "category": "Tech Radar",
+        "date": "2026-10-07",
+        "author": "David Sterling",
+        "excerpt": "The email arrives on a Tuesday morning, not with the klaxon of a security alert, but with the quiet finality of an accounting memo. A service that was...",
+        "contentFile": "news-1791378030182.md"
+    },
+    {
         "id": "1791291672734",
         "type": "blog",
         "title": "Your Report Showed the Metrics. It Didn't Tell the Story.",
