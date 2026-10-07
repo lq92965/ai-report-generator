@@ -5,6 +5,12 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Can't Measure the Impact Because You Didn't Instrument the Feature]]></title>
+    <link>https://goreportify.com/article-pages/blog-1791378078083.html</link>
+    <description><![CDATA[The demo went perfectly. The feature shipped on time. You’re in the monthly business review, and your slide shows a healthy spike in clicks on the new...]]></description>
+    <pubDate>Wed, 07 Oct 2026 13:01:18 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Shared the 'Final' Deck. You Should Have Shared the Messy Doc.]]></title>
     <link>https://goreportify.com/article-pages/blog-1791378073990.html</link>
     <description><![CDATA[You walk into the quarterly review. Your deck is clean, the narrative is tight, and the mockups are beautiful. You spent the last two weeks polishing...]]></description>
@@ -297,12 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1790254830715.html</link>
     <description><![CDATA[You see it on a third-tier code forum first. The answer is immaculate, formatted with a confidence you haven't seen since the documentation for a VAX...]]></description>
     <pubDate>Thu, 24 Sep 2026 13:00:30 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Demoed the Feature. They Asked About the Button Color.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1790168614326.html</link>
-    <description><![CDATA[It’s demo day. Your team just finished a two-week sprint, wrestling with a messy third-party API and a dozen edge cases. You pull up the staging envir...]]></description>
-    <pubDate>Wed, 23 Sep 2026 13:03:34 GMT</pubDate>
   </item>
 </channel>
 </rss>

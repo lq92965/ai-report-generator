@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [You Can't Measure the Impact Because You Didn't Instrument the Feature](https://goreportify.com/article-pages/blog-1791378078083.html)
+  - Type: Deep Insights | Date: 2026-10-07 | Author: Marcus Webb
+  - The demo went perfectly. The feature shipped on time. You’re in the monthly business review, and your slide shows a healthy spike in clicks on the new...
 - [You Shared the 'Final' Deck. You Should Have Shared the Messy Doc.](https://goreportify.com/article-pages/blog-1791378073990.html)
   - Type: Deep Insights | Date: 2026-10-07 | Author: David Sterling
   - You walk into the quarterly review. Your deck is clean, the narrative is tight, and the mockups are beautiful. You spent the last two weeks polishing...
@@ -2442,4 +2445,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 803 articles (424 blog + 379 news) + 8 core pages._
+_Total: 804 articles (425 blog + 379 news) + 8 core pages._

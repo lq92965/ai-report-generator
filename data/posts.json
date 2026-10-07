@@ -1,5 +1,15 @@
 [
     {
+        "id": "1791378078083",
+        "type": "blog",
+        "title": "You Can't Measure the Impact Because You Didn't Instrument the Feature",
+        "category": "Deep Insights",
+        "date": "2026-10-07",
+        "author": "Marcus Webb",
+        "excerpt": "The demo went perfectly. The feature shipped on time. You’re in the monthly business review, and your slide shows a healthy spike in clicks on the new...",
+        "contentFile": "blog-1791378078083.md"
+    },
+    {
         "id": "1791378073990",
         "type": "blog",
         "title": "You Shared the 'Final' Deck. You Should Have Shared the Messy Doc.",
