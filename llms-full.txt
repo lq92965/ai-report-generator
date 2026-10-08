@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [You Showed Them the Retention Dip. They Asked You to Change the Chart's Color.](https://goreportify.com/article-pages/blog-1791464499088.html)
+  - Type: Deep Insights | Date: 2026-10-08 | Author: Jessica Tran
+  - You’re on slide four of the quarterly business review. This is the big one. After weeks of digging, you found it: a 7% drop in week-two retention for...
 - [You Answered the Same Question Five Times. You Need a Decision Log.](https://goreportify.com/article-pages/blog-1791464461229.html)
   - Type: Deep Insights | Date: 2026-10-08 | Author: Alex Mercer
   - It’s 3 PM on a Tuesday. A new engineer on your team posts in the main Slack channel: “Hey, quick question—why are we using a third-party service for n...
@@ -2454,4 +2457,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 807 articles (426 blog + 381 news) + 8 core pages._
+_Total: 808 articles (427 blog + 381 news) + 8 core pages._
