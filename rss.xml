@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Answered the Same Question Five Times. You Need a Decision Log.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1791464461229.html</link>
+    <description><![CDATA[It’s 3 PM on a Tuesday. A new engineer on your team posts in the main Slack channel: “Hey, quick question—why are we using a third-party service for n...]]></description>
+    <pubDate>Thu, 08 Oct 2026 13:01:01 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Dataset Is a Colonial Map]]></title>
+    <link>https://goreportify.com/article-pages/news-1791464459011.html</link>
+    <description><![CDATA[A developer sits in a dark room, the monitor’s glow illuminating their face. With a few keystrokes, a command is sent: load_dataset('c4'). Terabytes o...]]></description>
+    <pubDate>Thu, 08 Oct 2026 13:00:59 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Idle Process Is Now a Day Trader]]></title>
+    <link>https://goreportify.com/article-pages/news-1791464428931.html</link>
+    <description><![CDATA[Your laptop fan is screaming. You’re just staring at a document, maybe typing a sentence or two, but the machine is hot to the touch and the battery i...]]></description>
+    <pubDate>Thu, 08 Oct 2026 13:00:28 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Can't Measure the Impact Because You Didn't Instrument the Feature]]></title>
     <link>https://goreportify.com/article-pages/blog-1791378078083.html</link>
     <description><![CDATA[The demo went perfectly. The feature shipped on time. You’re in the monthly business review, and your slide shows a healthy spike in clicks on the new...]]></description>
@@ -285,24 +303,6 @@
     <link>https://goreportify.com/article-pages/blog-1790254898930.html</link>
     <description><![CDATA[You just wrapped your tenth user interview in two days. Your brain is a soup of quotes, feature requests, and pain points. You export the transcripts,...]]></description>
     <pubDate>Thu, 24 Sep 2026 13:01:38 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Memory Leak Is Now a Business Model]]></title>
-    <link>https://goreportify.com/article-pages/news-1790254857269.html</link>
-    <description><![CDATA[The dashboard looked wrong. A young engineer, wired on a third cold brew, watched the GPU memory utilization graph for the new summarization feature....]]></description>
-    <pubDate>Thu, 24 Sep 2026 13:00:57 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Wrote a User Story. They Needed Acceptance Criteria.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1790254860233.html</link>
-    <description><![CDATA[The JIRA ticket looked perfect. You’d spent an hour crafting the user story, channeling the customer’s voice, their hopes, their dreams for a better c...]]></description>
-    <pubDate>Thu, 24 Sep 2026 13:01:00 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Cache Is Now Poisoned]]></title>
-    <link>https://goreportify.com/article-pages/news-1790254830715.html</link>
-    <description><![CDATA[You see it on a third-tier code forum first. The answer is immaculate, formatted with a confidence you haven't seen since the documentation for a VAX...]]></description>
-    <pubDate>Thu, 24 Sep 2026 13:00:30 GMT</pubDate>
   </item>
 </channel>
 </rss>

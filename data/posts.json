@@ -1,5 +1,35 @@
 [
     {
+        "id": "1791464461229",
+        "type": "blog",
+        "title": "You Answered the Same Question Five Times. You Need a Decision Log.",
+        "category": "Deep Insights",
+        "date": "2026-10-08",
+        "author": "Alex Mercer",
+        "excerpt": "It’s 3 PM on a Tuesday. A new engineer on your team posts in the main Slack channel: “Hey, quick question—why are we using a third-party service for n...",
+        "contentFile": "blog-1791464461229.md"
+    },
+    {
+        "id": "1791464459011",
+        "type": "news",
+        "title": "The Dataset Is a Colonial Map",
+        "category": "Tech Radar",
+        "date": "2026-10-08",
+        "author": "Jessica Tran",
+        "excerpt": "A developer sits in a dark room, the monitor’s glow illuminating their face. With a few keystrokes, a command is sent: load_dataset('c4'). Terabytes o...",
+        "contentFile": "news-1791464459011.md"
+    },
+    {
+        "id": "1791464428931",
+        "type": "news",
+        "title": "The Idle Process Is Now a Day Trader",
+        "category": "Tech Radar",
+        "date": "2026-10-08",
+        "author": "Alex Mercer",
+        "excerpt": "Your laptop fan is screaming. You’re just staring at a document, maybe typing a sentence or two, but the machine is hot to the touch and the battery i...",
+        "contentFile": "news-1791464428931.md"
+    },
+    {
         "id": "1791378078083",
         "type": "blog",
         "title": "You Can't Measure the Impact Because You Didn't Instrument the Feature",
