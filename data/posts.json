@@ -1,5 +1,35 @@
 [
     {
+        "id": "1791550873133",
+        "type": "blog",
+        "title": "Marketing Says 10k Signups. Product Says 2k. You Need a Single Source of Truth.",
+        "category": "Deep Insights",
+        "date": "2026-10-09",
+        "author": "Michael Chen",
+        "excerpt": "It’s Monday morning. You’re in the weekly business review, walking everyone through last week’s performance. You put up a slide showing 2,000 new user...",
+        "contentFile": "blog-1791550873133.md"
+    },
+    {
+        "id": "1791550868313",
+        "type": "news",
+        "title": "The AI Apocalypse Is a Head Fake",
+        "category": "Tech Radar",
+        "date": "2026-10-09",
+        "author": "David Sterling",
+        "excerpt": "The air in the conference room is recycled and smells faintly of whiteboard markers. On stage, four people who flew business class to be here are disc...",
+        "contentFile": "news-1791550868313.md"
+    },
+    {
+        "id": "1791550836541",
+        "type": "news",
+        "title": "The Safety Layer Is a Press Secretary",
+        "category": "Tech Radar",
+        "date": "2026-10-09",
+        "author": "Emily Rostova",
+        "excerpt": "The prompt was simple, a child’s question about history. The model’s response was a nightmare. Not because it was wrong, but because it was a clean, a...",
+        "contentFile": "news-1791550836541.md"
+    },
+    {
         "id": "1791464499088",
         "type": "blog",
         "title": "You Showed Them the Retention Dip. They Asked You to Change the Chart's Color.",

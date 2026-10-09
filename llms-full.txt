@@ -15,6 +15,15 @@
 
 ## All Articles
 
+- [Marketing Says 10k Signups. Product Says 2k. You Need a Single Source of Truth.](https://goreportify.com/article-pages/blog-1791550873133.html)
+  - Type: Deep Insights | Date: 2026-10-09 | Author: Michael Chen
+  - It’s Monday morning. You’re in the weekly business review, walking everyone through last week’s performance. You put up a slide showing 2,000 new user...
+- [The AI Apocalypse Is a Head Fake](https://goreportify.com/article-pages/news-1791550868313.html)
+  - Type: Tech Radar | Date: 2026-10-09 | Author: David Sterling
+  - The air in the conference room is recycled and smells faintly of whiteboard markers. On stage, four people who flew business class to be here are disc...
+- [The Safety Layer Is a Press Secretary](https://goreportify.com/article-pages/news-1791550836541.html)
+  - Type: Tech Radar | Date: 2026-10-09 | Author: Emily Rostova
+  - The prompt was simple, a child’s question about history. The model’s response was a nightmare. Not because it was wrong, but because it was a clean, a...
 - [You Showed Them the Retention Dip. They Asked You to Change the Chart's Color.](https://goreportify.com/article-pages/blog-1791464499088.html)
   - Type: Deep Insights | Date: 2026-10-08 | Author: Jessica Tran
   - You’re on slide four of the quarterly business review. This is the big one. After weeks of digging, you found it: a 7% drop in week-two retention for...
@@ -2457,4 +2466,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 808 articles (427 blog + 381 news) + 8 core pages._
+_Total: 811 articles (428 blog + 383 news) + 8 core pages._
