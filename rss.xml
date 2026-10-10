@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Killed the Feature. Now You Have to Write the Obituary.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1791637400096.html</link>
+    <description><![CDATA[The metrics were clear. The leadership team agreed. You made the call. The feature that consumed your team for the last two quarters is being sunsette...]]></description>
+    <pubDate>Sat, 10 Oct 2026 13:03:20 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Open Source License Is Now a Terms of Service]]></title>
+    <link>https://goreportify.com/article-pages/news-1791637364974.html</link>
+    <description><![CDATA[The download finishes. A developer, hunched over a laptop in a quiet room, unzips the file. Inside are the weights for a new foundation model, a multi...]]></description>
+    <pubDate>Sat, 10 Oct 2026 13:02:44 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Launched the Feature. Now Marketing Is Asking What It Does.]]></title>
     <link>https://goreportify.com/article-pages/blog-1791637274448.html</link>
     <description><![CDATA[The demo went perfectly. The engineering team is taking a well-deserved victory lap in the releases Slack channel. You just shipped a feature that sol...]]></description>
@@ -291,18 +303,6 @@
     <link>https://goreportify.com/article-pages/blog-1790427674431.html</link>
     <description><![CDATA[The calendar invite was optimistic. "Project Phoenix Sync." You click join. Ten faces pop up in their little boxes. The engineering lead kicks things...]]></description>
     <pubDate>Sat, 26 Sep 2026 13:01:14 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Closed 50 JIRA Tickets. You Didn't Move the Needle.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1790427661457.html</link>
-    <description><![CDATA[The sprint ended on Friday. You look at the JIRA burndown chart, and it’s a perfect 45-degree slope to zero. Fifty tickets closed. The team hit its ve...]]></description>
-    <pubDate>Sat, 26 Sep 2026 13:01:01 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Sanity Check Is a Prayer]]></title>
-    <link>https://goreportify.com/article-pages/news-1790427642039.html</link>
-    <description><![CDATA[A junior engineer stares at their screen, at the five lines of Python that are supposed to guard the company’s new AI-powered feature. The function is...]]></description>
-    <pubDate>Sat, 26 Sep 2026 13:00:42 GMT</pubDate>
   </item>
 </channel>
 </rss>

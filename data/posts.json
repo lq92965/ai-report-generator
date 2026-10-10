@@ -1,5 +1,25 @@
 [
     {
+        "id": "1791637400096",
+        "type": "blog",
+        "title": "You Killed the Feature. Now You Have to Write the Obituary.",
+        "category": "Deep Insights",
+        "date": "2026-10-10",
+        "author": "Sarah Jenkins",
+        "excerpt": "The metrics were clear. The leadership team agreed. You made the call. The feature that consumed your team for the last two quarters is being sunsette...",
+        "contentFile": "blog-1791637400096.md"
+    },
+    {
+        "id": "1791637364974",
+        "type": "news",
+        "title": "The Open Source License Is Now a Terms of Service",
+        "category": "Tech Radar",
+        "date": "2026-10-10",
+        "author": "Alex Mercer",
+        "excerpt": "The download finishes. A developer, hunched over a laptop in a quiet room, unzips the file. Inside are the weights for a new foundation model, a multi...",
+        "contentFile": "news-1791637364974.md"
+    },
+    {
         "id": "1791637274448",
         "type": "blog",
         "title": "You Launched the Feature. Now Marketing Is Asking What It Does.",

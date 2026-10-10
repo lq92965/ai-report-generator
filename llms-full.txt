@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Killed the Feature. Now You Have to Write the Obituary.](https://goreportify.com/article-pages/blog-1791637400096.html)
+  - Type: Deep Insights | Date: 2026-10-10 | Author: Sarah Jenkins
+  - The metrics were clear. The leadership team agreed. You made the call. The feature that consumed your team for the last two quarters is being sunsette...
+- [The Open Source License Is Now a Terms of Service](https://goreportify.com/article-pages/news-1791637364974.html)
+  - Type: Tech Radar | Date: 2026-10-10 | Author: Alex Mercer
+  - The download finishes. A developer, hunched over a laptop in a quiet room, unzips the file. Inside are the weights for a new foundation model, a multi...
 - [You Launched the Feature. Now Marketing Is Asking What It Does.](https://goreportify.com/article-pages/blog-1791637274448.html)
   - Type: Deep Insights | Date: 2026-10-10 | Author: Sarah Jenkins
   - The demo went perfectly. The engineering team is taking a well-deserved victory lap in the releases Slack channel. You just shipped a feature that sol...
@@ -2472,4 +2478,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 813 articles (429 blog + 384 news) + 8 core pages._
+_Total: 815 articles (430 blog + 385 news) + 8 core pages._
