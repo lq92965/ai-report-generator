@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Launched the Feature. Now Marketing Is Asking What It Does.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1791637274448.html</link>
+    <description><![CDATA[The demo went perfectly. The engineering team is taking a well-deserved victory lap in the releases Slack channel. You just shipped a feature that sol...]]></description>
+    <pubDate>Sat, 10 Oct 2026 13:01:14 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Changelog Is Now a Séance]]></title>
+    <link>https://goreportify.com/article-pages/news-1791637244927.html</link>
+    <description><![CDATA[An engineer in Austin wakes up to a flood of alerts. The customer service bot his team maintains, a thin wrapper around a major large language model,...]]></description>
+    <pubDate>Sat, 10 Oct 2026 13:00:44 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Marketing Says 10k Signups. Product Says 2k. You Need a Single Source of Truth.]]></title>
     <link>https://goreportify.com/article-pages/blog-1791550873133.html</link>
     <description><![CDATA[It’s Monday morning. You’re in the weekly business review, walking everyone through last week’s performance. You put up a slide showing 2,000 new user...]]></description>
@@ -291,18 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1790427642039.html</link>
     <description><![CDATA[A junior engineer stares at their screen, at the five lines of Python that are supposed to guard the company’s new AI-powered feature. The function is...]]></description>
     <pubDate>Sat, 26 Sep 2026 13:00:42 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Benchmark Is Now a Press Release]]></title>
-    <link>https://goreportify.com/article-pages/news-1790427630408.html</link>
-    <description><![CDATA[The Slack notification for the announcements channel lights up. There’s no new feature, no critical patch, no postmortem. It’s a screenshot of a Huggi...]]></description>
-    <pubDate>Sat, 26 Sep 2026 13:00:30 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Got Buy-In on the Goal. You Forgot to Get Buy-In on the Trade-Offs.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1790341293931.html</link>
-    <description><![CDATA[The exec team loved it. Your pitch for the new "AI-powered customer onboarding" was a home run. The CEO nodded along. The VP of Sales was already imag...]]></description>
-    <pubDate>Fri, 25 Sep 2026 13:01:33 GMT</pubDate>
   </item>
 </channel>
 </rss>

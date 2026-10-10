@@ -1,5 +1,25 @@
 [
     {
+        "id": "1791637274448",
+        "type": "blog",
+        "title": "You Launched the Feature. Now Marketing Is Asking What It Does.",
+        "category": "Deep Insights",
+        "date": "2026-10-10",
+        "author": "Sarah Jenkins",
+        "excerpt": "The demo went perfectly. The engineering team is taking a well-deserved victory lap in the releases Slack channel. You just shipped a feature that sol...",
+        "contentFile": "blog-1791637274448.md"
+    },
+    {
+        "id": "1791637244927",
+        "type": "news",
+        "title": "The Changelog Is Now a Séance",
+        "category": "Tech Radar",
+        "date": "2026-10-10",
+        "author": "David Sterling",
+        "excerpt": "An engineer in Austin wakes up to a flood of alerts. The customer service bot his team maintains, a thin wrapper around a major large language model,...",
+        "contentFile": "news-1791637244927.md"
+    },
+    {
         "id": "1791550873133",
         "type": "blog",
         "title": "Marketing Says 10k Signups. Product Says 2k. You Need a Single Source of Truth.",

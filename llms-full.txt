@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Launched the Feature. Now Marketing Is Asking What It Does.](https://goreportify.com/article-pages/blog-1791637274448.html)
+  - Type: Deep Insights | Date: 2026-10-10 | Author: Sarah Jenkins
+  - The demo went perfectly. The engineering team is taking a well-deserved victory lap in the releases Slack channel. You just shipped a feature that sol...
+- [The Changelog Is Now a Séance](https://goreportify.com/article-pages/news-1791637244927.html)
+  - Type: Tech Radar | Date: 2026-10-10 | Author: David Sterling
+  - An engineer in Austin wakes up to a flood of alerts. The customer service bot his team maintains, a thin wrapper around a major large language model,...
 - [Marketing Says 10k Signups. Product Says 2k. You Need a Single Source of Truth.](https://goreportify.com/article-pages/blog-1791550873133.html)
   - Type: Deep Insights | Date: 2026-10-09 | Author: Michael Chen
   - It’s Monday morning. You’re in the weekly business review, walking everyone through last week’s performance. You put up a slide showing 2,000 new user...
@@ -2466,4 +2472,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 811 articles (428 blog + 383 news) + 8 core pages._
+_Total: 813 articles (429 blog + 384 news) + 8 core pages._
