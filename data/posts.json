@@ -1,5 +1,35 @@
 [
     {
+        "id": "1791723676899",
+        "type": "blog",
+        "title": "You Shipped the Feature. Now Support Is Drowning in Tickets.",
+        "category": "Deep Insights",
+        "date": "2026-10-11",
+        "author": "Sarah Jenkins",
+        "excerpt": "The confetti in the launch Slack channel has settled. The adoption dashboard is ticking up. You take a sip of coffee, feeling that rare moment of calm...",
+        "contentFile": "blog-1791723676899.md"
+    },
+    {
+        "id": "1791723665152",
+        "type": "news",
+        "title": "The API Rate Limit Is Now a Class System",
+        "category": "Tech Radar",
+        "date": "2026-10-11",
+        "author": "Michael Chen",
+        "excerpt": "A few years ago, the call came from a product manager. A small, clever calendar app had found a way to sync its data using our public API. It wasn't a...",
+        "contentFile": "news-1791723665152.md"
+    },
+    {
+        "id": "1791723638973",
+        "type": "news",
+        "title": "The Friction Log Is a Time Card",
+        "category": "Tech Radar",
+        "date": "2026-10-11",
+        "author": "Michael Chen",
+        "excerpt": "It’s 4:00 PM on a Friday. A prompt appears in Slack, a chipper little bot asking you to log your \"weekly frictions.\" You dutifully type them out. The...",
+        "contentFile": "news-1791723638973.md"
+    },
+    {
         "id": "1791637400096",
         "type": "blog",
         "title": "You Killed the Feature. Now You Have to Write the Obituary.",

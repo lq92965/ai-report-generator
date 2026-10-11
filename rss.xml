@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Shipped the Feature. Now Support Is Drowning in Tickets.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1791723676899.html</link>
+    <description><![CDATA[The confetti in the launch Slack channel has settled. The adoption dashboard is ticking up. You take a sip of coffee, feeling that rare moment of calm...]]></description>
+    <pubDate>Sun, 11 Oct 2026 13:01:16 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The API Rate Limit Is Now a Class System]]></title>
+    <link>https://goreportify.com/article-pages/news-1791723665152.html</link>
+    <description><![CDATA[A few years ago, the call came from a product manager. A small, clever calendar app had found a way to sync its data using our public API. It wasn't a...]]></description>
+    <pubDate>Sun, 11 Oct 2026 13:01:05 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Friction Log Is a Time Card]]></title>
+    <link>https://goreportify.com/article-pages/news-1791723638973.html</link>
+    <description><![CDATA[It’s 4:00 PM on a Friday. A prompt appears in Slack, a chipper little bot asking you to log your "weekly frictions." You dutifully type them out. The...]]></description>
+    <pubDate>Sun, 11 Oct 2026 13:00:38 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Killed the Feature. Now You Have to Write the Obituary.]]></title>
     <link>https://goreportify.com/article-pages/blog-1791637400096.html</link>
     <description><![CDATA[The metrics were clear. The leadership team agreed. You made the call. The feature that consumed your team for the last two quarters is being sunsette...]]></description>
@@ -285,24 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1790600428483.html</link>
     <description><![CDATA[It’s 2 a.m. and a senior engineer is staring at a function. The function is clever. It uses a bitwise operation and a list comprehension in a way that...]]></description>
     <pubDate>Mon, 28 Sep 2026 13:00:28 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Meeting Notes Are a Transcript. They Need to Be a Decision Record.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1790514057347.html</link>
-    <description><![CDATA[You’re scrolling through a Slack channel, your eyes glazing over. Three weeks ago, your team made a critical call on the new checkout flow. Now, the V...]]></description>
-    <pubDate>Sun, 27 Sep 2026 13:00:57 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Legacy System Is Now a Protected Class]]></title>
-    <link>https://goreportify.com/article-pages/news-1790514028914.html</link>
-    <description><![CDATA[The meeting was over before it began. A junior engineer, armed with immaculate slides showing a migration path from the old AS/400 monolith to a set o...]]></description>
-    <pubDate>Sun, 27 Sep 2026 13:00:28 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Meeting Had a Vague Agenda. Now It Has a Vague Outcome.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1790427674431.html</link>
-    <description><![CDATA[The calendar invite was optimistic. "Project Phoenix Sync." You click join. Ten faces pop up in their little boxes. The engineering lead kicks things...]]></description>
-    <pubDate>Sat, 26 Sep 2026 13:01:14 GMT</pubDate>
   </item>
 </channel>
 </rss>
