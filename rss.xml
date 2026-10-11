@@ -5,6 +5,12 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Googled Your Competitor for an Hour. Your AI Could Have Done It in 5 Minutes.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1791723696143.html</link>
+    <description><![CDATA[It’s 3 PM and you have a strategy review tomorrow. Your director Slacks you: “Hey, can you pull a quick one-pager on what Competitor X is up to? Just...]]></description>
+    <pubDate>Sun, 11 Oct 2026 13:01:36 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Shipped the Feature. Now Support Is Drowning in Tickets.]]></title>
     <link>https://goreportify.com/article-pages/blog-1791723676899.html</link>
     <description><![CDATA[The confetti in the launch Slack channel has settled. The adoption dashboard is ticking up. You take a sip of coffee, feeling that rare moment of calm...]]></description>
@@ -297,12 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1790600443741.html</link>
     <description><![CDATA[You hit the wall on a tricky Kubernetes config. The official docs are dense. The first few search results look promising; they have code blocks and cl...]]></description>
     <pubDate>Mon, 28 Sep 2026 13:00:43 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Author Field Is Now Blank]]></title>
-    <link>https://goreportify.com/article-pages/news-1790600428483.html</link>
-    <description><![CDATA[It’s 2 a.m. and a senior engineer is staring at a function. The function is clever. It uses a bitwise operation and a list comprehension in a way that...]]></description>
-    <pubDate>Mon, 28 Sep 2026 13:00:28 GMT</pubDate>
   </item>
 </channel>
 </rss>

@@ -1,5 +1,15 @@
 [
     {
+        "id": "1791723696143",
+        "type": "blog",
+        "title": "You Googled Your Competitor for an Hour. Your AI Could Have Done It in 5 Minutes.",
+        "category": "Deep Insights",
+        "date": "2026-10-11",
+        "author": "Alex Mercer",
+        "excerpt": "It’s 3 PM and you have a strategy review tomorrow. Your director Slacks you: “Hey, can you pull a quick one-pager on what Competitor X is up to? Just...",
+        "contentFile": "blog-1791723696143.md"
+    },
+    {
         "id": "1791723676899",
         "type": "blog",
         "title": "You Shipped the Feature. Now Support Is Drowning in Tickets.",
