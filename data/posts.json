@@ -1,5 +1,48 @@
 [
     {
+        "id": "1791810077455",
+        "type": "blog",
+        "title": "You Said ‘MVP’. They Heard ‘Sloppy First Version’.",
+        "category": "Deep Insights",
+        "date": "2026-10-12",
+        "author": "Sarah Jenkins",
+        "excerpt": "You’re in the kickoff meeting, walking the team through the plan for the next big thing. You get to the slide titled “Phase 1: MVP Scope.” You feel go...",
+        "contentFile": "blog-1791810077455.md"
+    },
+    {
+        "id": "1791810042932",
+        "type": "news",
+        "title": "The SDK Is a Loyalty Oath",
+        "category": "Tech Radar",
+        "date": "2026-10-12",
+        "author": "Olivia Thorne",
+        "excerpt": "It starts with a single line in a \"Getting Started\" guide. You’re a developer tasked with adding a new service—analytics, payments, feature flags, wha...",
+        "contentFile": "news-1791810042932.md"
+    },
+    {
+        "id": "how-to-write-a-weekly-report",
+        "type": "blog",
+        "title": "How to Write a Weekly Report: Template and Examples",
+        "category": "Deep Insights",
+        "date": "2026-10-13",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A weekly report answers three questions in this order: what moved, what stalled, and what needs a decision. Keep it under 200 words if nothing changed. Keep it blunt if something did.",
+        "contentFile": "how-to-write-a-weekly-report.html",
+        "url": "/article-pages/how-to-write-a-weekly-report.html",
+        "targetKeyword": "how to write a weekly report",
+        "secondaryKeywords": [
+            "weekly report template",
+            "weekly report example",
+            "weekly status report format"
+        ],
+        "internalLinks": [
+            "monthly-report-template",
+            "how-to-write-a-project-status-report",
+            "one-on-one-meeting-agenda"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1791723696143",
         "type": "blog",
         "title": "You Googled Your Competitor for an Hour. Your AI Could Have Done It in 5 Minutes.",

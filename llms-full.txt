@@ -15,6 +15,15 @@
 
 ## All Articles
 
+- [You Said ‘MVP’. They Heard ‘Sloppy First Version’.](https://goreportify.com/article-pages/blog-1791810077455.html)
+  - Type: Deep Insights | Date: 2026-10-12 | Author: Sarah Jenkins
+  - You’re in the kickoff meeting, walking the team through the plan for the next big thing. You get to the slide titled “Phase 1: MVP Scope.” You feel go...
+- [The SDK Is a Loyalty Oath](https://goreportify.com/article-pages/news-1791810042932.html)
+  - Type: Tech Radar | Date: 2026-10-12 | Author: Olivia Thorne
+  - It starts with a single line in a "Getting Started" guide. You’re a developer tasked with adding a new service—analytics, payments, feature flags, wha...
+- [How to Write a Weekly Report: Template and Examples](https://goreportify.com/article-pages/blog-how-to-write-a-weekly-report.html)
+  - Type: Deep Insights | Date: 2026-10-13 | Author: Reportify AI Editorial
+  - A weekly report answers three questions in this order: what moved, what stalled, and what needs a decision. Keep it under 200 words if nothing changed. Keep it blunt if something did.
 - [You Googled Your Competitor for an Hour. Your AI Could Have Done It in 5 Minutes.](https://goreportify.com/article-pages/blog-1791723696143.html)
   - Type: Deep Insights | Date: 2026-10-11 | Author: Alex Mercer
   - It’s 3 PM and you have a strategy review tomorrow. Your director Slacks you: “Hey, can you pull a quick one-pager on what Competitor X is up to? Just...
@@ -2490,4 +2499,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 819 articles (432 blog + 387 news) + 8 core pages._
+_Total: 822 articles (434 blog + 388 news) + 8 core pages._

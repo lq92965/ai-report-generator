@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Said ‘MVP’. They Heard ‘Sloppy First Version’.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1791810077455.html</link>
+    <description><![CDATA[You’re in the kickoff meeting, walking the team through the plan for the next big thing. You get to the slide titled “Phase 1: MVP Scope.” You feel go...]]></description>
+    <pubDate>Mon, 12 Oct 2026 13:01:17 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The SDK Is a Loyalty Oath]]></title>
+    <link>https://goreportify.com/article-pages/news-1791810042932.html</link>
+    <description><![CDATA[It starts with a single line in a "Getting Started" guide. You’re a developer tasked with adding a new service—analytics, payments, feature flags, wha...]]></description>
+    <pubDate>Mon, 12 Oct 2026 13:00:42 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Write a Weekly Report: Template and Examples]]></title>
+    <link>https://goreportify.com/article-pages/blog-how-to-write-a-weekly-report.html</link>
+    <description><![CDATA[A weekly report answers three questions in this order: what moved, what stalled, and what needs a decision. Keep it under 200 words if nothing changed. Keep it blunt if something did.]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Googled Your Competitor for an Hour. Your AI Could Have Done It in 5 Minutes.]]></title>
     <link>https://goreportify.com/article-pages/blog-1791723696143.html</link>
     <description><![CDATA[It’s 3 PM and you have a strategy review tomorrow. Your director Slacks you: “Hey, can you pull a quick one-pager on what Competitor X is up to? Just...]]></description>
@@ -285,24 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1790686834310.html</link>
     <description><![CDATA[The bill arrives on the first of the month, an automated email with a five-figure number where you expected three. A junior engineer, proud of deployi...]]></description>
     <pubDate>Tue, 29 Sep 2026 13:00:34 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[That Ambiguous Sentence in Your PRD Just Cost You a Sprint]]></title>
-    <link>https://goreportify.com/article-pages/blog-1790600477714.html</link>
-    <description><![CDATA[It’s demo day. The engineer pulls up the new data import feature. You watch as they upload a CSV file with a few errors in it. The spinner spins, then...]]></description>
-    <pubDate>Mon, 28 Sep 2026 13:01:17 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Asked for Feedback. You Got a Wishlist.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1790600465054.html</link>
-    <description><![CDATA[You just walked your team through the quarterly roadmap. It’s tight. The strategy is sound, the problem is clear, and the proposed solutions are backe...]]></description>
-    <pubDate>Mon, 28 Sep 2026 13:01:05 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Generation Loss Is Now Generational]]></title>
-    <link>https://goreportify.com/article-pages/news-1790600443741.html</link>
-    <description><![CDATA[You hit the wall on a tricky Kubernetes config. The official docs are dense. The first few search results look promising; they have code blocks and cl...]]></description>
-    <pubDate>Mon, 28 Sep 2026 13:00:43 GMT</pubDate>
   </item>
 </channel>
 </rss>
