@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[They Asked for a 'Small Tweak.' You Derailed the Sprint.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1791896484863.html</link>
+    <description><![CDATA[It started in Slack. A message from the head of sales pops up. “Hey, quick one. Can we just add a ‘Source’ field to the new lead form? Should be super...]]></description>
+    <pubDate>Tue, 13 Oct 2026 13:01:24 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Debugger Is Now a Ouija Board]]></title>
+    <link>https://goreportify.com/article-pages/news-1791896441125.html</link>
+    <description><![CDATA[The ritual used to be simple. You’d find the line where the program crashed, set a breakpoint just before it, and run the code again. The debugger wou...]]></description>
+    <pubDate>Tue, 13 Oct 2026 13:00:41 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Said ‘MVP’. They Heard ‘Sloppy First Version’.]]></title>
     <link>https://goreportify.com/article-pages/blog-1791810077455.html</link>
     <description><![CDATA[You’re in the kickoff meeting, walking the team through the plan for the next big thing. You get to the slide titled “Phase 1: MVP Scope.” You feel go...]]></description>
@@ -291,18 +303,6 @@
     <link>https://goreportify.com/article-pages/blog-1790686869260.html</link>
     <description><![CDATA[It’s Tuesday morning. You hit send on the weekly progress update for Project Apollo. It’s a work of art. You’ve got the burndown chart, a list of comp...]]></description>
     <pubDate>Tue, 29 Sep 2026 13:01:09 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[What Changes Now in Building Markets]]></title>
-    <link>https://goreportify.com/article-pages/news-1790686845811.html</link>
-    <description><![CDATA[The founder’s slide deck was immaculate. In a conference room with borrowed air and rented chairs, he pointed to a box labeled "Proprietary Data & Cus...]]></description>
-    <pubDate>Tue, 29 Sep 2026 13:00:45 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Default Setting Is Betrayal]]></title>
-    <link>https://goreportify.com/article-pages/news-1790686834310.html</link>
-    <description><![CDATA[The bill arrives on the first of the month, an automated email with a five-figure number where you expected three. A junior engineer, proud of deployi...]]></description>
-    <pubDate>Tue, 29 Sep 2026 13:00:34 GMT</pubDate>
   </item>
 </channel>
 </rss>

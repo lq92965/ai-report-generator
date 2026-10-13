@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [They Asked for a 'Small Tweak.' You Derailed the Sprint.](https://goreportify.com/article-pages/blog-1791896484863.html)
+  - Type: Deep Insights | Date: 2026-10-13 | Author: Marcus Webb
+  - It started in Slack. A message from the head of sales pops up. “Hey, quick one. Can we just add a ‘Source’ field to the new lead form? Should be super...
+- [The Debugger Is Now a Ouija Board](https://goreportify.com/article-pages/news-1791896441125.html)
+  - Type: Tech Radar | Date: 2026-10-13 | Author: Michael Chen
+  - The ritual used to be simple. You’d find the line where the program crashed, set a breakpoint just before it, and run the code again. The debugger wou...
 - [You Said ‘MVP’. They Heard ‘Sloppy First Version’.](https://goreportify.com/article-pages/blog-1791810077455.html)
   - Type: Deep Insights | Date: 2026-10-12 | Author: Sarah Jenkins
   - You’re in the kickoff meeting, walking the team through the plan for the next big thing. You get to the slide titled “Phase 1: MVP Scope.” You feel go...
@@ -2499,4 +2505,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 822 articles (434 blog + 388 news) + 8 core pages._
+_Total: 824 articles (435 blog + 389 news) + 8 core pages._

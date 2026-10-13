@@ -1,5 +1,25 @@
 [
     {
+        "id": "1791896484863",
+        "type": "blog",
+        "title": "They Asked for a 'Small Tweak.' You Derailed the Sprint.",
+        "category": "Deep Insights",
+        "date": "2026-10-13",
+        "author": "Marcus Webb",
+        "excerpt": "It started in Slack. A message from the head of sales pops up. “Hey, quick one. Can we just add a ‘Source’ field to the new lead form? Should be super...",
+        "contentFile": "blog-1791896484863.md"
+    },
+    {
+        "id": "1791896441125",
+        "type": "news",
+        "title": "The Debugger Is Now a Ouija Board",
+        "category": "Tech Radar",
+        "date": "2026-10-13",
+        "author": "Michael Chen",
+        "excerpt": "The ritual used to be simple. You’d find the line where the program crashed, set a breakpoint just before it, and run the code again. The debugger wou...",
+        "contentFile": "news-1791896441125.md"
+    },
+    {
         "id": "1791810077455",
         "type": "blog",
         "title": "You Said ‘MVP’. They Heard ‘Sloppy First Version’.",
