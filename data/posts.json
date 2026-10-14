@@ -1,5 +1,25 @@
 [
     {
+        "id": "1791982883591",
+        "type": "blog",
+        "title": "You Sent a ‘Quick Heads-Up’. You Triggered a Panic.",
+        "category": "Deep Insights",
+        "date": "2026-10-14",
+        "author": "Marcus Webb",
+        "excerpt": "It was 9:17 AM on a Tuesday. You saw a spike in 500 errors from a newly shipped API endpoint. Your intent was noble: transparency. You jumped into the...",
+        "contentFile": "blog-1791982883591.md"
+    },
+    {
+        "id": "1791982843020",
+        "type": "news",
+        "title": "The Minimum Viable Product Is Now a Ransom Note",
+        "category": "Tech Radar",
+        "date": "2026-10-14",
+        "author": "David Sterling",
+        "excerpt": "You sign up for the service that promises to fix your workflow. The landing page is a clean, gradient-and-illustration masterpiece. You migrate a smal...",
+        "contentFile": "news-1791982843020.md"
+    },
+    {
         "id": "1791896484863",
         "type": "blog",
         "title": "They Asked for a 'Small Tweak.' You Derailed the Sprint.",

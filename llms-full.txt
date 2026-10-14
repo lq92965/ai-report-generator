@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Sent a ‘Quick Heads-Up’. You Triggered a Panic.](https://goreportify.com/article-pages/blog-1791982883591.html)
+  - Type: Deep Insights | Date: 2026-10-14 | Author: Marcus Webb
+  - It was 9:17 AM on a Tuesday. You saw a spike in 500 errors from a newly shipped API endpoint. Your intent was noble: transparency. You jumped into the...
+- [The Minimum Viable Product Is Now a Ransom Note](https://goreportify.com/article-pages/news-1791982843020.html)
+  - Type: Tech Radar | Date: 2026-10-14 | Author: David Sterling
+  - You sign up for the service that promises to fix your workflow. The landing page is a clean, gradient-and-illustration masterpiece. You migrate a smal...
 - [They Asked for a 'Small Tweak.' You Derailed the Sprint.](https://goreportify.com/article-pages/blog-1791896484863.html)
   - Type: Deep Insights | Date: 2026-10-13 | Author: Marcus Webb
   - It started in Slack. A message from the head of sales pops up. “Hey, quick one. Can we just add a ‘Source’ field to the new lead form? Should be super...
@@ -2505,4 +2511,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 824 articles (435 blog + 389 news) + 8 core pages._
+_Total: 826 articles (436 blog + 390 news) + 8 core pages._
