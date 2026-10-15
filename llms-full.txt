@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Sent a 5-Page Update. They Read the First Sentence.](https://goreportify.com/article-pages/blog-1792069276756.html)
+  - Type: Deep Insights | Date: 2026-10-15 | Author: David Sterling
+  - You spent three hours on it. You pulled the latest data, synthesized user feedback, and detailed every risk and dependency. The document was a masterp...
+- [The Bug Bounty Is Now a Protection Racket](https://goreportify.com/article-pages/news-1792069237402.html)
+  - Type: Tech Radar | Date: 2026-10-15 | Author: Emily Rostova
+  - A researcher hunches over a terminal at 2 a.m., caffeine and adrenaline singing in their veins. They just found it: a logic flaw in a major financial...
 - [You Sent a ‘Quick Heads-Up’. You Triggered a Panic.](https://goreportify.com/article-pages/blog-1791982883591.html)
   - Type: Deep Insights | Date: 2026-10-14 | Author: Marcus Webb
   - It was 9:17 AM on a Tuesday. You saw a spike in 500 errors from a newly shipped API endpoint. Your intent was noble: transparency. You jumped into the...
@@ -2511,4 +2517,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 826 articles (436 blog + 390 news) + 8 core pages._
+_Total: 828 articles (437 blog + 391 news) + 8 core pages._

@@ -1,5 +1,25 @@
 [
     {
+        "id": "1792069276756",
+        "type": "blog",
+        "title": "You Sent a 5-Page Update. They Read the First Sentence.",
+        "category": "Deep Insights",
+        "date": "2026-10-15",
+        "author": "David Sterling",
+        "excerpt": "You spent three hours on it. You pulled the latest data, synthesized user feedback, and detailed every risk and dependency. The document was a masterp...",
+        "contentFile": "blog-1792069276756.md"
+    },
+    {
+        "id": "1792069237402",
+        "type": "news",
+        "title": "The Bug Bounty Is Now a Protection Racket",
+        "category": "Tech Radar",
+        "date": "2026-10-15",
+        "author": "Emily Rostova",
+        "excerpt": "A researcher hunches over a terminal at 2 a.m., caffeine and adrenaline singing in their veins. They just found it: a logic flaw in a major financial...",
+        "contentFile": "news-1792069237402.md"
+    },
+    {
         "id": "1791982883591",
         "type": "blog",
         "title": "You Sent a ‘Quick Heads-Up’. You Triggered a Panic.",

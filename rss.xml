@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Sent a 5-Page Update. They Read the First Sentence.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1792069276756.html</link>
+    <description><![CDATA[You spent three hours on it. You pulled the latest data, synthesized user feedback, and detailed every risk and dependency. The document was a masterp...]]></description>
+    <pubDate>Thu, 15 Oct 2026 13:01:16 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Bug Bounty Is Now a Protection Racket]]></title>
+    <link>https://goreportify.com/article-pages/news-1792069237402.html</link>
+    <description><![CDATA[A researcher hunches over a terminal at 2 a.m., caffeine and adrenaline singing in their veins. They just found it: a logic flaw in a major financial...]]></description>
+    <pubDate>Thu, 15 Oct 2026 13:00:37 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Sent a ‘Quick Heads-Up’. You Triggered a Panic.]]></title>
     <link>https://goreportify.com/article-pages/blog-1791982883591.html</link>
     <description><![CDATA[It was 9:17 AM on a Tuesday. You saw a spike in 500 errors from a newly shipped API endpoint. Your intent was noble: transparency. You jumped into the...]]></description>
@@ -291,18 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1790773367707.html</link>
     <description><![CDATA[An alert fires at 2 AM. A customer's account was flagged for fraud, their assets frozen. The engineer on call digs in. They pull the logs. They see th...]]></description>
     <pubDate>Wed, 30 Sep 2026 13:02:47 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your AI Is Confidently Wrong. It Learned from Your Confluence Graveyard.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1790773281852.html</link>
-    <description><![CDATA[The new PM on your team just used your shiny internal AI assistant. They asked a simple question: “What is our go-to-market strategy for Project Firef...]]></description>
-    <pubDate>Wed, 30 Sep 2026 13:01:21 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Vendor Lock-in Is Now a Pre-existing Condition]]></title>
-    <link>https://goreportify.com/article-pages/news-1790773241492.html</link>
-    <description><![CDATA[The project was supposed to take two weeks. Just move a small analytics service off the managed platform and onto a self-hosted instance. A simple cos...]]></description>
-    <pubDate>Wed, 30 Sep 2026 13:00:41 GMT</pubDate>
   </item>
 </channel>
 </rss>
