@@ -1,5 +1,141 @@
 [
     {
+        "id": "1792155679570",
+        "type": "blog",
+        "title": "Engineering Said 'It's Complex.' You Nodded and Moved On.",
+        "category": "Deep Insights",
+        "date": "2026-10-16",
+        "author": "Sarah Jenkins",
+        "excerpt": "It’s sprint planning. You present the next feature, the one sales has been asking for. The one that lit up your user interviews. Your tech lead squint...",
+        "contentFile": "blog-1792155679570.md"
+    },
+    {
+        "id": "1792155636450",
+        "type": "news",
+        "title": "The Dependency Graph Is a Daisy Chain of Liability",
+        "category": "Tech Radar",
+        "date": "2026-10-16",
+        "author": "Alex Mercer",
+        "excerpt": "The command is so automatic it’s muscle memory. An engineer types pip install new-library and hits enter. A cascade of text scrolls by, fetching not o...",
+        "contentFile": "news-1792155636450.md"
+    },
+    {
+        "id": "weekly-status-report",
+        "type": "blog",
+        "title": "Weekly Status Report: The Short Format for Fast Updates",
+        "category": "Deep Insights",
+        "date": "2026-10-15",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A weekly status report is the lean cousin of the full weekly update. Where a detailed report explains context and results, a status report gives a fast snapshot: where things stand, what changed, and ",
+        "contentFile": "weekly-status-report.html",
+        "url": "/article-pages/weekly-status-report.html",
+        "targetKeyword": "weekly status report",
+        "secondaryKeywords": [
+            "weekly status report format",
+            "status report example",
+            "team status update"
+        ],
+        "internalLinks": [
+            "weekly-report",
+            "monthly-report",
+            "weekly-report-template"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "weekly-report-template",
+        "type": "blog",
+        "title": "Weekly Report Template: A Practical Format You Can Copy Today",
+        "category": "Deep Insights",
+        "date": "2026-10-15",
+        "author": "Reportify AI Editorial",
+        "excerpt": "If you have ever stared at a blank document on a Friday afternoon wondering what your manager actually wants to read, you are not alone. A good weekly report does not need to be long or clever. It nee",
+        "contentFile": "weekly-report-template.html",
+        "url": "/article-pages/weekly-report-template.html",
+        "targetKeyword": "weekly report template",
+        "secondaryKeywords": [
+            "weekly report format",
+            "simple weekly report",
+            "weekly status report template"
+        ],
+        "internalLinks": [
+            "weekly-report",
+            "monthly-report",
+            "weekly-status-report"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "how-to-write-a-monthly-report",
+        "type": "blog",
+        "title": "How to Write a Monthly Report: Template and Examples",
+        "category": "Deep Insights",
+        "date": "2026-10-14",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A monthly report is where guessing stops and evidence begins. Done well, it shows what moved, what stalled, and what to do next — in a format your manager can scan in two minutes. This guide gives you",
+        "contentFile": "how-to-write-a-monthly-report.html",
+        "url": "/article-pages/how-to-write-a-monthly-report.html",
+        "targetKeyword": "how to write a monthly report",
+        "secondaryKeywords": [
+            "monthly report template",
+            "monthly status report",
+            "monthly report example",
+            "monthly performance report"
+        ],
+        "internalLinks": [
+            "how-to-write-a-weekly-report",
+            "monthly-report-template",
+            "one-on-one-meeting-agenda"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "monthly-report-template",
+        "type": "blog",
+        "title": "Monthly Report Template That Saves You Hours",
+        "category": "Deep Insights",
+        "date": "2026-10-16",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A monthly report is where you step back from daily noise and show the trend. If you searched for a monthly report template, you probably have a deadline and a blank page. This page gives you a structu",
+        "contentFile": "monthly-report-template.html",
+        "url": "/article-pages/monthly-report-template.html",
+        "targetKeyword": "monthly report template",
+        "secondaryKeywords": [
+            "monthly performance report",
+            "monthly status report format",
+            "monthly report example"
+        ],
+        "internalLinks": [
+            "how-to-write-a-monthly-report",
+            "weekly-report-template",
+            "how-to-write-a-weekly-report"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "weekly-report-example",
+        "type": "blog",
+        "title": "Weekly Report Example You Can Copy This Week",
+        "category": "Deep Insights",
+        "date": "2026-10-16",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A weekly report is the fastest way to keep your manager and your team aligned without booking another meeting. If you typed \"weekly report example\" into a search box, you most likely want something yo",
+        "contentFile": "weekly-report-example.html",
+        "url": "/article-pages/weekly-report-example.html",
+        "targetKeyword": "weekly report example",
+        "secondaryKeywords": [
+            "weekly report sample",
+            "weekly status report example",
+            "weekly report format"
+        ],
+        "internalLinks": [
+            "how-to-write-a-weekly-report",
+            "weekly-report-template",
+            "weekly-status-report"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1792069276756",
         "type": "blog",
         "title": "You Sent a 5-Page Update. They Read the First Sentence.",

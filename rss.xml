@@ -5,6 +5,48 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Engineering Said 'It's Complex.' You Nodded and Moved On.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1792155679570.html</link>
+    <description><![CDATA[It’s sprint planning. You present the next feature, the one sales has been asking for. The one that lit up your user interviews. Your tech lead squint...]]></description>
+    <pubDate>Fri, 16 Oct 2026 13:01:19 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Dependency Graph Is a Daisy Chain of Liability]]></title>
+    <link>https://goreportify.com/article-pages/news-1792155636450.html</link>
+    <description><![CDATA[The command is so automatic it’s muscle memory. An engineer types pip install new-library and hits enter. A cascade of text scrolls by, fetching not o...]]></description>
+    <pubDate>Fri, 16 Oct 2026 13:00:36 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Weekly Status Report: The Short Format for Fast Updates]]></title>
+    <link>https://goreportify.com/article-pages/blog-weekly-status-report.html</link>
+    <description><![CDATA[A weekly status report is the lean cousin of the full weekly update. Where a detailed report explains context and results, a status report gives a fast snapshot: where things stand, what changed, and ]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Weekly Report Template: A Practical Format You Can Copy Today]]></title>
+    <link>https://goreportify.com/article-pages/blog-weekly-report-template.html</link>
+    <description><![CDATA[If you have ever stared at a blank document on a Friday afternoon wondering what your manager actually wants to read, you are not alone. A good weekly report does not need to be long or clever. It nee]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Write a Monthly Report: Template and Examples]]></title>
+    <link>https://goreportify.com/article-pages/blog-how-to-write-a-monthly-report.html</link>
+    <description><![CDATA[A monthly report is where guessing stops and evidence begins. Done well, it shows what moved, what stalled, and what to do next — in a format your manager can scan in two minutes. This guide gives you]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Monthly Report Template That Saves You Hours]]></title>
+    <link>https://goreportify.com/article-pages/blog-monthly-report-template.html</link>
+    <description><![CDATA[A monthly report is where you step back from daily noise and show the trend. If you searched for a monthly report template, you probably have a deadline and a blank page. This page gives you a structu]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Weekly Report Example You Can Copy This Week]]></title>
+    <link>https://goreportify.com/article-pages/blog-weekly-report-example.html</link>
+    <description><![CDATA[A weekly report is the fastest way to keep your manager and your team aligned without booking another meeting. If you typed "weekly report example" into a search box, you most likely want something yo]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Sent a 5-Page Update. They Read the First Sentence.]]></title>
     <link>https://goreportify.com/article-pages/blog-1792069276756.html</link>
     <description><![CDATA[You spent three hours on it. You pulled the latest data, synthesized user feedback, and detailed every risk and dependency. The document was a masterp...]]></description>
@@ -261,48 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1790946045734.html</link>
     <description><![CDATA[Another engineer resigns. There’s the awkward conversation with their manager, the perfunctory HR meeting, the surrendering of a laptop. It’s a famili...]]></description>
     <pubDate>Fri, 02 Oct 2026 13:00:45 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Feature Flag Is Now a Moral Compass]]></title>
-    <link>https://goreportify.com/article-pages/news-1790946037456.html</link>
-    <description><![CDATA[The question hangs in the Slack channel, stripped of all technical jargon. "Are we flipping enable-proactive-sentiment-analysis for the support chats?...]]></description>
-    <pubDate>Fri, 02 Oct 2026 13:00:37 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Announced the Roadmap. Now You're Defending Every Feature]]></title>
-    <link>https://goreportify.com/article-pages/blog-1790859711145.html</link>
-    <description><![CDATA[You just finished walking through the Q3 roadmap. You feel good. The slides connect company goals to product themes to specific initiatives. It’s a lo...]]></description>
-    <pubDate>Thu, 01 Oct 2026 13:01:51 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Domain Expert Is Now a Prompt]]></title>
-    <link>https://goreportify.com/article-pages/news-1790859677723.html</link>
-    <description><![CDATA[It used to start with a walk. You’d leave your desk, cross the office, and stand awkwardly in the doorway of the one person who actually knew how the...]]></description>
-    <pubDate>Thu, 01 Oct 2026 13:01:17 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Built a Dashboard. Now You're a Full-Time Analyst.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1790859673591.html</link>
-    <description><![CDATA[It was glorious. You hit ‘share’ on the new self-serve dashboard, posted the link in three Slack channels, and leaned back. The beautiful charts shimm...]]></description>
-    <pubDate>Thu, 01 Oct 2026 13:01:13 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Bill of Materials Is a Rumor]]></title>
-    <link>https://goreportify.com/article-pages/news-1790859636781.html</link>
-    <description><![CDATA[The senior developer squints at the Jira ticket. The task is to integrate a new transcription model from a startup that’s barely a year old. He asks t...]]></description>
-    <pubDate>Thu, 01 Oct 2026 13:00:36 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Said 'This Is a High Priority.' So Were the Other Five Things.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1790773406068.html</link>
-    <description><![CDATA[It’s Tuesday standup. You’re trying to inject some energy into the team. “Okay, team, leadership is really excited about the new reporting export. It’...]]></description>
-    <pubDate>Wed, 30 Sep 2026 13:03:26 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Audit Trail Is Now a Folk Tale]]></title>
-    <link>https://goreportify.com/article-pages/news-1790773367707.html</link>
-    <description><![CDATA[An alert fires at 2 AM. A customer's account was flagged for fraud, their assets frozen. The engineer on call digs in. They pull the logs. They see th...]]></description>
-    <pubDate>Wed, 30 Sep 2026 13:02:47 GMT</pubDate>
   </item>
 </channel>
 </rss>
