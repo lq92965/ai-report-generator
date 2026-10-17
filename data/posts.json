@@ -1,5 +1,71 @@
 [
     {
+        "id": "1792242075592",
+        "type": "blog",
+        "title": "You Shipped the Feature. Now No One Knows How to Sell It.",
+        "category": "Deep Insights",
+        "date": "2026-10-17",
+        "author": "Alex Mercer",
+        "excerpt": "The deploy notification hits the engineering Slack channel. You see the green checkmark. It’s live. You post a quick “It’s shipped!” message in the ma...",
+        "contentFile": "blog-1792242075592.md"
+    },
+    {
+        "id": "1792242037448",
+        "type": "news",
+        "title": "The Hallucination Is Now a Scapegoat",
+        "category": "Tech Radar",
+        "date": "2026-10-17",
+        "author": "Marcus Webb",
+        "excerpt": "The lawyer stood before the judge, explaining that the chatbot made him do it. He had used the new AI research tool to prepare a brief, and it had, wi...",
+        "contentFile": "news-1792242037448.md"
+    },
+    {
+        "id": "monthly-status-report-format",
+        "type": "blog",
+        "title": "Monthly Status Report Format That Keeps Stakeholders Aligned",
+        "category": "Deep Insights",
+        "date": "2026-10-17",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A monthly status report lives or dies by its format. Stakeholders do not have time to hunt for the answer to \"is this project okay?\" A clean, repeatable format lets them scan in thirty seconds and tru",
+        "contentFile": "monthly-status-report-format.html",
+        "url": "/article-pages/monthly-status-report-format.html",
+        "targetKeyword": "monthly status report format",
+        "secondaryKeywords": [
+            "monthly status report template",
+            "status report example",
+            "monthly performance report"
+        ],
+        "internalLinks": [
+            "how-to-write-a-monthly-report",
+            "monthly-report-template",
+            "weekly-status-report"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "monthly-performance-report",
+        "type": "blog",
+        "title": "How to Write a Monthly Performance Report That Drives Decisions",
+        "category": "Deep Insights",
+        "date": "2026-10-17",
+        "author": "Reportify AI Editorial",
+        "excerpt": "If your team treats the monthly performance report as a box to tick, you are leaving real value on the table. A good report turns a month of scattered activity into a clear story about what moved the ",
+        "contentFile": "monthly-performance-report.html",
+        "url": "/article-pages/monthly-performance-report.html",
+        "targetKeyword": "monthly performance report",
+        "secondaryKeywords": [
+            "monthly performance report template",
+            "performance report example",
+            "how to write a monthly report"
+        ],
+        "internalLinks": [
+            "how-to-write-a-monthly-report",
+            "monthly-report-template",
+            "weekly-report-template"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1792155679570",
         "type": "blog",
         "title": "Engineering Said 'It's Complex.' You Nodded and Moved On.",

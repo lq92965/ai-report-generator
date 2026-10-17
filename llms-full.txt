@@ -15,6 +15,18 @@
 
 ## All Articles
 
+- [You Shipped the Feature. Now No One Knows How to Sell It.](https://goreportify.com/article-pages/blog-1792242075592.html)
+  - Type: Deep Insights | Date: 2026-10-17 | Author: Alex Mercer
+  - The deploy notification hits the engineering Slack channel. You see the green checkmark. It’s live. You post a quick “It’s shipped!” message in the ma...
+- [The Hallucination Is Now a Scapegoat](https://goreportify.com/article-pages/news-1792242037448.html)
+  - Type: Tech Radar | Date: 2026-10-17 | Author: Marcus Webb
+  - The lawyer stood before the judge, explaining that the chatbot made him do it. He had used the new AI research tool to prepare a brief, and it had, wi...
+- [Monthly Status Report Format That Keeps Stakeholders Aligned](https://goreportify.com/article-pages/blog-monthly-status-report-format.html)
+  - Type: Deep Insights | Date: 2026-10-17 | Author: Reportify AI Editorial
+  - A monthly status report lives or dies by its format. Stakeholders do not have time to hunt for the answer to "is this project okay?" A clean, repeatable format lets them scan in thirty seconds and tru
+- [How to Write a Monthly Performance Report That Drives Decisions](https://goreportify.com/article-pages/blog-monthly-performance-report.html)
+  - Type: Deep Insights | Date: 2026-10-17 | Author: Reportify AI Editorial
+  - If your team treats the monthly performance report as a box to tick, you are leaving real value on the table. A good report turns a month of scattered activity into a clear story about what moved the 
 - [Engineering Said 'It's Complex.' You Nodded and Moved On.](https://goreportify.com/article-pages/blog-1792155679570.html)
   - Type: Deep Insights | Date: 2026-10-16 | Author: Sarah Jenkins
   - It’s sprint planning. You present the next feature, the one sales has been asking for. The one that lit up your user interviews. Your tech lead squint...
@@ -2538,4 +2550,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 835 articles (443 blog + 392 news) + 8 core pages._
+_Total: 839 articles (446 blog + 393 news) + 8 core pages._

@@ -5,6 +5,30 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Shipped the Feature. Now No One Knows How to Sell It.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1792242075592.html</link>
+    <description><![CDATA[The deploy notification hits the engineering Slack channel. You see the green checkmark. It’s live. You post a quick “It’s shipped!” message in the ma...]]></description>
+    <pubDate>Sat, 17 Oct 2026 13:01:15 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Hallucination Is Now a Scapegoat]]></title>
+    <link>https://goreportify.com/article-pages/news-1792242037448.html</link>
+    <description><![CDATA[The lawyer stood before the judge, explaining that the chatbot made him do it. He had used the new AI research tool to prepare a brief, and it had, wi...]]></description>
+    <pubDate>Sat, 17 Oct 2026 13:00:37 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Monthly Status Report Format That Keeps Stakeholders Aligned]]></title>
+    <link>https://goreportify.com/article-pages/blog-monthly-status-report-format.html</link>
+    <description><![CDATA[A monthly status report lives or dies by its format. Stakeholders do not have time to hunt for the answer to "is this project okay?" A clean, repeatable format lets them scan in thirty seconds and tru]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Write a Monthly Performance Report That Drives Decisions]]></title>
+    <link>https://goreportify.com/article-pages/blog-monthly-performance-report.html</link>
+    <description><![CDATA[If your team treats the monthly performance report as a box to tick, you are leaving real value on the table. A good report turns a month of scattered activity into a clear story about what moved the ]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Engineering Said 'It's Complex.' You Nodded and Moved On.]]></title>
     <link>https://goreportify.com/article-pages/blog-1792155679570.html</link>
     <description><![CDATA[It’s sprint planning. You present the next feature, the one sales has been asking for. The one that lit up your user interviews. Your tech lead squint...]]></description>
@@ -279,30 +303,6 @@
     <link>https://goreportify.com/article-pages/blog-1791032463178.html</link>
     <description><![CDATA[You walk into the weekly leadership sync, deck loaded. For the past four days, you’ve been deep in the data, pulling logs, joining tables, and wrestli...]]></description>
     <pubDate>Sat, 03 Oct 2026 13:01:03 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Long-Term Support Is a Ghost Story]]></title>
-    <link>https://goreportify.com/article-pages/news-1791032428791.html</link>
-    <description><![CDATA[The email arrives at 11:37 PM. It’s an automated notification about a critical dependency, some open-source library that props up half the company’s i...]]></description>
-    <pubDate>Sat, 03 Oct 2026 13:00:28 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Explained the Tech Debt. They Heard 'We're Not Shipping Features.']]></title>
-    <link>https://goreportify.com/article-pages/blog-1790946075096.html</link>
-    <description><![CDATA[You’re in the quarterly planning meeting, walking through the roadmap. It’s going well until you get to the big one. “For Q3,” you say, “we need to pr...]]></description>
-    <pubDate>Fri, 02 Oct 2026 13:01:15 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The AI Wrote Your PRD. Now Engineering Is Asking You to Explain It.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1790946067112.html</link>
-    <description><![CDATA[The kickoff meeting was going smoothly. You pasted the AI-generated Product Requirements Document into Confluence, and it looked perfect. The sections...]]></description>
-    <pubDate>Fri, 02 Oct 2026 13:01:07 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Exit Interview Is Now a Data Breach]]></title>
-    <link>https://goreportify.com/article-pages/news-1790946045734.html</link>
-    <description><![CDATA[Another engineer resigns. There’s the awkward conversation with their manager, the perfunctory HR meeting, the surrendering of a laptop. It’s a famili...]]></description>
-    <pubDate>Fri, 02 Oct 2026 13:00:45 GMT</pubDate>
   </item>
 </channel>
 </rss>
