@@ -1,5 +1,71 @@
 [
     {
+        "id": "1792328473500",
+        "type": "blog",
+        "title": "You Spent the Day Forwarding Emails. You Weren't a PM, You Were a Postmaster.",
+        "category": "Deep Insights",
+        "date": "2026-10-18",
+        "author": "Michael Chen",
+        "excerpt": "It’s 6 PM. You close your laptop, and your brain feels like a dial-up modem trying to load a 4K video. You were busy. Non-stop. You answered 47 Slack...",
+        "contentFile": "blog-1792328473500.md"
+    },
+    {
+        "id": "1792328436238",
+        "type": "news",
+        "title": "The Technical Debt Is Now Collateral",
+        "category": "Tech Radar",
+        "date": "2026-10-18",
+        "author": "Olivia Thorne",
+        "excerpt": "The engineering lead’s mouse hovers over the “merge” button. It’s 10 p.m. on a Tuesday. In the Slack channel, a product manager is waiting with a sing...",
+        "contentFile": "news-1792328436238.md"
+    },
+    {
+        "id": "project-status-report-template",
+        "type": "blog",
+        "title": "Project Status Report Template You Can Copy Today",
+        "category": "Deep Insights",
+        "date": "2026-10-18",
+        "author": "Reportify AI Editorial",
+        "excerpt": "Finding the right project status report template should take five minutes, not an afternoon. Most teams overbuild the first version and then abandon it because it is too heavy to fill in weekly. This ",
+        "contentFile": "project-status-report-template.html",
+        "url": "/article-pages/project-status-report-template.html",
+        "targetKeyword": "project status report template",
+        "secondaryKeywords": [
+            "how to write a project status report",
+            "project status update example",
+            "weekly report template"
+        ],
+        "internalLinks": [
+            "how-to-write-a-project-status-report",
+            "how-to-write-a-weekly-report",
+            "monthly-status-report-format"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "how-to-write-a-project-status-report",
+        "type": "blog",
+        "title": "How to Write a Project Status Report Stakeholders Actually Read",
+        "category": "Deep Insights",
+        "date": "2026-10-18",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A project status report is the single document that decides whether your project gets more support or more scrutiny. Write it well and stakeholders trust you with autonomy. Write it poorly and every s",
+        "contentFile": "how-to-write-a-project-status-report.html",
+        "url": "/article-pages/how-to-write-a-project-status-report.html",
+        "targetKeyword": "how to write a project status report",
+        "secondaryKeywords": [
+            "project status report template",
+            "project status update example",
+            "weekly status report"
+        ],
+        "internalLinks": [
+            "how-to-write-a-weekly-report",
+            "how-to-write-a-monthly-report",
+            "monthly-status-report-format"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1792242075592",
         "type": "blog",
         "title": "You Shipped the Feature. Now No One Knows How to Sell It.",
