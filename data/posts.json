@@ -1,5 +1,65 @@
 [
     {
+        "id": "1792414996783",
+        "type": "blog",
+        "title": "You Have to Tell Your CEO the Launch Is Delayed",
+        "category": "Deep Insights",
+        "date": "2026-10-19",
+        "author": "Alex Mercer",
+        "excerpt": "The Slack notification from your engineering lead lands with a thud. \"Got a minute? We found something in staging.\" Your stomach sinks. You know what...",
+        "contentFile": "blog-1792414996783.md"
+    },
+    {
+        "id": "1792414959528",
+        "type": "news",
+        "title": "The Environment Variable Is Now a State Secret",
+        "category": "Tech Radar",
+        "date": "2026-10-19",
+        "author": "Marcus Webb",
+        "excerpt": "It used to be simple. A developer would check a config.ini file into source control, a file holding the database password in plain text, and nobody ba...",
+        "contentFile": "news-1792414959528.md"
+    },
+    {
+        "id": "1792414890395",
+        "type": "blog",
+        "title": "You're Reading 100 Support Tickets. The AI Found the Pattern in 10.",
+        "category": "Deep Insights",
+        "date": "2026-10-19",
+        "author": "Sarah Jenkins",
+        "excerpt": "It’s 10 AM on Tuesday. You just launched a redesigned checkout flow. Now you’re staring at the support queue. The ticket count ticks up: 47, 58, 71. Y...",
+        "contentFile": "blog-1792414890395.md"
+    },
+    {
+        "id": "1792414844243",
+        "type": "news",
+        "title": "The Unit Test Is Now an Alibi",
+        "category": "Tech Radar",
+        "date": "2026-10-19",
+        "author": "Olivia Thorne",
+        "excerpt": "The pull request is blocked. Not by a colleague with a question, but by an automated gatekeeper demanding tribute. The price: one more unit test to nu...",
+        "contentFile": "news-1792414844243.md"
+    },
+    {
+        "id": "1792404322195",
+        "type": "blog",
+        "title": "You're a Product Manager, Not a Short-Order Cook for Feature Requests",
+        "category": "Deep Insights",
+        "date": "2026-10-19",
+        "author": "David Sterling",
+        "excerpt": "The Slack notification pops up. It’s the head of sales. “Quick question. Can we get a button on the dashboard that exports to a purple CSV? Big deal o...",
+        "contentFile": "blog-1792404322195.md"
+    },
+    {
+        "id": "1792404282530",
+        "type": "news",
+        "title": "The A/B Test Is Now Plausible Deniability",
+        "category": "Tech Radar",
+        "date": "2026-10-19",
+        "author": "Marcus Webb",
+        "excerpt": "The dashboard glows in the Tuesday morning stand-up. On the left, a button, soft blue: \"See Our Plans.\" On the right, the challenger, urgent orange: \"...",
+        "contentFile": "news-1792404282530.md"
+    },
+    {
         "id": "1792328473500",
         "type": "blog",
         "title": "You Spent the Day Forwarding Emails. You Weren't a PM, You Were a Postmaster.",

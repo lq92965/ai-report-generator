@@ -5,6 +5,42 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Have to Tell Your CEO the Launch Is Delayed]]></title>
+    <link>https://goreportify.com/article-pages/blog-1792414996783.html</link>
+    <description><![CDATA[The Slack notification from your engineering lead lands with a thud. "Got a minute? We found something in staging." Your stomach sinks. You know what...]]></description>
+    <pubDate>Mon, 19 Oct 2026 13:03:16 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Environment Variable Is Now a State Secret]]></title>
+    <link>https://goreportify.com/article-pages/news-1792414959528.html</link>
+    <description><![CDATA[It used to be simple. A developer would check a config.ini file into source control, a file holding the database password in plain text, and nobody ba...]]></description>
+    <pubDate>Mon, 19 Oct 2026 13:02:39 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[You're Reading 100 Support Tickets. The AI Found the Pattern in 10.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1792414890395.html</link>
+    <description><![CDATA[It’s 10 AM on Tuesday. You just launched a redesigned checkout flow. Now you’re staring at the support queue. The ticket count ticks up: 47, 58, 71. Y...]]></description>
+    <pubDate>Mon, 19 Oct 2026 13:01:30 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Unit Test Is Now an Alibi]]></title>
+    <link>https://goreportify.com/article-pages/news-1792414844243.html</link>
+    <description><![CDATA[The pull request is blocked. Not by a colleague with a question, but by an automated gatekeeper demanding tribute. The price: one more unit test to nu...]]></description>
+    <pubDate>Mon, 19 Oct 2026 13:00:44 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[You're a Product Manager, Not a Short-Order Cook for Feature Requests]]></title>
+    <link>https://goreportify.com/article-pages/blog-1792404322195.html</link>
+    <description><![CDATA[The Slack notification pops up. It’s the head of sales. “Quick question. Can we get a button on the dashboard that exports to a purple CSV? Big deal o...]]></description>
+    <pubDate>Mon, 19 Oct 2026 10:05:22 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The A/B Test Is Now Plausible Deniability]]></title>
+    <link>https://goreportify.com/article-pages/news-1792404282530.html</link>
+    <description><![CDATA[The dashboard glows in the Tuesday morning stand-up. On the left, a button, soft blue: "See Our Plans." On the right, the challenger, urgent orange: "...]]></description>
+    <pubDate>Mon, 19 Oct 2026 10:04:42 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Spent the Day Forwarding Emails. You Weren't a PM, You Were a Postmaster.]]></title>
     <link>https://goreportify.com/article-pages/blog-1792328473500.html</link>
     <description><![CDATA[It’s 6 PM. You close your laptop, and your brain feels like a dial-up modem trying to load a 4K video. You were busy. Non-stop. You answered 47 Slack...]]></description>
@@ -267,42 +303,6 @@
     <link>https://goreportify.com/article-pages/blog-1791291672734.html</link>
     <description><![CDATA[You shared your screen. The dashboard glowed with green arrows pointing up. Engagement, up 7%. Daily active users, up 4%. Conversion for the new featu...]]></description>
     <pubDate>Tue, 06 Oct 2026 13:01:12 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Proof-of-Concept Is a Hostage Video]]></title>
-    <link>https://goreportify.com/article-pages/news-1791291638669.html</link>
-    <description><![CDATA[The air in the conference room is thin. An engineer shares their screen, cursor trembling over a single text input box. The entire executive team is w...]]></description>
-    <pubDate>Tue, 06 Oct 2026 13:00:38 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Asked Stakeholders for Input. You Got a Scavenger Hunt.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1791205282879.html</link>
-    <description><![CDATA[It’s 4 PM on a Tuesday. You’re trying to lock down the requirements for the new billing page. You have a vague memory of the Head of Sales mentioning...]]></description>
-    <pubDate>Mon, 05 Oct 2026 13:01:22 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The AI Generated Your User Persona. Now You're Building for a Robot.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1791205280752.html</link>
-    <description><![CDATA[You fed 20 user interview transcripts into the AI and asked for a primary user persona. Ten seconds later, it was done. "Meet 'Strategic Sarah,' a 32-...]]></description>
-    <pubDate>Mon, 05 Oct 2026 13:01:20 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The `requirements.txt` Is a Chain Letter]]></title>
-    <link>https://goreportify.com/article-pages/news-1791205247346.html</link>
-    <description><![CDATA[It started with a 500-millisecond lag. A Microsoft developer, Andres Freund, noticed his SSH connections were fractionally slower than they should be....]]></description>
-    <pubDate>Mon, 05 Oct 2026 13:00:47 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Deprecation Notice Is a Footnote]]></title>
-    <link>https://goreportify.com/article-pages/news-1791205236526.html</link>
-    <description><![CDATA[The alert fired at 3:17 AM. A cascade of failures lit up the dashboard, all stemming from a single, critical API endpoint. The service status page for...]]></description>
-    <pubDate>Mon, 05 Oct 2026 13:00:36 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Quick Slack Question Spawned a 3-Day Debate]]></title>
-    <link>https://goreportify.com/article-pages/blog-1791118929719.html</link>
-    <description><![CDATA[It started innocently enough. You dropped a screenshot into the main engineering channel with a casual, “Quick gut check: does this new checkout flow...]]></description>
-    <pubDate>Sun, 04 Oct 2026 13:02:09 GMT</pubDate>
   </item>
 </channel>
 </rss>

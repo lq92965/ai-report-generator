@@ -15,6 +15,24 @@
 
 ## All Articles
 
+- [You Have to Tell Your CEO the Launch Is Delayed](https://goreportify.com/article-pages/blog-1792414996783.html)
+  - Type: Deep Insights | Date: 2026-10-19 | Author: Alex Mercer
+  - The Slack notification from your engineering lead lands with a thud. "Got a minute? We found something in staging." Your stomach sinks. You know what...
+- [The Environment Variable Is Now a State Secret](https://goreportify.com/article-pages/news-1792414959528.html)
+  - Type: Tech Radar | Date: 2026-10-19 | Author: Marcus Webb
+  - It used to be simple. A developer would check a config.ini file into source control, a file holding the database password in plain text, and nobody ba...
+- [You're Reading 100 Support Tickets. The AI Found the Pattern in 10.](https://goreportify.com/article-pages/blog-1792414890395.html)
+  - Type: Deep Insights | Date: 2026-10-19 | Author: Sarah Jenkins
+  - It’s 10 AM on Tuesday. You just launched a redesigned checkout flow. Now you’re staring at the support queue. The ticket count ticks up: 47, 58, 71. Y...
+- [The Unit Test Is Now an Alibi](https://goreportify.com/article-pages/news-1792414844243.html)
+  - Type: Tech Radar | Date: 2026-10-19 | Author: Olivia Thorne
+  - The pull request is blocked. Not by a colleague with a question, but by an automated gatekeeper demanding tribute. The price: one more unit test to nu...
+- [You're a Product Manager, Not a Short-Order Cook for Feature Requests](https://goreportify.com/article-pages/blog-1792404322195.html)
+  - Type: Deep Insights | Date: 2026-10-19 | Author: David Sterling
+  - The Slack notification pops up. It’s the head of sales. “Quick question. Can we get a button on the dashboard that exports to a purple CSV? Big deal o...
+- [The A/B Test Is Now Plausible Deniability](https://goreportify.com/article-pages/news-1792404282530.html)
+  - Type: Tech Radar | Date: 2026-10-19 | Author: Marcus Webb
+  - The dashboard glows in the Tuesday morning stand-up. On the left, a button, soft blue: "See Our Plans." On the right, the challenger, urgent orange: "...
 - [You Spent the Day Forwarding Emails. You Weren't a PM, You Were a Postmaster.](https://goreportify.com/article-pages/blog-1792328473500.html)
   - Type: Deep Insights | Date: 2026-10-18 | Author: Michael Chen
   - It’s 6 PM. You close your laptop, and your brain feels like a dial-up modem trying to load a 4K video. You were busy. Non-stop. You answered 47 Slack...
@@ -2562,4 +2580,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 843 articles (449 blog + 394 news) + 8 core pages._
+_Total: 849 articles (452 blog + 397 news) + 8 core pages._
