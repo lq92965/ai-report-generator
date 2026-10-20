@@ -1,5 +1,97 @@
 [
     {
+        "id": "project-status-update-example",
+        "type": "blog",
+        "title": "How to Write a Project Status Update (With a Real Example)",
+        "category": "Deep Insights",
+        "date": "2026-10-19",
+        "author": "Reportify AI Editorial",
+        "excerpt": "If you searched for a project status update example, you probably have a deadline and a manager waiting. This guide gives you a fill-in template and a complete worked example so you can send a clear u",
+        "contentFile": "project-status-update-example.html",
+        "url": "/article-pages/project-status-update-example.html",
+        "targetKeyword": "project status update example",
+        "secondaryKeywords": [
+            "project status update sample",
+            "project update email example",
+            "short project status update"
+        ],
+        "internalLinks": [
+            "how-to-write-a-project-status-report",
+            "project-status-report-template",
+            "weekly-status-report"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "first-1-on-1-meeting-questions",
+        "type": "blog",
+        "title": "First 1 on 1 Meeting Questions: How to Start a Manager Relationship Right",
+        "category": "Deep Insights",
+        "date": "2026-10-20",
+        "author": "Reportify AI Editorial",
+        "excerpt": "Your first 1 on 1 meeting questions set the tone for the entire working relationship. The opening conversation is where trust is built or lost, and you do not get a second chance at a first impression",
+        "contentFile": "first-1-on-1-meeting-questions.html",
+        "url": "/article-pages/first-1-on-1-meeting-questions.html",
+        "targetKeyword": "first 1 on 1 meeting questions",
+        "secondaryKeywords": [
+            "first one on one meeting",
+            "questions for first 1 on 1 with manager",
+            "first 1:1 meeting questions"
+        ],
+        "internalLinks": [
+            "one-on-one-meeting-agenda",
+            "one-on-one-meeting-questions",
+            "weekly-report-template"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "one-on-one-meeting-agenda",
+        "type": "blog",
+        "title": "How to Build a One on One Meeting Agenda That Actually Works",
+        "category": "Deep Insights",
+        "date": "2026-10-19",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A one on one meeting agenda is not a calendar invite with a title. It is the short list of topics you and your manager (or your report) work through together, usually for 25 to 50 minutes, on a regula",
+        "contentFile": "one-on-one-meeting-agenda.html",
+        "url": "/article-pages/one-on-one-meeting-agenda.html",
+        "targetKeyword": "one on one meeting agenda",
+        "secondaryKeywords": [
+            "1 on 1 meeting agenda",
+            "manager one on one template",
+            "weekly one on one agenda"
+        ],
+        "internalLinks": [
+            "one-on-one-meeting-questions",
+            "first-1-on-1-meeting-questions",
+            "how-to-write-a-weekly-report"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "one-on-one-meeting-questions",
+        "type": "blog",
+        "title": "One on One Meeting Questions That Actually Move the Work Forward",
+        "category": "Deep Insights",
+        "date": "2026-10-20",
+        "author": "Reportify AI Editorial",
+        "excerpt": "If you are looking for one on one meeting questions that do more than fill 30 minutes, you are in the right place. A one on one is the most useful meeting most managers underuse. It is the only recurr",
+        "contentFile": "one-on-one-meeting-questions.html",
+        "url": "/article-pages/one-on-one-meeting-questions.html",
+        "targetKeyword": "one on one meeting questions",
+        "secondaryKeywords": [
+            "good one on one questions",
+            "one on one questions to ask your manager",
+            "manager one on one questions"
+        ],
+        "internalLinks": [
+            "one-on-one-meeting-agenda",
+            "weekly-report-template",
+            "how-to-write-a-project-status-report"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1792414996783",
         "type": "blog",
         "title": "You Have to Tell Your CEO the Launch Is Delayed",
