@@ -5,6 +5,48 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Didn't Say 'No.' You Showed Them the Trade-Offs.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1792501272592.html</link>
+    <description><![CDATA[The request comes in on a Tuesday afternoon. It’s from the Head of Sales, and it’s an “urgent” one. A huge potential client loves the product but need...]]></description>
+    <pubDate>Tue, 20 Oct 2026 13:01:12 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Error Message Is Now a Gaslight]]></title>
+    <link>https://goreportify.com/article-pages/news-1792501269481.html</link>
+    <description><![CDATA[You did everything right. You filled out the form, triple-checked the account number, and clicked "Submit." A grey box bloomed on the screen. "Somethi...]]></description>
+    <pubDate>Tue, 20 Oct 2026 13:01:09 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Import Statement Is Now an Invitation]]></title>
+    <link>https://goreportify.com/article-pages/news-1792501234539.html</link>
+    <description><![CDATA[The line is typed without thinking. import pandas. require('left-pad'). It’s muscle memory, the modern equivalent of a carpenter reaching for a famili...]]></description>
+    <pubDate>Tue, 20 Oct 2026 13:00:34 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Write a Project Status Update (With a Real Example)]]></title>
+    <link>https://goreportify.com/article-pages/blog-project-status-update-example.html</link>
+    <description><![CDATA[If you searched for a project status update example, you probably have a deadline and a manager waiting. This guide gives you a fill-in template and a complete worked example so you can send a clear u]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[First 1 on 1 Meeting Questions: How to Start a Manager Relationship Right]]></title>
+    <link>https://goreportify.com/article-pages/blog-first-1-on-1-meeting-questions.html</link>
+    <description><![CDATA[Your first 1 on 1 meeting questions set the tone for the entire working relationship. The opening conversation is where trust is built or lost, and you do not get a second chance at a first impression]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Build a One on One Meeting Agenda That Actually Works]]></title>
+    <link>https://goreportify.com/article-pages/blog-one-on-one-meeting-agenda.html</link>
+    <description><![CDATA[A one on one meeting agenda is not a calendar invite with a title. It is the short list of topics you and your manager (or your report) work through together, usually for 25 to 50 minutes, on a regula]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[One on One Meeting Questions That Actually Move the Work Forward]]></title>
+    <link>https://goreportify.com/article-pages/blog-one-on-one-meeting-questions.html</link>
+    <description><![CDATA[If you are looking for one on one meeting questions that do more than fill 30 minutes, you are in the right place. A one on one is the most useful meeting most managers underuse. It is the only recurr]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Have to Tell Your CEO the Launch Is Delayed]]></title>
     <link>https://goreportify.com/article-pages/blog-1792414996783.html</link>
     <description><![CDATA[The Slack notification from your engineering lead lands with a thud. "Got a minute? We found something in staging." Your stomach sinks. You know what...]]></description>
@@ -261,48 +303,6 @@
     <link>https://goreportify.com/article-pages/blog-1791464461229.html</link>
     <description><![CDATA[It’s 3 PM on a Tuesday. A new engineer on your team posts in the main Slack channel: “Hey, quick question—why are we using a third-party service for n...]]></description>
     <pubDate>Thu, 08 Oct 2026 13:01:01 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Dataset Is a Colonial Map]]></title>
-    <link>https://goreportify.com/article-pages/news-1791464459011.html</link>
-    <description><![CDATA[A developer sits in a dark room, the monitor’s glow illuminating their face. With a few keystrokes, a command is sent: load_dataset('c4'). Terabytes o...]]></description>
-    <pubDate>Thu, 08 Oct 2026 13:00:59 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Idle Process Is Now a Day Trader]]></title>
-    <link>https://goreportify.com/article-pages/news-1791464428931.html</link>
-    <description><![CDATA[Your laptop fan is screaming. You’re just staring at a document, maybe typing a sentence or two, but the machine is hot to the touch and the battery i...]]></description>
-    <pubDate>Thu, 08 Oct 2026 13:00:28 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Can't Measure the Impact Because You Didn't Instrument the Feature]]></title>
-    <link>https://goreportify.com/article-pages/blog-1791378078083.html</link>
-    <description><![CDATA[The demo went perfectly. The feature shipped on time. You’re in the monthly business review, and your slide shows a healthy spike in clicks on the new...]]></description>
-    <pubDate>Wed, 07 Oct 2026 13:01:18 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Shared the 'Final' Deck. You Should Have Shared the Messy Doc.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1791378073990.html</link>
-    <description><![CDATA[You walk into the quarterly review. Your deck is clean, the narrative is tight, and the mockups are beautiful. You spent the last two weeks polishing...]]></description>
-    <pubDate>Wed, 07 Oct 2026 13:01:13 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Data Lake Is a Time Bomb]]></title>
-    <link>https://goreportify.com/article-pages/news-1791378043323.html</link>
-    <description><![CDATA[The dashboards glow with the soft, reassuring hum of accumulation. Petabytes ingested. Zettabytes under management. The data engineering team presents...]]></description>
-    <pubDate>Wed, 07 Oct 2026 13:00:43 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Cloud Service Is a Company Town]]></title>
-    <link>https://goreportify.com/article-pages/news-1791378030182.html</link>
-    <description><![CDATA[The email arrives on a Tuesday morning, not with the klaxon of a security alert, but with the quiet finality of an accounting memo. A service that was...]]></description>
-    <pubDate>Wed, 07 Oct 2026 13:00:30 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your Report Showed the Metrics. It Didn't Tell the Story.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1791291672734.html</link>
-    <description><![CDATA[You shared your screen. The dashboard glowed with green arrows pointing up. Engagement, up 7%. Daily active users, up 4%. Conversion for the new featu...]]></description>
-    <pubDate>Tue, 06 Oct 2026 13:01:12 GMT</pubDate>
   </item>
 </channel>
 </rss>

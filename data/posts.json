@@ -1,5 +1,35 @@
 [
     {
+        "id": "1792501272592",
+        "type": "blog",
+        "title": "You Didn't Say 'No.' You Showed Them the Trade-Offs.",
+        "category": "Deep Insights",
+        "date": "2026-10-20",
+        "author": "Alex Mercer",
+        "excerpt": "The request comes in on a Tuesday afternoon. It’s from the Head of Sales, and it’s an “urgent” one. A huge potential client loves the product but need...",
+        "contentFile": "blog-1792501272592.md"
+    },
+    {
+        "id": "1792501269481",
+        "type": "news",
+        "title": "The Error Message Is Now a Gaslight",
+        "category": "Tech Radar",
+        "date": "2026-10-20",
+        "author": "Michael Chen",
+        "excerpt": "You did everything right. You filled out the form, triple-checked the account number, and clicked \"Submit.\" A grey box bloomed on the screen. \"Somethi...",
+        "contentFile": "news-1792501269481.md"
+    },
+    {
+        "id": "1792501234539",
+        "type": "news",
+        "title": "The Import Statement Is Now an Invitation",
+        "category": "Tech Radar",
+        "date": "2026-10-20",
+        "author": "Alex Mercer",
+        "excerpt": "The line is typed without thinking. import pandas. require('left-pad'). It’s muscle memory, the modern equivalent of a carpenter reaching for a famili...",
+        "contentFile": "news-1792501234539.md"
+    },
+    {
         "id": "project-status-update-example",
         "type": "blog",
         "title": "How to Write a Project Status Update (With a Real Example)",

@@ -15,6 +15,27 @@
 
 ## All Articles
 
+- [You Didn't Say 'No.' You Showed Them the Trade-Offs.](https://goreportify.com/article-pages/blog-1792501272592.html)
+  - Type: Deep Insights | Date: 2026-10-20 | Author: Alex Mercer
+  - The request comes in on a Tuesday afternoon. It’s from the Head of Sales, and it’s an “urgent” one. A huge potential client loves the product but need...
+- [The Error Message Is Now a Gaslight](https://goreportify.com/article-pages/news-1792501269481.html)
+  - Type: Tech Radar | Date: 2026-10-20 | Author: Michael Chen
+  - You did everything right. You filled out the form, triple-checked the account number, and clicked "Submit." A grey box bloomed on the screen. "Somethi...
+- [The Import Statement Is Now an Invitation](https://goreportify.com/article-pages/news-1792501234539.html)
+  - Type: Tech Radar | Date: 2026-10-20 | Author: Alex Mercer
+  - The line is typed without thinking. import pandas. require('left-pad'). It’s muscle memory, the modern equivalent of a carpenter reaching for a famili...
+- [How to Write a Project Status Update (With a Real Example)](https://goreportify.com/article-pages/blog-project-status-update-example.html)
+  - Type: Deep Insights | Date: 2026-10-19 | Author: Reportify AI Editorial
+  - If you searched for a project status update example, you probably have a deadline and a manager waiting. This guide gives you a fill-in template and a complete worked example so you can send a clear u
+- [First 1 on 1 Meeting Questions: How to Start a Manager Relationship Right](https://goreportify.com/article-pages/blog-first-1-on-1-meeting-questions.html)
+  - Type: Deep Insights | Date: 2026-10-20 | Author: Reportify AI Editorial
+  - Your first 1 on 1 meeting questions set the tone for the entire working relationship. The opening conversation is where trust is built or lost, and you do not get a second chance at a first impression
+- [How to Build a One on One Meeting Agenda That Actually Works](https://goreportify.com/article-pages/blog-one-on-one-meeting-agenda.html)
+  - Type: Deep Insights | Date: 2026-10-19 | Author: Reportify AI Editorial
+  - A one on one meeting agenda is not a calendar invite with a title. It is the short list of topics you and your manager (or your report) work through together, usually for 25 to 50 minutes, on a regula
+- [One on One Meeting Questions That Actually Move the Work Forward](https://goreportify.com/article-pages/blog-one-on-one-meeting-questions.html)
+  - Type: Deep Insights | Date: 2026-10-20 | Author: Reportify AI Editorial
+  - If you are looking for one on one meeting questions that do more than fill 30 minutes, you are in the right place. A one on one is the most useful meeting most managers underuse. It is the only recurr
 - [You Have to Tell Your CEO the Launch Is Delayed](https://goreportify.com/article-pages/blog-1792414996783.html)
   - Type: Deep Insights | Date: 2026-10-19 | Author: Alex Mercer
   - The Slack notification from your engineering lead lands with a thud. "Got a minute? We found something in staging." Your stomach sinks. You know what...
@@ -2580,4 +2601,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 849 articles (452 blog + 397 news) + 8 core pages._
+_Total: 856 articles (457 blog + 399 news) + 8 core pages._
