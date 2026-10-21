@@ -5,6 +5,42 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Described a Pothole. Engineering Designed a Suspension Bridge.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1792587708124.html</link>
+    <description><![CDATA[You’re in the sprint planning meeting. You’ve just finished presenting a clear, well-researched user problem: customers are struggling to find the "ex...]]></description>
+    <pubDate>Wed, 21 Oct 2026 13:01:48 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[You Presented the Data. You Forgot the Recommendation.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1792587677696.html</link>
+    <description><![CDATA[The metrics review meeting is on the calendar. You spent three hours pulling data, triple-checking queries, and arranging it all in a beautiful dashbo...]]></description>
+    <pubDate>Wed, 21 Oct 2026 13:01:17 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Waitlist Is Now a Political Primary]]></title>
+    <link>https://goreportify.com/article-pages/news-1792587667798.html</link>
+    <description><![CDATA[You see the link on Twitter. The next big thing. A new AI-powered design tool, a social network that promises to be different, a productivity app that...]]></description>
+    <pubDate>Wed, 21 Oct 2026 13:01:07 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Telemetry Is a Wiretap]]></title>
+    <link>https://goreportify.com/article-pages/news-1792587640867.html</link>
+    <description><![CDATA[A product manager watches a session replay. A user’s mouse cursor jitters across the screen, hesitating over a button, then darting away. The user typ...]]></description>
+    <pubDate>Wed, 21 Oct 2026 13:00:40 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Status Update Email to Manager: How to Write One That Gets Read]]></title>
+    <link>https://goreportify.com/article-pages/blog-status-update-email-to-manager.html</link>
+    <description><![CDATA[A status update email to your manager is a brief, written check-in that keeps them informed without a meeting. It is the fastest way to answer the question every manager asks silently: are we okay, or]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Progress Report Template: A Simple Format You Can Copy Today]]></title>
+    <link>https://goreportify.com/article-pages/blog-progress-report-template.html</link>
+    <description><![CDATA[A progress report is a short document that tells stakeholders where a project, task, or team stands at a specific point in time. Unlike a status meeting or a long memo, it works as a written snapshot:]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Your 'Decision' Meeting Ended With 'Let's Take This]]></title>
     <link>https://goreportify.com/article-pages/blog-1792501306688.html</link>
     <description><![CDATA[The calendar invite was clear: “Decision Meeting: Q3 Pricing Model.” You booked the conference room for a full hour. You invited the VP of Sales, the...]]></description>
@@ -267,42 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1791637364974.html</link>
     <description><![CDATA[The download finishes. A developer, hunched over a laptop in a quiet room, unzips the file. Inside are the weights for a new foundation model, a multi...]]></description>
     <pubDate>Sat, 10 Oct 2026 13:02:44 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Launched the Feature. Now Marketing Is Asking What It Does.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1791637274448.html</link>
-    <description><![CDATA[The demo went perfectly. The engineering team is taking a well-deserved victory lap in the releases Slack channel. You just shipped a feature that sol...]]></description>
-    <pubDate>Sat, 10 Oct 2026 13:01:14 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Changelog Is Now a Séance]]></title>
-    <link>https://goreportify.com/article-pages/news-1791637244927.html</link>
-    <description><![CDATA[An engineer in Austin wakes up to a flood of alerts. The customer service bot his team maintains, a thin wrapper around a major large language model,...]]></description>
-    <pubDate>Sat, 10 Oct 2026 13:00:44 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Marketing Says 10k Signups. Product Says 2k. You Need a Single Source of Truth.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1791550873133.html</link>
-    <description><![CDATA[It’s Monday morning. You’re in the weekly business review, walking everyone through last week’s performance. You put up a slide showing 2,000 new user...]]></description>
-    <pubDate>Fri, 09 Oct 2026 13:01:13 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The AI Apocalypse Is a Head Fake]]></title>
-    <link>https://goreportify.com/article-pages/news-1791550868313.html</link>
-    <description><![CDATA[The air in the conference room is recycled and smells faintly of whiteboard markers. On stage, four people who flew business class to be here are disc...]]></description>
-    <pubDate>Fri, 09 Oct 2026 13:01:08 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Safety Layer Is a Press Secretary]]></title>
-    <link>https://goreportify.com/article-pages/news-1791550836541.html</link>
-    <description><![CDATA[The prompt was simple, a child’s question about history. The model’s response was a nightmare. Not because it was wrong, but because it was a clean, a...]]></description>
-    <pubDate>Fri, 09 Oct 2026 13:00:36 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Showed Them the Retention Dip. They Asked You to Change the Chart's Color.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1791464499088.html</link>
-    <description><![CDATA[You’re on slide four of the quarterly business review. This is the big one. After weeks of digging, you found it: a 7% drop in week-two retention for...]]></description>
-    <pubDate>Thu, 08 Oct 2026 13:01:39 GMT</pubDate>
   </item>
 </channel>
 </rss>

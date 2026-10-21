@@ -15,6 +15,24 @@
 
 ## All Articles
 
+- [You Described a Pothole. Engineering Designed a Suspension Bridge.](https://goreportify.com/article-pages/blog-1792587708124.html)
+  - Type: Deep Insights | Date: 2026-10-21 | Author: Emily Rostova
+  - You’re in the sprint planning meeting. You’ve just finished presenting a clear, well-researched user problem: customers are struggling to find the "ex...
+- [You Presented the Data. You Forgot the Recommendation.](https://goreportify.com/article-pages/blog-1792587677696.html)
+  - Type: Deep Insights | Date: 2026-10-21 | Author: Sarah Jenkins
+  - The metrics review meeting is on the calendar. You spent three hours pulling data, triple-checking queries, and arranging it all in a beautiful dashbo...
+- [The Waitlist Is Now a Political Primary](https://goreportify.com/article-pages/news-1792587667798.html)
+  - Type: Tech Radar | Date: 2026-10-21 | Author: Olivia Thorne
+  - You see the link on Twitter. The next big thing. A new AI-powered design tool, a social network that promises to be different, a productivity app that...
+- [The Telemetry Is a Wiretap](https://goreportify.com/article-pages/news-1792587640867.html)
+  - Type: Tech Radar | Date: 2026-10-21 | Author: Michael Chen
+  - A product manager watches a session replay. A user’s mouse cursor jitters across the screen, hesitating over a button, then darting away. The user typ...
+- [Status Update Email to Manager: How to Write One That Gets Read](https://goreportify.com/article-pages/blog-status-update-email-to-manager.html)
+  - Type: Deep Insights | Date: 2026-10-21 | Author: Reportify AI Editorial
+  - A status update email to your manager is a brief, written check-in that keeps them informed without a meeting. It is the fastest way to answer the question every manager asks silently: are we okay, or
+- [Progress Report Template: A Simple Format You Can Copy Today](https://goreportify.com/article-pages/blog-progress-report-template.html)
+  - Type: Deep Insights | Date: 2026-10-21 | Author: Reportify AI Editorial
+  - A progress report is a short document that tells stakeholders where a project, task, or team stands at a specific point in time. Unlike a status meeting or a long memo, it works as a written snapshot:
 - [Your 'Decision' Meeting Ended With 'Let's Take This](https://goreportify.com/article-pages/blog-1792501306688.html)
   - Type: Deep Insights | Date: 2026-10-20 | Author: David Sterling
   - The calendar invite was clear: “Decision Meeting: Q3 Pricing Model.” You booked the conference room for a full hour. You invited the VP of Sales, the...
@@ -2604,4 +2622,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 857 articles (458 blog + 399 news) + 8 core pages._
+_Total: 863 articles (462 blog + 401 news) + 8 core pages._

@@ -1,5 +1,45 @@
 [
     {
+        "id": "1792587708124",
+        "type": "blog",
+        "title": "You Described a Pothole. Engineering Designed a Suspension Bridge.",
+        "category": "Deep Insights",
+        "date": "2026-10-21",
+        "author": "Emily Rostova",
+        "excerpt": "You’re in the sprint planning meeting. You’ve just finished presenting a clear, well-researched user problem: customers are struggling to find the \"ex...",
+        "contentFile": "blog-1792587708124.md"
+    },
+    {
+        "id": "1792587677696",
+        "type": "blog",
+        "title": "You Presented the Data. You Forgot the Recommendation.",
+        "category": "Deep Insights",
+        "date": "2026-10-21",
+        "author": "Sarah Jenkins",
+        "excerpt": "The metrics review meeting is on the calendar. You spent three hours pulling data, triple-checking queries, and arranging it all in a beautiful dashbo...",
+        "contentFile": "blog-1792587677696.md"
+    },
+    {
+        "id": "1792587667798",
+        "type": "news",
+        "title": "The Waitlist Is Now a Political Primary",
+        "category": "Tech Radar",
+        "date": "2026-10-21",
+        "author": "Olivia Thorne",
+        "excerpt": "You see the link on Twitter. The next big thing. A new AI-powered design tool, a social network that promises to be different, a productivity app that...",
+        "contentFile": "news-1792587667798.md"
+    },
+    {
+        "id": "1792587640867",
+        "type": "news",
+        "title": "The Telemetry Is a Wiretap",
+        "category": "Tech Radar",
+        "date": "2026-10-21",
+        "author": "Michael Chen",
+        "excerpt": "A product manager watches a session replay. A user’s mouse cursor jitters across the screen, hesitating over a button, then darting away. The user typ...",
+        "contentFile": "news-1792587640867.md"
+    },
+    {
         "id": "status-update-email-to-manager",
         "type": "blog",
         "title": "Status Update Email to Manager: How to Write One That Gets Read",
