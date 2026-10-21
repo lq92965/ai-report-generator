@@ -1,5 +1,61 @@
 [
     {
+        "id": "status-update-email-to-manager",
+        "type": "blog",
+        "title": "Status Update Email to Manager: How to Write One That Gets Read",
+        "category": "Deep Insights",
+        "date": "2026-10-21",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A status update email to your manager is a brief, written check-in that keeps them informed without a meeting. It is the fastest way to answer the question every manager asks silently: are we okay, or",
+        "contentFile": "status-update-email-to-manager.html",
+        "url": "/article-pages/status-update-email-to-manager.html",
+        "targetKeyword": "status update email to manager",
+        "secondaryKeywords": [
+            "email to manager sample",
+            "status email template",
+            "update email to boss"
+        ],
+        "internalLinks": [
+            "weekly-status-report",
+            "project-status-update-example",
+            "one-on-one-meeting-agenda"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "progress-report-template",
+        "type": "blog",
+        "title": "Progress Report Template: A Simple Format You Can Copy Today",
+        "category": "Deep Insights",
+        "date": "2026-10-21",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A progress report is a short document that tells stakeholders where a project, task, or team stands at a specific point in time. Unlike a status meeting or a long memo, it works as a written snapshot:",
+        "contentFile": "progress-report-template.html",
+        "url": "/article-pages/progress-report-template.html",
+        "targetKeyword": "progress report template",
+        "secondaryKeywords": [
+            "progress report example",
+            "status report template",
+            "weekly progress update"
+        ],
+        "internalLinks": [
+            "weekly-report-template",
+            "monthly-report-template",
+            "project-status-report-template"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "1792501306688",
+        "type": "blog",
+        "title": "Your 'Decision' Meeting Ended With 'Let's Take This",
+        "category": "Deep Insights",
+        "date": "2026-10-20",
+        "author": "David Sterling",
+        "excerpt": "The calendar invite was clear: “Decision Meeting: Q3 Pricing Model.” You booked the conference room for a full hour. You invited the VP of Sales, the...",
+        "contentFile": "blog-1792501306688.md"
+    },
+    {
         "id": "1792501272592",
         "type": "blog",
         "title": "You Didn't Say 'No.' You Showed Them the Trade-Offs.",

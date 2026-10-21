@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [Your 'Decision' Meeting Ended With 'Let's Take This](https://goreportify.com/article-pages/blog-1792501306688.html)
+  - Type: Deep Insights | Date: 2026-10-20 | Author: David Sterling
+  - The calendar invite was clear: “Decision Meeting: Q3 Pricing Model.” You booked the conference room for a full hour. You invited the VP of Sales, the...
 - [You Didn't Say 'No.' You Showed Them the Trade-Offs.](https://goreportify.com/article-pages/blog-1792501272592.html)
   - Type: Deep Insights | Date: 2026-10-20 | Author: Alex Mercer
   - The request comes in on a Tuesday afternoon. It’s from the Head of Sales, and it’s an “urgent” one. A huge potential client loves the product but need...
@@ -2601,4 +2604,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 856 articles (457 blog + 399 news) + 8 core pages._
+_Total: 857 articles (458 blog + 399 news) + 8 core pages._
