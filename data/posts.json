@@ -1,5 +1,71 @@
 [
     {
+        "id": "1792674064555",
+        "type": "blog",
+        "title": "You Buried the Lead in a 20-Slide Deck",
+        "category": "Deep Insights",
+        "date": "2026-10-22",
+        "author": "Alex Mercer",
+        "excerpt": "You’re on slide 12. You’re meticulously explaining the cohort analysis that justifies the Q3 roadmap pivot. You can see the VP of Marketing squinting...",
+        "contentFile": "blog-1792674064555.md"
+    },
+    {
+        "id": "1792674028753",
+        "type": "news",
+        "title": "The Root Password Is Now a Guest Pass",
+        "category": "Tech Radar",
+        "date": "2026-10-22",
+        "author": "Alex Mercer",
+        "excerpt": "The email arrives at 3 a.m. A key vendor, the one whose API underpins a third of your product, has been acquired. The service will be sunsetted in 90...",
+        "contentFile": "news-1792674028753.md"
+    },
+    {
+        "id": "yearly-performance-review-self-review",
+        "type": "blog",
+        "title": "Yearly Performance Review Self Review: How to Write One That Lands",
+        "category": "Deep Insights",
+        "date": "2026-10-22",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A yearly performance review self review is the document you write before your manager writes theirs. It sets the record: what you actually delivered, where you grew, and what you want next. Done well,",
+        "contentFile": "yearly-performance-review-self-review.html",
+        "url": "/article-pages/yearly-performance-review-self-review.html",
+        "targetKeyword": "yearly performance review self review",
+        "secondaryKeywords": [
+            "self review performance",
+            "annual review self assessment",
+            "year end review"
+        ],
+        "internalLinks": [
+            "project-status-report-template",
+            "progress-report-template",
+            "monthly-performance-report"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "work-progress-report-sample",
+        "type": "blog",
+        "title": "Work Progress Report Sample: A Real Example You Can Copy",
+        "category": "Deep Insights",
+        "date": "2026-10-22",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A work progress report is the status document you write from your own seat. It tells a manager or a client what you finished, what you are still moving, and what is stuck — without waiting for a meeti",
+        "contentFile": "work-progress-report-sample.html",
+        "url": "/article-pages/work-progress-report-sample.html",
+        "targetKeyword": "work progress report sample",
+        "secondaryKeywords": [
+            "work progress report",
+            "progress report example",
+            "weekly work update"
+        ],
+        "internalLinks": [
+            "progress-report-template",
+            "weekly-report-template",
+            "monthly-report-template"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1792587708124",
         "type": "blog",
         "title": "You Described a Pothole. Engineering Designed a Suspension Bridge.",

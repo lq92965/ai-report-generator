@@ -15,6 +15,18 @@
 
 ## All Articles
 
+- [You Buried the Lead in a 20-Slide Deck](https://goreportify.com/article-pages/blog-1792674064555.html)
+  - Type: Deep Insights | Date: 2026-10-22 | Author: Alex Mercer
+  - You’re on slide 12. You’re meticulously explaining the cohort analysis that justifies the Q3 roadmap pivot. You can see the VP of Marketing squinting...
+- [The Root Password Is Now a Guest Pass](https://goreportify.com/article-pages/news-1792674028753.html)
+  - Type: Tech Radar | Date: 2026-10-22 | Author: Alex Mercer
+  - The email arrives at 3 a.m. A key vendor, the one whose API underpins a third of your product, has been acquired. The service will be sunsetted in 90...
+- [Yearly Performance Review Self Review: How to Write One That Lands](https://goreportify.com/article-pages/blog-yearly-performance-review-self-review.html)
+  - Type: Deep Insights | Date: 2026-10-22 | Author: Reportify AI Editorial
+  - A yearly performance review self review is the document you write before your manager writes theirs. It sets the record: what you actually delivered, where you grew, and what you want next. Done well,
+- [Work Progress Report Sample: A Real Example You Can Copy](https://goreportify.com/article-pages/blog-work-progress-report-sample.html)
+  - Type: Deep Insights | Date: 2026-10-22 | Author: Reportify AI Editorial
+  - A work progress report is the status document you write from your own seat. It tells a manager or a client what you finished, what you are still moving, and what is stuck — without waiting for a meeti
 - [You Described a Pothole. Engineering Designed a Suspension Bridge.](https://goreportify.com/article-pages/blog-1792587708124.html)
   - Type: Deep Insights | Date: 2026-10-21 | Author: Emily Rostova
   - You’re in the sprint planning meeting. You’ve just finished presenting a clear, well-researched user problem: customers are struggling to find the "ex...
@@ -2622,4 +2634,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 863 articles (462 blog + 401 news) + 8 core pages._
+_Total: 867 articles (465 blog + 402 news) + 8 core pages._

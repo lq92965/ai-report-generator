@@ -5,6 +5,30 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Buried the Lead in a 20-Slide Deck]]></title>
+    <link>https://goreportify.com/article-pages/blog-1792674064555.html</link>
+    <description><![CDATA[You’re on slide 12. You’re meticulously explaining the cohort analysis that justifies the Q3 roadmap pivot. You can see the VP of Marketing squinting...]]></description>
+    <pubDate>Thu, 22 Oct 2026 13:01:04 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Root Password Is Now a Guest Pass]]></title>
+    <link>https://goreportify.com/article-pages/news-1792674028753.html</link>
+    <description><![CDATA[The email arrives at 3 a.m. A key vendor, the one whose API underpins a third of your product, has been acquired. The service will be sunsetted in 90...]]></description>
+    <pubDate>Thu, 22 Oct 2026 13:00:28 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Yearly Performance Review Self Review: How to Write One That Lands]]></title>
+    <link>https://goreportify.com/article-pages/blog-yearly-performance-review-self-review.html</link>
+    <description><![CDATA[A yearly performance review self review is the document you write before your manager writes theirs. It sets the record: what you actually delivered, where you grew, and what you want next. Done well,]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Work Progress Report Sample: A Real Example You Can Copy]]></title>
+    <link>https://goreportify.com/article-pages/blog-work-progress-report-sample.html</link>
+    <description><![CDATA[A work progress report is the status document you write from your own seat. It tells a manager or a client what you finished, what you are still moving, and what is stuck — without waiting for a meeti]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Described a Pothole. Engineering Designed a Suspension Bridge.]]></title>
     <link>https://goreportify.com/article-pages/blog-1792587708124.html</link>
     <description><![CDATA[You’re in the sprint planning meeting. You’ve just finished presenting a clear, well-researched user problem: customers are struggling to find the "ex...]]></description>
@@ -279,30 +303,6 @@
     <link>https://goreportify.com/article-pages/blog-1791723676899.html</link>
     <description><![CDATA[The confetti in the launch Slack channel has settled. The adoption dashboard is ticking up. You take a sip of coffee, feeling that rare moment of calm...]]></description>
     <pubDate>Sun, 11 Oct 2026 13:01:16 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The API Rate Limit Is Now a Class System]]></title>
-    <link>https://goreportify.com/article-pages/news-1791723665152.html</link>
-    <description><![CDATA[A few years ago, the call came from a product manager. A small, clever calendar app had found a way to sync its data using our public API. It wasn't a...]]></description>
-    <pubDate>Sun, 11 Oct 2026 13:01:05 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Friction Log Is a Time Card]]></title>
-    <link>https://goreportify.com/article-pages/news-1791723638973.html</link>
-    <description><![CDATA[It’s 4:00 PM on a Friday. A prompt appears in Slack, a chipper little bot asking you to log your "weekly frictions." You dutifully type them out. The...]]></description>
-    <pubDate>Sun, 11 Oct 2026 13:00:38 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Killed the Feature. Now You Have to Write the Obituary.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1791637400096.html</link>
-    <description><![CDATA[The metrics were clear. The leadership team agreed. You made the call. The feature that consumed your team for the last two quarters is being sunsette...]]></description>
-    <pubDate>Sat, 10 Oct 2026 13:03:20 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Open Source License Is Now a Terms of Service]]></title>
-    <link>https://goreportify.com/article-pages/news-1791637364974.html</link>
-    <description><![CDATA[The download finishes. A developer, hunched over a laptop in a quiet room, unzips the file. Inside are the weights for a new foundation model, a multi...]]></description>
-    <pubDate>Sat, 10 Oct 2026 13:02:44 GMT</pubDate>
   </item>
 </channel>
 </rss>
