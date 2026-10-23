@@ -1,5 +1,71 @@
 [
     {
+        "id": "self-assessment-example-for-work",
+        "type": "blog",
+        "title": "Self-Assessment Example for Work: A Complete Sample You Can Adapt",
+        "category": "Deep Insights",
+        "date": "2026-10-23",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A self-assessment is the few paragraphs you write about your own work before a review meeting. Most people freeze at this step because no one taught them the shape. They either list tasks like a times",
+        "contentFile": "self-assessment-example-for-work.html",
+        "url": "/article-pages/self-assessment-example-for-work.html",
+        "targetKeyword": "self assessment example for work",
+        "secondaryKeywords": [
+            "employee self assessment",
+            "self evaluation example",
+            "performance self review"
+        ],
+        "internalLinks": [
+            "yearly-performance-review-self-review",
+            "work-progress-report-sample",
+            "performance-review-phrases"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "performance-review-phrases",
+        "type": "blog",
+        "title": "Performance Review Phrases That Sound Honest, Not Rehearsed",
+        "category": "Deep Insights",
+        "date": "2026-10-23",
+        "author": "Reportify AI Editorial",
+        "excerpt": "Most performance review phrases fail because they are either too soft to mean anything or too stiff to sound like a person wrote them. \"Excellent team player\" tells a reader nothing. \"Consistently exc",
+        "contentFile": "performance-review-phrases.html",
+        "url": "/article-pages/performance-review-phrases.html",
+        "targetKeyword": "performance review phrases",
+        "secondaryKeywords": [
+            "employee review phrases",
+            "performance feedback examples",
+            "self review phrases"
+        ],
+        "internalLinks": [
+            "yearly-performance-review-self-review",
+            "self-assessment-example-for-work",
+            "how-to-write-a-monthly-report"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "1792674196958",
+        "type": "blog",
+        "title": "You Asked a Chatbot for a Roadmap. It Gave You a Feature List.",
+        "category": "Deep Insights",
+        "date": "2026-10-22",
+        "author": "Marcus Webb",
+        "excerpt": "The cursor blinked. It was 9 PM on a Tuesday, and the Q3 roadmap draft was due tomorrow. You had the company goals, a mountain of user feedback, and a...",
+        "contentFile": "blog-1792674196958.md"
+    },
+    {
+        "id": "1792674161192",
+        "type": "news",
+        "title": "The Latency Is Now a Poll Tax",
+        "category": "Tech Radar",
+        "date": "2026-10-22",
+        "author": "Sarah Jenkins",
+        "excerpt": "The loading spinner on the county benefits portal has been spinning for ninety seconds. For a user on a shaky 4G connection in a rural town, tethering...",
+        "contentFile": "news-1792674161192.md"
+    },
+    {
         "id": "1792674064555",
         "type": "blog",
         "title": "You Buried the Lead in a 20-Slide Deck",

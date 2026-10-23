@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Asked a Chatbot for a Roadmap. It Gave You a Feature List.](https://goreportify.com/article-pages/blog-1792674196958.html)
+  - Type: Deep Insights | Date: 2026-10-22 | Author: Marcus Webb
+  - The cursor blinked. It was 9 PM on a Tuesday, and the Q3 roadmap draft was due tomorrow. You had the company goals, a mountain of user feedback, and a...
+- [The Latency Is Now a Poll Tax](https://goreportify.com/article-pages/news-1792674161192.html)
+  - Type: Tech Radar | Date: 2026-10-22 | Author: Sarah Jenkins
+  - The loading spinner on the county benefits portal has been spinning for ninety seconds. For a user on a shaky 4G connection in a rural town, tethering...
 - [You Buried the Lead in a 20-Slide Deck](https://goreportify.com/article-pages/blog-1792674064555.html)
   - Type: Deep Insights | Date: 2026-10-22 | Author: Alex Mercer
   - You’re on slide 12. You’re meticulously explaining the cohort analysis that justifies the Q3 roadmap pivot. You can see the VP of Marketing squinting...
@@ -2634,4 +2640,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 867 articles (465 blog + 402 news) + 8 core pages._
+_Total: 869 articles (466 blog + 403 news) + 8 core pages._

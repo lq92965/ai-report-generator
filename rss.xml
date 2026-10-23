@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Asked a Chatbot for a Roadmap. It Gave You a Feature List.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1792674196958.html</link>
+    <description><![CDATA[The cursor blinked. It was 9 PM on a Tuesday, and the Q3 roadmap draft was due tomorrow. You had the company goals, a mountain of user feedback, and a...]]></description>
+    <pubDate>Thu, 22 Oct 2026 13:03:16 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Latency Is Now a Poll Tax]]></title>
+    <link>https://goreportify.com/article-pages/news-1792674161192.html</link>
+    <description><![CDATA[The loading spinner on the county benefits portal has been spinning for ninety seconds. For a user on a shaky 4G connection in a rural town, tethering...]]></description>
+    <pubDate>Thu, 22 Oct 2026 13:02:41 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Buried the Lead in a 20-Slide Deck]]></title>
     <link>https://goreportify.com/article-pages/blog-1792674064555.html</link>
     <description><![CDATA[You’re on slide 12. You’re meticulously explaining the cohort analysis that justifies the Q3 roadmap pivot. You can see the VP of Marketing squinting...]]></description>
@@ -291,18 +303,6 @@
     <link>https://goreportify.com/article-pages/blog-how-to-write-a-weekly-report.html</link>
     <description><![CDATA[A weekly report answers three questions in this order: what moved, what stalled, and what needs a decision. Keep it under 200 words if nothing changed. Keep it blunt if something did.]]></description>
     <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Googled Your Competitor for an Hour. Your AI Could Have Done It in 5 Minutes.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1791723696143.html</link>
-    <description><![CDATA[It’s 3 PM and you have a strategy review tomorrow. Your director Slacks you: “Hey, can you pull a quick one-pager on what Competitor X is up to? Just...]]></description>
-    <pubDate>Sun, 11 Oct 2026 13:01:36 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Shipped the Feature. Now Support Is Drowning in Tickets.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1791723676899.html</link>
-    <description><![CDATA[The confetti in the launch Slack channel has settled. The adoption dashboard is ticking up. You take a sip of coffee, feeling that rare moment of calm...]]></description>
-    <pubDate>Sun, 11 Oct 2026 13:01:16 GMT</pubDate>
   </item>
 </channel>
 </rss>
