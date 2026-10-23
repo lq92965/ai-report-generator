@@ -1,5 +1,45 @@
 [
     {
+        "id": "1792760607016",
+        "type": "blog",
+        "title": "You Held a Kickoff Meeting. The Team Left More Confused.",
+        "category": "Deep Insights",
+        "date": "2026-10-23",
+        "author": "Olivia Thorne",
+        "excerpt": "You close the Zoom window and take a sip of coffee. That went well. You walked through all 32 slides of the project kickoff deck. You covered the mark...",
+        "contentFile": "blog-1792760607016.md"
+    },
+    {
+        "id": "1792760564042",
+        "type": "news",
+        "title": "The Staging Environment Is Now a Potemkin Village",
+        "category": "Tech Radar",
+        "date": "2026-10-23",
+        "author": "Sarah Jenkins",
+        "excerpt": "The pull request was approved. All 1,428 unit tests passed. The end-to-end suite ran clean against the staging environment, a supposedly perfect repli...",
+        "contentFile": "news-1792760564042.md"
+    },
+    {
+        "id": "1792760485807",
+        "type": "blog",
+        "title": "You Sent the Deck 'For Review.' You Should Have Held a Pre-Wire.",
+        "category": "Deep Insights",
+        "date": "2026-10-23",
+        "author": "Olivia Thorne",
+        "excerpt": "You hit send on the email. Subject: \"Draft Strategy Deck for Review.\" The attachment contains 25 slides you’ve spent the last week perfecting. You lea...",
+        "contentFile": "blog-1792760485807.md"
+    },
+    {
+        "id": "1792760444498",
+        "type": "news",
+        "title": "The AI Agent Is a Forged Signature",
+        "category": "Tech Radar",
+        "date": "2026-10-23",
+        "author": "Marcus Webb",
+        "excerpt": "Your new AI assistant just cost you $1,200. It saw an email thread about a possible trip to Denver, correlated it with a free weekend on your calendar...",
+        "contentFile": "news-1792760444498.md"
+    },
+    {
         "id": "self-assessment-example-for-work",
         "type": "blog",
         "title": "Self-Assessment Example for Work: A Complete Sample You Can Adapt",
