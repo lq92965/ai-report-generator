@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const R = path.join(__dirname, '..');
 const P = path.join(R, 'data', 'posts.json');
+const AP = path.join(R, 'article-pages');
 const C = [
   {url:'https://goreportify.com',title:'Homepage',description:'Generate professional AI-powered business reports.'},
   {url:'https://goreportify.com/generate.html',title:'Generate Report',description:'Upload your data and generate comprehensive AI reports.'},
@@ -12,10 +13,105 @@ const C = [
   {url:'https://goreportify.com/privacy.html',title:'Privacy Policy',description:'Data handling and privacy practices.'},
   {url:'https://goreportify.com/terms.html',title:'Terms of Service',description:'Terms for using Reportify AI.'}
 ];
-function L(){try{return JSON.parse(fs.readFileSync(P,'utf8'))}catch(e){return[]}}
+function L(){
+  var arr;
+  try { arr = JSON.parse(fs.readFileSync(P,'utf8')); } catch(e){ return []; }
+  if (!Array.isArray(arr)) return [];
+  // 按真实内容日期降序排序，不依赖 posts.json 数组位置。
+  // posts.json 尾部可能冻结在旧日期、新文章被 unshift 到中段，
+  // 直接用 slice(0,30) 会取到错误的一批，故此处显式排序。
+  // slice() 先复制，避免污染调用方的数组。
+  return arr.slice().sort(function(a,b){
+    var da = String((a && a.date) || '');
+    var db = String((b && b.date) || '');
+    var c = db.localeCompare(da);
+    if (c !== 0) return c;
+    return String((b && b.id) || '').localeCompare(String((a && a.id) || ''));
+  });
+}
 function T(s,m){if(m===void 0)m=120;if(!s||s.length<=m)return s||'';return s.slice(0,m).replace(/\s+\S*$/,'')+'\u2026'}
 function A(t){return t==='blog'?'Deep Insights':'Tech Radar'}
-function G(p){var l=['# Reportify AI','','> Reportify AI generates professional business reports, market analyses, and financial documents using AI.','','## Core Features',''];['AI Report Generator','Market Analysis','Financial Reports','Business Plans','Data Visualization','Daily Blog & News'].forEach(function(f){l.push('- '+f)});l.push('','## Core Pages','');C.forEach(function(x){l.push('- ['+x.title+']('+x.url+') - '+x.description)});l.push('');var r=p.slice(0,30);if(r.length){l.push('## Recent Articles','');r.forEach(function(x){var u='https://goreportify.com/article-pages/'+x.type+'-'+x.id+'.html';l.push('- ['+x.title+']('+u+') - ['+A(x.type)+'] '+T(x.excerpt,100))});l.push('')}return l.join('\n')}
-function F(p){var l=['# Reportify AI - Full Site Index','','> Complete index of all pages and articles.','','## All Core Pages',''];C.forEach(function(x){l.push('- ['+x.title+']('+x.url+') - '+x.description)});l.push('');if(p.length){l.push('## All Articles','');p.forEach(function(x){var u='https://goreportify.com/article-pages/'+x.type+'-'+x.id+'.html';l.push('- ['+x.title+']('+u+')','  - Type: '+A(x.type)+' | Date: '+x.date+' | Author: '+x.author,'  - '+T(x.excerpt,250))});l.push('')}var b=p.filter(function(x){return x.type==='blog'}).length;var n=p.filter(function(x){return x.type==='news'}).length;l.push('---','_Total: '+p.length+' articles ('+b+' blog + '+n+' news) + '+C.length+' core pages._');return l.join('\n')}
-function M(){var p=L();console.log('[llmstxt] Loaded '+p.length+' posts');fs.writeFileSync(path.join(R,'llms.txt'),G(p),'utf8');console.log('[llmstxt] llms.txt written');fs.writeFileSync(path.join(R,'llms-full.txt'),F(p),'utf8');console.log('[llmstxt] llms-full.txt written')}
+
+// 文件系统缓存：实际存在的 article-pages 文件名集合
+var _fsSet = null;
+function FS(){
+  if(_fsSet) return _fsSet;
+  try { _fsSet = new Set(fs.readdirSync(AP).filter(function(f){return f.endsWith('.html')})); }
+  catch(e){ _fsSet = new Set(); }
+  return _fsSet;
+}
+
+// 解析单篇文章的真实 URL 文件名。
+// 优先：posts.json 的 slug 字段 > id 本身已是 slug > 用文件系统校验数字命名 > 兜底数字命名
+function SLUG(x){
+  var set = FS();
+  // 1. 显式 slug 字段
+  if (x.slug && set.has(x.slug + '.html')) return x.slug + '.html';
+  // 2. id 本身就是语义化 slug（非纯数字）
+  if (x.id && !/^\d+$/.test(String(x.id))) {
+    var cand = String(x.id) + '.html';
+    if (set.has(cand)) return cand;
+  }
+  // 3. 传统数字命名，且文件确实存在
+  var legacy = x.type + '-' + x.id + '.html';
+  if (set.has(legacy)) return legacy;
+  // 4. 兜底：优先 x.id.html（避免拼出 type- 前缀的死链）
+  if (x.id && set.has(String(x.id) + '.html')) return String(x.id) + '.html';
+  return null; // 文件不存在，不写入清单
+}
+
+var _skipped = 0;
+function U(x){
+  var f = SLUG(x);
+  if (!f) { _skipped++; return null; }
+  return 'https://goreportify.com/article-pages/' + f;
+}
+
+function G(p){
+  var l=['# Reportify AI','','> Reportify AI generates professional business reports, market analyses, and financial documents using AI.','','## Core Features',''];
+  ['AI Report Generator','Market Analysis','Financial Reports','Business Plans','Data Visualization','Daily Blog & News'].forEach(function(f){l.push('- '+f)});
+  l.push('','## Core Pages','');
+  C.forEach(function(x){l.push('- ['+x.title+']('+x.url+') - '+x.description)});
+  l.push('');
+  var r=p.slice(0,30);
+  if(r.length){
+    var lines=[];
+    r.forEach(function(x){var u=U(x);if(!u)return;lines.push('- ['+x.title+']('+u+') - ['+A(x.type)+'] '+T(x.excerpt,100))});
+    if(lines.length){l.push('## Recent Articles','');lines.forEach(function(s){l.push(s)});l.push('')}
+  }
+  return l.join('\n');
+}
+
+function F(p){
+  var l=['# Reportify AI - Full Site Index','','> Complete index of all pages and articles.','','## All Core Pages',''];
+  C.forEach(function(x){l.push('- ['+x.title+']('+x.url+') - '+x.description)});
+  l.push('');
+  if(p.length){
+    var lines=[];
+    p.forEach(function(x){
+      var u=U(x); if(!u) return;
+      lines.push('- ['+x.title+']('+u+')');
+      lines.push('  - Type: '+A(x.type)+' | Date: '+x.date+' | Author: '+x.author);
+      lines.push('  - '+T(x.excerpt,250));
+    });
+    if(lines.length){l.push('## All Articles','');lines.forEach(function(s){l.push(s)});l.push('')}
+  }
+  var ok = p.filter(function(x){return SLUG(x)!==null}).length;
+  var b=p.filter(function(x){return x.type==='blog'}).length;
+  var n=p.filter(function(x){return x.type==='news'}).length;
+  l.push('---','_Total: '+ok+' articles ('+b+' blog + '+n+' news) + '+C.length+' core pages._');
+  return l.join('\n');
+}
+
+function M(){
+  _fsSet = null; _skipped = 0;
+  var p=L();
+  console.log('[llmstxt] Loaded '+p.length+' posts');
+  fs.writeFileSync(path.join(R,'llms.txt'),G(p),'utf8');
+  console.log('[llmstxt] llms.txt written');
+  fs.writeFileSync(path.join(R,'llms-full.txt'),F(p),'utf8');
+  console.log('[llmstxt] llms-full.txt written');
+  if(_skipped>0) console.log('[llmstxt] WARNING: '+_skipped+' posts skipped (no matching HTML file)');
+  return {total:p.length,skipped:_skipped};
+}
 if(require.main===module)M();else module.exports={main:M};

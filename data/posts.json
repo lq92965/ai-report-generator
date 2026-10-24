@@ -1,5 +1,25 @@
 [
     {
+        "id": "1792846883130",
+        "type": "blog",
+        "title": "You Pitched a New Feature. You Should Have Pitched Paying Down Tech Debt.",
+        "category": "Deep Insights",
+        "date": "2026-10-24",
+        "author": "Olivia Thorne",
+        "excerpt": "The roadmap meeting was going well. You presented the mockups for the new AI-powered reporting dashboard. It was slick. Stakeholders were nodding. The...",
+        "contentFile": "blog-1792846883130.md"
+    },
+    {
+        "id": "1792846843828",
+        "type": "news",
+        "title": "The Service-Level Agreement Is Now a Prenuptial Agreement",
+        "category": "Tech Radar",
+        "date": "2026-10-24",
+        "author": "David Sterling",
+        "excerpt": "The sales deck glows on screen, promising a future of seamless scalability and \"five nines\" of uptime. On the video call, the account executive from t...",
+        "contentFile": "news-1792846843828.md"
+    },
+    {
         "id": "1792760607016",
         "type": "blog",
         "title": "You Held a Kickoff Meeting. The Team Left More Confused.",

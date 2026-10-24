@@ -15,6 +15,12 @@
 
 ## All Articles
 
+- [You Pitched a New Feature. You Should Have Pitched Paying Down Tech Debt.](https://goreportify.com/article-pages/blog-1792846883130.html)
+  - Type: Deep Insights | Date: 2026-10-24 | Author: Olivia Thorne
+  - The roadmap meeting was going well. You presented the mockups for the new AI-powered reporting dashboard. It was slick. Stakeholders were nodding. The...
+- [The Service-Level Agreement Is Now a Prenuptial Agreement](https://goreportify.com/article-pages/news-1792846843828.html)
+  - Type: Tech Radar | Date: 2026-10-24 | Author: David Sterling
+  - The sales deck glows on screen, promising a future of seamless scalability and "five nines" of uptime. On the video call, the account executive from t...
 - [You Held a Kickoff Meeting. The Team Left More Confused.](https://goreportify.com/article-pages/blog-1792760607016.html)
   - Type: Deep Insights | Date: 2026-10-23 | Author: Olivia Thorne
   - You close the Zoom window and take a sip of coffee. That went well. You walked through all 32 slides of the project kickoff deck. You covered the mark...
@@ -2658,4 +2664,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 875 articles (470 blog + 405 news) + 8 core pages._
+_Total: 877 articles (471 blog + 406 news) + 8 core pages._

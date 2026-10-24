@@ -5,6 +5,18 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Pitched a New Feature. You Should Have Pitched Paying Down Tech Debt.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1792846883130.html</link>
+    <description><![CDATA[The roadmap meeting was going well. You presented the mockups for the new AI-powered reporting dashboard. It was slick. Stakeholders were nodding. The...]]></description>
+    <pubDate>Sat, 24 Oct 2026 13:01:23 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Service-Level Agreement Is Now a Prenuptial Agreement]]></title>
+    <link>https://goreportify.com/article-pages/news-1792846843828.html</link>
+    <description><![CDATA[The sales deck glows on screen, promising a future of seamless scalability and "five nines" of uptime. On the video call, the account executive from t...]]></description>
+    <pubDate>Sat, 24 Oct 2026 13:00:43 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Held a Kickoff Meeting. The Team Left More Confused.]]></title>
     <link>https://goreportify.com/article-pages/blog-1792760607016.html</link>
     <description><![CDATA[You close the Zoom window and take a sip of coffee. That went well. You walked through all 32 slides of the project kickoff deck. You covered the mark...]]></description>
@@ -291,18 +303,6 @@
     <link>https://goreportify.com/article-pages/blog-1792069276756.html</link>
     <description><![CDATA[You spent three hours on it. You pulled the latest data, synthesized user feedback, and detailed every risk and dependency. The document was a masterp...]]></description>
     <pubDate>Thu, 15 Oct 2026 13:01:16 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Bug Bounty Is Now a Protection Racket]]></title>
-    <link>https://goreportify.com/article-pages/news-1792069237402.html</link>
-    <description><![CDATA[A researcher hunches over a terminal at 2 a.m., caffeine and adrenaline singing in their veins. They just found it: a logic flaw in a major financial...]]></description>
-    <pubDate>Thu, 15 Oct 2026 13:00:37 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Sent a ‘Quick Heads-Up’. You Triggered a Panic.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1791982883591.html</link>
-    <description><![CDATA[It was 9:17 AM on a Tuesday. You saw a spike in 500 errors from a newly shipped API endpoint. Your intent was noble: transparency. You jumped into the...]]></description>
-    <pubDate>Wed, 14 Oct 2026 13:01:23 GMT</pubDate>
   </item>
 </channel>
 </rss>
