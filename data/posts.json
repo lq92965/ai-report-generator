@@ -1,5 +1,97 @@
 [
     {
+        "id": "how-to-make-a-report-in-excel",
+        "type": "blog",
+        "title": "How to Make a Report in Excel: A Step-by-Step Method That Stays Clean",
+        "category": "Deep Insights",
+        "date": "2026-10-25",
+        "author": "Reportify AI Editorial",
+        "excerpt": "Excel is where most work reports are actually born, even if they end up in an email or a slide. The problem is not Excel itself — it is that reports built without a structure turn into a maze of merge",
+        "contentFile": "how-to-make-a-report-in-excel.html",
+        "url": "/article-pages/how-to-make-a-report-in-excel.html",
+        "targetKeyword": "how to make a report in excel",
+        "secondaryKeywords": [
+            "excel report template",
+            "create report in excel",
+            "excel report format"
+        ],
+        "internalLinks": [
+            "weekly-report-template",
+            "report-writing-format",
+            "how-to-write-a-formal-report"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "meeting-summary-template",
+        "type": "blog",
+        "title": "Meeting Summary Template: The Short Recap Leadership Actually Reads",
+        "category": "Deep Insights",
+        "date": "2026-10-25",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A meeting summary is the one- or two-paragraph recap you send after a meeting so people who were not in the room — or who were but forgot — can see what happened and what happens next. It sits between",
+        "contentFile": "meeting-summary-template.html",
+        "url": "/article-pages/meeting-summary-template.html",
+        "targetKeyword": "meeting summary template",
+        "secondaryKeywords": [
+            "meeting recap template",
+            "post meeting summary",
+            "executive meeting summary"
+        ],
+        "internalLinks": [
+            "meeting-minutes-template",
+            "how-to-write-meeting-notes",
+            "one-on-one-meeting-agenda"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "how-to-write-meeting-notes",
+        "type": "blog",
+        "title": "How to Write Meeting Notes: A Practical Method for Busy People",
+        "category": "Deep Insights",
+        "date": "2026-10-24",
+        "author": "Reportify AI Editorial",
+        "excerpt": "Meeting notes are the quick record you keep during and right after a meeting so you can remember what mattered without writing a formal document. They are not the same as minutes. Minutes are the offi",
+        "contentFile": "how-to-write-meeting-notes.html",
+        "url": "/article-pages/how-to-write-meeting-notes.html",
+        "targetKeyword": "how to write meeting notes",
+        "secondaryKeywords": [
+            "meeting notes format",
+            "taking meeting notes",
+            "effective meeting notes"
+        ],
+        "internalLinks": [
+            "how-to-write-a-weekly-report",
+            "meeting-minutes-template",
+            "meeting-summary-template"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "meeting-minutes-template",
+        "type": "blog",
+        "title": "Meeting Minutes Template: A Clean Format You Can Use in 5 Minutes",
+        "category": "Deep Insights",
+        "date": "2026-10-24",
+        "author": "Reportify AI Editorial",
+        "excerpt": "Meeting minutes are the written record of what was said, decided, and assigned in a meeting. Most teams skip them or write a wall of text that nobody reads afterward. Both habits cost time later, beca",
+        "contentFile": "meeting-minutes-template.html",
+        "url": "/article-pages/meeting-minutes-template.html",
+        "targetKeyword": "meeting minutes template",
+        "secondaryKeywords": [
+            "meeting notes template",
+            "formal meeting minutes",
+            "how to take meeting minutes"
+        ],
+        "internalLinks": [
+            "how-to-write-a-weekly-report",
+            "one-on-one-meeting-agenda",
+            "how-to-write-meeting-notes"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1792846883130",
         "type": "blog",
         "title": "You Pitched a New Feature. You Should Have Pitched Paying Down Tech Debt.",
