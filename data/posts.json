@@ -1,5 +1,25 @@
 [
     {
+        "id": "1792933304433",
+        "type": "blog",
+        "title": "You Asked for an Estimate. You Started a Three-Day Debate.",
+        "category": "Deep Insights",
+        "date": "2026-10-25",
+        "author": "Alex Mercer",
+        "excerpt": "You’re in the room—real or virtual. The team is assembled. You’ve just finished walking through the new feature, a beautiful solution to a well-docume...",
+        "contentFile": "blog-1792933304433.md"
+    },
+    {
+        "id": "1792933264299",
+        "type": "news",
+        "title": "The Copilot Key Is a Panic Button",
+        "category": "Tech Radar",
+        "date": "2026-10-25",
+        "author": "Sarah Jenkins",
+        "excerpt": "Look down at the keyboard of a new \"AI PC.\" Next to the right-hand Alt key, a new icon has appeared. It’s the Copilot key, a dedicated, physical butto...",
+        "contentFile": "news-1792933264299.md"
+    },
+    {
         "id": "how-to-make-a-report-in-excel",
         "type": "blog",
         "title": "How to Make a Report in Excel: A Step-by-Step Method That Stays Clean",

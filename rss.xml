@@ -5,6 +5,42 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Asked for an Estimate. You Started a Three-Day Debate.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1792933304433.html</link>
+    <description><![CDATA[You’re in the room—real or virtual. The team is assembled. You’ve just finished walking through the new feature, a beautiful solution to a well-docume...]]></description>
+    <pubDate>Sun, 25 Oct 2026 13:01:44 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Copilot Key Is a Panic Button]]></title>
+    <link>https://goreportify.com/article-pages/news-1792933264299.html</link>
+    <description><![CDATA[Look down at the keyboard of a new "AI PC." Next to the right-hand Alt key, a new icon has appeared. It’s the Copilot key, a dedicated, physical butto...]]></description>
+    <pubDate>Sun, 25 Oct 2026 13:01:04 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Make a Report in Excel: A Step-by-Step Method That Stays Clean]]></title>
+    <link>https://goreportify.com/article-pages/blog-how-to-make-a-report-in-excel.html</link>
+    <description><![CDATA[Excel is where most work reports are actually born, even if they end up in an email or a slide. The problem is not Excel itself — it is that reports built without a structure turn into a maze of merge]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Meeting Summary Template: The Short Recap Leadership Actually Reads]]></title>
+    <link>https://goreportify.com/article-pages/blog-meeting-summary-template.html</link>
+    <description><![CDATA[A meeting summary is the one- or two-paragraph recap you send after a meeting so people who were not in the room — or who were but forgot — can see what happened and what happens next. It sits between]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Write Meeting Notes: A Practical Method for Busy People]]></title>
+    <link>https://goreportify.com/article-pages/blog-how-to-write-meeting-notes.html</link>
+    <description><![CDATA[Meeting notes are the quick record you keep during and right after a meeting so you can remember what mattered without writing a formal document. They are not the same as minutes. Minutes are the offi]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Meeting Minutes Template: A Clean Format You Can Use in 5 Minutes]]></title>
+    <link>https://goreportify.com/article-pages/blog-meeting-minutes-template.html</link>
+    <description><![CDATA[Meeting minutes are the written record of what was said, decided, and assigned in a meeting. Most teams skip them or write a wall of text that nobody reads afterward. Both habits cost time later, beca]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Pitched a New Feature. You Should Have Pitched Paying Down Tech Debt.]]></title>
     <link>https://goreportify.com/article-pages/blog-1792846883130.html</link>
     <description><![CDATA[The roadmap meeting was going well. You presented the mockups for the new AI-powered reporting dashboard. It was slick. Stakeholders were nodding. The...]]></description>
@@ -267,42 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1792155636450.html</link>
     <description><![CDATA[The command is so automatic it’s muscle memory. An engineer types pip install new-library and hits enter. A cascade of text scrolls by, fetching not o...]]></description>
     <pubDate>Fri, 16 Oct 2026 13:00:36 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Weekly Status Report: The Short Format for Fast Updates]]></title>
-    <link>https://goreportify.com/article-pages/blog-weekly-status-report.html</link>
-    <description><![CDATA[A weekly status report is the lean cousin of the full weekly update. Where a detailed report explains context and results, a status report gives a fast snapshot: where things stand, what changed, and ]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Weekly Report Template: A Practical Format You Can Copy Today]]></title>
-    <link>https://goreportify.com/article-pages/blog-weekly-report-template.html</link>
-    <description><![CDATA[If you have ever stared at a blank document on a Friday afternoon wondering what your manager actually wants to read, you are not alone. A good weekly report does not need to be long or clever. It nee]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How to Write a Monthly Report: Template and Examples]]></title>
-    <link>https://goreportify.com/article-pages/blog-how-to-write-a-monthly-report.html</link>
-    <description><![CDATA[A monthly report is where guessing stops and evidence begins. Done well, it shows what moved, what stalled, and what to do next — in a format your manager can scan in two minutes. This guide gives you]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Monthly Report Template That Saves You Hours]]></title>
-    <link>https://goreportify.com/article-pages/blog-monthly-report-template.html</link>
-    <description><![CDATA[A monthly report is where you step back from daily noise and show the trend. If you searched for a monthly report template, you probably have a deadline and a blank page. This page gives you a structu]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Weekly Report Example You Can Copy This Week]]></title>
-    <link>https://goreportify.com/article-pages/blog-weekly-report-example.html</link>
-    <description><![CDATA[A weekly report is the fastest way to keep your manager and your team aligned without booking another meeting. If you typed "weekly report example" into a search box, you most likely want something yo]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Sent a 5-Page Update. They Read the First Sentence.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1792069276756.html</link>
-    <description><![CDATA[You spent three hours on it. You pulled the latest data, synthesized user feedback, and detailed every risk and dependency. The document was a masterp...]]></description>
-    <pubDate>Thu, 15 Oct 2026 13:01:16 GMT</pubDate>
   </item>
 </channel>
 </rss>
