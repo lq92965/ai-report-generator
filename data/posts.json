@@ -1,5 +1,25 @@
 [
     {
+        "id": "1793019690545",
+        "type": "blog",
+        "title": "You Wrote 50 User Stories by Hand. Your AI Wrote Better Ones in 10 Minutes.",
+        "category": "Deep Insights",
+        "date": "2026-10-26",
+        "author": "Jessica Tran",
+        "excerpt": "I once spent an entire Tuesday writing user stories for a new reporting feature. Staring at Jira, I broke down a one-page spec into dozens of tickets....",
+        "contentFile": "blog-1793019690545.md"
+    },
+    {
+        "id": "1793019643879",
+        "type": "news",
+        "title": "The Log File Is a Pre-Crime Report",
+        "category": "Tech Radar",
+        "date": "2026-10-26",
+        "author": "Emily Rostova",
+        "excerpt": "A junior engineer squints at the terminal. A torrent of text scrolls past, a firehose of system events from a dozen microservices. Ten years ago, this...",
+        "contentFile": "news-1793019643879.md"
+    },
+    {
         "id": "how-to-write-a-formal-report",
         "type": "blog",
         "title": "How to Write a Formal Report That Holds Up to Scrutiny",

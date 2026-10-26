@@ -5,6 +5,30 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Wrote 50 User Stories by Hand. Your AI Wrote Better Ones in 10 Minutes.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1793019690545.html</link>
+    <description><![CDATA[I once spent an entire Tuesday writing user stories for a new reporting feature. Staring at Jira, I broke down a one-page spec into dozens of tickets....]]></description>
+    <pubDate>Mon, 26 Oct 2026 13:01:30 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Log File Is a Pre-Crime Report]]></title>
+    <link>https://goreportify.com/article-pages/news-1793019643879.html</link>
+    <description><![CDATA[A junior engineer squints at the terminal. A torrent of text scrolls past, a firehose of system events from a dozen microservices. Ten years ago, this...]]></description>
+    <pubDate>Mon, 26 Oct 2026 13:00:43 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Write a Formal Report That Holds Up to Scrutiny]]></title>
+    <link>https://goreportify.com/article-pages/blog-how-to-write-a-formal-report.html</link>
+    <description><![CDATA[A formal report is the document you reach for when the stakes are real: a board submission, a compliance write-up, a client deliverable, or an internal audit. Unlike a quick status note, a formal repo]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Report Writing Format: The Structure Readers Actually Finish]]></title>
+    <link>https://goreportify.com/article-pages/blog-report-writing-format.html</link>
+    <description><![CDATA[If your reports keep getting skimmed and ignored, the problem is rarely the writing itself. It is the format. A clear report writing format tells the reader where to look before they start reading, wh]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Asked for an Estimate. You Started a Three-Day Debate.]]></title>
     <link>https://goreportify.com/article-pages/blog-1792933304433.html</link>
     <description><![CDATA[You’re in the room—real or virtual. The team is assembled. You’ve just finished walking through the new feature, a beautiful solution to a well-docume...]]></description>
@@ -279,30 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1792242037448.html</link>
     <description><![CDATA[The lawyer stood before the judge, explaining that the chatbot made him do it. He had used the new AI research tool to prepare a brief, and it had, wi...]]></description>
     <pubDate>Sat, 17 Oct 2026 13:00:37 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Monthly Status Report Format That Keeps Stakeholders Aligned]]></title>
-    <link>https://goreportify.com/article-pages/blog-monthly-status-report-format.html</link>
-    <description><![CDATA[A monthly status report lives or dies by its format. Stakeholders do not have time to hunt for the answer to "is this project okay?" A clean, repeatable format lets them scan in thirty seconds and tru]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How to Write a Monthly Performance Report That Drives Decisions]]></title>
-    <link>https://goreportify.com/article-pages/blog-monthly-performance-report.html</link>
-    <description><![CDATA[If your team treats the monthly performance report as a box to tick, you are leaving real value on the table. A good report turns a month of scattered activity into a clear story about what moved the ]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Engineering Said 'It's Complex.' You Nodded and Moved On.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1792155679570.html</link>
-    <description><![CDATA[It’s sprint planning. You present the next feature, the one sales has been asking for. The one that lit up your user interviews. Your tech lead squint...]]></description>
-    <pubDate>Fri, 16 Oct 2026 13:01:19 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Dependency Graph Is a Daisy Chain of Liability]]></title>
-    <link>https://goreportify.com/article-pages/news-1792155636450.html</link>
-    <description><![CDATA[The command is so automatic it’s muscle memory. An engineer types pip install new-library and hits enter. A cascade of text scrolls by, fetching not o...]]></description>
-    <pubDate>Fri, 16 Oct 2026 13:00:36 GMT</pubDate>
   </item>
 </channel>
 </rss>
