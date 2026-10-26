@@ -1,5 +1,53 @@
 [
     {
+        "id": "how-to-write-a-formal-report",
+        "type": "blog",
+        "title": "How to Write a Formal Report That Holds Up to Scrutiny",
+        "category": "Deep Insights",
+        "date": "2026-10-26",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A formal report is the document you reach for when the stakes are real: a board submission, a compliance write-up, a client deliverable, or an internal audit. Unlike a quick status note, a formal repo",
+        "contentFile": "how-to-write-a-formal-report.html",
+        "url": "/article-pages/how-to-write-a-formal-report.html",
+        "targetKeyword": "how to write a formal report",
+        "secondaryKeywords": [
+            "formal report",
+            "how to write a formal report",
+            "formal report structure",
+            "business report writing"
+        ],
+        "internalLinks": [
+            "report-writing-format",
+            "how-to-make-a-report-in-excel",
+            "how-to-write-a-monthly-report"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "report-writing-format",
+        "type": "blog",
+        "title": "Report Writing Format: The Structure Readers Actually Finish",
+        "category": "Deep Insights",
+        "date": "2026-10-26",
+        "author": "Reportify AI Editorial",
+        "excerpt": "If your reports keep getting skimmed and ignored, the problem is rarely the writing itself. It is the format. A clear report writing format tells the reader where to look before they start reading, wh",
+        "contentFile": "report-writing-format.html",
+        "url": "/article-pages/report-writing-format.html",
+        "targetKeyword": "report writing format",
+        "secondaryKeywords": [
+            "report writing format",
+            "report format template",
+            "business report structure",
+            "how to format a report"
+        ],
+        "internalLinks": [
+            "how-to-make-a-report-in-excel",
+            "how-to-write-a-formal-report",
+            "how-to-write-a-weekly-report"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1792933304433",
         "type": "blog",
         "title": "You Asked for an Estimate. You Started a Three-Day Debate.",
