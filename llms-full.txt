@@ -15,6 +15,18 @@
 
 ## All Articles
 
+- [You Announced the Decision. You Forgot to Sell the Rationale.](https://goreportify.com/article-pages/blog-1793106145973.html)
+  - Type: Deep Insights | Date: 2026-10-27 | Author: David Sterling
+  - You hit “send” on the Slack message. “Team, after reviewing the data and options, we’ve decided to move forward with the integrated checkout flow inst...
+- [The Fine-Tuning Is a Lobotomy](https://goreportify.com/article-pages/news-1793106104126.html)
+  - Type: Tech Radar | Date: 2026-10-27 | Author: Jessica Tran
+  - A few months ago, the smartest machine on the planet got dumber. Developers who once coaxed intricate code from GPT-4 suddenly found it refusing simpl...
+- [Daily Report Template: Copy This Format and Fill It in 5 Minutes](https://goreportify.com/article-pages/blog-daily-report-template.html)
+  - Type: Deep Insights | Date: 2026-10-27 | Author: Reportify AI Editorial
+  - If you have ever ended the day unsure whether your work was visible to anyone, a daily report fixes that. You do not need a fancy tool or a long process. You need a fixed format you can fill in fast. 
+- [How to Write a Daily Report: A Simple Structure That Takes 5 Minutes](https://goreportify.com/article-pages/blog-how-to-write-a-daily-report.html)
+  - Type: Deep Insights | Date: 2026-10-27 | Author: Reportify AI Editorial
+  - A daily report is the shortest, most frequent status update you will ever write. Done well, it takes five minutes and keeps your manager, your client, or your own future self informed without a single
 - [You Wrote 50 User Stories by Hand. Your AI Wrote Better Ones in 10 Minutes.](https://goreportify.com/article-pages/blog-1793019690545.html)
   - Type: Deep Insights | Date: 2026-10-26 | Author: Jessica Tran
   - I once spent an entire Tuesday writing user stories for a new reporting feature. Staring at Jira, I broke down a one-page spec into dozens of tickets....
@@ -2694,4 +2706,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 887 articles (479 blog + 408 news) + 8 core pages._
+_Total: 891 articles (482 blog + 409 news) + 8 core pages._

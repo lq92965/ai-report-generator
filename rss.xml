@@ -5,6 +5,30 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[You Announced the Decision. You Forgot to Sell the Rationale.]]></title>
+    <link>https://goreportify.com/article-pages/blog-1793106145973.html</link>
+    <description><![CDATA[You hit “send” on the Slack message. “Team, after reviewing the data and options, we’ve decided to move forward with the integrated checkout flow inst...]]></description>
+    <pubDate>Tue, 27 Oct 2026 13:02:25 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Fine-Tuning Is a Lobotomy]]></title>
+    <link>https://goreportify.com/article-pages/news-1793106104126.html</link>
+    <description><![CDATA[A few months ago, the smartest machine on the planet got dumber. Developers who once coaxed intricate code from GPT-4 suddenly found it refusing simpl...]]></description>
+    <pubDate>Tue, 27 Oct 2026 13:01:44 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Daily Report Template: Copy This Format and Fill It in 5 Minutes]]></title>
+    <link>https://goreportify.com/article-pages/blog-daily-report-template.html</link>
+    <description><![CDATA[If you have ever ended the day unsure whether your work was visible to anyone, a daily report fixes that. You do not need a fancy tool or a long process. You need a fixed format you can fill in fast. ]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Write a Daily Report: A Simple Structure That Takes 5 Minutes]]></title>
+    <link>https://goreportify.com/article-pages/blog-how-to-write-a-daily-report.html</link>
+    <description><![CDATA[A daily report is the shortest, most frequent status update you will ever write. Done well, it takes five minutes and keeps your manager, your client, or your own future self informed without a single]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Wrote 50 User Stories by Hand. Your AI Wrote Better Ones in 10 Minutes.]]></title>
     <link>https://goreportify.com/article-pages/blog-1793019690545.html</link>
     <description><![CDATA[I once spent an entire Tuesday writing user stories for a new reporting feature. Staring at Jira, I broke down a one-page spec into dozens of tickets....]]></description>
@@ -279,30 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1792328436238.html</link>
     <description><![CDATA[The engineering lead’s mouse hovers over the “merge” button. It’s 10 p.m. on a Tuesday. In the Slack channel, a product manager is waiting with a sing...]]></description>
     <pubDate>Sun, 18 Oct 2026 13:00:36 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Project Status Report Template You Can Copy Today]]></title>
-    <link>https://goreportify.com/article-pages/blog-project-status-report-template.html</link>
-    <description><![CDATA[Finding the right project status report template should take five minutes, not an afternoon. Most teams overbuild the first version and then abandon it because it is too heavy to fill in weekly. This ]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How to Write a Project Status Report Stakeholders Actually Read]]></title>
-    <link>https://goreportify.com/article-pages/blog-how-to-write-a-project-status-report.html</link>
-    <description><![CDATA[A project status report is the single document that decides whether your project gets more support or more scrutiny. Write it well and stakeholders trust you with autonomy. Write it poorly and every s]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Shipped the Feature. Now No One Knows How to Sell It.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1792242075592.html</link>
-    <description><![CDATA[The deploy notification hits the engineering Slack channel. You see the green checkmark. It’s live. You post a quick “It’s shipped!” message in the ma...]]></description>
-    <pubDate>Sat, 17 Oct 2026 13:01:15 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Hallucination Is Now a Scapegoat]]></title>
-    <link>https://goreportify.com/article-pages/news-1792242037448.html</link>
-    <description><![CDATA[The lawyer stood before the judge, explaining that the chatbot made him do it. He had used the new AI research tool to prepare a brief, and it had, wi...]]></description>
-    <pubDate>Sat, 17 Oct 2026 13:00:37 GMT</pubDate>
   </item>
 </channel>
 </rss>

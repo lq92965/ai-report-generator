@@ -1,5 +1,71 @@
 [
     {
+        "id": "1793106145973",
+        "type": "blog",
+        "title": "You Announced the Decision. You Forgot to Sell the Rationale.",
+        "category": "Deep Insights",
+        "date": "2026-10-27",
+        "author": "David Sterling",
+        "excerpt": "You hit “send” on the Slack message. “Team, after reviewing the data and options, we’ve decided to move forward with the integrated checkout flow inst...",
+        "contentFile": "blog-1793106145973.md"
+    },
+    {
+        "id": "1793106104126",
+        "type": "news",
+        "title": "The Fine-Tuning Is a Lobotomy",
+        "category": "Tech Radar",
+        "date": "2026-10-27",
+        "author": "Jessica Tran",
+        "excerpt": "A few months ago, the smartest machine on the planet got dumber. Developers who once coaxed intricate code from GPT-4 suddenly found it refusing simpl...",
+        "contentFile": "news-1793106104126.md"
+    },
+    {
+        "id": "daily-report-template",
+        "type": "blog",
+        "title": "Daily Report Template: Copy This Format and Fill It in 5 Minutes",
+        "category": "Deep Insights",
+        "date": "2026-10-27",
+        "author": "Reportify AI Editorial",
+        "excerpt": "If you have ever ended the day unsure whether your work was visible to anyone, a daily report fixes that. You do not need a fancy tool or a long process. You need a fixed format you can fill in fast. ",
+        "contentFile": "daily-report-template.html",
+        "url": "/article-pages/daily-report-template.html",
+        "targetKeyword": "daily report template",
+        "secondaryKeywords": [
+            "daily work report format",
+            "end of day report template",
+            "simple daily report"
+        ],
+        "internalLinks": [
+            "how-to-write-a-daily-report",
+            "how-to-write-a-weekly-report",
+            "weekly-report-template"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "how-to-write-a-daily-report",
+        "type": "blog",
+        "title": "How to Write a Daily Report: A Simple Structure That Takes 5 Minutes",
+        "category": "Deep Insights",
+        "date": "2026-10-27",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A daily report is the shortest, most frequent status update you will ever write. Done well, it takes five minutes and keeps your manager, your client, or your own future self informed without a single",
+        "contentFile": "how-to-write-a-daily-report.html",
+        "url": "/article-pages/how-to-write-a-daily-report.html",
+        "targetKeyword": "how to write a daily report",
+        "secondaryKeywords": [
+            "daily report format",
+            "daily work report",
+            "end of day report"
+        ],
+        "internalLinks": [
+            "how-to-write-a-weekly-report",
+            "weekly-report-template",
+            "how-to-write-a-monthly-report"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1793019690545",
         "type": "blog",
         "title": "You Wrote 50 User Stories by Hand. Your AI Wrote Better Ones in 10 Minutes.",
