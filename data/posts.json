@@ -1,5 +1,61 @@
 [
     {
+        "id": "1793192425506",
+        "type": "blog",
+        "title": "AI Meeting Notes: What to Record, What to Skip, and How to Review Them",
+        "category": "Deep Insights",
+        "date": "2026-10-28",
+        "author": "Emily Rostova",
+        "excerpt": "The transcript is 8,000 words. The meeting was 45 minutes. You need three things from it: the decision on the pricing test, who owns the migration, an...",
+        "contentFile": "blog-1793192425506.md"
+    },
+    {
+        "id": "sales-report-template",
+        "type": "blog",
+        "title": "Sales Report Template: A Copy-Paste Structure for Weekly and Monthly Reports",
+        "category": "Deep Insights",
+        "date": "2026-10-28",
+        "author": "Reportify AI Editorial",
+        "excerpt": "Most sales reps do not have a reporting problem. They have a starting problem. They open a blank document, stare at it, and either skip the report or dump a CRM screenshot. A sales report template rem",
+        "contentFile": "sales-report-template.html",
+        "url": "/article-pages/sales-report-template.html",
+        "targetKeyword": "sales report template",
+        "secondaryKeywords": [
+            "weekly sales report",
+            "monthly sales report",
+            "sales performance template"
+        ],
+        "internalLinks": [
+            "how-to-write-a-sales-report",
+            "weekly-report-template",
+            "daily-report-template"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "how-to-write-a-sales-report",
+        "type": "blog",
+        "title": "How to Write a Sales Report That Your Manager Actually Reads",
+        "category": "Deep Insights",
+        "date": "2026-10-28",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A sales report is a snapshot of how much revenue you created, where it came from, and what is likely to close next. It is one of the few documents that directly connects your daily work to the company",
+        "contentFile": "how-to-write-a-sales-report.html",
+        "url": "/article-pages/how-to-write-a-sales-report.html",
+        "targetKeyword": "how to write a sales report",
+        "secondaryKeywords": [
+            "sales report template",
+            "weekly sales report",
+            "sales performance report"
+        ],
+        "internalLinks": [
+            "how-to-write-a-daily-report",
+            "how-to-make-a-report-in-excel",
+            "report-writing-format"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1793106145973",
         "type": "blog",
         "title": "You Announced the Decision. You Forgot to Sell the Rationale.",

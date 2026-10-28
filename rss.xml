@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[AI Meeting Notes: What to Record, What to Skip, and How to Review Them]]></title>
+    <link>https://goreportify.com/article-pages/blog-1793192425506.html</link>
+    <description><![CDATA[The transcript is 8,000 words. The meeting was 45 minutes. You need three things from it: the decision on the pricing test, who owns the migration, an...]]></description>
+    <pubDate>Wed, 28 Oct 2026 13:00:25 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Sales Report Template: A Copy-Paste Structure for Weekly and Monthly Reports]]></title>
+    <link>https://goreportify.com/article-pages/blog-sales-report-template.html</link>
+    <description><![CDATA[Most sales reps do not have a reporting problem. They have a starting problem. They open a blank document, stare at it, and either skip the report or dump a CRM screenshot. A sales report template rem]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Write a Sales Report That Your Manager Actually Reads]]></title>
+    <link>https://goreportify.com/article-pages/blog-how-to-write-a-sales-report.html</link>
+    <description><![CDATA[A sales report is a snapshot of how much revenue you created, where it came from, and what is likely to close next. It is one of the few documents that directly connects your daily work to the company]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[You Announced the Decision. You Forgot to Sell the Rationale.]]></title>
     <link>https://goreportify.com/article-pages/blog-1793106145973.html</link>
     <description><![CDATA[You hit “send” on the Slack message. “Team, after reviewing the data and options, we’ve decided to move forward with the integrated checkout flow inst...]]></description>
@@ -285,24 +303,6 @@
     <link>https://goreportify.com/article-pages/blog-1792404322195.html</link>
     <description><![CDATA[The Slack notification pops up. It’s the head of sales. “Quick question. Can we get a button on the dashboard that exports to a purple CSV? Big deal o...]]></description>
     <pubDate>Mon, 19 Oct 2026 10:05:22 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The A/B Test Is Now Plausible Deniability]]></title>
-    <link>https://goreportify.com/article-pages/news-1792404282530.html</link>
-    <description><![CDATA[The dashboard glows in the Tuesday morning stand-up. On the left, a button, soft blue: "See Our Plans." On the right, the challenger, urgent orange: "...]]></description>
-    <pubDate>Mon, 19 Oct 2026 10:04:42 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Spent the Day Forwarding Emails. You Weren't a PM, You Were a Postmaster.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1792328473500.html</link>
-    <description><![CDATA[It’s 6 PM. You close your laptop, and your brain feels like a dial-up modem trying to load a 4K video. You were busy. Non-stop. You answered 47 Slack...]]></description>
-    <pubDate>Sun, 18 Oct 2026 13:01:13 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Technical Debt Is Now Collateral]]></title>
-    <link>https://goreportify.com/article-pages/news-1792328436238.html</link>
-    <description><![CDATA[The engineering lead’s mouse hovers over the “merge” button. It’s 10 p.m. on a Tuesday. In the Slack channel, a product manager is waiting with a sing...]]></description>
-    <pubDate>Sun, 18 Oct 2026 13:00:36 GMT</pubDate>
   </item>
 </channel>
 </rss>

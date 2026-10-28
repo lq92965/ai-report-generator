@@ -15,6 +15,15 @@
 
 ## All Articles
 
+- [AI Meeting Notes: What to Record, What to Skip, and How to Review Them](https://goreportify.com/article-pages/blog-1793192425506.html)
+  - Type: Deep Insights | Date: 2026-10-28 | Author: Emily Rostova
+  - The transcript is 8,000 words. The meeting was 45 minutes. You need three things from it: the decision on the pricing test, who owns the migration, an...
+- [Sales Report Template: A Copy-Paste Structure for Weekly and Monthly Reports](https://goreportify.com/article-pages/blog-sales-report-template.html)
+  - Type: Deep Insights | Date: 2026-10-28 | Author: Reportify AI Editorial
+  - Most sales reps do not have a reporting problem. They have a starting problem. They open a blank document, stare at it, and either skip the report or dump a CRM screenshot. A sales report template rem
+- [How to Write a Sales Report That Your Manager Actually Reads](https://goreportify.com/article-pages/blog-how-to-write-a-sales-report.html)
+  - Type: Deep Insights | Date: 2026-10-28 | Author: Reportify AI Editorial
+  - A sales report is a snapshot of how much revenue you created, where it came from, and what is likely to close next. It is one of the few documents that directly connects your daily work to the company
 - [You Announced the Decision. You Forgot to Sell the Rationale.](https://goreportify.com/article-pages/blog-1793106145973.html)
   - Type: Deep Insights | Date: 2026-10-27 | Author: David Sterling
   - You hit “send” on the Slack message. “Team, after reviewing the data and options, we’ve decided to move forward with the integrated checkout flow inst...
@@ -2706,4 +2715,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 891 articles (482 blog + 409 news) + 8 core pages._
+_Total: 894 articles (485 blog + 409 news) + 8 core pages._
