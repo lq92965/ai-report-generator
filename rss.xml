@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[AI Productivity Tools for PMs: What to Automate and What to Keep Doing Yourself]]></title>
+    <link>https://goreportify.com/article-pages/blog-1793278821904.html</link>
+    <description><![CDATA[The first time I used an AI tool to summarize a week of customer calls, I felt a small pang of guilt. It took ninety seconds. I used to spend two hour...]]></description>
+    <pubDate>Thu, 29 Oct 2026 13:00:21 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Incident Report Template You Can Copy Today]]></title>
+    <link>https://goreportify.com/article-pages/blog-incident-report-template.html</link>
+    <description><![CDATA[Every team needs a standard incident report template before the next outage hits, not during it. A template removes the guesswork about what to write when people are tired and stressed. It also makes ]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Write an Incident Report That Fixes the Problem]]></title>
+    <link>https://goreportify.com/article-pages/blog-how-to-write-an-incident-report.html</link>
+    <description><![CDATA[An incident report records what broke, what it broke, who it touched, and what you did about it. It is the paper trail every operations, security, and support team relies on after something goes wrong]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[AI Meeting Notes: What to Record, What to Skip, and How to Review Them]]></title>
     <link>https://goreportify.com/article-pages/blog-1793192425506.html</link>
     <description><![CDATA[The transcript is 8,000 words. The meeting was 45 minutes. You need three things from it: the decision on the pricing test, who owns the migration, an...]]></description>
@@ -285,24 +303,6 @@
     <link>https://goreportify.com/article-pages/news-1792414959528.html</link>
     <description><![CDATA[It used to be simple. A developer would check a config.ini file into source control, a file holding the database password in plain text, and nobody ba...]]></description>
     <pubDate>Mon, 19 Oct 2026 13:02:39 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You're Reading 100 Support Tickets. The AI Found the Pattern in 10.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1792414890395.html</link>
-    <description><![CDATA[It’s 10 AM on Tuesday. You just launched a redesigned checkout flow. Now you’re staring at the support queue. The ticket count ticks up: 47, 58, 71. Y...]]></description>
-    <pubDate>Mon, 19 Oct 2026 13:01:30 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Unit Test Is Now an Alibi]]></title>
-    <link>https://goreportify.com/article-pages/news-1792414844243.html</link>
-    <description><![CDATA[The pull request is blocked. Not by a colleague with a question, but by an automated gatekeeper demanding tribute. The price: one more unit test to nu...]]></description>
-    <pubDate>Mon, 19 Oct 2026 13:00:44 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You're a Product Manager, Not a Short-Order Cook for Feature Requests]]></title>
-    <link>https://goreportify.com/article-pages/blog-1792404322195.html</link>
-    <description><![CDATA[The Slack notification pops up. It’s the head of sales. “Quick question. Can we get a button on the dashboard that exports to a purple CSV? Big deal o...]]></description>
-    <pubDate>Mon, 19 Oct 2026 10:05:22 GMT</pubDate>
   </item>
 </channel>
 </rss>

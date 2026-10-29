@@ -15,6 +15,15 @@
 
 ## All Articles
 
+- [AI Productivity Tools for PMs: What to Automate and What to Keep Doing Yourself](https://goreportify.com/article-pages/blog-1793278821904.html)
+  - Type: Deep Insights | Date: 2026-10-29 | Author: David Sterling
+  - The first time I used an AI tool to summarize a week of customer calls, I felt a small pang of guilt. It took ninety seconds. I used to spend two hour...
+- [Incident Report Template You Can Copy Today](https://goreportify.com/article-pages/blog-incident-report-template.html)
+  - Type: Deep Insights | Date: 2026-10-29 | Author: Reportify AI Editorial
+  - Every team needs a standard incident report template before the next outage hits, not during it. A template removes the guesswork about what to write when people are tired and stressed. It also makes 
+- [How to Write an Incident Report That Fixes the Problem](https://goreportify.com/article-pages/blog-how-to-write-an-incident-report.html)
+  - Type: Deep Insights | Date: 2026-10-29 | Author: Reportify AI Editorial
+  - An incident report records what broke, what it broke, who it touched, and what you did about it. It is the paper trail every operations, security, and support team relies on after something goes wrong
 - [AI Meeting Notes: What to Record, What to Skip, and How to Review Them](https://goreportify.com/article-pages/blog-1793192425506.html)
   - Type: Deep Insights | Date: 2026-10-28 | Author: Emily Rostova
   - The transcript is 8,000 words. The meeting was 45 minutes. You need three things from it: the decision on the pricing test, who owns the migration, an...
@@ -2715,4 +2724,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 894 articles (485 blog + 409 news) + 8 core pages._
+_Total: 897 articles (488 blog + 409 news) + 8 core pages._
