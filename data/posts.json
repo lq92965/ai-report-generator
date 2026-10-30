@@ -1,5 +1,15 @@
 [
     {
+        "id": "1793365221570",
+        "type": "blog",
+        "title": "How PM Teams Can Improve Ticket Outcomes",
+        "category": "Deep Insights",
+        "date": "2026-10-30",
+        "author": "Emily Rostova",
+        "excerpt": "The bug report said: \"Search is broken. Please fix ASAP.\"\n\nThe developer opened it, read it twice, and moved on to the next ticket. She had no idea wh...",
+        "contentFile": "blog-1793365221570.md"
+    },
+    {
         "id": "1793278821904",
         "type": "blog",
         "title": "AI Productivity Tools for PMs: What to Automate and What to Keep Doing Yourself",

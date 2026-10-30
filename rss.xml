@@ -5,6 +5,14 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[How PM Teams Can Improve Ticket Outcomes]]></title>
+    <link>https://goreportify.com/article-pages/blog-1793365221570.html</link>
+    <description><![CDATA[The bug report said: "Search is broken. Please fix ASAP."
+
+The developer opened it, read it twice, and moved on to the next ticket. She had no idea wh...]]></description>
+    <pubDate>Fri, 30 Oct 2026 13:00:21 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[AI Productivity Tools for PMs: What to Automate and What to Keep Doing Yourself]]></title>
     <link>https://goreportify.com/article-pages/blog-1793278821904.html</link>
     <description><![CDATA[The first time I used an AI tool to summarize a week of customer calls, I felt a small pang of guilt. It took ninety seconds. I used to spend two hour...]]></description>
@@ -297,12 +305,6 @@
     <link>https://goreportify.com/article-pages/blog-1792414996783.html</link>
     <description><![CDATA[The Slack notification from your engineering lead lands with a thud. "Got a minute? We found something in staging." Your stomach sinks. You know what...]]></description>
     <pubDate>Mon, 19 Oct 2026 13:03:16 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Environment Variable Is Now a State Secret]]></title>
-    <link>https://goreportify.com/article-pages/news-1792414959528.html</link>
-    <description><![CDATA[It used to be simple. A developer would check a config.ini file into source control, a file holding the database password in plain text, and nobody ba...]]></description>
-    <pubDate>Mon, 19 Oct 2026 13:02:39 GMT</pubDate>
   </item>
 </channel>
 </rss>

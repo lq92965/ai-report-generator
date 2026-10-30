@@ -15,6 +15,11 @@
 
 ## All Articles
 
+- [How PM Teams Can Improve Ticket Outcomes](https://goreportify.com/article-pages/blog-1793365221570.html)
+  - Type: Deep Insights | Date: 2026-10-30 | Author: Emily Rostova
+  - The bug report said: "Search is broken. Please fix ASAP."
+
+The developer opened it, read it twice, and moved on to the next ticket. She had no idea wh...
 - [AI Productivity Tools for PMs: What to Automate and What to Keep Doing Yourself](https://goreportify.com/article-pages/blog-1793278821904.html)
   - Type: Deep Insights | Date: 2026-10-29 | Author: David Sterling
   - The first time I used an AI tool to summarize a week of customer calls, I felt a small pang of guilt. It took ninety seconds. I used to spend two hour...
@@ -2724,4 +2729,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 897 articles (488 blog + 409 news) + 8 core pages._
+_Total: 898 articles (489 blog + 409 news) + 8 core pages._
