@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [AI Tools for Product Managers: A Decision Guide for What to Hand Off](https://goreportify.com/article-pages/blog-1793451620297.html)
+  - Type: Deep Insights | Date: 2026-10-31 | Author: Olivia Thorne
+  - A PM I know spent a Tuesday afternoon pasting support tickets into a chatbot. Two hundred of them. She wanted themes. By 5 p.m. she had a decent list...
 - [How PM Teams Can Improve Ticket Outcomes](https://goreportify.com/article-pages/blog-1793365221570.html)
   - Type: Deep Insights | Date: 2026-10-30 | Author: Emily Rostova
   - The bug report said: "Search is broken. Please fix ASAP."
@@ -2729,4 +2732,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 898 articles (489 blog + 409 news) + 8 core pages._
+_Total: 899 articles (490 blog + 409 news) + 8 core pages._
