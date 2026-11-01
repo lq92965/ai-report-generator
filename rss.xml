@@ -5,6 +5,38 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Fixing Reporting Workflows with Better Forward]]></title>
+    <link>https://goreportify.com/article-pages/blog-1793541623851.html</link>
+    <description><![CDATA[The forward is the whole game.
+
+You write a weekly update, hit send, and 40 minutes later your VP forwards it to the CEO with one line: "See below." T...]]></description>
+    <pubDate>Sun, 01 Nov 2026 14:00:23 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Executive Summary Template: The One-Page Shell You Fill Every Time]]></title>
+    <link>https://goreportify.com/article-pages/blog-executive-summary-template.html</link>
+    <description><![CDATA[An executive summary template is a fixed shell you reuse for every report so the structure never changes and only the content does. The point is not to look consistent — it is to save the thinking. Wh]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Write an Executive Summary: A Plain Method Busy Leaders Can Skim]]></title>
+    <link>https://goreportify.com/article-pages/blog-how-to-write-an-executive-summary.html</link>
+    <description><![CDATA[An executive summary is the short version of a longer report, written so a busy reader can decide what to do without reading the whole thing. It is not a preface and it is not a teaser. It stands alon]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Expense Report Template: A Clean Format You Can Reuse Every Month]]></title>
+    <link>https://goreportify.com/article-pages/blog-expense-report-template.html</link>
+    <description><![CDATA[A reusable expense report template saves you from rebuilding the same document every pay cycle. Instead of staring at a blank page each month, you open one file, drop in the new numbers, and send it. ]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Write an Expense Report (Step-by-Step Guide)]]></title>
+    <link>https://goreportify.com/article-pages/blog-how-to-write-an-expense-report.html</link>
+    <description><![CDATA[An expense report is the document you send to get reimbursed for money you spent on behalf of your company, or to show a client what their project actually cost. It lists what you bought, how much it ]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[AI Tools for Product Managers: A Decision Guide for What to Hand Off]]></title>
     <link>https://goreportify.com/article-pages/blog-1793451620297.html</link>
     <description><![CDATA[A PM I know spent a Tuesday afternoon pasting support tickets into a chatbot. Two hundred of them. She wanted themes. By 5 p.m. she had a decent list...]]></description>
@@ -275,36 +307,6 @@ The developer opened it, read it twice, and moved on to the next ticket. She had
     <link>https://goreportify.com/article-pages/news-1792501269481.html</link>
     <description><![CDATA[You did everything right. You filled out the form, triple-checked the account number, and clicked "Submit." A grey box bloomed on the screen. "Somethi...]]></description>
     <pubDate>Tue, 20 Oct 2026 13:01:09 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Import Statement Is Now an Invitation]]></title>
-    <link>https://goreportify.com/article-pages/news-1792501234539.html</link>
-    <description><![CDATA[The line is typed without thinking. import pandas. require('left-pad'). It’s muscle memory, the modern equivalent of a carpenter reaching for a famili...]]></description>
-    <pubDate>Tue, 20 Oct 2026 13:00:34 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How to Write a Project Status Update (With a Real Example)]]></title>
-    <link>https://goreportify.com/article-pages/blog-project-status-update-example.html</link>
-    <description><![CDATA[If you searched for a project status update example, you probably have a deadline and a manager waiting. This guide gives you a fill-in template and a complete worked example so you can send a clear u]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[First 1 on 1 Meeting Questions: How to Start a Manager Relationship Right]]></title>
-    <link>https://goreportify.com/article-pages/blog-first-1-on-1-meeting-questions.html</link>
-    <description><![CDATA[Your first 1 on 1 meeting questions set the tone for the entire working relationship. The opening conversation is where trust is built or lost, and you do not get a second chance at a first impression]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How to Build a One on One Meeting Agenda That Actually Works]]></title>
-    <link>https://goreportify.com/article-pages/blog-one-on-one-meeting-agenda.html</link>
-    <description><![CDATA[A one on one meeting agenda is not a calendar invite with a title. It is the short list of topics you and your manager (or your report) work through together, usually for 25 to 50 minutes, on a regula]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[One on One Meeting Questions That Actually Move the Work Forward]]></title>
-    <link>https://goreportify.com/article-pages/blog-one-on-one-meeting-questions.html</link>
-    <description><![CDATA[If you are looking for one on one meeting questions that do more than fill 30 minutes, you are in the right place. A one on one is the most useful meeting most managers underuse. It is the only recurr]]></description>
-    <pubDate>Invalid Date</pubDate>
   </item>
 </channel>
 </rss>

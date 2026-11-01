@@ -1,5 +1,15 @@
 [
     {
+        "id": "1793541623851",
+        "type": "blog",
+        "title": "Fixing Reporting Workflows with Better Forward",
+        "category": "Deep Insights",
+        "date": "2026-11-01",
+        "author": "Olivia Thorne",
+        "excerpt": "The forward is the whole game.\n\nYou write a weekly update, hit send, and 40 minutes later your VP forwards it to the CEO with one line: \"See below.\" T...",
+        "contentFile": "blog-1793541623851.md"
+    },
+    {
         "id": "executive-summary-template",
         "type": "blog",
         "title": "Executive Summary Template: The One-Page Shell You Fill Every Time",
