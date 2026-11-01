@@ -1,5 +1,97 @@
 [
     {
+        "id": "executive-summary-template",
+        "type": "blog",
+        "title": "Executive Summary Template: The One-Page Shell You Fill Every Time",
+        "category": "Deep Insights",
+        "date": "2026-10-31",
+        "author": "Reportify AI Editorial",
+        "excerpt": "An executive summary template is a fixed shell you reuse for every report so the structure never changes and only the content does. The point is not to look consistent — it is to save the thinking. Wh",
+        "contentFile": "executive-summary-template.html",
+        "url": "/article-pages/executive-summary-template.html",
+        "targetKeyword": "executive summary template",
+        "secondaryKeywords": [
+            "executive summary example",
+            "business executive summary template",
+            "one page executive summary"
+        ],
+        "internalLinks": [
+            "monthly-report-template",
+            "how-to-write-a-project-status-report",
+            "how-to-make-a-report-in-excel"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "how-to-write-an-executive-summary",
+        "type": "blog",
+        "title": "How to Write an Executive Summary: A Plain Method Busy Leaders Can Skim",
+        "category": "Deep Insights",
+        "date": "2026-10-31",
+        "author": "Reportify AI Editorial",
+        "excerpt": "An executive summary is the short version of a longer report, written so a busy reader can decide what to do without reading the whole thing. It is not a preface and it is not a teaser. It stands alon",
+        "contentFile": "how-to-write-an-executive-summary.html",
+        "url": "/article-pages/how-to-write-an-executive-summary.html",
+        "targetKeyword": "how to write an executive summary",
+        "secondaryKeywords": [
+            "executive summary example",
+            "how to write an executive summary for a report",
+            "executive summary format"
+        ],
+        "internalLinks": [
+            "how-to-write-a-weekly-report",
+            "how-to-write-a-monthly-report",
+            "report-writing-format"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "expense-report-template",
+        "type": "blog",
+        "title": "Expense Report Template: A Clean Format You Can Reuse Every Month",
+        "category": "Deep Insights",
+        "date": "2026-11-01",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A reusable expense report template saves you from rebuilding the same document every pay cycle. Instead of staring at a blank page each month, you open one file, drop in the new numbers, and send it. ",
+        "contentFile": "expense-report-template.html",
+        "url": "/article-pages/expense-report-template.html",
+        "targetKeyword": "expense report template",
+        "secondaryKeywords": [
+            "monthly expense report template",
+            "business expense sheet",
+            "reusable expense form"
+        ],
+        "internalLinks": [
+            "daily-report-template",
+            "how-to-write-a-sales-report",
+            "sales-report-template"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "how-to-write-an-expense-report",
+        "type": "blog",
+        "title": "How to Write an Expense Report (Step-by-Step Guide)",
+        "category": "Deep Insights",
+        "date": "2026-11-01",
+        "author": "Reportify AI Editorial",
+        "excerpt": "An expense report is the document you send to get reimbursed for money you spent on behalf of your company, or to show a client what their project actually cost. It lists what you bought, how much it ",
+        "contentFile": "how-to-write-an-expense-report.html",
+        "url": "/article-pages/how-to-write-an-expense-report.html",
+        "targetKeyword": "how to write an expense report",
+        "secondaryKeywords": [
+            "expense report template",
+            "business expense report",
+            "how to fill out an expense report"
+        ],
+        "internalLinks": [
+            "daily-report-template",
+            "how-to-write-a-sales-report",
+            "sales-report-template"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1793451620297",
         "type": "blog",
         "title": "AI Tools for Product Managers: A Decision Guide for What to Hand Off",
