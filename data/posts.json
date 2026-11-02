@@ -1,5 +1,53 @@
 [
     {
+        "id": "how-to-write-a-financial-report",
+        "type": "blog",
+        "title": "How to Write a Financial Report That Stakeholders Trust",
+        "category": "Deep Insights",
+        "date": "2026-11-02",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A financial report is the one document where a small wording error can change a decision worth real money. Managers read it to decide whether to hire, investors read it to decide whether to fund, and ",
+        "contentFile": "how-to-write-a-financial-report.html",
+        "url": "/article-pages/how-to-write-a-financial-report.html",
+        "targetKeyword": "how to write a financial report",
+        "secondaryKeywords": [
+            "financial report template",
+            "monthly financial report",
+            "business financial summary",
+            "finance report structure"
+        ],
+        "internalLinks": [
+            "how-to-write-a-sales-report",
+            "expense-report-template",
+            "monthly-performance-report"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "how-to-write-a-bug-report",
+        "type": "blog",
+        "title": "How to Write a Bug Report That Engineers Actually Fix",
+        "category": "Deep Insights",
+        "date": "2026-11-02",
+        "author": "Reportify AI Editorial",
+        "excerpt": "When software breaks, the time it takes to fix usually has less to do with how hard the bug is and more to do with how clear the report was. A message that just says \"the export is broken\" can sit in ",
+        "contentFile": "how-to-write-a-bug-report.html",
+        "url": "/article-pages/how-to-write-a-bug-report.html",
+        "targetKeyword": "how to write a bug report",
+        "secondaryKeywords": [
+            "bug report template",
+            "software bug report",
+            "QA bug report",
+            "defect report"
+        ],
+        "internalLinks": [
+            "how-to-write-a-daily-report",
+            "how-to-write-an-incident-report",
+            "project-status-report-template"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1793541623851",
         "type": "blog",
         "title": "Fixing Reporting Workflows with Better Forward",
