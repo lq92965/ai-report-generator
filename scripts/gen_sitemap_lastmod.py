@@ -59,9 +59,15 @@ for rel, freq, prio, lm in STATIC:
 
 ap = os.path.join(BASE, 'article-pages')
 files = sorted(os.listdir(ap), reverse=True)
-for f in files:
-    if not f.endswith('.html'):
-        continue
+
+# Crawl-budget cap: new/low-authority sites should keep sitemaps small.
+# A large sitemap of never-crawled URLs throttles site-wide crawling
+# ("Discovered - currently not indexed"). Only newest N articles are listed;
+# older pages stay live but leave the sitemap.
+MAX_ARTICLE_URLS = 50
+
+kept = [f for f in files if f.endswith('.html')][:MAX_ARTICLE_URLS]
+for f in kept:
     lm = by_html.get(f) or datetime.date.fromtimestamp(
         os.path.getmtime(os.path.join(ap, f))).isoformat()
     lines.append(url_block(f'https://goreportify.com/article-pages/{f}',
@@ -76,4 +82,4 @@ assert '<lastmod>' in content
 with open(OUT, 'w', encoding='utf-8') as fh:
     fh.write(content)
 
-print(f'urls={content.count("<url>")}  with_lastmod={content.count("<lastmod>")}  newest_post={newest}')
+print(f'urls={content.count("<url>")}  articles={len(kept)}/{len(files)}  with_lastmod={content.count("<lastmod>")}  newest_post={newest}')

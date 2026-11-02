@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[A Practical Playbook for Weekly Decisions]]></title>
+    <link>https://goreportify.com/article-pages/blog-1793628021784.html</link>
+    <description><![CDATA[I once watched a director open a weekly report, scroll for four seconds, and close the tab. She'd asked for it. She'd waited for it. She just couldn't...]]></description>
+    <pubDate>Mon, 02 Nov 2026 14:00:21 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Write a Financial Report That Stakeholders Trust]]></title>
+    <link>https://goreportify.com/article-pages/blog-how-to-write-a-financial-report.html</link>
+    <description><![CDATA[A financial report is the one document where a small wording error can change a decision worth real money. Managers read it to decide whether to hire, investors read it to decide whether to fund, and ]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Write a Bug Report That Engineers Actually Fix]]></title>
+    <link>https://goreportify.com/article-pages/blog-how-to-write-a-bug-report.html</link>
+    <description><![CDATA[When software breaks, the time it takes to fix usually has less to do with how hard the bug is and more to do with how clear the report was. A message that just says "the export is broken" can sit in ]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Fixing Reporting Workflows with Better Forward]]></title>
     <link>https://goreportify.com/article-pages/blog-1793541623851.html</link>
     <description><![CDATA[The forward is the whole game.
@@ -289,24 +307,6 @@ The developer opened it, read it twice, and moved on to the next ticket. She had
     <link>https://goreportify.com/article-pages/blog-progress-report-template.html</link>
     <description><![CDATA[A progress report is a short document that tells stakeholders where a project, task, or team stands at a specific point in time. Unlike a status meeting or a long memo, it works as a written snapshot:]]></description>
     <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Your 'Decision' Meeting Ended With 'Let's Take This]]></title>
-    <link>https://goreportify.com/article-pages/blog-1792501306688.html</link>
-    <description><![CDATA[The calendar invite was clear: “Decision Meeting: Q3 Pricing Model.” You booked the conference room for a full hour. You invited the VP of Sales, the...]]></description>
-    <pubDate>Tue, 20 Oct 2026 13:01:46 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Didn't Say 'No.' You Showed Them the Trade-Offs.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1792501272592.html</link>
-    <description><![CDATA[The request comes in on a Tuesday afternoon. It’s from the Head of Sales, and it’s an “urgent” one. A huge potential client loves the product but need...]]></description>
-    <pubDate>Tue, 20 Oct 2026 13:01:12 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Error Message Is Now a Gaslight]]></title>
-    <link>https://goreportify.com/article-pages/news-1792501269481.html</link>
-    <description><![CDATA[You did everything right. You filled out the form, triple-checked the account number, and clicked "Submit." A grey box bloomed on the screen. "Somethi...]]></description>
-    <pubDate>Tue, 20 Oct 2026 13:01:09 GMT</pubDate>
   </item>
 </channel>
 </rss>

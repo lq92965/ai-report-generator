@@ -1,5 +1,15 @@
 [
     {
+        "id": "1793628021784",
+        "type": "blog",
+        "title": "A Practical Playbook for Weekly Decisions",
+        "category": "Deep Insights",
+        "date": "2026-11-02",
+        "author": "Olivia Thorne",
+        "excerpt": "I once watched a director open a weekly report, scroll for four seconds, and close the tab. She'd asked for it. She'd waited for it. She just couldn't...",
+        "contentFile": "blog-1793628021784.md"
+    },
+    {
         "id": "how-to-write-a-financial-report",
         "type": "blog",
         "title": "How to Write a Financial Report That Stakeholders Trust",
