@@ -1,5 +1,15 @@
 [
     {
+        "id": "1793714416085",
+        "type": "blog",
+        "title": "How PM Teams Can Improve Reader Outcomes",
+        "category": "Deep Insights",
+        "date": "2026-11-03",
+        "author": "Emily Rostova",
+        "excerpt": "The weekly status report is the most-ignored document in most companies. That's not because people are lazy. It's because most weekly reports are writ...",
+        "contentFile": "blog-1793714416085.md"
+    },
+    {
         "id": "end-of-day-report",
         "type": "blog",
         "title": "End of Day Report: The 5-Minute Close-Out That Keeps Teams Aligned",

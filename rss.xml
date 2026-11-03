@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[How PM Teams Can Improve Reader Outcomes]]></title>
+    <link>https://goreportify.com/article-pages/blog-1793714416085.html</link>
+    <description><![CDATA[The weekly status report is the most-ignored document in most companies. That's not because people are lazy. It's because most weekly reports are writ...]]></description>
+    <pubDate>Tue, 03 Nov 2026 14:00:16 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[End of Day Report: The 5-Minute Close-Out That Keeps Teams Aligned]]></title>
+    <link>https://goreportify.com/article-pages/blog-end-of-day-report.html</link>
+    <description><![CDATA[An end of day report is the smallest report that still earns its place in your routine. It takes five minutes, it closes the loop on the day's work, and it gives tomorrow a head start. Remote teams, s]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Annual Report Template: A Structure That Survives the Audit]]></title>
+    <link>https://goreportify.com/article-pages/blog-annual-report-template.html</link>
+    <description><![CDATA[An annual report is the one document your whole year gets judged by. Investors, board members, regulators, and your own team will read it long after the work is done, and many of them will form their ]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[A Practical Playbook for Weekly Decisions]]></title>
     <link>https://goreportify.com/article-pages/blog-1793628021784.html</link>
     <description><![CDATA[I once watched a director open a weekly report, scroll for four seconds, and close the tab. She'd asked for it. She'd waited for it. She just couldn't...]]></description>
@@ -289,24 +307,6 @@ The developer opened it, read it twice, and moved on to the next ticket. She had
     <link>https://goreportify.com/article-pages/news-1792587667798.html</link>
     <description><![CDATA[You see the link on Twitter. The next big thing. A new AI-powered design tool, a social network that promises to be different, a productivity app that...]]></description>
     <pubDate>Wed, 21 Oct 2026 13:01:07 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Telemetry Is a Wiretap]]></title>
-    <link>https://goreportify.com/article-pages/news-1792587640867.html</link>
-    <description><![CDATA[A product manager watches a session replay. A user’s mouse cursor jitters across the screen, hesitating over a button, then darting away. The user typ...]]></description>
-    <pubDate>Wed, 21 Oct 2026 13:00:40 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Status Update Email to Manager: How to Write One That Gets Read]]></title>
-    <link>https://goreportify.com/article-pages/blog-status-update-email-to-manager.html</link>
-    <description><![CDATA[A status update email to your manager is a brief, written check-in that keeps them informed without a meeting. It is the fastest way to answer the question every manager asks silently: are we okay, or]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Progress Report Template: A Simple Format You Can Copy Today]]></title>
-    <link>https://goreportify.com/article-pages/blog-progress-report-template.html</link>
-    <description><![CDATA[A progress report is a short document that tells stakeholders where a project, task, or team stands at a specific point in time. Unlike a status meeting or a long memo, it works as a written snapshot:]]></description>
-    <pubDate>Invalid Date</pubDate>
   </item>
 </channel>
 </rss>
