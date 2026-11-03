@@ -1,5 +1,53 @@
 [
     {
+        "id": "end-of-day-report",
+        "type": "blog",
+        "title": "End of Day Report: The 5-Minute Close-Out That Keeps Teams Aligned",
+        "category": "Deep Insights",
+        "date": "2026-11-03",
+        "author": "Reportify AI Editorial",
+        "excerpt": "An end of day report is the smallest report that still earns its place in your routine. It takes five minutes, it closes the loop on the day's work, and it gives tomorrow a head start. Remote teams, s",
+        "contentFile": "end-of-day-report.html",
+        "url": "/article-pages/end-of-day-report.html",
+        "targetKeyword": "end of day report",
+        "secondaryKeywords": [
+            "end of day report template",
+            "daily wrap up report",
+            "shift handoff report",
+            "eod report"
+        ],
+        "internalLinks": [
+            "how-to-write-a-daily-report",
+            "daily-report-template",
+            "how-to-make-a-report-in-excel"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "annual-report-template",
+        "type": "blog",
+        "title": "Annual Report Template: A Structure That Survives the Audit",
+        "category": "Deep Insights",
+        "date": "2026-11-03",
+        "author": "Reportify AI Editorial",
+        "excerpt": "An annual report is the one document your whole year gets judged by. Investors, board members, regulators, and your own team will read it long after the work is done, and many of them will form their ",
+        "contentFile": "annual-report-template.html",
+        "url": "/article-pages/annual-report-template.html",
+        "targetKeyword": "annual report template",
+        "secondaryKeywords": [
+            "annual report example",
+            "annual report format",
+            "yearly report template",
+            "company annual report"
+        ],
+        "internalLinks": [
+            "how-to-write-a-financial-report",
+            "monthly-report-template",
+            "expense-report-template"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1793628021784",
         "type": "blog",
         "title": "A Practical Playbook for Weekly Decisions",

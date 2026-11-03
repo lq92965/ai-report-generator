@@ -58,15 +58,27 @@ for rel, freq, prio, lm in STATIC:
     lines.append(url_block(f'https://goreportify.com/{rel}', freq, prio, lm))
 
 ap = os.path.join(BASE, 'article-pages')
-files = sorted(os.listdir(ap), reverse=True)
+files = [f for f in os.listdir(ap) if f.endswith('.html')]
 
 # Crawl-budget cap: new/low-authority sites should keep sitemaps small.
 # A large sitemap of never-crawled URLs throttles site-wide crawling
 # ("Discovered - currently not indexed"). Only newest N articles are listed;
 # older pages stay live but leave the sitemap.
+#
+# FIX: sort by ACTUAL recency (post date from posts.json, else mtime), newest first.
+# The previous version sorted filenames reverse-alphabetically, which silently
+# excluded every new slug starting with an early letter (e.g. "annual-report-template").
 MAX_ARTICLE_URLS = 50
 
-kept = [f for f in files if f.endswith('.html')][:MAX_ARTICLE_URLS]
+def sort_key(f):
+    d = by_html.get(f)
+    if d:
+        return (1, d, os.path.getmtime(os.path.join(ap, f)))
+    return (0, datetime.date.fromtimestamp(
+        os.path.getmtime(os.path.join(ap, f))).isoformat(), os.path.getmtime(os.path.join(ap, f)))
+
+files.sort(key=sort_key, reverse=True)
+kept = files[:MAX_ARTICLE_URLS]
 for f in kept:
     lm = by_html.get(f) or datetime.date.fromtimestamp(
         os.path.getmtime(os.path.join(ap, f))).isoformat()
