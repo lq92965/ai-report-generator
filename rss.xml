@@ -5,6 +5,12 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Fixing Reporting Workflows with Better Reader]]></title>
+    <link>https://goreportify.com/article-pages/blog-1793800819556.html</link>
+    <description><![CDATA[The report lands at 6:47 p.m. Friday. By 9:15 Monday it's buried under forty-two unread emails, three calendar invites, and a Slack thread about the s...]]></description>
+    <pubDate>Wed, 04 Nov 2026 14:00:19 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[How PM Teams Can Improve Reader Outcomes]]></title>
     <link>https://goreportify.com/article-pages/blog-1793714416085.html</link>
     <description><![CDATA[The weekly status report is the most-ignored document in most companies. That's not because people are lazy. It's because most weekly reports are writ...]]></description>
@@ -301,12 +307,6 @@ The developer opened it, read it twice, and moved on to the next ticket. She had
     <link>https://goreportify.com/article-pages/blog-1792587677696.html</link>
     <description><![CDATA[The metrics review meeting is on the calendar. You spent three hours pulling data, triple-checking queries, and arranging it all in a beautiful dashbo...]]></description>
     <pubDate>Wed, 21 Oct 2026 13:01:17 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Waitlist Is Now a Political Primary]]></title>
-    <link>https://goreportify.com/article-pages/news-1792587667798.html</link>
-    <description><![CDATA[You see the link on Twitter. The next big thing. A new AI-powered design tool, a social network that promises to be different, a productivity app that...]]></description>
-    <pubDate>Wed, 21 Oct 2026 13:01:07 GMT</pubDate>
   </item>
 </channel>
 </rss>

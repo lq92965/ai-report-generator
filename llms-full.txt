@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [Fixing Reporting Workflows with Better Reader](https://goreportify.com/article-pages/blog-1793800819556.html)
+  - Type: Deep Insights | Date: 2026-11-04 | Author: David Sterling
+  - The report lands at 6:47 p.m. Friday. By 9:15 Monday it's buried under forty-two unread emails, three calendar invites, and a Slack thread about the s...
 - [How PM Teams Can Improve Reader Outcomes](https://goreportify.com/article-pages/blog-1793714416085.html)
   - Type: Deep Insights | Date: 2026-11-03 | Author: Emily Rostova
   - The weekly status report is the most-ignored document in most companies. That's not because people are lazy. It's because most weekly reports are writ...
@@ -2767,4 +2770,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 910 articles (501 blog + 409 news) + 8 core pages._
+_Total: 911 articles (502 blog + 409 news) + 8 core pages._

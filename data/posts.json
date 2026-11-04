@@ -1,5 +1,15 @@
 [
     {
+        "id": "1793800819556",
+        "type": "blog",
+        "title": "Fixing Reporting Workflows with Better Reader",
+        "category": "Deep Insights",
+        "date": "2026-11-04",
+        "author": "David Sterling",
+        "excerpt": "The report lands at 6:47 p.m. Friday. By 9:15 Monday it's buried under forty-two unread emails, three calendar invites, and a Slack thread about the s...",
+        "contentFile": "blog-1793800819556.md"
+    },
+    {
         "id": "1793714416085",
         "type": "blog",
         "title": "How PM Teams Can Improve Reader Outcomes",
