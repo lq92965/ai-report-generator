@@ -1,5 +1,28 @@
 [
     {
+        "id": "how-to-write-a-work-report",
+        "type": "blog",
+        "title": "How to Write a Work Report That Gets Read",
+        "category": "Deep Insights",
+        "date": "2026-11-05",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A work report is the simplest way to show what you did, what you are doing, and what you need from the people above you. If you searched for \"how to write a work report,\" you most likely have a deadli",
+        "contentFile": "how-to-write-a-work-report.html",
+        "url": "/article-pages/how-to-write-a-work-report.html",
+        "targetKeyword": "how to write a work report",
+        "secondaryKeywords": [
+            "work report template",
+            "daily work report",
+            "how to write a daily report"
+        ],
+        "internalLinks": [
+            "how-to-write-a-daily-report",
+            "daily-report-template",
+            "progress-report-template"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1793800819556",
         "type": "blog",
         "title": "Fixing Reporting Workflows with Better Reader",
