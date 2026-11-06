@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [How PM Teams Can Improve Write Outcomes](https://goreportify.com/article-pages/blog-1793973634039.html)
+  - Type: Deep Insights | Date: 2026-11-06 | Author: Alex Mercer
+  - Your VP opens Slack at 8:40 on Monday. Between two fires and a budget review, she gives your team update eleven seconds. If she has to hunt for the he...
 - [Fixing Reporting Workflows with Better Reader 11/5-1](https://goreportify.com/article-pages/blog-1793887226368.html)
   - Type: Deep Insights | Date: 2026-11-05 | Author: Sarah Jenkins
   - The report you write on Friday gets read by someone who wasn't in the room on Tuesday, on a team that will be restructured in six weeks. Most weekly s...
@@ -2776,4 +2779,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 913 articles (504 blog + 409 news) + 8 core pages._
+_Total: 914 articles (505 blog + 409 news) + 8 core pages._

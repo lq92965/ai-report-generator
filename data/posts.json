@@ -1,5 +1,15 @@
 [
     {
+        "id": "1793973634039",
+        "type": "blog",
+        "title": "How PM Teams Can Improve Write Outcomes",
+        "category": "Deep Insights",
+        "date": "2026-11-06",
+        "author": "Alex Mercer",
+        "excerpt": "Your VP opens Slack at 8:40 on Monday. Between two fires and a budget review, she gives your team update eleven seconds. If she has to hunt for the he...",
+        "contentFile": "blog-1793973634039.md"
+    },
+    {
         "id": "1793887226368",
         "type": "blog",
         "title": "Fixing Reporting Workflows with Better Reader 11/5-1",
