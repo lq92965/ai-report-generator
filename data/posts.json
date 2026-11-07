@@ -1,5 +1,25 @@
 [
     {
+        "id": "1794056568803",
+        "type": "blog",
+        "title": "AI Tools for Product Managers: A Handoff Audit You Can Run This Week",
+        "category": "Deep Insights",
+        "date": "2026-11-07",
+        "author": "Marcus Webb",
+        "excerpt": "The first time I let an AI draft a PRD, I saved forty minutes and created a week of rework. The draft was fluent, confident, and wrong about our users...",
+        "contentFile": "blog-1794056568803.md"
+    },
+    {
+        "id": "1794056552168",
+        "type": "news",
+        "title": "The Prompt Injection Is Now a Labor Dispute",
+        "category": "Tech Radar",
+        "date": "2026-11-07",
+        "author": "Olivia Thorne",
+        "excerpt": "The job posting went up on a Tuesday. A mid-sized logistics firm in Ohio wanted an \"AI Operations Coordinator\" — someone to babysit the customer-servi...",
+        "contentFile": "news-1794056552168.md"
+    },
+    {
         "id": "1793973634039",
         "type": "blog",
         "title": "How PM Teams Can Improve Write Outcomes",

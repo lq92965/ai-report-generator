@@ -337,7 +337,13 @@ function looksLikeStubArticleMarkdown(md) {
 
 async function generateArticle(type) {
     const useGemini = (type === 'blog');
-    let apiUrl = useGemini ? process.env.GEMINI_API_URL : process.env.DEEPSEEK_API_URL;
+    // Normalize DeepSeek endpoint: env may hold base URL (https://api.deepseek.com)
+    // without the chat path, which 404s. Blog fallback already normalized; news did not.
+    const dsRaw = process.env.DEEPSEEK_API_URL || '';
+    const dsUrl = !dsRaw ? '' : (dsRaw.endsWith('/v1/chat/completions')
+        ? dsRaw
+        : `${dsRaw.replace(/\/$/, '')}/v1/chat/completions`);
+    let apiUrl = useGemini ? process.env.GEMINI_API_URL : dsUrl;
     let apiKey = useGemini ? process.env.GEMINI_API_KEY : process.env.DEEPSEEK_API_KEY;
     let aiModel = useGemini ? process.env.GEMINI_MODEL : process.env.DEEPSEEK_MODEL;
 

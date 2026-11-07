@@ -69,19 +69,34 @@ async function dailyCheck() {
     console.log(`[HEALTH] 📰 Latest news: ${newsDate} | Latest blog: ${blogDate} | Today (NY): ${todayStr} | DOW: ${dayOfWeek}`);
     
     const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
-    
-    if (newsDate !== todayStr && !isWeekend) {
-      console.log(`[HEALTH] ⚠️ News last updated: ${newsDate} (not today)`);
+    const STALE_DAYS = 2; // tolerate a weekend gap, but 3+ days is a real outage
+
+    function ageDays(d) {
+      if (!d || d === 'N/A') return Infinity;
+      const t = Date.parse(d + 'T00:00:00Z');
+      if (isNaN(t)) return Infinity;
+      const today = Date.parse(todayStr + 'T00:00:00Z');
+      return Math.floor((today - t) / 86400000);
     }
-    if (blogDate !== todayStr && !isWeekend) {
-      console.log(`[HEALTH] ⚠️ Blog last updated: ${blogDate} (not today)`);
+
+    const newsAge = ageDays(newsDate);
+    const blogAge = ageDays(blogDate);
+
+    if (newsAge > STALE_DAYS) {
+      console.log(`[HEALTH] ⚠️ News last updated: ${newsDate} — ${newsAge} days stale`);
     }
-    
-    // On weekends, consider it "ok" if last article is from Friday or later
-    const isFresh = isWeekend ? true : (newsDate === todayStr || blogDate === todayStr);
-    
-    results.push({ name: 'news_freshness', value: newsDate, ok: isWeekend || newsDate === todayStr });
-    results.push({ name: 'blog_freshness', value: blogDate, ok: isWeekend || blogDate === todayStr });
+    if (blogAge > STALE_DAYS) {
+      console.log(`[HEALTH] ⚠️ Blog last updated: ${blogDate} — ${blogAge} days stale`);
+    }
+
+    // Freshness is based on actual age. Weekends get a longer grace period, but
+    // intermittent weekend bypass previously hid an 11-day news outage.
+    const grace = isWeekend ? STALE_DAYS + 1 : STALE_DAYS;
+    const newsOk = newsAge <= grace;
+    const blogOk = blogAge <= grace;
+
+    results.push({ name: 'news_freshness', value: newsDate, ok: newsOk, ageDays: newsAge });
+    results.push({ name: 'blog_freshness', value: blogDate, ok: blogOk, ageDays: blogAge });
   } catch (e) {
     console.log(`[HEALTH] ⚠️ Could not check posts: ${e.message}`);
   }
@@ -97,7 +112,8 @@ async function dailyCheck() {
   console.log(`${'='.repeat(50)}`);
   for (const r of results) {
     const mark = r.ok ? '✅' : '❌';
-    const extra = r.value ? ` (${r.value})` : '';
+    const ageNote = (typeof r.ageDays === 'number' && isFinite(r.ageDays)) ? `, ${r.ageDays}d old` : '';
+    const extra = r.value ? ` (${r.value}${ageNote})` : '';
     console.log(`  ${mark} ${r.name.padEnd(nameLen)} ${r.status || ''}${extra}`);
   }
   
