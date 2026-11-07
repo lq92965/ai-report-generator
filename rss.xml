@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[A Practical Playbook for Reader Decisions]]></title>
+    <link>https://goreportify.com/article-pages/blog-1794060018590.html</link>
+    <description><![CDATA[Remote teams don't share a hallway. They share a document. That document is your weekly status report, and it's doing more work than you probably thin...]]></description>
+    <pubDate>Sat, 07 Nov 2026 14:00:18 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[AI Tools for Product Managers: A Handoff Audit You Can Run This Week]]></title>
+    <link>https://goreportify.com/article-pages/blog-1794056568803.html</link>
+    <description><![CDATA[The first time I let an AI draft a PRD, I saved forty minutes and created a week of rework. The draft was fluent, confident, and wrong about our users...]]></description>
+    <pubDate>Sat, 07 Nov 2026 13:02:48 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Prompt Injection Is Now a Labor Dispute]]></title>
+    <link>https://goreportify.com/article-pages/news-1794056552168.html</link>
+    <description><![CDATA[The job posting went up on a Tuesday. A mid-sized logistics firm in Ohio wanted an "AI Operations Coordinator" — someone to babysit the customer-servi...]]></description>
+    <pubDate>Sat, 07 Nov 2026 13:02:32 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[How PM Teams Can Improve Write Outcomes]]></title>
     <link>https://goreportify.com/article-pages/blog-1793973634039.html</link>
     <description><![CDATA[Your VP opens Slack at 8:40 on Monday. Between two fires and a budget review, she gives your team update eleven seconds. If she has to hunt for the he...]]></description>
@@ -289,24 +307,6 @@ The developer opened it, read it twice, and moved on to the next ticket. She had
     <link>https://goreportify.com/article-pages/news-1792674161192.html</link>
     <description><![CDATA[The loading spinner on the county benefits portal has been spinning for ninety seconds. For a user on a shaky 4G connection in a rural town, tethering...]]></description>
     <pubDate>Thu, 22 Oct 2026 13:02:41 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Buried the Lead in a 20-Slide Deck]]></title>
-    <link>https://goreportify.com/article-pages/blog-1792674064555.html</link>
-    <description><![CDATA[You’re on slide 12. You’re meticulously explaining the cohort analysis that justifies the Q3 roadmap pivot. You can see the VP of Marketing squinting...]]></description>
-    <pubDate>Thu, 22 Oct 2026 13:01:04 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Root Password Is Now a Guest Pass]]></title>
-    <link>https://goreportify.com/article-pages/news-1792674028753.html</link>
-    <description><![CDATA[The email arrives at 3 a.m. A key vendor, the one whose API underpins a third of your product, has been acquired. The service will be sunsetted in 90...]]></description>
-    <pubDate>Thu, 22 Oct 2026 13:00:28 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Yearly Performance Review Self Review: How to Write One That Lands]]></title>
-    <link>https://goreportify.com/article-pages/blog-yearly-performance-review-self-review.html</link>
-    <description><![CDATA[A yearly performance review self review is the document you write before your manager writes theirs. It sets the record: what you actually delivered, where you grew, and what you want next. Done well,]]></description>
-    <pubDate>Invalid Date</pubDate>
   </item>
 </channel>
 </rss>

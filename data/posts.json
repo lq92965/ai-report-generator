@@ -1,5 +1,15 @@
 [
     {
+        "id": "1794060018590",
+        "type": "blog",
+        "title": "A Practical Playbook for Reader Decisions",
+        "category": "Deep Insights",
+        "date": "2026-11-07",
+        "author": "Emily Rostova",
+        "excerpt": "Remote teams don't share a hallway. They share a document. That document is your weekly status report, and it's doing more work than you probably thin...",
+        "contentFile": "blog-1794060018590.md"
+    },
+    {
         "id": "1794056568803",
         "type": "blog",
         "title": "AI Tools for Product Managers: A Handoff Audit You Can Run This Week",

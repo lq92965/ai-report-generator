@@ -15,6 +15,15 @@
 
 ## All Articles
 
+- [A Practical Playbook for Reader Decisions](https://goreportify.com/article-pages/blog-1794060018590.html)
+  - Type: Deep Insights | Date: 2026-11-07 | Author: Emily Rostova
+  - Remote teams don't share a hallway. They share a document. That document is your weekly status report, and it's doing more work than you probably thin...
+- [AI Tools for Product Managers: A Handoff Audit You Can Run This Week](https://goreportify.com/article-pages/blog-1794056568803.html)
+  - Type: Deep Insights | Date: 2026-11-07 | Author: Marcus Webb
+  - The first time I let an AI draft a PRD, I saved forty minutes and created a week of rework. The draft was fluent, confident, and wrong about our users...
+- [The Prompt Injection Is Now a Labor Dispute](https://goreportify.com/article-pages/news-1794056552168.html)
+  - Type: Tech Radar | Date: 2026-11-07 | Author: Olivia Thorne
+  - The job posting went up on a Tuesday. A mid-sized logistics firm in Ohio wanted an "AI Operations Coordinator" — someone to babysit the customer-servi...
 - [How PM Teams Can Improve Write Outcomes](https://goreportify.com/article-pages/blog-1793973634039.html)
   - Type: Deep Insights | Date: 2026-11-06 | Author: Alex Mercer
   - Your VP opens Slack at 8:40 on Monday. Between two fires and a budget review, she gives your team update eleven seconds. If she has to hunt for the he...
@@ -2779,4 +2788,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 914 articles (505 blog + 409 news) + 8 core pages._
+_Total: 917 articles (507 blog + 410 news) + 8 core pages._
