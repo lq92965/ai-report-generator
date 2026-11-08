@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [Weekly Status Report Template: The 6-Line Format That Survives a Reorg](https://goreportify.com/article-pages/blog-1794146420621.html)
+  - Type: Deep Insights | Date: 2026-11-08 | Author: Michael Chen
+  - Most status reports fail for a boring reason: they report activity instead of change. "Worked on onboarding flow. Met with design. Continuing QA." Nob...
 - [A Practical Playbook for Reader Decisions](https://goreportify.com/article-pages/blog-1794060018590.html)
   - Type: Deep Insights | Date: 2026-11-07 | Author: Emily Rostova
   - Remote teams don't share a hallway. They share a document. That document is your weekly status report, and it's doing more work than you probably thin...
@@ -2788,4 +2791,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 917 articles (507 blog + 410 news) + 8 core pages._
+_Total: 918 articles (508 blog + 410 news) + 8 core pages._

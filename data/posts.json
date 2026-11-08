@@ -1,5 +1,15 @@
 [
     {
+        "id": "1794146420621",
+        "type": "blog",
+        "title": "Weekly Status Report Template: The 6-Line Format That Survives a Reorg",
+        "category": "Deep Insights",
+        "date": "2026-11-08",
+        "author": "Michael Chen",
+        "excerpt": "Most status reports fail for a boring reason: they report activity instead of change. \"Worked on onboarding flow. Met with design. Continuing QA.\" Nob...",
+        "contentFile": "blog-1794146420621.md"
+    },
+    {
         "id": "1794060018590",
         "type": "blog",
         "title": "A Practical Playbook for Reader Decisions",
