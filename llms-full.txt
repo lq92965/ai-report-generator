@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [A Practical Playbook for Reader Decisions 11/10-1](https://goreportify.com/article-pages/blog-1794319228851.html)
+  - Type: Deep Insights | Date: 2026-11-10 | Author: Jessica Tran
+  - Most project updates get written in a hurry, on a Thursday afternoon, because someone in leadership asked for "a quick status." So you paste last week...
 - [Project Status Report Template: The RAG Line That Stops Surprise Escalations](https://goreportify.com/article-pages/blog-1794232817373.html)
   - Type: Deep Insights | Date: 2026-11-09 | Author: Olivia Thorne
   - The Friday before launch, a VP forwarded my team's status report back to me with one line highlighted: "On track." Her note: "Your own doc says the pa...
@@ -2794,4 +2797,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 919 articles (509 blog + 410 news) + 8 core pages._
+_Total: 920 articles (510 blog + 410 news) + 8 core pages._

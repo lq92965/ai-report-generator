@@ -1,5 +1,15 @@
 [
     {
+        "id": "1794319228851",
+        "type": "blog",
+        "title": "A Practical Playbook for Reader Decisions 11/10-1",
+        "category": "Deep Insights",
+        "date": "2026-11-10",
+        "author": "Jessica Tran",
+        "excerpt": "Most project updates get written in a hurry, on a Thursday afternoon, because someone in leadership asked for \"a quick status.\" So you paste last week...",
+        "contentFile": "blog-1794319228851.md"
+    },
+    {
         "id": "1794232817373",
         "type": "blog",
         "title": "Project Status Report Template: The RAG Line That Stops Surprise Escalations",
