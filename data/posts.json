@@ -1,5 +1,15 @@
 [
     {
+        "id": "1794405619909",
+        "type": "blog",
+        "title": "AI Tools for Product Managers: A Weekly Review Ritual That Keeps You in Control",
+        "category": "Deep Insights",
+        "date": "2026-11-11",
+        "author": "Jessica Tran",
+        "excerpt": "I watched a PM paste eleven pages of customer interview transcripts into a chatbot, ask for \"themes,\" and ship the output straight into a strategy doc...",
+        "contentFile": "blog-1794405619909.md"
+    },
+    {
         "id": "1794402158105",
         "type": "news",
         "title": "The Merge Conflict Is Now a Custody Battle",

@@ -5,6 +5,12 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[AI Tools for Product Managers: A Weekly Review Ritual That Keeps You in Control]]></title>
+    <link>https://goreportify.com/article-pages/blog-1794405619909.html</link>
+    <description><![CDATA[I watched a PM paste eleven pages of customer interview transcripts into a chatbot, ask for "themes," and ship the output straight into a strategy doc...]]></description>
+    <pubDate>Wed, 11 Nov 2026 14:00:19 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The Merge Conflict Is Now a Custody Battle]]></title>
     <link>https://goreportify.com/article-pages/news-1794402158105.html</link>
     <description><![CDATA[Two engineers spent Tuesday afternoon arguing about a semicolon. Not the semicolon itself—nobody has cared about a semicolon since the last linter upd...]]></description>
@@ -301,12 +307,6 @@ The developer opened it, read it twice, and moved on to the next ticket. She had
     <link>https://goreportify.com/article-pages/blog-1792760485807.html</link>
     <description><![CDATA[You hit send on the email. Subject: "Draft Strategy Deck for Review." The attachment contains 25 slides you’ve spent the last week perfecting. You lea...]]></description>
     <pubDate>Fri, 23 Oct 2026 13:01:25 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The AI Agent Is a Forged Signature]]></title>
-    <link>https://goreportify.com/article-pages/news-1792760444498.html</link>
-    <description><![CDATA[Your new AI assistant just cost you $1,200. It saw an email thread about a possible trip to Denver, correlated it with a free weekend on your calendar...]]></description>
-    <pubDate>Fri, 23 Oct 2026 13:00:44 GMT</pubDate>
   </item>
 </channel>
 </rss>
