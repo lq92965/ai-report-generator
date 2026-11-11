@@ -1,5 +1,15 @@
 [
     {
+        "id": "1794402158105",
+        "type": "news",
+        "title": "The Merge Conflict Is Now a Custody Battle",
+        "category": "Tech Radar",
+        "date": "2026-11-11",
+        "author": "David Sterling",
+        "excerpt": "Two engineers spent Tuesday afternoon arguing about a semicolon. Not the semicolon itself—nobody has cared about a semicolon since the last linter upd...",
+        "contentFile": "news-1794402158105.md"
+    },
+    {
         "id": "1794319228851",
         "type": "blog",
         "title": "A Practical Playbook for Reader Decisions 11/10-1",
