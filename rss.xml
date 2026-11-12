@@ -5,6 +5,14 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Fixing Reporting Workflows with Better Update]]></title>
+    <link>https://goreportify.com/article-pages/blog-1794492016257.html</link>
+    <description><![CDATA[The update went out at 9:02 on a Tuesday. By 9:15, three people had replied with the same question: "So are we on track or not?"
+
+You wrote six paragr...]]></description>
+    <pubDate>Thu, 12 Nov 2026 14:00:16 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[AI Tools for Product Managers: A Weekly Review Ritual That Keeps You in Control]]></title>
     <link>https://goreportify.com/article-pages/blog-1794405619909.html</link>
     <description><![CDATA[I watched a PM paste eleven pages of customer interview transcripts into a chatbot, ask for "themes," and ship the output straight into a strategy doc...]]></description>
@@ -301,12 +309,6 @@ The developer opened it, read it twice, and moved on to the next ticket. She had
     <link>https://goreportify.com/article-pages/news-1792760564042.html</link>
     <description><![CDATA[The pull request was approved. All 1,428 unit tests passed. The end-to-end suite ran clean against the staging environment, a supposedly perfect repli...]]></description>
     <pubDate>Fri, 23 Oct 2026 13:02:44 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Sent the Deck 'For Review.' You Should Have Held a Pre-Wire.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1792760485807.html</link>
-    <description><![CDATA[You hit send on the email. Subject: "Draft Strategy Deck for Review." The attachment contains 25 slides you’ve spent the last week perfecting. You lea...]]></description>
-    <pubDate>Fri, 23 Oct 2026 13:01:25 GMT</pubDate>
   </item>
 </channel>
 </rss>

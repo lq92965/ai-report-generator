@@ -15,6 +15,11 @@
 
 ## All Articles
 
+- [Fixing Reporting Workflows with Better Update](https://goreportify.com/article-pages/blog-1794492016257.html)
+  - Type: Deep Insights | Date: 2026-11-12 | Author: Emily Rostova
+  - The update went out at 9:02 on a Tuesday. By 9:15, three people had replied with the same question: "So are we on track or not?"
+
+You wrote six paragr...
 - [AI Tools for Product Managers: A Weekly Review Ritual That Keeps You in Control](https://goreportify.com/article-pages/blog-1794405619909.html)
   - Type: Deep Insights | Date: 2026-11-11 | Author: Jessica Tran
   - I watched a PM paste eleven pages of customer interview transcripts into a chatbot, ask for "themes," and ship the output straight into a strategy doc...
@@ -2803,4 +2808,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 922 articles (511 blog + 411 news) + 8 core pages._
+_Total: 923 articles (512 blog + 411 news) + 8 core pages._
