@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [How PM Teams Can Improve Three Outcomes](https://goreportify.com/article-pages/blog-1794578416364.html)
+  - Type: Deep Insights | Date: 2026-11-13 | Author: David Sterling
+  - The report sat in her inbox for two days. I know because I checked the read receipt, which is a small humiliation I recommend to anyone who wants to l...
 - [Fixing Reporting Workflows with Better Update](https://goreportify.com/article-pages/blog-1794492016257.html)
   - Type: Deep Insights | Date: 2026-11-12 | Author: Emily Rostova
   - The update went out at 9:02 on a Tuesday. By 9:15, three people had replied with the same question: "So are we on track or not?"
@@ -2808,4 +2811,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 923 articles (512 blog + 411 news) + 8 core pages._
+_Total: 924 articles (513 blog + 411 news) + 8 core pages._

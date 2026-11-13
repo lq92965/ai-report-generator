@@ -5,6 +5,12 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[How PM Teams Can Improve Three Outcomes]]></title>
+    <link>https://goreportify.com/article-pages/blog-1794578416364.html</link>
+    <description><![CDATA[The report sat in her inbox for two days. I know because I checked the read receipt, which is a small humiliation I recommend to anyone who wants to l...]]></description>
+    <pubDate>Fri, 13 Nov 2026 14:00:16 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Fixing Reporting Workflows with Better Update]]></title>
     <link>https://goreportify.com/article-pages/blog-1794492016257.html</link>
     <description><![CDATA[The update went out at 9:02 on a Tuesday. By 9:15, three people had replied with the same question: "So are we on track or not?"
@@ -303,12 +309,6 @@ The developer opened it, read it twice, and moved on to the next ticket. She had
     <link>https://goreportify.com/article-pages/blog-1792760607016.html</link>
     <description><![CDATA[You close the Zoom window and take a sip of coffee. That went well. You walked through all 32 slides of the project kickoff deck. You covered the mark...]]></description>
     <pubDate>Fri, 23 Oct 2026 13:03:27 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Staging Environment Is Now a Potemkin Village]]></title>
-    <link>https://goreportify.com/article-pages/news-1792760564042.html</link>
-    <description><![CDATA[The pull request was approved. All 1,428 unit tests passed. The end-to-end suite ran clean against the staging environment, a supposedly perfect repli...]]></description>
-    <pubDate>Fri, 23 Oct 2026 13:02:44 GMT</pubDate>
   </item>
 </channel>
 </rss>
