@@ -1,5 +1,15 @@
 [
     {
+        "id": "1794664815677",
+        "type": "blog",
+        "title": "Fixing Reporting Workflows with Better Update 11/14-1",
+        "category": "Deep Insights",
+        "date": "2026-11-14",
+        "author": "David Sterling",
+        "excerpt": "The project is three weeks behind. Two engineers quit. The vendor missed a deadline and the fix has no date. You open a blank doc to write the update,...",
+        "contentFile": "blog-1794664815677.md"
+    },
+    {
         "id": "1794578416364",
         "type": "blog",
         "title": "How PM Teams Can Improve Three Outcomes",

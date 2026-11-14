@@ -5,6 +5,12 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Fixing Reporting Workflows with Better Update 11/14-1]]></title>
+    <link>https://goreportify.com/article-pages/blog-1794664815677.html</link>
+    <description><![CDATA[The project is three weeks behind. Two engineers quit. The vendor missed a deadline and the fix has no date. You open a blank doc to write the update,...]]></description>
+    <pubDate>Sat, 14 Nov 2026 14:00:15 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[How PM Teams Can Improve Three Outcomes]]></title>
     <link>https://goreportify.com/article-pages/blog-1794578416364.html</link>
     <description><![CDATA[The report sat in her inbox for two days. I know because I checked the read receipt, which is a small humiliation I recommend to anyone who wants to l...]]></description>
@@ -303,12 +309,6 @@ The developer opened it, read it twice, and moved on to the next ticket. She had
     <link>https://goreportify.com/article-pages/news-1792846843828.html</link>
     <description><![CDATA[The sales deck glows on screen, promising a future of seamless scalability and "five nines" of uptime. On the video call, the account executive from t...]]></description>
     <pubDate>Sat, 24 Oct 2026 13:00:43 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Held a Kickoff Meeting. The Team Left More Confused.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1792760607016.html</link>
-    <description><![CDATA[You close the Zoom window and take a sip of coffee. That went well. You walked through all 32 slides of the project kickoff deck. You covered the mark...]]></description>
-    <pubDate>Fri, 23 Oct 2026 13:03:27 GMT</pubDate>
   </item>
 </channel>
 </rss>

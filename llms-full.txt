@@ -15,6 +15,9 @@
 
 ## All Articles
 
+- [Fixing Reporting Workflows with Better Update 11/14-1](https://goreportify.com/article-pages/blog-1794664815677.html)
+  - Type: Deep Insights | Date: 2026-11-14 | Author: David Sterling
+  - The project is three weeks behind. Two engineers quit. The vendor missed a deadline and the fix has no date. You open a blank doc to write the update,...
 - [How PM Teams Can Improve Three Outcomes](https://goreportify.com/article-pages/blog-1794578416364.html)
   - Type: Deep Insights | Date: 2026-11-13 | Author: David Sterling
   - The report sat in her inbox for two days. I know because I checked the read receipt, which is a small humiliation I recommend to anyone who wants to l...
@@ -2811,4 +2814,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 924 articles (513 blog + 411 news) + 8 core pages._
+_Total: 925 articles (514 blog + 411 news) + 8 core pages._
