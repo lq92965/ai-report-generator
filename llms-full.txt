@@ -15,6 +15,15 @@
 
 ## All Articles
 
+- [Fixing Reporting Workflows with Better Reader 11/15-1](https://goreportify.com/article-pages/blog-1794751247732.html)
+  - Type: Deep Insights | Date: 2026-11-15 | Author: Emily Rostova
+  - Tuesday, 9:40 a.m. Your VP drops a message in the channel: "Quick one — where are we on the migration?" You have the answer. You also have a status do...
+- [Stakeholder Update Email: A Template That Gets a Reply, Not a Meeting](https://goreportify.com/article-pages/blog-1794747874101.html)
+  - Type: Deep Insights | Date: 2026-11-15 | Author: Marcus Webb
+  - You send the update at 4:40 on Friday. By Monday it has eleven opens and zero replies. Then Thursday, someone books a 30-minute "alignment" call to as...
+- [The Schema Migration Is Now a Boundary Redraw](https://goreportify.com/article-pages/news-1794747857238.html)
+  - Type: Tech Radar | Date: 2026-11-15 | Author: Marcus Webb
+  - The migration ran at 02:14 UTC on a Tuesday. By 09:00, the support queue held 340 tickets, all variations on the same sentence: "My account shows some...
 - [Fixing Reporting Workflows with Better Update 11/14-1](https://goreportify.com/article-pages/blog-1794664815677.html)
   - Type: Deep Insights | Date: 2026-11-14 | Author: David Sterling
   - The project is three weeks behind. Two engineers quit. The vendor missed a deadline and the fix has no date. You open a blank doc to write the update,...
@@ -2814,4 +2823,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 925 articles (514 blog + 411 news) + 8 core pages._
+_Total: 928 articles (516 blog + 412 news) + 8 core pages._

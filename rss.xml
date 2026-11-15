@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Fixing Reporting Workflows with Better Reader 11/15-1]]></title>
+    <link>https://goreportify.com/article-pages/blog-1794751247732.html</link>
+    <description><![CDATA[Tuesday, 9:40 a.m. Your VP drops a message in the channel: "Quick one — where are we on the migration?" You have the answer. You also have a status do...]]></description>
+    <pubDate>Sun, 15 Nov 2026 14:00:47 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Stakeholder Update Email: A Template That Gets a Reply, Not a Meeting]]></title>
+    <link>https://goreportify.com/article-pages/blog-1794747874101.html</link>
+    <description><![CDATA[You send the update at 4:40 on Friday. By Monday it has eleven opens and zero replies. Then Thursday, someone books a 30-minute "alignment" call to as...]]></description>
+    <pubDate>Sun, 15 Nov 2026 13:04:34 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Schema Migration Is Now a Boundary Redraw]]></title>
+    <link>https://goreportify.com/article-pages/news-1794747857238.html</link>
+    <description><![CDATA[The migration ran at 02:14 UTC on a Tuesday. By 09:00, the support queue held 340 tickets, all variations on the same sentence: "My account shows some...]]></description>
+    <pubDate>Sun, 15 Nov 2026 13:04:17 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Fixing Reporting Workflows with Better Update 11/14-1]]></title>
     <link>https://goreportify.com/article-pages/blog-1794664815677.html</link>
     <description><![CDATA[The project is three weeks behind. Two engineers quit. The vendor missed a deadline and the fix has no date. You open a blank doc to write the update,...]]></description>
@@ -291,24 +309,6 @@ The developer opened it, read it twice, and moved on to the next ticket. She had
     <link>https://goreportify.com/article-pages/blog-how-to-write-meeting-notes.html</link>
     <description><![CDATA[Meeting notes are the quick record you keep during and right after a meeting so you can remember what mattered without writing a formal document. They are not the same as minutes. Minutes are the offi]]></description>
     <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Meeting Minutes Template: A Clean Format You Can Use in 5 Minutes]]></title>
-    <link>https://goreportify.com/article-pages/blog-meeting-minutes-template.html</link>
-    <description><![CDATA[Meeting minutes are the written record of what was said, decided, and assigned in a meeting. Most teams skip them or write a wall of text that nobody reads afterward. Both habits cost time later, beca]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Pitched a New Feature. You Should Have Pitched Paying Down Tech Debt.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1792846883130.html</link>
-    <description><![CDATA[The roadmap meeting was going well. You presented the mockups for the new AI-powered reporting dashboard. It was slick. Stakeholders were nodding. The...]]></description>
-    <pubDate>Sat, 24 Oct 2026 13:01:23 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Service-Level Agreement Is Now a Prenuptial Agreement]]></title>
-    <link>https://goreportify.com/article-pages/news-1792846843828.html</link>
-    <description><![CDATA[The sales deck glows on screen, promising a future of seamless scalability and "five nines" of uptime. On the video call, the account executive from t...]]></description>
-    <pubDate>Sat, 24 Oct 2026 13:00:43 GMT</pubDate>
   </item>
 </channel>
 </rss>
