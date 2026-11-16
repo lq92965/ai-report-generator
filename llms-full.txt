@@ -15,6 +15,15 @@
 
 ## All Articles
 
+- [Fixing Reporting Workflows with Better Decision](https://goreportify.com/article-pages/blog-1794837616073.html)
+  - Type: Deep Insights | Date: 2026-11-16 | Author: Marcus Webb
+  - The best compliment a weekly report can get is silence from your manager and a forward to their boss. That forward is the whole game. It means your up...
+- [A Practical Playbook for Drift Decisions](https://goreportify.com/article-pages/blog-1794834041481.html)
+  - Type: Deep Insights | Date: 2026-11-16 | Author: Michael Chen
+  - A spec drifts one comment at a time. Someone asks for a small change in Slack, you say yes, someone else asks for a corner case, you say yes, and thre...
+- [The Rollback Is Now a Cover-Up](https://goreportify.com/article-pages/news-1794834022607.html)
+  - Type: Tech Radar | Date: 2026-11-16 | Author: Marcus Webb
+  - The deploy went out at 4:47 on a Thursday. By 5:12 the error rate on the checkout service had tripled, and by 5:40 a staff engineer named Priya was st...
 - [Fixing Reporting Workflows with Better Reader 11/15-1](https://goreportify.com/article-pages/blog-1794751247732.html)
   - Type: Deep Insights | Date: 2026-11-15 | Author: Emily Rostova
   - Tuesday, 9:40 a.m. Your VP drops a message in the channel: "Quick one — where are we on the migration?" You have the answer. You also have a status do...
@@ -2823,4 +2832,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 928 articles (516 blog + 412 news) + 8 core pages._
+_Total: 931 articles (518 blog + 413 news) + 8 core pages._

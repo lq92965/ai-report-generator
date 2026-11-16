@@ -1,5 +1,35 @@
 [
     {
+        "id": "1794837616073",
+        "type": "blog",
+        "title": "Fixing Reporting Workflows with Better Decision",
+        "category": "Deep Insights",
+        "date": "2026-11-16",
+        "author": "Marcus Webb",
+        "excerpt": "The best compliment a weekly report can get is silence from your manager and a forward to their boss. That forward is the whole game. It means your up...",
+        "contentFile": "blog-1794837616073.md"
+    },
+    {
+        "id": "1794834041481",
+        "type": "blog",
+        "title": "A Practical Playbook for Drift Decisions",
+        "category": "Deep Insights",
+        "date": "2026-11-16",
+        "author": "Michael Chen",
+        "excerpt": "A spec drifts one comment at a time. Someone asks for a small change in Slack, you say yes, someone else asks for a corner case, you say yes, and thre...",
+        "contentFile": "blog-1794834041481.md"
+    },
+    {
+        "id": "1794834022607",
+        "type": "news",
+        "title": "The Rollback Is Now a Cover-Up",
+        "category": "Tech Radar",
+        "date": "2026-11-16",
+        "author": "Marcus Webb",
+        "excerpt": "The deploy went out at 4:47 on a Thursday. By 5:12 the error rate on the checkout service had tripled, and by 5:40 a staff engineer named Priya was st...",
+        "contentFile": "news-1794834022607.md"
+    },
+    {
         "id": "1794751247732",
         "type": "blog",
         "title": "Fixing Reporting Workflows with Better Reader 11/15-1",

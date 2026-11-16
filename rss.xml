@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[Fixing Reporting Workflows with Better Decision]]></title>
+    <link>https://goreportify.com/article-pages/blog-1794837616073.html</link>
+    <description><![CDATA[The best compliment a weekly report can get is silence from your manager and a forward to their boss. That forward is the whole game. It means your up...]]></description>
+    <pubDate>Mon, 16 Nov 2026 14:00:16 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[A Practical Playbook for Drift Decisions]]></title>
+    <link>https://goreportify.com/article-pages/blog-1794834041481.html</link>
+    <description><![CDATA[A spec drifts one comment at a time. Someone asks for a small change in Slack, you say yes, someone else asks for a corner case, you say yes, and thre...]]></description>
+    <pubDate>Mon, 16 Nov 2026 13:00:41 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Rollback Is Now a Cover-Up]]></title>
+    <link>https://goreportify.com/article-pages/news-1794834022607.html</link>
+    <description><![CDATA[The deploy went out at 4:47 on a Thursday. By 5:12 the error rate on the checkout service had tripled, and by 5:40 a staff engineer named Priya was st...]]></description>
+    <pubDate>Mon, 16 Nov 2026 13:00:22 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Fixing Reporting Workflows with Better Reader 11/15-1]]></title>
     <link>https://goreportify.com/article-pages/blog-1794751247732.html</link>
     <description><![CDATA[Tuesday, 9:40 a.m. Your VP drops a message in the channel: "Quick one — where are we on the migration?" You have the answer. You also have a status do...]]></description>
@@ -291,24 +309,6 @@ The developer opened it, read it twice, and moved on to the next ticket. She had
     <link>https://goreportify.com/article-pages/news-1792933264299.html</link>
     <description><![CDATA[Look down at the keyboard of a new "AI PC." Next to the right-hand Alt key, a new icon has appeared. It’s the Copilot key, a dedicated, physical butto...]]></description>
     <pubDate>Sun, 25 Oct 2026 13:01:04 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How to Make a Report in Excel: A Step-by-Step Method That Stays Clean]]></title>
-    <link>https://goreportify.com/article-pages/blog-how-to-make-a-report-in-excel.html</link>
-    <description><![CDATA[Excel is where most work reports are actually born, even if they end up in an email or a slide. The problem is not Excel itself — it is that reports built without a structure turn into a maze of merge]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Meeting Summary Template: The Short Recap Leadership Actually Reads]]></title>
-    <link>https://goreportify.com/article-pages/blog-meeting-summary-template.html</link>
-    <description><![CDATA[A meeting summary is the one- or two-paragraph recap you send after a meeting so people who were not in the room — or who were but forgot — can see what happened and what happens next. It sits between]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How to Write Meeting Notes: A Practical Method for Busy People]]></title>
-    <link>https://goreportify.com/article-pages/blog-how-to-write-meeting-notes.html</link>
-    <description><![CDATA[Meeting notes are the quick record you keep during and right after a meeting so you can remember what mattered without writing a formal document. They are not the same as minutes. Minutes are the offi]]></description>
-    <pubDate>Invalid Date</pubDate>
   </item>
 </channel>
 </rss>
