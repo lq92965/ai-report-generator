@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[A Practical Playbook for Minutes Decisions]]></title>
+    <link>https://goreportify.com/article-pages/blog-1794924020021.html</link>
+    <description><![CDATA[My calendar said "AI deep dive" for eleven straight weeks. I attended exactly three. The other eight, I opened the doc, skimmed the agenda, and quietl...]]></description>
+    <pubDate>Tue, 17 Nov 2026 14:00:20 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Fixing Reporting Workflows with Better Reader 11/17-1]]></title>
+    <link>https://goreportify.com/article-pages/blog-1794920451982.html</link>
+    <description><![CDATA[A VP pings you at 4:52 on a Thursday: "Quick one — where are we on the migration?" You paste the link to last week's progress report. She replies: "I...]]></description>
+    <pubDate>Tue, 17 Nov 2026 13:00:51 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Postmortem Is Now a Plea Bargain]]></title>
+    <link>https://goreportify.com/article-pages/news-1794920434346.html</link>
+    <description><![CDATA[The incident channel for the checkout outage went quiet at 2:14 a.m., nine hours after the first 500s started. What followed wasn't a fix. It was a ne...]]></description>
+    <pubDate>Tue, 17 Nov 2026 13:00:34 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[Fixing Reporting Workflows with Better Decision]]></title>
     <link>https://goreportify.com/article-pages/blog-1794837616073.html</link>
     <description><![CDATA[The best compliment a weekly report can get is silence from your manager and a forward to their boss. That forward is the whole game. It means your up...]]></description>
@@ -291,24 +309,6 @@ The developer opened it, read it twice, and moved on to the next ticket. She had
     <link>https://goreportify.com/article-pages/blog-how-to-write-a-formal-report.html</link>
     <description><![CDATA[A formal report is the document you reach for when the stakes are real: a board submission, a compliance write-up, a client deliverable, or an internal audit. Unlike a quick status note, a formal repo]]></description>
     <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Report Writing Format: The Structure Readers Actually Finish]]></title>
-    <link>https://goreportify.com/article-pages/blog-report-writing-format.html</link>
-    <description><![CDATA[If your reports keep getting skimmed and ignored, the problem is rarely the writing itself. It is the format. A clear report writing format tells the reader where to look before they start reading, wh]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Asked for an Estimate. You Started a Three-Day Debate.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1792933304433.html</link>
-    <description><![CDATA[You’re in the room—real or virtual. The team is assembled. You’ve just finished walking through the new feature, a beautiful solution to a well-docume...]]></description>
-    <pubDate>Sun, 25 Oct 2026 13:01:44 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Copilot Key Is a Panic Button]]></title>
-    <link>https://goreportify.com/article-pages/news-1792933264299.html</link>
-    <description><![CDATA[Look down at the keyboard of a new "AI PC." Next to the right-hand Alt key, a new icon has appeared. It’s the Copilot key, a dedicated, physical butto...]]></description>
-    <pubDate>Sun, 25 Oct 2026 13:01:04 GMT</pubDate>
   </item>
 </channel>
 </rss>

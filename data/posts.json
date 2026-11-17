@@ -1,5 +1,35 @@
 [
     {
+        "id": "1794924020021",
+        "type": "blog",
+        "title": "A Practical Playbook for Minutes Decisions",
+        "category": "Deep Insights",
+        "date": "2026-11-17",
+        "author": "Olivia Thorne",
+        "excerpt": "My calendar said \"AI deep dive\" for eleven straight weeks. I attended exactly three. The other eight, I opened the doc, skimmed the agenda, and quietl...",
+        "contentFile": "blog-1794924020021.md"
+    },
+    {
+        "id": "1794920451982",
+        "type": "blog",
+        "title": "Fixing Reporting Workflows with Better Reader 11/17-1",
+        "category": "Deep Insights",
+        "date": "2026-11-17",
+        "author": "Michael Chen",
+        "excerpt": "A VP pings you at 4:52 on a Thursday: \"Quick one — where are we on the migration?\" You paste the link to last week's progress report. She replies: \"I...",
+        "contentFile": "blog-1794920451982.md"
+    },
+    {
+        "id": "1794920434346",
+        "type": "news",
+        "title": "The Postmortem Is Now a Plea Bargain",
+        "category": "Tech Radar",
+        "date": "2026-11-17",
+        "author": "Marcus Webb",
+        "excerpt": "The incident channel for the checkout outage went quiet at 2:14 a.m., nine hours after the first 500s started. What followed wasn't a fix. It was a ne...",
+        "contentFile": "news-1794920434346.md"
+    },
+    {
         "id": "1794837616073",
         "type": "blog",
         "title": "Fixing Reporting Workflows with Better Decision",
