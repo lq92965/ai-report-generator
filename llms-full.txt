@@ -15,6 +15,21 @@
 
 ## All Articles
 
+- [The Meeting Recap Email That Kills the Follow-Up Meeting](https://goreportify.com/article-pages/blog-1795010853353.html)
+  - Type: Deep Insights | Date: 2026-11-18 | Author: Olivia Thorne
+  - You know the drill. Forty-five minutes on Zoom, six people, a decision that took eight minutes to reach and thirty-seven to circle. Then someone says,...
+- [A Practical Playbook for Prompt Decisions](https://goreportify.com/article-pages/blog-1795007291789.html)
+  - Type: Deep Insights | Date: 2026-11-18 | Author: David Sterling
+  - Last Tuesday I watched a PM named Dana paste the same 400-word context paragraph into ChatGPT for the fourth time that week. She was drafting a releas...
+- [The Sprint Velocity Is Now a Body Count](https://goreportify.com/article-pages/news-1795007273442.html)
+  - Type: Tech Radar | Date: 2026-11-18 | Author: Sarah Jenkins
+  - The standup starts at 9:15. By 9:22, the engineering manager has read twelve ticket numbers aloud in a flat voice, and the room has the particular sil...
+- [Status Report Template You Can Use Right Now](https://goreportify.com/article-pages/blog-status-report-template.html)
+  - Type: Deep Insights | Date: 2026-11-18 | Author: Reportify AI Editorial
+  - A status report tells people where a piece of work stands right now: what is done, what is moving, and what is stuck. If you searched for a "status report template," you probably need to send one soon
+- [How to Write a Quarterly Report That People Actually Read](https://goreportify.com/article-pages/blog-how-to-write-a-quarterly-report.html)
+  - Type: Deep Insights | Date: 2026-11-18 | Author: Reportify AI Editorial
+  - A quarterly report is a snapshot of where a team or business stands every three months. If you searched for "how to write a quarterly report," you most likely have a review meeting coming up and a fol
 - [A Practical Playbook for Minutes Decisions](https://goreportify.com/article-pages/blog-1794924020021.html)
   - Type: Deep Insights | Date: 2026-11-17 | Author: Olivia Thorne
   - My calendar said "AI deep dive" for eleven straight weeks. I attended exactly three. The other eight, I opened the doc, skimmed the agenda, and quietl...
@@ -2841,4 +2856,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 934 articles (520 blog + 414 news) + 8 core pages._
+_Total: 939 articles (524 blog + 415 news) + 8 core pages._

@@ -5,6 +5,36 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[The Meeting Recap Email That Kills the Follow-Up Meeting]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795010853353.html</link>
+    <description><![CDATA[You know the drill. Forty-five minutes on Zoom, six people, a decision that took eight minutes to reach and thirty-seven to circle. Then someone says,...]]></description>
+    <pubDate>Wed, 18 Nov 2026 14:07:33 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[A Practical Playbook for Prompt Decisions]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795007291789.html</link>
+    <description><![CDATA[Last Tuesday I watched a PM named Dana paste the same 400-word context paragraph into ChatGPT for the fourth time that week. She was drafting a releas...]]></description>
+    <pubDate>Wed, 18 Nov 2026 13:08:11 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Sprint Velocity Is Now a Body Count]]></title>
+    <link>https://goreportify.com/article-pages/news-1795007273442.html</link>
+    <description><![CDATA[The standup starts at 9:15. By 9:22, the engineering manager has read twelve ticket numbers aloud in a flat voice, and the room has the particular sil...]]></description>
+    <pubDate>Wed, 18 Nov 2026 13:07:53 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Status Report Template You Can Use Right Now]]></title>
+    <link>https://goreportify.com/article-pages/blog-status-report-template.html</link>
+    <description><![CDATA[A status report tells people where a piece of work stands right now: what is done, what is moving, and what is stuck. If you searched for a "status report template," you probably need to send one soon]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Write a Quarterly Report That People Actually Read]]></title>
+    <link>https://goreportify.com/article-pages/blog-how-to-write-a-quarterly-report.html</link>
+    <description><![CDATA[A quarterly report is a snapshot of where a team or business stands every three months. If you searched for "how to write a quarterly report," you most likely have a review meeting coming up and a fol]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[A Practical Playbook for Minutes Decisions]]></title>
     <link>https://goreportify.com/article-pages/blog-1794924020021.html</link>
     <description><![CDATA[My calendar said "AI deep dive" for eleven straight weeks. I attended exactly three. The other eight, I opened the doc, skimmed the agenda, and quietl...]]></description>
@@ -279,36 +309,6 @@ The developer opened it, read it twice, and moved on to the next ticket. She had
     <link>https://goreportify.com/article-pages/news-1793106104126.html</link>
     <description><![CDATA[A few months ago, the smartest machine on the planet got dumber. Developers who once coaxed intricate code from GPT-4 suddenly found it refusing simpl...]]></description>
     <pubDate>Tue, 27 Oct 2026 13:01:44 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Daily Report Template: Copy This Format and Fill It in 5 Minutes]]></title>
-    <link>https://goreportify.com/article-pages/blog-daily-report-template.html</link>
-    <description><![CDATA[If you have ever ended the day unsure whether your work was visible to anyone, a daily report fixes that. You do not need a fancy tool or a long process. You need a fixed format you can fill in fast. ]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How to Write a Daily Report: A Simple Structure That Takes 5 Minutes]]></title>
-    <link>https://goreportify.com/article-pages/blog-how-to-write-a-daily-report.html</link>
-    <description><![CDATA[A daily report is the shortest, most frequent status update you will ever write. Done well, it takes five minutes and keeps your manager, your client, or your own future self informed without a single]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Wrote 50 User Stories by Hand. Your AI Wrote Better Ones in 10 Minutes.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1793019690545.html</link>
-    <description><![CDATA[I once spent an entire Tuesday writing user stories for a new reporting feature. Staring at Jira, I broke down a one-page spec into dozens of tickets....]]></description>
-    <pubDate>Mon, 26 Oct 2026 13:01:30 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Log File Is a Pre-Crime Report]]></title>
-    <link>https://goreportify.com/article-pages/news-1793019643879.html</link>
-    <description><![CDATA[A junior engineer squints at the terminal. A torrent of text scrolls past, a firehose of system events from a dozen microservices. Ten years ago, this...]]></description>
-    <pubDate>Mon, 26 Oct 2026 13:00:43 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How to Write a Formal Report That Holds Up to Scrutiny]]></title>
-    <link>https://goreportify.com/article-pages/blog-how-to-write-a-formal-report.html</link>
-    <description><![CDATA[A formal report is the document you reach for when the stakes are real: a board submission, a compliance write-up, a client deliverable, or an internal audit. Unlike a quick status note, a formal repo]]></description>
-    <pubDate>Invalid Date</pubDate>
   </item>
 </channel>
 </rss>

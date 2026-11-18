@@ -1,5 +1,81 @@
 [
     {
+        "id": "1795010853353",
+        "type": "blog",
+        "title": "The Meeting Recap Email That Kills the Follow-Up Meeting",
+        "category": "Deep Insights",
+        "date": "2026-11-18",
+        "author": "Olivia Thorne",
+        "excerpt": "You know the drill. Forty-five minutes on Zoom, six people, a decision that took eight minutes to reach and thirty-seven to circle. Then someone says,...",
+        "contentFile": "blog-1795010853353.md"
+    },
+    {
+        "id": "1795007291789",
+        "type": "blog",
+        "title": "A Practical Playbook for Prompt Decisions",
+        "category": "Deep Insights",
+        "date": "2026-11-18",
+        "author": "David Sterling",
+        "excerpt": "Last Tuesday I watched a PM named Dana paste the same 400-word context paragraph into ChatGPT for the fourth time that week. She was drafting a releas...",
+        "contentFile": "blog-1795007291789.md"
+    },
+    {
+        "id": "1795007273442",
+        "type": "news",
+        "title": "The Sprint Velocity Is Now a Body Count",
+        "category": "Tech Radar",
+        "date": "2026-11-18",
+        "author": "Sarah Jenkins",
+        "excerpt": "The standup starts at 9:15. By 9:22, the engineering manager has read twelve ticket numbers aloud in a flat voice, and the room has the particular sil...",
+        "contentFile": "news-1795007273442.md"
+    },
+    {
+        "id": "status-report-template",
+        "type": "blog",
+        "title": "Status Report Template You Can Use Right Now",
+        "category": "Deep Insights",
+        "date": "2026-11-18",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A status report tells people where a piece of work stands right now: what is done, what is moving, and what is stuck. If you searched for a \"status report template,\" you probably need to send one soon",
+        "contentFile": "status-report-template.html",
+        "url": "/article-pages/status-report-template.html",
+        "targetKeyword": "status report template",
+        "secondaryKeywords": [
+            "status report example",
+            "status report format",
+            "how to write a status report"
+        ],
+        "internalLinks": [
+            "how-to-write-a-weekly-report",
+            "weekly-status-report",
+            "how-to-write-a-project-status-report"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "how-to-write-a-quarterly-report",
+        "type": "blog",
+        "title": "How to Write a Quarterly Report That People Actually Read",
+        "category": "Deep Insights",
+        "date": "2026-11-18",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A quarterly report is a snapshot of where a team or business stands every three months. If you searched for \"how to write a quarterly report,\" you most likely have a review meeting coming up and a fol",
+        "contentFile": "how-to-write-a-quarterly-report.html",
+        "url": "/article-pages/how-to-write-a-quarterly-report.html",
+        "targetKeyword": "how to write a quarterly report",
+        "secondaryKeywords": [
+            "quarterly report template",
+            "quarterly business review",
+            "quarterly report example"
+        ],
+        "internalLinks": [
+            "how-to-write-a-monthly-report",
+            "monthly-report-template",
+            "how-to-write-a-financial-report"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1794924020021",
         "type": "blog",
         "title": "A Practical Playbook for Minutes Decisions",
