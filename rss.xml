@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[A Practical Playbook for Decision Decisions]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795097273453.html</link>
+    <description><![CDATA[Most risk reports are written after the fact. The project slips, someone asks "what happened," and a PM assembles a tidy document explaining the delay...]]></description>
+    <pubDate>Thu, 19 Nov 2026 14:07:53 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Fixing Reporting Workflows with Better Progress]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795093694121.html</link>
+    <description><![CDATA[The fastest way to lose a room is to hand someone a progress report that says "on track" when their gut says otherwise. They've been burned before. Ma...]]></description>
+    <pubDate>Thu, 19 Nov 2026 13:08:14 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Incident Commander Is Now a Hostage Negotiator]]></title>
+    <link>https://goreportify.com/article-pages/news-1795093675325.html</link>
+    <description><![CDATA[At 2:14 a.m. on a Tuesday in March, the on-call engineer for a payments company I'll call Meridian opened a Slack channel called inc-4471-checkout-dow...]]></description>
+    <pubDate>Thu, 19 Nov 2026 13:07:55 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The Meeting Recap Email That Kills the Follow-Up Meeting]]></title>
     <link>https://goreportify.com/article-pages/blog-1795010853353.html</link>
     <description><![CDATA[You know the drill. Forty-five minutes on Zoom, six people, a decision that took eight minutes to reach and thirty-seven to circle. Then someone says,...]]></description>
@@ -291,24 +309,6 @@ The developer opened it, read it twice, and moved on to the next ticket. She had
     <link>https://goreportify.com/article-pages/blog-sales-report-template.html</link>
     <description><![CDATA[Most sales reps do not have a reporting problem. They have a starting problem. They open a blank document, stare at it, and either skip the report or dump a CRM screenshot. A sales report template rem]]></description>
     <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How to Write a Sales Report That Your Manager Actually Reads]]></title>
-    <link>https://goreportify.com/article-pages/blog-how-to-write-a-sales-report.html</link>
-    <description><![CDATA[A sales report is a snapshot of how much revenue you created, where it came from, and what is likely to close next. It is one of the few documents that directly connects your daily work to the company]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[You Announced the Decision. You Forgot to Sell the Rationale.]]></title>
-    <link>https://goreportify.com/article-pages/blog-1793106145973.html</link>
-    <description><![CDATA[You hit “send” on the Slack message. “Team, after reviewing the data and options, we’ve decided to move forward with the integrated checkout flow inst...]]></description>
-    <pubDate>Tue, 27 Oct 2026 13:02:25 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Fine-Tuning Is a Lobotomy]]></title>
-    <link>https://goreportify.com/article-pages/news-1793106104126.html</link>
-    <description><![CDATA[A few months ago, the smartest machine on the planet got dumber. Developers who once coaxed intricate code from GPT-4 suddenly found it refusing simpl...]]></description>
-    <pubDate>Tue, 27 Oct 2026 13:01:44 GMT</pubDate>
   </item>
 </channel>
 </rss>

@@ -15,6 +15,15 @@
 
 ## All Articles
 
+- [A Practical Playbook for Decision Decisions](https://goreportify.com/article-pages/blog-1795097273453.html)
+  - Type: Deep Insights | Date: 2026-11-19 | Author: Marcus Webb
+  - Most risk reports are written after the fact. The project slips, someone asks "what happened," and a PM assembles a tidy document explaining the delay...
+- [Fixing Reporting Workflows with Better Progress](https://goreportify.com/article-pages/blog-1795093694121.html)
+  - Type: Deep Insights | Date: 2026-11-19 | Author: Jessica Tran
+  - The fastest way to lose a room is to hand someone a progress report that says "on track" when their gut says otherwise. They've been burned before. Ma...
+- [The Incident Commander Is Now a Hostage Negotiator](https://goreportify.com/article-pages/news-1795093675325.html)
+  - Type: Tech Radar | Date: 2026-11-19 | Author: Emily Rostova
+  - At 2:14 a.m. on a Tuesday in March, the on-call engineer for a payments company I'll call Meridian opened a Slack channel called inc-4471-checkout-dow...
 - [The Meeting Recap Email That Kills the Follow-Up Meeting](https://goreportify.com/article-pages/blog-1795010853353.html)
   - Type: Deep Insights | Date: 2026-11-18 | Author: Olivia Thorne
   - You know the drill. Forty-five minutes on Zoom, six people, a decision that took eight minutes to reach and thirty-seven to circle. Then someone says,...
@@ -2856,4 +2865,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 939 articles (524 blog + 415 news) + 8 core pages._
+_Total: 942 articles (526 blog + 416 news) + 8 core pages._
