@@ -1,5 +1,35 @@
 [
     {
+        "id": "1795183674076",
+        "type": "blog",
+        "title": "The Pre-Mortem Status Update: How to Report on a Project Before It Fails",
+        "category": "Deep Insights",
+        "date": "2026-11-20",
+        "author": "Michael Chen",
+        "excerpt": "The project is three weeks from launch. Your status report is green. Then the VP of Sales forwards an email from a customer who heard a rumor that the...",
+        "contentFile": "blog-1795183674076.md"
+    },
+    {
+        "id": "1795180038123",
+        "type": "blog",
+        "title": "How PM Teams Can Improve Model Outcomes",
+        "category": "Deep Insights",
+        "date": "2026-11-20",
+        "author": "Jessica Tran",
+        "excerpt": "Monday, 8:47 a.m. Your inbox holds 61 unread messages, three Slack threads where someone used the word \"blocker\" in all caps, and a roadmap review at...",
+        "contentFile": "blog-1795180038123.md"
+    },
+    {
+        "id": "1795180022437",
+        "type": "news",
+        "title": "The Incident Retrospective Is Now a Confession Booth",
+        "category": "Tech Radar",
+        "date": "2026-11-20",
+        "author": "Alex Mercer",
+        "excerpt": "The room smells like stale coffee and the particular anxiety of twelve engineers who know they're about to be asked, one by one, what they were thinki...",
+        "contentFile": "news-1795180022437.md"
+    },
+    {
         "id": "1795097273453",
         "type": "blog",
         "title": "A Practical Playbook for Decision Decisions",

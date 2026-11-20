@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[The Pre-Mortem Status Update: How to Report on a Project Before It Fails]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795183674076.html</link>
+    <description><![CDATA[The project is three weeks from launch. Your status report is green. Then the VP of Sales forwards an email from a customer who heard a rumor that the...]]></description>
+    <pubDate>Fri, 20 Nov 2026 14:07:54 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How PM Teams Can Improve Model Outcomes]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795180038123.html</link>
+    <description><![CDATA[Monday, 8:47 a.m. Your inbox holds 61 unread messages, three Slack threads where someone used the word "blocker" in all caps, and a roadmap review at...]]></description>
+    <pubDate>Fri, 20 Nov 2026 13:07:18 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Incident Retrospective Is Now a Confession Booth]]></title>
+    <link>https://goreportify.com/article-pages/news-1795180022437.html</link>
+    <description><![CDATA[The room smells like stale coffee and the particular anxiety of twelve engineers who know they're about to be asked, one by one, what they were thinki...]]></description>
+    <pubDate>Fri, 20 Nov 2026 13:07:02 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[A Practical Playbook for Decision Decisions]]></title>
     <link>https://goreportify.com/article-pages/blog-1795097273453.html</link>
     <description><![CDATA[Most risk reports are written after the fact. The project slips, someone asks "what happened," and a PM assembles a tidy document explaining the delay...]]></description>
@@ -290,24 +308,6 @@ The developer opened it, read it twice, and moved on to the next ticket. She had
     <title><![CDATA[Incident Report Template You Can Copy Today]]></title>
     <link>https://goreportify.com/article-pages/blog-incident-report-template.html</link>
     <description><![CDATA[Every team needs a standard incident report template before the next outage hits, not during it. A template removes the guesswork about what to write when people are tired and stressed. It also makes ]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How to Write an Incident Report That Fixes the Problem]]></title>
-    <link>https://goreportify.com/article-pages/blog-how-to-write-an-incident-report.html</link>
-    <description><![CDATA[An incident report records what broke, what it broke, who it touched, and what you did about it. It is the paper trail every operations, security, and support team relies on after something goes wrong]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[AI Meeting Notes: What to Record, What to Skip, and How to Review Them]]></title>
-    <link>https://goreportify.com/article-pages/blog-1793192425506.html</link>
-    <description><![CDATA[The transcript is 8,000 words. The meeting was 45 minutes. You need three things from it: the decision on the pricing test, who owns the migration, an...]]></description>
-    <pubDate>Wed, 28 Oct 2026 13:00:25 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Sales Report Template: A Copy-Paste Structure for Weekly and Monthly Reports]]></title>
-    <link>https://goreportify.com/article-pages/blog-sales-report-template.html</link>
-    <description><![CDATA[Most sales reps do not have a reporting problem. They have a starting problem. They open a blank document, stare at it, and either skip the report or dump a CRM screenshot. A sales report template rem]]></description>
     <pubDate>Invalid Date</pubDate>
   </item>
 </channel>

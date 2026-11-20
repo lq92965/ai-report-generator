@@ -15,6 +15,15 @@
 
 ## All Articles
 
+- [The Pre-Mortem Status Update: How to Report on a Project Before It Fails](https://goreportify.com/article-pages/blog-1795183674076.html)
+  - Type: Deep Insights | Date: 2026-11-20 | Author: Michael Chen
+  - The project is three weeks from launch. Your status report is green. Then the VP of Sales forwards an email from a customer who heard a rumor that the...
+- [How PM Teams Can Improve Model Outcomes](https://goreportify.com/article-pages/blog-1795180038123.html)
+  - Type: Deep Insights | Date: 2026-11-20 | Author: Jessica Tran
+  - Monday, 8:47 a.m. Your inbox holds 61 unread messages, three Slack threads where someone used the word "blocker" in all caps, and a roadmap review at...
+- [The Incident Retrospective Is Now a Confession Booth](https://goreportify.com/article-pages/news-1795180022437.html)
+  - Type: Tech Radar | Date: 2026-11-20 | Author: Alex Mercer
+  - The room smells like stale coffee and the particular anxiety of twelve engineers who know they're about to be asked, one by one, what they were thinki...
 - [A Practical Playbook for Decision Decisions](https://goreportify.com/article-pages/blog-1795097273453.html)
   - Type: Deep Insights | Date: 2026-11-19 | Author: Marcus Webb
   - Most risk reports are written after the fact. The project slips, someone asks "what happened," and a PM assembles a tidy document explaining the delay...
@@ -2865,4 +2874,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 942 articles (526 blog + 416 news) + 8 core pages._
+_Total: 945 articles (528 blog + 417 news) + 8 core pages._
