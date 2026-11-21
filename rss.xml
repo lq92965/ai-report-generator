@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[The AI Draft Review: A 20-Minute Check Before You Send Anything to Stakeholders]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795270020137.html</link>
+    <description><![CDATA[You typed "write a status update for the Atlas migration" into your AI tool. Eight seconds later you have four paragraphs that sound like a consultant...]]></description>
+    <pubDate>Sat, 21 Nov 2026 14:07:00 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How PM Teams Can Improve Decision Outcomes]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795266441567.html</link>
+    <description><![CDATA[Most risk reports are written for the wrong moment. They get drafted after the risk has already become an issue, formatted to look thorough, and filed...]]></description>
+    <pubDate>Sat, 21 Nov 2026 13:07:21 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Model Card Is Now a Liability Waiver]]></title>
+    <link>https://goreportify.com/article-pages/news-1795266422314.html</link>
+    <description><![CDATA[The model card arrives as a PDF, eleven pages, attached to a vendor email with the subject line "Responsible AI Documentation — Confidential." It is t...]]></description>
+    <pubDate>Sat, 21 Nov 2026 13:07:02 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The Pre-Mortem Status Update: How to Report on a Project Before It Fails]]></title>
     <link>https://goreportify.com/article-pages/blog-1795183674076.html</link>
     <description><![CDATA[The project is three weeks from launch. Your status report is green. Then the VP of Sales forwards an email from a customer who heard a rumor that the...]]></description>
@@ -289,26 +307,6 @@ You write a weekly update, hit send, and 40 minutes later your VP forwards it to
     <link>https://goreportify.com/article-pages/blog-1793451620297.html</link>
     <description><![CDATA[A PM I know spent a Tuesday afternoon pasting support tickets into a chatbot. Two hundred of them. She wanted themes. By 5 p.m. she had a decent list...]]></description>
     <pubDate>Sat, 31 Oct 2026 13:00:20 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How PM Teams Can Improve Ticket Outcomes]]></title>
-    <link>https://goreportify.com/article-pages/blog-1793365221570.html</link>
-    <description><![CDATA[The bug report said: "Search is broken. Please fix ASAP."
-
-The developer opened it, read it twice, and moved on to the next ticket. She had no idea wh...]]></description>
-    <pubDate>Fri, 30 Oct 2026 13:00:21 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[AI Productivity Tools for PMs: What to Automate and What to Keep Doing Yourself]]></title>
-    <link>https://goreportify.com/article-pages/blog-1793278821904.html</link>
-    <description><![CDATA[The first time I used an AI tool to summarize a week of customer calls, I felt a small pang of guilt. It took ninety seconds. I used to spend two hour...]]></description>
-    <pubDate>Thu, 29 Oct 2026 13:00:21 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Incident Report Template You Can Copy Today]]></title>
-    <link>https://goreportify.com/article-pages/blog-incident-report-template.html</link>
-    <description><![CDATA[Every team needs a standard incident report template before the next outage hits, not during it. A template removes the guesswork about what to write when people are tired and stressed. It also makes ]]></description>
-    <pubDate>Invalid Date</pubDate>
   </item>
 </channel>
 </rss>

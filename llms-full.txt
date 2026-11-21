@@ -15,6 +15,15 @@
 
 ## All Articles
 
+- [The AI Draft Review: A 20-Minute Check Before You Send Anything to Stakeholders](https://goreportify.com/article-pages/blog-1795270020137.html)
+  - Type: Deep Insights | Date: 2026-11-21 | Author: Marcus Webb
+  - You typed "write a status update for the Atlas migration" into your AI tool. Eight seconds later you have four paragraphs that sound like a consultant...
+- [How PM Teams Can Improve Decision Outcomes](https://goreportify.com/article-pages/blog-1795266441567.html)
+  - Type: Deep Insights | Date: 2026-11-21 | Author: Marcus Webb
+  - Most risk reports are written for the wrong moment. They get drafted after the risk has already become an issue, formatted to look thorough, and filed...
+- [The Model Card Is Now a Liability Waiver](https://goreportify.com/article-pages/news-1795266422314.html)
+  - Type: Tech Radar | Date: 2026-11-21 | Author: Emily Rostova
+  - The model card arrives as a PDF, eleven pages, attached to a vendor email with the subject line "Responsible AI Documentation — Confidential." It is t...
 - [The Pre-Mortem Status Update: How to Report on a Project Before It Fails](https://goreportify.com/article-pages/blog-1795183674076.html)
   - Type: Deep Insights | Date: 2026-11-20 | Author: Michael Chen
   - The project is three weeks from launch. Your status report is green. Then the VP of Sales forwards an email from a customer who heard a rumor that the...
@@ -2874,4 +2883,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 945 articles (528 blog + 417 news) + 8 core pages._
+_Total: 948 articles (530 blog + 418 news) + 8 core pages._

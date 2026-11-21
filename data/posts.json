@@ -1,5 +1,35 @@
 [
     {
+        "id": "1795270020137",
+        "type": "blog",
+        "title": "The AI Draft Review: A 20-Minute Check Before You Send Anything to Stakeholders",
+        "category": "Deep Insights",
+        "date": "2026-11-21",
+        "author": "Marcus Webb",
+        "excerpt": "You typed \"write a status update for the Atlas migration\" into your AI tool. Eight seconds later you have four paragraphs that sound like a consultant...",
+        "contentFile": "blog-1795270020137.md"
+    },
+    {
+        "id": "1795266441567",
+        "type": "blog",
+        "title": "How PM Teams Can Improve Decision Outcomes",
+        "category": "Deep Insights",
+        "date": "2026-11-21",
+        "author": "Marcus Webb",
+        "excerpt": "Most risk reports are written for the wrong moment. They get drafted after the risk has already become an issue, formatted to look thorough, and filed...",
+        "contentFile": "blog-1795266441567.md"
+    },
+    {
+        "id": "1795266422314",
+        "type": "news",
+        "title": "The Model Card Is Now a Liability Waiver",
+        "category": "Tech Radar",
+        "date": "2026-11-21",
+        "author": "Emily Rostova",
+        "excerpt": "The model card arrives as a PDF, eleven pages, attached to a vendor email with the subject line \"Responsible AI Documentation — Confidential.\" It is t...",
+        "contentFile": "news-1795266422314.md"
+    },
+    {
         "id": "1795183674076",
         "type": "blog",
         "title": "The Pre-Mortem Status Update: How to Report on a Project Before It Fails",
