@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[How PM Teams Can Improve Decision Outcomes 11/22-1]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795356414482.html</link>
+    <description><![CDATA[The risk register said "medium." Six weeks later the launch slipped a quarter, and nobody in the room could explain why the warning never turned into...]]></description>
+    <pubDate>Sun, 22 Nov 2026 14:06:54 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Fixing Reporting Workflows with Better Reader 11/22-1]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795352886029.html</link>
+    <description><![CDATA[The project is three weeks late. Your steering committee meets Thursday. You open a blank doc, type "Project Status Update," and then sit there for si...]]></description>
+    <pubDate>Sun, 22 Nov 2026 13:08:06 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Incident Severity Level Is Now a Triage Nurse]]></title>
+    <link>https://goreportify.com/article-pages/news-1795352873695.html</link>
+    <description><![CDATA[The pager went off at 2:14 a.m. on a Tuesday. The on-call engineer at a mid-sized payments company rolled over, thumbed the phone awake, and read the...]]></description>
+    <pubDate>Sun, 22 Nov 2026 13:07:53 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The AI Draft Review: A 20-Minute Check Before You Send Anything to Stakeholders]]></title>
     <link>https://goreportify.com/article-pages/blog-1795270020137.html</link>
     <description><![CDATA[You typed "write a status update for the Atlas migration" into your AI tool. Eight seconds later you have four paragraphs that sound like a consultant...]]></description>
@@ -289,24 +307,6 @@ You write a weekly update, hit send, and 40 minutes later your VP forwards it to
     <link>https://goreportify.com/article-pages/blog-how-to-write-an-executive-summary.html</link>
     <description><![CDATA[An executive summary is the short version of a longer report, written so a busy reader can decide what to do without reading the whole thing. It is not a preface and it is not a teaser. It stands alon]]></description>
     <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Expense Report Template: A Clean Format You Can Reuse Every Month]]></title>
-    <link>https://goreportify.com/article-pages/blog-expense-report-template.html</link>
-    <description><![CDATA[A reusable expense report template saves you from rebuilding the same document every pay cycle. Instead of staring at a blank page each month, you open one file, drop in the new numbers, and send it. ]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How to Write an Expense Report (Step-by-Step Guide)]]></title>
-    <link>https://goreportify.com/article-pages/blog-how-to-write-an-expense-report.html</link>
-    <description><![CDATA[An expense report is the document you send to get reimbursed for money you spent on behalf of your company, or to show a client what their project actually cost. It lists what you bought, how much it ]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[AI Tools for Product Managers: A Decision Guide for What to Hand Off]]></title>
-    <link>https://goreportify.com/article-pages/blog-1793451620297.html</link>
-    <description><![CDATA[A PM I know spent a Tuesday afternoon pasting support tickets into a chatbot. Two hundred of them. She wanted themes. By 5 p.m. she had a decent list...]]></description>
-    <pubDate>Sat, 31 Oct 2026 13:00:20 GMT</pubDate>
   </item>
 </channel>
 </rss>

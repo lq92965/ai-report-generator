@@ -15,6 +15,15 @@
 
 ## All Articles
 
+- [How PM Teams Can Improve Decision Outcomes 11/22-1](https://goreportify.com/article-pages/blog-1795356414482.html)
+  - Type: Deep Insights | Date: 2026-11-22 | Author: Olivia Thorne
+  - The risk register said "medium." Six weeks later the launch slipped a quarter, and nobody in the room could explain why the warning never turned into...
+- [Fixing Reporting Workflows with Better Reader 11/22-1](https://goreportify.com/article-pages/blog-1795352886029.html)
+  - Type: Deep Insights | Date: 2026-11-22 | Author: Olivia Thorne
+  - The project is three weeks late. Your steering committee meets Thursday. You open a blank doc, type "Project Status Update," and then sit there for si...
+- [The Incident Severity Level Is Now a Triage Nurse](https://goreportify.com/article-pages/news-1795352873695.html)
+  - Type: Tech Radar | Date: 2026-11-22 | Author: David Sterling
+  - The pager went off at 2:14 a.m. on a Tuesday. The on-call engineer at a mid-sized payments company rolled over, thumbed the phone awake, and read the...
 - [The AI Draft Review: A 20-Minute Check Before You Send Anything to Stakeholders](https://goreportify.com/article-pages/blog-1795270020137.html)
   - Type: Deep Insights | Date: 2026-11-21 | Author: Marcus Webb
   - You typed "write a status update for the Atlas migration" into your AI tool. Eight seconds later you have four paragraphs that sound like a consultant...
@@ -2883,4 +2892,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 948 articles (530 blog + 418 news) + 8 core pages._
+_Total: 951 articles (532 blog + 419 news) + 8 core pages._

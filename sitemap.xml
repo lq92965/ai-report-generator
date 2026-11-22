@@ -36,6 +36,21 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://goreportify.com/article-pages/blog-1795356414482.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://goreportify.com/article-pages/blog-1795352886029.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://goreportify.com/article-pages/news-1795352873695.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://goreportify.com/article-pages/blog-1795270020137.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -267,21 +282,6 @@
   </url>
   <url>
     <loc>https://goreportify.com/article-pages/blog-how-to-write-an-executive-summary.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://goreportify.com/article-pages/blog-expense-report-template.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://goreportify.com/article-pages/blog-how-to-write-an-expense-report.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://goreportify.com/article-pages/blog-1793451620297.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

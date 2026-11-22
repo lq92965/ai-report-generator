@@ -1,5 +1,35 @@
 [
     {
+        "id": "1795356414482",
+        "type": "blog",
+        "title": "How PM Teams Can Improve Decision Outcomes 11/22-1",
+        "category": "Deep Insights",
+        "date": "2026-11-22",
+        "author": "Olivia Thorne",
+        "excerpt": "The risk register said \"medium.\" Six weeks later the launch slipped a quarter, and nobody in the room could explain why the warning never turned into...",
+        "contentFile": "blog-1795356414482.md"
+    },
+    {
+        "id": "1795352886029",
+        "type": "blog",
+        "title": "Fixing Reporting Workflows with Better Reader 11/22-1",
+        "category": "Deep Insights",
+        "date": "2026-11-22",
+        "author": "Olivia Thorne",
+        "excerpt": "The project is three weeks late. Your steering committee meets Thursday. You open a blank doc, type \"Project Status Update,\" and then sit there for si...",
+        "contentFile": "blog-1795352886029.md"
+    },
+    {
+        "id": "1795352873695",
+        "type": "news",
+        "title": "The Incident Severity Level Is Now a Triage Nurse",
+        "category": "Tech Radar",
+        "date": "2026-11-22",
+        "author": "David Sterling",
+        "excerpt": "The pager went off at 2:14 a.m. on a Tuesday. The on-call engineer at a mid-sized payments company rolled over, thumbed the phone awake, and read the...",
+        "contentFile": "news-1795352873695.md"
+    },
+    {
         "id": "1795270020137",
         "type": "blog",
         "title": "The AI Draft Review: A 20-Minute Check Before You Send Anything to Stakeholders",
