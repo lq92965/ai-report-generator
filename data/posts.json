@@ -1,5 +1,35 @@
 [
     {
+        "id": "1795442876866",
+        "type": "blog",
+        "title": "The 15-Minute Monday Triage: How PMs Set the Week Before It Sets Them",
+        "category": "Deep Insights",
+        "date": "2026-11-23",
+        "author": "David Sterling",
+        "excerpt": "Monday, 9:04 a.m. You open your laptop to 47 unread Slack messages, three \"quick question\" DMs that are not quick, and a calendar that looks like a ga...",
+        "contentFile": "blog-1795442876866.md"
+    },
+    {
+        "id": "1795439243674",
+        "type": "blog",
+        "title": "The Standing Friday Note: A Lightweight Status Format for Teams That Hate Status Meetings",
+        "category": "Deep Insights",
+        "date": "2026-11-23",
+        "author": "Alex Mercer",
+        "excerpt": "Most status reporting fails for a boring reason: it's written for the person asking, not the person reading. The PM writes a paragraph about what they...",
+        "contentFile": "blog-1795439243674.md"
+    },
+    {
+        "id": "1795439227336",
+        "type": "news",
+        "title": "The Code Review Is Now a Border Checkpoint",
+        "category": "Tech Radar",
+        "date": "2026-11-23",
+        "author": "Marcus Webb",
+        "excerpt": "The pull request had been open for nine days. Forty-one files changed. The author had answered every comment, resolved every thread, and the CI was gr...",
+        "contentFile": "news-1795439227336.md"
+    },
+    {
         "id": "1795356414482",
         "type": "blog",
         "title": "How PM Teams Can Improve Decision Outcomes 11/22-1",

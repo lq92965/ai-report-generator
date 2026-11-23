@@ -5,6 +5,24 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[The 15-Minute Monday Triage: How PMs Set the Week Before It Sets Them]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795442876866.html</link>
+    <description><![CDATA[Monday, 9:04 a.m. You open your laptop to 47 unread Slack messages, three "quick question" DMs that are not quick, and a calendar that looks like a ga...]]></description>
+    <pubDate>Mon, 23 Nov 2026 14:07:56 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Standing Friday Note: A Lightweight Status Format for Teams That Hate Status Meetings]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795439243674.html</link>
+    <description><![CDATA[Most status reporting fails for a boring reason: it's written for the person asking, not the person reading. The PM writes a paragraph about what they...]]></description>
+    <pubDate>Mon, 23 Nov 2026 13:07:23 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Code Review Is Now a Border Checkpoint]]></title>
+    <link>https://goreportify.com/article-pages/news-1795439227336.html</link>
+    <description><![CDATA[The pull request had been open for nine days. Forty-one files changed. The author had answered every comment, resolved every thread, and the CI was gr...]]></description>
+    <pubDate>Mon, 23 Nov 2026 13:07:07 GMT</pubDate>
+  </item>
+  <item>
     <title><![CDATA[How PM Teams Can Improve Decision Outcomes 11/22-1]]></title>
     <link>https://goreportify.com/article-pages/blog-1795356414482.html</link>
     <description><![CDATA[The risk register said "medium." Six weeks later the launch slipped a quarter, and nobody in the room could explain why the warning never turned into...]]></description>
@@ -286,26 +304,6 @@ You wrote six paragr...]]></description>
     <title><![CDATA[How to Write a Bug Report That Engineers Actually Fix]]></title>
     <link>https://goreportify.com/article-pages/blog-how-to-write-a-bug-report.html</link>
     <description><![CDATA[When software breaks, the time it takes to fix usually has less to do with how hard the bug is and more to do with how clear the report was. A message that just says "the export is broken" can sit in ]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Fixing Reporting Workflows with Better Forward]]></title>
-    <link>https://goreportify.com/article-pages/blog-1793541623851.html</link>
-    <description><![CDATA[The forward is the whole game.
-
-You write a weekly update, hit send, and 40 minutes later your VP forwards it to the CEO with one line: "See below." T...]]></description>
-    <pubDate>Sun, 01 Nov 2026 14:00:23 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Executive Summary Template: The One-Page Shell You Fill Every Time]]></title>
-    <link>https://goreportify.com/article-pages/blog-executive-summary-template.html</link>
-    <description><![CDATA[An executive summary template is a fixed shell you reuse for every report so the structure never changes and only the content does. The point is not to look consistent — it is to save the thinking. Wh]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How to Write an Executive Summary: A Plain Method Busy Leaders Can Skim]]></title>
-    <link>https://goreportify.com/article-pages/blog-how-to-write-an-executive-summary.html</link>
-    <description><![CDATA[An executive summary is the short version of a longer report, written so a busy reader can decide what to do without reading the whole thing. It is not a preface and it is not a teaser. It stands alon]]></description>
     <pubDate>Invalid Date</pubDate>
   </item>
 </channel>

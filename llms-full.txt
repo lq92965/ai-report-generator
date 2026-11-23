@@ -15,6 +15,15 @@
 
 ## All Articles
 
+- [The 15-Minute Monday Triage: How PMs Set the Week Before It Sets Them](https://goreportify.com/article-pages/blog-1795442876866.html)
+  - Type: Deep Insights | Date: 2026-11-23 | Author: David Sterling
+  - Monday, 9:04 a.m. You open your laptop to 47 unread Slack messages, three "quick question" DMs that are not quick, and a calendar that looks like a ga...
+- [The Standing Friday Note: A Lightweight Status Format for Teams That Hate Status Meetings](https://goreportify.com/article-pages/blog-1795439243674.html)
+  - Type: Deep Insights | Date: 2026-11-23 | Author: Alex Mercer
+  - Most status reporting fails for a boring reason: it's written for the person asking, not the person reading. The PM writes a paragraph about what they...
+- [The Code Review Is Now a Border Checkpoint](https://goreportify.com/article-pages/news-1795439227336.html)
+  - Type: Tech Radar | Date: 2026-11-23 | Author: Marcus Webb
+  - The pull request had been open for nine days. Forty-one files changed. The author had answered every comment, resolved every thread, and the CI was gr...
 - [How PM Teams Can Improve Decision Outcomes 11/22-1](https://goreportify.com/article-pages/blog-1795356414482.html)
   - Type: Deep Insights | Date: 2026-11-22 | Author: Olivia Thorne
   - The risk register said "medium." Six weeks later the launch slipped a quarter, and nobody in the room could explain why the warning never turned into...
@@ -2892,4 +2901,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 951 articles (532 blog + 419 news) + 8 core pages._
+_Total: 954 articles (534 blog + 420 news) + 8 core pages._
