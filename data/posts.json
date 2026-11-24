@@ -1,5 +1,35 @@
 [
     {
+        "id": "1795529215115",
+        "type": "blog",
+        "title": "The Two-Minute Status Audit: A Weekly Check That Catches Stale Reports Before Your Stakeholders Do",
+        "category": "Deep Insights",
+        "date": "2026-11-24",
+        "author": "Jessica Tran",
+        "excerpt": "A status report that says \"on track\" for six weeks straight is not reassuring. It's a warning sign. Either the project is genuinely boring, or nobody...",
+        "contentFile": "blog-1795529215115.md"
+    },
+    {
+        "id": "1795525648500",
+        "type": "blog",
+        "title": "The Decision Log: How PMs Keep Context When the Team Changes",
+        "category": "Deep Insights",
+        "date": "2026-11-24",
+        "author": "Marcus Webb",
+        "excerpt": "Mira joined the payments team in March. By her second week she'd found the architecture doc, the roadmap, and a Slack channel with 40,000 messages. Wh...",
+        "contentFile": "blog-1795525648500.md"
+    },
+    {
+        "id": "1795525632021",
+        "type": "news",
+        "title": "The Feature Flag Is Now a Landmine",
+        "category": "Tech Radar",
+        "date": "2026-11-24",
+        "author": "Olivia Thorne",
+        "excerpt": "The flag was called enable_checkout_v2. It had been on for 100 percent of traffic since March. Nobody remembered who owned it. When a junior engineer...",
+        "contentFile": "news-1795525632021.md"
+    },
+    {
         "id": "quarterly-business-review",
         "type": "blog",
         "title": "How to Run a Quarterly Business Review That Drives Decisions",

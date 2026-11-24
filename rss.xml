@@ -5,6 +5,48 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[The Two-Minute Status Audit: A Weekly Check That Catches Stale Reports Before Your Stakeholders Do]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795529215115.html</link>
+    <description><![CDATA[A status report that says "on track" for six weeks straight is not reassuring. It's a warning sign. Either the project is genuinely boring, or nobody...]]></description>
+    <pubDate>Tue, 24 Nov 2026 14:06:55 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Decision Log: How PMs Keep Context When the Team Changes]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795525648500.html</link>
+    <description><![CDATA[Mira joined the payments team in March. By her second week she'd found the architecture doc, the roadmap, and a Slack channel with 40,000 messages. Wh...]]></description>
+    <pubDate>Tue, 24 Nov 2026 13:07:28 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Feature Flag Is Now a Landmine]]></title>
+    <link>https://goreportify.com/article-pages/news-1795525632021.html</link>
+    <description><![CDATA[The flag was called enable_checkout_v2. It had been on for 100 percent of traffic since March. Nobody remembered who owned it. When a junior engineer...]]></description>
+    <pubDate>Tue, 24 Nov 2026 13:07:12 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Run a Quarterly Business Review That Drives Decisions]]></title>
+    <link>https://goreportify.com/article-pages/blog-quarterly-business-review.html</link>
+    <description><![CDATA[A quarterly business review is a working session, not a slide show. Done well, it forces a clear answer to three questions: what did we promise, what actually happened, and what will we do differently]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Quarterly Report Template You Can Fill In Today]]></title>
+    <link>https://goreportify.com/article-pages/blog-quarterly-report-template.html</link>
+    <description><![CDATA[A quarterly report template is a fixed set of sections you reuse every three months, so the work goes into the numbers instead of into deciding what to write first. If you are looking for one, you pro]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Situation Report Template You Can Copy and Fill In]]></title>
+    <link>https://goreportify.com/article-pages/blog-situation-report-template.html</link>
+    <description><![CDATA[A situation report gives a reader what they need to act, in the order they need it. It is the format emergency teams, operations desks, and project leads reach for when conditions are moving faster th]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Write a Status Report That Gets Read]]></title>
+    <link>https://goreportify.com/article-pages/blog-how-to-write-a-status-report.html</link>
+    <description><![CDATA[Learning how to write a status report is mostly a matter of deciding what to leave out. A status report is not a diary of everything you did this week; it is a short note that tells a manager where wo]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The 15-Minute Monday Triage: How PMs Set the Week Before It Sets Them]]></title>
     <link>https://goreportify.com/article-pages/blog-1795442876866.html</link>
     <description><![CDATA[Monday, 9:04 a.m. You open your laptop to 47 unread Slack messages, three "quick question" DMs that are not quick, and a calendar that looks like a ga...]]></description>
@@ -262,48 +304,6 @@ You wrote six paragr...]]></description>
     <title><![CDATA[How to Write a Work Report That Gets Read]]></title>
     <link>https://goreportify.com/article-pages/blog-how-to-write-a-work-report.html</link>
     <description><![CDATA[A work report is the simplest way to show what you did, what you are doing, and what you need from the people above you. If you searched for "how to write a work report," you most likely have a deadli]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Fixing Reporting Workflows with Better Reader]]></title>
-    <link>https://goreportify.com/article-pages/blog-1793800819556.html</link>
-    <description><![CDATA[The report lands at 6:47 p.m. Friday. By 9:15 Monday it's buried under forty-two unread emails, three calendar invites, and a Slack thread about the s...]]></description>
-    <pubDate>Wed, 04 Nov 2026 14:00:19 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How PM Teams Can Improve Reader Outcomes]]></title>
-    <link>https://goreportify.com/article-pages/blog-1793714416085.html</link>
-    <description><![CDATA[The weekly status report is the most-ignored document in most companies. That's not because people are lazy. It's because most weekly reports are writ...]]></description>
-    <pubDate>Tue, 03 Nov 2026 14:00:16 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[End of Day Report: The 5-Minute Close-Out That Keeps Teams Aligned]]></title>
-    <link>https://goreportify.com/article-pages/blog-end-of-day-report.html</link>
-    <description><![CDATA[An end of day report is the smallest report that still earns its place in your routine. It takes five minutes, it closes the loop on the day's work, and it gives tomorrow a head start. Remote teams, s]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Annual Report Template: A Structure That Survives the Audit]]></title>
-    <link>https://goreportify.com/article-pages/blog-annual-report-template.html</link>
-    <description><![CDATA[An annual report is the one document your whole year gets judged by. Investors, board members, regulators, and your own team will read it long after the work is done, and many of them will form their ]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[A Practical Playbook for Weekly Decisions]]></title>
-    <link>https://goreportify.com/article-pages/blog-1793628021784.html</link>
-    <description><![CDATA[I once watched a director open a weekly report, scroll for four seconds, and close the tab. She'd asked for it. She'd waited for it. She just couldn't...]]></description>
-    <pubDate>Mon, 02 Nov 2026 14:00:21 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How to Write a Financial Report That Stakeholders Trust]]></title>
-    <link>https://goreportify.com/article-pages/blog-how-to-write-a-financial-report.html</link>
-    <description><![CDATA[A financial report is the one document where a small wording error can change a decision worth real money. Managers read it to decide whether to hire, investors read it to decide whether to fund, and ]]></description>
-    <pubDate>Invalid Date</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How to Write a Bug Report That Engineers Actually Fix]]></title>
-    <link>https://goreportify.com/article-pages/blog-how-to-write-a-bug-report.html</link>
-    <description><![CDATA[When software breaks, the time it takes to fix usually has less to do with how hard the bug is and more to do with how clear the report was. A message that just says "the export is broken" can sit in ]]></description>
     <pubDate>Invalid Date</pubDate>
   </item>
 </channel>
