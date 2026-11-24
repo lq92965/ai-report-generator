@@ -1,5 +1,97 @@
 [
     {
+        "id": "quarterly-business-review",
+        "type": "blog",
+        "title": "How to Run a Quarterly Business Review That Drives Decisions",
+        "category": "Deep Insights",
+        "date": "2026-11-24",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A quarterly business review is a working session, not a slide show. Done well, it forces a clear answer to three questions: what did we promise, what actually happened, and what will we do differently",
+        "contentFile": "quarterly-business-review.html",
+        "url": "/article-pages/quarterly-business-review.html",
+        "targetKeyword": "quarterly business review",
+        "secondaryKeywords": [
+            "quarterly business review template",
+            "quarterly business review example",
+            "QBR format"
+        ],
+        "internalLinks": [
+            "how-to-write-a-quarterly-report",
+            "status-report-template",
+            "monthly-performance-report"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "quarterly-report-template",
+        "type": "blog",
+        "title": "Quarterly Report Template You Can Fill In Today",
+        "category": "Deep Insights",
+        "date": "2026-11-23",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A quarterly report template is a fixed set of sections you reuse every three months, so the work goes into the numbers instead of into deciding what to write first. If you are looking for one, you pro",
+        "contentFile": "quarterly-report-template.html",
+        "url": "/article-pages/quarterly-report-template.html",
+        "targetKeyword": "quarterly report template",
+        "secondaryKeywords": [
+            "quarterly report format",
+            "quarterly business review template",
+            "quarterly report example"
+        ],
+        "internalLinks": [
+            "how-to-write-a-quarterly-report",
+            "status-report-template",
+            "how-to-write-a-monthly-report"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "situation-report-template",
+        "type": "blog",
+        "title": "Situation Report Template You Can Copy and Fill In",
+        "category": "Deep Insights",
+        "date": "2026-11-24",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A situation report gives a reader what they need to act, in the order they need it. It is the format emergency teams, operations desks, and project leads reach for when conditions are moving faster th",
+        "contentFile": "situation-report-template.html",
+        "url": "/article-pages/situation-report-template.html",
+        "targetKeyword": "situation report template",
+        "secondaryKeywords": [
+            "situation report format",
+            "situation report example",
+            "sitrep template"
+        ],
+        "internalLinks": [
+            "weekly-status-report",
+            "how-to-write-a-project-status-report",
+            "progress-report-template"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "how-to-write-a-status-report",
+        "type": "blog",
+        "title": "How to Write a Status Report That Gets Read",
+        "category": "Deep Insights",
+        "date": "2026-11-23",
+        "author": "Reportify AI Editorial",
+        "excerpt": "Learning how to write a status report is mostly a matter of deciding what to leave out. A status report is not a diary of everything you did this week; it is a short note that tells a manager where wo",
+        "contentFile": "how-to-write-a-status-report.html",
+        "url": "/article-pages/how-to-write-a-status-report.html",
+        "targetKeyword": "how to write a status report",
+        "secondaryKeywords": [
+            "status report template",
+            "status report example",
+            "weekly status report format"
+        ],
+        "internalLinks": [
+            "status-report-template",
+            "weekly-status-report",
+            "how-to-write-a-project-status-report"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1795442876866",
         "type": "blog",
         "title": "The 15-Minute Monday Triage: How PMs Set the Week Before It Sets Them",
