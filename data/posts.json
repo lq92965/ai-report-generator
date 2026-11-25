@@ -1,5 +1,81 @@
 [
     {
+        "id": "1795615614100",
+        "type": "blog",
+        "title": "The Stakeholder Map: How PMs Decide Who Gets Which Update (and Who Doesn't)",
+        "category": "Deep Insights",
+        "date": "2026-11-25",
+        "author": "Michael Chen",
+        "excerpt": "Three weeks into a platform migration, Dana sent the same 600-word status update to 34 people. The VP of Engineering replied in four minutes: \"Too lon...",
+        "contentFile": "blog-1795615614100.md"
+    },
+    {
+        "id": "1795612039263",
+        "type": "blog",
+        "title": "The Five-Minute Project Health Check: A PM's Weekly Scan Before the Status Meeting",
+        "category": "Deep Insights",
+        "date": "2026-11-25",
+        "author": "Marcus Webb",
+        "excerpt": "Most project problems don't announce themselves. They sit in a Slack thread nobody replied to, a Jira ticket that's been \"in progress\" for eleven days...",
+        "contentFile": "blog-1795612039263.md"
+    },
+    {
+        "id": "1795612024676",
+        "type": "news",
+        "title": "The Container Registry Is Now a Landlord",
+        "category": "Tech Radar",
+        "date": "2026-11-25",
+        "author": "Emily Rostova",
+        "excerpt": "The first thing you notice on the dashboard is the pull counter. It ticks up in the thousands per minute, a number that once felt like a health metric...",
+        "contentFile": "news-1795612024676.md"
+    },
+    {
+        "id": "status-report-vs-progress-report",
+        "type": "blog",
+        "title": "Status Report vs Progress Report: The Difference That Matters",
+        "category": "Deep Insights",
+        "date": "2026-11-25",
+        "author": "Reportify AI Editorial",
+        "excerpt": "People use \"status report\" and \"progress report\" as if the two words were interchangeable. They are not, and mixing them up is why so many updates land with a thud. A status report tells you where thi",
+        "contentFile": "status-report-vs-progress-report.html",
+        "url": "/article-pages/status-report-vs-progress-report.html",
+        "targetKeyword": "status report vs progress report",
+        "secondaryKeywords": [
+            "status report and progress report difference",
+            "status report example",
+            "progress report format"
+        ],
+        "internalLinks": [
+            "status-report-template",
+            "weekly-status-report",
+            "progress-report-template"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "how-to-write-a-progress-report",
+        "type": "blog",
+        "title": "How to Write a Progress Report That Shows Real Movement",
+        "category": "Deep Insights",
+        "date": "2026-11-25",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A progress report answers one question better than any other document at work: are we actually moving, and how do you know? Not \"are we busy\" and not \"did everyone attend the meetings.\" Just movement ",
+        "contentFile": "how-to-write-a-progress-report.html",
+        "url": "/article-pages/how-to-write-a-progress-report.html",
+        "targetKeyword": "how to write a progress report",
+        "secondaryKeywords": [
+            "progress report format",
+            "progress report example",
+            "writing a progress report"
+        ],
+        "internalLinks": [
+            "progress-report-template",
+            "work-progress-report-sample",
+            "how-to-write-a-project-status-report"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1795529215115",
         "type": "blog",
         "title": "The Two-Minute Status Audit: A Weekly Check That Catches Stale Reports Before Your Stakeholders Do",

@@ -5,6 +5,36 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[The Stakeholder Map: How PMs Decide Who Gets Which Update (and Who Doesn't)]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795615614100.html</link>
+    <description><![CDATA[Three weeks into a platform migration, Dana sent the same 600-word status update to 34 people. The VP of Engineering replied in four minutes: "Too lon...]]></description>
+    <pubDate>Wed, 25 Nov 2026 14:06:54 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Five-Minute Project Health Check: A PM's Weekly Scan Before the Status Meeting]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795612039263.html</link>
+    <description><![CDATA[Most project problems don't announce themselves. They sit in a Slack thread nobody replied to, a Jira ticket that's been "in progress" for eleven days...]]></description>
+    <pubDate>Wed, 25 Nov 2026 13:07:19 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Container Registry Is Now a Landlord]]></title>
+    <link>https://goreportify.com/article-pages/news-1795612024676.html</link>
+    <description><![CDATA[The first thing you notice on the dashboard is the pull counter. It ticks up in the thousands per minute, a number that once felt like a health metric...]]></description>
+    <pubDate>Wed, 25 Nov 2026 13:07:04 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Status Report vs Progress Report: The Difference That Matters]]></title>
+    <link>https://goreportify.com/article-pages/blog-status-report-vs-progress-report.html</link>
+    <description><![CDATA[People use "status report" and "progress report" as if the two words were interchangeable. They are not, and mixing them up is why so many updates land with a thud. A status report tells you where thi]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[How to Write a Progress Report That Shows Real Movement]]></title>
+    <link>https://goreportify.com/article-pages/blog-how-to-write-a-progress-report.html</link>
+    <description><![CDATA[A progress report answers one question better than any other document at work: are we actually moving, and how do you know? Not "are we busy" and not "did everyone attend the meetings." Just movement ]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The Two-Minute Status Audit: A Weekly Check That Catches Stale Reports Before Your Stakeholders Do]]></title>
     <link>https://goreportify.com/article-pages/blog-1795529215115.html</link>
     <description><![CDATA[A status report that says "on track" for six weeks straight is not reassuring. It's a warning sign. Either the project is genuinely boring, or nobody...]]></description>
@@ -275,36 +305,6 @@ You wrote six paragr...]]></description>
     <link>https://goreportify.com/article-pages/blog-1794060018590.html</link>
     <description><![CDATA[Remote teams don't share a hallway. They share a document. That document is your weekly status report, and it's doing more work than you probably thin...]]></description>
     <pubDate>Sat, 07 Nov 2026 14:00:18 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[AI Tools for Product Managers: A Handoff Audit You Can Run This Week]]></title>
-    <link>https://goreportify.com/article-pages/blog-1794056568803.html</link>
-    <description><![CDATA[The first time I let an AI draft a PRD, I saved forty minutes and created a week of rework. The draft was fluent, confident, and wrong about our users...]]></description>
-    <pubDate>Sat, 07 Nov 2026 13:02:48 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Prompt Injection Is Now a Labor Dispute]]></title>
-    <link>https://goreportify.com/article-pages/news-1794056552168.html</link>
-    <description><![CDATA[The job posting went up on a Tuesday. A mid-sized logistics firm in Ohio wanted an "AI Operations Coordinator" — someone to babysit the customer-servi...]]></description>
-    <pubDate>Sat, 07 Nov 2026 13:02:32 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How PM Teams Can Improve Write Outcomes]]></title>
-    <link>https://goreportify.com/article-pages/blog-1793973634039.html</link>
-    <description><![CDATA[Your VP opens Slack at 8:40 on Monday. Between two fires and a budget review, she gives your team update eleven seconds. If she has to hunt for the he...]]></description>
-    <pubDate>Fri, 06 Nov 2026 14:00:34 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Fixing Reporting Workflows with Better Reader 11/5-1]]></title>
-    <link>https://goreportify.com/article-pages/blog-1793887226368.html</link>
-    <description><![CDATA[The report you write on Friday gets read by someone who wasn't in the room on Tuesday, on a team that will be restructured in six weeks. Most weekly s...]]></description>
-    <pubDate>Thu, 05 Nov 2026 14:00:26 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How to Write a Work Report That Gets Read]]></title>
-    <link>https://goreportify.com/article-pages/blog-how-to-write-a-work-report.html</link>
-    <description><![CDATA[A work report is the simplest way to show what you did, what you are doing, and what you need from the people above you. If you searched for "how to write a work report," you most likely have a deadli]]></description>
-    <pubDate>Invalid Date</pubDate>
   </item>
 </channel>
 </rss>
