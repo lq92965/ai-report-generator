@@ -5,6 +5,36 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[The AI Meeting Notes Trap: Why Transcripts Aren't Decisions]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795702018422.html</link>
+    <description><![CDATA[Your AI notetaker joined the sprint review, produced 2,400 words of transcript, and extracted eleven "action items." Three of them contradict each oth...]]></description>
+    <pubDate>Thu, 26 Nov 2026 14:06:58 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Exception Report: How PMs Surface Problems Without Writing a Novel]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795698469405.html</link>
+    <description><![CDATA[Most status reports fail the same way: they describe everything and flag nothing. Forty lines of green checkmarks, a paragraph about a vendor call, an...]]></description>
+    <pubDate>Thu, 26 Nov 2026 13:07:49 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Sandbox Is Now a Company Store]]></title>
+    <link>https://goreportify.com/article-pages/news-1795698449930.html</link>
+    <description><![CDATA[The demo took ninety seconds. A procurement manager in Ohio uploaded a scanned invoice, watched an agent extract line items, cross-check them against...]]></description>
+    <pubDate>Thu, 26 Nov 2026 13:07:29 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Project Health Report Template: See Trouble Before It Costs You]]></title>
+    <link>https://goreportify.com/article-pages/blog-project-health-report-template.html</link>
+    <description><![CDATA[A project health report answers a different question from a status update. A status update says what happened this week. A health report says whether the project is still likely to succeed, and it doe]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Quarterly Report Example: A Filled-In Sample You Can Copy]]></title>
+    <link>https://goreportify.com/article-pages/blog-quarterly-report-example.html</link>
+    <description><![CDATA[A quarterly report example helps in a way that instructions never quite do. You can read a dozen explanations of what a quarterly report should contain and still freeze when it is your turn to write o]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The Stakeholder Map: How PMs Decide Who Gets Which Update (and Who Doesn't)]]></title>
     <link>https://goreportify.com/article-pages/blog-1795615614100.html</link>
     <description><![CDATA[Three weeks into a platform migration, Dana sent the same 600-word status update to 34 people. The VP of Engineering replied in four minutes: "Too lon...]]></description>
@@ -275,36 +305,6 @@ You wrote six paragr...]]></description>
     <link>https://goreportify.com/article-pages/blog-1794405619909.html</link>
     <description><![CDATA[I watched a PM paste eleven pages of customer interview transcripts into a chatbot, ask for "themes," and ship the output straight into a strategy doc...]]></description>
     <pubDate>Wed, 11 Nov 2026 14:00:19 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Merge Conflict Is Now a Custody Battle]]></title>
-    <link>https://goreportify.com/article-pages/news-1794402158105.html</link>
-    <description><![CDATA[Two engineers spent Tuesday afternoon arguing about a semicolon. Not the semicolon itself—nobody has cared about a semicolon since the last linter upd...]]></description>
-    <pubDate>Wed, 11 Nov 2026 13:02:38 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[A Practical Playbook for Reader Decisions 11/10-1]]></title>
-    <link>https://goreportify.com/article-pages/blog-1794319228851.html</link>
-    <description><![CDATA[Most project updates get written in a hurry, on a Thursday afternoon, because someone in leadership asked for "a quick status." So you paste last week...]]></description>
-    <pubDate>Tue, 10 Nov 2026 14:00:28 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Project Status Report Template: The RAG Line That Stops Surprise Escalations]]></title>
-    <link>https://goreportify.com/article-pages/blog-1794232817373.html</link>
-    <description><![CDATA[The Friday before launch, a VP forwarded my team's status report back to me with one line highlighted: "On track." Her note: "Your own doc says the pa...]]></description>
-    <pubDate>Mon, 09 Nov 2026 14:00:17 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Weekly Status Report Template: The 6-Line Format That Survives a Reorg]]></title>
-    <link>https://goreportify.com/article-pages/blog-1794146420621.html</link>
-    <description><![CDATA[Most status reports fail for a boring reason: they report activity instead of change. "Worked on onboarding flow. Met with design. Continuing QA." Nob...]]></description>
-    <pubDate>Sun, 08 Nov 2026 14:00:20 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[A Practical Playbook for Reader Decisions]]></title>
-    <link>https://goreportify.com/article-pages/blog-1794060018590.html</link>
-    <description><![CDATA[Remote teams don't share a hallway. They share a document. That document is your weekly status report, and it's doing more work than you probably thin...]]></description>
-    <pubDate>Sat, 07 Nov 2026 14:00:18 GMT</pubDate>
   </item>
 </channel>
 </rss>

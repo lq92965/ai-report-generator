@@ -1,5 +1,35 @@
 [
     {
+        "id": "1795702018422",
+        "type": "blog",
+        "title": "The AI Meeting Notes Trap: Why Transcripts Aren't Decisions",
+        "category": "Deep Insights",
+        "date": "2026-11-26",
+        "author": "David Sterling",
+        "excerpt": "Your AI notetaker joined the sprint review, produced 2,400 words of transcript, and extracted eleven \"action items.\" Three of them contradict each oth...",
+        "contentFile": "blog-1795702018422.md"
+    },
+    {
+        "id": "1795698469405",
+        "type": "blog",
+        "title": "The Exception Report: How PMs Surface Problems Without Writing a Novel",
+        "category": "Deep Insights",
+        "date": "2026-11-26",
+        "author": "Sarah Jenkins",
+        "excerpt": "Most status reports fail the same way: they describe everything and flag nothing. Forty lines of green checkmarks, a paragraph about a vendor call, an...",
+        "contentFile": "blog-1795698469405.md"
+    },
+    {
+        "id": "1795698449930",
+        "type": "news",
+        "title": "The Sandbox Is Now a Company Store",
+        "category": "Tech Radar",
+        "date": "2026-11-26",
+        "author": "Olivia Thorne",
+        "excerpt": "The demo took ninety seconds. A procurement manager in Ohio uploaded a scanned invoice, watched an agent extract line items, cross-check them against...",
+        "contentFile": "news-1795698449930.md"
+    },
+    {
         "id": "project-health-report-template",
         "type": "blog",
         "title": "Project Health Report Template: See Trouble Before It Costs You",
