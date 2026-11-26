@@ -1,5 +1,51 @@
 [
     {
+        "id": "project-health-report-template",
+        "type": "blog",
+        "title": "Project Health Report Template: See Trouble Before It Costs You",
+        "category": "Deep Insights",
+        "date": "2026-11-26",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A project health report answers a different question from a status update. A status update says what happened this week. A health report says whether the project is still likely to succeed, and it doe",
+        "contentFile": "project-health-report-template.html",
+        "url": "/article-pages/project-health-report-template.html",
+        "targetKeyword": "project health report template",
+        "secondaryKeywords": [
+            "project health check template",
+            "project status health report",
+            "project health assessment template"
+        ],
+        "internalLinks": [
+            "how-to-write-a-project-status-report",
+            "project-status-report-template",
+            "status-report-template"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "quarterly-report-example",
+        "type": "blog",
+        "title": "Quarterly Report Example: A Filled-In Sample You Can Copy",
+        "category": "Deep Insights",
+        "date": "2026-11-26",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A quarterly report example helps in a way that instructions never quite do. You can read a dozen explanations of what a quarterly report should contain and still freeze when it is your turn to write o",
+        "contentFile": "quarterly-report-example.html",
+        "url": "/article-pages/quarterly-report-example.html",
+        "targetKeyword": "quarterly report example",
+        "secondaryKeywords": [
+            "quarterly report sample",
+            "quarterly business report example",
+            "q3 report example"
+        ],
+        "internalLinks": [
+            "quarterly-report-template",
+            "how-to-write-a-quarterly-report",
+            "quarterly-business-review"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1795615614100",
         "type": "blog",
         "title": "The Stakeholder Map: How PMs Decide Who Gets Which Update (and Who Doesn't)",
