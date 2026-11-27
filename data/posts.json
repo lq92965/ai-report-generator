@@ -1,5 +1,35 @@
 [
     {
+        "id": "1795788425847",
+        "type": "blog",
+        "title": "The Silent Blocker Log: How PMs Track What's Actually Slowing the Team Down",
+        "category": "Deep Insights",
+        "date": "2026-11-27",
+        "author": "David Sterling",
+        "excerpt": "Every team has a version of the same conversation. It happens on a Thursday, usually after a sprint review that felt fine. Someone mentions, offhand,...",
+        "contentFile": "blog-1795788425847.md"
+    },
+    {
+        "id": "1795784845602",
+        "type": "blog",
+        "title": "The Async Standup That Doesn't Rot: A Format PMs Can Run Without a Meeting",
+        "category": "Deep Insights",
+        "date": "2026-11-27",
+        "author": "Michael Chen",
+        "excerpt": "The standup channel dies around week three. Day one, everyone posts. Day five, two people post and three react with 👍. Week three, it's a ghost town...",
+        "contentFile": "blog-1795784845602.md"
+    },
+    {
+        "id": "1795784825167",
+        "type": "news",
+        "title": "The Backup Is Now a Betrayal",
+        "category": "Tech Radar",
+        "date": "2026-11-27",
+        "author": "Marcus Webb",
+        "excerpt": "The first thing Priya noticed was the silence. Not the absence of noise—the office at 2 a.m. has its own hum, the HVAC, the distant elevator—but the a...",
+        "contentFile": "news-1795784825167.md"
+    },
+    {
         "id": "weekly-progress-report",
         "type": "blog",
         "title": "Weekly Progress Report: How to Write One That Gets Read",

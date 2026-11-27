@@ -15,6 +15,21 @@
 
 ## All Articles
 
+- [The Silent Blocker Log: How PMs Track What's Actually Slowing the Team Down](https://goreportify.com/article-pages/blog-1795788425847.html)
+  - Type: Deep Insights | Date: 2026-11-27 | Author: David Sterling
+  - Every team has a version of the same conversation. It happens on a Thursday, usually after a sprint review that felt fine. Someone mentions, offhand,...
+- [The Async Standup That Doesn't Rot: A Format PMs Can Run Without a Meeting](https://goreportify.com/article-pages/blog-1795784845602.html)
+  - Type: Deep Insights | Date: 2026-11-27 | Author: Michael Chen
+  - The standup channel dies around week three. Day one, everyone posts. Day five, two people post and three react with 👍. Week three, it's a ghost town...
+- [The Backup Is Now a Betrayal](https://goreportify.com/article-pages/news-1795784825167.html)
+  - Type: Tech Radar | Date: 2026-11-27 | Author: Marcus Webb
+  - The first thing Priya noticed was the silence. Not the absence of noise—the office at 2 a.m. has its own hum, the HVAC, the distant elevator—but the a...
+- [Weekly Progress Report: How to Write One That Gets Read](https://goreportify.com/article-pages/blog-weekly-progress-report.html)
+  - Type: Deep Insights | Date: 2026-11-27 | Author: Reportify AI Editorial
+  - A weekly progress report has one job: show what actually moved in the last seven days. Done well, it takes five minutes to write and thirty seconds to read. Done badly, it becomes a long list of chore
+- [Status Report Examples: Three Samples You Can Copy](https://goreportify.com/article-pages/blog-status-report-examples.html)
+  - Type: Deep Insights | Date: 2026-11-27 | Author: Reportify AI Editorial
+  - A good status report answers a handful of questions in the first ten seconds: what changed, where things stand, and what needs a decision. Most people who search for status report examples are not loo
 - [The AI Meeting Notes Trap: Why Transcripts Aren't Decisions](https://goreportify.com/article-pages/blog-1795702018422.html)
   - Type: Deep Insights | Date: 2026-11-26 | Author: David Sterling
   - Your AI notetaker joined the sprint review, produced 2,400 words of transcript, and extracted eleven "action items." Three of them contradict each oth...
@@ -2952,4 +2967,4 @@ Your stomach sin...
   - In a move that recalibrates the competitive landscape of artificial intelligence, Anthropic has closed a monumental $2.8 billion Series D funding roun...
 
 ---
-_Total: 971 articles (548 blog + 423 news) + 8 core pages._
+_Total: 976 articles (552 blog + 424 news) + 8 core pages._

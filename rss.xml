@@ -5,6 +5,36 @@
   <link>https://goreportify.com</link>
   <description>Latest tech insights and PM strategies</description>
   <item>
+    <title><![CDATA[The Silent Blocker Log: How PMs Track What's Actually Slowing the Team Down]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795788425847.html</link>
+    <description><![CDATA[Every team has a version of the same conversation. It happens on a Thursday, usually after a sprint review that felt fine. Someone mentions, offhand,...]]></description>
+    <pubDate>Fri, 27 Nov 2026 14:07:05 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Async Standup That Doesn't Rot: A Format PMs Can Run Without a Meeting]]></title>
+    <link>https://goreportify.com/article-pages/blog-1795784845602.html</link>
+    <description><![CDATA[The standup channel dies around week three. Day one, everyone posts. Day five, two people post and three react with 👍. Week three, it's a ghost town...]]></description>
+    <pubDate>Fri, 27 Nov 2026 13:07:25 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[The Backup Is Now a Betrayal]]></title>
+    <link>https://goreportify.com/article-pages/news-1795784825167.html</link>
+    <description><![CDATA[The first thing Priya noticed was the silence. Not the absence of noise—the office at 2 a.m. has its own hum, the HVAC, the distant elevator—but the a...]]></description>
+    <pubDate>Fri, 27 Nov 2026 13:07:05 GMT</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Weekly Progress Report: How to Write One That Gets Read]]></title>
+    <link>https://goreportify.com/article-pages/blog-weekly-progress-report.html</link>
+    <description><![CDATA[A weekly progress report has one job: show what actually moved in the last seven days. Done well, it takes five minutes to write and thirty seconds to read. Done badly, it becomes a long list of chore]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
+    <title><![CDATA[Status Report Examples: Three Samples You Can Copy]]></title>
+    <link>https://goreportify.com/article-pages/blog-status-report-examples.html</link>
+    <description><![CDATA[A good status report answers a handful of questions in the first ten seconds: what changed, where things stand, and what needs a decision. Most people who search for status report examples are not loo]]></description>
+    <pubDate>Invalid Date</pubDate>
+  </item>
+  <item>
     <title><![CDATA[The AI Meeting Notes Trap: Why Transcripts Aren't Decisions]]></title>
     <link>https://goreportify.com/article-pages/blog-1795702018422.html</link>
     <description><![CDATA[Your AI notetaker joined the sprint review, produced 2,400 words of transcript, and extracted eleven "action items." Three of them contradict each oth...]]></description>
@@ -273,38 +303,6 @@
     <link>https://goreportify.com/article-pages/blog-1794747874101.html</link>
     <description><![CDATA[You send the update at 4:40 on Friday. By Monday it has eleven opens and zero replies. Then Thursday, someone books a 30-minute "alignment" call to as...]]></description>
     <pubDate>Sun, 15 Nov 2026 13:04:34 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[The Schema Migration Is Now a Boundary Redraw]]></title>
-    <link>https://goreportify.com/article-pages/news-1794747857238.html</link>
-    <description><![CDATA[The migration ran at 02:14 UTC on a Tuesday. By 09:00, the support queue held 340 tickets, all variations on the same sentence: "My account shows some...]]></description>
-    <pubDate>Sun, 15 Nov 2026 13:04:17 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Fixing Reporting Workflows with Better Update 11/14-1]]></title>
-    <link>https://goreportify.com/article-pages/blog-1794664815677.html</link>
-    <description><![CDATA[The project is three weeks behind. Two engineers quit. The vendor missed a deadline and the fix has no date. You open a blank doc to write the update,...]]></description>
-    <pubDate>Sat, 14 Nov 2026 14:00:15 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[How PM Teams Can Improve Three Outcomes]]></title>
-    <link>https://goreportify.com/article-pages/blog-1794578416364.html</link>
-    <description><![CDATA[The report sat in her inbox for two days. I know because I checked the read receipt, which is a small humiliation I recommend to anyone who wants to l...]]></description>
-    <pubDate>Fri, 13 Nov 2026 14:00:16 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[Fixing Reporting Workflows with Better Update]]></title>
-    <link>https://goreportify.com/article-pages/blog-1794492016257.html</link>
-    <description><![CDATA[The update went out at 9:02 on a Tuesday. By 9:15, three people had replied with the same question: "So are we on track or not?"
-
-You wrote six paragr...]]></description>
-    <pubDate>Thu, 12 Nov 2026 14:00:16 GMT</pubDate>
-  </item>
-  <item>
-    <title><![CDATA[AI Tools for Product Managers: A Weekly Review Ritual That Keeps You in Control]]></title>
-    <link>https://goreportify.com/article-pages/blog-1794405619909.html</link>
-    <description><![CDATA[I watched a PM paste eleven pages of customer interview transcripts into a chatbot, ask for "themes," and ship the output straight into a strategy doc...]]></description>
-    <pubDate>Wed, 11 Nov 2026 14:00:19 GMT</pubDate>
   </item>
 </channel>
 </rss>
