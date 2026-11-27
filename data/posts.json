@@ -1,5 +1,51 @@
 [
     {
+        "id": "weekly-progress-report",
+        "type": "blog",
+        "title": "Weekly Progress Report: How to Write One That Gets Read",
+        "category": "Deep Insights",
+        "date": "2026-11-27",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A weekly progress report has one job: show what actually moved in the last seven days. Done well, it takes five minutes to write and thirty seconds to read. Done badly, it becomes a long list of chore",
+        "contentFile": "weekly-progress-report.html",
+        "url": "/article-pages/weekly-progress-report.html",
+        "targetKeyword": "weekly progress report",
+        "secondaryKeywords": [
+            "weekly progress report format",
+            "weekly work progress report",
+            "weekly progress update template"
+        ],
+        "internalLinks": [
+            "how-to-write-a-progress-report",
+            "progress-report-template",
+            "weekly-status-report"
+        ],
+        "platform": "website"
+    },
+    {
+        "id": "status-report-examples",
+        "type": "blog",
+        "title": "Status Report Examples: Three Samples You Can Copy",
+        "category": "Deep Insights",
+        "date": "2026-11-27",
+        "author": "Reportify AI Editorial",
+        "excerpt": "A good status report answers a handful of questions in the first ten seconds: what changed, where things stand, and what needs a decision. Most people who search for status report examples are not loo",
+        "contentFile": "status-report-examples.html",
+        "url": "/article-pages/status-report-examples.html",
+        "targetKeyword": "status report examples",
+        "secondaryKeywords": [
+            "project status report example",
+            "weekly status report sample",
+            "status update example"
+        ],
+        "internalLinks": [
+            "status-report-template",
+            "how-to-write-a-status-report",
+            "weekly-status-report"
+        ],
+        "platform": "website"
+    },
+    {
         "id": "1795702018422",
         "type": "blog",
         "title": "The AI Meeting Notes Trap: Why Transcripts Aren't Decisions",
